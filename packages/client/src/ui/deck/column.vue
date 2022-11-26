@@ -133,25 +133,25 @@ function getMenu() {
 		text: i18n.ts.move + '...',
 		icon: 'ph-arrows-out-cardinal-bold ph-lg',
 		children: [{
-			icon: 'ph--left-bold ph-lg',
+			icon: 'ph-caret-left-bold ph-lg',
 			text: i18n.ts._deck.swapLeft,
 			action: () => {
 				swapLeftColumn(props.column.id);
 			},
 		}, {
-			icon: 'ph--right-bold ph-lg',
+			icon: 'ph-caret-right-bold ph-lg',
 			text: i18n.ts._deck.swapRight,
 			action: () => {
 				swapRightColumn(props.column.id);
 			},
 		}, props.isStacked ? {
-			icon: 'ph--up-bold ph-lg',
+			icon: 'ph-caret-up-bold ph-lg',
 			text: i18n.ts._deck.swapUp,
 			action: () => {
 				swapUpColumn(props.column.id);
 			},
 		} : undefined, props.isStacked ? {
-			icon: 'ph--down-bold ph-lg',
+			icon: 'ph-caret-down-bold ph-lg',
 			text: i18n.ts._deck.swapDown,
 			action: () => {
 				swapDownColumn(props.column.id);

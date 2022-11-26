@@ -57,7 +57,7 @@ const buttonsLeft = $computed(() => {
 
 	if (history.length > 1) {
 		buttons.push({
-			icon: 'ph--left-bold ph-lg',
+			icon: 'ph-caret-left-bold ph-lg',
 			onClick: back,
 		});
 	}
