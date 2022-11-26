@@ -106,10 +106,19 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 
 		await prefetchEmojis(aggregateNoteEmojis(notes));
 
-		return await Promise.all(notifications.map(x => this.pack(x, {
-			_hintForEachNotes_: {
-				myReactions: myReactionsMap,
-			},
-		})));
-	},
+		const results = await Promise.all(notifications
+			.map(x =>
+				this.pack(x, {
+					_hintForEachNotes_: {
+						myReactions: myReactionsMap,
+					},
+				})
+				.catch(e => null)
+			)
+		);
+
+		return results.filter(x => x != null);
+	}
+
 });
+
