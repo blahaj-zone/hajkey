@@ -426,7 +426,8 @@ function readPromo() {
 	> .article {
 		display: flex;
 		padding: 28px 32px 18px;
-
+		cursor: pointer;
+		
 		> .avatar {
 			flex-shrink: 0;
 			display: block;

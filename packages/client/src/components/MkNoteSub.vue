@@ -65,6 +65,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	&.children {
 		padding: 10px 0 0 16px;
 		font-size: 1em;
+		cursor: auto;
 
 		&.max-width_450px {
 			padding: 10px 0 0 8px;
@@ -86,9 +87,11 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		> .body {
 			flex: 1;
 			min-width: 0;
-
+			cursor: pointer;
+			
 			> .header {
 				margin-bottom: 2px;
+				cursor: auto;
 			}
 
 			> .body {
