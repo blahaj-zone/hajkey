@@ -102,10 +102,11 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 					words.push(keyword
 							.replace(reEscapes, '\\$&')
 							.replace('\\*', `[\\p{L}\\p{N}'_-]*`)
+							.replace('\\?', `[\\p{L}\\p{N}'_-]`)
 					);
 			}
 			
-			const kpReText: string = `\\b${words.join(`\\p{Z}+`)}\\b`;
+			const kpReText: string = `(?<=\\b|[^\\p{L}\\p{N}]|^)${words.join(`\\p{Z}+`)}(?=\\b|[^\\p{L}\\p{N}]|$)`;
 			let kpRe: RegExp;
 			try {
 				kpRe = new RegExp(kpReText, antenna.caseSensitive ? 'u' : 'iu')
