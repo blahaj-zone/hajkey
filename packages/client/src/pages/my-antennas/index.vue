@@ -7,9 +7,14 @@
 
 			<div class="">
 				<MkPagination v-slot="{items}" ref="list" :pagination="pagination">
-					<MkA v-for="antenna in items" :key="antenna.id" class="ljoevbzj" :to="`/my/antennas/${antenna.id}`">
-						<div class="name">{{ antenna.name }}</div>
-					</MkA>
+					<div v-for="antenna in items" :key="antenna.id">
+						<MkA class="uopelskx" :link="true" :to="`/timeline/antenna/${antenna.id}`">
+							<i class="ph-flying-saucer-bold ph-lg"></i>
+						</MkA>
+						<MkA class="ljoevbzj" :to="`/my/antennas/${antenna.id}`">
+							<div class="name">{{ antenna.name }}</div>
+						</MkA>
+					</div>
 				</MkPagination>
 			</div>
 		</div>
@@ -44,6 +49,20 @@ definePageMetadata({
 
 	> .add {
 		margin: 0 auto 16px auto;
+	}
+
+	.uopelskx {
+		float: left;
+		min-width: 25px;
+		padding: 13px;
+		margin-right: 10px;
+		border: solid 1px var(--divider);
+		border-radius: 6px;
+
+		&:hover {
+			border: solid 1px var(--accent);
+			text-decoration: none;
+		}
 	}
 
 	.ljoevbzj {

@@ -58,16 +58,35 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 		.map(xs => xs.filter(x => x !== ''))
 		.filter(xs => xs.length > 0);
 
+	const text = antenna.caseSensitive ? note.text : note.text?.toLowerCase();
+
+	const keywordTest = (keyword: string) => {
+		const n = keyword.length
+		if (n === 0) {
+			return false
+		}
+
+		if (n > 2 && keyword[0] === '/' && keyword[n - 1] === '/') {
+			const reText = keyword.substring(1, n-1);
+			let re;
+			try {
+				re = new RegExp(reText, antenna.caseSensitive ? undefined : 'i');
+			} catch (ex) {
+				console.log('failed to compile regex', reText)
+				return false;
+			}
+			const match = re.exec(text!);
+
+			return match !== null;
+		}
+		
+		const includesKw = text!.includes(antenna.caseSensitive ? keyword : keyword.toLowerCase());
+		return includesKw;
+	};
+
 	if (keywords.length > 0) {
-		if (note.text == null) return false;
-
-		const matched = keywords.some(and =>
-			and.every(keyword =>
-				antenna.caseSensitive
-					? note.text!.includes(keyword)
-					: note.text!.toLowerCase().includes(keyword.toLowerCase())
-			));
-
+		if (text == null) return false;
+		const matched = keywords.some(and => and.every(keywordTest));
 		if (!matched) return false;
 	}
 
@@ -77,15 +96,8 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 		.filter(xs => xs.length > 0);
 
 	if (excludeKeywords.length > 0) {
-		if (note.text == null) return false;
-
-		const matched = excludeKeywords.some(and =>
-			and.every(keyword =>
-				antenna.caseSensitive
-					? note.text!.includes(keyword)
-					: note.text!.toLowerCase().includes(keyword.toLowerCase())
-			));
-
+		if (text == null) return false;
+		const matched = keywords.some(and => and.every(keywordTest));
 		if (matched) return false;
 	}
 
