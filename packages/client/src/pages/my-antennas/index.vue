@@ -31,7 +31,7 @@ import { definePageMetadata } from '@/scripts/page-metadata';
 
 const pagination = {
 	endpoint: 'antennas/list' as const,
-	limit: 10,
+	limit: 250,
 };
 
 const headerActions = $computed(() => []);

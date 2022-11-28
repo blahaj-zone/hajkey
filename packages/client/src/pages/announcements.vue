@@ -28,7 +28,7 @@ import { definePageMetadata } from '@/scripts/page-metadata';
 
 const pagination = {
 	endpoint: 'announcements' as const,
-	limit: 10,
+	limit: 50,
 };
 
 // TODO: これは実質的に親コンポーネントから子コンポーネントのプロパティを変更してるのでなんとかしたい

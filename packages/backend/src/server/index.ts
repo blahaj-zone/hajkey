@@ -138,7 +138,7 @@ export const startServer = () => {
 	return server;
 };
 
-export default () => new Promise(resolve => {
+export default () => new Promise<void>(resolve => {
 	const server = createServer();
 
 	initializeStreamingServer(server);
