@@ -101,8 +101,8 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 			for (const keyword of splitPhrase) {
 					words.push(keyword
 							.replace(reEscapes, '\\$&')
-							.replace('\\*', `[\\p{L}\\p{N}'_-]*`)
-							.replace('\\?', `[\\p{L}\\p{N}'_-]`)
+							.replaceAll('\\*', `[\\p{L}\\p{N}'_-]*`)
+							.replaceAll('\\?', `[\\p{L}\\p{N}'_-]`)
 					);
 			}
 			
