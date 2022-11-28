@@ -27,11 +27,17 @@
 		<MkSwitch v-model="withReplies" class="_formBlock">{{ i18n.ts.withReplies }}</MkSwitch>
 		<MkTextarea v-model="keywords" class="_formBlock">
 			<template #label>{{ i18n.ts.antennaKeywords }}</template>
-			<template #caption>{{ i18n.ts.antennaKeywordsDescription }}</template>
+			<template #caption>
+				{{ i18n.ts.antennaKeywordsDescription }}<br/>
+				{{ i18n.ts.antennaKeywordsComposition }}
+			</template>
 		</MkTextarea>
 		<MkTextarea v-model="excludeKeywords" class="_formBlock">
 			<template #label>{{ i18n.ts.antennaExcludeKeywords }}</template>
-			<template #caption>{{ i18n.ts.antennaKeywordsDescription }}</template>
+			<template #caption>
+				{{ i18n.ts.antennaKeywordsDescription }}<br/>
+				{{ i18n.ts.antennaKeywordsComposition }}
+			</template>
 		</MkTextarea>
 		<MkSwitch v-model="caseSensitive" class="_formBlock">{{ i18n.ts.caseSensitive }}</MkSwitch>
 		<MkSwitch v-model="withFile" class="_formBlock">{{ i18n.ts.withFileAntenna }}</MkSwitch>
@@ -70,8 +76,8 @@ let src: string = $ref(props.antenna.src);
 let userListId: any = $ref(props.antenna.userListId);
 let userGroupId: any = $ref(props.antenna.userGroupId);
 let users: string = $ref(props.antenna.users.join('\n'));
-let keywords: string = $ref(props.antenna.keywords.map(x => x.join(' ')).join('\n'));
-let excludeKeywords: string = $ref(props.antenna.excludeKeywords.map(x => x.join(' ')).join('\n'));
+let keywords: string = $ref(props.antenna.keywords.map(x => x.join('  ')).join('\n'));
+let excludeKeywords: string = $ref(props.antenna.excludeKeywords.map(x => x.join('  ')).join('\n'));
 let caseSensitive: boolean = $ref(props.antenna.caseSensitive);
 let withReplies: boolean = $ref(props.antenna.withReplies);
 let withFile: boolean = $ref(props.antenna.withFile);
@@ -103,8 +109,8 @@ async function saveAntenna() {
 		notify,
 		caseSensitive,
 		users: users.trim().split('\n').map(x => x.trim()),
-		keywords: keywords.trim().split('\n').map(x => x.trim().split(' ')),
-		excludeKeywords: excludeKeywords.trim().split('\n').map(x => x.trim().split(' ')),
+		keywords: keywords.trim().split('\n').map(x => x.trim().split('  ')),
+		excludeKeywords: excludeKeywords.trim().split('\n').map(x => x.trim().split('  ')),
 	};
 
 	if (props.antenna.id == null) {

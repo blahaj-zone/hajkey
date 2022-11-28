@@ -9,6 +9,9 @@ import { Cache } from './cache.js';
 
 const blockingCache = new Cache<User['id'][]>(1000 * 60 * 5);
 
+type matchFunction = (text: string) => boolean;
+const matcherCache = new Cache<matchFunction>(1000 * 60 * 60);
+
 // NOTE: フォローしているユーザーのノート、リストのユーザーのノート、グループのユーザーのノート指定はパフォーマンス上の理由で無効になっている
 
 /**
@@ -53,40 +56,83 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 		if (!accts.includes(getFullApAccount(noteUser.username, noteUser.host).toLowerCase())) return false;
 	}
 
+	const text = antenna.caseSensitive ? note.text : note.text?.toLowerCase();
+
+	const alwaysFalseMatcher: matchFunction = () => false;
+
+	const makeReMatcher = (re: RegExp): matchFunction => {
+		return (text) => re.test(text)
+	}
+
+	const reWhitespace = /\s+/;
+	const reEscapes = /[/\-\\^$*+?.()|[\]{}]/g;
+
+	const compileKeyphrase = (keyphrase: string): matchFunction => {
+		const now = Date.now();
+		const ce = matcherCache.get(keyphrase);
+		if (ce) {
+			return ce;
+		}
+
+		const matcher = (():matchFunction => {
+			const n = keyphrase.length
+			if (n === 0) {
+				return alwaysFalseMatcher;
+			}
+
+			if (n > 2 && keyphrase[0] === '/') {
+				const lastSlash = keyphrase.lastIndexOf('/');
+				const flags = keyphrase.slice(lastSlash + 1);
+				const pattern = keyphrase.slice(1, lastSlash);
+				let re: RegExp;
+				try {
+					re = new RegExp(pattern, flags);
+				} catch (ex) {
+					console.log('failed to compile regex', pattern)
+					return alwaysFalseMatcher;
+				}
+
+				return makeReMatcher(re);
+			}
+
+			let words: string[] = [];
+
+			const splitPhrase = keyphrase.split(reWhitespace)
+			for (const keyword of splitPhrase) {
+					words.push(keyword
+							.replace(reEscapes, '\\$&')
+							.replace('\\*', `[\\p{L}\\p{N}'_-]*`)
+					);
+			}
+			
+			const kpReText: string = `\\b${words.join(`\\p{Z}+`)}\\b`;
+			let kpRe: RegExp;
+			try {
+				kpRe = new RegExp(kpReText, antenna.caseSensitive ? 'u' : 'iu')
+			} catch (ex) {
+				console.log('failed to compile keyphrase regex', kpReText)
+				return alwaysFalseMatcher;
+			}
+
+			return makeReMatcher(kpRe);
+		})();
+
+		matcherCache.set(keyphrase, matcher);
+
+		return matcher;
+	}
+
+	const keywordsTest = (keywords: string): boolean =>
+		compileKeyphrase(keywords)(text ?? '');
+	
 	const keywords = antenna.keywords
 		// Clean up
 		.map(xs => xs.filter(x => x !== ''))
 		.filter(xs => xs.length > 0);
 
-	const text = antenna.caseSensitive ? note.text : note.text?.toLowerCase();
-
-	const keywordTest = (keyword: string) => {
-		const n = keyword.length
-		if (n === 0) {
-			return false
-		}
-
-		if (n > 2 && keyword[0] === '/' && keyword[n - 1] === '/') {
-			const reText = keyword.substring(1, n-1);
-			let re;
-			try {
-				re = new RegExp(reText, antenna.caseSensitive ? undefined : 'i');
-			} catch (ex) {
-				console.log('failed to compile regex', reText)
-				return false;
-			}
-			const match = re.exec(text!);
-
-			return match !== null;
-		}
-		
-		const includesKw = text!.includes(antenna.caseSensitive ? keyword : keyword.toLowerCase());
-		return includesKw;
-	};
-
 	if (keywords.length > 0) {
 		if (text == null) return false;
-		const matched = keywords.some(and => and.every(keywordTest));
+		const matched = keywords.some(and => and.every(keywordsTest));
 		if (!matched) return false;
 	}
 
@@ -97,7 +143,7 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 
 	if (excludeKeywords.length > 0) {
 		if (text == null) return false;
-		const matched = keywords.some(and => and.every(keywordTest));
+		const matched = keywords.some(and => and.every(keywordsTest));
 		if (matched) return false;
 	}
 
