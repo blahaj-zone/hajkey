@@ -1,14 +1,14 @@
 import { In, Repository } from 'typeorm';
-import { Users, Notes, UserGroupInvitations, AccessTokens, NoteReactions } from '../index.js';
 import { Notification } from '@/models/entities/notification.js';
 import { awaitAll } from '@/prelude/await-all.js';
-import { Packed } from '@/misc/schema.js';
-import { Note } from '@/models/entities/note.js';
-import { NoteReaction } from '@/models/entities/note-reaction.js';
-import { User } from '@/models/entities/user.js';
+import type { Packed } from '@/misc/schema.js';
+import type { Note } from '@/models/entities/note.js';
+import type { NoteReaction } from '@/models/entities/note-reaction.js';
+import type { User } from '@/models/entities/user.js';
 import { aggregateNoteEmojis, prefetchEmojis } from '@/misc/populate-emojis.js';
 import { notificationTypes } from '@/types.js';
 import { db } from '@/db/postgre.js';
+import { Users, Notes, UserGroupInvitations, AccessTokens, NoteReactions } from '../index.js';
 
 export const NotificationRepository = db.getRepository(Notification).extend({
 	async pack(
@@ -17,7 +17,7 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 			_hintForEachNotes_?: {
 				myReactions: Map<Note['id'], NoteReaction | null>;
 			};
-		}
+		},
 	): Promise<Packed<'Notification'>> {
 		const notification = typeof src === 'object' ? src : await this.findOneByOrFail({ id: src });
 		const token = notification.appAccessTokenId ? await AccessTokens.findOneByOrFail({ id: notification.appAccessTokenId }) : null;
@@ -86,7 +86,7 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 
 	async packMany(
 		notifications: Notification[],
-		meId: User['id']
+		meId: User['id'],
 	) {
 		if (notifications.length === 0) return [];
 

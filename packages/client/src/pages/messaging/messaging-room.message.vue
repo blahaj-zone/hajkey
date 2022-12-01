@@ -90,7 +90,6 @@ function del(): void {
 			min-height: 38px;
 			border-radius: 16px;
 			max-width: 100%;
-			margin-left: 4%;
 
 			& + * {
 				clear: both;
@@ -215,8 +214,6 @@ function del(): void {
 
 			> .balloon {
 				$color: var(--X4);
-				margin-right: 4%;
-				margin-left: 0%;
 				background: $color;
 
 				&.noText {

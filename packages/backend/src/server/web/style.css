@@ -42,7 +42,7 @@ html {
 	width: 28px;
 	height: 28px;
 	transform: translateY(110px);
-	display: none !important;
+	display: none;
 	color: var(--accent);
 }
 #splashSpinner > .spinner {
@@ -98,6 +98,16 @@ html {
 
 	100% {
 		transform: scale3d(1, 1, 1);
+	}
+}
+
+@media(prefers-reduced-motion) {
+	#splashSpinner {
+		display: block;
+	}
+
+	#splashIcon {
+		animation: none;
 	}
 }
 

@@ -1,6 +1,7 @@
 <template>
 <button
 	v-if="canRenote && $store.state.seperateRenoteQuote"
+	v-tooltip.noDelay.bottom="i18n.ts.quote"
 	class="eddddedb _button"
 	@click="quote()"
 >
@@ -14,6 +15,7 @@ import type { Note } from 'misskey-js/built/entities';
 import { pleaseLogin } from '@/scripts/please-login';
 import * as os from '@/os';
 import { $i } from '@/account';
+import { i18n } from '@/i18n';
 
 const props = defineProps<{
 	note: Note;

@@ -4,6 +4,8 @@
 
 const fs = require('fs');
 const yaml = require('js-yaml');
+let languages = []
+let languages_custom = []
 
 const merge = (...args) => args.reduce((a, c) => ({
 	...a,
@@ -13,33 +15,20 @@ const merge = (...args) => args.reduce((a, c) => ({
 		.reduce((a, [k, v]) => (a[k] = merge(v, c[k]), a), {})
 }), {});
 
-const languages = [
-	'ar-SA',
-	'cs-CZ',
-	'da-DK',
-	'de-DE',
-	'en-US',
-	'es-ES',
-	'fr-FR',
-	'id-ID',
-	'it-IT',
-	'ja-JP',
-	'ja-KS',
-	'kab-KAB',
-	'kn-IN',
-	'ko-KR',
-	'nl-NL',
-	'no-NO',
-	'pl-PL',
-	'pt-PT',
-	'ru-RU',
-	'sk-SK',
-	'ug-CN',
-	'uk-UA',
-	'vi-VN',
-	'zh-CN',
-	'zh-TW',
-];
+
+fs.readdirSync(__dirname).forEach((file) => {
+	if (file.includes('.yml')){
+		file = file.slice(0, file.indexOf('.'))
+		languages.push(file);
+	}
+})
+
+fs.readdirSync(__dirname + '/../custom/locales').forEach((file) => {
+	if (file.includes('.yml')){
+		file = file.slice(0, file.indexOf('.'))
+		languages_custom.push(file);
+	}
+})
 
 const primaries = {
 	'en': 'US',
@@ -51,6 +40,8 @@ const primaries = {
 const clean = (text) => text.replace(new RegExp(String.fromCodePoint(0x08), 'g'), '');
 
 const locales = languages.reduce((a, c) => (a[c] = yaml.load(clean(fs.readFileSync(`${__dirname}/${c}.yml`, 'utf-8'))) || {}, a), {});
+const locales_custom = languages_custom.reduce((a, c) => (a[c] = yaml.load(clean(fs.readFileSync(`${__dirname}/../custom/locales/${c}.yml`, 'utf-8'))) || {}, a), {});
+Object.assign(locales, locales_custom)
 
 module.exports = Object.entries(locales)
 	.reduce((a, [k ,v]) => (a[k] = (() => {

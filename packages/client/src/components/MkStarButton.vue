@@ -1,5 +1,5 @@
 <template>
-<button class="skdfgljsdkf _button" @click="star($event)">
+<button v-tooltip.noDelay.bottom="i18n.ts._gallery.like" class="skdfgljsdkf _button" @click="star($event)">
 	<i class="ph-star-bold ph-lg"></i>
 </button>
 </template>
@@ -9,6 +9,7 @@ import type { Note } from 'misskey-js/built/entities';
 import Ripple from '@/components/MkRipple.vue';
 import { pleaseLogin } from '@/scripts/please-login';
 import * as os from '@/os';
+import { i18n } from '@/i18n';
 
 const props = defineProps<{
 	note: Note;
