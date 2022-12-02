@@ -11,6 +11,7 @@
 			<option value="users">{{ i18n.ts._antennaSources.users }}</option>
 			<!--<option value="list">{{ i18n.ts._antennaSources.userList }}</option>-->
 			<!--<option value="group">{{ i18n.ts._antennaSources.userGroup }}</option>-->
+			<option value="hosts">{{ i18n.ts._antennaSources.hosts }}</option>
 		</MkSelect>
 		<MkSelect v-if="src === 'list'" v-model="userListId" class="_formBlock">
 			<template #label>{{ i18n.ts.userList }}</template>
@@ -23,6 +24,10 @@
 		<MkTextarea v-else-if="src === 'users'" v-model="users" class="_formBlock">
 			<template #label>{{ i18n.ts.users }}</template>
 			<template #caption>{{ i18n.ts.antennaUsersDescription }} <button class="_textButton" @click="addUser">{{ i18n.ts.addUser }}</button></template>
+		</MkTextarea>
+		<MkTextarea v-else-if="src === 'hosts'" v-model="users" class="_formBlock">
+			<template #label>{{ i18n.ts.hosts }}</template>
+			<template #caption>{{ i18n.ts.antennaHostsDescription }}</template>
 		</MkTextarea>
 		<MkSwitch v-model="withReplies" class="_formBlock">{{ i18n.ts.withReplies }}</MkSwitch>
 		<MkTextarea v-model="keywords" class="_formBlock">
