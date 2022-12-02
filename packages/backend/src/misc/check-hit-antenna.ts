@@ -54,6 +54,13 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 			return getFullApAccount(username, host).toLowerCase();
 		});
 		if (!accts.includes(getFullApAccount(noteUser.username, noteUser.host).toLowerCase())) return false;
+	} else if (antenna.src === 'hosts') {
+		const hosts = antenna.users
+			.filter(x => x !== '')
+			.map(host => {
+				return host.toLowerCase();
+			});
+		if (!hosts.includes(noteUser.host?.toLowerCase() ?? '')) return false;
 	}
 
 	const text = antenna.caseSensitive ? note.text : note.text?.toLowerCase();
@@ -144,7 +151,7 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 
 	if (excludeKeywords.length > 0) {
 		if (text == null) return false;
-		const matched = keywords.some(and => and.every(keywordsTest));
+		const matched = excludeKeywords.some(and => and.every(keywordsTest));
 		if (matched) return false;
 	}
 

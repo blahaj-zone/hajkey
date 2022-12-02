@@ -33,8 +33,8 @@ export class Antenna {
 	})
 	public name: string;
 
-	@Column('enum', { enum: ['home', 'all', 'users', 'list', 'group'] })
-	public src: 'home' | 'all' | 'users' | 'list' | 'group';
+	@Column('enum', { enum: ['home', 'all', 'users', 'list', 'group', 'hosts'] })
+	public src: 'home' | 'all' | 'users' | 'list' | 'group' | 'hosts';
 
 	@Column({
 		...id(),
