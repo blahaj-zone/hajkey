@@ -1,5 +1,6 @@
-import { VNode, defineComponent, h } from 'vue';
+import { defineComponent, h } from 'vue';
 import * as mfm from 'mfm-js';
+import type { VNode } from 'vue';
 import MkUrl from '@/components/global/MkUrl.vue';
 import MkLink from '@/components/MkLink.vue';
 import MkMention from '@/components/MkMention.vue';
@@ -12,6 +13,7 @@ import MkSparkle from '@/components/MkSparkle.vue';
 import MkA from '@/components/global/MkA.vue';
 import { host } from '@/config';
 import { MFM_TAGS } from '@/scripts/mfm-tags';
+import { reducedMotion } from '@/scripts/reduced-motion';
 
 export default defineComponent({
 	props: {
@@ -97,17 +99,17 @@ export default defineComponent({
 						}
 						case 'jelly': {
 							const speed = validTime(token.props.args.speed) || '1s';
-							style = (this.$store.state.animatedMfm ? `animation: mfm-rubberBand ${speed} linear infinite both;` : '');
+							style = (this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-rubberBand ${speed} linear infinite both;` : '');
 							break;
 						}
 						case 'twitch': {
 							const speed = validTime(token.props.args.speed) || '0.5s';
-							style = this.$store.state.animatedMfm ? `animation: mfm-twitch ${speed} ease infinite;` : '';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-twitch ${speed} ease infinite;` : '';
 							break;
 						}
 						case 'shake': {
 							const speed = validTime(token.props.args.speed) || '0.5s';
-							style = this.$store.state.animatedMfm ? `animation: mfm-shake ${speed} ease infinite;` : '';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-shake ${speed} ease infinite;` : '';
 							break;
 						}
 						case 'spin': {
@@ -120,18 +122,29 @@ export default defineComponent({
 								token.props.args.y ? 'mfm-spinY' :
 								'mfm-spin';
 							const speed = validTime(token.props.args.speed) || '1.5s';
-							style = this.$store.state.animatedMfm ? `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction};` : '';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction};` : '';
 							break;
 						}
 						case 'jump': {
 							const speed = validTime(token.props.args.speed) || '0.75s';
-							style = this.$store.state.animatedMfm ? `animation: mfm-jump ${speed} linear infinite;` : '';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-jump ${speed} linear infinite;` : '';
 							break;
 						}
 						case 'bounce': {
 							const speed = validTime(token.props.args.speed) || '0.75s';
-							style = this.$store.state.animatedMfm ? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;` : '';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;` : '';
 							break;
+						}
+						case 'rainbow': {
+							const speed = validTime(token.props.args.speed) || '1s';
+							style = this.$store.state.animatedMfm && !reducedMotion() ? `animation: mfm-rainbow ${speed} linear infinite;` : '';
+							break;
+						}
+						case 'sparkle': {
+							if (!this.$store.state.animatedMfm && !reducedMotion()) {
+								return genEl(token.children);
+							}
+							return h(MkSparkle, {}, genEl(token.children));
 						}
 						case 'flip': {
 							const transform =
@@ -172,17 +185,6 @@ export default defineComponent({
 							return h('span', {
 								class: '_mfm_blur_',
 							}, genEl(token.children));
-						}
-						case 'rainbow': {
-							const speed = validTime(token.props.args.speed) || '1s';
-							style = this.$store.state.animatedMfm ? `animation: mfm-rainbow ${speed} linear infinite;` : '';
-							break;
-						}
-						case 'sparkle': {
-							if (!this.$store.state.animatedMfm) {
-								return genEl(token.children);
-							}
-							return h(MkSparkle, {}, genEl(token.children));
 						}
 						case 'rotate': {
 							const rotate =

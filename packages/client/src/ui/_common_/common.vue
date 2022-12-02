@@ -11,7 +11,7 @@
 
 <XStreamIndicator/>
 
-<div v-if="pendingApiRequestsCount > 0" id="wait"></div>
+<!-- <div v-if="pendingApiRequestsCount > 0" id="wait"></div> -->
 
 <div v-if="dev" id="devTicker"><span>DEV BUILD</span></div>
 </template>

@@ -64,6 +64,7 @@ const bg = {
 		font-size: 0.9em;
 		vertical-align: top;
 		font-weight: bold;
+		text-overflow: clip;
 	}
 }
 </style>

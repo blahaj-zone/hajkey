@@ -3,7 +3,7 @@
  */
 
 import '@/style.scss';
-import '@/icons.css';
+import '@/icons.scss';
 
 //#region account indexedDB migration
 import { set } from '@/scripts/idb-proxy';
@@ -296,7 +296,7 @@ import { getAccountFromId } from '@/scripts/get-account-from-id';
 	}, { immediate: true });
 
 	watch(defaultStore.reactiveState.useBlurEffect, v => {
-		if (v) {
+		if (v && deviceKind !== 'smartphone') {
 			document.documentElement.style.removeProperty('--blur');
 		} else {
 			document.documentElement.style.setProperty('--blur', 'none');
