@@ -103,7 +103,20 @@ watch(() => src, async () => {
 	}
 });
 
+const stripPrefix = (s: string, p: string): string =>
+	s.startsWith(p) ? s.slice(p.length) : s;
+
+const stripPrefices = (s: string, ...p: string[]): string =>
+	p.reduce((acc, pattern) => stripPrefix(acc, pattern), s);
+
 async function saveAntenna() {
+	let userList = users.trim().split('\n').map(x => x.trim())
+	if (src === 'hosts') {
+		userList = userList
+			.map(host => stripPrefices(host.toLowerCase(), 'https://', 'http://', '@'))
+			.filter(x => x !== '');
+	}
+
 	const antennaData = {
 		name,
 		src,
@@ -113,7 +126,7 @@ async function saveAntenna() {
 		withFile,
 		notify,
 		caseSensitive,
-		users: users.trim().split('\n').map(x => x.trim()),
+		users: userList,
 		keywords: keywords.trim().split('\n').map(x => x.trim().split('  ')),
 		excludeKeywords: excludeKeywords.trim().split('\n').map(x => x.trim().split('  ')),
 	};

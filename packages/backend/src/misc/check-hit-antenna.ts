@@ -56,10 +56,7 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<'No
 		if (!accts.includes(getFullApAccount(noteUser.username, noteUser.host).toLowerCase())) return false;
 	} else if (antenna.src === 'hosts') {
 		const hosts = antenna.users
-			.filter(x => x !== '')
-			.map(host => {
-				return host.toLowerCase();
-			});
+		console.log("testing host: ", noteUser.host, ' against', hosts)
 		if (!hosts.includes(noteUser.host?.toLowerCase() ?? '')) return false;
 	}
 
