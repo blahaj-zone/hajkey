@@ -428,6 +428,10 @@ function readPromo() {
 		padding: 28px 32px 18px;
 		cursor: pointer;
 
+		@media (pointer: coarse) {
+			cursor: default;
+		}
+
 		> .avatar {
 			flex-shrink: 0;
 			display: block;

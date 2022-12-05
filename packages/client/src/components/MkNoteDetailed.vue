@@ -347,7 +347,10 @@ if (appearNote.replyId) {
 	> .reply-to-more {
 		opacity: 0.7;
 		cursor: pointer;
-		
+
+		@media (pointer: coarse) {
+			cursor: default;
+		}
 	}
 
 	> .renote {
@@ -546,6 +549,10 @@ if (appearNote.replyId) {
 	> .reply {
 		border-top: solid 0.5px var(--divider);
 		cursor: pointer;
+
+		@media (pointer: coarse) {
+			cursor: default;
+		}
 	}
 
 	> .reply, .reply-to, .reply-to-more {

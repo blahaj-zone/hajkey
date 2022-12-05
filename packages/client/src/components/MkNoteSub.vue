@@ -88,6 +88,10 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			flex: 1;
 			min-width: 0;
 			cursor: pointer;
+
+			@media (pointer: coarse) {
+				cursor: default;
+			}
 			
 			> .header {
 				margin-bottom: 2px;

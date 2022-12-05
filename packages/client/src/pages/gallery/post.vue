@@ -24,7 +24,7 @@
 							<div class="other">
 								<button v-if="$i && $i.id === post.user.id" v-tooltip="i18n.ts.edit" v-click-anime class="_button" @click="edit"><i class="ph-pencil-bold ph-lg ph-fw ph-lg"></i></button>
 								<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat-bold ph-lg ph-fw ph-lg"></i></button>
-								<button v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
+								<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
 							</div>
 						</div>
 						<div class="user">
@@ -67,6 +67,7 @@ import { url } from '@/config';
 import { useRouter } from '@/router';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
+import { shareAvailable } from '@/scripts/share-available';
 
 const router = useRouter();
 

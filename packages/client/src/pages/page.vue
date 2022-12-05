@@ -34,7 +34,7 @@
 						</div>
 						<div class="other">
 							<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat-bold ph-lg ph-fw ph-lg"></i></button>
-							<button v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
+							<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
 						</div>
 						<div class="user">
 							<MkAvatar :user="page.user" class="avatar"/>
@@ -81,6 +81,7 @@ import MkPagination from '@/components/MkPagination.vue';
 import MkPagePreview from '@/components/MkPagePreview.vue';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
+import { shareAvailable } from '@/scripts/share-available';
 
 const props = defineProps<{
 	pageName: string;
