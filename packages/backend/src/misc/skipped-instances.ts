@@ -14,7 +14,7 @@ const deadThreshold = 7 * DAY;
  * @param hosts array of punycoded instance hosts
  * @returns array of punycoed instance hosts that should be skipped (subset of hosts parameter)
  */
-export async function skippedInstances(hosts: Array<Instace['host']>): Array<Instance['host']> {
+export async function skippedInstances(hosts: Array<Instance['host']>): Promise<Array<Instance['host']>> {
 	// first check for blocked instances since that info may already be in memory
 	const { blockedHosts } = await fetchMeta();
 
@@ -33,7 +33,7 @@ export async function skippedInstances(hosts: Array<Instace['host']>): Array<Ins
 			})
 			.andWhere(new Brackets(qb => { qb
 				.where('instance.isSuspended')
-				.orWhere('instance.lastCommunicatedAt < :deadTime', { deadTime });
+				//.orWhere('instance.lastCommunicatedAt < :deadTime', { deadTime });
 			}))
 			.select('host')
 			.getRawMany()
@@ -48,7 +48,7 @@ export async function skippedInstances(hosts: Array<Instace['host']>): Array<Ins
  * @param host punycoded instance host
  * @returns whether the given host should be skipped
  */
-export async function shouldSkipInstance(host: Instance['host']): boolean {
+export async function shouldSkipInstance(host: Instance['host']): Promise<boolean> {
 	const skipped = await skippedInstances([host]);
 	return skipped.length > 0;
 }
