@@ -102,10 +102,10 @@ async function resolveSelf(acctLower: string) {
 		logger.error(`Failed to WebFinger for ${chalk.yellow(acctLower)}: ${ e.statusCode || e.message }`);
 		throw new Error(`Failed to WebFinger for ${acctLower}: ${ e.statusCode || e.message }`);
 	});
-	const self = finger.links.find(link => link.rel != null && link.rel.toLowerCase() === 'self');
-	if (!self) {
+	const selfs = finger.links.filter(link => link.rel != null && link.rel.toLowerCase() === 'self');
+	if (selfs.length < 1) {
 		logger.error(`Failed to WebFinger for ${chalk.yellow(acctLower)}: self link not found`);
 		throw new Error('self link not found');
 	}
-	return self;
+	return selfs[selfs.length-1];
 }
