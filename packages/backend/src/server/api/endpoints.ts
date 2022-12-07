@@ -306,6 +306,7 @@ import * as ep___users_groups_transfer from './endpoints/users/groups/transfer.j
 import * as ep___users_groups_update from './endpoints/users/groups/update.js';
 import * as ep___users_lists_create from './endpoints/users/lists/create.js';
 import * as ep___users_lists_delete from './endpoints/users/lists/delete.js';
+import * as ep___users_lists_delete_all from './endpoints/users/lists/delete-all.js';
 import * as ep___users_lists_list from './endpoints/users/lists/list.js';
 import * as ep___users_lists_pull from './endpoints/users/lists/pull.js';
 import * as ep___users_lists_push from './endpoints/users/lists/push.js';
@@ -631,6 +632,7 @@ const eps = [
 	['users/groups/update', ep___users_groups_update],
 	['users/lists/create', ep___users_lists_create],
 	['users/lists/delete', ep___users_lists_delete],
+	['users/lists/delete-all', ep___users_lists_delete_all],
 	['users/lists/list', ep___users_lists_list],
 	['users/lists/pull', ep___users_lists_pull],
 	['users/lists/push', ep___users_lists_push],

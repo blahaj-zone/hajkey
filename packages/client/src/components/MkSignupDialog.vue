@@ -1,16 +1,15 @@
 <template>
 <XModalWindow
 	ref="dialog"
-	:width="366"
-	:height="500"
-	@close="dialog.close()"
+	:width="400"
+	@close="dialog!.close()"
 	@closed="$emit('closed')"
 >
 	<template #header>{{ i18n.ts.signup }}</template>
 
 	<div class="_monolithic_">
 		<div class="_section">
-			<XSignup :auto-set="autoSet" @signup="onSignup" @signupEmailPending="onSignupEmailPending"/>
+			<XSignup :auto-set="autoSet" @signup="onSignup" @signup-email-pending="onSignupEmailPending"/>
 		</div>
 	</div>
 </XModalWindow>
@@ -37,10 +36,10 @@ const dialog = $ref<InstanceType<typeof XModalWindow>>();
 
 function onSignup(res) {
 	emit('done', res);
-	dialog.close();
+	dialog?.close();
 }
 
 function onSignupEmailPending() {
-	dialog.close();
+	dialog?.close();
 }
 </script>

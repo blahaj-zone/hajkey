@@ -3,7 +3,10 @@
 	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
 	<MkSpacer :content-max="700">
 		<div class="qkcjvfiv">
-			<MkButton primary class="add" @click="create"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.createList }}</MkButton>
+			<div class="buttonWrapper">
+				<MkButton primary class="add" @click="create"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.createList }}</MkButton>
+				<MkButton @click="deleteAll"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.deleteAll }}</MkButton>
+			</div>
 
 			<MkPagination v-slot="{items}" ref="pagingComponent" :pagination="pagination" class="lists _content">
 				<MkA v-for="list in items" :key="list.id" class="list _panel" :to="`/my/lists/${ list.id }`">
@@ -41,6 +44,17 @@ async function create() {
 	pagingComponent.reload();
 }
 
+async function deleteAll() {
+	const { canceled } = await os.confirm({
+		type: 'warning',
+		text: i18n.t('removeAreYouSure', { x: 'all lists' }),
+	});
+	if (canceled) return;
+
+	await os.api('users/lists/delete-all');
+	os.success();
+}
+
 const headerActions = $computed(() => []);
 
 const headerTabs = $computed(() => []);
@@ -57,8 +71,13 @@ definePageMetadata({
 
 <style lang="scss" scoped>
 .qkcjvfiv {
-	> .add {
-		margin: 0 auto var(--margin) auto;
+	> .buttonWrapper {
+		display: grid;
+		justify-content: center;
+
+		> .add {
+			margin: 0 auto var(--margin) auto;
+		}
 	}
 
 	> .lists {

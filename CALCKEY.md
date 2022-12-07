@@ -2,34 +2,39 @@
 
 ## Planned
 
-- MFM button
-- Classic mode make instance icon bring up new context menu
-- Exclude self from antenna
-- Backfill remote users
-- User "choices" (recommended users) like Mastodon and Soapbox
-- Option to publicize instance blocks
-- Fully revamp non-logged-in screen
-- Personal notes for all accounts
-- Non-nyaify cat mode
-- Timeline filters
-- Filter notifications by user
-- Join Reason system like Mastodon/Pleroma
-- Build flag to remove NSFW/AI stuff
-- [Rat mode?](https://stop.voring.me/notes/933fx97bmd)
+- Stucture
+	- Sonic search support
+	- DragonflyDB support
+	- Use Cassandra for storing notes
+	- Rewrite backend in Rust and Axum
+- Function
+	- Federate with note edits
+	- User "choices" (recommended users) like Mastodon and Soapbox
+	- Join Reason system like Mastodon/Pleroma
+	- Option to publicize instance blocks
+	- Backfill remote users
+	- Build flag to remove NSFW/AI stuff
+	- Timeline filters
+	- Filter notifications by user
+	- Non-nyaify cat mode
+	- Exclude self from antenna
+- Form
+	- MFM button
+	- Personal notes for all accounts
+	- Fully revamp non-logged-in screen
+	- Classic mode make instance icon bring up new context menu
+	- [Rat mode?](https://stop.voring.me/notes/933fx97bmd)
 
 ## Work in progress
 
+- Account migration
+- Link verification
 - Better Messaging UI
 - Better API Documentation
 - Remote follow button
 - Admin custom CSS
 - Add back time machine (jump to date)
-- Improve accesibility score
-<details><summary>Current Misskey score is 57/100</summary>
-
-![accesibility score](https://pool.jortage.com/voringme/misskey/8ff18aae-4dc6-4b08-9e05-a4c9d051a9e3.png)
-
-</details>
+- Improve accesibility
 
 ## Implemented
 
@@ -88,8 +93,9 @@
 - Page drafts
 - Patron list
 - Animations respect reduced motion
-- Obliteration of Ai-chan
 - Undo renote button inside original note
+- Custom locales
+- Obliteration of Ai-chan
 - MissV: [fix Misskey Forkbomb](https://code.vtopia.live/Vtopia/MissV/commit/40b23c070bd4adbb3188c73546c6c625138fb3c1)
 - [Make showing ads optional](https://github.com/misskey-dev/misskey/pull/8996)
 - [Tapping avatar in mobile opens account modal](https://github.com/misskey-dev/misskey/pull/9056)
@@ -131,3 +137,4 @@
 	- 4c5aa9e53887cca5561fcec6ab0754e018f589a5: server: allow to like own pages
 	- 923c93da1228458dd65be47483c198a1a9191bcf: use await for notes.countBy
 	- ca90cedba0a0704b503c2778694230f5a7dfbace: server: reduce dead instance detection to 7 days
+	- e9ab42c10afb4e27516c2d2b5e3e06630efe9edd: Alt text in image viewer

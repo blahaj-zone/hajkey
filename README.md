@@ -49,10 +49,10 @@ This guide will work for both **starting from scratch** and **migrating from Mis
 
 ## 📦 Dependencies
 
-- 🐢 At least [NodeJS](https://nodejs.org/en/) v18.12.1 (v19.1.0 recommended)
+- 🐢 At least [NodeJS](https://nodejs.org/en/) v18.12.1 (v19 recommended)
   - Install with [nvm](https://github.com/nvm-sh/nvm)
 - 🐘 At least [PostgreSQL](https://www.postgresql.org/) v12
-- 🍱 At least [Redis](https://redis.io/) v6 (v7 recommended)
+- 🍱 At least [Redis](https://redis.io/) v6 (v7 recommend)
 
 ### 😗 Optional dependencies
 

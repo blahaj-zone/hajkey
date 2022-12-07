@@ -144,22 +144,35 @@ function top(): void {
 
 async function chooseList(ev: MouseEvent): Promise<void> {
 	const lists = await os.api('users/lists/list');
-	const items = lists.map((list) => ({
+	const items = [{
+		type: 'link' as const,
+		text: i18n.ts.manageLists,
+		icon: 'ph-faders-horizontal-bold ph-lg',
+		to: '/my/lists',
+	}].concat(lists.map((list) => ({
 		type: 'link' as const,
 		text: list.name,
+		icon: '',
 		to: `/timeline/list/${list.id}`,
-	}));
+	})));
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
 async function chooseAntenna(ev: MouseEvent): Promise<void> {
 	const antennas = await os.api('antennas/list');
-	const items = antennas.map((antenna) => ({
+	const items = [{
+		type: 'link' as const,
+		indicate: false,
+		text: i18n.ts.manageAntennas,
+		icon: 'ph-faders-horizontal-bold ph-lg',
+		to: '/my/antennas',
+	}].concat(antennas.map((antenna) => ({
 		type: 'link' as const,
 		text: antenna.name,
+		icon: '',
 		indicate: antenna.hasUnreadNote,
 		to: `/timeline/antenna/${antenna.id}`,
-	}));
+	})));
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
