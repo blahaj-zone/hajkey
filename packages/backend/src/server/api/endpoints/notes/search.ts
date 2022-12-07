@@ -7,6 +7,7 @@ import { makePaginationQuery } from '../../common/make-pagination-query.js';
 import { generateVisibilityQuery } from '../../common/generate-visibility-query.js';
 import { generateMutedUserQuery } from '../../common/generate-muted-user-query.js';
 import { generateBlockedUserQuery } from '../../common/generate-block-query.js';
+import safe from 'safe-regex';
 
 export const meta = {
 	tags: ['notes'],
@@ -47,6 +48,8 @@ export const paramDef = {
 	required: ['query'],
 } as const;
 
+const max = (a:number, b:number): number => a > b ? b : 1;
+
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	if (es == null) {
@@ -58,8 +61,28 @@ export default define(meta, paramDef, async (ps, me) => {
 			query.andWhere('note.channelId = :channelId', { channelId: ps.channelId });
 		}
 
-		query
+		const reStart = ps.query.indexOf('/')
+		const reEnd = ps.query.lastIndexOf('/')
+
+		if (ps.query.length > 3 && reStart === 0 && reEnd >= max(3, ps.query.length - 2)) {
+			const reMatch = ps.query.slice(reStart+1, reEnd);
+			const reOpts = ps.query.slice(reEnd+1);
+			
+			if (!safe(reMatch)) {
+				return null;
+			}
+
+			if (reOpts.includes('i')) {
+				query.andWhere('note.text ~* :q', { q: reMatch })
+			} else {
+				query.andWhere('note.text ~ :q', { q: reMatch })
+			}
+		} else {
+			query
 			.andWhere('note.text ILIKE :q', { q: `%${ps.query}%` })
+		}
+
+		query
 			.innerJoinAndSelect('note.user', 'user')
 			.leftJoinAndSelect('user.avatar', 'avatar')
 			.leftJoinAndSelect('user.banner', 'banner')
