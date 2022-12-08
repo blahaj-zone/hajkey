@@ -59,7 +59,7 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	const query = makePaginationQuery(Notes.createQueryBuilder('note'),
 			ps.sinceId, ps.untilId, ps.sinceDate, ps.untilDate)
-		.innerJoin(AntennaNotes.metadata.targetName, 'antennaNote', 'antennaNote.noteId = note.id')
+		.innerJoinAndSelect(AntennaNotes.metadata.targetName, 'antennaNote', 'antennaNote.noteId = note.id')
 		.innerJoinAndSelect('note.user', 'user')
 		.leftJoinAndSelect('user.avatar', 'avatar')
 		.leftJoinAndSelect('user.banner', 'banner')
@@ -72,6 +72,17 @@ export default define(meta, paramDef, async (ps, user) => {
 		.leftJoinAndSelect('renoteUser.avatar', 'renoteUserAvatar')
 		.leftJoinAndSelect('renoteUser.banner', 'renoteUserBanner')
 		.andWhere('antennaNote.antennaId = :antennaId', { antennaId: antenna.id });
+
+	const order = query.expressionMap.orderBys;
+	query.orderBy('antennaNote.read', 'ASC')
+	for (const k of Object.keys(order)) {
+		const v = order[k];
+		if ('string' === typeof v) {
+			query.addOrderBy(k, v)
+		} else {
+			query.addOrderBy(k, v.order, v.nulls)
+		}
+	}
 
 	generateVisibilityQuery(query, user);
 	generateMutedUserQuery(query, user);
