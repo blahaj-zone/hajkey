@@ -324,6 +324,7 @@ import * as ep___users_show from './endpoints/users/show.js';
 import * as ep___users_stats from './endpoints/users/stats.js';
 import * as ep___fetchRss from './endpoints/fetch-rss.js';
 import * as ep___admin_driveCapOverride from './endpoints/admin/drive-capacity-override.js';
+import * as ep___instance_info from './endpoints/instance-info.js';
 
 const eps = [
 	['admin/meta', ep___admin_meta],
@@ -650,6 +651,7 @@ const eps = [
 	['users/stats', ep___users_stats],
 	['admin/drive-capacity-override', ep___admin_driveCapOverride],
 	['fetch-rss', ep___fetchRss],
+	['v1/instance', ep___instance_info],
 ];
 
 export interface IEndpointMeta {
