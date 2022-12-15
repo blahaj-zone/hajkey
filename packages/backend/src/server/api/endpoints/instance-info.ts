@@ -123,6 +123,11 @@ const splitN = (
 
 	let start = 0;
 	let pos = s.indexOf(split);
+	if (pos === -1) {
+		ret.push(s);
+		return ret;
+	}
+
 	for (let i = 0; i < n - 1; i++) {
 		ret.push(s.substring(start, pos));
 		start = pos + split.length;
