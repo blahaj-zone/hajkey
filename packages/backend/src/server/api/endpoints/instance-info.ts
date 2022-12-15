@@ -1,9 +1,10 @@
-import * as os from 'node:os';
-import si from 'systeminformation';
+import * as mfm from 'mfm-js';
+import { toHtml } from '@/mfm/to-html.js';
 import config from '@/config/index.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
-import { Users, Notes, Instances, UserProfiles, Emojis } from '@/models/index.js';
+import { Users, Notes, Instances, UserProfiles, Emojis, DriveFiles } from '@/models/index.js';
 import { Emoji } from '@/models/entities/emoji.js';
+import { User } from '@/models/entities/user.js';
 import { IsNull, In } from 'typeorm';
 import { MAX_NOTE_TEXT_LENGTH, FILE_TYPE_BROWSERSAFE } from '@/const.js';
 import define from '../define.js';
@@ -28,17 +29,13 @@ export default define(meta, paramDef, async () => {
 	const [
 		meta,
 		total,
-		//activeHalfyear,
-		//activeMonth,
 		localPosts,
 		instanceCount,
 		firstAdmin,
-		emojiList,
+		emojis,
 	] = await Promise.all([
 		fetchMeta(true),
 		Users.count({ where: { host: IsNull() } }),
-		//Users.count({ where: { host: IsNull(), lastActiveDate: MoreThan(new Date(now - 15552000000)) } }),
-		//Users.count({ where: { host: IsNull(), lastActiveDate: MoreThan(new Date(now - 2592000000)) } }),
 		Notes.count({ where: { userHost: IsNull(), replyId: IsNull() } }),
 		Instances.count(),
 		Users.findOne({
@@ -48,22 +45,26 @@ export default define(meta, paramDef, async () => {
 		Emojis.find({
 			where: { host: IsNull(), type: In(FILE_TYPE_BROWSERSAFE) },
 			select: ['id', 'name', 'originalUrl', 'publicUrl'],
-		}),
+		}).then(l =>
+			l.reduce((a, e) =>
+				{
+					a[e.name] = e
+					return a
+				},
+				{} as Record<string, Emoji>
+			)
+		),
 	]);
 
-	let firstProfile = firstAdmin ? await UserProfiles.findOne({ where: { userId: firstAdmin.id }}) : null;
-	let descs = meta.description ? splitN(meta.description, '\n', 2) : [];
-
-	const emojis = emojiList.reduce((a, e) => {
-		a[e.name] = e
-		return a
-	}, {} as Record<string, Emoji>);
+	let descSplit = splitN(meta.description, '\n', 2);
+	let shortDesc = markup(descSplit.length > 0 ? descSplit[0]: '');
+	let longDesc = markup(meta.description ?? '');
 
 	return {
 			"uri": config.hostname,
 			"title": meta.name,
-			"short_description": descs[0],
-			"description": meta.description,
+			"short_description": shortDesc,
+			"description": longDesc,
 			"email": meta.maintainerEmail,
 			"version": config.version,
 			"urls": {
@@ -103,43 +104,22 @@ export default define(meta, paramDef, async () => {
 					"max_expiration": -1
 				}
 			},
-			"contact_account": firstAdmin && firstProfile ? {
-				id: firstAdmin.id,
-				username: firstAdmin.username,
-				acct: firstAdmin.username,
-				display_name: firstAdmin.name,
-				locked: firstAdmin.isLocked,
-				bot: firstAdmin.isBot,
-				created_at: firstAdmin.createdAt.toISOString(),
-				note: firstProfile.description,
-				url: `${config.url}/@${firstAdmin.username}`,
-				avatar: firstAdmin.avatarId ? `${config.url}/files/${firstAdmin.avatarId}` : null,
-				header: firstAdmin.bannerId ? `${config.url}/files/${firstAdmin.bannerId}` : null,
-				avatar_static: firstAdmin.avatarId ? `${config.url}/files/${firstAdmin.avatarId}` : null,
-				header_static: firstAdmin.bannerId ? `${config.url}/files/${firstAdmin.bannerId}` : null,
-				followers_count: firstAdmin.followersCount,
-				following_count: firstAdmin.followingCount,
-				statuses_count: firstAdmin.notesCount,
-				last_status_at: firstAdmin.lastActiveDate ? firstAdmin.lastActiveDate.toISOString() : null,
-				noindex: firstProfile.noCrawle,
-				emojis: firstAdmin.emojis ? firstAdmin.emojis.map(e => ({
-					shortcode: e,
-					static_url: `${config.url}/files/${emojis[e].publicUrl}`,
-					url: `${config.url}/files/${emojis[e].originalUrl}`,
-					visible_in_picker: true,
-				})) : [],
-				fields: firstProfile.fields ? firstProfile.fields.map(f => ({
-					name: f.name,
-					value: f.value,
-					verified_at: null,
-				})) : [],
-			} : null,
+			"contact_account": await getContact(firstAdmin, emojis),
 			"rules": []
 	};
 });
 
-const splitN = (s: string, split: string, n: number) => {
-	const ret = [];
+const splitN = (
+	s: string | null,
+	split: string,
+	n: number
+): string[] => {
+	const ret: string[] = [];
+	if (s == null) return ret;
+	if (s === '') {
+		ret.push(s);
+		return ret;
+	}
 
 	let start = 0;
 	let pos = s.indexOf(split);
@@ -153,3 +133,89 @@ const splitN = (s: string, split: string, n: number) => {
 
 	return ret;
 };
+
+type ContactType = {
+	id: string;
+	username: string;
+	acct: string;
+	display_name: string;
+	note?: string;
+	noindex?: boolean;
+	fields?: {
+		name: string;
+		value: string;
+		verified_at:string | null;
+	}[];
+	locked: boolean;
+	bot: boolean;
+	created_at: string;
+	url: string;
+	followers_count: number;
+	following_count: number;
+	statuses_count: number;
+	last_status_at?: string;
+	emojis: any;
+} | null;
+
+const getContact = async (
+	user: User | null,
+	emojis: Record<string, Emoji>
+): Promise<ContactType> => {
+	if (!user) return null;
+
+	let contact: ContactType = {
+		id: user.id,
+		username: user.username,
+		acct: user.username,
+		display_name: user.name ?? user.username,
+		locked: user.isLocked,
+		bot: user.isBot,
+		created_at: user.createdAt.toISOString(),
+		url: `${config.url}/@${user.username}`,
+		followers_count: user.followersCount,
+		following_count: user.followingCount,
+		statuses_count: user.notesCount,
+		last_status_at: user.lastActiveDate?.toISOString(),
+		emojis: emojis ? user.emojis.map(e => ({
+			shortcode: e,
+			static_url: `${config.url}/files/${emojis[e].publicUrl}`,
+			url: `${config.url}/files/${emojis[e].publicUrl}`,
+			visible_in_picker: true,
+		})) : [],
+	};
+
+	const [profile] = await Promise.all([
+		UserProfiles.findOne({ where: { userId: user.id }}),
+		loadDriveFiles(contact, 'avatar', user.avatarId),
+		loadDriveFiles(contact, 'header', user.bannerId),
+	]);
+
+	if (!profile) {
+		return contact;
+	}
+
+	contact = {
+		...contact,
+		note: markup(profile.description ?? ''),
+		noindex: profile.noCrawle,
+		fields: profile.fields.map(f => ({
+			name: f.name,
+			value: f.value,
+			verified_at: null,
+		}))
+	};
+
+	return contact;
+}
+
+const loadDriveFiles = async (contact: any, key: string, fileId: string | null) => {
+	if (fileId) {
+		const file = await DriveFiles.findOneBy({ id: fileId });
+		if (file) {
+			contact[key] = file.webpublicUrl ?? file.url;
+			contact[`${key}_static`] = contact[key];
+		}
+	}
+}
+
+const markup = (text: string): string => toHtml(mfm.parse(text)) ?? '';
