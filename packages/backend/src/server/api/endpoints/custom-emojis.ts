@@ -26,8 +26,6 @@ export default define(meta, paramDef, async () => {
 		select: ['name', 'originalUrl', 'publicUrl', 'category'],
 	});
 
-	console.log('emojis', emojis)
-
 	const emojiList = emojis.map(emoji => ({
 		shortcode: emoji.name,
 		url: emoji.originalUrl,
