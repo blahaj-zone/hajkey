@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, watch } from 'vue';
+import { computed, defineComponent, watch, onMounted } from 'vue';
 import { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import MkFolder from '@/components/MkFolder.vue';
@@ -137,6 +137,10 @@ function onSlideChange() {
 function syncSlide(index) {
 	swiperRef.slideTo(index);
 }
+
+onMounted(() => {
+	syncSlide(tabs.indexOf(swiperRef.activeIndex));
+});
 </script>
 
 <style lang="scss" scoped>

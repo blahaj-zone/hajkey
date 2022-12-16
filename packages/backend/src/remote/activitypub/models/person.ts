@@ -172,6 +172,8 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 				lastFetchedAt: new Date(),
 				name: truncate(person.name, nameLength),
 				isLocked: !!person.manuallyApprovesFollowers,
+				movedToUri: person.movedTo,
+				alsoKnownAs: person.alsoKnownAs,
 				isExplorable: !!person.discoverable,
 				username: person.preferredUsername,
 				usernameLower: person.preferredUsername!.toLowerCase(),
@@ -277,21 +279,21 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 }
 
 /**
- * Personの情報を更新します。
- * Misskeyに対象のPersonが登録されていなければ無視します。
+ * Update Person data from remote.
+ * If the target Person is not registered in Calckey, it is ignored.
  * @param uri URI of Person
  * @param resolver Resolver
- * @param hint Hint of Person object (この値が正当なPersonの場合、Remote resolveをせずに更新に利用します)
+ * @param hint Hint of Person object (If this value is a valid Person, it is used for updating without Remote resolve)
  */
 export async function updatePerson(uri: string, resolver?: Resolver | null, hint?: IObject): Promise<void> {
 	if (typeof uri !== 'string') throw new Error('uri is not string');
 
-	// URIがこのサーバーを指しているならスキップ
+	// Skip if the URI points to this server
 	if (uri.startsWith(config.url + '/')) {
 		return;
 	}
 
-	//#region このサーバーに既に登録されているか
+	//#region Already registered on this server?
 	const exist = await Users.findOneBy({ uri }) as IRemoteUser;
 
 	if (exist == null) {
@@ -307,7 +309,7 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 
 	logger.info(`Updating the Person: ${person.id}`);
 
-	// アバターとヘッダー画像をフェッチ
+	// Fetch avatar and header image
 	const [avatar, banner] = await Promise.all([
 		person.icon,
 		person.image,
@@ -317,7 +319,7 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 			: resolveImage(exist, img).catch(() => null),
 	));
 
-	// カスタム絵文字取得
+	// Custom pictogram acquisition
 	const emojis = await extractEmojis(person.tag || [], exist.host).catch(e => {
 		logger.info(`extractEmojis: ${e}`);
 		return [] as Emoji[];
@@ -343,6 +345,8 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 		isBot: getApType(object) === 'Service',
 		isCat: (person as any).isCat === true,
 		isLocked: !!person.manuallyApprovesFollowers,
+		movedToUri: person.movedTo,
+		alsoKnownAs: person.alsoKnownAs,
 		isExplorable: !!person.discoverable,
 	} as Partial<User>;
 
@@ -374,10 +378,10 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 
 	publishInternalEvent('remoteUserUpdated', { id: exist.id });
 
-	// ハッシュタグ更新
+	// Hashtag Update
 	updateUsertags(exist, tags);
 
-	// 該当ユーザーが既にフォロワーになっていた場合はFollowingもアップデートする
+	// If the user in question is a follower, followers will also be updated.
 	await Followings.update({
 		followerId: exist.id,
 	}, {
@@ -388,15 +392,15 @@ export async function updatePerson(uri: string, resolver?: Resolver | null, hint
 }
 
 /**
- * Personを解決します。
+ * Resolve Person.
  *
- * Misskeyに対象のPersonが登録されていればそれを返し、そうでなければ
- * リモートサーバーからフェッチしてMisskeyに登録しそれを返します。
+ * If the target person is registered in Calckey, it returns it; 
+ * otherwise, it fetches it from the remote server, registers it in Calckey, and returns it.
  */
 export async function resolvePerson(uri: string, resolver?: Resolver): Promise<CacheableUser> {
 	if (typeof uri !== 'string') throw new Error('uri is not string');
 
-	//#region このサーバーに既に登録されていたらそれを返す
+	//#region If already registered on this server, return it.
 	const exist = await fetchPerson(uri);
 
 	if (exist) {
@@ -404,7 +408,7 @@ export async function resolvePerson(uri: string, resolver?: Resolver): Promise<C
 	}
 	//#endregion
 
-	// リモートサーバーからフェッチしてきて登録
+	// Fetched from remote server and registered
 	if (resolver == null) resolver = new Resolver();
 	return await createPerson(uri, resolver);
 }
@@ -482,14 +486,14 @@ export async function updateFeatured(userId: User['id'], resolver?: Resolver) {
 	// Resolve and regist Notes
 	const limit = promiseLimit<Note | null>(2);
 	const featuredNotes = await Promise.all(items
-		.filter(item => getApType(item) === 'Note')	// TODO: Noteでなくてもいいかも
+		.filter(item => getApType(item) === 'Note')	// TODO: Maybe it doesn't have to be a Note.
 		.slice(0, 5)
 		.map(item => limit(() => resolveNote(item, resolver))));
 
 	await db.transaction(async transactionalEntityManager => {
 		await transactionalEntityManager.delete(UserNotePining, { userId: user.id });
 
-		// とりあえずidを別の時間で生成して順番を維持
+		// For now, generate the id at a different time and maintain the order.
 		let td = 0;
 		for (const note of featuredNotes.filter(note => note != null)) {
 			td -= 1000;

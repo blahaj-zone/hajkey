@@ -1,9 +1,9 @@
-import config from '@/config/index.js';
 import { v4 as uuid } from 'uuid';
-import { IActivity } from '../type.js';
-import { LdSignature } from '../misc/ld-signature.js';
+import config from '@/config/index.js';
 import { getUserKeypair } from '@/misc/keypair-store.js';
-import { User } from '@/models/entities/user.js';
+import type { User } from '@/models/entities/user.js';
+import { LdSignature } from '../misc/ld-signature.js';
+import type { IActivity } from '../type.js';
 
 export const renderActivity = (x: any): IActivity | null => {
 	if (x == null) return null;
@@ -19,6 +19,7 @@ export const renderActivity = (x: any): IActivity | null => {
 			{
 				// as non-standards
 				manuallyApprovesFollowers: 'as:manuallyApprovesFollowers',
+				movedToUri: 'as:movedTo',
 				sensitive: 'as:sensitive',
 				Hashtag: 'as:Hashtag',
 				quoteUrl: 'as:quoteUrl',

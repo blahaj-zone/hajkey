@@ -88,10 +88,10 @@ export default define(meta, paramDef, async (ps, me) => {
 });
 
 /***
- * URIからUserかNoteを解決する
+ * Resolve User or Note from URI
  */
 async function fetchAny(uri: string, me: CacheableLocalUser | null | undefined): Promise<SchemaType<typeof meta['res']> | null> {
-	// ブロックしてたら中断
+	// Wait if blocked.
 	const fetchedMeta = await fetchMeta();
 	if (fetchedMeta.blockedHosts.includes(extractDbHost(uri))) return null;
 
@@ -103,12 +103,12 @@ async function fetchAny(uri: string, me: CacheableLocalUser | null | undefined):
 	]));
 	if (local != null) return local;
 
-	// リモートから一旦オブジェクトフェッチ
+	// fetching Object once from remote
 	const resolver = new Resolver();
 	const object = await resolver.resolve(uri) as any;
 
-	// /@user のような正規id以外で取得できるURIが指定されていた場合、ここで初めて正規URIが確定する
-	// これはDBに存在する可能性があるため再度DB検索
+	// /@user If a URI other than the id is specified,
+	// the URI is determined here
 	if (uri !== object.id) {
 		local = await mergePack(me, ...await Promise.all([
 			dbResolver.getUserFromApId(object.id),

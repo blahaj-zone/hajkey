@@ -153,12 +153,7 @@ function like() {
 }
 
 async function unlike() {
-	const confirm = await os.confirm({
-		type: 'warning',
-		text: i18n.ts.unlikeConfirm,
-	});
-	if (confirm.canceled) return;
-	os.apiWithDialog('pages/unlike', {
+	os.api('pages/unlike', {
 		pageId: page.id,
 	}).then(() => {
 		page.isLiked = false;

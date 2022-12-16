@@ -20,7 +20,7 @@ import { UserPublickey } from '@/models/entities/user-publickey.js';
 
 const logger = new Logger('inbox');
 
-// ユーザーのinboxにアクティビティが届いた時の処理
+// Processing when an activity arrives in the user's inbox
 export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 	const signature = job.data.signature;	// HTTP-signature
 	const activity = job.data.activity;
@@ -30,16 +30,15 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 	delete info['@context'];
 	logger.debug(JSON.stringify(info, null, 2));
 	//#endregion
-
 	const host = toPuny(new URL(signature.keyId).hostname);
 
-	// ブロックしてたら中断
+	// interrupt if blocked
 	const meta = await fetchMeta();
 	if (meta.blockedHosts.includes(host)) {
 		return `Blocked request: ${host}`;
 	}
 
-	// 非公開モードなら許可なインスタンスのみ
+	// only whitelisted instances in private mode
 	if (meta.privateMode && !meta.allowedHosts.includes(host)) {
 		return `Blocked request: ${host}`;
 	}
@@ -51,7 +50,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
 	const dbResolver = new DbResolver();
 
-	// HTTP-Signature keyIdを元にDBから取得
+	// HTTP-Signature keyId from DB
 	let authUser: {
 		user: CacheableRemoteUser;
 		key: UserPublickey | null;
@@ -62,7 +61,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 		try {
 			authUser = await dbResolver.getAuthUserFromApId(getApId(activity.actor));
 		} catch (e) {
-			// 対象が4xxならスキップ
+			// Skip if target is 4xx
 			if (e instanceof StatusError) {
 				if (e.isClientError) {
 					return `skip: Ignored deleted actors on both ends ${activity.actor} - ${e.statusCode}`;

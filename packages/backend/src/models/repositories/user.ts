@@ -1,22 +1,49 @@
-import { EntityRepository, Repository, In, Not } from 'typeorm';
+import { URL } from 'url';
+import { In, Not } from 'typeorm';
 import Ajv from 'ajv';
-import { User, ILocalUser, IRemoteUser } from '@/models/entities/user.js';
+import type { ILocalUser, IRemoteUser } from '@/models/entities/user.js';
+import { User } from '@/models/entities/user.js';
 import config from '@/config/index.js';
-import { Packed } from '@/misc/schema.js';
-import { awaitAll, Promiseable } from '@/prelude/await-all.js';
+import type { Packed } from '@/misc/schema.js';
+import type { Promiseable } from '@/prelude/await-all.js';
+import { awaitAll } from '@/prelude/await-all.js';
 import { populateEmojis } from '@/misc/populate-emojis.js';
 import { getAntennas } from '@/misc/antenna-cache.js';
 import { USER_ACTIVE_THRESHOLD, USER_ONLINE_THRESHOLD } from '@/const.js';
 import { Cache } from '@/misc/cache.js';
 import { db } from '@/db/postgre.js';
-import { Instance } from '../entities/instance.js';
-import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, Antennas, AntennaNotes, ChannelFollowings, Instances, DriveFiles } from '../index.js';
+import { isActor, getApId } from '@/remote/activitypub/type.js';
+import DbResolver from '@/remote/activitypub/db-resolver.js';
+import Resolver from '@/remote/activitypub/resolver.js';
+import { createPerson } from '@/remote/activitypub/models/person.js';
+import {
+	AnnouncementReads,
+	Announcements,
+	AntennaNotes,
+	Blockings,
+	ChannelFollowings,
+	DriveFiles,
+	Followings,
+	FollowRequests,
+	Instances,
+	MessagingMessages,
+	Mutings,
+	Notes,
+	NoteUnreads,
+	Notifications,
+	Pages,
+	UserGroupJoinings,
+	UserNotePinings,
+	UserProfiles,
+	UserSecurityKeys,
+} from '../index.js';
+import type { Instance } from '../entities/instance.js';
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
 type IsUserDetailed<Detailed extends boolean> = Detailed extends true ? Packed<'UserDetailed'> : Packed<'UserLite'>;
 type IsMeAndIsUserDetailed<ExpectsMe extends boolean | null, Detailed extends boolean> =
-	Detailed extends true ? 
+	Detailed extends true ?
 		ExpectsMe extends true ? Packed<'MeDetailed'> :
 		ExpectsMe extends false ? Packed<'UserDetailedNotMe'> :
 		Packed<'UserDetailed'> :
@@ -33,12 +60,24 @@ const birthdaySchema = { type: 'string', pattern: /^([0-9]{4})-([0-9]{2})-([0-9]
 
 function isLocalUser(user: User): user is ILocalUser;
 function isLocalUser<T extends { host: User['host'] }>(user: T): user is T & { host: null; };
+/**
+ * Returns true if the user is local.
+ *
+ * @param user The user to check.
+ * @returns True if the user is local.
+ */
 function isLocalUser(user: User | { host: User['host'] }): boolean {
 	return user.host == null;
 }
 
 function isRemoteUser(user: User): user is IRemoteUser;
 function isRemoteUser<T extends { host: User['host'] }>(user: T): user is T & { host: string; };
+/**
+ * Returns true if the user is remote.
+ *
+ * @param user The user to check.
+ * @returns True if the user is remote.
+ */
 function isRemoteUser(user: User | { host: User['host'] }): boolean {
 	return !isLocalUser(user);
 }
@@ -154,6 +193,27 @@ export const UserRepository = db.getRepository(User).extend({
 		} : {});
 
 		return count > 0;
+	},
+
+	async userFromURI(uri: string): Promise<User | null> {
+		const dbResolver = new DbResolver();
+		let local = await dbResolver.getUserFromApId(uri);
+		if (local) {
+      return local;
+    }
+
+		// fetching Object once from remote
+		const resolver = new Resolver();
+		const object = await resolver.resolve(uri) as any;
+
+		// /@user If a URI other than the id is specified,
+		// the URI is determined here
+		if (uri !== object.id) {
+			local = await dbResolver.getUserFromApId(object.id);
+			if (local != null) return local;
+		}
+
+		return isActor(object) ? await createPerson(getApId(object)) : null;
 	},
 
 	async getHasUnreadAntenna(userId: User['id']): Promise<boolean> {
@@ -320,6 +380,8 @@ export const UserRepository = db.getRepository(User).extend({
 			...(opts.detail ? {
 				url: profile!.url,
 				uri: user.uri,
+				movedToUri: user.movedToUri ? await this.userFromURI(user.movedToUri) : null,
+				alsoKnownAs: user.alsoKnownAs,
 				createdAt: user.createdAt.toISOString(),
 				updatedAt: user.updatedAt ? user.updatedAt.toISOString() : null,
 				lastFetchedAt: user.lastFetchedAt ? user.lastFetchedAt.toISOString() : null,

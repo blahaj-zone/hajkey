@@ -11,11 +11,11 @@ const router = new Router();
 const nodeinfo2_1path = '/nodeinfo/2.1';
 const nodeinfo2_0path = '/nodeinfo/2.0';
 
-export const links = [/* (awaiting release) {
-	rel: 'http://nodeinfo.diaspora.software/ns/schema/2.1',
+export const links = [{
+	rel: 'https://nodeinfo.diaspora.software/ns/schema/2.1',
 	href: config.url + nodeinfo2_1path
-}, */{
-	rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
+}, {
+	rel: 'https://nodeinfo.diaspora.software/ns/schema/2.0',
 	href: config.url + nodeinfo2_0path,
 }];
 
@@ -96,6 +96,7 @@ router.get(nodeinfo2_1path, async ctx => {
 router.get(nodeinfo2_0path, async ctx => {
 	const base = await cache.fetch(null, () => nodeinfo2());
 
+	// @ts-ignore
 	delete base.software.repository;
 
 	ctx.body = { version: '2.0', ...base };

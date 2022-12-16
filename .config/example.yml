@@ -93,6 +93,9 @@ id: 'aid'
 #   ┌─────────────────────┐
 #───┘ Other configuration └─────────────────────────────────────
 
+# Max note length, should be < 8000.
+#maxNoteLength: 3000
+
 # Whether disable HSTS
 #disableHsts: true
 

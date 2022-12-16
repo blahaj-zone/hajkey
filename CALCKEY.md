@@ -3,31 +3,33 @@
 ## Planned
 
 - Stucture
-	- Sonic search support
-	- DragonflyDB support
-	- Use Cassandra for storing notes
-	- Rewrite backend in Rust and Axum
+  - [Sonic](https://crates.io/crates/sonic-server) support as an ElasticSearch alternative
+  - [DragonflyDB](https://dragonflydb.io/) support as a Redis alternative
+  - Optionally use [ScyllaDB](https://www.scylladb.com/open-source-nosql-database/) for storing notes
+  - Rewrite backend in Rust and [Axum](https://github.com/tokio-rs/axum)
 - Function
-	- Federate with note edits
-	- User "choices" (recommended users) like Mastodon and Soapbox
-	- Join Reason system like Mastodon/Pleroma
-	- Option to publicize instance blocks
-	- Backfill remote users
-	- Build flag to remove NSFW/AI stuff
-	- Timeline filters
-	- Filter notifications by user
-	- Non-nyaify cat mode
-	- Exclude self from antenna
+  - Federate with note edits
+  - Admin customizable max note length (100-8000)
+  - User "choices" (recommended users) like Mastodon and Soapbox
+  - Join Reason system like Mastodon/Pleroma
+  - Option to publicize instance blocks
+  - Backfill remote users
+  - Build flag to remove NSFW/AI stuff
+  - Timeline filters
+  - Filter notifications by user
+  - Non-nyaify cat mode
+  - Exclude self from antenna
 - Form
-	- MFM button
-	- Personal notes for all accounts
-	- Fully revamp non-logged-in screen
-	- Classic mode make instance icon bring up new context menu
-	- [Rat mode?](https://stop.voring.me/notes/933fx97bmd)
+  - MFM button
+  - Personal notes for all accounts
+  - Fully revamp non-logged-in screen
+  - Classic mode make instance icon bring up new context menu
+  - [Rat mode?](https://stop.voring.me/notes/933fx97bmd)
 
 ## Work in progress
 
-- Account migration
+- Weblate project
+- Customizable max note length
 - Link verification
 - Better Messaging UI
 - Better API Documentation
@@ -43,6 +45,7 @@
   - Fix Dockerfile @hanna
   - Upgrade packages with security vunrabilities
 - Saner defaults
+- Fediverse account migration
 - Recommended instances timeline
 - OCR image captioning
 - Improve mobile UX
@@ -96,6 +99,7 @@
 - Undo renote button inside original note
 - Custom locales
 - Obliteration of Ai-chan
+- Switch to [Calckey.js](https://codeberg.org/thatonecalculator/calckey.js)
 - MissV: [fix Misskey Forkbomb](https://code.vtopia.live/Vtopia/MissV/commit/40b23c070bd4adbb3188c73546c6c625138fb3c1)
 - [Make showing ads optional](https://github.com/misskey-dev/misskey/pull/8996)
 - [Tapping avatar in mobile opens account modal](https://github.com/misskey-dev/misskey/pull/9056)

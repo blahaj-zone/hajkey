@@ -1,13 +1,13 @@
 import { URL } from 'node:url';
-import webFinger from './webfinger.js';
-import config from '@/config/index.js';
-import { createPerson, updatePerson } from './activitypub/models/person.js';
-import { remoteLogger } from './logger.js';
 import chalk from 'chalk';
-import { User, IRemoteUser } from '@/models/entities/user.js';
+import { IsNull } from 'typeorm';
+import config from '@/config/index.js';
+import type { User, IRemoteUser } from '@/models/entities/user.js';
 import { Users } from '@/models/index.js';
 import { toPuny } from '@/misc/convert-host.js';
-import { IsNull } from 'typeorm';
+import webFinger from './webfinger.js';
+import { createPerson, updatePerson } from './activitypub/models/person.js';
+import { remoteLogger } from './logger.js';
 
 const logger = remoteLogger.createSubLogger('resolve-user');
 
@@ -49,9 +49,9 @@ export async function resolveUser(username: string, host: string | null): Promis
 		return await createPerson(self.href);
 	}
 
-	// ユーザー情報が古い場合は、WebFilgerからやりなおして返す
+	// If user information is out of date, return it by starting over from WebFilger
 	if (user.lastFetchedAt == null || Date.now() - user.lastFetchedAt.getTime() > 1000 * 60 * 60 * 24) {
-		// 繋がらないインスタンスに何回も試行するのを防ぐ, 後続の同様処理の連続試行を防ぐ ため 試行前にも更新する
+		// Prevent multiple attempts to connect to unconnected instances, update before each attempt to prevent subsequent similar attempts
 		await Users.update(user.id, {
 			lastFetchedAt: new Date(),
 		});
@@ -67,7 +67,7 @@ export async function resolveUser(username: string, host: string | null): Promis
 			// validate uri
 			const uri = new URL(self.href);
 			if (uri.hostname !== host) {
-				throw new Error(`Invalid uri`);
+				throw new Error('Invalid uri');
 			}
 
 			await Users.update({

@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { markRaw, onMounted, onUnmounted, watch } from 'vue';
-import * as Acct from 'misskey-js/built/acct';
+import * as Acct from 'calckey-js/built/acct';
 import { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import MkButton from '@/components/MkButton.vue';
@@ -130,11 +130,11 @@ function onRead(ids): void {
 function startMenu(ev) {
 	os.popupMenu([{
 		text: i18n.ts.messagingWithUser,
-		icon: 'fas fa-user',
+		icon: 'ph-user-bold ph-lg',
 		action: () => { startUser(); },
 	}, {
 		text: i18n.ts.messagingWithGroup,
-		icon: 'fas fa-users',
+		icon: 'ph-users-three-bold ph-lg',
 		action: () => { startGroup(); },
 	}], ev.currentTarget ?? ev.target);
 }

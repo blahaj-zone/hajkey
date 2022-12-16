@@ -107,7 +107,7 @@
 import { computed, inject, onMounted, onUnmounted, reactive, ref } from 'vue';
 import * as mfm from 'mfm-js';
 import type { Ref } from 'vue';
-import type * as misskey from 'misskey-js';
+import type * as misskey from 'calckey-js';
 import MkNoteSub from '@/components/MkNoteSub.vue';
 import XNoteHeader from '@/components/MkNoteHeader.vue';
 import XNoteSimple from '@/components/MkNoteSimple.vue';

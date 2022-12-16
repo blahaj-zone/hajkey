@@ -75,7 +75,7 @@ export class Hpml {
 			SEED: opts.randomSeed ? opts.randomSeed : '',
 			YMD: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
 			AISCRIPT_DISABLED: !this.opts.enableAiScript,
-			NULL: null
+			NULL: null,
 		};
 
 		this.eval();

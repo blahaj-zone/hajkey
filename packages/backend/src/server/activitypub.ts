@@ -38,6 +38,7 @@ function inbox(ctx: Router.RouterContext) {
 		return;
 	}
 
+	// @ts-ignore
 	processInbox(ctx.request.body, signature);
 
 	ctx.status = 202;
@@ -86,7 +87,7 @@ router.get('/notes/:note', async (ctx, next) => {
 		return;
 	}
 
-	// リモートだったらリダイレクト
+	// redirect if remote
 	if (note.userHost != null) {
 		if (note.uri == null || isSelfHost(note.userHost)) {
 			ctx.status = 500;

@@ -1,9 +1,9 @@
 import { db } from '@/db/postgre.js';
 import { Page } from '@/models/entities/page.js';
-import { Packed } from '@/misc/schema.js';
+import type { Packed } from '@/misc/schema.js';
 import { awaitAll } from '@/prelude/await-all.js';
-import { DriveFile } from '@/models/entities/drive-file.js';
-import { User } from '@/models/entities/user.js';
+import type { DriveFile } from '@/models/entities/drive-file.js';
+import type { User } from '@/models/entities/user.js';
 import { Users, DriveFiles, PageLikes } from '../index.js';
 
 export const PageRepository = db.getRepository(Page).extend({

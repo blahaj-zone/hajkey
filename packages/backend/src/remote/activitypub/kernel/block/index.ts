@@ -5,7 +5,7 @@ import DbResolver from '../../db-resolver.js';
 import { Users } from '@/models/index.js';
 
 export default async (actor: CacheableRemoteUser, activity: IBlock): Promise<string> => {
-	// ※ activity.objectにブロック対象があり、それは存在するローカルユーザーのはず
+	// ※ There is a block target in activity.object, which should be a local user that exists.
 
 	const dbResolver = new DbResolver();
 	const blockee = await dbResolver.getUserFromApId(activity.object);
@@ -15,7 +15,7 @@ export default async (actor: CacheableRemoteUser, activity: IBlock): Promise<str
 	}
 
 	if (blockee.host != null) {
-		return `skip: ブロックしようとしているユーザーはローカルユーザーではありません`;
+		return `skip: The user you are trying to block is not a local user`;
 	}
 
 	await block(await Users.findOneByOrFail({ id: actor.id }), await Users.findOneByOrFail({ id: blockee.id }));

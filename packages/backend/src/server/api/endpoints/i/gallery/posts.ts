@@ -1,5 +1,5 @@
-import define from '../../../define.js';
 import { GalleryPosts } from '@/models/index.js';
+import define from '../../../define.js';
 import { makePaginationQuery } from '../../../common/make-pagination-query.js';
 
 export const meta = {
@@ -33,7 +33,7 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const query = makePaginationQuery(GalleryPosts.createQueryBuilder('post'), ps.sinceId, ps.untilId)
-		.andWhere(`post.userId = :meId`, { meId: user.id });
+		.andWhere('post.userId = :meId', { meId: user.id });
 
 	const posts = await query
 		.take(ps.limit)

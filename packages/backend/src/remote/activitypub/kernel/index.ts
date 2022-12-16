@@ -1,5 +1,26 @@
-import { IObject, isCreate, isDelete, isUpdate, isRead, isFollow, isAccept, isReject, isAdd, isRemove, isAnnounce, isLike, isUndo, isBlock, isCollectionOrOrderedCollection, isCollection, isFlag } from '../type.js';
-import { CacheableRemoteUser } from '@/models/entities/user.js';
+import type { CacheableRemoteUser } from '@/models/entities/user.js';
+import { toArray } from '@/prelude/array.js';
+import {
+	isCreate,
+	isDelete,
+	isUpdate,
+	isRead,
+	isFollow,
+	isAccept,
+	isReject,
+	isAdd,
+	isRemove,
+	isAnnounce,
+	isLike,
+	isUndo,
+	isBlock,
+	isCollectionOrOrderedCollection,
+	isCollection,
+	isFlag,
+	isMove,
+} from '../type.js';
+import { apLogger } from '../logger.js';
+import Resolver from '../resolver.js';
 import create from './create/index.js';
 import performDeleteActivity from './delete/index.js';
 import performUpdateActivity from './update/index.js';
@@ -14,10 +35,8 @@ import add from './add/index.js';
 import remove from './remove/index.js';
 import block from './block/index.js';
 import flag from './flag/index.js';
-import { apLogger } from '../logger.js';
-import Resolver from '../resolver.js';
-import { toArray } from '@/prelude/array.js';
-import { Users } from '@/models/index.js';
+import move from './move/index.js';
+import type { IObject } from '../type.js';
 
 export async function performActivity(actor: CacheableRemoteUser, activity: IObject) {
 	if (isCollectionOrOrderedCollection(activity)) {
@@ -68,6 +87,8 @@ async function performOneActivity(actor: CacheableRemoteUser, activity: IObject)
 		await block(actor, activity);
 	} else if (isFlag(activity)) {
 		await flag(actor, activity);
+	} else if (isMove(activity)) {
+		await move(actor,activity);
 	} else {
 		apLogger.warn(`unrecognized activity type: ${(activity as any).type}`);
 	}

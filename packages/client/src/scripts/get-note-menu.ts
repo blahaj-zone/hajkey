@@ -1,5 +1,5 @@
 import { defineAsyncComponent, Ref, inject } from 'vue';
-import * as misskey from 'misskey-js';
+import * as misskey from 'calckey-js';
 import { pleaseLogin } from './please-login';
 import { $i } from '@/account';
 import { i18n } from '@/i18n';

@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import * as Misskey from 'misskey-js';
+import * as Misskey from 'calckey-js';
 import XDrive from '@/components/MkDrive.vue';
 import XModalWindow from '@/components/MkModalWindow.vue';
 import number from '@/filters/number';

@@ -34,8 +34,9 @@
 				<FormSection>
 					<template #label>{{ i18n.ts._aboutMisskey.contributors }}</template>
 					<div class="_formLinks">
-						<FormLink to="/@t1c@i.calckey.cloud"><Mfm :text="'$[sparkle @t1c@i.calckey.cloud] (Main fork developer)'"/></FormLink>
-						<FormLink to="/@syuilo@misskey.io"><Mfm :text="'@syuilo@misskey.io (Misskey developer)'"/></FormLink>
+						<FormLink to="/@t1c@i.calckey.cloud"><Mfm :text="'$[sparkle @t1c@i.calckey.cloud] (Main developer)'"/></FormLink>
+						<FormLink to="/@cleo@tech.lgbt"><Mfm :text="'@cleo@tech.lgbt (Maintainer)'"/></FormLink>
+						<FormLink to="/@syuilo@misskey.io"><Mfm :text="'@syuilo@misskey.io (Original Misskey developer)'"/></FormLink>
 						<FormLink to="https://www.youtube.com/c/Henkiwashere" external>Henki (error images artist)</FormLink>
 					</div>
 					<template #caption><MkLink url="https://codeberg.org/thatonecalculator/calckey/activity">{{ i18n.ts._aboutMisskey.allContributors }}</MkLink></template>

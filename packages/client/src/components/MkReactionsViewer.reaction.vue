@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
-import * as misskey from 'misskey-js';
+import * as misskey from 'calckey-js';
 import XDetails from '@/components/MkReactionsViewer.details.vue';
 import XReactionIcon from '@/components/MkReactionIcon.vue';
 import * as os from '@/os';

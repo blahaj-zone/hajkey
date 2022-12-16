@@ -8,7 +8,7 @@ COPY . ./
 
 # Install Dependencies
 RUN apk update
-RUN apk add git ffmpeg tini alpine-sdk
+RUN apk add git ffmpeg tini alpine-sdk python3
 
 # Configure corepack and yarn
 RUN corepack enable

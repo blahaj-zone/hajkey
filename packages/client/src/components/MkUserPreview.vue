@@ -35,8 +35,8 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import * as Acct from 'misskey-js/built/acct';
-import type * as misskey from 'misskey-js';
+import * as Acct from 'calckey-js/built/acct';
+import type * as misskey from 'calckey-js';
 import MkFollowButton from '@/components/MkFollowButton.vue';
 import { userPage } from '@/filters/user';
 import * as os from '@/os';

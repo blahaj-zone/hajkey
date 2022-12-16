@@ -1,0 +1,27 @@
+pipeline:
+  migrate:
+    image: node:19.2.0
+    commands:
+      - cp .config/ci.yml .config/default.yml
+      - corepack enable
+      - yarn install
+      - yarn build
+      - yarn migrate
+    environment:
+      - YARN_ENABLE_IMMUTABLE_INSTALLS=false
+
+services:
+  database:
+    image: postgres:${DATABASE}
+    environment:
+      - POSTGRES_PASSWORD=test
+  redis:
+    image: redis
+
+matrix:
+  DATABASE:
+    - 12
+    - latest
+
+branches:
+  include: [ master, develop, feature/* ]

@@ -91,7 +91,7 @@ export function applyTheme(theme: Theme, persist = true) {
 		localStorage.setItem('colorSchema', colorSchema);
 	}
 
-	// 色計算など再度行えるようにクライアント全体に通知
+	// Site-wide notification that the theme has changed
 	globalEvents.emit('themeChanged');
 }
 

@@ -121,7 +121,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	serverDisconnectedBehavior: {
 		where: 'device',
-		default: 'quiet' as 'nothing' | 'quiet' | 'reload' | 'dialog',
+		default: 'nothing' as 'nothing' | 'quiet' | 'reload' | 'dialog',
 	},
 	seperateRenoteQuote: {
 		where: 'device',

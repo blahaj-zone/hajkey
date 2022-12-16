@@ -41,8 +41,7 @@
 		</div>
 		<div v-if="instances" class="federation">
 			<MarqueeText :duration="40">
-				<MkA v-for="instance in instances" :key="instance.id" :class="$style.federationInstance" :to="`/instance-info/${instance.host}`" behavior="window">
-					<!--<MkInstanceCardMini :instance="instance"/>-->
+				<MkA v-for="instance in instances" :key="instance.id" :class="$style.federationInstance" @click="signup()">
 					<img v-if="instance.iconUrl" class="icon" :src="instance.iconUrl" alt=""/>
 					<span class="name _monospace">{{ instance.host }}</span>
 				</MkA>

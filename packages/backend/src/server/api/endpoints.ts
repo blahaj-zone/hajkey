@@ -327,6 +327,10 @@ import * as ep___admin_driveCapOverride from './endpoints/admin/drive-capacity-o
 import * as ep___instance_info from './endpoints/instance-info.js';
 import * as ep___custom_emojis from './endpoints/custom-emojis.js';
 
+//Calckey Move
+import * as ep___i_move from './endpoints/i/move.js';
+import * as ep___i_known_as from './endpoints/i/known-as.js';
+
 const eps = [
 	['admin/meta', ep___admin_meta],
 	['admin/abuse-user-reports', ep___admin_abuseUserReports],
@@ -491,6 +495,8 @@ const eps = [
 	['hashtags/trend', ep___hashtags_trend],
 	['hashtags/users', ep___hashtags_users],
 	['i', ep___i],
+	['i/known-as', ep___i_known_as],
+	['i/move', ep___i_move],
 	['i/2fa/done', ep___i_2fa_done],
 	['i/2fa/key-done', ep___i_2fa_keyDone],
 	['i/2fa/password-less', ep___i_2fa_passwordLess],

@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { } from 'vue';
 import * as mfm from 'mfm-js';
-import type * as Misskey from 'misskey-js';
+import type * as Misskey from 'calckey-js';
 import XMediaList from '@/components/MkMediaList.vue';
 import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
 import MkUrlPreview from '@/components/MkUrlPreview.vue';

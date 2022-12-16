@@ -1,0 +1,17 @@
+pipeline:
+  build:
+    image: node:${NODE_VERSION}
+    commands:
+      - corepack enable
+      - yarn install
+      - yarn build
+    environment:
+      - YARN_ENABLE_IMMUTABLE_INSTALLS=false
+
+matrix:
+  NODE_VERSION:
+    - 18.12.1
+    - 19.2.0
+
+branches:
+  include: [ master, develop, feature/* ]

@@ -9,7 +9,7 @@
 		<template #label>{{ i18n.ts.twoStepAuthentication }}</template>
 		<X2fa/>
 	</FormSection>
-	
+
 	<FormSection>
 		<template #label>{{ i18n.ts.signinHistory }}</template>
 		<MkPagination :pagination="pagination" disable-auto-load>
@@ -52,7 +52,7 @@ const pagination = {
 	limit: 5,
 };
 
-async function change() {
+async function change(): Promise<void> {
 	const { canceled: canceled1, result: currentPassword } = await os.inputText({
 		title: i18n.ts.currentPassword,
 		type: 'password',
@@ -78,14 +78,14 @@ async function change() {
 		});
 		return;
 	}
-	
+
 	os.apiWithDialog('i/change-password', {
 		currentPassword,
 		newPassword,
 	});
 }
 
-function regenerateToken() {
+function regenerateToken(): void {
 	os.inputText({
 		title: i18n.ts.password,
 		type: 'password',

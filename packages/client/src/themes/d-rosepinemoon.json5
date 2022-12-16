@@ -56,6 +56,8 @@
 		fgOnAccent: '#393552',
 		infoWarnBg: '#393552',
 		infoWarnFg: '#f6c177',
+		infoRemoteBg: 'rgba(57, 53, 82, .2)',
+		infoRemoteFg: 'rgba(150, 150, 150, 0.4)',
 		navHoverFg: ':lighten<17<@fg',
 		dateLabelFg: '@fg',
 		inputBorder: 'rgba(255, 255, 255, 0.1)',

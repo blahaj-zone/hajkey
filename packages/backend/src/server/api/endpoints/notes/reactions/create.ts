@@ -28,6 +28,11 @@ export const meta = {
 			code: 'YOU_HAVE_BEEN_BLOCKED',
 			id: '20ef5475-9f38-4e4c-bd33-de6d979498ec',
 		},
+		accountLocked: {
+			message: 'You migrated. Your account is now locked.',
+			code: 'ACCOUNT_LOCKED',
+			id: 'd390d7e1-8a5e-46ed-b625-06271cafd3d3',
+		},
 	},
 } as const;
 
@@ -42,6 +47,7 @@ export const paramDef = {
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
+	if(user.movedToUri != null) throw new ApiError(meta.errors.accountLocked);
 	const note = await getNote(ps.noteId, user).catch(err => {
 		if (err.id === '9725d0ce-ba28-4dde-95a7-2cbb2c15de24') throw new ApiError(meta.errors.noSuchNote);
 		throw err;

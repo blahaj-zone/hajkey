@@ -6,7 +6,7 @@ import { fetchMeta } from '@/misc/fetch-meta.js';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: true,
+	requireCredential: false,
 	requireCredentialPrivateMode: true,
 
 	res: {

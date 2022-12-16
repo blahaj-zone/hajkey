@@ -1,4 +1,4 @@
-<div align="center">
+<a href="https://ci.codeberg.org/thatonecalculator/calckey"><img src="https://ci.codeberg.org/api/badges/thatonecalculator/calckey/status.svg" align="left" height="20px" alt="Calc (the Calckey mascot) smoking a fat dart"/></a><br/><div align="center">
 <a href="https://i.calckey.cloud/">
 	<img src="./.github/title_float.svg" alt="Calckey logo" style="border-radius:50%" width="400"/>
 </a>
@@ -11,6 +11,7 @@
 
 <img src="https://pool.jortage.com/voringme/misskey/e7cd2a17-8b23-4e1e-b5cf-709480c623e2.png" align="right" height="320px" alt="Calc (the Calckey mascot) smoking a fat dart"/>
 
+
 # ✨ About Calckey
 
 - Calckey is based off of Misskey, a powerful microblogging server on ActivityPub with features such as emoji reactions, a customizable web UI, rich chatting, and much more!
@@ -19,6 +20,7 @@
 - Notable differences:
   - Improved UI/UX (especially on mobile)
   - Improved notifications
+  - Fediverse account migration
   - Improved instance security
   - Improved accessibility
   - Recommended Instances timeline
@@ -97,7 +99,7 @@ psql postgres -c "create database calckey with encoding = 'UTF8';"
 ## 💅 Customize
 
 - To add custom CSS for all users, edit `./custom/assets/instance.css`.
-- To add static assets (such as images for the splash screen), place them in the `./custom/assets/` directory. They'll then be avaliable on `https://yourinstance.tld/static-assets/filename.ext`.
+- To add static assets (such as images for the splash screen), place them in the `./custom/assets/` directory. They'll then be available on `https://yourinstance.tld/static-assets/filename.ext`.
 - To add custom locales, place them in the `./custom/locales/` directory. If you name your custom locale the same as an existing locale, it will overwrite it. If you give it a unique name, it will be added to the list. Also make sure that the first part of the filename matches the locale you're basing it on. (Example: `en-FOO.yml`)
 - To update custom assets without rebuilding, just run `yarn run gulp`.
 
@@ -134,24 +136,13 @@ cp -r ../misskey/files . # if you don't use object storage
 ```sh
 # git pull
 yarn install
-NODE_ENV=production yarn run build && yarn run migrate
+NODE_ENV=production yarn run rebuild && yarn run migrate
 pm2 start "NODE_ENV=production yarn start" --name Calckey
 ```
 
-### 🐋 Prebuilt Docker image
+### 🐋 Docker
 
-```sh
-docker pull thatonecalculator/calckey
-docker up -d
-```
-
-### 🐳 Docker Compose
-
-```sh
-docker-compose build
-docker-compose run --rm web yarn run init
-docker-compose up -d
-```
+[How to run Calckey with Docker](./docker-README.md).
 
 ## 😉 Tips & Tricks
 

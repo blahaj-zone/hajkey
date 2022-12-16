@@ -1,6 +1,6 @@
 {
 	"name": "calckey",
-	"version": "12.119.0-calc.19-b14-kt.3",
+	"version": "13.0.0-rc1-kt.4",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
@@ -14,11 +14,13 @@
 	],
 	"private": true,
 	"scripts": {
+		"rebuild": "yarn clean && yarn build",
 		"build": "yarn workspaces foreach run build && yarn run gulp",
 		"start": "yarn workspace backend run start",
 		"start:test": "yarn workspace backend run start:test",
 		"init": "yarn migrate",
 		"migrate": "yarn workspace backend run migrate",
+		"revertmigration": "yarn workspace backend run revertmigration",
 		"migrateandstart": "yarn migrate && yarn start",
 		"gulp": "gulp build",
 		"watch": "yarn dev",
@@ -42,6 +44,7 @@
 		"@bull-board/api": "^4.6.4",
 		"@bull-board/ui": "^4.6.4",
 		"@tensorflow/tfjs": "^3.21.0",
+		"calckey-js": "^0.0.17",
 		"eslint": "^8.28.0",
 		"execa": "5.1.1",
 		"gulp": "4.0.2",

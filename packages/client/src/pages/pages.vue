@@ -18,17 +18,19 @@
 				</div>
 			</swiper-slide>
 			<swiper-slide>
-				<div class="rknalgpo my">
-					<MkButton class="new" @click="create()"><i class="ph-plus-bold ph-lg"></i></MkButton>
-					<MkPagination v-slot="{items}" :pagination="myPagesPagination">
-						<MkPagePreview v-for="page in items" :key="page.id" class="ckltabjg" :page="page"/>
+				<div class="rknalgpo liked">
+					<MkPagination v-slot="{items}" :pagination="likedPagesPagination">
+						<MkPagePreview v-for="like in items" :key="like.page.id" class="ckltabjg" :page="like.page"/>
 					</MkPagination>
 				</div>
 			</swiper-slide>
 			<swiper-slide>
-				<div class="rknalgpo">
-					<MkPagination v-slot="{items}" :pagination="likedPagesPagination">
-						<MkPagePreview v-for="like in items" :key="like.page.id" class="ckltabjg" :page="like.page"/>
+				<div class="rknalgpo my">
+					<div class="buttoncontainer">
+						<MkButton class="new primary" @click="create()"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts._pages.newPage }}</MkButton>
+					</div>
+					<MkPagination v-slot="{items}" :pagination="myPagesPagination">
+						<MkPagePreview v-for="page in items" :key="page.id" class="ckltabjg" :page="page"/>
 					</MkPagination>
 				</div>
 			</swiper-slide>
@@ -55,20 +57,20 @@ import 'swiper/scss/virtual';
 const router = useRouter();
 
 let tab = $ref('featured');
-const tabs = ['featured', 'my', 'liked'];
+const tabs = ['featured', 'liked', 'my'];
 watch($$(tab), () => (syncSlide(tabs.indexOf(tab))));
 
 const featuredPagesPagination = {
 	endpoint: 'pages/featured' as const,
-	noPaging: true,
-};
-const myPagesPagination = {
-	endpoint: 'i/pages' as const,
-	limit: 5,
+	limit: 10,
 };
 const likedPagesPagination = {
 	endpoint: 'i/page-likes' as const,
-	limit: 5,
+	limit: 10,
+};
+const myPagesPagination = {
+	endpoint: 'i/pages' as const,
+	limit: 10,
 };
 
 function create() {
@@ -86,18 +88,18 @@ const headerTabs = $computed(() => [{
 	title: i18n.ts._pages.featured,
 	icon: 'ph-fire-simple-bold ph-lg',
 }, {
-	key: 'my',
-	title: i18n.ts._pages.my,
-	icon: 'ph-crown-simple-bold ph-lg',
-}, {
 	key: 'liked',
 	title: i18n.ts._pages.liked,
 	icon: 'ph-heart-bold ph-lg',
+}, {
+	key: 'my',
+	title: i18n.ts._pages.my,
+	icon: 'ph-crown-simple-bold ph-lg',
 }]);
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.pages,
-	icon: 'ph-sticker-bold ph-lg',
+	icon: 'ph-file-text-bold ph-lg',
 })));
 
 let swiperRef = null;
@@ -122,6 +124,13 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .rknalgpo {
+
+	> .buttoncontainer {
+		display: grid;
+		justify-content: center;
+		margin-bottom: 1rem;
+	}
+
 	&.my .ckltabjg:first-child {
 		margin-top: 16px;
 	}

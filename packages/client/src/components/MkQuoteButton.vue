@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type { Note } from 'misskey-js/built/entities';
+import type { Note } from 'calckey-js/built/entities';
 import { pleaseLogin } from '@/scripts/please-login';
 import * as os from '@/os';
 import { $i } from '@/account';

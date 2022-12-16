@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch } from 'vue';
-import * as misskey from 'misskey-js';
+import * as misskey from 'calckey-js';
 import { getStaticImageUrl } from '@/scripts/get-static-image-url';
 import { extractAvgColorFromBlurhash } from '@/scripts/extract-avg-color-from-blurhash';
 import { acct, userPage } from '@/filters/user';
@@ -110,7 +110,7 @@ watch(() => props.user.avatarBlurhash, () => {
 
 	&.cat {
 		&:before, &:after {
-			background: #df548f;
+			background: #ebbcba;
 			border: solid 4px currentColor;
 			box-sizing: border-box;
 			content: '';

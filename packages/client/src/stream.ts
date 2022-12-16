@@ -1,4 +1,4 @@
-import * as Misskey from 'misskey-js';
+import * as Misskey from 'calckey-js';
 import { markRaw } from 'vue';
 import { $i } from '@/account';
 import { url } from '@/config';

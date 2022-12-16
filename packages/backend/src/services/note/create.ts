@@ -127,8 +127,8 @@ type Option = {
 };
 
 export default async (user: { id: User['id']; username: User['username']; host: User['host']; isSilenced: User['isSilenced']; createdAt: User['createdAt']; }, data: Option, silent = false) => new Promise<Note>(async (res, rej) => {
-	// チャンネル外にリプライしたら対象のスコープに合わせる
-	// (クライアントサイドでやっても良い処理だと思うけどとりあえずサーバーサイドで)
+	// If you reply outside the channel, match the scope of the target.
+	// TODO (I think it's a process that could be done on the client side, but it's server side for now.)
 	if (data.reply && data.channel && data.reply.channelId !== data.channel.id) {
 		if (data.reply.channelId) {
 			data.channel = await Channels.findOneBy({ id: data.reply.channelId });
@@ -137,8 +137,8 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 		}
 	}
 
-	// チャンネル内にリプライしたら対象のスコープに合わせる
-	// (クライアントサイドでやっても良い処理だと思うけどとりあえずサーバーサイドで)
+	// When you reply in a channel, match the scope of the target
+	// TODO (I think it's a process that could be done on the client side, but it's server side for now.)
 	if (data.reply && (data.channel == null) && data.reply.channelId) {
 		data.channel = await Channels.findOneBy({ id: data.reply.channelId });
 	}
@@ -150,37 +150,37 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 	if (data.channel != null) data.visibleUsers = [];
 	if (data.channel != null) data.localOnly = true;
 
-	// サイレンス
+	// enforce silent clients on server
 	if (user.isSilenced && data.visibility === 'public' && data.channel == null) {
 		data.visibility = 'home';
 	}
 
-	// Renote対象が「ホームまたは全体」以外の公開範囲ならreject
+	// Reject if the target of the renote is a public range other than "Home or Entire".
 	if (data.renote && data.renote.visibility !== 'public' && data.renote.visibility !== 'home' && data.renote.userId !== user.id) {
 		return rej('Renote target is not public or home');
 	}
 
-	// Renote対象がpublicではないならhomeにする
+	// If the target of the renote is not public, make it home.
 	if (data.renote && data.renote.visibility !== 'public' && data.visibility === 'public') {
 		data.visibility = 'home';
 	}
 
-	// Renote対象がfollowersならfollowersにする
+	// If the target of Renote is followers, make it followers.
 	if (data.renote && data.renote.visibility === 'followers') {
 		data.visibility = 'followers';
 	}
 
-	// 返信対象がpublicではないならhomeにする
+	// If the reply target is not public, make it home.
 	if (data.reply && data.reply.visibility !== 'public' && data.visibility === 'public') {
 		data.visibility = 'home';
 	}
 
-	// ローカルのみをRenoteしたらローカルのみにする
+	// Renote local only if you Renote local only.
 	if (data.renote && data.renote.localOnly && data.channel == null) {
 		data.localOnly = true;
 	}
 
-	// ローカルのみにリプライしたらローカルのみにする
+	// If you reply to local only, make it local only.
 	if (data.reply && data.reply.localOnly && data.channel == null) {
 		data.localOnly = true;
 	}

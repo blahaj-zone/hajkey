@@ -53,7 +53,7 @@
 
 <script lang="ts" setup>
 import { nextTick, onMounted } from 'vue';
-import * as misskey from 'misskey-js';
+import * as misskey from 'calckey-js';
 import MkInput from '@/components/form/input.vue';
 import FormSplit from '@/components/form/split.vue';
 import XModalWindow from '@/components/MkModalWindow.vue';

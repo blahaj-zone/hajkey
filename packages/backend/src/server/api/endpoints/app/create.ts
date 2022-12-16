@@ -31,6 +31,10 @@ export const paramDef = {
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
+	if(user && user.movedToUri != null) return await Apps.pack("", null, {
+		detail: true,
+		includeSecret: true,
+	});;
 	// Generate secret
 	const secret = secureRndstr(32, true);
 

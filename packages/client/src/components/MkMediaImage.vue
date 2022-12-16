@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { watch } from 'vue';
-import * as misskey from 'misskey-js';
+import * as misskey from 'calckey-js';
 import { getStaticImageUrl } from '@/scripts/get-static-image-url';
 import ImgWithBlurhash from '@/components/MkImgWithBlurhash.vue';
 import { defaultStore } from '@/store';

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Note } from 'misskey-js/built/entities';
+import type { Note } from 'calckey-js/built/entities';
 import Ripple from '@/components/MkRipple.vue';
 import { pleaseLogin } from '@/scripts/please-login';
 import * as os from '@/os';

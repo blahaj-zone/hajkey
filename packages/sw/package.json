@@ -7,9 +7,9 @@
 		"lint": "eslint --quiet src/**/*.{ts}"
 	},
 	"dependencies": {
+		"calckey-js": "^0.0.17",
 		"esbuild": "^0.15.14",
-		"idb-keyval": "^6.2.0",
-		"misskey-js": "0.0.14"
+		"idb-keyval": "^6.2.0"
 	},
 	"devDependencies": {
 		"eslint": "^8.28.0"

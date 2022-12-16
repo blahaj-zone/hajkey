@@ -7,7 +7,6 @@ import Router from '@koa/router';
 import multer from '@koa/multer';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
-
 import { Instances, AccessTokens, Users } from '@/models/index.js';
 import config from '@/config/index.js';
 import endpoints from './endpoints.js';
@@ -34,7 +33,10 @@ app.use(async (ctx, next) => {
 
 app.use(bodyParser({
 	// リクエストが multipart/form-data でない限りはJSONだと見なす
-	detectJSON: ctx => !ctx.is('multipart/form-data'),
+	detectJSON: ctx => !(
+		ctx.is('multipart/form-data') ||
+		ctx.is('application/x-www-form-urlencoded')
+	)
 }));
 
 // Init multer instance

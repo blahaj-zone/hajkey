@@ -134,6 +134,11 @@ const menuDef = computed(() => [{
 }, {
 	title: i18n.ts.otherSettings,
 	items: [{
+		icon: 'ph-airplane-takeoff-bold ph-lg',
+		text: i18n.ts.migration,
+		to: '/settings/migration',
+		active: currentPage?.route.name === 'migration',
+	}, {
 		icon: 'ph-package-bold ph-lg',
 		text: i18n.ts.importAndExport,
 		to: '/settings/import-export',

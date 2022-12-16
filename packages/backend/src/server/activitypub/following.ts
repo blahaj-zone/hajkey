@@ -61,7 +61,7 @@ export default async (ctx: Router.RouterContext) => {
 			followerId: user.id,
 		} as FindOptionsWhere<Following>;
 
-		// カーソルが指定されている場合
+		// If a cursor is specified
 		if (cursor) {
 			query.id = LessThan(cursor);
 		}
@@ -73,7 +73,7 @@ export default async (ctx: Router.RouterContext) => {
 			order: { id: -1 },
 		});
 
-		// 「次のページ」があるかどうか
+		// Whether there is a "next page" or not
 		const inStock = followings.length === limit + 1;
 		if (inStock) followings.pop();
 

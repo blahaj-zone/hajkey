@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import type * as misskey from 'misskey-js';
+import type * as misskey from 'calckey-js';
 import Ripple from '@/components/MkRipple.vue';
 import XDetails from '@/components/MkUsersTooltip.vue';
 import { pleaseLogin } from '@/scripts/please-login';

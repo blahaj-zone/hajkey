@@ -1,4 +1,6 @@
-export const MAX_NOTE_TEXT_LENGTH = 3000;
+import config from '@/config/index.js';
+
+export const MAX_NOTE_TEXT_LENGTH = config.maxNoteLength != null ? config.maxNoteLength : 3000;
 
 export const SECOND = 1000;
 export const SEC = 1000;

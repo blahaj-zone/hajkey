@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, computed, watch } from 'vue';
 import calcAge from 's-age';
-import * as Acct from 'misskey-js/built/acct';
-import type * as misskey from 'misskey-js';
+import * as Acct from 'calckey-js/built/acct';
+import type * as misskey from 'calckey-js';
 import { getScrollPosition } from '@/scripts/scroll';
 import number from '@/filters/number';
 import { userPage, acct as getAcct } from '@/filters/user';
@@ -112,7 +112,7 @@ definePageMetadata(
 	computed(() =>
 		user
 			? {
-				icon: 'fas fa-user',
+				icon: 'ph-user-bold ph-lg',
 				title: user.name
 					? `${user.name} (@${user.username})`
 					: `@${user.username}`,

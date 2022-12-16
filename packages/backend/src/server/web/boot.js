@@ -22,36 +22,31 @@
 		renderError('SOMETHING_HAPPENED_IN_PROMISE', e);
 	};
 
-	const v = localStorage.getItem('v') || VERSION;
-
 	//#region Detect language & fetch translations
-	const localeVersion = localStorage.getItem('localeVersion');
-	const localeOutdated = (localeVersion == null || localeVersion !== v);
-
-	if (!localStorage.hasOwnProperty('locale') || localeOutdated) {
-		const supportedLangs = LANGS;
-		let lang = localStorage.getItem('lang');
-		if (lang == null || !supportedLangs.includes(lang)) {
-			if (supportedLangs.includes(navigator.language)) {
-				lang = navigator.language;
-			} else {
-				lang = supportedLangs.find(x => x.split('-')[0] === navigator.language);
-
-				// Fallback
-				if (lang == null) lang = 'en-US';
-			}
-		}
-
-		const res = await fetch(`/assets/locales/${lang}.${v}.json`);
-		if (res.status === 200) {
-			localStorage.setItem('lang', lang);
-			localStorage.setItem('locale', await res.text());
-			localStorage.setItem('localeVersion', v);
+	const v = localStorage.getItem('v') || VERSION;
+	
+	const supportedLangs = LANGS;
+	let lang = localStorage.getItem('lang');
+	if (lang == null || !supportedLangs.includes(lang)) {
+		if (supportedLangs.includes(navigator.language)) {
+			lang = navigator.language;
 		} else {
-			await checkUpdate();
-			renderError('LOCALE_FETCH');
-			return;
+			lang = supportedLangs.find(x => x.split('-')[0] === navigator.language);
+
+			// Fallback
+			if (lang == null) lang = 'en-US';
 		}
+	}
+
+	const res = await fetch(`/assets/locales/${lang}.${v}.json`);
+	if (res.status === 200) {
+		localStorage.setItem('lang', lang);
+		localStorage.setItem('locale', await res.text());
+		localStorage.setItem('localeVersion', v);
+	} else {
+		await checkUpdate();
+		renderError('LOCALE_FETCH');
+		return;
 	}
 	//#endregion
 
