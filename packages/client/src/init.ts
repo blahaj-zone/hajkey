@@ -2,6 +2,9 @@
  * Client entry point
  */
 
+// https://vitejs.dev/config/build-options.html#build-modulepreload
+import 'vite/modulepreload-polyfill';
+
 import '@/style.scss';
 import '@/icons.scss';
 

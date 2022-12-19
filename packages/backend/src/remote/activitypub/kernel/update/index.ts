@@ -6,7 +6,7 @@ import Resolver from '../../resolver.js';
 import { updatePerson } from '../../models/person.js';
 
 /**
- * Updateアクティビティを捌きます
+ * Handler for the Update activity
  */
 export default async (actor: CacheableRemoteUser, activity: IUpdate): Promise<string> => {
 	if ('actor' in activity && actor.uri !== activity.actor) {

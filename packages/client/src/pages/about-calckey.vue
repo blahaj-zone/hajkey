@@ -12,14 +12,14 @@
 					<span v-for="emoji in easterEggEmojis" :key="emoji.id" class="emoji" :data-physics-x="emoji.left" :data-physics-y="emoji.top" :class="{ _physics_circle_: !emoji.emoji.startsWith(':') }"><MkEmoji class="emoji" :emoji="emoji.emoji" :custom-emojis="$instance.emojis" :is-reaction="false" :normal="true" :no-style="true"/></span>
 				</div>
 				<div class="_formBlock" style="text-align: center;">
-					{{ i18n.ts._aboutMisskey.about }}<br><a href="https://codeberg.org/thatonecalculator/calckey" target="_blank" class="_link">{{ i18n.ts.learnMore }}</a>
+					{{ i18n.ts._aboutMisskey.about }}<br><a href="https://codeberg.org/calckey/calckey" target="_blank" class="_link">{{ i18n.ts.learnMore }}</a>
 				</div>
 				<div class="_formBlock" style="text-align: center;">
 					<MkButton primary rounded inline @click="iLoveMisskey">I <Mfm text="$[jelly ❤]"/> #Calckey</MkButton>
 				</div>
 				<FormSection>
 					<div class="_formLinks">
-						<FormLink to="https://codeberg.org/thatonecalculator/calckey" external>
+						<FormLink to="https://codeberg.org/calckey/calckey" external>
 							<template #icon><i class="ph-code-bold ph-lg"></i></template>
 							{{ i18n.ts._aboutMisskey.source }}
 							<template #suffix>Codeberg</template>
@@ -29,17 +29,22 @@
 							{{ i18n.ts._aboutMisskey.donate }}
 							<template #suffix>Donate</template>
 						</FormLink>
+						<FormLink to="https://hosted.weblate.org/engage/calckey/" external>
+							<template #icon><i class="ph-translate-bold ph-lg"></i></template>
+							{{ i18n.ts._aboutMisskey.translation }}
+							<template #suffix>Translate</template>
+						</FormLink>
 					</div>
 				</FormSection>
 				<FormSection>
 					<template #label>{{ i18n.ts._aboutMisskey.contributors }}</template>
 					<div class="_formLinks">
 						<FormLink to="/@t1c@i.calckey.cloud"><Mfm :text="'$[sparkle @t1c@i.calckey.cloud] (Main developer)'"/></FormLink>
-						<FormLink to="/@cleo@tech.lgbt"><Mfm :text="'@cleo@tech.lgbt (Maintainer)'"/></FormLink>
+						<FormLink to="/@cleo@bz.pawdev.me"><Mfm :text="'@cleo@bz.pawdev.me (Maintainer)'"/></FormLink>
 						<FormLink to="/@syuilo@misskey.io"><Mfm :text="'@syuilo@misskey.io (Original Misskey developer)'"/></FormLink>
 						<FormLink to="https://www.youtube.com/c/Henkiwashere" external>Henki (error images artist)</FormLink>
 					</div>
-					<template #caption><MkLink url="https://codeberg.org/thatonecalculator/calckey/activity">{{ i18n.ts._aboutMisskey.allContributors }}</MkLink></template>
+					<template #caption><MkLink url="https://codeberg.org/calckey/calckey/activity">{{ i18n.ts._aboutMisskey.allContributors }}</MkLink></template>
 				</FormSection>
 				<FormSection>
 					<template #label><Mfm text="$[jelly ❤]"/> {{ i18n.ts._aboutMisskey.patrons }}</template>

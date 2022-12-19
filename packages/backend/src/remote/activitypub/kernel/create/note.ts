@@ -7,7 +7,7 @@ import { extractDbHost } from '@/misc/convert-host.js';
 import { StatusError } from '@/misc/fetch.js';
 
 /**
- * 投稿作成アクティビティを捌きます
+ * Handle post creation activity
  */
 export default async function(resolver: Resolver, actor: CacheableRemoteUser, note: IObject, silent = false, activity?: ICreate): Promise<string> {
 	const uri = getApId(note);

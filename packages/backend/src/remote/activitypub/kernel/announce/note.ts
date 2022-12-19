@@ -14,7 +14,7 @@ import { Notes } from '@/models/index.js';
 const logger = apLogger;
 
 /**
- * アナウンスアクティビティを捌きます
+ * Handle announcement activities
  */
 export default async function(resolver: Resolver, actor: CacheableRemoteUser, activity: IAnnounce, targetUri: string): Promise<void> {
 	const uri = getApId(activity);
@@ -23,25 +23,25 @@ export default async function(resolver: Resolver, actor: CacheableRemoteUser, ac
 		return;
 	}
 
-	// アナウンス先をブロックしてたら中断
+	// Interrupt if you block the announcement destination
 	const meta = await fetchMeta();
 	if (meta.blockedHosts.includes(extractDbHost(uri))) return;
 
 	const unlock = await getApLock(uri);
 
 	try {
-		// 既に同じURIを持つものが登録されていないかチェック
+		// Check if something with the same URI is already registered
 		const exist = await fetchNote(uri);
 		if (exist) {
 			return;
 		}
 
-		// Announce対象をresolve
+		// Resolve Announce target
 		let renote;
 		try {
 			renote = await resolveNote(targetUri);
 		} catch (e) {
-			// 対象が4xxならスキップ
+			// Skip if target is 4xx
 			if (e instanceof StatusError) {
 				if (e.isClientError) {
 					logger.warn(`Ignored announce target ${targetUri} - ${e.statusCode}`);

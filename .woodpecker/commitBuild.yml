@@ -14,4 +14,4 @@ matrix:
     - 19.2.0
 
 branches:
-  include: [ master, develop, feature/* ]
+  include: [ main, develop, feature/* ]

@@ -4,6 +4,7 @@ pipeline:
     commands:
       - cp .config/ci.yml .config/default.yml
       - corepack enable
+      - yarn set version berry
       - yarn install
       - yarn build
       - yarn migrate
@@ -24,4 +25,4 @@ matrix:
     - latest
 
 branches:
-  include: [ master, develop, feature/* ]
+  include: [ main, develop, feature/* ]

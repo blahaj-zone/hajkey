@@ -1,11 +1,13 @@
 # Contribution guide
-We're glad you're interested in contributing Misskey! In this document you will find the information you need to contribute to the project.
+We're glad you're interested in contributing Calckey! In this document you will find the information you need to contribute to the project.
 
-> **Note**
-> This project uses Japanese as its major language, **but you do not need to translate and write the Issues/PRs in Japanese.**
-> Also, you might receive comments on your Issue/PR in Japanese, but you do not need to reply to them in Japanese as well.\
-> The accuracy of machine translation into Japanese is not high, so it will be easier for us to understand if you write it in the original language.
-> It will also allow the reader to use the translation tool of their preference if necessary.
+# Translations
+
+You can contribute without knowing how to code by helping translate here:
+
+[![Translation status](https://hosted.weblate.org/widgets/calckey/-/287x66-grey.png)](https://hosted.weblate.org/engage/calckey/)
+
+[![Translation bars](https://hosted.weblate.org/widgets/calckey/-/multi-auto.svg)](https://hosted.weblate.org/engage/calckey/)
 
 ## Roadmap
 See [ROADMAP.md](./ROADMAP.md)

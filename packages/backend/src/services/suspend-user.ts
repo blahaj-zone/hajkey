@@ -11,7 +11,7 @@ export async function doPostSuspend(user: { id: User['id']; host: User['host'] }
 	publishInternalEvent('userChangeSuspendedState', { id: user.id, isSuspended: true });
 
 	if (Users.isLocalUser(user)) {
-		// 知り得る全SharedInboxにDelete配信
+		// Send Delete to all known SharedInboxes
 		const content = renderActivity(renderDelete(`${config.url}/users/${user.id}`, user));
 
 		const queue: string[] = [];

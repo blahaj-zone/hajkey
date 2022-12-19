@@ -16,7 +16,7 @@ doctype html
 
 		Thank you for using Calckey!
 		If you are reading this message... how about joining the development?
-		https://codeberg.org/thatonecalculator/calckey
+		https://codeberg.org/calckey/calckey
 
 html
 
@@ -41,11 +41,9 @@ html
 		link(rel='stylesheet' href=`/static-assets/instance.css?${ timestamp }`)
 		link(rel='modulepreload' href=`/assets/${clientEntry.file}`)
 
-		each href in clientEntry.css
-			link(rel='preload' href=`/assets/${href}` as='style')
-
-		each href in clientEntry.css
-			link(rel='preload' href=`/assets/${href}` as='style')
+		if Array.isArray(clientEntry.css)
+			each href in clientEntry.css
+				link(rel='stylesheet' href=`/assets/${href}`)
 
 		title
 			block title

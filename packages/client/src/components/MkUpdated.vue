@@ -2,7 +2,7 @@
 <MkModal ref="modal" :z-priority="'middle'" @click="$refs.modal.close()" @closed="$emit('closed')">
 	<div class="ewlycnyt">
 		<div class="title"><MkSparkle>{{ i18n.ts.misskeyUpdated }}</MkSparkle></div>
-		<div class="version">✨{{ version }}🚀</div>
+		<div class="version">✨ {{ version }} 🚀</div>
 		<MkButton full @click="whatIsNew">{{ i18n.ts.whatIsNew }}</MkButton>
 		<MkButton class="gotIt" primary full @click="$refs.modal.close()">{{ i18n.ts.gotIt }}</MkButton>
 	</div>
@@ -21,7 +21,7 @@ const modal = ref<InstanceType<typeof MkModal>>();
 
 const whatIsNew = () => {
 	modal.value.close();
-	window.open('https://codeberg.org/thatonecalculator/calckey/releases', '_blank');
+	window.open('https://codeberg.org/calckey/calckey/releases', '_blank');
 };
 </script>
 

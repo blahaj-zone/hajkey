@@ -19,8 +19,10 @@ defineProps<{
 <style lang="scss" scoped>
 .msjugskd {
 	padding: 16px;
+	font-size: 90%;
 	background: var(--infoWarnBg);
 	color: var(--error);
+	border-radius: var(--radius);
 
 	> .link {
 		margin-left: 4px;

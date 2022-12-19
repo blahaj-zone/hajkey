@@ -21,7 +21,7 @@ export default async function(actor: CacheableRemoteUser, uri: string): Promise<
 			if (message == null) return 'message not found';
 
 			if (message.userId !== actor.id) {
-				return '投稿を削除しようとしているユーザーは投稿の作成者ではありません';
+				return 'The user trying to delete the post is not the post author';
 			}
 
 			await deleteMessage(message);
@@ -30,7 +30,7 @@ export default async function(actor: CacheableRemoteUser, uri: string): Promise<
 		}
 
 		if (note.userId !== actor.id) {
-			return '投稿を削除しようとしているユーザーは投稿の作成者ではありません';
+			return 'The user trying to delete the post is not the post author';
 		}
 
 		await deleteNode(actor, note);

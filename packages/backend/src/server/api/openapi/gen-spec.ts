@@ -15,7 +15,7 @@ export function genOpenapiSpec() {
 
 		externalDocs: {
 			description: 'Repository',
-			url: 'https://codeberg.org/thatonecalculator/calckey',
+			url: 'https://codeberg.org/calckey/calckey',
 		},
 
 		servers: [{
@@ -95,7 +95,7 @@ export function genOpenapiSpec() {
 			description: desc,
 			externalDocs: {
 				description: 'Source code',
-				url: `https://codeberg.org/thatonecalculator/calckey/src/branch/develop/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
+				url: `https://codeberg.org/calckey/calckey/src/branch/develop/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
 			},
 			tags: endpoint.meta.tags || undefined,
 			security,

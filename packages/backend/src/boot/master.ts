@@ -38,7 +38,7 @@ function greet() {
 		//#endregion
 
 		console.log(' Calckey is an open-source decentralized microblogging platform.');
-		console.log(chalk.rgb(255, 136, 0)(' If you like Calckey, please consider starring or contributing to the repo. https://codeberg.org/thatonecalculator/calckey'));
+		console.log(chalk.rgb(255, 136, 0)(' If you like Calckey, please consider starring or contributing to the repo. https://codeberg.org/calckey/calckey'));
 
 		console.log('');
 		console.log(chalkTemplate`--- ${os.hostname()} {gray (PID: ${process.pid.toString()})} ---`);

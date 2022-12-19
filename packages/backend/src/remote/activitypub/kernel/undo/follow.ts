@@ -14,7 +14,7 @@ export default async (actor: CacheableRemoteUser, activity: IFollow): Promise<st
 	}
 
 	if (followee.host != null) {
-		return `skip: フォロー解除しようとしているユーザーはローカルユーザーではありません`;
+		return `skip: The user you are trying to unfollow is not a local user`;
 	}
 
 	const req = await FollowRequests.findOneBy({
@@ -37,5 +37,5 @@ export default async (actor: CacheableRemoteUser, activity: IFollow): Promise<st
 		return `ok: unfollowed`;
 	}
 
-	return `skip: リクエストもフォローもされていない`;
+	return `skip: Not requested or followed`;
 };

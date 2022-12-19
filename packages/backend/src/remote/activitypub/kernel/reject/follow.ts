@@ -6,7 +6,7 @@ import { relayRejected } from '@/services/relay.js';
 import { Users } from '@/models/index.js';
 
 export default async (actor: CacheableRemoteUser, activity: IFollow): Promise<string> => {
-	// ※ activityはこっちから投げたフォローリクエストなので、activity.actorは存在するローカルユーザーである必要がある
+	// ※ `activity.actor` must be an existing local user, since `activity` is a follow request thrown from us.
 
 	const dbResolver = new DbResolver();
 	const follower = await dbResolver.getUserFromApId(activity.actor);

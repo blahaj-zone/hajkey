@@ -13,7 +13,7 @@ export default async (actor: CacheableRemoteUser, activity: IBlock): Promise<str
 	}
 
 	if (blockee.host != null) {
-		return `skip: ブロック解除しようとしているユーザーはローカルユーザーではありません`;
+		return `skip: The user you are trying to unblock is not a local user`;
 	}
 
 	await unblock(await Users.findOneByOrFail({ id: actor.id }), blockee);

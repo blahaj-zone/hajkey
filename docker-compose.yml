@@ -3,6 +3,7 @@ version: "3"
 services:
   web:
     image: docker.io/thatonecalculator/calckey
+    container_name: calckey_web
     restart: unless-stopped
     depends_on:
       - db
@@ -17,11 +18,12 @@ services:
       NODE_ENV: production
     volumes:
       - ./files:/calckey/files
-      - ./config:/calckey/.config:ro
+      - ./.config:/calckey/.config:ro
 
   redis:
     restart: unless-stopped
     image: docker.io/redis:7.0-alpine
+    container_name: calckey_redis
     networks:
       - calcnet
     volumes:
@@ -30,10 +32,11 @@ services:
   db:
     restart: unless-stopped
     image: docker.io/postgres:12.2-alpine
+    container_name: calckey_db
     networks:
       - calcnet
     env_file:
-      - config/docker.env
+      - .config/docker.env
     volumes:
       - ./db:/var/lib/postgresql/data
 

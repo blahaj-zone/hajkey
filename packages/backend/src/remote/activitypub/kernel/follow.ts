@@ -12,7 +12,7 @@ export default async (actor: CacheableRemoteUser, activity: IFollow): Promise<st
 	}
 
 	if (followee.host != null) {
-		return `skip: フォローしようとしているユーザーはローカルユーザーではありません`;
+		return `skip: user you are trying to follow is not a local user`;
 	}
 
 	await follow(actor, followee, activity.id);

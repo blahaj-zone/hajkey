@@ -24,7 +24,7 @@
 
 	//#region Detect language & fetch translations
 	const v = localStorage.getItem('v') || VERSION;
-	
+
 	const supportedLangs = LANGS;
 	let lang = localStorage.getItem('lang');
 	if (lang == null || !supportedLangs.includes(lang)) {

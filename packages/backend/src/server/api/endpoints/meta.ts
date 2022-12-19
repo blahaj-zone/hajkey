@@ -57,12 +57,12 @@ export const meta = {
 			repositoryUrl: {
 				type: 'string',
 				optional: false, nullable: false,
-				default: 'https://codeberg.org/thatonecalculator/calckey',
+				default: 'https://codeberg.org/calckey/calckey',
 			},
 			feedbackUrl: {
 				type: 'string',
 				optional: false, nullable: false,
-				default: 'https://codeberg.org/thatonecalculator/calckey/issues',
+				default: 'https://codeberg.org/calckey/calckey/issues',
 			},
 			defaultDarkTheme: {
 				type: 'string',

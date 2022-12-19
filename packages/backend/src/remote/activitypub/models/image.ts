@@ -11,10 +11,10 @@ import { DB_MAX_IMAGE_COMMENT_LENGTH } from '@/misc/hard-limits.js';
 const logger = apLogger;
 
 /**
- * Imageを作成します。
+ * create an Image.
  */
 export async function createImage(actor: CacheableRemoteUser, value: any): Promise<DriveFile> {
-	// 投稿者が凍結されていたらスキップ
+	// Skip if author is frozen.
 	if (actor.isSuspended) {
 		throw new Error('actor has been suspended');
 	}
@@ -39,8 +39,8 @@ export async function createImage(actor: CacheableRemoteUser, value: any): Promi
 	});
 
 	if (file.isLink) {
-		// URLが異なっている場合、同じ画像が以前に異なるURLで登録されていたということなので、
-		// URLを更新する
+	  // If the URL is different, it means that the same image was previously
+	  // registered with a different URL, so update the URL
 		if (file.url !== image.url) {
 			await DriveFiles.update({ id: file.id }, {
 				url: image.url,
@@ -55,14 +55,14 @@ export async function createImage(actor: CacheableRemoteUser, value: any): Promi
 }
 
 /**
- * Imageを解決します。
+ * Resolve Image.
  *
- * Misskeyに対象のImageが登録されていればそれを返し、そうでなければ
- * リモートサーバーからフェッチしてMisskeyに登録しそれを返します。
+ * If the target Image is registered in Calckey, return it, otherwise
+ * Fetch from remote server, register with Calckey and return it.
  */
 export async function resolveImage(actor: CacheableRemoteUser, value: any): Promise<DriveFile> {
 	// TODO
 
-	// リモートサーバーからフェッチしてきて登録
+	// Fetch from remote server and register
 	return await createImage(actor, value);
 }

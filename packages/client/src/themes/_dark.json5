@@ -54,8 +54,6 @@
 		infoFg: '#fff',
 		infoWarnBg: '#42321c',
 		infoWarnFg: '#ffbd3e',
-		infoRemoteBg: 'rgba(71, 71, 71, 0.4)',
-		infoRemoteFg: 'rgba(150, 150, 150, 0.4)',
 		switchBg: 'rgba(255, 255, 255, 0.15)',
 		cwBg: '#687390',
 		cwFg: '#393f4f',

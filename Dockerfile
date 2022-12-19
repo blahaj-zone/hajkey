@@ -17,7 +17,7 @@ RUN yarn plugin import workspace-tools
 
 # Install Dependencies
 RUN yarn install
-RUN yarn build
+RUN yarn rebuild
 
 # Remove git files
 RUN rm -rf .git

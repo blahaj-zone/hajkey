@@ -101,9 +101,9 @@ function validateActor(x: IObject, uri: string): IActor {
 }
 
 /**
- * Personをフェッチします。
+ * Fetch a Person.
  *
- * Misskeyに対象のPersonが登録されていればそれを返します。
+ * If the target Person is registered in Calckey, it will be returned.
  */
 export async function fetchPerson(uri: string, resolver?: Resolver): Promise<CacheableUser | null> {
 	if (typeof uri !== 'string') throw new Error('uri is not string');
@@ -111,7 +111,7 @@ export async function fetchPerson(uri: string, resolver?: Resolver): Promise<Cac
 	const cached = uriPersonCache.get(uri);
 	if (cached) return cached;
 
-	// URIがこのサーバーを指しているならデータベースからフェッチ
+	// Fetch from the database if the URI points to this server
 	if (uri.startsWith(config.url + '/')) {
 		const id = uri.split('/').pop();
 		const u = await Users.findOneBy({ id });
@@ -119,7 +119,7 @@ export async function fetchPerson(uri: string, resolver?: Resolver): Promise<Cac
 		return u;
 	}
 
-	//#region このサーバーに既に登録されていたらそれを返す
+	//#region Returns if already registered with this server
 	const exist = await Users.findOneBy({ uri });
 
 	if (exist) {
@@ -132,7 +132,7 @@ export async function fetchPerson(uri: string, resolver?: Resolver): Promise<Cac
 }
 
 /**
- * Personを作成します。
+ * Create Person.
  */
 export async function createPerson(uri: string, resolver?: Resolver): Promise<User> {
 	if (typeof uri !== 'string') throw new Error('uri is not string');
@@ -210,7 +210,7 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 	} catch (e) {
 		// duplicate key error
 		if (isDuplicateKeyValueError(e)) {
-			// /users/@a => /users/:id のように入力がaliasなときにエラーになることがあるのを対応
+			// /users/@a => /users/:id Corresponds to an error that may occur when the input is an alias like
 			const u = await Users.findOneBy({
 				uri: person.id,
 			});
@@ -235,10 +235,10 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 
 	usersChart.update(user!, true);
 
-	// ハッシュタグ更新
+	// Hashtag update
 	updateUsertags(user!, tags);
 
-	//#region アバターとヘッダー画像をフェッチ
+	//#region Fetch avatar and header image
 	const [avatar, banner] = await Promise.all([
 		person.icon,
 		person.image,
@@ -260,7 +260,7 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 	user!.bannerId = bannerId;
 	//#endregion
 
-	//#region カスタム絵文字取得
+	//#region Get custom emoji
 	const emojis = await extractEmojis(person.tag || [], host).catch(e => {
 		logger.info(`extractEmojis: ${e}`);
 		return [] as Emoji[];

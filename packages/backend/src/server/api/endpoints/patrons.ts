@@ -17,7 +17,7 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
 	let patrons;
-	await fetch('https://codeberg.org/thatonecalculator/calckey/raw/branch/develop/patrons.json')
+	await fetch('https://codeberg.org/calckey/calckey/raw/branch/develop/patrons.json')
 		.then((response) => response.json())
 		.then((data) => {
 			patrons = data['patrons'];

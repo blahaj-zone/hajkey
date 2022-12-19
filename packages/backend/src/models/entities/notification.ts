@@ -19,7 +19,7 @@ export class Notification {
 	public createdAt: Date;
 
 	/**
-	 * 通知の受信者
+	 * Notification Recipient ID
 	 */
 	@Index()
 	@Column({
@@ -35,7 +35,7 @@ export class Notification {
 	public notifiee: User | null;
 
 	/**
-	 * 通知の送信者(initiator)
+	 * Notification sender (initiator)
 	 */
 	@Index()
 	@Column({
@@ -52,19 +52,19 @@ export class Notification {
 	public notifier: User | null;
 
 	/**
-	 * 通知の種類。
-	 * follow - フォローされた
-	 * mention - 投稿で自分が言及された
-	 * reply - (自分または自分がWatchしている)投稿が返信された
-	 * renote - (自分または自分がWatchしている)投稿がRenoteされた
-	 * quote - (自分または自分がWatchしている)投稿が引用Renoteされた
+	 * Notification types:
+	 * follow - Follow request
+	 * mention - User was referenced in a post.
+	 * reply - A post that a user made (or was watching) has been replied to.
+	 * renote - A post that a user made (or was watching) has been renoted.
+	 * quote - A post that a user made (or was watching) has been quoted and renoted.
 	 * reaction - (自分または自分がWatchしている)投稿にリアクションされた
 	 * pollVote - (自分または自分がWatchしている)投稿のアンケートに投票された
 	 * pollEnded - 自分のアンケートもしくは自分が投票したアンケートが終了した
 	 * receiveFollowRequest - フォローリクエストされた
-	 * followRequestAccepted - 自分の送ったフォローリクエストが承認された
+	 * followRequestAccepted - A follow request has been accepted.
 	 * groupInvited - グループに招待された
-	 * app - アプリ通知
+	 * app - App notifications.
 	 */
 	@Index()
 	@Column('enum', {
@@ -74,12 +74,12 @@ export class Notification {
 	public type: typeof notificationTypes[number];
 
 	/**
-	 * 通知が読まれたかどうか
+	 * Whether the notification was read.
 	 */
 	@Index()
 	@Column('boolean', {
 		default: false,
-		comment: 'Whether the Notification is read.',
+		comment: 'Whether the notification was read.',
 	})
 	public isRead: boolean;
 
@@ -130,7 +130,7 @@ export class Notification {
 	public choice: number | null;
 
 	/**
-	 * アプリ通知のbody
+	 * App notification body
 	 */
 	@Column('varchar', {
 		length: 2048, nullable: true,
@@ -138,8 +138,8 @@ export class Notification {
 	public customBody: string | null;
 
 	/**
-	 * アプリ通知のheader
-	 * (省略時はアプリ名で表示されることを期待)
+	 * App notification header
+	 * (If omitted, it is expected to be displayed with the app name)
 	 */
 	@Column('varchar', {
 		length: 256, nullable: true,
@@ -147,8 +147,8 @@ export class Notification {
 	public customHeader: string | null;
 
 	/**
-	 * アプリ通知のicon(URL)
-	 * (省略時はアプリアイコンで表示されることを期待)
+	 * App notification icon (URL)
+	 * (If omitted, it is expected to be displayed as an app icon)
 	 */
 	@Column('varchar', {
 		length: 1024, nullable: true,
@@ -156,7 +156,7 @@ export class Notification {
 	public customIcon: string | null;
 
 	/**
-	 * アプリ通知のアプリ(のトークン)
+	 * App notification app (token for)
 	 */
 	@Index()
 	@Column({

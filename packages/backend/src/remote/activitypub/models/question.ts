@@ -43,10 +43,10 @@ export async function extractPollFromQuestion(source: string | IObject, resolver
 export async function updateQuestion(value: any, resolver?: Resolver) {
 	const uri = typeof value === 'string' ? value : value.id;
 
-	// URIがこのサーバーを指しているならスキップ
+	// Skip if URI points to this server
 	if (uri.startsWith(config.url + '/')) throw new Error('uri points local');
 
-	//#region このサーバーに既に登録されているか
+	//#region Already registered with this server?
 	const note = await Notes.findOneBy({ uri });
 	if (note == null) throw new Error('Question is not registed');
 

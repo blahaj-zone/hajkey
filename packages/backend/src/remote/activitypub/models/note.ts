@@ -53,9 +53,9 @@ export function validateNote(object: any, uri: string) {
 }
 
 /**
- * Noteをフェッチします。
+ * Fetch Notes.
  *
- * Misskeyに対象のNoteが登録されていればそれを返します。
+ * If the target Note is registered in Calckey, it will be returned.
  */
 export async function fetchNote(object: string | IObject): Promise<Note | null> {
 	const dbResolver = new DbResolver();
@@ -63,7 +63,7 @@ export async function fetchNote(object: string | IObject): Promise<Note | null> 
 }
 
 /**
- * Noteを作成します。
+ * Create a Note.
  */
 export async function createNote(value: string | IObject, resolver?: Resolver, silent = false): Promise<Note | null> {
 	if (resolver == null) resolver = new Resolver();
@@ -89,10 +89,10 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 
 	logger.info(`Creating the Note: ${note.id}`);
 
-	// 投稿者をフェッチ
+	// Fetch author
 	const actor = await resolvePerson(getOneApId(note.attributedTo), resolver) as CacheableRemoteUser;
 
-	// 投稿者が凍結されていたらスキップ
+	// Skip if author is suspended.
 	if (actor.isSuspended) {
 		throw new Error('actor has been suspended');
 	}
@@ -101,10 +101,10 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 	let visibility = noteAudience.visibility;
 	const visibleUsers = noteAudience.visibleUsers;
 
-	// Audience (to, cc) が指定されてなかった場合
+	// If Audience (to, cc) was not specified
 	if (visibility === 'specified' && visibleUsers.length === 0) {
-		if (typeof value === 'string') {	// 入力がstringならばresolverでGETが発生している
-			// こちらから匿名GET出来たものならばpublic
+		if (typeof value === 'string') {	// If the input is a string, GET occurs in resolver
+			// Public if you can GET anonymously from here
 			visibility = 'public';
 		}
 	}
@@ -114,7 +114,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 	const apMentions = await extractApMentions(note.tag);
 	const apHashtags = await extractApHashtags(note.tag);
 
-	// 添付ファイル
+	// Attachments
 	// TODO: attachmentは必ずしもImageではない
 	// TODO: attachmentは必ずしも配列ではない
 	// Noteがsensitiveなら添付もsensitiveにする
@@ -127,7 +127,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 			.filter(image => image != null)
 		: [];
 
-	// リプライ
+	// Reply
 	const reply: Note | null = note.inReplyTo
 		? await resolveNote(note.inReplyTo, resolver).then(x => {
 			if (x == null) {
@@ -153,7 +153,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 		})
 		: null;
 
-	// 引用
+	// Quote
 	let quote: Note | undefined | null;
 
 	if (note._misskey_quote || note.quoteUrl) {
@@ -196,7 +196,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 
 	const cw = note.summary === '' ? null : note.summary;
 
-	// テキストのパース
+	// Text parsing
 	let text: string | null = null;
 	if (note.source?.mediaType === 'text/x.misskeymarkdown' && typeof note.source?.content === 'string') {
 		text = note.source.content;
@@ -265,23 +265,23 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 }
 
 /**
- * Noteを解決します。
+ * Resolve Note.
  *
- * Misskeyに対象のNoteが登録されていればそれを返し、そうでなければ
- * リモートサーバーからフェッチしてMisskeyに登録しそれを返します。
+ * If the target Note is registered in Calckey, return it, otherwise
+ * Fetch from remote server, register with Calckey and return it.
  */
 export async function resolveNote(value: string | IObject, resolver?: Resolver): Promise<Note | null> {
 	const uri = typeof value === 'string' ? value : value.id;
 	if (uri == null) throw new Error('missing uri');
 
-	// ブロックしてたら中断
+	// Abort if origin host is blocked
 	const meta = await fetchMeta();
 	if (meta.blockedHosts.includes(extractDbHost(uri))) throw new StatusError('host blocked', 451, `host ${extractDbHost(uri)} is blocked`);
 
 	const unlock = await getApLock(uri);
 
 	try {
-		//#region このサーバーに既に登録されていたらそれを返す
+		//#region Returns if already registered with this server
 		const exist = await fetchNote(uri);
 
 		if (exist) {
@@ -293,9 +293,9 @@ export async function resolveNote(value: string | IObject, resolver?: Resolver):
 			throw new StatusError('cannot resolve local note', 400, 'cannot resolve local note');
 		}
 
-		// リモートサーバーからフェッチしてきて登録
-		// ここでuriの代わりに添付されてきたNote Objectが指定されていると、サーバーフェッチを経ずにノートが生成されるが
-		// 添付されてきたNote Objectは偽装されている可能性があるため、常にuriを指定してサーバーフェッチを行う。
+		// Fetch from remote server and register
+		// If the attached `Note` Object is specified here instead of the uri, the note will be generated without going through the server fetch.
+		// Since the attached Note Object may be disguised, always specify the uri and fetch it from the server.
 		return await createNote(uri, resolver, true);
 	} finally {
 		unlock();

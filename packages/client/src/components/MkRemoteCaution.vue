@@ -13,9 +13,10 @@ defineProps<{
 <style lang="scss" scoped>
 .jmgmzlwq {
 	padding: 16px;
-	background: var(--infoRemoteBg);
-	color: var(--fg);
-	font-size: 0.85rem;
+	font-size: 90%;
+	background: var(--infoWarnBg);
+	color: var(--infoWarnFg);
+	border-radius: var(--radius);
 
 	> .link {
 		margin-left: 4px;

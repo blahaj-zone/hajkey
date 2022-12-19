@@ -99,7 +99,8 @@
 - Undo renote button inside original note
 - Custom locales
 - Obliteration of Ai-chan
-- Switch to [Calckey.js](https://codeberg.org/thatonecalculator/calckey.js)
+- Switch to [Calckey.js](https://codeberg.org/calckey/calckey.js)
+- Woozy mode 🥴
 - MissV: [fix Misskey Forkbomb](https://code.vtopia.live/Vtopia/MissV/commit/40b23c070bd4adbb3188c73546c6c625138fb3c1)
 - [Make showing ads optional](https://github.com/misskey-dev/misskey/pull/8996)
 - [Tapping avatar in mobile opens account modal](https://github.com/misskey-dev/misskey/pull/9056)

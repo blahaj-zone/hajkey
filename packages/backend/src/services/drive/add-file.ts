@@ -217,8 +217,10 @@ export async function generateAlts(path: string, type: string, generateWeb: bool
 		logger.info('creating web image');
 
 		try {
-			if (['image/jpeg', 'image/webp'].includes(type)) {
+			if (['image/jpeg'].includes(type)) {
 				webpublic = await convertSharpToJpeg(img, 2048, 2048);
+			} else if (['image/webp'].includes(type)) {
+				webpublic = await convertSharpToPng(img, 2048, 2048);
 			} else if (['image/png'].includes(type)) {
 				webpublic = await convertSharpToPng(img, 2048, 2048);
 			} else if (['image/svg+xml'].includes(type)) {

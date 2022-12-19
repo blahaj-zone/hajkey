@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import insertTextAtCursor from 'insert-text-at-cursor';
 import { length } from 'stringz';
 import * as os from '@/os';
 import MkModal from '@/components/MkModal.vue';
@@ -147,7 +148,7 @@ export default defineComponent({
 			os.api('drive/files/caption-image', {
 				url: img.src,
 			}).then(text => {
-				ta.value += text.slice(0, (512 - ta.value.length));
+				insertTextAtCursor(ta, text.slice(0, (512 - ta.value.length)));
 			});
 		},
 	},

@@ -6,8 +6,9 @@ import { In } from 'typeorm';
 import { genId } from '@/misc/gen-id.js';
 
 export default async (actor: CacheableRemoteUser, activity: IFlag): Promise<string> => {
-	// objectは `(User|Note) | (User|Note)[]` だけど、全パターンDBスキーマと対応させられないので
-	// 対象ユーザーは一番最初のユーザー として あとはコメントとして格納する
+	// The object is `(User | Note) | (User | Note) []`, but it cannot be
+  // matched with all patterns of the DB schema, so the target user is the first
+  // user and it is stored as a comment.
 	const uris = getApIds(activity.object);
 
 	const userIds = uris.filter(uri => uri.startsWith(config.url + '/users/')).map(uri => uri.split('/').pop()!);
