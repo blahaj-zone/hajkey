@@ -5,7 +5,7 @@ import * as cp___customEmojis from './endpoints/compatibility/custom-emojis.js';
 
 const cps = [
 	['v1/instance', cp___instanceInfo],
-	['v1/custom_emojis', cp___customEmojis],
+	['v1/custom-emojis', cp___customEmojis],
 ];
 
 const compatibility: IEndpoint[] = cps.map(([name, cp]) => {
