@@ -5,6 +5,7 @@ import { AccessToken } from '@/models/entities/access-token.js';
 import { getIpHash } from '@/misc/get-ip-hash.js';
 import { limiter } from './limiter.js';
 import endpoints, { IEndpointMeta } from './endpoints.js';
+import compatibility from './compatibility.js';
 import { ApiError } from './error.js';
 import { apiLogger } from './logger.js';
 import { AccessToken } from '@/models/entities/access-token.js';
@@ -20,7 +21,8 @@ export default async (endpoint: string, user: CacheableLocalUser | null | undefi
 	const isSecure = user != null && token == null;
 	const isModerator = user != null && (user.isModerator || user.isAdmin);
 
-	const ep = endpoints.find(e => e.name === endpoint);
+	const ep = endpoints.find(e => e.name === endpoint) ||
+		compatibility.find(e => e.name === endpoint);
 
 	if (ep == null) {
 		throw new ApiError({
