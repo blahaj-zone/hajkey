@@ -7,7 +7,7 @@ import { Emoji } from '@/models/entities/emoji.js';
 import { User } from '@/models/entities/user.js';
 import { IsNull, In } from 'typeorm';
 import { MAX_NOTE_TEXT_LENGTH, FILE_TYPE_BROWSERSAFE } from '@/const.js';
-import define from '../define.js';
+import define from '../../define.js';
 
 export const meta = {
 	requireCredential: false,

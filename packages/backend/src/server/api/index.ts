@@ -10,6 +10,7 @@ import cors from '@koa/cors';
 import { Instances, AccessTokens, Users } from '@/models/index.js';
 import config from '@/config/index.js';
 import endpoints from './endpoints.js';
+import compatibility from './compatibility.js';
 import handler from './api-handler.js';
 import signup from './private/signup.js';
 import signin from './private/signin.js';
@@ -54,7 +55,7 @@ const router = new Router();
 /**
  * Register endpoint handlers
  */
-for (const endpoint of endpoints) {
+for (const endpoint of [...endpoints, ...compatibility]) {
 	if (endpoint.meta.requireFile) {
 		router.post(`/${endpoint.name}`, upload.single('file'), handler.bind(null, endpoint));
 	} else {

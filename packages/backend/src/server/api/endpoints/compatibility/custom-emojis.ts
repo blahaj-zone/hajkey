@@ -2,7 +2,7 @@ import { Emojis } from '@/models/index.js';
 import { Emoji } from '@/models/entities/emoji.js';
 import { IsNull, In } from 'typeorm';
 import { FILE_TYPE_BROWSERSAFE } from '@/const.js';
-import define from '../define.js';
+import define from '../../define.js';
 
 export const meta = {
 	requireCredential: false,
