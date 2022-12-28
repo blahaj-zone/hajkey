@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
+import { onActivated, ref } from 'vue';
 import MkPagination from '@/components/MkPagination.vue';
 import MkButton from '@/components/MkButton.vue';
 import { i18n } from '@/i18n';
@@ -37,6 +37,16 @@ const pagination = {
 const headerActions = $computed(() => []);
 
 const headerTabs = $computed(() => []);
+
+const list = ref<typeof MkPagination|null>(null);
+
+let isCached = false;
+onActivated(() => {
+	if (isCached) {
+		list.value?.reload();
+	}
+	isCached = true;
+});
 
 definePageMetadata({
 	title: i18n.ts.manageAntennas,
@@ -88,7 +98,7 @@ definePageMetadata({
     left: -0.5em;
 
 		&.ph-circle-fill {
-			color: var(--accent);
+			color: var(--indicator);
 			animation: blink 1s infinite;
 		}
 
