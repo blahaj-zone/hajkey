@@ -131,9 +131,21 @@ const refresh = async (): void => {
 		limit: items.value.length + 1,
 		offset: 0,
 	}).then(res => {
+		let ids = items.value.reduce((a, b) => {
+			a[b.id] = true;
+			return a;
+		}, {} as { [id: string]: boolean; });
+
 		for (let i = 0; i < res.length; i++) {
 			const item = res[i];
-			updateItem(item.id, old => item);
+			if (!updateItem(item.id, old => item)) {
+				append(item);
+			}
+			delete ids[item.id];
+		}
+
+		for (const id in ids) {
+			removeItem(i => i.id === id);
 		}
 	}, err => {
 		error.value = true;
@@ -274,14 +286,24 @@ const append = (item: Item): void => {
 	items.value.push(item);
 };
 
-const removeItem = (finder: (item: Item) => boolean): void => {
+const removeItem = (finder: (item: Item) => boolean): boolean => {
 	const i = items.value.findIndex(finder);
+	if (i === -1) {
+		return false;
+	}
+
 	items.value.splice(i, 1);
+	return true;
 };
 
-const updateItem = (id: Item['id'], replacer: (old: Item) => Item): void => {
+const updateItem = (id: Item['id'], replacer: (old: Item) => Item): boolean => {
 	const i = items.value.findIndex(item => item.id === id);
+	if (i === -1) {
+		return false;
+	}
+
 	items.value[i] = replacer(items.value[i]);
+	return true;
 };
 
 if (props.pagination.params && isRef(props.pagination.params)) {
