@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onActivated, ref } from 'vue';
+import { onActivated, onDeactivated, ref } from 'vue';
 import MkPagination from '@/components/MkPagination.vue';
 import MkButton from '@/components/MkButton.vue';
 import { i18n } from '@/i18n';
@@ -40,12 +40,27 @@ const headerTabs = $computed(() => []);
 
 const list = ref<typeof MkPagination|null>(null);
 
-let isCached = false;
-onActivated(() => {
+let isCached: boolean = false;
+let refreshTimer: number | null = null;
+
+const refresh = () => {
 	if (isCached) {
-		list.value?.reload();
+		list.value?.refresh();
 	}
+
 	isCached = true;
+	refreshTimer = setTimeout(refresh, 15000)
+};
+
+onActivated(() => {
+	refresh();
+});
+
+onDeactivated(() => {
+	if (refreshTimer) {
+		clearTimeout(refreshTimer);
+		refreshTimer = null;
+	}
 });
 
 definePageMetadata({

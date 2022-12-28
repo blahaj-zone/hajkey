@@ -124,6 +124,23 @@ const reload = (): void => {
 	init();
 };
 
+const refresh = async (): void => {
+	const params = props.pagination.params ? isRef(props.pagination.params) ? props.pagination.params.value : props.pagination.params : {};
+	await os.api(props.pagination.endpoint, {
+		...params,
+		limit: items.value.length + 1,
+		offset: 0,
+	}).then(res => {
+		for (let i = 0; i < res.length; i++) {
+			const item = res[i];
+			updateItem(item.id, old => item);
+		}
+	}, err => {
+		error.value = true;
+		fetching.value = false;
+	});
+};
+
 const fetchMore = async (): Promise<void> => {
 	if (!more.value || fetching.value || moreFetching.value || items.value.length === 0) return;
 	moreFetching.value = true;
@@ -291,6 +308,7 @@ defineExpose({
 	queue,
 	backed,
 	reload,
+	refresh,
 	prepend,
 	append,
 	removeItem,
