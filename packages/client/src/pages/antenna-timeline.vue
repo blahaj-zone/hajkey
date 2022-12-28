@@ -61,10 +61,21 @@ function settings() {
 	router.push(`/my/antennas/${props.antennaId}`);
 }
 
-function markRead() {
-	os.api('antennas/mark-read', {
+async function doMarkRead() {
+	const ret = await os.api('antennas/mark-read', {
 		antennaId: props.antennaId,
-	})
+	});
+
+	if (ret) {
+		return true
+	}
+
+	throw new Error(i18n.ts.failedToMarkAsRead);
+}
+
+async function markRead() {
+	await os.promiseDialog(doMarkRead());
+	router.push(`/my/antennas`);
 }
 
 function focus() {
