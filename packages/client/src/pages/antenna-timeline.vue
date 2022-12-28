@@ -61,6 +61,12 @@ function settings() {
 	router.push(`/my/antennas/${props.antennaId}`);
 }
 
+function markRead() {
+	os.api('antennas/mark-read', {
+		antennaId: props.antennaId,
+	})
+}
+
 function focus() {
 	tlEl.focus();
 }
@@ -79,6 +85,10 @@ const headerActions = $computed(() => antenna ? [{
 	icon: 'ph-gear-six-bold ph-lg',
 	text: i18n.ts.settings,
 	handler: settings,
+}, {
+	icon: 'ph-checks-bold ph-lg',
+	text: i18n.ts.markAllAsRead,
+	handler: markRead,
 }] : []);
 
 const headerTabs = $computed(() => []);

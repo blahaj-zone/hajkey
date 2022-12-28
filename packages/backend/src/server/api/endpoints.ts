@@ -67,6 +67,7 @@ import * as ep___announcements from './endpoints/announcements.js';
 import * as ep___antennas_create from './endpoints/antennas/create.js';
 import * as ep___antennas_delete from './endpoints/antennas/delete.js';
 import * as ep___antennas_list from './endpoints/antennas/list.js';
+import * as ep___antennas_markRead from './endpoints/antennas/markread.js';
 import * as ep___antennas_notes from './endpoints/antennas/notes.js';
 import * as ep___antennas_show from './endpoints/antennas/show.js';
 import * as ep___antennas_update from './endpoints/antennas/update.js';
@@ -397,6 +398,7 @@ const eps = [
 	['antennas/create', ep___antennas_create],
 	['antennas/delete', ep___antennas_delete],
 	['antennas/list', ep___antennas_list],
+	['antennas/mark-read', ep___antennas_markRead],
 	['antennas/notes', ep___antennas_notes],
 	['antennas/show', ep___antennas_show],
 	['antennas/update', ep___antennas_update],
