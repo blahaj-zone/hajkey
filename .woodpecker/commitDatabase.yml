@@ -1,15 +1,13 @@
 pipeline:
   migrate:
-    image: node:19.2.0
+    image: node:latest
     commands:
       - cp .config/ci.yml .config/default.yml
       - corepack enable
       - yarn set version berry
-      - yarn install
+      - yarn install --immutable
       - yarn build
       - yarn migrate
-    environment:
-      - YARN_ENABLE_IMMUTABLE_INSTALLS=false
 
 services:
   database:

@@ -23,7 +23,7 @@
 			<slot name="action"></slot>
 		</div>
 		<span class="header"><slot name="header"></slot></span>
-		<button v-tooltip="i18n.ts.settings" class="menu _button" @click.stop="showSettingsMenu"><i class="ph-three-dots-outline-vertical-bold ph-lg"></i></button>
+		<button v-tooltip="i18n.ts.settings" class="menu _button" @click.stop="showSettingsMenu"><i class="ph-dots-three-outline-vertical-bold ph-lg"></i></button>
 	</header>
 	<div v-show="active" ref="body">
 		<slot></slot>
@@ -244,6 +244,16 @@ function onDrop(ev) {
 	}
 }
 </script>
+
+<style lang="scss">
+.dnpfarvg {
+	header {
+		.ph-lg {
+			vertical-align: -.24em;
+		}
+	}
+}
+</style>
 
 <style lang="scss" scoped>
 .dnpfarvg {

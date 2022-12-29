@@ -16,3 +16,6 @@ pipeline:
       # Push new version when version tag is created
       event: tag
       tag: v*
+
+depends_on:
+  - prSecurityCheck

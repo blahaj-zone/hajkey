@@ -6,6 +6,7 @@ import { URL } from 'url';
 import { toPuny } from '@/misc/convert-host.js';
 import DbResolver from '@/remote/activitypub/db-resolver.js';
 import { getApId } from '@/remote/activitypub/type.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance';
 
 
 export default async function checkFetch(req: IncomingMessage): Promise<number> {
@@ -22,7 +23,7 @@ export default async function checkFetch(req: IncomingMessage): Promise<number> 
 		const keyId = new URL(signature.keyId);
 		const host = toPuny(keyId.hostname);
 
-		if (meta.blockedHosts.includes(host)) {
+		if (await shouldBlockInstance(host, meta)) {
 			return 403;
 		}
 

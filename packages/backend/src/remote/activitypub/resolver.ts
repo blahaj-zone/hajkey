@@ -5,7 +5,7 @@ import { getInstanceActor } from '@/services/instance-actor.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
 import { extractDbHost, isSelfHost } from '@/misc/convert-host.js';
 import { signedGet } from './request.js';
-import { IObject, isCollectionOrOrderedCollection, ICollection, IOrderedCollection } from './type.js';
+import { IObject, isCollectionOrOrderedCollection, ICollection, IOrderedCollection, getApId } from './type.js';
 import { FollowRequests, Notes, NoteReactions, Polls, Users } from '@/models/index.js';
 import { parseUri } from './db-resolver.js';
 import renderNote from '@/remote/activitypub/renderer/note.js';
@@ -15,6 +15,7 @@ import renderQuestion from '@/remote/activitypub/renderer/question.js';
 import renderCreate from '@/remote/activitypub/renderer/create.js';
 import { renderActivity } from '@/remote/activitypub/renderer/index.js';
 import renderFollow from '@/remote/activitypub/renderer/follow.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 export default class Resolver {
 	private history: Set<string>;
@@ -31,9 +32,7 @@ export default class Resolver {
 	}
 
 	public async resolveCollection(value: string | IObject): Promise<ICollection | IOrderedCollection> {
-		const collection = typeof value === 'string'
-			? await this.resolve(value)
-			: value;
+		const collection = await this.resolve(value);
 
 		if (isCollectionOrOrderedCollection(collection)) {
 			return collection;
@@ -48,6 +47,12 @@ export default class Resolver {
 		}
 
 		if (typeof value !== 'string') {
+			if (typeof value.id !== 'undefined') {
+				const host = extractDbHost(getApId(value));
+				if (await shouldBlockInstance(host)) {
+					throw new Error('instance is blocked');
+				}
+			}
 			return value;
 		}
 
@@ -72,7 +77,7 @@ export default class Resolver {
 		}
 
 		const meta = await fetchMeta();
-		if (meta.blockedHosts.includes(host)) {
+		if (await shouldBlockInstance(host, meta)) {
 			throw new Error('Instance is blocked');
 		}
 

@@ -13,6 +13,7 @@ import { fetchMeta } from '@/misc/fetch-meta.js';
 import { isActor, isPost, getApId } from '@/remote/activitypub/type.js';
 import { SchemaType } from '@/misc/schema.js';
 import { HOUR } from '@/const.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 export const meta = {
 	tags: ['federation'],
@@ -92,8 +93,7 @@ export default define(meta, paramDef, async (ps, me) => {
  */
 async function fetchAny(uri: string, me: CacheableLocalUser | null | undefined): Promise<SchemaType<typeof meta['res']> | null> {
 	// Wait if blocked.
-	const fetchedMeta = await fetchMeta();
-	if (fetchedMeta.blockedHosts.includes(extractDbHost(uri))) return null;
+	if (await shouldBlockInstance(extractDbHost(uri))) return null;
 
 	const dbResolver = new DbResolver();
 

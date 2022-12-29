@@ -5,11 +5,11 @@ import { IAnnounce, getApId } from '../../type.js';
 import { fetchNote, resolveNote } from '../../models/note.js';
 import { apLogger } from '../../logger.js';
 import { extractDbHost } from '@/misc/convert-host.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
 import { getApLock } from '@/misc/app-lock.js';
 import { parseAudience } from '../../audience.js';
 import { StatusError } from '@/misc/fetch.js';
 import { Notes } from '@/models/index.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 const logger = apLogger;
 
@@ -24,8 +24,7 @@ export default async function(resolver: Resolver, actor: CacheableRemoteUser, ac
 	}
 
 	// Interrupt if you block the announcement destination
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(extractDbHost(uri))) return;
+	if (await shouldBlockInstance(extractDbHost(uri))) return;
 
 	const unlock = await getApLock(uri);
 

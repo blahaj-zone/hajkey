@@ -13,7 +13,6 @@ node_modules
 report.*.json
 
 # Yarn
-yarn.lock
 .yarn/*
 !.yarn/patches
 !.yarn/plugins

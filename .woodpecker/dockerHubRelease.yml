@@ -15,3 +15,6 @@ pipeline:
       # Push new version of tag latest if new push on main-branch
       event: push
       branch: main
+
+depends_on:
+  - prSecurityCheck

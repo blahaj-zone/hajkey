@@ -18,6 +18,7 @@ import {
 	isCollection,
 	isFlag,
 	isMove,
+	getApId,
 } from '../type.js';
 import { apLogger } from '../logger.js';
 import Resolver from '../resolver.js';
@@ -37,6 +38,8 @@ import block from './block/index.js';
 import flag from './flag/index.js';
 import move from './move/index.js';
 import type { IObject } from '../type.js';
+import { extractDbHost } from '@/misc/convert-host.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 export async function performActivity(actor: CacheableRemoteUser, activity: IObject) {
 	if (isCollectionOrOrderedCollection(activity)) {
@@ -58,6 +61,12 @@ export async function performActivity(actor: CacheableRemoteUser, activity: IObj
 
 async function performOneActivity(actor: CacheableRemoteUser, activity: IObject): Promise<void> {
 	if (actor.isSuspended) return;
+
+	if (typeof activity.id !== 'undefined') {
+		const host = extractDbHost(getApId(activity));
+		if (await shouldBlockInstance(host)) return;
+	}
+
 
 	if (isCreate(activity)) {
 		await create(actor, activity);

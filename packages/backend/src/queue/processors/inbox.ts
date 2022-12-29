@@ -17,6 +17,7 @@ import { LdSignature } from '@/remote/activitypub/misc/ld-signature.js';
 import { StatusError } from '@/misc/fetch.js';
 import { CacheableRemoteUser } from '@/models/entities/user.js';
 import { UserPublickey } from '@/models/entities/user-publickey.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 const logger = new Logger('inbox');
 
@@ -34,7 +35,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
 	// interrupt if blocked
 	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(host)) {
+	if (await shouldBlockInstance(host, meta)) {
 		return `Blocked request: ${host}`;
 	}
 
@@ -123,7 +124,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
 			// ブロックしてたら中断
 			const ldHost = extractDbHost(authUser.user.uri);
-			if (meta.blockedHosts.includes(ldHost)) {
+			if (await shouldBlockInstance(ldHost, meta)) {
 				return `Blocked request: ${ldHost}`;
 			}
 		} else {

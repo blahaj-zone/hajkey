@@ -2,6 +2,7 @@ import { db } from '@/db/postgre.js';
 import { Instance } from '@/models/entities/instance.js';
 import { Packed } from '@/misc/schema.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 export const InstanceRepository = db.getRepository(Instance).extend({
 	async pack(
@@ -20,7 +21,7 @@ export const InstanceRepository = db.getRepository(Instance).extend({
 			lastCommunicatedAt: instance.lastCommunicatedAt.toISOString(),
 			isNotResponding: instance.isNotResponding,
 			isSuspended: instance.isSuspended,
-			isBlocked: meta.blockedHosts.includes(instance.host),
+			isBlocked: await shouldBlockInstance(instance.host),
 			softwareName: instance.softwareName,
 			softwareVersion: instance.softwareVersion,
 			openRegistrations: instance.openRegistrations,

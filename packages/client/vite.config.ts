@@ -49,7 +49,7 @@ export default defineConfig(({ command, mode }) => {
 				'chrome100',
 				'firefox100',
 				'safari15',
-				'es2017', // TODO: そのうち消す
+				'es2021', // TODO: keep this up to date
 			],
 			manifest: 'manifest.json',
 			rollupOptions: {
@@ -63,11 +63,15 @@ export default defineConfig(({ command, mode }) => {
 				},
 			},
 			cssCodeSplit: true,
+			assetsInlineLimit: 0,
 			outDir: __dirname + '/../../built/_client_dist_',
 			assetsDir: '.',
 			emptyOutDir: false,
 			sourcemap: process.env.NODE_ENV !== 'production',
 			reportCompressedSize: false,
+		},
+		optimizeDeps: {
+			auto: true
 		},
 	};
 });

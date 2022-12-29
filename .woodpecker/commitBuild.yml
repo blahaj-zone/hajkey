@@ -3,15 +3,14 @@ pipeline:
     image: node:${NODE_VERSION}
     commands:
       - corepack enable
-      - yarn install
+      - yarn set version berry
+      - yarn install --immutable
       - yarn build
-    environment:
-      - YARN_ENABLE_IMMUTABLE_INSTALLS=false
 
 matrix:
   NODE_VERSION:
     - 18.12.1
-    - 19.2.0
+    - latest
 
 branches:
   include: [ main, develop, feature/* ]

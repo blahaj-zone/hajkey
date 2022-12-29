@@ -3,6 +3,7 @@ import { fetchMeta } from '@/misc/fetch-meta.js';
 import { Instances } from '@/models/index.js';
 import { Instance } from '@/models/entities/instance.js';
 import { DAY } from '@/const.js';
+import { shouldBlockInstance } from './should-block-instance';
 
 // Threshold from last contact after which an instance will be considered
 // "dead" and should no longer get activities delivered to it.
@@ -16,9 +17,10 @@ const deadThreshold = 7 * DAY;
  */
 export async function skippedInstances(hosts: Array<Instance['host']>): Promise<Array<Instance['host']>> {
 	// first check for blocked instances since that info may already be in memory
-	const { blockedHosts } = await fetchMeta();
-
-	const skipped = hosts.filter(host => blockedHosts.includes(host));
+	const meta = await fetchMeta();
+	const shouldSkip = await Promise.all(hosts.map(host => shouldBlockInstance(host, meta)));
+	const skipped = hosts.filter((_, i) => shouldSkip[i]);
+	
 	// if possible return early and skip accessing the database
 	if (skipped.length === hosts.length) return hosts;	
 

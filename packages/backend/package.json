@@ -4,15 +4,15 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"start": "node ./built/index.js",
-		"start:test": "NODE_ENV=test node ./built/index.js",
+		"start": "yarn node ./built/index.js",
+		"start:test": "NODE_ENV=test yarn node ./built/index.js",
 		"migrate": "typeorm migration:run -d ormconfig.js",
 		"revertmigration": "typeorm migration:revert -d ormconfig.js",
 		"build": "tsc -p tsconfig.json || echo done. && tsc-alias -p tsconfig.json",
-		"watch": "node watch.mjs",
+		"watch": "yarn node watch.mjs",
 		"lint": "eslint --quiet \"src/**/*.ts\"",
 		"mocha": "cross-env NODE_ENV=test TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true TS_NODE_PROJECT=\"./test/tsconfig.json\" mocha",
-		"test": "npm run mocha"
+		"test": "yarn run mocha"
 	},
 	"resolutions": {
 		"chokidar": "^3.3.1",
@@ -33,6 +33,7 @@
 		"@peertube/http-signature": "1.7.0",
 		"@sinonjs/fake-timers": "9.1.2",
 		"@syuilo/aiscript": "0.11.1",
+		"@tensorflow/tfjs": "^4.1.0",
 		"ajv": "8.11.2",
 		"archiver": "5.3.1",
 		"autobind-decorator": "2.4.0",

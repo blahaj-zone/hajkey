@@ -27,6 +27,7 @@ import { parseAudience } from '../audience.js';
 import { extractApMentions } from './mention.js';
 import DbResolver from '../db-resolver.js';
 import { StatusError } from '@/misc/fetch.js';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
 const logger = apLogger;
 
@@ -275,8 +276,7 @@ export async function resolveNote(value: string | IObject, resolver?: Resolver):
 	if (uri == null) throw new Error('missing uri');
 
 	// Abort if origin host is blocked
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(extractDbHost(uri))) throw new StatusError('host blocked', 451, `host ${extractDbHost(uri)} is blocked`);
+	if (await shouldBlockInstance(extractDbHost(uri))) throw new StatusError('host blocked', 451, `host ${extractDbHost(uri)} is blocked`);
 
 	const unlock = await getApLock(uri);
 

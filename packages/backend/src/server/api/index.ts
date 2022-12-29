@@ -91,6 +91,9 @@ router.use(twitter.routes());
 router.get('/v1/instance/peers', async ctx => {
 	const instances = await Instances.find({
 		select: ['host'],
+		where: {
+			isSuspended: false,
+		},
 	});
 
 	ctx.body = instances.map(instance => instance.host);
