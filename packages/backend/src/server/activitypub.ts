@@ -18,7 +18,7 @@ import { ILocalUser, User } from '@/models/entities/user.js';
 import { In, IsNull, Not } from 'typeorm';
 import { renderLike } from '@/remote/activitypub/renderer/like.js';
 import { getUserKeypair } from '@/misc/keypair-store.js';
-import checkFetch from '@/remote/activitypub/check-fetch.js';
+import checkFetch, { hasSignature } from '@/remote/activitypub/check-fetch.js';
 import { getInstanceActor } from '@/services/instance-actor.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
 import renderFollow from '@/remote/activitypub/renderer/follow.js';
@@ -220,8 +220,11 @@ router.get('/users/:user', async (ctx, next) => {
 		return;
 	}
 
+	const missing = await hasSignature(ctx.req) === 'missing';
+	// Allow 'missing' signature to /users/:user for older clients
+
 	const verify = await checkFetch(ctx.req);
-	if (verify != 200) {
+	if (verify != 200 && !missing) {
 		ctx.status = verify;
 		return;
 	}
@@ -246,8 +249,11 @@ router.get('/@:user', async (ctx, next) => {
 		return;
 	}
 
+	const missing = await hasSignature(ctx.req) === 'missing';
+	// Allow 'missing' signature to /@:user for older clients
+
 	const verify = await checkFetch(ctx.req);
-	if (verify != 200) {
+	if (verify != 200 && !missing) {
 		ctx.status = verify;
 		return;
 	}

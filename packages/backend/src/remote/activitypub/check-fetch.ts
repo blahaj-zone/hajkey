@@ -6,8 +6,22 @@ import { URL } from 'url';
 import { toPuny } from '@/misc/convert-host.js';
 import DbResolver from '@/remote/activitypub/db-resolver.js';
 import { getApId } from '@/remote/activitypub/type.js';
-import { shouldBlockInstance } from '@/misc/should-block-instance';
+import { shouldBlockInstance } from '@/misc/should-block-instance.js';
 
+export async function hasSignature(req: IncomingMessage): Promise<string> {
+	const meta = await fetchMeta();
+	const required = (meta.secureMode || meta.privateMode)
+
+	try {
+		httpSignature.parseRequest(req, { 'headers': [] });
+	} catch (e) {
+		if (e instanceof Error && e.name === 'MissingHeaderError') {
+			return required ? 'missing' : 'optional';
+		}
+		return 'invalid';
+	}
+	return required ? 'supplied' : 'unneeded';
+}
 
 export default async function checkFetch(req: IncomingMessage): Promise<number> {
 	const meta = await fetchMeta();

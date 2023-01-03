@@ -3,7 +3,7 @@ import { fetchMeta } from '@/misc/fetch-meta.js';
 import { Instances } from '@/models/index.js';
 import { Instance } from '@/models/entities/instance.js';
 import { DAY } from '@/const.js';
-import { shouldBlockInstance } from './should-block-instance';
+import { shouldBlockInstance } from './should-block-instance.js';
 
 // Threshold from last contact after which an instance will be considered
 // "dead" and should no longer get activities delivered to it.
