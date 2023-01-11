@@ -230,8 +230,10 @@ import { getAccountFromId } from '@/scripts/get-account-from-id';
 	reactionPicker.init();
 
 	if (splash) {
-		splash.style.opacity = '0';
-		splash.style.pointerEvents = 'none';
+		setTimeout(() => {
+			splash.style.opacity = '0';
+			splash.style.pointerEvents = 'none';
+		}, 1500);
 	}
 
 	// クライアントが更新されたか？

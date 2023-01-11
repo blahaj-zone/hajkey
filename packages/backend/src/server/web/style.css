@@ -13,7 +13,7 @@ html {
 	cursor: wait;
 	background-color: var(--bg);
 	opacity: 1;
-	transition: opacity 0.2s ease;
+	transition: opacity 0.5s ease;
 }
 
 #splashIcon {
