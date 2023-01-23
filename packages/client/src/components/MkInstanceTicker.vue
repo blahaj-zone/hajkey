@@ -1,7 +1,7 @@
 <template>
-<div class="hpaizdrt" :style="bg">
+<div class="hpaizdrt" :style="border">
 	<img v-if="instance.faviconUrl" class="icon" :src="instance.faviconUrl" aria-hidden="true"/>
-	<span class="name">{{ instance.name }}</span>
+	<span class="name" :style="bg">{{ instance.name }}</span>
 </div>
 </template>
 
@@ -12,6 +12,7 @@ import { instance as Instance } from '@/instance';
 const props = defineProps<{
 	instance?: {
 		faviconUrl?: string
+		iconUrl?: string
 		name: string
 		themeColor?: string
 	}
@@ -24,10 +25,21 @@ const instance = props.instance ?? {
 	themeColor: (document.querySelector('meta[name="theme-color-orig"]') as HTMLMetaElement)?.content
 };
 
-const themeColor = instance.themeColor ?? '#777777';
+const themeColor = instance.themeColor ?? '#3088D4';
+
+const [r, g, b] = (themeColor.match(/\w\w/g)?.map(x => parseInt(x, 16))) as [number, number, number];
+const rLum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+const textColor = rLum > 0.179 ? '#101010' : '#f0f0f0';
+const shadowColor = rLum <= 0.179 ? '#000000' : '#ffffff';
+const shadowBlur = rLum <= 0.179 ? '0 2px 2px' : '1px 1px 1px';
 
 const bg = {
-	background: `linear-gradient(90deg, ${themeColor}, ${themeColor}11)`,
+	color: textColor,
+	textShadow: ` ${shadowColor} ${shadowBlur}`,
+	background: `linear-gradient(90deg, ${themeColor}, ${themeColor}AA)`,
+};
+const border = {
+	border: `1px solid ${themeColor}`,
 };
 </script>
 
@@ -36,18 +48,19 @@ const bg = {
 	$height: 1.1rem;
 
 	height: $height;
+	padding: 0;
 	justify-self: flex-end;
-	padding: .1em .7em;
 	border-radius: 100px;
 	font-size: .8em;
-	text-shadow: 0 2px 2px var(--shadow);
 	overflow: hidden;
 
 	> .icon {
-		height: 100%;
+    height: 90%;
+    margin: 0 0 0 0.25em;
 	}
 
 	> .name {
+    padding: 0.3em 0.9em;
 		margin-left: 4px;
 		line-height: $height;
 		font-size: 0.9em;
