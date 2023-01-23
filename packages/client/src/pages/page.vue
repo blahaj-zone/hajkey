@@ -219,7 +219,7 @@ definePageMetadata(computed(() => page ? {
 					> h1 {
 						margin: 0;
 						color: white;
-						text-shadow: 0 0 8px #000;
+						text-shadow: 0 0 8px var(--shadow);
 					}
 				}
 
@@ -239,7 +239,7 @@ definePageMetadata(computed(() => page ? {
 						height: 31px;
 						width: 31px;
 						color: #fff;
-						text-shadow: 0 0 8px #000;
+						text-shadow: 0 0 8px var(--shadow);
 						font-size: 16px;
 					}
 

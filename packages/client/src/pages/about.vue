@@ -307,7 +307,7 @@ function syncSlide(index) {
 			display: block;
 			padding: 16px;
 			color: #e0def4;
-			text-shadow: 0 0 8px #000;
+			text-shadow: 0 0 8px var(--shadow);
 			background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
 		}
 	}

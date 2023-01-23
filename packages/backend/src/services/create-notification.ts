@@ -1,6 +1,6 @@
 import { publishMainStream } from '@/services/stream.js';
 import { pushNotification } from '@/services/push-notification.js';
-import { Notifications, Mutings, UserProfiles, Users } from '@/models/index.js';
+import { Notifications, Mutings, NoteThreadMutings, UserProfiles, Users } from '@/models/index.js';
 import { genId } from '@/misc/gen-id.js';
 import { User } from '@/models/entities/user.js';
 import { Notification } from '@/models/entities/notification.js';
@@ -18,6 +18,17 @@ export async function createNotification(
 	const profile = await UserProfiles.findOneBy({ userId: notifieeId });
 
 	const isMuted = profile?.mutingNotificationTypes.includes(type);
+
+	if (data.note != null) {
+		const threadMute = await NoteThreadMutings.findOneBy({
+			userId: notifieeId,
+			threadId: data.note.threadId || data.note.id,
+		});
+
+		if (threadMute) {
+			return null;
+		}
+	}
 
 	// Create notification
 	const notification = await Notifications.insert({

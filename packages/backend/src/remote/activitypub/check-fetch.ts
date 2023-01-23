@@ -1,12 +1,12 @@
-import config from '@/config/index.js';
-import { IncomingMessage } from 'http';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import httpSignature from '@peertube/http-signature';
 import { URL } from 'url';
+import httpSignature from '@peertube/http-signature';
+import config from '@/config/index.js';
+import { fetchMeta } from '@/misc/fetch-meta.js';
 import { toPuny } from '@/misc/convert-host.js';
 import DbResolver from '@/remote/activitypub/db-resolver.js';
 import { getApId } from '@/remote/activitypub/type.js';
 import { shouldBlockInstance } from '@/misc/should-block-instance.js';
+import type { IncomingMessage } from 'http';
 
 export async function hasSignature(req: IncomingMessage): Promise<string> {
 	const meta = await fetchMeta();
@@ -23,7 +23,7 @@ export async function hasSignature(req: IncomingMessage): Promise<string> {
 	return required ? 'supplied' : 'unneeded';
 }
 
-export default async function checkFetch(req: IncomingMessage): Promise<number> {
+export async function checkFetch(req: IncomingMessage): Promise<number> {
 	const meta = await fetchMeta();
 	if (meta.secureMode || meta.privateMode) {
 		let signature;

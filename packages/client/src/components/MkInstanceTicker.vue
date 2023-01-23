@@ -6,7 +6,6 @@
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
 import { instanceName } from '@/config';
 import { instance as Instance } from '@/instance';
 
@@ -28,7 +27,7 @@ const instance = props.instance ?? {
 const themeColor = instance.themeColor ?? '#777777';
 
 const bg = {
-	background: `linear-gradient(90deg, ${themeColor}, ${themeColor}00)`
+	background: `linear-gradient(90deg, ${themeColor}, ${themeColor}11)`,
 };
 </script>
 
@@ -37,22 +36,12 @@ const bg = {
 	$height: 1.1rem;
 
 	height: $height;
-	border-radius: 4px 0 0 4px;
+	justify-self: flex-end;
+	padding: .1em .7em;
+	border-radius: 100px;
+	font-size: .8em;
+	text-shadow: 0 2px 2px var(--shadow);
 	overflow: hidden;
-	color: #fff;
-	text-shadow: /* .866 ≈ sin(60deg) */
-		1px 0 1px #000,
-		.866px .5px 1px #000,
-		.5px .866px 1px #000,
-		0 1px 1px #000,
-		-.5px .866px 1px #000,
-		-.866px .5px 1px #000,
-		-1px 0 1px #000,
-		-.866px -.5px 1px #000,
-		-.5px -.866px 1px #000,
-		0 -1px 1px #000,
-		.5px -.866px 1px #000,
-		.866px -.5px 1px #000;
 
 	> .icon {
 		height: 100%;

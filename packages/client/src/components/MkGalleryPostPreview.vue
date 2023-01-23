@@ -88,7 +88,7 @@ const props = defineProps<{
 			padding: 16px;
 			box-sizing: border-box;
 			color: #fff;
-			text-shadow: 0 0 8px #000;
+			text-shadow: 0 0 8px var(--shadow);
 			background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
 
 			&:before {

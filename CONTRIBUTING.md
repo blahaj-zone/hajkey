@@ -1,7 +1,10 @@
 # Contribution guide
 We're glad you're interested in contributing Calckey! In this document you will find the information you need to contribute to the project.
 
-# Translations
+## Localization (l10n)
+Calckey uses [Weblate](hhttps://hosted.weblate.org/engage/calckey/) for localization management.
+
+If your language is not listed in Weblate, please open an issue.
 
 You can contribute without knowing how to code by helping translate here:
 
@@ -10,14 +13,14 @@ You can contribute without knowing how to code by helping translate here:
 [![Translation bars](https://hosted.weblate.org/widgets/calckey/-/multi-auto.svg)](https://hosted.weblate.org/engage/calckey/)
 
 ## Roadmap
-See [ROADMAP.md](./ROADMAP.md)
+See [CALCKEY.md](./CALCKEY.md)
 
 ## Issues
 Before creating an issue, please check the following:
 - To avoid duplication, please search for similar issues before creating a new issue.
 - Do not use Issues to ask questions or troubleshooting.
 	- Issues should only be used to feature requests, suggestions, and bug tracking.
-	- Please ask questions or troubleshooting in the [Misskey Forum](https://forum.misskey.io/) or [Discord](https://discord.gg/Wp8gVStHW3).
+	- Please ask questions or troubleshooting in the [Matrix room](https://matrix.to/#/#calckey:matrix.fedibird.com).
 
 > **Warning**
 > Do not close issues that are about to be resolved. It should remain open until a commit that actually resolves it is merged.
@@ -31,18 +34,18 @@ PRs that do not have a clear set of do's and don'ts tend to be bloated and diffi
 Also, when you start implementation, assign yourself to the Issue (if you cannot do it yourself, ask another member to assign you). By expressing your intention to work the Issue, you can prevent conflicts in the work.
 
 ## Well-known branches
-- **`master`** branch is tracking the latest release and used for production purposes.
-- **`develop`** branch is where we work for the next release.
-	- When you create a PR, basically target it to this branch.
-- **`l10n_develop`** branch is reserved for localization management.
+- The **`main`** branch is tracking the latest release and used for production purposes.
+- The **`develop`** branch is where we work for the next release.
+	- When you create a PR, basically target it to this branch. **But create a different branch**
+- The **`l10n_develop`** branch is reserved for localization management.
+- **`feature/*`** branches are reserved for the development of a specific feature
 
 ## Creating a PR
 Thank you for your PR! Before creating a PR, please check the following:
 - If possible, prefix the title with a keyword that identifies the type of this PR, as shown below.
-  - `fix` / `refactor` / `feat` / `enhance` / `perf` / `chore` etc
+  - `fix` / `refactor` / `feat` / `enhance` / `perf` / `chore` etc. You are also welcome to use gitmoji. This is important as we use these to A) easier read the git history and B) generate our changelog. Without propper prefixing it is possible that your PR is rejected.
   - Also, make sure that the granularity of this PR is appropriate. Please do not include more than one type of change or interest in a single PR.
-- If there is an Issue which will be resolved by this PR, please include a reference to the Issue in the text.
-- Please add the summary of the changes to [`CHANGELOG.md`](/CHANGELOG.md). However, this is not necessary for changes that do not affect the users, such as refactoring.
+- If there is an Issue which will be resolved by this PR, please include a reference to the Issue in the text. Good examples include `Closing: #21` or `Resolves: #21`
 - Check if there are any documents that need to be created or updated due to this change.
 - If you have added a feature or fixed a bug, please add a test case if possible.
 - Please make sure that tests and Lint are passed in advance.
@@ -68,7 +71,7 @@ Be willing to comment on the good points and not just the things you want fixed 
 	- Are there any omissions or gaps?
 	- Does it check for anomalies?
 
-## Deploy
+## Deploy (SOON)
 The `/deploy` command by issue comment can be used to deploy the contents of a PR to the preview environment.
 ```
 /deploy sha=<commit hash>
@@ -90,20 +93,13 @@ An actual domain will be assigned so you can test the federation.
 	- The target branch must be `master`
 	- The tag name must be the version
 
-## Localization (l10n)
-Misskey uses [Crowdin](https://crowdin.com/project/misskey) for localization management.
-You can improve our translations with your Crowdin account.
-Your changes in Crowdin are automatically submitted as a PR (with the title "New Crowdin translations") to the repository.
-The owner [@syuilo](https://github.com/syuilo) merges the PR into the develop branch before the next release.
-
-If your language is not listed in Crowdin, please open an issue.
-
-![Crowdin](https://d322cqt584bo4o.cloudfront.net/misskey/localized.svg)
-
 ## Development
 During development, it is useful to use the `yarn dev` command.
 This command monitors the server-side and client-side source files and automatically builds them if they are modified.
 In addition, it will also automatically start the Misskey server process.
+
+
+# THE FOLLOWING IS OUTDATED:
 
 ## Testing
 - Test codes are located in [`/test`](/test).

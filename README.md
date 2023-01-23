@@ -5,10 +5,12 @@
 
 **🌎 **[Calckey](https://i.calckey.cloud/)** is an open source, decentralized social media platform that's free forever! 🚀**
 
+[![no-github-badge](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page/)
 [![status-badge](https://ci.codeberg.org/api/badges/calckey/calckey/status.svg)](https://ci.codeberg.org/calckey/calckey)
 [![liberapay-badge](https://img.shields.io/liberapay/receives/ThatOneCalculator?logo=liberapay)](https://liberapay.com/ThatOneCalculator)
 [![translate-badge](https://hosted.weblate.org/widgets/calckey/-/svg-badge.svg)](https://hosted.weblate.org/engage/calckey/)
 [![docker-badge](https://img.shields.io/docker/pulls/thatonecalculator/calckey?logo=docker)](https://hub.docker.com/r/thatonecalculator/calckey)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](./CODE_OF_CONDUCT.md)
 [![codeberg-badge](https://custom-icon-badges.demolab.com/badge/hosted%20on-codeberg-blue.svg?logo=codeberg&logoColor=white)](https://codeberg.org/calckey/calckey/)
 
 </div>
@@ -50,12 +52,13 @@
 - 📖 JoinFediverse Wiki: <https://joinfediverse.wiki/What_is_Calckey%3F>
 - 🐋 Docker Hub: <https://hub.docker.com/r/thatonecalculator/calckey>
 - ✍️ Weblate: <https://hosted.weblate.org/engage/calckey/>
+- 📦 Yunohost: <https://github.com/YunoHost-Apps/calckey_ynh>
 
 # 🌠 Getting started
 
 This guide will work for both **starting from scratch** and **migrating from Misskey**.
 
-## 📦 Dependencies
+## 🧑‍💻 Dependencies
 
 - 🐢 At least [NodeJS](https://nodejs.org/en/) v18.12.1 (v19 recommended)
   - Install with [nvm](https://github.com/nvm-sh/nvm)
@@ -90,7 +93,7 @@ cd calckey/
 ## 📩 Install dependencies
 
 ```sh
-# nvm install 18 && nvm alias default 18 && nvm use 18
+# nvm install 19 && nvm use 19
 corepack enable
 ```
 

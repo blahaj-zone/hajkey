@@ -142,6 +142,7 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 			mediaType: "text/x.misskeymarkdown",
 		},
 		_misskey_quote: quote,
+		quoteUri: quote,
 		quoteUrl: quote,
 		published: note.createdAt.toISOString(),
 		to,

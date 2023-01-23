@@ -33,7 +33,7 @@ async function init() {
 
 function save() {
 	os.apiWithDialog('admin/update-meta', {
-		blockedHosts: blockedHosts.split('\n') || [],
+		blockedHosts: blockedHosts.split('\n').map(h => h.trim()) || [],
 	}).then(() => {
 		fetchInstance();
 	});

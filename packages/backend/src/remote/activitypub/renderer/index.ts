@@ -22,6 +22,7 @@ export const renderActivity = (x: any): IActivity | null => {
 				movedToUri: 'as:movedTo',
 				sensitive: 'as:sensitive',
 				Hashtag: 'as:Hashtag',
+				quoteUri: 'fedibird:quoteUri',
 				quoteUrl: 'as:quoteUrl',
 				// Mastodon
 				toot: 'http://joinmastodon.org/ns#',

@@ -92,6 +92,7 @@ class NotificationManager {
 				createNotification(x.target, x.reason, {
 					notifierId: this.notifier.id,
 					noteId: this.note.id,
+					note: this.note,
 				});
 			}
 		}
@@ -394,7 +395,14 @@ export default async (user: { id: User['id']; username: User['username']; host: 
 
 			// Notify
 			if (data.renote.userHost === null) {
-				nm.push(data.renote.userId, type);
+				const threadMuted = await NoteThreadMutings.findOneBy({
+					userId: data.renote.userId,
+					threadId: data.renote.threadId || data.renote.id,
+				});
+				
+				if (!threadMuted) {
+					nm.push(data.renote.userId, type);
+				}
 			}
 
 			// Fetch watchers

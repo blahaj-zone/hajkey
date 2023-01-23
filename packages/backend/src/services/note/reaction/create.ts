@@ -102,6 +102,7 @@ export default async (user: { id: User['id']; host: User['host']; }, note: Note,
 	if (note.userHost === null) {
 		createNotification(note.userId, 'reaction', {
 			notifierId: user.id,
+			note: note,
 			noteId: note.id,
 			reaction: reaction,
 		});
@@ -115,6 +116,7 @@ export default async (user: { id: User['id']; host: User['host']; }, note: Note,
 		for (const watcher of watchers) {
 			createNotification(watcher.userId, 'reaction', {
 				notifierId: user.id,
+				note: note,
 				noteId: note.id,
 				reaction: reaction,
 			});

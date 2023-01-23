@@ -1,6 +1,6 @@
 {
 	"name": "calckey",
-	"version": "13.0.5-kt.6",
+	"version": "13.0.6-rc-kt.7",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
@@ -42,8 +42,8 @@
 		"@bull-board/api": "^4.6.4",
 		"@bull-board/ui": "^4.6.4",
 		"@tensorflow/tfjs": "^3.21.0",
-		"calckey-js": "^0.0.17",
-		"eslint": "^8.30.0",
+		"calckey-js": "^0.0.20",
+		"eslint": "^8.31.0",
 		"execa": "5.1.1",
 		"gulp": "4.0.2",
 		"gulp-cssnano": "2.1.3",

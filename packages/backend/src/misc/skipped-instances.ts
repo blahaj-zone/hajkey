@@ -1,7 +1,7 @@
 import { Brackets } from 'typeorm';
 import { fetchMeta } from '@/misc/fetch-meta.js';
 import { Instances } from '@/models/index.js';
-import { Instance } from '@/models/entities/instance.js';
+import type { Instance } from '@/models/entities/instance.js';
 import { DAY } from '@/const.js';
 import { shouldBlockInstance } from './should-block-instance.js';
 
@@ -34,10 +34,10 @@ export async function skippedInstances(hosts: Array<Instance['host']>): Promise<
 				hosts: hosts.filter(host => !skipped.includes(host)),
 			})
 			.andWhere(new Brackets(qb => { qb
-				.where('instance.isSuspended')
+				.where('instance.isSuspended');
 			}))
 			.select('host')
-			.getRawMany()
+			.getRawMany(),
 	);
 }
 

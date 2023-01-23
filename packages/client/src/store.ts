@@ -257,7 +257,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	showUpdates: {
 		where: 'device',
-		default: false,
+		default: true,
 	},
 	swipeOnDesktop: {
 		where: 'device',

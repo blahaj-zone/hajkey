@@ -288,10 +288,10 @@ async function deleteProfile() {
 
 			> .column {
 				flex-shrink: 0;
-				border-right: solid var(--deckDividerThickness) var(--deckDivider);
+				border-right: solid var(--deckDividerThickness) var(--bg);
 
 				&:first-of-type {
-					border-left: solid var(--deckDividerThickness) var(--deckDivider);
+					border-left: solid var(--deckDividerThickness) var(--bg);
 				}
 
 				&.folder {
@@ -299,7 +299,7 @@ async function deleteProfile() {
 					flex-direction: column;
 
 					> *:not(:last-of-type) {
-						border-bottom: solid var(--deckDividerThickness) var(--deckDivider);
+						border-bottom: solid var(--deckDividerThickness) var(--bg);
 					}
 				}
 			}

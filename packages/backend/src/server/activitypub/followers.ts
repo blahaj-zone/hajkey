@@ -1,5 +1,4 @@
-import Router from '@koa/router';
-import { FindOptionsWhere, IsNull, LessThan } from 'typeorm';
+import { IsNull, LessThan } from 'typeorm';
 import config from '@/config/index.js';
 import * as url from '@/prelude/url.js';
 import { renderActivity } from '@/remote/activitypub/renderer/index.js';
@@ -7,14 +6,16 @@ import renderOrderedCollection from '@/remote/activitypub/renderer/ordered-colle
 import renderOrderedCollectionPage from '@/remote/activitypub/renderer/ordered-collection-page.js';
 import renderFollowUser from '@/remote/activitypub/renderer/follow-user.js';
 import { Users, Followings, UserProfiles } from '@/models/index.js';
-import { Following } from '@/models/entities/following.js';
-import { setResponseType } from '../activitypub.js';
-import checkFetch from '@/remote/activitypub/check-fetch.js';
+import type { Following } from '@/models/entities/following.js';
+import { checkFetch } from '@/remote/activitypub/check-fetch.js';
 import { fetchMeta } from '@/misc/fetch-meta.js';
+import { setResponseType } from '../activitypub.js';
+import type { FindOptionsWhere } from 'typeorm';
+import type Router from '@koa/router';
 
 export default async (ctx: Router.RouterContext) => {
 	const verify = await checkFetch(ctx.req);
-	if (verify != 200) {
+	if (verify !== 200) {
 		ctx.status = verify;
 		return;
 	}

@@ -44,7 +44,7 @@
 					</div>
 					<div class="follow-container">
 						<div class="actions">
-							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" :inline="true" :transparent="false" :full="true" class="koudoku"/>
+							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" :inline="true" :transparent="false" :full="!narrow" class="koudoku"/>
 							<button class="menu _button" @click="menu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
 							<!-- <MkFollowButton v-else-if="$i == null" :user="user" :remote="true" :inline="true" :transparent="false" :full="true" class="koudoku"/> -->
 						</div>
@@ -227,7 +227,7 @@ onUnmounted(() => {
 						background-color: #26233a;
 						background-size: cover;
 						background-position: center;
-						box-shadow: 0 0 128px rgba(0, 0, 0, 0.5) inset;
+						box-shadow: 0 0 128px var(--shadow) inset;
 						will-change: background-position;
 
 						&::after {
@@ -275,7 +275,7 @@ onUnmounted(() => {
 							height: 31px;
 							width: 31px;
 							color: #fff;
-							text-shadow: 0 0 8px #000;
+							text-shadow: 0 0 8px var(--shadow);
 							font-size: 16px;
 						}
 
@@ -302,7 +302,7 @@ onUnmounted(() => {
 							line-height: 32px;
 							font-weight: bold;
 							font-size: 1.8em;
-							text-shadow: 0 0 8px #000;
+							text-shadow: 0 0 8px var(--shadow);
 						}
 
 						> .followed {
@@ -339,6 +339,7 @@ onUnmounted(() => {
 					overflow: hidden;
 					background-size: cover;
 					background-position: center;
+					z-index: 100;
 
 					> .fade {
 						position: absolute;
@@ -385,7 +386,7 @@ onUnmounted(() => {
 							line-height: 32px;
 							font-weight: bold;
 							font-size: 1.8em;
-							text-shadow: 0 0 8px #000;
+							text-shadow: 0 0 8px var(--shadow);
 						}
 
 						> .bottom {
@@ -418,7 +419,7 @@ onUnmounted(() => {
 							line-height: 32px;
 							font-weight: bold;
 							font-size: 1.8em;
-							text-shadow: 0 0 8px #000;
+							text-shadow: 0 0 8px var(--shadow);
 						}
 
 						> .followed {
@@ -466,11 +467,10 @@ onUnmounted(() => {
 				}
 
 				> .description {
-					padding: 24px 24px 24px 154px;
+					padding: 72px 12px 2px 24px;
 					font-size: 0.95em;
 					top: -65px;
 					position: relative;
-					max-width: 400px;
 
 					> .empty {
 						margin: 0;
