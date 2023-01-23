@@ -97,11 +97,7 @@ const headerActions = $computed(() => antenna ? [{
 	text: i18n.ts.settings,
 	handler: settings,
 }, {
-<<<<<<< HEAD
 	icon: 'ph-checks-bold ph-lg',
-=======
-	icon: 'ph-check-bold ph-lg',
->>>>>>> v13.0.6-rc
 	text: i18n.ts.markAllAsRead,
 	handler: markRead,
 }] : []);
