@@ -603,10 +603,53 @@ async function post() {
 		});
 	}).catch(err => {
 		posting = false;
-		os.alert({
-			type: 'error',
-			text: err.message + '\n' + (err as any).id,
-		});
+
+		let message: string[] = [];
+
+		const sendMessage = (msg: string) => {
+			os.alert({
+				type: 'error',
+				text: msg,
+			});
+		};
+
+		let n: number;
+		switch (err.info?.param) {
+			case '#/properties/poll/properties/choices/items/maxLength':
+				n = +(/(\d+)/.exec(err.info?.reason)?.[1] ?? 0);
+				sendMessage(`Poll choices must be less than ${n} characters.`);
+				return;
+			case '#/properties/poll/properties/choices/items/minLength':
+				n = +(/(\d+)/.exec(err.info?.reason)?.[1] ?? 0);
+				sendMessage(`Poll choices must be more than ${n} characters.`);
+				return;
+			case '#/properties/cw/maxLength':
+				n = +(/(\d+)/.exec(err.info?.reason)?.[1] ?? 0);
+				sendMessage(`Content warning must be less than ${n} characters.`);
+				return;
+			case '#/properties/poll/properties/expiresAfter/minimum':
+				sendMessage(`Poll expiration must be more than 1 seconds.`);
+				return;
+		}
+
+		if (err.info?.param) {
+			const paramName = err.info.param
+				.replace('#/properties/', '')
+				.replaceAll('/properties/', '/')
+				.replaceAll('/', ' ');
+
+			message.push(`Parameter: ${paramName}`);
+		}
+
+		if (err.info?.reason) {
+			message.push(`Reason: ${err.info.reason}`);
+		}
+
+		if (message.length < 1) {
+			message.push(`${err.message}\n${err.id}`);
+		}
+
+		sendMessage(`${message.join('\n')}`);
 	});
 }
 
