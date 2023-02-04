@@ -1,6 +1,13 @@
-import { PrimaryColumn, Entity, JoinColumn, Column, ManyToOne, Index } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	JoinColumn,
+	Column,
+	ManyToOne,
+	Index,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class UserSecurityKey {
@@ -11,7 +18,7 @@ export class UserSecurityKey {
 
 	@Index()
 	@Column(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

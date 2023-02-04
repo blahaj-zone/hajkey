@@ -1,8 +1,8 @@
-import Connection from '.';
-import { Note } from '@/models/entities/note.js';
-import { Notes } from '@/models/index.js';
-import { Packed } from '@/misc/schema.js';
-import { IdentifiableError } from '@/misc/identifiable-error.js';
+import type Connection from ".";
+import type { Note } from "@/models/entities/note.js";
+import { Notes } from "@/models/index.js";
+import type { Packed } from "@/misc/schema.js";
+import { IdentifiableError } from "@/misc/identifiable-error.js";
 
 /**
  * Stream channel
@@ -51,30 +51,35 @@ export default abstract class Channel {
 		const type = payload === undefined ? typeOrPayload.type : typeOrPayload;
 		const body = payload === undefined ? typeOrPayload.body : payload;
 
-		this.connection.sendMessageToWs('channel', {
+		this.connection.sendMessageToWs("channel", {
 			id: this.id,
 			type: type,
 			body: body,
 		});
 	}
 
-	protected withPackedNote(callback: (note: Packed<'Note'>) => void): (Note) => void {
+	protected withPackedNote(
+		callback: (note: Packed<"Note">) => void,
+	): (Note) => void {
 		return async (note: Note) => {
 			try {
 				// because `note` was previously JSON.stringify'ed, the fields that
 				// were objects before are now strings and have to be restored or
 				// removed from the object
 				note.createdAt = new Date(note.createdAt);
-				delete note.reply;
-				delete note.renote;
-				delete note.user;
-				delete note.channel;
+				note.reply = undefined;
+				note.renote = undefined;
+				note.user = undefined;
+				note.channel = undefined;
 
 				const packed = await Notes.pack(note, this.user, { detail: true });
 
 				callback(packed);
 			} catch (err) {
-				if (err instanceof IdentifiableError && err.id === '9725d0ce-ba28-4dde-95a7-2cbb2c15de24') {
+				if (
+					err instanceof IdentifiableError &&
+					err.id === "9725d0ce-ba28-4dde-95a7-2cbb2c15de24"
+				) {
 					// skip: note not visible to user
 					return;
 				} else {

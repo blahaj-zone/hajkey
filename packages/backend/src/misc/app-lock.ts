@@ -1,16 +1,15 @@
-import { redisClient } from '../db/redis.js';
-import { promisify } from 'node:util';
-import redisLock from 'redis-lock';
+import { redisClient } from "../db/redis.js";
+import { promisify } from "node:util";
+import redisLock from "redis-lock";
 
 /**
  * Retry delay (ms) for lock acquisition
  */
 const retryDelay = 100;
 
-const lock: (key: string, timeout?: number) => Promise<() => void>
-	= redisClient
+const lock: (key: string, timeout?: number) => Promise<() => void> = redisClient
 	? promisify(redisLock(redisClient, retryDelay))
-	: async () => () => { };
+	: async () => () => {};
 
 /**
  * Get AP Object lock
@@ -22,7 +21,10 @@ export function getApLock(uri: string, timeout = 30 * 1000) {
 	return lock(`ap-object:${uri}`, timeout);
 }
 
-export function getFetchInstanceMetadataLock(host: string, timeout = 30 * 1000) {
+export function getFetchInstanceMetadataLock(
+	host: string,
+	timeout = 30 * 1000,
+) {
 	return lock(`instance:${host}`, timeout);
 }
 

@@ -1,15 +1,15 @@
-import define from '../../../define.js';
-import { ApiError } from '../../../error.js';
-import { MessagingMessages } from '@/models/index.js';
-import { deleteMessage } from '@/services/messages/delete.js';
-import { SECOND, HOUR } from '@/const.js';
+import define from "../../../define.js";
+import { ApiError } from "../../../error.js";
+import { MessagingMessages } from "@/models/index.js";
+import { deleteMessage } from "@/services/messages/delete.js";
+import { SECOND, HOUR } from "@/const.js";
 
 export const meta = {
-	tags: ['messaging'],
+	tags: ["messaging"],
 
 	requireCredential: true,
 
-	kind: 'write:messaging',
+	kind: "write:messaging",
 
 	limit: {
 		duration: HOUR,
@@ -19,22 +19,21 @@ export const meta = {
 
 	errors: {
 		noSuchMessage: {
-			message: 'No such message.',
-			code: 'NO_SUCH_MESSAGE',
-			id: '54b5b326-7925-42cf-8019-130fda8b56af',
+			message: "No such message.",
+			code: "NO_SUCH_MESSAGE",
+			id: "54b5b326-7925-42cf-8019-130fda8b56af",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		messageId: { type: 'string', format: 'misskey:id' },
+		messageId: { type: "string", format: "misskey:id" },
 	},
-	required: ['messageId'],
+	required: ["messageId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const message = await MessagingMessages.findOneBy({
 		id: ps.messageId,

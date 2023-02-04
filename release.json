@@ -1,5 +1,5 @@
 {
-	"version": "13.0.6-rc",
-	"notes": "$[jelly Happy new year!] This release includes many changes, including:\n- New post layout\n- Automatic subdomain blocks\n- Notes are now called posts\n- Federation improvements\n- Many bug fixes and performance improvements",
+	"version": "13.1.0",
+	"notes": "This release includes many changes, including:\n\n• New post and thread layout\n• Automatic subdomain blocks\n• Customizable default reactions\n• Federation improvements\n• Many bug fixes and performance improvements",
 	"screenshots": []
 }

@@ -1,6 +1,6 @@
-import { onUnmounted, ref } from 'vue';
-import * as os from '@/os';
-import MkChartTooltip from '@/components/MkChartTooltip.vue';
+import { onUnmounted, ref } from "vue";
+import * as os from "@/os";
+import MkChartTooltip from "@/components/MkChartTooltip.vue";
 
 export function useChartTooltip() {
 	const tooltipShowing = ref(false);
@@ -10,13 +10,17 @@ export function useChartTooltip() {
 	const tooltipSeries = ref(null);
 	let disposeTooltipComponent;
 
-	os.popup(MkChartTooltip, {
-		showing: tooltipShowing,
-		x: tooltipX,
-		y: tooltipY,
-		title: tooltipTitle,
-		series: tooltipSeries,
-	}, {}).then(({ dispose }) => {
+	os.popup(
+		MkChartTooltip,
+		{
+			showing: tooltipShowing,
+			x: tooltipX,
+			y: tooltipY,
+			title: tooltipTitle,
+			series: tooltipSeries,
+		},
+		{},
+	).then(({ dispose }) => {
 		disposeTooltipComponent = dispose;
 	});
 

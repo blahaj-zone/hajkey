@@ -1,7 +1,14 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { DriveFile } from './drive-file.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import { DriveFile } from "./drive-file.js";
 
 @Entity()
 export class Channel {
@@ -26,7 +33,7 @@ export class Channel {
 		nullable: true,
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'] | null;
+	public userId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'SET NULL',
@@ -51,7 +58,7 @@ export class Channel {
 		nullable: true,
 		comment: 'The ID of banner Channel.',
 	})
-	public bannerId: DriveFile['id'] | null;
+	public bannerId: DriveFile["id"] | null;
 
 	@ManyToOne(type => DriveFile, {
 		onDelete: 'SET NULL',

@@ -1,20 +1,24 @@
-import { Note } from '@/models/entities/note.js';
-import { publishMainStream } from '@/services/stream.js';
-import { User } from '@/models/entities/user.js';
-import { Mutings, NoteThreadMutings, NoteUnreads } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
+import type { Note } from "@/models/entities/note.js";
+import { publishMainStream } from "@/services/stream.js";
+import type { User } from "@/models/entities/user.js";
+import { Mutings, NoteThreadMutings, NoteUnreads } from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
 
-export async function insertNoteUnread(userId: User['id'], note: Note, params: {
-	// NOTE: isSpecifiedがtrueならisMentionedは必ずfalse
-	isSpecified: boolean;
-	isMentioned: boolean;
-}) {
+export async function insertNoteUnread(
+	userId: User["id"],
+	note: Note,
+	params: {
+		// NOTE: isSpecifiedがtrueならisMentionedは必ずfalse
+		isSpecified: boolean;
+		isMentioned: boolean;
+	},
+) {
 	//#region ミュートしているなら無視
 	// TODO: 現在の仕様ではChannelにミュートは適用されないのでよしなにケアする
 	const mute = await Mutings.findBy({
 		muterId: userId,
 	});
-	if (mute.map(m => m.muteeId).includes(note.userId)) return;
+	if (mute.map((m) => m.muteeId).includes(note.userId)) return;
 	//#endregion
 
 	// スレッドミュート
@@ -43,13 +47,13 @@ export async function insertNoteUnread(userId: User['id'], note: Note, params: {
 		if (exist == null) return;
 
 		if (params.isMentioned) {
-			publishMainStream(userId, 'unreadMention', note.id);
+			publishMainStream(userId, "unreadMention", note.id);
 		}
 		if (params.isSpecified) {
-			publishMainStream(userId, 'unreadSpecifiedNote', note.id);
+			publishMainStream(userId, "unreadSpecifiedNote", note.id);
 		}
 		if (note.channelId) {
-			publishMainStream(userId, 'unreadChannel', note.id);
+			publishMainStream(userId, "unreadChannel", note.id);
 		}
 	}, 2000);
 }

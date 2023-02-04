@@ -1,6 +1,6 @@
-import define from '../../define.js';
-import { createExportNotesJob } from '@/queue/index.js';
-import { DAY } from '@/const.js';
+import define from "../../define.js";
+import { createExportNotesJob } from "@/queue/index.js";
+import { DAY } from "@/const.js";
 
 export const meta = {
 	secure: true,
@@ -12,12 +12,11 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	createExportNotesJob(user);
 });

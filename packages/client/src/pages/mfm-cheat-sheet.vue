@@ -4,6 +4,7 @@
 	<MkSpacer :content-max="800">
 		<div class="mwysmxbg">
 			<div>{{ i18n.ts._mfm.intro }}</div>
+			<br/>
 			<div class="section _block">
 				<div class="title">{{ i18n.ts._mfm.mention }}</div>
 				<div class="content">
@@ -21,16 +22,6 @@
 					<div class="preview">
 						<Mfm :text="preview_hashtag"/>
 						<MkTextarea v-model="preview_hashtag"><template #label>MFM</template></MkTextarea>
-					</div>
-				</div>
-			</div>
-			<div class="section _block">
-				<div class="title">{{ i18n.ts._mfm.url }}</div>
-				<div class="content">
-					<p>{{ i18n.ts._mfm.urlDescription }}</p>
-					<div class="preview">
-						<Mfm :text="preview_url"/>
-						<MkTextarea v-model="preview_url"><template #label>MFM</template></MkTextarea>
 					</div>
 				</div>
 			</div>
@@ -320,7 +311,6 @@ import { instance } from '@/instance';
 
 let preview_mention = $ref('@example');
 let preview_hashtag = $ref('#test');
-let preview_url = $ref('https://example.com');
 let preview_link = $ref(`[${i18n.ts._mfm.dummy}](https://example.com)`);
 let preview_emoji = $ref(instance.emojis.length ? `:${instance.emojis[0].name}:` : ':emojiname:');
 let preview_bold = $ref(`**${i18n.ts._mfm.dummy}**`);

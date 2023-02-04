@@ -1,16 +1,16 @@
-import { db } from '@/db/postgre.js';
-import { Meta } from '@/models/entities/meta.js';
+import { db } from "@/db/postgre.js";
+import { Meta } from "@/models/entities/meta.js";
 
 let cache: Meta;
 
 export async function fetchMeta(noCache = false): Promise<Meta> {
 	if (!noCache && cache) return cache;
 
-	return await db.transaction(async transactionalEntityManager => {
+	return await db.transaction(async (transactionalEntityManager) => {
 		// New IDs are prioritized because multiple records may have been created due to past bugs.
 		const metas = await transactionalEntityManager.find(Meta, {
 			order: {
-				id: 'DESC',
+				id: "DESC",
 			},
 		});
 
@@ -25,11 +25,13 @@ export async function fetchMeta(noCache = false): Promise<Meta> {
 				.upsert(
 					Meta,
 					{
-						id: 'x',
+						id: "x",
 					},
-					['id'],
+					["id"],
 				)
-				.then((x) => transactionalEntityManager.findOneByOrFail(Meta, x.identifiers[0]));
+				.then((x) =>
+					transactionalEntityManager.findOneByOrFail(Meta, x.identifiers[0]),
+				);
 
 			cache = saved;
 			return saved;
@@ -38,7 +40,7 @@ export async function fetchMeta(noCache = false): Promise<Meta> {
 }
 
 setInterval(() => {
-	fetchMeta(true).then(meta => {
+	fetchMeta(true).then((meta) => {
 		cache = meta;
 	});
 }, 1000 * 10);

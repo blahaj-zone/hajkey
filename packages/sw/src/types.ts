@@ -1,9 +1,9 @@
-import * as Misskey from 'calckey-js';
+import * as Misskey from "calckey-js";
 
-export type swMessageOrderType = 'post' | 'push';
+export type swMessageOrderType = "post" | "push";
 
 export type SwMessage = {
-	type: 'order';
+	type: "order";
 	order: swMessageOrderType;
 	loginId: string;
 	url: string;
@@ -20,7 +20,9 @@ type pushNotificationDataSourceMap = {
 	readAllMessagingMessagesOfARoom: { userId: string } | { groupId: string };
 };
 
-export type pushNotificationData<K extends keyof pushNotificationDataSourceMap> = {
+export type pushNotificationData<
+	K extends keyof pushNotificationDataSourceMap,
+> = {
 	type: K;
 	body: pushNotificationDataSourceMap[K];
 	userId: string;

@@ -1,21 +1,28 @@
-import config from '@/config/index.js';
-import { getJson } from '@/misc/fetch.js';
-import { ILocalUser } from '@/models/entities/user.js';
-import { getInstanceActor } from '@/services/instance-actor.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { extractDbHost, isSelfHost } from '@/misc/convert-host.js';
-import { signedGet } from './request.js';
-import { IObject, isCollectionOrOrderedCollection, ICollection, IOrderedCollection, getApId } from './type.js';
-import { FollowRequests, Notes, NoteReactions, Polls, Users } from '@/models/index.js';
-import { parseUri } from './db-resolver.js';
-import renderNote from '@/remote/activitypub/renderer/note.js';
-import { renderLike } from '@/remote/activitypub/renderer/like.js';
-import { renderPerson } from '@/remote/activitypub/renderer/person.js';
-import renderQuestion from '@/remote/activitypub/renderer/question.js';
-import renderCreate from '@/remote/activitypub/renderer/create.js';
-import { renderActivity } from '@/remote/activitypub/renderer/index.js';
-import renderFollow from '@/remote/activitypub/renderer/follow.js';
-import { shouldBlockInstance } from '@/misc/should-block-instance.js';
+import config from "@/config/index.js";
+import { getJson } from "@/misc/fetch.js";
+import type { ILocalUser } from "@/models/entities/user.js";
+import { getInstanceActor } from "@/services/instance-actor.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { extractDbHost, isSelfHost } from "@/misc/convert-host.js";
+import { signedGet } from "./request.js";
+import type { IObject, ICollection, IOrderedCollection } from "./type.js";
+import { isCollectionOrOrderedCollection, getApId } from "./type.js";
+import {
+	FollowRequests,
+	Notes,
+	NoteReactions,
+	Polls,
+	Users,
+} from "@/models/index.js";
+import { parseUri } from "./db-resolver.js";
+import renderNote from "@/remote/activitypub/renderer/note.js";
+import { renderLike } from "@/remote/activitypub/renderer/like.js";
+import { renderPerson } from "@/remote/activitypub/renderer/person.js";
+import renderQuestion from "@/remote/activitypub/renderer/question.js";
+import renderCreate from "@/remote/activitypub/renderer/create.js";
+import { renderActivity } from "@/remote/activitypub/renderer/index.js";
+import renderFollow from "@/remote/activitypub/renderer/follow.js";
+import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 
 export default class Resolver {
 	private history: Set<string>;
@@ -31,7 +38,9 @@ export default class Resolver {
 		return Array.from(this.history);
 	}
 
-	public async resolveCollection(value: string | IObject): Promise<ICollection | IOrderedCollection> {
+	public async resolveCollection(
+		value: string | IObject,
+	): Promise<ICollection | IOrderedCollection> {
 		const collection = await this.resolve(value);
 
 		if (isCollectionOrOrderedCollection(collection)) {
@@ -43,20 +52,20 @@ export default class Resolver {
 
 	public async resolve(value: string | IObject): Promise<IObject> {
 		if (value == null) {
-			throw new Error('resolvee is null (or undefined)');
+			throw new Error("resolvee is null (or undefined)");
 		}
 
-		if (typeof value !== 'string') {
-			if (typeof value.id !== 'undefined') {
+		if (typeof value !== "string") {
+			if (typeof value.id !== "undefined") {
 				const host = extractDbHost(getApId(value));
 				if (await shouldBlockInstance(host)) {
-					throw new Error('instance is blocked');
+					throw new Error("instance is blocked");
 				}
 			}
 			return value;
 		}
 
-		if (value.includes('#')) {
+		if (value.includes("#")) {
 			// URLs with fragment parts cannot be resolved correctly because
 			// the fragment part does not get transmitted over HTTP(S).
 			// Avoid strange behaviour by not trying to resolve these at all.
@@ -64,10 +73,10 @@ export default class Resolver {
 		}
 
 		if (this.history.has(value)) {
-			throw new Error('cannot resolve already resolved one');
+			throw new Error("cannot resolve already resolved one");
 		}
 		if (this.recursionLimit && this.history.size > this.recursionLimit) {
-			throw new Error('hit recursion limit');
+			throw new Error("hit recursion limit");
 		}
 		this.history.add(value);
 
@@ -78,27 +87,36 @@ export default class Resolver {
 
 		const meta = await fetchMeta();
 		if (await shouldBlockInstance(host, meta)) {
-			throw new Error('Instance is blocked');
+			throw new Error("Instance is blocked");
 		}
 
-		if (meta.privateMode && config.host !== host && !meta.allowedHosts.includes(host)) {
-			throw new Error('Instance is not allowed');
+		if (
+			meta.privateMode &&
+			config.host !== host &&
+			!meta.allowedHosts.includes(host)
+		) {
+			throw new Error("Instance is not allowed");
 		}
 
 		if (!this.user) {
 			this.user = await getInstanceActor();
 		}
 
-		const object = (this.user
-			? await signedGet(value, this.user)
-			: await getJson(value, 'application/activity+json, application/ld+json')) as IObject;
+		const object = (
+			this.user
+				? await signedGet(value, this.user)
+				: await getJson(value, "application/activity+json, application/ld+json")
+		) as IObject;
 
-		if (object == null || (
-			Array.isArray(object['@context']) ?
-				!(object['@context'] as unknown[]).includes('https://www.w3.org/ns/activitystreams') :
-				object['@context'] !== 'https://www.w3.org/ns/activitystreams'
-		)) {
-			throw new Error('invalid response');
+		if (
+			object == null ||
+			(Array.isArray(object["@context"])
+				? !(object["@context"] as unknown[]).includes(
+						"https://www.w3.org/ns/activitystreams",
+				  )
+				: object["@context"] !== "https://www.w3.org/ns/activitystreams")
+		) {
+			throw new Error("invalid response");
 		}
 
 		return object;
@@ -106,39 +124,44 @@ export default class Resolver {
 
 	private resolveLocal(url: string): Promise<IObject> {
 		const parsed = parseUri(url);
-		if (!parsed.local) throw new Error('resolveLocal: not local');
+		if (!parsed.local) throw new Error("resolveLocal: not local");
 
 		switch (parsed.type) {
-			case 'notes':
-				return Notes.findOneByOrFail({ id: parsed.id })
-				.then(note => {
-					if (parsed.rest === 'activity') {
+			case "notes":
+				return Notes.findOneByOrFail({ id: parsed.id }).then((note) => {
+					if (parsed.rest === "activity") {
 						// this refers to the create activity and not the note itself
 						return renderActivity(renderCreate(renderNote(note)));
 					} else {
 						return renderNote(note);
 					}
 				});
-			case 'users':
-				return Users.findOneByOrFail({ id: parsed.id })
-				.then(user => renderPerson(user as ILocalUser));
-			case 'questions':
+			case "users":
+				return Users.findOneByOrFail({ id: parsed.id }).then((user) =>
+					renderPerson(user as ILocalUser),
+				);
+			case "questions":
 				// Polls are indexed by the note they are attached to.
 				return Promise.all([
 					Notes.findOneByOrFail({ id: parsed.id }),
 					Polls.findOneByOrFail({ noteId: parsed.id }),
-				])
-				.then(([note, poll]) => renderQuestion({ id: note.userId }, note, poll));
-			case 'likes':
-				return NoteReactions.findOneByOrFail({ id: parsed.id }).then(reaction => renderActivity(renderLike(reaction, { uri: null })));
-			case 'follows':
+				]).then(([note, poll]) =>
+					renderQuestion({ id: note.userId }, note, poll),
+				);
+			case "likes":
+				return NoteReactions.findOneByOrFail({ id: parsed.id }).then(
+					(reaction) => renderActivity(renderLike(reaction, { uri: null })),
+				);
+			case "follows":
 				// rest should be <followee id>
-				if (parsed.rest == null || !/^\w+$/.test(parsed.rest)) throw new Error('resolveLocal: invalid follow URI');
+				if (parsed.rest == null || !/^\w+$/.test(parsed.rest))
+					throw new Error("resolveLocal: invalid follow URI");
 
 				return Promise.all(
-					[parsed.id, parsed.rest].map(id => Users.findOneByOrFail({ id }))
-				)
-				.then(([follower, followee]) => renderActivity(renderFollow(follower, followee, url)));
+					[parsed.id, parsed.rest].map((id) => Users.findOneByOrFail({ id })),
+				).then(([follower, followee]) =>
+					renderActivity(renderFollow(follower, followee, url)),
+				);
 			default:
 				throw new Error(`resolveLocal: type ${type} unhandled`);
 		}

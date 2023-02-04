@@ -1,11 +1,15 @@
-import { DriveFile } from '@/models/entities/drive-file.js';
-import { InternalStorage } from './internal-storage.js';
-import { DriveFiles, Instances } from '@/models/index.js';
-import { driveChart, perUserDriveChart, instanceChart } from '@/services/chart/index.js';
-import { createDeleteObjectStorageFileJob } from '@/queue/index.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { getS3 } from './s3.js';
-import { v4 as uuid } from 'uuid';
+import type { DriveFile } from "@/models/entities/drive-file.js";
+import { InternalStorage } from "./internal-storage.js";
+import { DriveFiles, Instances } from "@/models/index.js";
+import {
+	driveChart,
+	perUserDriveChart,
+	instanceChart,
+} from "@/services/chart/index.js";
+import { createDeleteObjectStorageFileJob } from "@/queue/index.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { getS3 } from "./s3.js";
+import { v4 as uuid } from "uuid";
 
 export async function deleteFile(file: DriveFile, isExpired = false) {
 	if (file.storedInternal) {
@@ -74,8 +78,8 @@ async function postProcess(file: DriveFile, isExpired = false) {
 			storedInternal: false,
 			// ローカルプロキシ用
 			accessKey: uuid(),
-			thumbnailAccessKey: 'thumbnail-' + uuid(),
-			webpublicAccessKey: 'webpublic-' + uuid(),
+			thumbnailAccessKey: `thumbnail-${uuid()}`,
+			webpublicAccessKey: `webpublic-${uuid()}`,
 		});
 	} else {
 		DriveFiles.delete(file.id);
@@ -94,8 +98,10 @@ export async function deleteObjectStorageFile(key: string) {
 
 	const s3 = getS3(meta);
 
-	await s3.deleteObject({
-		Bucket: meta.objectStorageBucket!,
-		Key: key,
-	}).promise();
+	await s3
+		.deleteObject({
+			Bucket: meta.objectStorageBucket!,
+			Key: key,
+		})
+		.promise();
 }

@@ -96,7 +96,11 @@ async function leave(group) {
 		font-weight: bold;
 	}
 	._content {
-		margin: 1rem 0;
+		padding: 20px;
+
+		>.defgtij {
+			padding: 0;
+		}
 	}
 	._footer {
 		display: flex;

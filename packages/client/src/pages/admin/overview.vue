@@ -69,10 +69,6 @@
 						<div class="label">Redis</div>
 						<div class="value _monospace">{{ serverInfo.redis }}</div>
 					</div>
-					<div class="number _panel">
-						<div class="label">Vue</div>
-						<div class="value _monospace">{{ vueVersion }}</div>
-					</div>
 				</div>
 			</div>
 		</div>

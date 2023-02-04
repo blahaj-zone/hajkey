@@ -1,5 +1,5 @@
-import Xev from 'xev';
-import { deliverQueue, inboxQueue } from '../queue/queues.js';
+import Xev from "xev";
+import { deliverQueue, inboxQueue } from "../queue/queues.js";
 
 const ev = new Xev();
 
@@ -8,21 +8,21 @@ const interval = 10000;
 /**
  * Report queue stats regularly
  */
-export default function() {
+export default function () {
 	const log = [] as any[];
 
-	ev.on('requestQueueStatsLog', x => {
+	ev.on("requestQueueStatsLog", (x) => {
 		ev.emit(`queueStatsLog:${x.id}`, log.slice(0, x.length || 50));
 	});
 
 	let activeDeliverJobs = 0;
 	let activeInboxJobs = 0;
 
-	deliverQueue.on('global:active', () => {
+	deliverQueue.on("global:active", () => {
 		activeDeliverJobs++;
 	});
 
-	inboxQueue.on('global:active', () => {
+	inboxQueue.on("global:active", () => {
 		activeInboxJobs++;
 	});
 
@@ -45,7 +45,7 @@ export default function() {
 			},
 		};
 
-		ev.emit('queueStats', stats);
+		ev.emit("queueStats", stats);
 
 		log.unshift(stats);
 		if (log.length > 200) log.pop();

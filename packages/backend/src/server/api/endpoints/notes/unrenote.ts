@@ -1,16 +1,16 @@
-import deleteNote from '@/services/note/delete.js';
-import { Notes, Users } from '@/models/index.js';
-import define from '../../define.js';
-import { getNote } from '../../common/getters.js';
-import { ApiError } from '../../error.js';
-import { SECOND, HOUR } from '@/const.js';
+import deleteNote from "@/services/note/delete.js";
+import { Notes, Users } from "@/models/index.js";
+import define from "../../define.js";
+import { getNote } from "../../common/getters.js";
+import { ApiError } from "../../error.js";
+import { SECOND, HOUR } from "@/const.js";
 
 export const meta = {
-	tags: ['notes'],
+	tags: ["notes"],
 
 	requireCredential: true,
 
-	kind: 'write:notes',
+	kind: "write:notes",
 
 	limit: {
 		duration: HOUR,
@@ -20,25 +20,25 @@ export const meta = {
 
 	errors: {
 		noSuchNote: {
-			message: 'No such note.',
-			code: 'NO_SUCH_NOTE',
-			id: 'efd4a259-2442-496b-8dd7-b255aa1a160f',
+			message: "No such note.",
+			code: "NO_SUCH_NOTE",
+			id: "efd4a259-2442-496b-8dd7-b255aa1a160f",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		noteId: { type: 'string', format: 'misskey:id' },
+		noteId: { type: "string", format: "misskey:id" },
 	},
-	required: ['noteId'],
+	required: ["noteId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
-	const note = await getNote(ps.noteId, user).catch(err => {
-		if (err.id === '9725d0ce-ba28-4dde-95a7-2cbb2c15de24') throw new ApiError(meta.errors.noSuchNote);
+	const note = await getNote(ps.noteId, user).catch((err) => {
+		if (err.id === "9725d0ce-ba28-4dde-95a7-2cbb2c15de24")
+			throw new ApiError(meta.errors.noSuchNote);
 		throw err;
 	});
 

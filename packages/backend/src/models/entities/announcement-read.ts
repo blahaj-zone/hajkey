@@ -1,7 +1,14 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { Announcement } from './announcement.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { Announcement } from "./announcement.js";
+import { id } from "../id.js";
 
 @Entity()
 @Index(['userId', 'announcementId'], { unique: true })
@@ -16,7 +23,7 @@ export class AnnouncementRead {
 
 	@Index()
 	@Column(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -26,7 +33,7 @@ export class AnnouncementRead {
 
 	@Index()
 	@Column(id())
-	public announcementId: Announcement['id'];
+	public announcementId: Announcement["id"];
 
 	@ManyToOne(type => Announcement, {
 		onDelete: 'CASCADE',

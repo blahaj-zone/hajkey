@@ -1,11 +1,11 @@
 <template>
 <span v-if="disableLink" v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :title="acct(user)" @click="onClick">
 	<img class="inner" :src="url" decoding="async"/>
-	<MkUserOnlineIndicator v-if="showIndicator" class="indicator" :user="user"/>
+	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
 </span>
 <MkA v-else v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :to="userPage(user)" :title="acct(user)" :target="target">
 	<img class="inner" :src="url" decoding="async"/>
-	<MkUserOnlineIndicator v-if="showIndicator" class="indicator" :user="user"/>
+	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
 </MkA>
 </template>
 
@@ -96,8 +96,8 @@ watch(() => props.user.avatarBlurhash, () => {
 		z-index: 1;
 		bottom: 0;
 		left: 0;
-		width: 20%;
-		height: 20%;
+		width: 18%;
+		height: 18%;
 	}
 
 	&.square {

@@ -1,14 +1,17 @@
-import Bull from 'bull';
+import type Bull from "bull";
 
-import { queueLogger } from '../../logger.js';
-import { deleteFileSync } from '@/services/drive/delete-file.js';
-import { Users, DriveFiles } from '@/models/index.js';
-import { MoreThan } from 'typeorm';
-import { DbUserJobData } from '@/queue/types.js';
+import { queueLogger } from "../../logger.js";
+import { deleteFileSync } from "@/services/drive/delete-file.js";
+import { Users, DriveFiles } from "@/models/index.js";
+import { MoreThan } from "typeorm";
+import type { DbUserJobData } from "@/queue/types.js";
 
-const logger = queueLogger.createSubLogger('delete-drive-files');
+const logger = queueLogger.createSubLogger("delete-drive-files");
 
-export async function deleteDriveFiles(job: Bull.Job<DbUserJobData>, done: any): Promise<void> {
+export async function deleteDriveFiles(
+	job: Bull.Job<DbUserJobData>,
+	done: any,
+): Promise<void> {
 	logger.info(`Deleting drive files of ${job.data.user.id} ...`);
 
 	const user = await Users.findOneBy({ id: job.data.user.id });
@@ -51,6 +54,8 @@ export async function deleteDriveFiles(job: Bull.Job<DbUserJobData>, done: any):
 		job.progress(deletedCount / total);
 	}
 
-	logger.succ(`All drive files (${deletedCount}) of ${user.id} has been deleted.`);
+	logger.succ(
+		`All drive files (${deletedCount}) of ${user.id} has been deleted.`,
+	);
 	done();
 }

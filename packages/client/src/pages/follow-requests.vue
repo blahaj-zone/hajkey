@@ -76,6 +76,7 @@ definePageMetadata(computed(() => ({
 	> .user {
 		display: flex;
 		padding: 16px;
+		margin: 10px 0 auto;
 
 		> .avatar {
 			display: block;

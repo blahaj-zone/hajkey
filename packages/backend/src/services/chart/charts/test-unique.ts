@@ -1,10 +1,11 @@
-import Chart, { KVs } from '../core.js';
-import { name, schema } from './entities/test-unique.js';
+import type { KVs } from "../core.js";
+import Chart from "../core.js";
+import { name, schema } from "./entities/test-unique.js";
 
 /**
  * For testing
  */
-// eslint-disable-next-line import/no-default-export
+
 export default class TestUniqueChart extends Chart<typeof schema> {
 	constructor() {
 		super(name, schema);

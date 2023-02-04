@@ -1,5 +1,5 @@
-import type { CacheableRemoteUser } from '@/models/entities/user.js';
-import { toArray } from '@/prelude/array.js';
+import type { CacheableRemoteUser } from "@/models/entities/user.js";
+import { toArray } from "@/prelude/array.js";
 import {
 	isCreate,
 	isDelete,
@@ -19,37 +19,42 @@ import {
 	isFlag,
 	isMove,
 	getApId,
-} from '../type.js';
-import { apLogger } from '../logger.js';
-import Resolver from '../resolver.js';
-import create from './create/index.js';
-import performDeleteActivity from './delete/index.js';
-import performUpdateActivity from './update/index.js';
-import { performReadActivity } from './read.js';
-import follow from './follow.js';
-import undo from './undo/index.js';
-import like from './like.js';
-import announce from './announce/index.js';
-import accept from './accept/index.js';
-import reject from './reject/index.js';
-import add from './add/index.js';
-import remove from './remove/index.js';
-import block from './block/index.js';
-import flag from './flag/index.js';
-import move from './move/index.js';
-import type { IObject } from '../type.js';
-import { extractDbHost } from '@/misc/convert-host.js';
-import { shouldBlockInstance } from '@/misc/should-block-instance.js';
+} from "../type.js";
+import { apLogger } from "../logger.js";
+import Resolver from "../resolver.js";
+import create from "./create/index.js";
+import performDeleteActivity from "./delete/index.js";
+import performUpdateActivity from "./update/index.js";
+import { performReadActivity } from "./read.js";
+import follow from "./follow.js";
+import undo from "./undo/index.js";
+import like from "./like.js";
+import announce from "./announce/index.js";
+import accept from "./accept/index.js";
+import reject from "./reject/index.js";
+import add from "./add/index.js";
+import remove from "./remove/index.js";
+import block from "./block/index.js";
+import flag from "./flag/index.js";
+import move from "./move/index.js";
+import type { IObject } from "../type.js";
+import { extractDbHost } from "@/misc/convert-host.js";
+import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 
-export async function performActivity(actor: CacheableRemoteUser, activity: IObject) {
+export async function performActivity(
+	actor: CacheableRemoteUser,
+	activity: IObject,
+) {
 	if (isCollectionOrOrderedCollection(activity)) {
 		const resolver = new Resolver();
-		for (const item of toArray(isCollection(activity) ? activity.items : activity.orderedItems)) {
+		for (const item of toArray(
+			isCollection(activity) ? activity.items : activity.orderedItems,
+		)) {
 			const act = await resolver.resolve(item);
 			try {
 				await performOneActivity(actor, act);
 			} catch (err) {
-				if (err instanceof Error || typeof err === 'string') {
+				if (err instanceof Error || typeof err === "string") {
 					apLogger.error(err);
 				}
 			}
@@ -59,14 +64,16 @@ export async function performActivity(actor: CacheableRemoteUser, activity: IObj
 	}
 }
 
-async function performOneActivity(actor: CacheableRemoteUser, activity: IObject): Promise<void> {
+async function performOneActivity(
+	actor: CacheableRemoteUser,
+	activity: IObject,
+): Promise<void> {
 	if (actor.isSuspended) return;
 
-	if (typeof activity.id !== 'undefined') {
+	if (typeof activity.id !== "undefined") {
 		const host = extractDbHost(getApId(activity));
 		if (await shouldBlockInstance(host)) return;
 	}
-
 
 	if (isCreate(activity)) {
 		await create(actor, activity);
@@ -83,9 +90,9 @@ async function performOneActivity(actor: CacheableRemoteUser, activity: IObject)
 	} else if (isReject(activity)) {
 		await reject(actor, activity);
 	} else if (isAdd(activity)) {
-		await add(actor, activity).catch(err => apLogger.error(err));
+		await add(actor, activity).catch((err) => apLogger.error(err));
 	} else if (isRemove(activity)) {
-		await remove(actor, activity).catch(err => apLogger.error(err));
+		await remove(actor, activity).catch((err) => apLogger.error(err));
 	} else if (isAnnounce(activity)) {
 		await announce(actor, activity);
 	} else if (isLike(activity)) {
@@ -97,7 +104,7 @@ async function performOneActivity(actor: CacheableRemoteUser, activity: IObject)
 	} else if (isFlag(activity)) {
 		await flag(actor, activity);
 	} else if (isMove(activity)) {
-		await move(actor,activity);
+		await move(actor, activity);
 	} else {
 		apLogger.warn(`unrecognized activity type: ${(activity as any).type}`);
 	}

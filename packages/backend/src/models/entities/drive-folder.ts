@@ -1,6 +1,13 @@
-import { JoinColumn, ManyToOne, Entity, PrimaryColumn, Index, Column } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	JoinColumn,
+	ManyToOne,
+	Entity,
+	PrimaryColumn,
+	Index,
+	Column,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class DriveFolder {
@@ -25,7 +32,7 @@ export class DriveFolder {
 		nullable: true,
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'] | null;
+	public userId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -39,7 +46,7 @@ export class DriveFolder {
 		nullable: true,
 		comment: 'The parent folder ID. If null, it means the DriveFolder is located in root.',
 	})
-	public parentId: DriveFolder['id'] | null;
+	public parentId: DriveFolder["id"] | null;
 
 	@ManyToOne(type => DriveFolder, {
 		onDelete: 'SET NULL',

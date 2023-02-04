@@ -1,8 +1,15 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { DriveFile } from './drive-file.js';
-import { id } from '../id.js';
-import { UserGroup } from './user-group.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { DriveFile } from "./drive-file.js";
+import { id } from "../id.js";
+import { UserGroup } from "./user-group.js";
 
 @Entity()
 export class MessagingMessage {
@@ -20,7 +27,7 @@ export class MessagingMessage {
 		...id(),
 		comment: 'The sender user ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -33,7 +40,7 @@ export class MessagingMessage {
 		...id(), nullable: true,
 		comment: 'The recipient user ID.',
 	})
-	public recipientId: User['id'] | null;
+	public recipientId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -46,7 +53,7 @@ export class MessagingMessage {
 		...id(), nullable: true,
 		comment: 'The recipient group ID.',
 	})
-	public groupId: UserGroup['id'] | null;
+	public groupId: UserGroup["id"] | null;
 
 	@ManyToOne(type => UserGroup, {
 		onDelete: 'CASCADE',
@@ -73,13 +80,13 @@ export class MessagingMessage {
 		...id(),
 		array: true, default: '{}',
 	})
-	public reads: User['id'][];
+	public reads: User["id"][];
 
 	@Column({
 		...id(),
 		nullable: true,
 	})
-	public fileId: DriveFile['id'] | null;
+	public fileId: DriveFile["id"] | null;
 
 	@ManyToOne(type => DriveFile, {
 		onDelete: 'CASCADE',

@@ -1,11 +1,18 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, OneToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	OneToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class UserPublickey {
 	@PrimaryColumn(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@OneToOne(type => User, {
 		onDelete: 'CASCADE',

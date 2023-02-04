@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
 <div class="rwqkcmrc" :style="{ backgroundImage: transparent ? 'none' : `url(${ $instance.backgroundImageUrl })` }">
 	<div class="back" :class="{ transparent }"></div>

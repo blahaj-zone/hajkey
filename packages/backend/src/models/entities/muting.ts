@@ -1,6 +1,13 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 @Index(['muterId', 'muteeId'], { unique: true })
@@ -25,7 +32,7 @@ export class Muting {
 		...id(),
 		comment: 'The mutee user ID.',
 	})
-	public muteeId: User['id'];
+	public muteeId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -38,7 +45,7 @@ export class Muting {
 		...id(),
 		comment: 'The muter user ID.',
 	})
-	public muterId: User['id'];
+	public muterId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

@@ -1,5 +1,5 @@
-import { PrimaryColumn, Entity, Index, Column } from 'typeorm';
-import { id } from '../id.js';
+import { PrimaryColumn, Entity, Index, Column } from "typeorm";
+import { id } from "../id.js";
 
 @Entity()
 export class Relay {
@@ -15,5 +15,5 @@ export class Relay {
 	@Column('enum', {
 		enum: ['requesting', 'accepted', 'rejected'],
 	})
-	public status: 'requesting' | 'accepted' | 'rejected';
+	public status: "requesting" | "accepted" | "rejected";
 }

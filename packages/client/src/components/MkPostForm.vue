@@ -54,6 +54,7 @@
 			<button v-tooltip="i18n.ts.hashtags" class="_button" :class="{ active: withHashtags }" @click="withHashtags = !withHashtags"><i class="ph-hash-bold ph-lg"></i></button>
 			<button v-tooltip="i18n.ts.emoji" class="_button" @click="insertEmoji"><i class="ph-smiley-bold ph-lg"></i></button>
 			<button v-if="postFormActions.length > 0" v-tooltip="i18n.ts.plugin" class="_button" @click="showActions"><i class="ph-plug-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts._mfm.cheatSheet" class="_button right" @click="openCheatSheet"><i class="ph-question-bold ph-lg"></i></button>
 		</footer>
 		<datalist id="hashtags">
 			<option v-for="hashtag in recentHashtags" :key="hashtag" :value="hashtag"/>
@@ -90,6 +91,7 @@ import { instance } from '@/instance';
 import { $i, getAccounts, openAccountMenu as openAccountMenu_ } from '@/account';
 import { uploadFile } from '@/scripts/upload';
 import { deepClone } from '@/scripts/clone';
+import XCheatSheet from '@/components/MkCheatSheetDialog.vue';
 
 const modal = inject('modal');
 
@@ -667,6 +669,10 @@ async function insertEmoji(ev: MouseEvent) {
 	os.openEmojiPicker(ev.currentTarget ?? ev.target, {}, textareaEl);
 }
 
+async function openCheatSheet(ev: MouseEvent) {
+  os.popup(XCheatSheet, {}, {}, 'closed');
+}
+
 function showActions(ev) {
 	os.popupMenu(postFormActions.map(action => ({
 		text: action.title,
@@ -754,6 +760,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.right {
+	float:right
+}
 .gafaadew {
 	position: relative;
 

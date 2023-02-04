@@ -21,7 +21,6 @@
 						<img v-if="meta.logoImageUrl" class="logo" :src="meta.logoImageUrl"><span v-else class="text">{{ instanceName }}</span>
 					</h1>
 					<div class="about">
-						<!-- eslint-disable-next-line vue/no-v-html -->
 						<div class="desc" v-html="meta.description || i18n.ts.headlineMisskey"></div>
 					</div>
 					<div class="action">
@@ -58,12 +57,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { toUnicode } from 'punycode/';
+import XTimeline from './welcome.timeline.vue';
 import XSigninDialog from '@/components/MkSigninDialog.vue';
 import XSignupDialog from '@/components/MkSignupDialog.vue';
 import MkButton from '@/components/MkButton.vue';
 import XNote from '@/components/MkNote.vue';
 import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
-import XTimeline from './welcome.timeline.vue';
 import { host, instanceName } from '@/config';
 import * as os from '@/os';
 import number from '@/filters/number';
@@ -104,7 +103,7 @@ export default defineComponent({
 
 		os.api('hashtags/list', {
 			sort: '+mentionedLocalUsers',
-			limit: 8
+			limit: 8,
 		}).then(tags => {
 			this.tags = tags;
 		});
@@ -113,13 +112,13 @@ export default defineComponent({
 	methods: {
 		signin() {
 			os.popup(XSigninDialog, {
-				autoSet: true
+				autoSet: true,
 			}, {}, 'closed');
 		},
 
 		signup() {
 			os.popup(XSignupDialog, {
-				autoSet: true
+				autoSet: true,
 			}, {}, 'closed');
 		},
 
@@ -129,24 +128,17 @@ export default defineComponent({
 				icon: 'ph-info-bold ph-lg',
 				action: () => {
 					os.pageWindow('/about');
-				}
+				},
 			}, {
 				text: i18n.ts.aboutMisskey,
 				icon: 'ph-info-bold ph-lg',
 				action: () => {
 					os.pageWindow('/about-calckey');
-				}
-			}, null, {
-				text: i18n.ts.help,
-				icon: 'ph-question-bold ph-lg',
-				action: () => {
-					window.open(`https://misskey-hub.net/help.md`, '_blank');
-				}
+				},
 			}], ev.currentTarget ?? ev.target);
 		},
-
-		number
-	}
+		number,
+	},
 });
 </script>
 

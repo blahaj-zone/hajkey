@@ -1,10 +1,11 @@
-import Chart, { KVs } from '../core.js';
-import { name, schema } from './entities/test-grouped.js';
+import type { KVs } from "../core.js";
+import Chart from "../core.js";
+import { name, schema } from "./entities/test-grouped.js";
 
 /**
  * For testing
  */
-// eslint-disable-next-line import/no-default-export
+
 export default class TestGroupedChart extends Chart<typeof schema> {
 	private total = {} as Record<string, number>;
 
@@ -12,9 +13,11 @@ export default class TestGroupedChart extends Chart<typeof schema> {
 		super(name, schema, true);
 	}
 
-	protected async tickMajor(group: string): Promise<Partial<KVs<typeof schema>>> {
+	protected async tickMajor(
+		group: string,
+	): Promise<Partial<KVs<typeof schema>>> {
 		return {
-			'foo.total': this.total[group],
+			"foo.total": this.total[group],
 		};
 	}
 
@@ -27,9 +30,12 @@ export default class TestGroupedChart extends Chart<typeof schema> {
 
 		this.total[group]++;
 
-		await this.commit({
-			'foo.total': 1,
-			'foo.inc': 1,
-		}, group);
+		await this.commit(
+			{
+				"foo.total": 1,
+				"foo.inc": 1,
+			},
+			group,
+		);
 	}
 }

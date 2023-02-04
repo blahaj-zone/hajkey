@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :removable="removable" :error="error" :warn="warn" :draggable="draggable" @remove="() => $emit('remove')">
 	<template #header><i v-if="icon" :class="icon"></i> <template v-if="title">{{ title }} <span v-if="typeText" class="turmquns">({{ typeText }})</span></template><template v-else-if="typeText">{{ typeText }}</template></template>
 	<template #func>
@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable vue/no-mutating-props */
+
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { v4 as uuid } from 'uuid';
 import XContainer from './page-editor.container.vue';

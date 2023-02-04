@@ -1,14 +1,17 @@
-import { Directive } from 'vue';
+import { Directive } from "vue";
 
-type Value = { max?: number[]; min?: number[]; };
+type Value = { max?: number[]; min?: number[] };
 
 //const observers = new Map<Element, ResizeObserver>();
-const mountings = new Map<Element, {
-	value: Value;
-	resize: ResizeObserver;
-	intersection?: IntersectionObserver;
-	previousWidth: number;
-}>();
+const mountings = new Map<
+	Element,
+	{
+		value: Value;
+		resize: ResizeObserver;
+		intersection?: IntersectionObserver;
+		previousWidth: number;
+	}
+>();
 
 type ClassOrder = {
 	add: string[];
@@ -23,13 +26,17 @@ function getClassOrder(width: number, queue: Value): ClassOrder {
 
 	return {
 		add: [
-			...(queue.max ? queue.max.filter(v => width <= v).map(getMaxClass) : []),
-			...(queue.min ? queue.min.filter(v => width >= v).map(getMinClass) : []),
+			...(queue.max
+				? queue.max.filter((v) => width <= v).map(getMaxClass)
+				: []),
+			...(queue.min
+				? queue.min.filter((v) => width >= v).map(getMinClass)
+				: []),
 		],
 		remove: [
-			...(queue.max ? queue.max.filter(v => width > v).map(getMaxClass) : []),
-			...(queue.min ? queue.min.filter(v => width < v).map(getMinClass) : []),
-		]
+			...(queue.max ? queue.max.filter((v) => width > v).map(getMaxClass) : []),
+			...(queue.min ? queue.min.filter((v) => width < v).map(getMinClass) : []),
+		],
 	};
 }
 
@@ -39,7 +46,9 @@ function applyClassOrder(el: Element, order: ClassOrder) {
 }
 
 function getOrderName(width: number, queue: Value): string {
-	return `${width}|${queue.max ? queue.max.join(',') : ''}|${queue.min ? queue.min.join(',') : ''}`;
+	return `${width}|${queue.max ? queue.max.join(",") : ""}|${
+		queue.min ? queue.min.join(",") : ""
+	}`;
 }
 
 function calc(el: Element) {
@@ -52,8 +61,8 @@ function calc(el: Element) {
 	if (!width) {
 		// IntersectionObserverで表示検出する
 		if (!info.intersection) {
-			info.intersection = new IntersectionObserver(entries => {
-				if (entries.some(entry => entry.isIntersecting)) calc(el);
+			info.intersection = new IntersectionObserver((entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) calc(el);
 			});
 		}
 		info.intersection.observe(el);
@@ -61,7 +70,7 @@ function calc(el: Element) {
 	}
 	if (info.intersection) {
 		info.intersection.disconnect();
-		delete info.intersection;
+		info.intersection = undefined;
 	}
 
 	mountings.set(el, Object.assign(info, { previousWidth: width }));
@@ -93,7 +102,10 @@ export default {
 	},
 
 	updated(src, binding, vn) {
-		mountings.set(src, Object.assign({}, mountings.get(src), { value: binding.value }));
+		mountings.set(
+			src,
+			Object.assign({}, mountings.get(src), { value: binding.value }),
+		);
 		calc(src);
 	},
 
@@ -103,5 +115,5 @@ export default {
 		info.resize.disconnect();
 		if (info.intersection) info.intersection.disconnect();
 		mountings.delete(src);
-	}
+	},
 } as Directive<Element, Value>;

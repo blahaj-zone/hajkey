@@ -1,48 +1,48 @@
-import { UserGroups, UserGroupJoinings } from '@/models/index.js';
-import define from '../../../define.js';
-import { ApiError } from '../../../error.js';
-import { getUser } from '../../../common/getters.js';
+import { UserGroups, UserGroupJoinings } from "@/models/index.js";
+import define from "../../../define.js";
+import { ApiError } from "../../../error.js";
+import { getUser } from "../../../common/getters.js";
 
 export const meta = {
-	tags: ['groups', 'users'],
+	tags: ["groups", "users"],
 
 	requireCredential: true,
 
-	kind: 'write:user-groups',
+	kind: "write:user-groups",
 
-	description: 'Removes a specified user from a group. The owner can not be removed.',
+	description:
+		"Removes a specified user from a group. The owner can not be removed.",
 
 	errors: {
 		noSuchGroup: {
-			message: 'No such group.',
-			code: 'NO_SUCH_GROUP',
-			id: '4662487c-05b1-4b78-86e5-fd46998aba74',
+			message: "No such group.",
+			code: "NO_SUCH_GROUP",
+			id: "4662487c-05b1-4b78-86e5-fd46998aba74",
 		},
 
 		noSuchUser: {
-			message: 'No such user.',
-			code: 'NO_SUCH_USER',
-			id: '0b5cc374-3681-41da-861e-8bc1146f7a55',
+			message: "No such user.",
+			code: "NO_SUCH_USER",
+			id: "0b5cc374-3681-41da-861e-8bc1146f7a55",
 		},
 
 		isOwner: {
-			message: 'The user is the owner.',
-			code: 'IS_OWNER',
-			id: '1546eed5-4414-4dea-81c1-b0aec4f6d2af',
+			message: "The user is the owner.",
+			code: "IS_OWNER",
+			id: "1546eed5-4414-4dea-81c1-b0aec4f6d2af",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		groupId: { type: 'string', format: 'misskey:id' },
-		userId: { type: 'string', format: 'misskey:id' },
+		groupId: { type: "string", format: "misskey:id" },
+		userId: { type: "string", format: "misskey:id" },
 	},
-	required: ['groupId', 'userId'],
+	required: ["groupId", "userId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	// Fetch the group
 	const userGroup = await UserGroups.findOneBy({
@@ -55,8 +55,9 @@ export default define(meta, paramDef, async (ps, me) => {
 	}
 
 	// Fetch the user
-	const user = await getUser(ps.userId).catch(e => {
-		if (e.id === '15348ddd-432d-49c2-8a5a-8069753becff') throw new ApiError(meta.errors.noSuchUser);
+	const user = await getUser(ps.userId).catch((e) => {
+		if (e.id === "15348ddd-432d-49c2-8a5a-8069753becff")
+			throw new ApiError(meta.errors.noSuchUser);
 		throw e;
 	});
 
@@ -65,5 +66,8 @@ export default define(meta, paramDef, async (ps, me) => {
 	}
 
 	// Pull the user
-	await UserGroupJoinings.delete({ userGroupId: userGroup.id, userId: user.id });
+	await UserGroupJoinings.delete({
+		userGroupId: userGroup.id,
+		userId: user.id,
+	});
 });

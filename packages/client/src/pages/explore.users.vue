@@ -28,7 +28,7 @@
 	</div>
 	<div v-else>
 		<MkFolder ref="tagsEl" :foldable="true" :expanded="false" class="_gap">
-			<template #header><i class="ph-hash-bold ph-lg ph-fw" style="margin-right: 0.5em;"></i>{{ i18n.ts.popularTags }}</template>
+			<template #header><i class="ph-compass-bold ph-lg ph-fw" style="margin-right: 0.5em;"></i>{{ i18n.ts.popularTags }}</template>
 
 			<div class="vxjfqztj">
 				<MkA v-for="tag in tagsLocal" :key="'local:' + tag.tag" :to="`/explore/tags/${tag.tag}`" class="local">{{ tag.tag }}</MkA>

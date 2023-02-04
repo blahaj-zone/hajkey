@@ -39,14 +39,16 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, markRaw, ComputedRef, ref, onMounted, provide } from 'vue';
+import { defineAsyncComponent, markRaw, ref, onMounted, provide } from 'vue';
 import XSidebar from './classic.sidebar.vue';
 import XCommon from './_common_/common.vue';
+import type { ComputedRef } from 'vue';
+import type { PageMetadata } from '@/scripts/page-metadata';
 import { instanceName } from '@/config';
 import { StickySidebar } from '@/scripts/sticky-sidebar';
 import * as os from '@/os';
 import { mainRouter } from '@/router';
-import { PageMetadata, provideMetadataReceiver, setPageMetadata } from '@/scripts/page-metadata';
+import { provideMetadataReceiver, setPageMetadata } from '@/scripts/page-metadata';
 import { defaultStore } from '@/store';
 import { i18n } from '@/i18n';
 const XHeaderMenu = defineAsyncComponent(() => import('./classic.header.vue'));
@@ -114,10 +116,6 @@ function onContextmenu(ev: MouseEvent) {
 			os.pageWindow(path);
 		},
 	}], ev);
-}
-
-function onAiClick(ev) {
-	//if (this.live2d) this.live2d.click(ev);
 }
 
 if (window.innerWidth < 1024) {
@@ -218,6 +216,7 @@ onMounted(() => {
 			border-radius: 0;
 			overflow: clip;
 			--margin: 12px;
+			background: var(--bg);
 		}
 
 		> .widgets {

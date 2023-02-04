@@ -1,6 +1,13 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 // TODO: 同じdomain、同じscope、同じkeyのレコードは二つ以上存在しないように制約付けたい
 @Entity()
@@ -23,7 +30,7 @@ export class RegistryItem {
 		...id(),
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

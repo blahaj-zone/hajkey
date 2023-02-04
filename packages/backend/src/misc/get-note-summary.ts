@@ -1,21 +1,21 @@
-import { Packed } from './schema.js';
+import type { Packed } from "./schema.js";
 
 /**
  * 投稿を表す文字列を取得します。
  * @param {*} note (packされた)投稿
  */
-export const getNoteSummary = (note: Packed<'Note'>): string => {
+export const getNoteSummary = (note: Packed<"Note">): string => {
 	if (note.deletedAt) {
-		return `(❌⛔)`;
+		return "❌";
 	}
 
-	let summary = '';
+	let summary = "";
 
 	// 本文
 	if (note.cw != null) {
 		summary += note.cw;
 	} else {
-		summary += note.text ? note.text : '';
+		summary += note.text ? note.text : "";
 	}
 
 	// ファイルが添付されているとき
@@ -25,7 +25,7 @@ export const getNoteSummary = (note: Packed<'Note'>): string => {
 
 	// 投票が添付されているとき
 	if (note.poll) {
-		summary += ` (📊)`;
+		summary += " (📊)";
 	}
 
 	/*

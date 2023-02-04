@@ -7,11 +7,18 @@
  * @param prev URL of prev page (optional)
  * @param next URL of next page (optional)
  */
-export default function(id: string, totalItems: any, orderedItems: any, partOf: string, prev?: string, next?: string) {
+export default function (
+	id: string,
+	totalItems: any,
+	orderedItems: any,
+	partOf: string,
+	prev?: string,
+	next?: string,
+) {
 	const page = {
 		id,
 		partOf,
-		type: 'OrderedCollectionPage',
+		type: "OrderedCollectionPage",
 		totalItems,
 		orderedItems,
 	} as any;

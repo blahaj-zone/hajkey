@@ -135,7 +135,7 @@
 import { watch } from 'vue';
 import { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import * as misskey from 'calckey-js';
+import type * as misskey from 'calckey-js';
 import MkChart from '@/components/MkChart.vue';
 import MkObjectView from '@/components/MkObjectView.vue';
 import FormLink from '@/components/form/link.vue';
@@ -147,7 +147,6 @@ import MkSelect from '@/components/form/select.vue';
 import FormSwitch from '@/components/form/switch.vue';
 import * as os from '@/os';
 import number from '@/filters/number';
-import bytes from '@/filters/bytes';
 import { iAmModerator } from '@/account';
 import { definePageMetadata } from '@/scripts/page-metadata';
 import { deviceKind } from '@/scripts/device-kind';

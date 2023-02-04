@@ -1,18 +1,21 @@
-import { IsNull } from 'typeorm';
-import follow from '@/services/following/create.js';
+import { IsNull } from "typeorm";
+import follow from "@/services/following/create.js";
 
-import * as Acct from '@/misc/acct.js';
-import { resolveUser } from '@/remote/resolve-user.js';
-import { downloadTextFile } from '@/misc/download-text-file.js';
-import { isSelfHost, toPuny } from '@/misc/convert-host.js';
-import { Users, DriveFiles } from '@/models/index.js';
-import type { DbUserImportJobData } from '@/queue/types.js';
-import { queueLogger } from '../../logger.js';
-import type Bull from 'bull';
+import * as Acct from "@/misc/acct.js";
+import { resolveUser } from "@/remote/resolve-user.js";
+import { downloadTextFile } from "@/misc/download-text-file.js";
+import { isSelfHost, toPuny } from "@/misc/convert-host.js";
+import { Users, DriveFiles } from "@/models/index.js";
+import type { DbUserImportJobData } from "@/queue/types.js";
+import { queueLogger } from "../../logger.js";
+import type Bull from "bull";
 
-const logger = queueLogger.createSubLogger('import-following');
+const logger = queueLogger.createSubLogger("import-following");
 
-export async function importFollowing(job: Bull.Job<DbUserImportJobData>, done: any): Promise<void> {
+export async function importFollowing(
+	job: Bull.Job<DbUserImportJobData>,
+	done: any,
+): Promise<void> {
 	logger.info(`Importing following of ${job.data.user.id} ...`);
 
 	const user = await Users.findOneBy({ id: job.data.user.id });
@@ -33,18 +36,20 @@ export async function importFollowing(job: Bull.Job<DbUserImportJobData>, done: 
 
 	let linenum = 0;
 
-	if (file.type.endsWith('json')) {
+	if (file.type.endsWith("json")) {
 		for (const acct of JSON.parse(csv)) {
 			try {
 				const { username, host } = Acct.parse(acct);
 
-				let target = isSelfHost(host!) ? await Users.findOneBy({
-					host: IsNull(),
-					usernameLower: username.toLowerCase(),
-				}) : await Users.findOneBy({
-					host: toPuny(host!),
-					usernameLower: username.toLowerCase(),
-				});
+				let target = isSelfHost(host!)
+					? await Users.findOneBy({
+							host: IsNull(),
+							usernameLower: username.toLowerCase(),
+					  })
+					: await Users.findOneBy({
+							host: toPuny(host!),
+							usernameLower: username.toLowerCase(),
+					  });
 
 				if (host == null && target == null) continue;
 
@@ -66,22 +71,23 @@ export async function importFollowing(job: Bull.Job<DbUserImportJobData>, done: 
 				logger.warn(`Error in line:${linenum} ${e}`);
 			}
 		}
-	}
-	else {
-		for (const line of csv.trim().split('\n')) {
+	} else {
+		for (const line of csv.trim().split("\n")) {
 			linenum++;
 
 			try {
-				const acct = line.split(',')[0].trim();
+				const acct = line.split(",")[0].trim();
 				const { username, host } = Acct.parse(acct);
 
-				let target = isSelfHost(host!) ? await Users.findOneBy({
-					host: IsNull(),
-					usernameLower: username.toLowerCase(),
-				}) : await Users.findOneBy({
-					host: toPuny(host!),
-					usernameLower: username.toLowerCase(),
-				});
+				let target = isSelfHost(host!)
+					? await Users.findOneBy({
+							host: IsNull(),
+							usernameLower: username.toLowerCase(),
+					  })
+					: await Users.findOneBy({
+							host: toPuny(host!),
+							usernameLower: username.toLowerCase(),
+					  });
 
 				if (host == null && target == null) continue;
 
@@ -105,6 +111,6 @@ export async function importFollowing(job: Bull.Job<DbUserImportJobData>, done: 
 		}
 	}
 
-	logger.succ('Imported');
+	logger.succ("Imported");
 	done();
 }

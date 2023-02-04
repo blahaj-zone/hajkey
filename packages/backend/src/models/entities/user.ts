@@ -1,6 +1,13 @@
-import { Entity, Column, Index, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { id } from '../id.js';
-import { DriveFile } from './drive-file.js';
+import {
+	Entity,
+	Column,
+	Index,
+	OneToOne,
+	JoinColumn,
+	PrimaryColumn,
+} from "typeorm";
+import { id } from "../id.js";
+import { DriveFile } from "./drive-file.js";
 
 @Entity()
 @Index(['usernameLower', 'host'], { unique: true })
@@ -92,7 +99,7 @@ export class User {
 		nullable: true,
 		comment: 'The ID of avatar DriveFile.',
 	})
-	public avatarId: DriveFile['id'] | null;
+	public avatarId: DriveFile["id"] | null;
 
 	@OneToOne(type => DriveFile, {
 		onDelete: 'SET NULL',
@@ -105,7 +112,7 @@ export class User {
 		nullable: true,
 		comment: 'The ID of banner DriveFile.',
 	})
-	public bannerId: DriveFile['id'] | null;
+	public bannerId: DriveFile["id"] | null;
 
 	@OneToOne(type => DriveFile, {
 		onDelete: 'SET NULL',

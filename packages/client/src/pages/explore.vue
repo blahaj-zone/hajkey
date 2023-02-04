@@ -97,7 +97,7 @@ const headerTabs = $computed(() => [{
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.explore,
-	icon: 'ph-hash-bold ph-lg',
+	icon: 'ph-compass-bold ph-lg',
 })));
 
 let swiperRef = null;

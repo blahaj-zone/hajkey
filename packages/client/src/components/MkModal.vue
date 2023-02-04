@@ -78,7 +78,6 @@ const type = $computed(() => {
 let contentClicking = false;
 
 const close = () => {
-	// eslint-disable-next-line vue/no-mutating-props
 	if (props.src) props.src.style.pointerEvents = 'auto';
 	showing = false;
 	emit('close');
@@ -231,7 +230,6 @@ const onOpened = () => {
 onMounted(() => {
 	watch(() => props.src, async () => {
 		if (props.src) {
-			// eslint-disable-next-line vue/no-mutating-props
 			props.src.style.pointerEvents = 'none';
 		}
 		fixed = (type === 'drawer') || (getFixedContainer(props.src) != null);

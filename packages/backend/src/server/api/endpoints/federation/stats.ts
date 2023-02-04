@@ -1,10 +1,10 @@
-import { IsNull, MoreThan, Not } from 'typeorm';
-import { Followings, Instances } from '@/models/index.js';
-import { awaitAll } from '@/prelude/await-all.js';
-import define from '../../define.js';
+import { IsNull, MoreThan, Not } from "typeorm";
+import { Followings, Instances } from "@/models/index.js";
+import { awaitAll } from "@/prelude/await-all.js";
+import define from "../../define.js";
 
 export const meta = {
-	tags: ['federation'],
+	tags: ["federation"],
 
 	requireCredential: false,
 
@@ -13,48 +13,52 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		limit: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
+		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
 	},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
-	const [topSubInstances, topPubInstances, allSubCount, allPubCount] = await Promise.all([
-		Instances.find({
-			where: {
-				followersCount: MoreThan(0),
-			},
-			order: {
-				followersCount: 'DESC',
-			},
-			take: ps.limit,
-		}),
-		Instances.find({
-			where: {
-				followingCount: MoreThan(0),
-			},
-			order: {
-				followingCount: 'DESC',
-			},
-			take: ps.limit,
-		}),
-		Followings.count({
-			where: {
-				followeeHost: Not(IsNull()),
-			},
-		}),
-		Followings.count({
-			where: {
-				followerHost: Not(IsNull()),
-			},
-		}),
-	]);
+	const [topSubInstances, topPubInstances, allSubCount, allPubCount] =
+		await Promise.all([
+			Instances.find({
+				where: {
+					followersCount: MoreThan(0),
+				},
+				order: {
+					followersCount: "DESC",
+				},
+				take: ps.limit,
+			}),
+			Instances.find({
+				where: {
+					followingCount: MoreThan(0),
+				},
+				order: {
+					followingCount: "DESC",
+				},
+				take: ps.limit,
+			}),
+			Followings.count({
+				where: {
+					followeeHost: Not(IsNull()),
+				},
+			}),
+			Followings.count({
+				where: {
+					followerHost: Not(IsNull()),
+				},
+			}),
+		]);
 
-	const gotSubCount = topSubInstances.map(x => x.followersCount).reduce((a, b) => a + b, 0);
-	const gotPubCount = topPubInstances.map(x => x.followingCount).reduce((a, b) => a + b, 0);
+	const gotSubCount = topSubInstances
+		.map((x) => x.followersCount)
+		.reduce((a, b) => a + b, 0);
+	const gotPubCount = topPubInstances
+		.map((x) => x.followingCount)
+		.reduce((a, b) => a + b, 0);
 
 	return await awaitAll({
 		topSubInstances: Instances.packMany(topSubInstances),

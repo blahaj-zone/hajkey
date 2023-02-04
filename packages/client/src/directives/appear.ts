@@ -1,12 +1,12 @@
-import { Directive } from 'vue';
+import { Directive } from "vue";
 
 export default {
 	mounted(src, binding, vn) {
 		const fn = binding.value;
 		if (fn == null) return;
 
-		const observer = new IntersectionObserver(entries => {
-			if (entries.some(entry => entry.isIntersecting)) {
+		const observer = new IntersectionObserver((entries) => {
+			if (entries.some((entry) => entry.isIntersecting)) {
 				fn();
 			}
 		});
@@ -18,5 +18,5 @@ export default {
 
 	unmounted(src, binding, vn) {
 		if (src._observer_) src._observer_.disconnect();
-	}
+	},
 } as Directive;

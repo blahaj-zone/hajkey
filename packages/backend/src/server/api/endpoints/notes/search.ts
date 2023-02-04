@@ -1,51 +1,62 @@
-import { In } from 'typeorm';
-import { Notes } from '@/models/index.js';
-import config from '@/config/index.js';
-import es from '../../../../db/elasticsearch.js';
-import define from '../../define.js';
-import { makePaginationQuery } from '../../common/make-pagination-query.js';
-import { generateVisibilityQuery } from '../../common/generate-visibility-query.js';
-import { generateMutedUserQuery } from '../../common/generate-muted-user-query.js';
-import { generateBlockedUserQuery } from '../../common/generate-block-query.js';
-import safe from 'safe-regex';
+import { In } from "typeorm";
+import { Notes } from "@/models/index.js";
+import config from "@/config/index.js";
+import es from "../../../../db/elasticsearch.js";
+import define from "../../define.js";
+import { makePaginationQuery } from "../../common/make-pagination-query.js";
+import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
+import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
+import { generateBlockedUserQuery } from "../../common/generate-block-query.js";
+import safe from "safe-regex";
 
 export const meta = {
-	tags: ['notes'],
+	tags: ["notes"],
 
 	requireCredential: false,
 	requireCredentialPrivateMode: true,
 
 	res: {
-		type: 'array',
-		optional: false, nullable: false,
+		type: "array",
+		optional: false,
+		nullable: false,
 		items: {
-			type: 'object',
-			optional: false, nullable: false,
-			ref: 'Note',
+			type: "object",
+			optional: false,
+			nullable: false,
+			ref: "Note",
 		},
 	},
 
-	errors: {
-	},
+	errors: {},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		query: { type: 'string' },
-		sinceId: { type: 'string', format: 'misskey:id' },
-		untilId: { type: 'string', format: 'misskey:id' },
-		limit: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
-		offset: { type: 'integer', default: 0 },
+		query: { type: "string" },
+		sinceId: { type: "string", format: "misskey:id" },
+		untilId: { type: "string", format: "misskey:id" },
+		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
+		offset: { type: "integer", default: 0 },
 		host: {
-			type: 'string',
+			type: "string",
 			nullable: true,
-			description: 'The local host is represented with `null`.',
+			description: "The local host is represented with `null`.",
 		},
-		userId: { type: 'string', format: 'misskey:id', nullable: true, default: null },
-		channelId: { type: 'string', format: 'misskey:id', nullable: true, default: null },
+		userId: {
+			type: "string",
+			format: "misskey:id",
+			nullable: true,
+			default: null,
+		},
+		channelId: {
+			type: "string",
+			format: "misskey:id",
+			nullable: true,
+			default: null,
+		},
 	},
-	required: ['query'],
+	required: ["query"],
 } as const;
 
 const max = (a:number, b:number): number => a > b ? b : 1;
@@ -53,47 +64,56 @@ const max = (a:number, b:number): number => a > b ? b : 1;
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	if (es == null) {
-		const query = makePaginationQuery(Notes.createQueryBuilder('note'), ps.sinceId, ps.untilId);
+		const query = makePaginationQuery(
+			Notes.createQueryBuilder("note"),
+			ps.sinceId,
+			ps.untilId,
+		);
 
 		if (ps.userId) {
-			query.andWhere('note.userId = :userId', { userId: ps.userId });
+			query.andWhere("note.userId = :userId", { userId: ps.userId });
 		} else if (ps.channelId) {
-			query.andWhere('note.channelId = :channelId', { channelId: ps.channelId });
+			query.andWhere("note.channelId = :channelId", {
+				channelId: ps.channelId,
+			});
 		}
 
-		const reStart = ps.query.indexOf('/')
-		const reEnd = ps.query.lastIndexOf('/')
+		const reStart = ps.query.indexOf("/");
+		const reEnd = ps.query.lastIndexOf("/");
 
-		if (ps.query.length > 3 && reStart === 0 && reEnd >= max(3, ps.query.length - 2)) {
-			const reMatch = ps.query.slice(reStart+1, reEnd);
-			const reOpts = ps.query.slice(reEnd+1);
-			
+		if (
+			ps.query.length > 3 &&
+			reStart === 0 &&
+			reEnd >= max(3, ps.query.length - 2)
+		) {
+			const reMatch = ps.query.slice(reStart + 1, reEnd);
+			const reOpts = ps.query.slice(reEnd + 1);
+
 			if (!safe(reMatch)) {
 				return null;
 			}
 
-			if (reOpts.includes('i')) {
-				query.andWhere('note.text ~* :q', { q: reMatch })
+			if (reOpts.includes("i")) {
+				query.andWhere("note.text ~* :q", { q: reMatch });
 			} else {
-				query.andWhere('note.text ~ :q', { q: reMatch })
+				query.andWhere("note.text ~ :q", { q: reMatch });
 			}
 		} else {
-			query
-			.andWhere('note.text ILIKE :q', { q: `%${ps.query}%` })
+			query.andWhere("note.text ILIKE :q", { q: `%${ps.query}%` });
 		}
 
 		query
-			.innerJoinAndSelect('note.user', 'user')
-			.leftJoinAndSelect('user.avatar', 'avatar')
-			.leftJoinAndSelect('user.banner', 'banner')
-			.leftJoinAndSelect('note.reply', 'reply')
-			.leftJoinAndSelect('note.renote', 'renote')
-			.leftJoinAndSelect('reply.user', 'replyUser')
-			.leftJoinAndSelect('replyUser.avatar', 'replyUserAvatar')
-			.leftJoinAndSelect('replyUser.banner', 'replyUserBanner')
-			.leftJoinAndSelect('renote.user', 'renoteUser')
-			.leftJoinAndSelect('renoteUser.avatar', 'renoteUserAvatar')
-			.leftJoinAndSelect('renoteUser.banner', 'renoteUserBanner');
+			.innerJoinAndSelect("note.user", "user")
+			.leftJoinAndSelect("user.avatar", "avatar")
+			.leftJoinAndSelect("user.banner", "banner")
+			.leftJoinAndSelect("note.reply", "reply")
+			.leftJoinAndSelect("note.renote", "renote")
+			.leftJoinAndSelect("reply.user", "replyUser")
+			.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+			.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+			.leftJoinAndSelect("renote.user", "renoteUser")
+			.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+			.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
 
 		generateVisibilityQuery(query, me);
 		if (me) generateMutedUserQuery(query, me);
@@ -103,47 +123,67 @@ export default define(meta, paramDef, async (ps, me) => {
 
 		return await Notes.packMany(notes, me);
 	} else {
-		const userQuery = ps.userId != null ? [{
-			term: {
-				userId: ps.userId,
-			},
-		}] : [];
-
-		const hostQuery = ps.userId == null ?
-			ps.host === null ? [{
-				bool: {
-					must_not: {
-						exists: {
-							field: 'userHost',
+		const userQuery =
+			ps.userId != null
+				? [
+						{
+							term: {
+								userId: ps.userId,
+							},
 						},
-					},
-				},
-			}] : ps.host !== undefined ? [{
-				term: {
-					userHost: ps.host,
-				},
-			}] : []
-			: [];
+				  ]
+				: [];
+
+		const hostQuery =
+			ps.userId == null
+				? ps.host === null
+					? [
+							{
+								bool: {
+									must_not: {
+										exists: {
+											field: "userHost",
+										},
+									},
+								},
+							},
+					  ]
+					: ps.host !== undefined
+					? [
+							{
+								term: {
+									userHost: ps.host,
+								},
+							},
+					  ]
+					: []
+				: [];
 
 		const result = await es.search({
-			index: config.elasticsearch.index || 'misskey_note',
+			index: config.elasticsearch.index || "misskey_note",
 			body: {
 				size: ps.limit,
 				from: ps.offset,
 				query: {
 					bool: {
-						must: [{
-							simple_query_string: {
-								fields: ['text'],
-								query: ps.query.toLowerCase(),
-								default_operator: 'and',
+						must: [
+							{
+								simple_query_string: {
+									fields: ["text"],
+									query: ps.query.toLowerCase(),
+									default_operator: "and",
+								},
 							},
-						}, ...hostQuery, ...userQuery],
+							...hostQuery,
+							...userQuery,
+						],
 					},
 				},
-				sort: [{
-					_doc: 'desc',
-				}],
+				sort: [
+					{
+						_doc: "desc",
+					},
+				],
 			},
 		});
 

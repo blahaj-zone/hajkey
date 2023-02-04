@@ -1,33 +1,32 @@
-import define from '../../define.js';
-import { ApiError } from '../../error.js';
-import { Channels, ChannelFollowings } from '@/models/index.js';
-import { publishUserEvent } from '@/services/stream.js';
+import define from "../../define.js";
+import { ApiError } from "../../error.js";
+import { Channels, ChannelFollowings } from "@/models/index.js";
+import { publishUserEvent } from "@/services/stream.js";
 
 export const meta = {
-	tags: ['channels'],
+	tags: ["channels"],
 
 	requireCredential: true,
 
-	kind: 'write:channels',
+	kind: "write:channels",
 
 	errors: {
 		noSuchChannel: {
-			message: 'No such channel.',
-			code: 'NO_SUCH_CHANNEL',
-			id: '19959ee9-0153-4c51-bbd9-a98c49dc59d6',
+			message: "No such channel.",
+			code: "NO_SUCH_CHANNEL",
+			id: "19959ee9-0153-4c51-bbd9-a98c49dc59d6",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		channelId: { type: 'string', format: 'misskey:id' },
+		channelId: { type: "string", format: "misskey:id" },
 	},
-	required: ['channelId'],
+	required: ["channelId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const channel = await Channels.findOneBy({
 		id: ps.channelId,
@@ -42,5 +41,5 @@ export default define(meta, paramDef, async (ps, user) => {
 		followeeId: channel.id,
 	});
 
-	publishUserEvent(user.id, 'unfollowChannel', channel);
+	publishUserEvent(user.id, "unfollowChannel", channel);
 });

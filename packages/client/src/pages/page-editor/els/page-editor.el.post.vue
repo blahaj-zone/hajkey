@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :draggable="true" @remove="() => $emit('remove')">
 	<template #header><i class="ph-paper-plane-tilt-bold ph-lg"></i> {{ i18n.ts._pages.blocks.post }}</template>
 
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable vue/no-mutating-props */
+
 import { } from 'vue';
 import XContainer from '../page-editor.container.vue';
 import MkTextarea from '@/components/form/textarea.vue';

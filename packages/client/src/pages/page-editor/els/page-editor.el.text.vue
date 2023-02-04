@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :draggable="true" @remove="() => $emit('remove')">
 	<template #header><i class="ph-align-left-bold ph-lg"></i> {{ i18n.ts._pages.blocks.text }}</template>
 
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable vue/no-mutating-props */
+
 import { } from 'vue';
 import XContainer from '../page-editor.container.vue';
 import { i18n } from '@/i18n';

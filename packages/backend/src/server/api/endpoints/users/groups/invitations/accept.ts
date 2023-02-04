@@ -1,36 +1,35 @@
-import { UserGroupJoinings, UserGroupInvitations } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
-import { UserGroupJoining } from '@/models/entities/user-group-joining.js';
-import { ApiError } from '../../../../error.js';
-import define from '../../../../define.js';
+import { UserGroupJoinings, UserGroupInvitations } from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
+import type { UserGroupJoining } from "@/models/entities/user-group-joining.js";
+import { ApiError } from "../../../../error.js";
+import define from "../../../../define.js";
 
 export const meta = {
-	tags: ['groups', 'users'],
+	tags: ["groups", "users"],
 
 	requireCredential: true,
 
-	kind: 'write:user-groups',
+	kind: "write:user-groups",
 
-	description: 'Join a group the authenticated user has been invited to.',
+	description: "Join a group the authenticated user has been invited to.",
 
 	errors: {
 		noSuchInvitation: {
-			message: 'No such invitation.',
-			code: 'NO_SUCH_INVITATION',
-			id: '98c11eca-c890-4f42-9806-c8c8303ebb5e',
+			message: "No such invitation.",
+			code: "NO_SUCH_INVITATION",
+			id: "98c11eca-c890-4f42-9806-c8c8303ebb5e",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		invitationId: { type: 'string', format: 'misskey:id' },
+		invitationId: { type: "string", format: "misskey:id" },
 	},
-	required: ['invitationId'],
+	required: ["invitationId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	// Fetch the invitation
 	const invitation = await UserGroupInvitations.findOneBy({

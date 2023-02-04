@@ -1,7 +1,14 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { UserGroup } from './user-group.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { UserGroup } from "./user-group.js";
+import { id } from "../id.js";
 
 @Entity()
 @Index(['userId', 'userGroupId'], { unique: true })
@@ -19,7 +26,7 @@ export class UserGroupJoining {
 		...id(),
 		comment: 'The user ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -32,7 +39,7 @@ export class UserGroupJoining {
 		...id(),
 		comment: 'The group ID.',
 	})
-	public userGroupId: UserGroup['id'];
+	public userGroupId: UserGroup["id"];
 
 	@ManyToOne(type => UserGroup, {
 		onDelete: 'CASCADE',

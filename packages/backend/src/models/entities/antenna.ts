@@ -1,8 +1,15 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { UserList } from './user-list.js';
-import { UserGroupJoining } from './user-group-joining.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import { UserList } from "./user-list.js";
+import { UserGroupJoining } from "./user-group-joining.js";
 
 @Entity()
 export class Antenna {
@@ -19,7 +26,7 @@ export class Antenna {
 		...id(),
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -40,7 +47,7 @@ export class Antenna {
 		...id(),
 		nullable: true,
 	})
-	public userListId: UserList['id'] | null;
+	public userListId: UserList["id"] | null;
 
 	@ManyToOne(type => UserList, {
 		onDelete: 'CASCADE',
@@ -52,7 +59,7 @@ export class Antenna {
 		...id(),
 		nullable: true,
 	})
-	public userGroupJoiningId: UserGroupJoining['id'] | null;
+	public userGroupJoiningId: UserGroupJoining["id"] | null;
 
 	@ManyToOne(type => UserGroupJoining, {
 		onDelete: 'CASCADE',

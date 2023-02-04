@@ -1,13 +1,13 @@
-import { IsNull } from 'typeorm';
-import config from '@/config/index.js';
-import { renderActivity } from '@/remote/activitypub/renderer/index.js';
-import renderOrderedCollection from '@/remote/activitypub/renderer/ordered-collection.js';
-import renderNote from '@/remote/activitypub/renderer/note.js';
-import { Users, Notes, UserNotePinings } from '@/models/index.js';
-import { checkFetch } from '@/remote/activitypub/check-fetch.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { setResponseType } from '../activitypub.js';
-import type Router from '@koa/router';
+import { IsNull } from "typeorm";
+import config from "@/config/index.js";
+import { renderActivity } from "@/remote/activitypub/renderer/index.js";
+import renderOrderedCollection from "@/remote/activitypub/renderer/ordered-collection.js";
+import renderNote from "@/remote/activitypub/renderer/note.js";
+import { Users, Notes, UserNotePinings } from "@/models/index.js";
+import { checkFetch } from "@/remote/activitypub/check-fetch.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { setResponseType } from "../activitypub.js";
+import type Router from "@koa/router";
 
 export default async (ctx: Router.RouterContext) => {
 	const verify = await checkFetch(ctx.req);
@@ -30,26 +30,32 @@ export default async (ctx: Router.RouterContext) => {
 
 	const pinings = await UserNotePinings.find({
 		where: { userId: user.id },
-		order: { id: 'DESC' },
+		order: { id: "DESC" },
 	});
 
-	const pinnedNotes = await Promise.all(pinings.map(pining =>
-		Notes.findOneByOrFail({ id: pining.noteId })));
+	const pinnedNotes = await Promise.all(
+		pinings.map((pining) => Notes.findOneByOrFail({ id: pining.noteId })),
+	);
 
-	const renderedNotes = await Promise.all(pinnedNotes.map(note => renderNote(note)));
+	const renderedNotes = await Promise.all(
+		pinnedNotes.map((note) => renderNote(note)),
+	);
 
 	const rendered = renderOrderedCollection(
 		`${config.url}/users/${userId}/collections/featured`,
-		renderedNotes.length, undefined, undefined, renderedNotes,
+		renderedNotes.length,
+		undefined,
+		undefined,
+		renderedNotes,
 	);
 
 	ctx.body = renderActivity(rendered);
 
 	const meta = await fetchMeta();
 	if (meta.secureMode || meta.privateMode) {
-		ctx.set('Cache-Control', 'private, max-age=0, must-revalidate');
+		ctx.set("Cache-Control", "private, max-age=0, must-revalidate");
 	} else {
-		ctx.set('Cache-Control', 'public, max-age=180');
+		ctx.set("Cache-Control", "public, max-age=180");
 	}
 	setResponseType(ctx);
 };

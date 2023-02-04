@@ -1,85 +1,100 @@
-import * as os from 'node:os';
-import si from 'systeminformation';
-import define from '../../define.js';
-import { redisClient } from '../../../../db/redis.js';
-import { db } from '@/db/postgre.js';
+import * as os from "node:os";
+import si from "systeminformation";
+import define from "../../define.js";
+import { redisClient } from "../../../../db/redis.js";
+import { db } from "@/db/postgre.js";
 
 export const meta = {
 	requireCredential: true,
 	requireModerator: true,
 
-	tags: ['admin', 'meta'],
+	tags: ["admin", "meta"],
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 		properties: {
 			machine: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			os: {
-				type: 'string',
-				optional: false, nullable: false,
-				example: 'linux',
+				type: "string",
+				optional: false,
+				nullable: false,
+				example: "linux",
 			},
 			node: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			psql: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			cpu: {
-				type: 'object',
-				optional: false, nullable: false,
+				type: "object",
+				optional: false,
+				nullable: false,
 				properties: {
 					model: {
-						type: 'string',
-						optional: false, nullable: false,
+						type: "string",
+						optional: false,
+						nullable: false,
 					},
 					cores: {
-						type: 'number',
-						optional: false, nullable: false,
+						type: "number",
+						optional: false,
+						nullable: false,
 					},
 				},
 			},
 			mem: {
-				type: 'object',
-				optional: false, nullable: false,
+				type: "object",
+				optional: false,
+				nullable: false,
 				properties: {
 					total: {
-						type: 'number',
-						optional: false, nullable: false,
-						format: 'bytes',
+						type: "number",
+						optional: false,
+						nullable: false,
+						format: "bytes",
 					},
 				},
 			},
 			fs: {
-				type: 'object',
-				optional: false, nullable: false,
+				type: "object",
+				optional: false,
+				nullable: false,
 				properties: {
 					total: {
-						type: 'number',
-						optional: false, nullable: false,
-						format: 'bytes',
+						type: "number",
+						optional: false,
+						nullable: false,
+						format: "bytes",
 					},
 					used: {
-						type: 'number',
-						optional: false, nullable: false,
-						format: 'bytes',
+						type: "number",
+						optional: false,
+						nullable: false,
+						format: "bytes",
 					},
 				},
 			},
 			net: {
-				type: 'object',
-				optional: false, nullable: false,
+				type: "object",
+				optional: false,
+				nullable: false,
 				properties: {
 					interface: {
-						type: 'string',
-						optional: false, nullable: false,
-						example: 'eth0',
+						type: "string",
+						optional: false,
+						nullable: false,
+						example: "eth0",
 					},
 				},
 			},
@@ -88,26 +103,27 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
 	const memStats = await si.mem();
 	const fsStats = await si.fsSize();
 	const netInterface = await si.networkInterfaceDefault();
 
-	const redisServerInfo = await redisClient.info('Server');
-	const m = redisServerInfo.match(new RegExp('^redis_version:(.*)', 'm'));
+	const redisServerInfo = await redisClient.info("Server");
+	const m = redisServerInfo.match(new RegExp("^redis_version:(.*)", "m"));
 	const redis_version = m?.[1];
 
 	return {
 		machine: os.hostname(),
 		os: os.platform(),
 		node: process.version,
-		psql: await db.query('SHOW server_version').then(x => x[0].server_version),
+		psql: await db
+			.query("SHOW server_version")
+			.then((x) => x[0].server_version),
 		redis: redis_version,
 		cpu: {
 			model: os.cpus()[0].model,

@@ -1,40 +1,41 @@
-import define from '../../../define.js';
-import { createWorker } from 'tesseract.js';
+import define from "../../../define.js";
+import { createWorker } from "tesseract.js";
 
 export const meta = {
-	tags: ['drive'],
+	tags: ["drive"],
 
 	requireCredential: true,
 
-	kind: 'read:drive',
+	kind: "read:drive",
 
-	description: 'Return caption of image',
+	description: "Return caption of image",
 
 	res: {
-		type: 'string',
-		optional: false, nullable: false,
+		type: "string",
+		optional: false,
+		nullable: false,
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		url: { type: 'string' },
+		url: { type: "string" },
 	},
-	required: ['url'],
+	required: ["url"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
-
 	const worker = createWorker({
-		logger: m => console.log(m)
+		logger: (m) => console.log(m),
 	});
 
 	await worker.load();
-	await worker.loadLanguage('eng');
-	await worker.initialize('eng');
-	const { data: { text } } = await worker.recognize(ps.url);
+	await worker.loadLanguage("eng");
+	await worker.initialize("eng");
+	const {
+		data: { text },
+	} = await worker.recognize(ps.url);
 	await worker.terminate();
 
 	return text;

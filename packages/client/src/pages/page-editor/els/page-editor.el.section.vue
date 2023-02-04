@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :draggable="true" @remove="() => $emit('remove')">
 	<template #header><i class="ph-sticker-bold ph-lg"></i> {{ value.title }}</template>
 	<template #func>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable vue/no-mutating-props */
+
 import { defineAsyncComponent, inject, onMounted } from 'vue';
 import { v4 as uuid } from 'uuid';
 import XContainer from '../page-editor.container.vue';

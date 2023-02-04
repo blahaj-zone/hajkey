@@ -1,27 +1,30 @@
-import { db } from '@/db/postgre.js';
-import { Page } from '@/models/entities/page.js';
-import type { Packed } from '@/misc/schema.js';
-import { awaitAll } from '@/prelude/await-all.js';
-import type { DriveFile } from '@/models/entities/drive-file.js';
-import type { User } from '@/models/entities/user.js';
-import { Users, DriveFiles, PageLikes } from '../index.js';
+import { db } from "@/db/postgre.js";
+import { Page } from "@/models/entities/page.js";
+import type { Packed } from "@/misc/schema.js";
+import { awaitAll } from "@/prelude/await-all.js";
+import type { DriveFile } from "@/models/entities/drive-file.js";
+import type { User } from "@/models/entities/user.js";
+import { Users, DriveFiles, PageLikes } from "../index.js";
 
 export const PageRepository = db.getRepository(Page).extend({
 	async pack(
-		src: Page['id'] | Page,
-		me?: { id: User['id'] } | null | undefined,
-	): Promise<Packed<'Page'>> {
+		src: Page["id"] | Page,
+		me?: { id: User["id"] } | null | undefined,
+	): Promise<Packed<"Page">> {
 		const meId = me ? me.id : null;
-		const page = typeof src === 'object' ? src : await this.findOneByOrFail({ id: src });
+		const page =
+			typeof src === "object" ? src : await this.findOneByOrFail({ id: src });
 
 		const attachedFiles: Promise<DriveFile | null>[] = [];
 		const collectFile = (xs: any[]) => {
 			for (const x of xs) {
-				if (x.type === 'image') {
-					attachedFiles.push(DriveFiles.findOneBy({
-						id: x.fileId,
-						userId: page.userId,
-					}));
+				if (x.type === "image") {
+					attachedFiles.push(
+						DriveFiles.findOneBy({
+							id: x.fileId,
+							userId: page.userId,
+						}),
+					);
 				}
 				if (x.children) {
 					collectFile(x.children);
@@ -34,12 +37,12 @@ export const PageRepository = db.getRepository(Page).extend({
 		let migrated = false;
 		const migrate = (xs: any[]) => {
 			for (const x of xs) {
-				if (x.type === 'input') {
-					if (x.inputType === 'text') {
-						x.type = 'textInput';
+				if (x.type === "input") {
+					if (x.inputType === "text") {
+						x.type = "textInput";
 					}
-					if (x.inputType === 'number') {
-						x.type = 'numberInput';
+					if (x.inputType === "number") {
+						x.type = "numberInput";
 						if (x.default) x.default = parseInt(x.default, 10);
 					}
 					migrated = true;
@@ -73,17 +76,24 @@ export const PageRepository = db.getRepository(Page).extend({
 			font: page.font,
 			script: page.script,
 			eyeCatchingImageId: page.eyeCatchingImageId,
-			eyeCatchingImage: page.eyeCatchingImageId ? await DriveFiles.pack(page.eyeCatchingImageId) : null,
-			attachedFiles: DriveFiles.packMany((await Promise.all(attachedFiles)).filter((x): x is DriveFile => x != null)),
+			eyeCatchingImage: page.eyeCatchingImageId
+				? await DriveFiles.pack(page.eyeCatchingImageId)
+				: null,
+			attachedFiles: DriveFiles.packMany(
+				(
+					await Promise.all(attachedFiles)
+				).filter((x): x is DriveFile => x != null),
+			),
 			likedCount: page.likedCount,
-			isLiked: meId ? await PageLikes.findOneBy({ pageId: page.id, userId: meId }).then(x => x != null) : undefined,
+			isLiked: meId
+				? await PageLikes.findOneBy({ pageId: page.id, userId: meId }).then(
+						(x) => x != null,
+				  )
+				: undefined,
 		});
 	},
 
-	packMany(
-		pages: Page[],
-		me?: { id: User['id'] } | null | undefined,
-	) {
-		return Promise.all(pages.map(x => this.pack(x, me)));
+	packMany(pages: Page[], me?: { id: User["id"] } | null | undefined) {
+		return Promise.all(pages.map((x) => this.pack(x, me)));
 	},
 });

@@ -1,7 +1,14 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { id } from '../id.js';
-import { User } from './user.js';
-import { DriveFolder } from './drive-folder.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { id } from "../id.js";
+import { User } from "./user.js";
+import { DriveFolder } from "./drive-folder.js";
 
 @Entity()
 @Index(['userId', 'folderId', 'id'])
@@ -21,7 +28,7 @@ export class DriveFile {
 		nullable: true,
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'] | null;
+	public userId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'SET NULL',
@@ -77,7 +84,12 @@ export class DriveFile {
 		default: {},
 		comment: 'The any properties of the DriveFile. For example, it includes image width/height.',
 	})
-	public properties: { width?: number; height?: number; orientation?: number; avgColor?: string };
+	public properties: {
+		width?: number;
+		height?: number;
+		orientation?: number;
+		avgColor?: string;
+	};
 
 	@Column('boolean')
 	public storedInternal: boolean;
@@ -141,7 +153,7 @@ export class DriveFile {
 		nullable: true,
 		comment: 'The parent folder ID. If null, it means the DriveFile is located in root.',
 	})
-	public folderId: DriveFolder['id'] | null;
+	public folderId: DriveFolder["id"] | null;
 
 	@ManyToOne(type => DriveFolder, {
 		onDelete: 'SET NULL',

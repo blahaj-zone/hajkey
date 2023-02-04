@@ -10,20 +10,18 @@ export default defineComponent({
 	render() {
 		const options = this.$slots.default();
 
-		return withDirectives(h('div', {
+		return h('div', {
 			class: 'pxhvhrfw',
 		}, options.map(option => withDirectives(h('button', {
-			class: ['_button', { active: this.modelValue === option.props.value }],
+			class: ['_button', { active: this.modelValue === option.props?.value }],
 			key: option.key,
-			disabled: this.modelValue === option.props.value,
+			disabled: this.modelValue === option.props?.value,
 			onClick: () => {
-				this.$emit('update:modelValue', option.props.value);
+				this.$emit('update:modelValue', option.props?.value);
 			},
 		}, option.children), [
 			[resolveDirective('click-anime')],
-		]))), [
-			[resolveDirective('size'), { max: [500] }],
-		]);
+		])));
 	},
 });
 </script>
@@ -38,6 +36,7 @@ export default defineComponent({
 	> button {
 		flex: 1;
 		padding: 10px 8px;
+		margin: 0 8px;
 		border-radius: var(--radius);
 
 		&:disabled {

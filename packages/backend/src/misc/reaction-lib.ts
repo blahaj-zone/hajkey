@@ -1,27 +1,26 @@
-/* eslint-disable key-spacing */
-import { emojiRegex } from './emoji-regex.js';
-import { fetchMeta } from './fetch-meta.js';
-import { Emojis } from '@/models/index.js';
-import { toPunyNullable } from './convert-host.js';
-import { IsNull } from 'typeorm';
+import { emojiRegex } from "./emoji-regex.js";
+import { fetchMeta } from "./fetch-meta.js";
+import { Emojis } from "@/models/index.js";
+import { toPunyNullable } from "./convert-host.js";
+import { IsNull } from "typeorm";
 
 const legacies: Record<string, string> = {
-	'like':     '👍',
-	'love':     '❤', // ここに記述する場合は異体字セレクタを入れない
-	'laugh':    '😆',
-	'hmm':      '🤔',
-	'surprise': '😮',
-	'congrats': '🎉',
-	'angry':    '💢',
-	'confused': '😥',
-	'rip':      '😇',
-	'pudding':  '🍮',
-	'star':     '⭐',
+	like: "👍",
+	love: "❤️", // ここに記述する場合は異体字セレクタを入れない <- not that good because modern browsers just display it as the red heart so just convert it to it to not end up with two seperate reactions of "the same emoji" for the user
+	laugh: "😆",
+	hmm: "🤔",
+	surprise: "😮",
+	congrats: "🎉",
+	angry: "💢",
+	confused: "😥",
+	rip: "😇",
+	pudding: "🍮",
+	star: "⭐",
 };
 
 export async function getFallbackReaction(): Promise<string> {
 	const meta = await fetchMeta();
-	return meta.useStarForReactionFallback ? '⭐' : '👍';
+	return meta.defaultReaction;
 }
 
 export function convertLegacyReactions(reactions: Record<string, number>) {
@@ -35,6 +34,12 @@ export function convertLegacyReactions(reactions: Record<string, number>) {
 				_reactions[legacies[reaction]] += reactions[reaction];
 			} else {
 				_reactions[legacies[reaction]] = reactions[reaction];
+			}
+		} else if (reaction === "♥️") {
+			if (_reactions["❤️"]) {
+				_reactions["❤️"] += reactions[reaction];
+			} else {
+				_reactions["❤️"] = reactions[reaction];
 			}
 		} else {
 			if (_reactions[reaction]) {
@@ -54,23 +59,18 @@ export function convertLegacyReactions(reactions: Record<string, number>) {
 	return _reactions2;
 }
 
-export async function toDbReaction(reaction?: string | null, reacterHost?: string | null): Promise<string> {
+export async function toDbReaction(
+	reaction?: string | null,
+	reacterHost?: string | null,
+): Promise<string> {
 	if (reaction == null) return await getFallbackReaction();
 
 	reacterHost = toPunyNullable(reacterHost);
 
-	// 文字列タイプのリアクションを絵文字に変換
+	// Convert string-type reactions to unicode
 	if (Object.keys(legacies).includes(reaction)) return legacies[reaction];
-
-	// Unicode絵文字
-	const match = emojiRegex.exec(reaction);
-	if (match) {
-		// 合字を含む1つの絵文字
-		const unicode = match[0];
-
-		// 異体字セレクタ除去
-		return unicode.match('\u200d') ? unicode : unicode.replace(/\ufe0f/g, '');
-	}
+	// Convert old heart to new
+	if (reaction === "♥️") return "❤️";
 
 	const custom = reaction.match(/^:([\w+-]+)(?:@\.)?:$/);
 	if (custom) {
@@ -111,7 +111,7 @@ export function decodeReaction(str: string): DecodedReaction {
 		const host = custom[2] || null;
 
 		return {
-			reaction: `:${name}@${host || '.'}:`,	// ローカル分は@以降を省略するのではなく.にする
+			reaction: `:${name}@${host || "."}:`, // ローカル分は@以降を省略するのではなく.にする
 			name,
 			host,
 		};

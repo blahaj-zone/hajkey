@@ -24,13 +24,17 @@ import * as os from '@/os';
 
 const modal = $ref<InstanceType<typeof MkModal>>();
 
-let newRelease = false;
-let data;
+let newRelease = $ref(false);
+let data = $ref(Object);
+
 os.api('release').then(res => {
 	data = res;
-	console.log(data);
 	newRelease = (version === data?.version);
 });
+console.log(`Version: ${version}`)
+console.log(`Data version: ${data.version}`)
+console.log(newRelease)
+console.log(data);
 
 </script>
 

@@ -1,10 +1,11 @@
-import Chart, { KVs } from '../core.js';
-import { name, schema } from './entities/test.js';
+import type { KVs } from "../core.js";
+import Chart from "../core.js";
+import { name, schema } from "./entities/test.js";
 
 /**
  * For testing
  */
-// eslint-disable-next-line import/no-default-export
+
 export default class TestChart extends Chart<typeof schema> {
 	public total = 0; // publicにするのはテストのため
 
@@ -14,7 +15,7 @@ export default class TestChart extends Chart<typeof schema> {
 
 	protected async tickMajor(): Promise<Partial<KVs<typeof schema>>> {
 		return {
-			'foo.total': this.total,
+			"foo.total": this.total,
 		};
 	}
 
@@ -26,8 +27,8 @@ export default class TestChart extends Chart<typeof schema> {
 		this.total++;
 
 		await this.commit({
-			'foo.total': 1,
-			'foo.inc': 1,
+			"foo.total": 1,
+			"foo.inc": 1,
 		});
 	}
 
@@ -35,8 +36,8 @@ export default class TestChart extends Chart<typeof schema> {
 		this.total--;
 
 		await this.commit({
-			'foo.total': -1,
-			'foo.dec': 1,
+			"foo.total": -1,
+			"foo.dec": 1,
 		});
 	}
 }

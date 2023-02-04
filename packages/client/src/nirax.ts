@@ -1,9 +1,9 @@
 // NIRAX --- A lightweight router
 
-import { EventEmitter } from 'eventemitter3';
-import { Ref, Component, ref, shallowRef, ShallowRef } from 'vue';
-import { pleaseLogin } from '@/scripts/please-login';
-import { safeURIDecode } from '@/scripts/safe-uri-decode';
+import { EventEmitter } from "eventemitter3";
+import { Ref, Component, ref, shallowRef, ShallowRef } from "vue";
+import { pleaseLogin } from "@/scripts/please-login";
+import { safeURIDecode } from "@/scripts/safe-uri-decode";
 
 type RouteDef = {
 	path: string;
@@ -16,29 +16,36 @@ type RouteDef = {
 	children?: RouteDef[];
 };
 
-type ParsedPath = (string | {
-	name: string;
-	startsWith?: string;
-	wildcard?: boolean;
-	optional?: boolean;
-})[];
+type ParsedPath = (
+	| string
+	| {
+			name: string;
+			startsWith?: string;
+			wildcard?: boolean;
+			optional?: boolean;
+	  }
+)[];
 
-export type Resolved = { route: RouteDef; props: Map<string, string>; child?: Resolved; };
+export type Resolved = {
+	route: RouteDef;
+	props: Map<string, string>;
+	child?: Resolved;
+};
 
 function parsePath(path: string): ParsedPath {
 	const res = [] as ParsedPath;
 
 	path = path.substring(1);
 
-	for (const part of path.split('/')) {
-		if (part.includes(':')) {
-			const prefix = part.substring(0, part.indexOf(':'));
-			const placeholder = part.substring(part.indexOf(':') + 1);
-			const wildcard = placeholder.includes('(*)');
-			const optional = placeholder.endsWith('?');
+	for (const part of path.split("/")) {
+		if (part.includes(":")) {
+			const prefix = part.substring(0, part.indexOf(":"));
+			const placeholder = part.substring(part.indexOf(":") + 1);
+			const wildcard = placeholder.includes("(*)");
+			const optional = placeholder.endsWith("?");
 			res.push({
-				name: placeholder.replace('(*)', '').replace('?', ''),
-				startsWith: prefix !== '' ? prefix : undefined,
+				name: placeholder.replace("(*)", "").replace("?", ""),
+				startsWith: prefix !== "" ? prefix : undefined,
 				wildcard,
 				optional,
 			});
@@ -79,7 +86,7 @@ export class Router extends EventEmitter<{
 
 	public navHook: ((path: string, flag?: any) => boolean) | null = null;
 
-	constructor(routes: Router['routes'], currentPath: Router['currentPath']) {
+	constructor(routes: Router["routes"], currentPath: Router["currentPath"]) {
 		super();
 
 		this.routes = routes;
@@ -90,27 +97,25 @@ export class Router extends EventEmitter<{
 	public resolve(path: string): Resolved | null {
 		let queryString: string | null = null;
 		let hash: string | null = null;
-		if (path[0] === '/') path = path.substring(1);
-		if (path.includes('#')) {
-			hash = path.substring(path.indexOf('#') + 1);
-			path = path.substring(0, path.indexOf('#'));
+		if (path[0] === "/") path = path.substring(1);
+		if (path.includes("#")) {
+			hash = path.substring(path.indexOf("#") + 1);
+			path = path.substring(0, path.indexOf("#"));
 		}
-		if (path.includes('?')) {
-			queryString = path.substring(path.indexOf('?') + 1);
-			path = path.substring(0, path.indexOf('?'));
+		if (path.includes("?")) {
+			queryString = path.substring(path.indexOf("?") + 1);
+			path = path.substring(0, path.indexOf("?"));
 		}
 
-		if (_DEV_) console.log('Routing: ', path, queryString);
+		if (_DEV_) console.log("Routing: ", path, queryString);
 
 		function check(routes: RouteDef[], _parts: string[]): Resolved | null {
-			forEachRouteLoop:
-			for (const route of routes) {
-				let parts = [ ..._parts ];
+			forEachRouteLoop: for (const route of routes) {
+				let parts = [..._parts];
 				const props = new Map<string, string>();
 
-				pathMatchLoop:
-				for (const p of parsePath(route.path)) {
-					if (typeof p === 'string') {
+				pathMatchLoop: for (const p of parsePath(route.path)) {
+					if (typeof p === "string") {
 						if (p === parts[0]) {
 							parts.shift();
 						} else {
@@ -122,15 +127,19 @@ export class Router extends EventEmitter<{
 						}
 						if (p.wildcard) {
 							if (parts.length !== 0) {
-								props.set(p.name, safeURIDecode(parts.join('/')));
+								props.set(p.name, safeURIDecode(parts.join("/")));
 								parts = [];
 							}
 							break pathMatchLoop;
 						} else {
 							if (p.startsWith) {
-								if (parts[0] == null || !parts[0].startsWith(p.startsWith)) continue forEachRouteLoop;
+								if (parts[0] == null || !parts[0].startsWith(p.startsWith))
+									continue forEachRouteLoop;
 
-								props.set(p.name, safeURIDecode(parts[0].substring(p.startsWith.length)));
+								props.set(
+									p.name,
+									safeURIDecode(parts[0].substring(p.startsWith.length)),
+								);
 								parts.shift();
 							} else {
 								if (parts[0]) {
@@ -159,11 +168,12 @@ export class Router extends EventEmitter<{
 					if (route.hash != null && hash != null) {
 						props.set(route.hash, safeURIDecode(hash));
 					}
-	
+
 					if (route.query != null && queryString != null) {
-						const queryObject = [...new URLSearchParams(queryString).entries()]
-							.reduce((obj, entry) => ({ ...obj, [entry[0]]: entry[1] }), {});
-	
+						const queryObject = [
+							...new URLSearchParams(queryString).entries(),
+						].reduce((obj, entry) => ({ ...obj, [entry[0]]: entry[1] }), {});
+
 						for (const q in route.query) {
 							const as = route.query[q];
 							if (queryObject[q]) {
@@ -171,7 +181,7 @@ export class Router extends EventEmitter<{
 							}
 						}
 					}
-	
+
 					return {
 						route,
 						props,
@@ -186,10 +196,8 @@ export class Router extends EventEmitter<{
 								child,
 							};
 						} else {
-							continue forEachRouteLoop;
 						}
 					} else {
-						continue forEachRouteLoop;
 					}
 				}
 			}
@@ -197,23 +205,27 @@ export class Router extends EventEmitter<{
 			return null;
 		}
 
-		const _parts = path.split('/').filter(part => part.length !== 0);
+		const _parts = path.split("/").filter((part) => part.length !== 0);
 
 		return check(this.routes, _parts);
 	}
 
-	private navigate(path: string, key: string | null | undefined, emitChange = true) {
+	private navigate(
+		path: string,
+		key: string | null | undefined,
+		emitChange = true,
+	) {
 		const beforePath = this.currentPath;
 		this.currentPath = path;
 
 		const res = this.resolve(this.currentPath);
 
 		if (res == null) {
-			throw new Error('no route found for: ' + path);
+			throw new Error(`no route found for: ${path}`);
 		}
 
 		if (res.route.loginRequired) {
-			pleaseLogin('/');
+			pleaseLogin("/");
 		}
 
 		const isSamePath = beforePath === path;
@@ -224,7 +236,7 @@ export class Router extends EventEmitter<{
 		this.currentKey = res.route.globalCacheKey ?? key ?? path;
 
 		if (emitChange) {
-			this.emit('change', {
+			this.emit("change", {
 				beforePath,
 				path,
 				resolved: res,
@@ -246,7 +258,7 @@ export class Router extends EventEmitter<{
 	public push(path: string, flag?: any) {
 		const beforePath = this.currentPath;
 		if (path === beforePath) {
-			this.emit('same');
+			this.emit("same");
 			return;
 		}
 		if (this.navHook) {
@@ -254,7 +266,7 @@ export class Router extends EventEmitter<{
 			if (cancel) return;
 		}
 		const res = this.navigate(path, null);
-		this.emit('push', {
+		this.emit("push", {
 			beforePath,
 			path,
 			route: res.route,
@@ -266,7 +278,7 @@ export class Router extends EventEmitter<{
 	public replace(path: string, key?: string | null, emitEvent = true) {
 		this.navigate(path, key);
 		if (emitEvent) {
-			this.emit('replace', {
+			this.emit("replace", {
 				path,
 				key: this.currentKey,
 			});

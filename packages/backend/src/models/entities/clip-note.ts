@@ -1,7 +1,14 @@
-import { Entity, Index, JoinColumn, Column, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Note } from './note.js';
-import { Clip } from './clip.js';
-import { id } from '../id.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+	PrimaryColumn,
+} from "typeorm";
+import { Note } from "./note.js";
+import { Clip } from "./clip.js";
+import { id } from "../id.js";
 
 @Entity()
 @Index(['noteId', 'clipId'], { unique: true })
@@ -14,7 +21,7 @@ export class ClipNote {
 		...id(),
 		comment: 'The note ID.',
 	})
-	public noteId: Note['id'];
+	public noteId: Note["id"];
 
 	@ManyToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -27,7 +34,7 @@ export class ClipNote {
 		...id(),
 		comment: 'The clip ID.',
 	})
-	public clipId: Clip['id'];
+	public clipId: Clip["id"];
 
 	@ManyToOne(type => Clip, {
 		onDelete: 'CASCADE',

@@ -1,7 +1,14 @@
-import { Entity, Index, JoinColumn, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { DriveFile } from './drive-file.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	PrimaryColumn,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import { DriveFile } from "./drive-file.js";
 
 @Entity()
 @Index(['userId', 'name'], { unique: true })
@@ -58,7 +65,7 @@ export class Page {
 		...id(),
 		comment: 'The ID of author.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -70,7 +77,7 @@ export class Page {
 		...id(),
 		nullable: true,
 	})
-	public eyeCatchingImageId: DriveFile['id'] | null;
+	public eyeCatchingImageId: DriveFile["id"] | null;
 
 	@ManyToOne(type => DriveFile, {
 		onDelete: 'CASCADE',
@@ -100,14 +107,14 @@ export class Page {
 	 * specified ... visibleUserIds で指定したユーザーのみ
 	 */
 	@Column('enum', { enum: ['public', 'followers', 'specified'] })
-	public visibility: 'public' | 'followers' | 'specified';
+	public visibility: "public" | "followers" | "specified";
 
 	@Index()
 	@Column({
 		...id(),
 		array: true, default: '{}',
 	})
-	public visibleUserIds: User['id'][];
+	public visibleUserIds: User["id"][];
 
 	@Column('integer', {
 		default: 0,

@@ -41,7 +41,7 @@
 ## Implemented
 
 - A lot of general bugfixes
-- Yarn 3
+- pnpm instead of yarn
   - Fix Dockerfile @hanna
   - Upgrade packages with security vunrabilities
 - Saner defaults
@@ -104,6 +104,10 @@
 - Improve blocking instances
 - Release notes
 - New post style
+- Admins set default reaction emoji
+  - Allows custom emoji
+- Fix lint errors
+- Use Rome instead of ESLint
 - MissV: [fix Misskey Forkbomb](https://code.vtopia.live/Vtopia/MissV/commit/40b23c070bd4adbb3188c73546c6c625138fb3c1)
 - [Make showing ads optional](https://github.com/misskey-dev/misskey/pull/8996)
 - [Tapping avatar in mobile opens account modal](https://github.com/misskey-dev/misskey/pull/9056)

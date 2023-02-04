@@ -1,13 +1,12 @@
-import { db } from '@/db/postgre.js';
-import { Users } from '../index.js';
-import { ModerationLog } from '@/models/entities/moderation-log.js';
-import { awaitAll } from '@/prelude/await-all.js';
+import { db } from "@/db/postgre.js";
+import { Users } from "../index.js";
+import { ModerationLog } from "@/models/entities/moderation-log.js";
+import { awaitAll } from "@/prelude/await-all.js";
 
 export const ModerationLogRepository = db.getRepository(ModerationLog).extend({
-	async pack(
-		src: ModerationLog['id'] | ModerationLog,
-	) {
-		const log = typeof src === 'object' ? src : await this.findOneByOrFail({ id: src });
+	async pack(src: ModerationLog["id"] | ModerationLog) {
+		const log =
+			typeof src === "object" ? src : await this.findOneByOrFail({ id: src });
 
 		return await awaitAll({
 			id: log.id,
@@ -21,9 +20,7 @@ export const ModerationLogRepository = db.getRepository(ModerationLog).extend({
 		});
 	},
 
-	packMany(
-		reports: any[],
-	) {
-		return Promise.all(reports.map(x => this.pack(x)));
+	packMany(reports: any[]) {
+		return Promise.all(reports.map((x) => this.pack(x)));
 	},
 });

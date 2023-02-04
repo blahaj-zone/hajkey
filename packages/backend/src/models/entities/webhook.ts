@@ -1,8 +1,24 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
-export const webhookEventTypes = ['mention', 'unfollow', 'follow', 'followed', 'note', 'reply', 'renote', 'reaction'] as const;
+export const webhookEventTypes = [
+	"mention",
+	"unfollow",
+	"follow",
+	"followed",
+	"note",
+	"reply",
+	"renote",
+	"reaction",
+] as const;
 
 @Entity()
 export class Webhook {
@@ -19,7 +35,7 @@ export class Webhook {
 		...id(),
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -37,7 +53,7 @@ export class Webhook {
 	@Column('varchar', {
 		length: 128, array: true, default: '{}',
 	})
-	public on: (typeof webhookEventTypes)[number][];
+	public on: typeof webhookEventTypes[number][];
 
 	@Column('varchar', {
 		length: 1024,

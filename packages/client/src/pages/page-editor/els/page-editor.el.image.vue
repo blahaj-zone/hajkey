@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :draggable="true" @remove="() => $emit('remove')">
 	<template #header><i class="ph-image-bold ph-lg"></i> {{ i18n.ts._pages.blocks.image }}</template>
 	<template #func>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable vue/no-mutating-props */
+
 import { onMounted } from 'vue';
 import XContainer from '../page-editor.container.vue';
 import MkDriveFileThumbnail from '@/components/MkDriveFileThumbnail.vue';

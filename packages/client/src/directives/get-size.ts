@@ -1,10 +1,13 @@
-import { Directive } from 'vue';
+import { Directive } from "vue";
 
-const mountings = new Map<Element, {
-	resize: ResizeObserver;
-	intersection?: IntersectionObserver;
-	fn: (w: number, h: number) => void;
-}>();
+const mountings = new Map<
+	Element,
+	{
+		resize: ResizeObserver;
+		intersection?: IntersectionObserver;
+		fn: (w: number, h: number) => void;
+	}
+>();
 
 function calc(src: Element) {
 	const info = mountings.get(src);
@@ -17,8 +20,8 @@ function calc(src: Element) {
 	if (!height) {
 		// IntersectionObserverで表示検出する
 		if (!info.intersection) {
-			info.intersection = new IntersectionObserver(entries => {
-				if (entries.some(entry => entry.isIntersecting)) calc(src);
+			info.intersection = new IntersectionObserver((entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) calc(src);
 			});
 		}
 		info.intersection.observe(src);
@@ -26,7 +29,7 @@ function calc(src: Element) {
 	}
 	if (info.intersection) {
 		info.intersection.disconnect();
-		delete info.intersection;
+		info.intersection = undefined;
 	}
 
 	info.fn(width, height);
@@ -39,7 +42,7 @@ export default {
 		});
 		resize.observe(src);
 
-		mountings.set(src, { resize, fn: binding.value, });
+		mountings.set(src, { resize, fn: binding.value });
 		calc(src);
 	},
 
@@ -50,5 +53,5 @@ export default {
 		info.resize.disconnect();
 		if (info.intersection) info.intersection.disconnect();
 		mountings.delete(src);
-	}
+	},
 } as Directive<Element, (w: number, h: number) => void>;

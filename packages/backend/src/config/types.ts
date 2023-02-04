@@ -47,7 +47,7 @@ export type Source = {
 
 	id: string;
 
-	outgoingAddressFamily?: 'ipv4' | 'ipv6' | 'dual';
+	outgoingAddressFamily?: "ipv4" | "ipv6" | "dual";
 
 	deliverJobConcurrency?: number;
 	inboxJobConcurrency?: number;
@@ -63,6 +63,12 @@ export type Source = {
 
 	mediaProxy?: string;
 	proxyRemoteFiles?: boolean;
+
+	twa: {
+		nameSpace?: string;
+		packageName?: string;
+		sha256CertFingerprints?: string[];
+	};
 
 	// Managed hosting stuff
 	maxUserSignups?: number;
@@ -81,7 +87,6 @@ export type Source = {
 		user?: string;
 		pass?: string;
 		useImplicitSslTls?: boolean;
-
 	};
 	objectStorage: {
 		managed?: boolean;

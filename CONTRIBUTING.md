@@ -49,7 +49,7 @@ Thank you for your PR! Before creating a PR, please check the following:
 - Check if there are any documents that need to be created or updated due to this change.
 - If you have added a feature or fixed a bug, please add a test case if possible.
 - Please make sure that tests and Lint are passed in advance.
-  - You can run it with `yarn test` and `yarn lint`. [See more info](#testing)
+  - You can run it with `pnpm run test` and `pnpm run lint`. [See more info](#testing)
 - If this PR includes UI changes, please attach a screenshot in the text.
 
 Thanks for your cooperation 🤗
@@ -255,7 +255,7 @@ MongoDBは`null`で返してきてたので、その感覚で`if (x === null)`�
 ### Migration作成方法
 packages/backendで:
 ```sh
-yarn dlx typeorm migration:generate -d ormconfig.js -o <migration name>
+pnpm dlx typeorm migration:generate -d ormconfig.js -o <migration name>
 ```
 
 - 生成後、ファイルをmigration下に移してください

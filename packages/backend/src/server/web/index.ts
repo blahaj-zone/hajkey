@@ -2,31 +2,39 @@
  * Web Client Server
  */
 
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { readFileSync } from 'node:fs';
-import Koa from 'koa';
-import Router from '@koa/router';
-import send from 'koa-send';
-import favicon from 'koa-favicon';
-import views from 'koa-views';
-import sharp from 'sharp';
-import { createBullBoard } from '@bull-board/api';
-import { BullAdapter } from '@bull-board/api/bullAdapter.js';
-import { KoaAdapter } from '@bull-board/koa';
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import Koa from "koa";
+import Router from "@koa/router";
+import send from "koa-send";
+import favicon from "koa-favicon";
+import views from "koa-views";
+import sharp from "sharp";
+import { createBullBoard } from "@bull-board/api";
+import { BullAdapter } from "@bull-board/api/bullAdapter.js";
+import { KoaAdapter } from "@bull-board/koa";
 
-import { In, IsNull } from 'typeorm';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import config from '@/config/index.js';
-import { Users, Notes, UserProfiles, Pages, Channels, Clips, GalleryPosts } from '@/models/index.js';
-import * as Acct from '@/misc/acct.js';
-import { getNoteSummary } from '@/misc/get-note-summary.js';
-import { queues } from '@/queue/queues.js';
-import { genOpenapiSpec } from '../api/openapi/gen-spec.js';
-import { urlPreviewHandler } from './url-preview.js';
-import { manifestHandler } from './manifest.js';
-import packFeed from './feed.js';
-import { MINUTE, DAY } from '@/const.js';
+import { In, IsNull } from "typeorm";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import config from "@/config/index.js";
+import {
+	Users,
+	Notes,
+	UserProfiles,
+	Pages,
+	Channels,
+	Clips,
+	GalleryPosts,
+} from "@/models/index.js";
+import * as Acct from "@/misc/acct.js";
+import { getNoteSummary } from "@/misc/get-note-summary.js";
+import { queues } from "@/queue/queues.js";
+import { genOpenapiSpec } from "../api/openapi/gen-spec.js";
+import { urlPreviewHandler } from "./url-preview.js";
+import { manifestHandler } from "./manifest.js";
+import packFeed from "./feed.js";
+import { MINUTE, DAY } from "@/const.js";
 
 const _filename = fileURLToPath(import.meta.url);
 const _dirname = dirname(_filename);
@@ -40,12 +48,12 @@ const swAssets = `${_dirname}/../../../../../built/_sw_dist_/`;
 const app = new Koa();
 
 //#region Bull Dashboard
-const bullBoardPath = '/queue';
+const bullBoardPath = "/queue";
 
 // Authenticate
 app.use(async (ctx, next) => {
-	if (ctx.path === bullBoardPath || ctx.path.startsWith(bullBoardPath + '/')) {
-		const token = ctx.cookies.get('token');
+	if (ctx.path === bullBoardPath || ctx.path.startsWith(`${bullBoardPath}/`)) {
+		const token = ctx.cookies.get("token");
 		if (token == null) {
 			ctx.status = 401;
 			return;
@@ -62,7 +70,7 @@ app.use(async (ctx, next) => {
 const serverAdapter = new KoaAdapter();
 
 createBullBoard({
-	queues: queues.map(q => new BullAdapter(q)),
+	queues: queues.map((q) => new BullAdapter(q)),
 	serverAdapter,
 });
 
@@ -71,16 +79,24 @@ app.use(serverAdapter.registerPlugin());
 //#endregion
 
 // Init renderer
-app.use(views(_dirname + '/views', {
-	extension: 'pug',
-	options: {
-		version: config.version,
-		getClientEntry: () => process.env.NODE_ENV === 'production' ?
-			config.clientEntry :
-			JSON.parse(readFileSync(`${_dirname}/../../../../../built/_client_dist_/manifest.json`, 'utf-8'))['src/init.ts'],
-		config,
-	},
-}));
+app.use(
+	views(`${_dirname}/views`, {
+		extension: "pug",
+		options: {
+			version: config.version,
+			getClientEntry: () =>
+				process.env.NODE_ENV === "production"
+					? config.clientEntry
+					: JSON.parse(
+							readFileSync(
+								`${_dirname}/../../../../../built/_client_dist_/manifest.json`,
+								"utf-8",
+							),
+					  )["src/init.ts"],
+			config,
+		},
+	}),
+);
 
 // Serve favicon
 app.use(favicon(`${_dirname}/../../../assets/favicon.ico`));
@@ -88,7 +104,7 @@ app.use(favicon(`${_dirname}/../../../assets/favicon.ico`));
 // Common request handler
 app.use(async (ctx, next) => {
 	// IFrameの中に入れられないようにする
-	ctx.set('X-Frame-Options', 'DENY');
+	ctx.set("X-Frame-Options", "DENY");
 	await next();
 });
 
@@ -97,43 +113,46 @@ const router = new Router();
 
 //#region static assets
 
-router.get('/static-assets/(.*)', async ctx => {
-	await send(ctx as any, ctx.path.replace('/static-assets/', ''), {
+router.get("/static-assets/(.*)", async (ctx) => {
+	await send(ctx as any, ctx.path.replace("/static-assets/", ""), {
 		root: staticAssets,
 		maxage: 7 * DAY,
 	});
 });
 
-router.get('/client-assets/(.*)', async ctx => {
-	await send(ctx as any, ctx.path.replace('/client-assets/', ''), {
+router.get("/client-assets/(.*)", async (ctx) => {
+	await send(ctx as any, ctx.path.replace("/client-assets/", ""), {
 		root: clientAssets,
 		maxage: 7 * DAY,
 	});
 });
 
-router.get('/assets/(.*)', async ctx => {
-	await send(ctx as any, ctx.path.replace('/assets/', ''), {
+router.get("/assets/(.*)", async (ctx) => {
+	await send(ctx as any, ctx.path.replace("/assets/", ""), {
 		root: assets,
 		maxage: 7 * DAY,
 	});
 });
 
 // Apple touch icon
-router.get('/apple-touch-icon.png', async ctx => {
-	await send(ctx as any, '/apple-touch-icon.png', {
+router.get("/apple-touch-icon.png", async (ctx) => {
+	await send(ctx as any, "/apple-touch-icon.png", {
 		root: staticAssets,
 	});
 });
 
-router.get('/twemoji/(.*)', async ctx => {
-	const path = ctx.path.replace('/twemoji/', '');
+router.get("/twemoji/(.*)", async (ctx) => {
+	const path = ctx.path.replace("/twemoji/", "");
 
 	if (!path.match(/^[0-9a-f-]+\.svg$/)) {
 		ctx.status = 404;
 		return;
 	}
 
-	ctx.set('Content-Security-Policy', 'default-src \'none\'; style-src \'unsafe-inline\'');
+	ctx.set(
+		"Content-Security-Policy",
+		"default-src 'none'; style-src 'unsafe-inline'",
+	);
 
 	await send(ctx as any, path, {
 		root: `${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/`,
@@ -141,8 +160,8 @@ router.get('/twemoji/(.*)', async ctx => {
 	});
 });
 
-router.get('/twemoji-badge/(.*)', async ctx => {
-	const path = ctx.path.replace('/twemoji-badge/', '');
+router.get("/twemoji-badge/(.*)", async (ctx) => {
+	const path = ctx.path.replace("/twemoji-badge/", "");
 
 	if (!path.match(/^[0-9a-f-]+\.png$/)) {
 		ctx.status = 404;
@@ -150,53 +169,64 @@ router.get('/twemoji-badge/(.*)', async ctx => {
 	}
 
 	const mask = await sharp(
-		`${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/${path.replace('.png', '')}.svg`,
+		`${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/${path.replace(
+			".png",
+			"",
+		)}.svg`,
 		{ density: 1000 },
 	)
 		.resize(488, 488)
 		.greyscale()
 		.normalise()
 		.linear(1.75, -(128 * 1.75) + 128) // 1.75x contrast
-		.flatten({ background: '#000' })
+		.flatten({ background: "#000" })
 		.extend({
 			top: 12,
 			bottom: 12,
 			left: 12,
 			right: 12,
-			background: '#000',
+			background: "#000",
 		})
-		.toColorspace('b-w')
+		.toColorspace("b-w")
 		.png()
 		.toBuffer();
 
 	const buffer = await sharp({
-		create: { width: 512, height: 512, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
+		create: {
+			width: 512,
+			height: 512,
+			channels: 4,
+			background: { r: 0, g: 0, b: 0, alpha: 0 },
+		},
 	})
-		.pipelineColorspace('b-w')
-		.boolean(mask, 'eor')
+		.pipelineColorspace("b-w")
+		.boolean(mask, "eor")
 		.resize(96, 96)
 		.png()
 		.toBuffer();
 
-	ctx.set('Content-Security-Policy', 'default-src \'none\'; style-src \'unsafe-inline\'');
-	ctx.set('Cache-Control', 'max-age=2592000');
-	ctx.set('Content-Type', 'image/png');
+	ctx.set(
+		"Content-Security-Policy",
+		"default-src 'none'; style-src 'unsafe-inline'",
+	);
+	ctx.set("Cache-Control", "max-age=2592000");
+	ctx.set("Content-Type", "image/png");
 	ctx.body = buffer;
 });
 
 // ServiceWorker
-router.get(`/sw.js`, async ctx => {
-	await send(ctx as any, `/sw.js`, {
+router.get("/sw.js", async (ctx) => {
+	await send(ctx as any, "/sw.js", {
 		root: swAssets,
 		maxage: 10 * MINUTE,
 	});
 });
 
 // Manifest
-router.get('/manifest.json', manifestHandler);
+router.get("/manifest.json", manifestHandler);
 
-router.get('/robots.txt', async ctx => {
-	await send(ctx as any, '/robots.txt', {
+router.get("/robots.txt", async (ctx) => {
+	await send(ctx as any, "/robots.txt", {
 		root: staticAssets,
 	});
 });
@@ -204,16 +234,16 @@ router.get('/robots.txt', async ctx => {
 //#endregion
 
 // Docs
-router.get('/api-doc', async ctx => {
-	await send(ctx as any, '/redoc.html', {
+router.get("/api-doc", async (ctx) => {
+	await send(ctx as any, "/redoc.html", {
 		root: staticAssets,
 	});
 });
 
 // URL preview endpoint
-router.get('/url', urlPreviewHandler);
+router.get("/url", urlPreviewHandler);
 
-router.get('/api.json', async ctx => {
+router.get("/api.json", async (ctx) => {
 	ctx.body = genOpenapiSpec();
 });
 
@@ -229,11 +259,13 @@ const getFeed = async (acct: string) => {
 		isSuspended: false,
 	});
 
-	return user && await packFeed(user);
+	return user && (await packFeed(user));
 };
 
 // As the /@user[.json|.rss|.atom]/sub endpoint is complicated, we will use a regex to switch between them.
-const reUser = new RegExp(`^/@(?<user>[^/]+?)(?:\.(?<feed>json|rss|atom))?(?:/(?<sub>[^/]+))?$`);
+const reUser = new RegExp(
+	"^/@(?<user>[^/]+?)(?:.(?<feed>json|rss|atom))?(?:/(?<sub>[^/]+))?$",
+);
 router.get(reUser, async (ctx, next) => {
 	const groups = reUser.exec(ctx.originalUrl)?.groups;
 	if (!groups) {
@@ -243,6 +275,7 @@ router.get(reUser, async (ctx, next) => {
 
 	ctx.params = groups;
 
+	console.log(ctx, ctx.params);
 	if (groups.feed) {
 		if (groups.sub) {
 			await next();
@@ -250,13 +283,13 @@ router.get(reUser, async (ctx, next) => {
 		}
 
 		switch (groups.feed) {
-			case 'json':
+			case "json":
 				await jsonFeed(ctx, next);
 				break;
-			case 'rss':
+			case "rss":
 				await rssFeed(ctx, next);
 				break;
-			case 'atom':
+			case "atom":
 				await atomFeed(ctx, next);
 				break;
 		}
@@ -267,11 +300,11 @@ router.get(reUser, async (ctx, next) => {
 });
 
 // Atom
-const atomFeed: Router.Middleware = async ctx => {
+const atomFeed: Router.Middleware = async (ctx) => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
-		ctx.set('Content-Type', 'application/atom+xml; charset=utf-8');
+		ctx.set("Content-Type", "application/atom+xml; charset=utf-8");
 		ctx.body = feed.atom1();
 	} else {
 		ctx.status = 404;
@@ -279,11 +312,11 @@ const atomFeed: Router.Middleware = async ctx => {
 };
 
 // RSS
-const rssFeed: Router.Middleware = async ctx => {
+const rssFeed: Router.Middleware = async (ctx) => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
-		ctx.set('Content-Type', 'application/rss+xml; charset=utf-8');
+		ctx.set("Content-Type", "application/rss+xml; charset=utf-8");
 		ctx.body = feed.rss2();
 	} else {
 		ctx.status = 404;
@@ -291,11 +324,11 @@ const rssFeed: Router.Middleware = async ctx => {
 };
 
 // JSON
-const jsonFeed: Router.Middleware = async ctx => {
+const jsonFeed: Router.Middleware = async (ctx) => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
-		ctx.set('Content-Type', 'application/json; charset=utf-8');
+		ctx.set("Content-Type", "application/json; charset=utf-8");
 		ctx.body = feed.json1();
 	} else {
 		ctx.status = 404;
@@ -324,25 +357,27 @@ const userPage: Router.Middleware = async (ctx, next) => {
 	const meta = await fetchMeta();
 	const me = profile.fields
 		? profile.fields
-			.filter(filed => filed.value != null && filed.value.match(/^https?:/))
-			.map(field => field.value)
+				.filter((filed) => filed.value?.match(/^https?:/))
+				.map((field) => field.value)
 		: [];
 
 	const userDetail = {
-		user, profile, me,
+		user,
+		profile,
+		me,
 		avatarUrl: await Users.getAvatarUrl(user),
 		sub: subParam,
-		instanceName: meta.name || 'Calckey',
+		instanceName: meta.name || "Calckey",
 		icon: meta.iconUrl,
 		themeColor: meta.themeColor,
 		privateMode: meta.privateMode,
 	};
 
-	await ctx.render('user', userDetail);
-	ctx.set('Cache-Control', 'public, max-age=15');
+	await ctx.render("user", userDetail);
+	ctx.set("Cache-Control", "public, max-age=15");
 };
 
-router.get('/users/:user', async ctx => {
+router.get("/users/:user", async (ctx) => {
 	const user = await Users.findOneBy({
 		id: ctx.params.user,
 		host: IsNull(),
@@ -354,33 +389,67 @@ router.get('/users/:user', async ctx => {
 		return;
 	}
 
-	ctx.redirect(`/@${user.username}${ user.host == null ? '' : '@' + user.host}`);
+	ctx.redirect(`/@${user.username}${user.host == null ? "" : `@${user.host}`}`);
 });
 
 // Note
-router.get('/notes/:note', async (ctx, next) => {
+router.get("/notes/:note", async (ctx, next) => {
 	const note = await Notes.findOneBy({
 		id: ctx.params.note,
-		visibility: In(['public', 'home']),
+		visibility: In(["public", "home"]),
 	});
 
 	if (note) {
 		const _note = await Notes.pack(note);
 		const profile = await UserProfiles.findOneByOrFail({ userId: note.userId });
 		const meta = await fetchMeta();
-		await ctx.render('note', {
+		await ctx.render("note", {
 			note: _note,
 			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: note.userId })),
+			avatarUrl: await Users.getAvatarUrl(
+				await Users.findOneByOrFail({ id: note.userId }),
+			),
 			// TODO: Let locale changeable by instance setting
 			summary: getNoteSummary(_note),
-			instanceName: meta.name || 'Calckey',
+			instanceName: meta.name || "Calckey",
 			icon: meta.iconUrl,
 			privateMode: meta.privateMode,
 			themeColor: meta.themeColor,
 		});
 
-		ctx.set('Cache-Control', 'public, max-age=15');
+		ctx.set("Cache-Control", "public, max-age=15");
+
+		return;
+	}
+
+	await next();
+});
+
+router.get("/posts/:note", async (ctx, next) => {
+	const note = await Notes.findOneBy({
+		id: ctx.params.note,
+		visibility: In(["public", "home"]),
+	});
+
+	if (note) {
+		const _note = await Notes.pack(note);
+		const profile = await UserProfiles.findOneByOrFail({ userId: note.userId });
+		const meta = await fetchMeta();
+		await ctx.render("note", {
+			note: _note,
+			profile,
+			avatarUrl: await Users.getAvatarUrl(
+				await Users.findOneByOrFail({ id: note.userId }),
+			),
+			// TODO: Let locale changeable by instance setting
+			summary: getNoteSummary(_note),
+			instanceName: meta.name || "Calckey",
+			icon: meta.iconUrl,
+			privateMode: meta.privateMode,
+			themeColor: meta.themeColor,
+		});
+
+		ctx.set("Cache-Control", "public, max-age=15");
 
 		return;
 	}
@@ -389,7 +458,7 @@ router.get('/notes/:note', async (ctx, next) => {
 });
 
 // Page
-router.get('/@:user/pages/:page', async (ctx, next) => {
+router.get("/@:user/pages/:page", async (ctx, next) => {
 	const { username, host } = Acct.parse(ctx.params.user);
 	const user = await Users.findOneBy({
 		usernameLower: username.toLowerCase(),
@@ -407,20 +476,22 @@ router.get('/@:user/pages/:page', async (ctx, next) => {
 		const _page = await Pages.pack(page);
 		const profile = await UserProfiles.findOneByOrFail({ userId: page.userId });
 		const meta = await fetchMeta();
-		await ctx.render('page', {
+		await ctx.render("page", {
 			page: _page,
 			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: page.userId })),
-			instanceName: meta.name || 'Calckey',
+			avatarUrl: await Users.getAvatarUrl(
+				await Users.findOneByOrFail({ id: page.userId }),
+			),
+			instanceName: meta.name || "Calckey",
 			icon: meta.iconUrl,
 			themeColor: meta.themeColor,
 			privateMode: meta.privateMode,
 		});
 
-		if (['public'].includes(page.visibility)) {
-			ctx.set('Cache-Control', 'public, max-age=15');
+		if (["public"].includes(page.visibility)) {
+			ctx.set("Cache-Control", "public, max-age=15");
 		} else {
-			ctx.set('Cache-Control', 'private, max-age=0, must-revalidate');
+			ctx.set("Cache-Control", "private, max-age=0, must-revalidate");
 		}
 
 		return;
@@ -430,8 +501,8 @@ router.get('/@:user/pages/:page', async (ctx, next) => {
 });
 
 // Clip
-// TODO: 非publicなclipのハンドリング
-router.get('/clips/:clip', async (ctx, next) => {
+// TODO: handling of private clips
+router.get("/clips/:clip", async (ctx, next) => {
 	const clip = await Clips.findOneBy({
 		id: ctx.params.clip,
 	});
@@ -440,17 +511,19 @@ router.get('/clips/:clip', async (ctx, next) => {
 		const _clip = await Clips.pack(clip);
 		const profile = await UserProfiles.findOneByOrFail({ userId: clip.userId });
 		const meta = await fetchMeta();
-		await ctx.render('clip', {
+		await ctx.render("clip", {
 			clip: _clip,
 			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: clip.userId })),
-			instanceName: meta.name || 'Calckey',
+			avatarUrl: await Users.getAvatarUrl(
+				await Users.findOneByOrFail({ id: clip.userId }),
+			),
+			instanceName: meta.name || "Calckey",
 			privateMode: meta.privateMode,
 			icon: meta.iconUrl,
 			themeColor: meta.themeColor,
 		});
 
-		ctx.set('Cache-Control', 'public, max-age=15');
+		ctx.set("Cache-Control", "public, max-age=15");
 
 		return;
 	}
@@ -459,24 +532,26 @@ router.get('/clips/:clip', async (ctx, next) => {
 });
 
 // Gallery post
-router.get('/gallery/:post', async (ctx, next) => {
+router.get("/gallery/:post", async (ctx, next) => {
 	const post = await GalleryPosts.findOneBy({ id: ctx.params.post });
 
 	if (post) {
 		const _post = await GalleryPosts.pack(post);
 		const profile = await UserProfiles.findOneByOrFail({ userId: post.userId });
 		const meta = await fetchMeta();
-		await ctx.render('gallery-post', {
+		await ctx.render("gallery-post", {
 			post: _post,
 			profile,
-			avatarUrl: await Users.getAvatarUrl(await Users.findOneByOrFail({ id: post.userId })),
-			instanceName: meta.name || 'Calckey',
+			avatarUrl: await Users.getAvatarUrl(
+				await Users.findOneByOrFail({ id: post.userId }),
+			),
+			instanceName: meta.name || "Calckey",
 			icon: meta.iconUrl,
 			themeColor: meta.themeColor,
 			privateMode: meta.privateMode,
 		});
 
-		ctx.set('Cache-Control', 'public, max-age=15');
+		ctx.set("Cache-Control", "public, max-age=15");
 
 		return;
 	}
@@ -485,7 +560,7 @@ router.get('/gallery/:post', async (ctx, next) => {
 });
 
 // Channel
-router.get('/channels/:channel', async (ctx, next) => {
+router.get("/channels/:channel", async (ctx, next) => {
 	const channel = await Channels.findOneBy({
 		id: ctx.params.channel,
 	});
@@ -493,15 +568,15 @@ router.get('/channels/:channel', async (ctx, next) => {
 	if (channel) {
 		const _channel = await Channels.pack(channel);
 		const meta = await fetchMeta();
-		await ctx.render('channel', {
+		await ctx.render("channel", {
 			channel: _channel,
-			instanceName: meta.name || 'Calckey',
+			instanceName: meta.name || "Calckey",
 			icon: meta.iconUrl,
 			themeColor: meta.themeColor,
 			privateMode: meta.privateMode,
 		});
 
-		ctx.set('Cache-Control', 'public, max-age=15');
+		ctx.set("Cache-Control", "public, max-age=15");
 
 		return;
 	}
@@ -510,16 +585,16 @@ router.get('/channels/:channel', async (ctx, next) => {
 });
 //#endregion
 
-router.get('/_info_card_', async ctx => {
+router.get("/_info_card_", async (ctx) => {
 	const meta = await fetchMeta(true);
 	if (meta.privateMode) {
 		ctx.status = 403;
 		return;
 	}
 
-	ctx.remove('X-Frame-Options');
+	ctx.remove("X-Frame-Options");
 
-	await ctx.render('info-card', {
+	await ctx.render("info-card", {
 		version: config.version,
 		host: config.host,
 		meta: meta,
@@ -528,46 +603,56 @@ router.get('/_info_card_', async ctx => {
 	});
 });
 
-router.get('/bios', async ctx => {
-	await ctx.render('bios', {
+router.get("/bios", async (ctx) => {
+	await ctx.render("bios", {
 		version: config.version,
 	});
 });
 
-router.get('/cli', async ctx => {
-	await ctx.render('cli', {
+router.get("/cli", async (ctx) => {
+	await ctx.render("cli", {
 		version: config.version,
 	});
 });
 
 const override = (source: string, target: string, depth = 0) =>
-	[, ...target.split('/').filter(x => x), ...source.split('/').filter(x => x).splice(depth)].join('/');
+	[
+		undefined,
+		...target.split("/").filter((x) => x),
+		...source
+			.split("/")
+			.filter((x) => x)
+			.splice(depth),
+	].join("/");
 
-router.get('/flush', async ctx => {
-	await ctx.render('flush');
+router.get("/flush", async (ctx) => {
+	await ctx.render("flush");
 });
 
-// streamingに非WebSocketリクエストが来た場合にbase htmlをキャシュ付きで返すと、Proxy等でそのパスがキャッシュされておかしくなる
-router.get('/streaming', async ctx => {
+// If a non-WebSocket request comes in to streaming and base html is returned with cache, the path will be cached by Proxy, etc. and it will be wrong.
+router.get("/streaming", async (ctx) => {
 	ctx.status = 503;
-	ctx.set('Cache-Control', 'private, max-age=0');
+	ctx.set("Cache-Control", "private, max-age=0");
 });
 
 // Render base html for all requests
-router.get('(.*)', async ctx => {
+router.get("(.*)", async (ctx) => {
 	const meta = await fetchMeta();
-	let motd = ['Loading...'];
+	let motd = ["Loading..."];
 	if (meta.customMOTD.length > 0) {
 		motd = meta.customMOTD;
 	}
 	let splashIconUrl = meta.iconUrl;
 	if (meta.customSplashIcons.length > 0) {
-		splashIconUrl = meta.customSplashIcons[Math.floor(Math.random() * meta.customSplashIcons.length)];
+		splashIconUrl =
+			meta.customSplashIcons[
+				Math.floor(Math.random() * meta.customSplashIcons.length)
+			];
 	}
-	await ctx.render('base', {
+	await ctx.render("base", {
 		img: meta.bannerUrl,
-		title: meta.name || 'Calckey',
-		instanceName: meta.name || 'Calckey',
+		title: meta.name || "Calckey",
+		instanceName: meta.name || "Calckey",
 		desc: meta.description,
 		icon: meta.iconUrl,
 		splashIcon: splashIconUrl,
@@ -575,7 +660,7 @@ router.get('(.*)', async ctx => {
 		randomMOTD: motd[Math.floor(Math.random() * motd.length)],
 		privateMode: meta.privateMode,
 	});
-	ctx.set('Cache-Control', 'public, max-age=3');
+	ctx.set("Cache-Control", "public, max-age=3");
 });
 
 // Register router

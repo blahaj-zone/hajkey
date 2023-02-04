@@ -1,13 +1,20 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, OneToOne } from 'typeorm';
-import { id } from '../id.js';
-import { Note } from './note.js';
-import { User } from './user.js';
-import { noteVisibilities } from '../../types.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	OneToOne,
+} from "typeorm";
+import { id } from "../id.js";
+import { Note } from "./note.js";
+import type { User } from "./user.js";
+import { noteVisibilities } from "../../types.js";
 
 @Entity()
 export class Poll {
 	@PrimaryColumn(id())
-	public noteId: Note['id'];
+	public noteId: Note["id"];
 
 	@OneToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -24,7 +31,7 @@ export class Poll {
 	public multiple: boolean;
 
 	@Column('varchar', {
-		length: 128, array: true, default: '{}',
+		length: 256, array: true, default: '{}',
 	})
 	public choices: string[];
 
@@ -45,7 +52,7 @@ export class Poll {
 		...id(),
 		comment: '[Denormalized]',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@Index()
 	@Column('varchar', {

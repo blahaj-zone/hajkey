@@ -50,16 +50,17 @@ html
 				= title || 'Calckey'
 
 		block desc
-			meta(name='description' content= desc || '✨🌎✨ A interplanetary communication platform ✨🚀✨')
+			meta(name='description' content=desc || 'An open source, decentralized social media platform that\'s free forever! 🚀')
 
 		block meta
 			if privateMode
 				meta(name='robots' content='noindex')
 
 		block og
-			meta(property='og:title'       content= title || 'Calckey')
-			meta(property='og:description' content= desc || '✨🌎 A interplanetary communication platform 🚀✨')
-			meta(property='og:image'       content= img)
+			meta(property='og:title'       content=title || 'Calckey')
+			meta(property='og:description' content=desc || 'An open source, decentralized social media platform that\'s free forever! 🚀')
+			meta(property='og:image'       content=img)
+			meta(property='og:image:alt'   content=alt || 'Pfp')
 
 		style
 			include ../style.css

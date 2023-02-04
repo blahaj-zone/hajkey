@@ -1,7 +1,14 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { Note } from './note.js';
-import { id } from '../id.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { Note } from "./note.js";
+import { id } from "../id.js";
 
 @Entity()
 @Index(['userId', 'threadId'], { unique: true })
@@ -17,7 +24,7 @@ export class NoteThreadMuting {
 	@Column({
 		...id(),
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

@@ -1,7 +1,14 @@
-import { Entity, Index, JoinColumn, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { DriveFile } from './drive-file.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	PrimaryColumn,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import type { DriveFile } from "./drive-file.js";
 
 @Entity()
 export class GalleryPost {
@@ -35,7 +42,7 @@ export class GalleryPost {
 		...id(),
 		comment: 'The ID of author.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -48,7 +55,7 @@ export class GalleryPost {
 		...id(),
 		array: true, default: '{}',
 	})
-	public fileIds: DriveFile['id'][];
+	public fileIds: DriveFile["id"][];
 
 	@Index()
 	@Column('boolean', {

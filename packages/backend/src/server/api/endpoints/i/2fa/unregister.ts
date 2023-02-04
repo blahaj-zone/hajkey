@@ -1,6 +1,6 @@
-import bcrypt from 'bcryptjs';
-import define from '../../../define.js';
-import { UserProfiles } from '@/models/index.js';
+import bcrypt from "bcryptjs";
+import define from "../../../define.js";
+import { UserProfiles } from "@/models/index.js";
 
 export const meta = {
 	requireCredential: true,
@@ -9,14 +9,13 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		password: { type: 'string' },
+		password: { type: "string" },
 	},
-	required: ['password'],
+	required: ["password"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
@@ -24,7 +23,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	const same = await bcrypt.compare(ps.password, profile.password!);
 
 	if (!same) {
-		throw new Error('incorrect password');
+		throw new Error("incorrect password");
 	}
 
 	await UserProfiles.update(user.id, {

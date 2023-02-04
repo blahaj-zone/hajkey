@@ -1,19 +1,36 @@
-import { CacheableUser, User } from '@/models/entities/user.js';
-import { UserGroup } from '@/models/entities/user-group.js';
-import { DriveFile } from '@/models/entities/drive-file.js';
-import { MessagingMessages, UserGroupJoinings, Mutings, Users } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
-import { MessagingMessage } from '@/models/entities/messaging-message.js';
-import { publishMessagingStream, publishMessagingIndexStream, publishMainStream, publishGroupMessagingStream } from '@/services/stream.js';
-import { pushNotification } from '@/services/push-notification.js';
-import { Not } from 'typeorm';
-import { Note } from '@/models/entities/note.js';
-import renderNote from '@/remote/activitypub/renderer/note.js';
-import renderCreate from '@/remote/activitypub/renderer/create.js';
-import { renderActivity } from '@/remote/activitypub/renderer/index.js';
-import { deliver } from '@/queue/index.js';
+import type { CacheableUser, User } from "@/models/entities/user.js";
+import type { UserGroup } from "@/models/entities/user-group.js";
+import type { DriveFile } from "@/models/entities/drive-file.js";
+import {
+	MessagingMessages,
+	UserGroupJoinings,
+	Mutings,
+	Users,
+} from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
+import type { MessagingMessage } from "@/models/entities/messaging-message.js";
+import {
+	publishMessagingStream,
+	publishMessagingIndexStream,
+	publishMainStream,
+	publishGroupMessagingStream,
+} from "@/services/stream.js";
+import { pushNotification } from "@/services/push-notification.js";
+import { Not } from "typeorm";
+import type { Note } from "@/models/entities/note.js";
+import renderNote from "@/remote/activitypub/renderer/note.js";
+import renderCreate from "@/remote/activitypub/renderer/create.js";
+import { renderActivity } from "@/remote/activitypub/renderer/index.js";
+import { deliver } from "@/queue/index.js";
 
-export async function createMessage(user: { id: User['id']; host: User['host']; }, recipientUser: CacheableUser | undefined, recipientGroup: UserGroup | undefined, text: string | null | undefined, file: DriveFile | null, uri?: string) {
+export async function createMessage(
+	user: { id: User["id"]; host: User["host"] },
+	recipientUser: CacheableUser | undefined,
+	recipientGroup: UserGroup | undefined,
+	text: string | null | undefined,
+	file: DriveFile | null,
+	uri?: string,
+) {
 	const message = {
 		id: genId(),
 		createdAt: new Date(),
@@ -34,26 +51,38 @@ export async function createMessage(user: { id: User['id']; host: User['host']; 
 	if (recipientUser) {
 		if (Users.isLocalUser(user)) {
 			// 自分のストリーム
-			publishMessagingStream(message.userId, recipientUser.id, 'message', messageObj);
-			publishMessagingIndexStream(message.userId, 'message', messageObj);
-			publishMainStream(message.userId, 'messagingMessage', messageObj);
+			publishMessagingStream(
+				message.userId,
+				recipientUser.id,
+				"message",
+				messageObj,
+			);
+			publishMessagingIndexStream(message.userId, "message", messageObj);
+			publishMainStream(message.userId, "messagingMessage", messageObj);
 		}
 
 		if (Users.isLocalUser(recipientUser)) {
 			// 相手のストリーム
-			publishMessagingStream(recipientUser.id, message.userId, 'message', messageObj);
-			publishMessagingIndexStream(recipientUser.id, 'message', messageObj);
-			publishMainStream(recipientUser.id, 'messagingMessage', messageObj);
+			publishMessagingStream(
+				recipientUser.id,
+				message.userId,
+				"message",
+				messageObj,
+			);
+			publishMessagingIndexStream(recipientUser.id, "message", messageObj);
+			publishMainStream(recipientUser.id, "messagingMessage", messageObj);
 		}
 	} else if (recipientGroup) {
 		// グループのストリーム
-		publishGroupMessagingStream(recipientGroup.id, 'message', messageObj);
+		publishGroupMessagingStream(recipientGroup.id, "message", messageObj);
 
 		// メンバーのストリーム
-		const joinings = await UserGroupJoinings.findBy({ userGroupId: recipientGroup.id });
+		const joinings = await UserGroupJoinings.findBy({
+			userGroupId: recipientGroup.id,
+		});
 		for (const joining of joinings) {
-			publishMessagingIndexStream(joining.userId, 'message', messageObj);
-			publishMainStream(joining.userId, 'messagingMessage', messageObj);
+			publishMessagingIndexStream(joining.userId, "message", messageObj);
+			publishMainStream(joining.userId, "messagingMessage", messageObj);
 		}
 	}
 
@@ -69,38 +98,49 @@ export async function createMessage(user: { id: User['id']; host: User['host']; 
 			const mute = await Mutings.findBy({
 				muterId: recipientUser.id,
 			});
-			if (mute.map(m => m.muteeId).includes(user.id)) return;
+			if (mute.map((m) => m.muteeId).includes(user.id)) return;
 			//#endregion
 
-			publishMainStream(recipientUser.id, 'unreadMessagingMessage', messageObj);
-			pushNotification(recipientUser.id, 'unreadMessagingMessage', messageObj);
+			publishMainStream(recipientUser.id, "unreadMessagingMessage", messageObj);
+			pushNotification(recipientUser.id, "unreadMessagingMessage", messageObj);
 		} else if (recipientGroup) {
-			const joinings = await UserGroupJoinings.findBy({ userGroupId: recipientGroup.id, userId: Not(user.id) });
+			const joinings = await UserGroupJoinings.findBy({
+				userGroupId: recipientGroup.id,
+				userId: Not(user.id),
+			});
 			for (const joining of joinings) {
 				if (freshMessage.reads.includes(joining.userId)) return; // 既読
-				publishMainStream(joining.userId, 'unreadMessagingMessage', messageObj);
-				pushNotification(joining.userId, 'unreadMessagingMessage', messageObj);
+				publishMainStream(joining.userId, "unreadMessagingMessage", messageObj);
+				pushNotification(joining.userId, "unreadMessagingMessage", messageObj);
 			}
 		}
 	}, 2000);
 
-	if (recipientUser && Users.isLocalUser(user) && Users.isRemoteUser(recipientUser)) {
+	if (
+		recipientUser &&
+		Users.isLocalUser(user) &&
+		Users.isRemoteUser(recipientUser)
+	) {
 		const note = {
 			id: message.id,
 			createdAt: message.createdAt,
-			fileIds: message.fileId ? [ message.fileId ] : [],
+			fileIds: message.fileId ? [message.fileId] : [],
 			text: message.text,
 			userId: message.userId,
-			visibility: 'specified',
-			mentions: [ recipientUser ].map(u => u.id),
-			mentionedRemoteUsers: JSON.stringify([ recipientUser ].map(u => ({
-				uri: u.uri,
-				username: u.username,
-				host: u.host,
-			}))),
+			visibility: "specified",
+			mentions: [recipientUser].map((u) => u.id),
+			mentionedRemoteUsers: JSON.stringify(
+				[recipientUser].map((u) => ({
+					uri: u.uri,
+					username: u.username,
+					host: u.host,
+				})),
+			),
 		} as Note;
 
-		const activity = renderActivity(renderCreate(await renderNote(note, false, true), note));
+		const activity = renderActivity(
+			renderCreate(await renderNote(note, false, true), note),
+		);
 
 		deliver(user, activity, recipientUser.inbox);
 	}

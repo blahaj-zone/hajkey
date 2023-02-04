@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { id } from '../id.js';
-import { User } from './user.js';
-import type { Clip } from './clip.js';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
+import { id } from "../id.js";
+import { User } from "./user.js";
+import type { Clip } from "./clip.js";
 
 @Entity()
 export class Meta {
@@ -57,10 +57,10 @@ export class Meta {
 	})
 	public disableGlobalTimeline: boolean;
 
-	@Column('boolean', {
-		default: false,
+	@Column('varchar', {
+		length: 256, default: '⭐',
 	})
-	public useStarForReactionFallback: boolean;
+	public defaultReaction: string;
 
 	@Column('varchar', {
 		length: 64, array: true, default: '{}',
@@ -121,7 +121,7 @@ export class Meta {
 		...id(),
 		nullable: true,
 	})
-	public pinnedClipId: Clip['id'] | null;
+	public pinnedClipId: Clip["id"] | null;
 
 	@Column('varchar', {
 		length: 512,
@@ -176,7 +176,7 @@ export class Meta {
 		...id(),
 		nullable: true,
 	})
-	public proxyAccountId: User['id'] | null;
+	public proxyAccountId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'SET NULL',
@@ -227,13 +227,18 @@ export class Meta {
 		enum: ['none', 'all', 'local', 'remote'],
 		default: 'none',
 	})
-	public sensitiveMediaDetection: 'none' | 'all' | 'local' | 'remote';
+	public sensitiveMediaDetection: "none" | "all" | "local" | "remote";
 
 	@Column('enum', {
 		enum: ['medium', 'low', 'high', 'veryLow', 'veryHigh'],
 		default: 'medium',
 	})
-	public sensitiveMediaDetectionSensitivity: 'medium' | 'low' | 'high' | 'veryLow' | 'veryHigh';
+	public sensitiveMediaDetectionSensitivity:
+		| "medium"
+		| "low"
+		| "high"
+		| "veryLow"
+		| "veryHigh";
 
 	@Column('boolean', {
 		default: false,

@@ -1,9 +1,9 @@
-import define from '../../define.js';
-import Resolver from '@/remote/activitypub/resolver.js';
-import { HOUR } from '@/const.js';
+import define from "../../define.js";
+import Resolver from "@/remote/activitypub/resolver.js";
+import { HOUR } from "@/const.js";
 
 export const meta = {
-	tags: ['federation'],
+	tags: ["federation"],
 
 	requireCredential: true,
 
@@ -12,24 +12,23 @@ export const meta = {
 		max: 30,
 	},
 
-	errors: {
-	},
+	errors: {},
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		uri: { type: 'string' },
+		uri: { type: "string" },
 	},
-	required: ['uri'],
+	required: ["uri"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
 	const resolver = new Resolver();
 	const object = await resolver.resolve(ps.uri);

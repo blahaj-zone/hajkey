@@ -22,6 +22,7 @@ const isMe = computed(() => $i && $i.id === props.note.userId);
 <style lang="scss" scoped>
 .tdflqwzn {
 	margin: 4px -2px 0 -2px;
+	width: 100%;
 
 	&:empty {
 		display: none;

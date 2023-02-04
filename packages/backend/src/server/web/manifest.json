@@ -11,12 +11,26 @@
 		{
 			"src": "/static-assets/icons/192.png",
 			"sizes": "192x192",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any"
 		},
 		{
 			"src": "/static-assets/icons/512.png",
 			"sizes": "512x512",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/static-assets/icons/maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/static-assets/icons/monochrome.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "monochrome"
 		}
 	],
 	"share_target": {
@@ -53,5 +67,8 @@
 			"name": "Chats",
 			"url": "/my/messaging"
 		}
-	]
+	],
+	"categories": [
+    "social"
+  ]
 }

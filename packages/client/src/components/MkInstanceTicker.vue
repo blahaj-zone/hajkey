@@ -12,6 +12,7 @@
 <script lang="ts" setup>
 import { instanceName } from '@/config';
 import { instance as Instance } from '@/instance';
+import { getProxiedImageUrlNullable } from '@/scripts/media-proxy';
 
 const props = defineProps<{
 	instance?: {
@@ -21,6 +22,8 @@ const props = defineProps<{
 		themeColor?: string
 	}
 }>();
+
+let ticker = $ref<HTMLElement | null>(null);
 
 // if no instance data is given, this is for the local instance
 const instance = props.instance ?? {
@@ -53,6 +56,10 @@ const nameStyle = {
 	color: textColor,
 	textShadow: textShadow,
 };
+
+function getInstanceIcon(instance): string {
+	return getProxiedImageUrlNullable(instance.iconUrl, 'preview') ?? getProxiedImageUrlNullable(instance.faviconUrl, 'preview') ?? '/client-assets/dummy.png';
+}
 </script>
 
 <style lang="scss" scoped>

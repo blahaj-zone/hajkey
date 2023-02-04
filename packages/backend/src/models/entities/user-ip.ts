@@ -1,7 +1,15 @@
-import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { id } from '../id.js';
-import { Note } from './note.js';
-import { User } from './user.js';
+import {
+	PrimaryColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from "typeorm";
+import { id } from "../id.js";
+import { Note } from "./note.js";
+import type { User } from "./user.js";
 
 @Entity()
 @Index(['userId', 'ip'], { unique: true })
@@ -15,7 +23,7 @@ export class UserIp {
 
 	@Index()
 	@Column(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@Column('varchar', {
 		length: 128,

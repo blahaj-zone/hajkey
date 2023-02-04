@@ -1,17 +1,22 @@
-import * as nodemailer from 'nodemailer';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import Logger from './logger.js';
-import config from '@/config/index.js';
+import * as nodemailer from "nodemailer";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import Logger from "./logger.js";
+import config from "@/config/index.js";
 
-export const logger = new Logger('email');
+export const logger = new Logger("email");
 
-export async function sendEmail(to: string, subject: string, html: string, text: string) {
+export async function sendEmail(
+	to: string,
+	subject: string,
+	html: string,
+	text: string,
+) {
 	const meta = await fetchMeta(true);
 
 	const iconUrl = `${config.url}/static-assets/mi-white.png`;
 	const emailSettingUrl = `${config.url}/settings/email`;
 
-	const enableAuth = meta.smtpUser != null && meta.smtpUser !== '';
+	const enableAuth = meta.smtpUser != null && meta.smtpUser !== "";
 
 	const transporter = nodemailer.createTransport({
 		host: meta.smtpHost,
@@ -19,10 +24,12 @@ export async function sendEmail(to: string, subject: string, html: string, text:
 		secure: meta.smtpSecure,
 		ignoreTLS: !enableAuth,
 		proxy: config.proxySmtp,
-		auth: enableAuth ? {
-			user: meta.smtpUser,
-			pass: meta.smtpPass,
-		} : undefined,
+		auth: enableAuth
+			? {
+					user: meta.smtpUser,
+					pass: meta.smtpPass,
+			  }
+			: undefined,
 	} as any);
 
 	try {
@@ -36,7 +43,7 @@ export async function sendEmail(to: string, subject: string, html: string, text:
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>${ subject }</title>
+		<title>${subject}</title>
 		<style>
 			html {
 				background: #eee;
@@ -97,18 +104,18 @@ export async function sendEmail(to: string, subject: string, html: string, text:
 	<body>
 		<main>
 			<header>
-				<img src="${ meta.logoImageUrl || meta.iconUrl || iconUrl }"/>
+				<img src="${meta.logoImageUrl || meta.iconUrl || iconUrl}"/>
 			</header>
 			<article>
-				<h1>${ subject }</h1>
-				<div>${ html }</div>
+				<h1>${subject}</h1>
+				<div>${html}</div>
 			</article>
 			<footer>
-				<a href="${ emailSettingUrl }">${ 'Email setting' }</a>
+				<a href="${emailSettingUrl}">${"Email setting"}</a>
 			</footer>
 		</main>
 		<nav>
-			<a href="${ config.url }">${ config.host }</a>
+			<a href="${config.url}">${config.host}</a>
 		</nav>
 	</body>
 </html>`,

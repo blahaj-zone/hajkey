@@ -2,28 +2,28 @@
 <XModalWindow
 	ref="dialog"
 	:width="400"
-	:height="450"
+	:height="600"
 	:with-ok-button="true"
 	:ok-button-disabled="false"
 	:can-close="false"
 	@close="dialog.close()"
 	@closed="$emit('closed')"
 	@ok="ok()"
+	style="padding: 12px"
 >
 	<template #header>{{ title || i18n.ts.generateAccessToken }}</template>
 	<div v-if="information" class="_section">
 		<MkInfo warn>{{ information }}</MkInfo>
 	</div>
 	<div class="_section">
-		<MkInput v-model="name">
-			<template #label>{{ i18n.ts.name }}</template>
-		</MkInput>
+		<div style="margin-bottom: 16px;"><b>{{ i18n.ts.name }}</b></div>
+		<MkInput style="margin-bottom: 16px;" v-model="name"/>
 	</div>
 	<div class="_section">
 		<div style="margin-bottom: 16px;"><b>{{ i18n.ts.permission }}</b></div>
 		<MkButton inline @click="disableAll">{{ i18n.ts.disableAll }}</MkButton>
-		<MkButton inline @click="enableAll">{{ i18n.ts.enableAll }}</MkButton>
-		<MkSwitch v-for="kind in (initialPermissions || kinds)" :key="kind" v-model="permissions[kind]">{{ i18n.t(`_permissions.${kind}`) }}</MkSwitch>
+		<MkButton style="margin-bottom: 12px;" inline @click="enableAll">{{ i18n.ts.enableAll }}</MkButton>
+		<MkSwitch style="margin-bottom: 6px;" v-for="kind in (initialPermissions || kinds)" :key="kind" v-model="permissions[kind]">{{ i18n.t(`_permissions.${kind}`) }}</MkSwitch>
 	</div>
 </XModalWindow>
 </template>

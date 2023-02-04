@@ -135,6 +135,7 @@ definePageMetadata(computed(() => list ? {
 					display: flex;
 					align-items: center;
 					padding: 16px;
+					margin: 10px 0 auto;
 
 					> .avatar {
 						width: 50px;

@@ -1,18 +1,29 @@
-import { CacheableRemoteUser } from '@/models/entities/user.js';
-import { IUndo, isFollow, isBlock, isLike, isAnnounce, getApType, isAccept } from '../../type.js';
-import unfollow from './follow.js';
-import unblock from './block.js';
-import undoLike from './like.js';
-import undoAccept from './accept.js';
-import { undoAnnounce } from './announce.js';
-import Resolver from '../../resolver.js';
-import { apLogger } from '../../logger.js';
+import type { CacheableRemoteUser } from "@/models/entities/user.js";
+import type { IUndo } from "../../type.js";
+import {
+	isFollow,
+	isBlock,
+	isLike,
+	isAnnounce,
+	getApType,
+	isAccept,
+} from "../../type.js";
+import unfollow from "./follow.js";
+import unblock from "./block.js";
+import undoLike from "./like.js";
+import undoAccept from "./accept.js";
+import { undoAnnounce } from "./announce.js";
+import Resolver from "../../resolver.js";
+import { apLogger } from "../../logger.js";
 
 const logger = apLogger;
 
-export default async (actor: CacheableRemoteUser, activity: IUndo): Promise<string> => {
-	if ('actor' in activity && actor.uri !== activity.actor) {
-		throw new Error('invalid actor');
+export default async (
+	actor: CacheableRemoteUser,
+	activity: IUndo,
+): Promise<string> => {
+	if ("actor" in activity && actor.uri !== activity.actor) {
+		throw new Error("invalid actor");
 	}
 
 	const uri = activity.id || activity;
@@ -21,7 +32,7 @@ export default async (actor: CacheableRemoteUser, activity: IUndo): Promise<stri
 
 	const resolver = new Resolver();
 
-	const object = await resolver.resolve(activity.object).catch(e => {
+	const object = await resolver.resolve(activity.object).catch((e) => {
 		logger.error(`Resolution failed: ${e}`);
 		throw e;
 	});

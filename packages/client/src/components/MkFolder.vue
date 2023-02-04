@@ -28,7 +28,7 @@ import tinycolor from 'tinycolor2';
 
 const localStoragePrefix = 'ui:folder:';
 
-// eslint-disable-next-line import/no-default-export
+
 export default defineComponent({
 	props: {
 		expanded: {

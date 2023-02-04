@@ -1,12 +1,12 @@
-import { URL } from 'node:url';
-import Bull from 'bull';
-import Logger from '@/services/logger.js';
-import { WebhookDeliverJobData } from '../types.js';
-import { getResponse, StatusError } from '@/misc/fetch.js';
-import { Webhooks } from '@/models/index.js';
-import config from '@/config/index.js';
+import { URL } from "node:url";
+import type Bull from "bull";
+import Logger from "@/services/logger.js";
+import type { WebhookDeliverJobData } from "../types.js";
+import { getResponse, StatusError } from "@/misc/fetch.js";
+import { Webhooks } from "@/models/index.js";
+import config from "@/config/index.js";
 
-const logger = new Logger('webhook');
+const logger = new Logger("webhook");
 
 export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 	try {
@@ -14,12 +14,12 @@ export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 
 		const res = await getResponse({
 			url: job.data.to,
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'User-Agent': 'Calckey-Hooks',
-				'X-Calckey-Host': config.host,
-				'X-Calckey-Hook-Id': job.data.webhookId,
-				'X-Calckey-Hook-Secret': job.data.secret,
+				"User-Agent": "Calckey-Hooks",
+				"X-Calckey-Host": config.host,
+				"X-Calckey-Hook-Id": job.data.webhookId,
+				"X-Calckey-Hook-Secret": job.data.secret,
 			},
 			body: JSON.stringify({
 				hookId: job.data.webhookId,
@@ -31,17 +31,23 @@ export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 			}),
 		});
 
-		Webhooks.update({ id: job.data.webhookId }, {
-			latestSentAt: new Date(),
-			latestStatus: res.status,
-		});
+		Webhooks.update(
+			{ id: job.data.webhookId },
+			{
+				latestSentAt: new Date(),
+				latestStatus: res.status,
+			},
+		);
 
-		return 'Success';
+		return "Success";
 	} catch (res) {
-		Webhooks.update({ id: job.data.webhookId }, {
-			latestSentAt: new Date(),
-			latestStatus: res instanceof StatusError ? res.statusCode : 1,
-		});
+		Webhooks.update(
+			{ id: job.data.webhookId },
+			{
+				latestSentAt: new Date(),
+				latestStatus: res instanceof StatusError ? res.statusCode : 1,
+			},
+		);
 
 		if (res instanceof StatusError) {
 			// 4xx

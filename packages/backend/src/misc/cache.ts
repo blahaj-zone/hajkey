@@ -1,8 +1,8 @@
 export class Cache<T> {
-	public cache: Map<string | null, { date: number; value: T; }>;
+	public cache: Map<string | null, { date: number; value: T }>;
 	private lifetime: number;
 
-	constructor(lifetime: Cache<never>['lifetime']) {
+	constructor(lifetime: Cache<never>["lifetime"]) {
 		this.cache = new Map();
 		this.lifetime = lifetime;
 	}
@@ -17,7 +17,7 @@ export class Cache<T> {
 	public get(key: string | null): T | undefined {
 		const cached = this.cache.get(key);
 		if (cached == null) return undefined;
-		if ((Date.now() - cached.date) > this.lifetime) {
+		if (Date.now() - cached.date > this.lifetime) {
 			this.cache.delete(key);
 			return undefined;
 		}
@@ -32,7 +32,11 @@ export class Cache<T> {
 	 * キャッシュがあればそれを返し、無ければfetcherを呼び出して結果をキャッシュ&返します
 	 * optional: キャッシュが存在してもvalidatorでfalseを返すとキャッシュ無効扱いにします
 	 */
-	public async fetch(key: string | null, fetcher: () => Promise<T>, validator?: (cachedValue: T) => boolean): Promise<T> {
+	public async fetch(
+		key: string | null,
+		fetcher: () => Promise<T>,
+		validator?: (cachedValue: T) => boolean,
+	): Promise<T> {
 		const cachedValue = this.get(key);
 		if (cachedValue !== undefined) {
 			if (validator) {
@@ -56,7 +60,11 @@ export class Cache<T> {
 	 * キャッシュがあればそれを返し、無ければfetcherを呼び出して結果をキャッシュ&返します
 	 * optional: キャッシュが存在してもvalidatorでfalseを返すとキャッシュ無効扱いにします
 	 */
-	public async fetchMaybe(key: string | null, fetcher: () => Promise<T | undefined>, validator?: (cachedValue: T) => boolean): Promise<T | undefined> {
+	public async fetchMaybe(
+		key: string | null,
+		fetcher: () => Promise<T | undefined>,
+		validator?: (cachedValue: T) => boolean,
+	): Promise<T | undefined> {
 		const cachedValue = this.get(key);
 		if (cachedValue !== undefined) {
 			if (validator) {

@@ -1,4 +1,3 @@
-
 // If you change DB_* values, you must also change the DB schema.
 
 /**

@@ -99,7 +99,7 @@ function openInstanceMenu(ev: MouseEvent) {
 			text: i18n.ts.document,
 			icon: 'ph-question-bold ph-lg',
 			action: () => {
-				window.open('https://misskey-hub.net/help.html', '_blank');
+				window.open('/api-doc', '_blank');
 			},
 		}],
 	}, {

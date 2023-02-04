@@ -1,7 +1,14 @@
-import { Entity, PrimaryColumn, Index, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.js';
-import { App } from './app.js';
-import { id } from '../id.js';
+import {
+	Entity,
+	PrimaryColumn,
+	Index,
+	Column,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { User } from "./user.js";
+import { App } from "./app.js";
+import { id } from "../id.js";
 
 @Entity()
 export class AuthSession {
@@ -23,7 +30,7 @@ export class AuthSession {
 		...id(),
 		nullable: true,
 	})
-	public userId: User['id'] | null;
+	public userId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -33,7 +40,7 @@ export class AuthSession {
 	public user: User | null;
 
 	@Column(id())
-	public appId: App['id'];
+	public appId: App["id"];
 
 	@ManyToOne(type => App, {
 		onDelete: 'CASCADE',

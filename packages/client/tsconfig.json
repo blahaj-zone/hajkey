@@ -40,7 +40,6 @@
 	},
 	"compileOnSave": false,
 	"include": [
-		".eslintrc.js",
 		"./**/*.ts",
 		"./**/*.vue"
 	]

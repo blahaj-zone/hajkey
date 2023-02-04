@@ -1,15 +1,22 @@
-import { Entity, Column, Index, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { ffVisibility, notificationTypes } from '@/types.js';
-import { id } from '../id.js';
-import { User } from './user.js';
-import { Page } from './page.js';
+import {
+	Entity,
+	Column,
+	Index,
+	OneToOne,
+	JoinColumn,
+	PrimaryColumn,
+} from "typeorm";
+import { ffVisibility, notificationTypes } from "@/types.js";
+import { id } from "../id.js";
+import { User } from "./user.js";
+import { Page } from "./page.js";
 
 // TODO: このテーブルで管理している情報すべてレジストリで管理するようにしても良いかも
 //       ただ、「emailVerified が true なユーザーを find する」のようなクエリは書けなくなるからウーン
 @Entity()
 export class UserProfile {
 	@PrimaryColumn(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@OneToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -176,7 +183,7 @@ export class UserProfile {
 		...id(),
 		nullable: true,
 	})
-	public pinnedPageId: Page['id'] | null;
+	public pinnedPageId: Page["id"] | null;
 
 	@OneToOne(type => Page, {
 		onDelete: 'SET NULL',

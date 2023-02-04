@@ -4,7 +4,7 @@
 		<div class="content">
 			<MkA to="/" class="link" active-class="active"><i class="ph-house-bold ph-lg icon"></i>{{ i18n.ts.home }}</MkA>
 			<MkA v-if="isTimelineAvailable" to="/timeline" class="link" active-class="active"><i class="ph-chats-circle-bold ph-lg icon"></i>{{ i18n.ts.timeline }}</MkA>
-			<MkA to="/explore" class="link" active-class="active"><i class="ph-hash-bold ph-lg icon"></i>{{ i18n.ts.explore }}</MkA>
+			<MkA to="/explore" class="link" active-class="active"><i class="ph-compass-bold ph-lg icon"></i>{{ i18n.ts.explore }}</MkA>
 			<MkA to="/channels" class="link" active-class="active"><i class="ph-television-bold ph-lg icon"></i>{{ i18n.ts.channel }}</MkA>
 			<MkA to="/pages" class="link" active-class="active"><i class="ph-file-text-bold ph-lg icon"></i>{{ i18n.ts.pages }}</MkA>
 			<MkA to="/gallery" class="link" active-class="active"><i class="ph-image-square-bold ph-lg icon"></i>{{ i18n.ts.gallery }}</MkA>

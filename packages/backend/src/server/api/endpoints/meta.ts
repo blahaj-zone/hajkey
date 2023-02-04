@@ -1,327 +1,401 @@
-import { IsNull, MoreThan } from 'typeorm';
-import config from '@/config/index.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { Ads, Emojis, Users } from '@/models/index.js';
-import { DB_MAX_NOTE_TEXT_LENGTH } from '@/misc/hard-limits.js';
-import { MAX_NOTE_TEXT_LENGTH } from '@/const.js';
-import define from '../define.js';
+import { IsNull, MoreThan } from "typeorm";
+import config from "@/config/index.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { Ads, Emojis, Users } from "@/models/index.js";
+import { DB_MAX_NOTE_TEXT_LENGTH } from "@/misc/hard-limits.js";
+import { MAX_NOTE_TEXT_LENGTH } from "@/const.js";
+import define from "../define.js";
 
 export const meta = {
-	tags: ['meta'],
+	tags: ["meta"],
 
 	requireCredential: false,
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 		properties: {
 			maintainerName: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			maintainerEmail: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			version: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 				example: config.version,
 			},
 			name: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			uri: {
-				type: 'string',
-				optional: false, nullable: false,
-				format: 'url',
-				example: 'https://calckey.example.com',
+				type: "string",
+				optional: false,
+				nullable: false,
+				format: "url",
+				example: "https://calckey.example.com",
 			},
 			description: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			langs: {
-				type: 'array',
-				optional: false, nullable: false,
+				type: "array",
+				optional: false,
+				nullable: false,
 				items: {
-					type: 'string',
-					optional: false, nullable: false,
+					type: "string",
+					optional: false,
+					nullable: false,
 				},
 			},
 			tosUrl: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			repositoryUrl: {
-				type: 'string',
-				optional: false, nullable: false,
-				default: 'https://codeberg.org/calckey/calckey',
+				type: "string",
+				optional: false,
+				nullable: false,
+				default: "https://codeberg.org/calckey/calckey",
 			},
 			feedbackUrl: {
-				type: 'string',
-				optional: false, nullable: false,
-				default: 'https://codeberg.org/calckey/calckey/issues',
+				type: "string",
+				optional: false,
+				nullable: false,
+				default: "https://codeberg.org/calckey/calckey/issues",
 			},
 			defaultDarkTheme: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			defaultLightTheme: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			disableRegistration: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			disableLocalTimeline: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			disableRecommendedTimeline: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			disableGlobalTimeline: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			driveCapacityPerLocalUserMb: {
-				type: 'number',
-				optional: false, nullable: false,
+				type: "number",
+				optional: false,
+				nullable: false,
 			},
 			driveCapacityPerRemoteUserMb: {
-				type: 'number',
-				optional: false, nullable: false,
+				type: "number",
+				optional: false,
+				nullable: false,
 			},
 			cacheRemoteFiles: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			emailRequiredForSignup: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			enableHcaptcha: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			hcaptchaSiteKey: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			enableRecaptcha: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			recaptchaSiteKey: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			swPublickey: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			mascotImageUrl: {
-				type: 'string',
-				optional: false, nullable: false,
-				default: '/assets/ai.png',
+				type: "string",
+				optional: false,
+				nullable: false,
+				default: "/assets/ai.png",
 			},
 			bannerUrl: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			errorImageUrl: {
-				type: 'string',
-				optional: false, nullable: false,
-				default: 'https://xn--931a.moe/aiart/yubitun.png',
+				type: "string",
+				optional: false,
+				nullable: false,
+				default: "https://xn--931a.moe/aiart/yubitun.png",
 			},
 			iconUrl: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			maxNoteTextLength: {
-				type: 'number',
-				optional: false, nullable: false,
+				type: "number",
+				optional: false,
+				nullable: false,
 			},
 			emojis: {
-				type: 'array',
-				optional: false, nullable: false,
+				type: "array",
+				optional: false,
+				nullable: false,
 				items: {
-					type: 'object',
-					optional: false, nullable: false,
+					type: "object",
+					optional: false,
+					nullable: false,
 					properties: {
 						id: {
-							type: 'string',
-							optional: false, nullable: false,
-							format: 'id',
+							type: "string",
+							optional: false,
+							nullable: false,
+							format: "id",
 						},
 						aliases: {
-							type: 'array',
-							optional: false, nullable: false,
+							type: "array",
+							optional: false,
+							nullable: false,
 							items: {
-								type: 'string',
-								optional: false, nullable: false,
+								type: "string",
+								optional: false,
+								nullable: false,
 							},
 						},
 						category: {
-							type: 'string',
-							optional: false, nullable: true,
+							type: "string",
+							optional: false,
+							nullable: true,
 						},
 						host: {
-							type: 'string',
-							optional: false, nullable: true,
-							description: 'The local host is represented with `null`.',
+							type: "string",
+							optional: false,
+							nullable: true,
+							description: "The local host is represented with `null`.",
 						},
 						url: {
-							type: 'string',
-							optional: false, nullable: false,
-							format: 'url',
+							type: "string",
+							optional: false,
+							nullable: false,
+							format: "url",
 						},
 					},
 				},
 			},
 			ads: {
-				type: 'array',
-				optional: false, nullable: false,
+				type: "array",
+				optional: false,
+				nullable: false,
 				items: {
-					type: 'object',
-					optional: false, nullable: false,
+					type: "object",
+					optional: false,
+					nullable: false,
 					properties: {
 						place: {
-							type: 'string',
-							optional: false, nullable: false,
+							type: "string",
+							optional: false,
+							nullable: false,
 						},
 						url: {
-							type: 'string',
-							optional: false, nullable: false,
-							format: 'url',
+							type: "string",
+							optional: false,
+							nullable: false,
+							format: "url",
 						},
 						imageUrl: {
-							type: 'string',
-							optional: false, nullable: false,
-							format: 'url',
+							type: "string",
+							optional: false,
+							nullable: false,
+							format: "url",
 						},
 					},
 				},
 			},
 			requireSetup: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 				example: false,
 			},
 			enableEmail: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			enableTwitterIntegration: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			enableGithubIntegration: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			enableDiscordIntegration: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			enableServiceWorker: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			translatorAvailable: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			proxyAccountName: {
-				type: 'string',
-				optional: false, nullable: true,
+				type: "string",
+				optional: false,
+				nullable: true,
 			},
 			features: {
-				type: 'object',
-				optional: true, nullable: false,
+				type: "object",
+				optional: true,
+				nullable: false,
 				properties: {
 					registration: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					localTimeLine: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					recommendedTimeLine: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					globalTimeLine: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					elasticsearch: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					hcaptcha: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					recaptcha: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					objectStorage: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					twitter: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					github: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					discord: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					serviceWorker: {
-						type: 'boolean',
-						optional: false, nullable: false,
+						type: "boolean",
+						optional: false,
+						nullable: false,
 					},
 					miauth: {
-						type: 'boolean',
-						optional: true, nullable: false,
+						type: "boolean",
+						optional: true,
+						nullable: false,
 						default: true,
 					},
 				},
 			},
 			secureMode: {
-				type: 'boolean',
-				optional: true, nullable: false,
+				type: "boolean",
+				optional: true,
+				nullable: false,
 				default: false,
 			},
 			privateMode: {
-				type: 'boolean',
-				optional: true, nullable: false,
+				type: "boolean",
+				optional: true,
+				nullable: false,
 				default: false,
+			},
+			defaultReaction: {
+				type: "string",
+				optional: "false",
+				nullable: false,
+				default: "⭐",
 			},
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		detail: { type: 'boolean', default: true },
+		detail: { type: "boolean", default: true },
 	},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	const instance = await fetchMeta(true);
 
@@ -330,12 +404,12 @@ export default define(meta, paramDef, async (ps, me) => {
 			host: IsNull(),
 		},
 		order: {
-			category: 'ASC',
-			name: 'ASC',
+			category: "ASC",
+			name: "ASC",
 		},
 		cache: {
-			id: 'meta_emojis',
-			milliseconds: 3600000,	// 1 hour
+			id: "meta_emojis",
+			milliseconds: 3600000, // 1 hour
 		},
 	});
 
@@ -385,13 +459,16 @@ export default define(meta, paramDef, async (ps, me) => {
 		emojis: instance.privateMode && !me ? [] : await Emojis.packMany(emojis),
 		defaultLightTheme: instance.defaultLightTheme,
 		defaultDarkTheme: instance.defaultDarkTheme,
-		ads: instance.privateMode && !me ? [] : ads.map(ad => ({
-			id: ad.id,
-			url: ad.url,
-			place: ad.place,
-			ratio: ad.ratio,
-			imageUrl: ad.imageUrl,
-		})),
+		ads:
+			instance.privateMode && !me
+				? []
+				: ads.map((ad) => ({
+						id: ad.id,
+						url: ad.url,
+						place: ad.place,
+						ratio: ad.ratio,
+						imageUrl: ad.imageUrl,
+				  })),
 		enableEmail: instance.enableEmail,
 
 		enableTwitterIntegration: instance.enableTwitterIntegration,
@@ -401,20 +478,27 @@ export default define(meta, paramDef, async (ps, me) => {
 		enableServiceWorker: instance.enableServiceWorker,
 
 		translatorAvailable: instance.deeplAuthKey != null,
+		defaultReaction: instance.defaultReaction,
 
-		...(ps.detail ? {
-			pinnedPages: instance.privateMode && !me ? [] : instance.pinnedPages,
-			pinnedClipId: instance.privateMode && !me ? [] : instance.pinnedClipId,
-			cacheRemoteFiles: instance.cacheRemoteFiles,
-			requireSetup: (await Users.countBy({
-				host: IsNull(),
-			})) === 0,
-		} : {}),
+		...(ps.detail
+			? {
+					pinnedPages: instance.privateMode && !me ? [] : instance.pinnedPages,
+					pinnedClipId:
+						instance.privateMode && !me ? [] : instance.pinnedClipId,
+					cacheRemoteFiles: instance.cacheRemoteFiles,
+					requireSetup:
+						(await Users.countBy({
+							host: IsNull(),
+						})) === 0,
+			  }
+			: {}),
 	};
 
 	if (ps.detail) {
 		if (!instance.privateMode || me) {
-			const proxyAccount = instance.proxyAccountId ? await Users.pack(instance.proxyAccountId).catch(() => null) : null;
+			const proxyAccount = instance.proxyAccountId
+				? await Users.pack(instance.proxyAccountId).catch(() => null)
+				: null;
 			response.proxyAccountName = proxyAccount ? proxyAccount.username : null;
 		}
 

@@ -1,12 +1,14 @@
-import { Instance } from '@/models/entities/instance.js';
-import { Instances } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
-import { toPuny } from '@/misc/convert-host.js';
-import { Cache } from '@/misc/cache.js';
+import type { Instance } from "@/models/entities/instance.js";
+import { Instances } from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
+import { toPuny } from "@/misc/convert-host.js";
+import { Cache } from "@/misc/cache.js";
 
 const cache = new Cache<Instance>(1000 * 60 * 60);
 
-export async function registerOrFetchInstanceDoc(host: string): Promise<Instance> {
+export async function registerOrFetchInstanceDoc(
+	host: string,
+): Promise<Instance> {
 	host = toPuny(host);
 
 	const cached = cache.get(host);
@@ -20,7 +22,7 @@ export async function registerOrFetchInstanceDoc(host: string): Promise<Instance
 			host,
 			caughtAt: new Date(),
 			lastCommunicatedAt: new Date(),
-		}).then(x => Instances.findOneByOrFail(x.identifiers[0]));
+		}).then((x) => Instances.findOneByOrFail(x.identifiers[0]));
 
 		cache.set(host, i);
 		return i;

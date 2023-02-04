@@ -1,17 +1,23 @@
-import { publishMainStream } from '@/services/stream.js';
-import { pushNotification } from '@/services/push-notification.js';
-import { Notifications, Mutings, NoteThreadMutings, UserProfiles, Users } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
-import { User } from '@/models/entities/user.js';
-import { Notification } from '@/models/entities/notification.js';
-import { sendEmailNotification } from './send-email-notification.js';
+import { publishMainStream } from "@/services/stream.js";
+import { pushNotification } from "@/services/push-notification.js";
+import {
+	Notifications,
+	Mutings,
+	NoteThreadMutings,
+	UserProfiles,
+	Users,
+} from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
+import type { User } from "@/models/entities/user.js";
+import type { Notification } from "@/models/entities/notification.js";
+import { sendEmailNotification } from "./send-email-notification.js";
 
 export async function createNotification(
-	notifieeId: User['id'],
-	type: Notification['type'],
-	data: Partial<Notification>
+	notifieeId: User["id"],
+	type: Notification["type"],
+	data: Partial<Notification>,
 ) {
-	if (data.notifierId && (notifieeId === data.notifierId)) {
+	if (data.notifierId && notifieeId === data.notifierId) {
 		return null;
 	}
 
@@ -39,13 +45,14 @@ export async function createNotification(
 		// 相手がこの通知をミュートしているようなら、既読を予めつけておく
 		isRead: isMuted,
 		...data,
-	} as Partial<Notification>)
-		.then(x => Notifications.findOneByOrFail(x.identifiers[0]));
+	} as Partial<Notification>).then((x) =>
+		Notifications.findOneByOrFail(x.identifiers[0]),
+	);
 
 	const packed = await Notifications.pack(notification, {});
 
 	// Publish notification event
-	publishMainStream(notifieeId, 'notification', packed);
+	publishMainStream(notifieeId, "notification", packed);
 
 	// 2秒経っても(今回作成した)通知が既読にならなかったら「未読の通知がありますよ」イベントを発行する
 	setTimeout(async () => {
@@ -57,16 +64,27 @@ export async function createNotification(
 		const mutings = await Mutings.findBy({
 			muterId: notifieeId,
 		});
-		if (data.notifierId && mutings.map(m => m.muteeId).includes(data.notifierId)) {
+		if (
+			data.notifierId &&
+			mutings.map((m) => m.muteeId).includes(data.notifierId)
+		) {
 			return;
 		}
 		//#endregion
 
-		publishMainStream(notifieeId, 'unreadNotification', packed);
-		pushNotification(notifieeId, 'notification', packed);
+		publishMainStream(notifieeId, "unreadNotification", packed);
+		pushNotification(notifieeId, "notification", packed);
 
-		if (type === 'follow') sendEmailNotification.follow(notifieeId, await Users.findOneByOrFail({ id: data.notifierId! }));
-		if (type === 'receiveFollowRequest') sendEmailNotification.receiveFollowRequest(notifieeId, await Users.findOneByOrFail({ id: data.notifierId! }));
+		if (type === "follow")
+			sendEmailNotification.follow(
+				notifieeId,
+				await Users.findOneByOrFail({ id: data.notifierId! }),
+			);
+		if (type === "receiveFollowRequest")
+			sendEmailNotification.receiveFollowRequest(
+				notifieeId,
+				await Users.findOneByOrFail({ id: data.notifierId! }),
+			);
 	}, 2000);
 
 	return notification;

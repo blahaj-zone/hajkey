@@ -1,8 +1,15 @@
-import { Entity, Index, JoinColumn, Column, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Note } from './note.js';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { mutedNoteReasons } from '../../types.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	ManyToOne,
+	PrimaryColumn,
+} from "typeorm";
+import { Note } from "./note.js";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import { mutedNoteReasons } from "../../types.js";
 
 @Entity()
 @Index(['noteId', 'userId'], { unique: true })
@@ -15,7 +22,7 @@ export class MutedNote {
 		...id(),
 		comment: 'The note ID.',
 	})
-	public noteId: Note['id'];
+	public noteId: Note["id"];
 
 	@ManyToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -28,7 +35,7 @@ export class MutedNote {
 		...id(),
 		comment: 'The user ID.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

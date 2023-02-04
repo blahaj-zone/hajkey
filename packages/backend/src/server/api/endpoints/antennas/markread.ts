@@ -1,26 +1,24 @@
-import define from '../../define.js';
-import { Antennas, AntennaNotes } from '@/models/index.js';
-import { FindOptionsWhere } from 'typeorm';
-import { AntennaNote } from '@/models/entities/antenna-note.js';
+import define from "../../define.js";
+import { Antennas, AntennaNotes } from "@/models/index.js";
+import { FindOptionsWhere } from "typeorm";
+import { AntennaNote } from "@/models/entities/antenna-note.js";
 
 export const meta = {
-	tags: ['antennas', 'account'],
+	tags: ["antennas", "account"],
 
 	requireCredential: true,
 
-	kind: 'write:account',
-
+	kind: "write:account",
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		antennaId: { type: 'string', format: 'misskey:id' },
+		antennaId: { type: "string", format: "misskey:id" },
 	},
-	required: ['antennaId'],
+	required: ["antennaId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	const antenna = await Antennas.findOneBy({
 		userId: me.id,
@@ -28,18 +26,18 @@ export default define(meta, paramDef, async (ps, me) => {
 	});
 
 	if (!antenna) {
-		return null
+		return null;
 	}
 
-	await AntennaNotes.update({
-		antennaId: antenna.id,
-		read: false,
-	}, {
-		read: true,
-	})
+	await AntennaNotes.update(
+		{
+			antennaId: antenna.id,
+			read: false,
+		},
+		{
+			read: true,
+		},
+	);
 
-	return true
-
+	return true;
 });
-
-

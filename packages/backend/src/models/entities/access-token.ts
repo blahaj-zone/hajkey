@@ -1,7 +1,14 @@
-import { Entity, PrimaryColumn, Index, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.js';
-import { App } from './app.js';
-import { id } from '../id.js';
+import {
+	Entity,
+	PrimaryColumn,
+	Index,
+	Column,
+	ManyToOne,
+	JoinColumn,
+} from "typeorm";
+import { User } from "./user.js";
+import { App } from "./app.js";
+import { id } from "../id.js";
 
 @Entity()
 export class AccessToken {
@@ -39,7 +46,7 @@ export class AccessToken {
 
 	@Index()
 	@Column(id())
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -51,7 +58,7 @@ export class AccessToken {
 		...id(),
 		nullable: true,
 	})
-	public appId: App['id'] | null;
+	public appId: App["id"] | null;
 
 	@ManyToOne(type => App, {
 		onDelete: 'CASCADE',

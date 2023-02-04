@@ -1,6 +1,6 @@
-import { Entity, PrimaryColumn, Column, Index, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import { Entity, PrimaryColumn, Column, Index, ManyToOne } from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class App {
@@ -19,7 +19,7 @@ export class App {
 		nullable: true,
 		comment: 'The owner ID.',
 	})
-	public userId: User['id'] | null;
+	public userId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'SET NULL',

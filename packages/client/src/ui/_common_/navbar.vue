@@ -108,9 +108,9 @@ if ($i?.isAdmin) {
 
 if (defaultStore.state.showAdminUpdates) {
 	os.api('latest-version').then(res => {
-		const cleanRes = res?.tag_name.replace(/[^0-9]/g, '');
-		const cleanVersion = version.replace(/[^0-9]/g, '');
-		if (cleanRes !== cleanVersion) {
+		const cleanRes = parseInt(res?.tag_name.replace(/[^0-9]/g, ''));
+		const cleanVersion = parseInt(version.replace(/[^0-9]/g, ''));
+		if (cleanRes > cleanVersion) {
 			updateAvailable = true;
 		}
 	});

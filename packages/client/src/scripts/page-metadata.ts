@@ -1,8 +1,17 @@
-import * as misskey from 'calckey-js';
-import { ComputedRef, inject, isRef, onActivated, onMounted, provide, ref, Ref } from 'vue';
+import * as misskey from "calckey-js";
+import {
+	ComputedRef,
+	inject,
+	isRef,
+	onActivated,
+	onMounted,
+	provide,
+	ref,
+	Ref,
+} from "vue";
 
-export const setPageMetadata = Symbol('setPageMetadata');
-export const pageMetadataProvider = Symbol('pageMetadataProvider');
+export const setPageMetadata = Symbol("setPageMetadata");
+export const pageMetadataProvider = Symbol("pageMetadataProvider");
 
 export type PageMetadata = {
 	title: string;
@@ -13,7 +22,13 @@ export type PageMetadata = {
 	bg?: string;
 };
 
-export function definePageMetadata(metadata: PageMetadata | null | Ref<PageMetadata | null> | ComputedRef<PageMetadata | null>): void {
+export function definePageMetadata(
+	metadata:
+		| PageMetadata
+		| null
+		| Ref<PageMetadata | null>
+		| ComputedRef<PageMetadata | null>,
+): void {
 	const _metadata = isRef(metadata) ? metadata : ref(metadata);
 
 	provide(pageMetadataProvider, _metadata);
@@ -32,7 +47,9 @@ export function definePageMetadata(metadata: PageMetadata | null | Ref<PageMetad
 	}
 }
 
-export function provideMetadataReceiver(callback: (info: ComputedRef<PageMetadata>) => void): void {
+export function provideMetadataReceiver(
+	callback: (info: ComputedRef<PageMetadata>) => void,
+): void {
 	provide(setPageMetadata, callback);
 }
 

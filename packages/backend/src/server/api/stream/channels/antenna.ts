@@ -1,16 +1,16 @@
-import Channel from '../channel.js';
-import { Notes } from '@/models/index.js';
-import { isUserRelated } from '@/misc/is-user-related.js';
-import { StreamMessages } from '../types.js';
-import { IdentifiableError } from '@/misc/identifiable-error.js';
+import Channel from "../channel.js";
+import { Notes } from "@/models/index.js";
+import { isUserRelated } from "@/misc/is-user-related.js";
+import type { StreamMessages } from "../types.js";
+import { IdentifiableError } from "@/misc/identifiable-error.js";
 
 export default class extends Channel {
-	public readonly chName = 'antenna';
+	public readonly chName = "antenna";
 	public static shouldShare = false;
 	public static requireCredential = false;
 	private antennaId: string;
 
-	constructor(id: string, connection: Channel['connection']) {
+	constructor(id: string, connection: Channel["connection"]) {
 		super(id, connection);
 		this.onEvent = this.onEvent.bind(this);
 	}
@@ -22,10 +22,12 @@ export default class extends Channel {
 		this.subscriber.on(`antennaStream:${this.antennaId}`, this.onEvent);
 	}
 
-	private async onEvent(data: StreamMessages['antenna']['payload']) {
-		if (data.type === 'note') {
+	private async onEvent(data: StreamMessages["antenna"]["payload"]) {
+		if (data.type === "note") {
 			try {
-				const note = await Notes.pack(data.body.id, this.user, { detail: true });
+				const note = await Notes.pack(data.body.id, this.user, {
+					detail: true,
+				});
 
 				// 流れてきたNoteがミュートしているユーザーが関わるものだったら無視する
 				if (isUserRelated(note, this.muting)) return;
@@ -34,9 +36,12 @@ export default class extends Channel {
 
 				this.connection.cacheNote(note);
 
-				this.send('note', note);
+				this.send("note", note);
 			} catch (e) {
-				if (e instanceof IdentifiableError && e.id === '9725d0ce-ba28-4dde-95a7-2cbb2c15de24') {
+				if (
+					e instanceof IdentifiableError &&
+					e.id === "9725d0ce-ba28-4dde-95a7-2cbb2c15de24"
+				) {
 					// skip: note not visible to user
 					return;
 				} else {

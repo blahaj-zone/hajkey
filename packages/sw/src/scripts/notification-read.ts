@@ -1,27 +1,27 @@
 declare var self: ServiceWorkerGlobalScope;
 
-import { get } from 'idb-keyval';
-import { pushNotificationDataMap } from '@/types';
-import { api } from '@/scripts/operations';
+import { get } from "idb-keyval";
+import { pushNotificationDataMap } from "@/types";
+import { api } from "@/scripts/operations";
 
 type Accounts = {
 	[x: string]: {
-		queue: string[],
-		timeout: number | null
-	}
+		queue: string[];
+		timeout: number | null;
+	};
 };
 
 class SwNotificationReadManager {
 	private accounts: Accounts = {};
 
 	public async construct() {
-		const accounts = await get('accounts');
-		if (!accounts) Error('Accounts are not recorded');
+		const accounts = await get("accounts");
+		if (!accounts) Error("Accounts are not recorded");
 
 		this.accounts = accounts.reduce((acc, e) => {
 			acc[e.id] = {
 				queue: [],
-				timeout: null
+				timeout: null,
 			};
 			return acc;
 		}, {} as Accounts);
@@ -30,8 +30,10 @@ class SwNotificationReadManager {
 	}
 
 	// プッシュ通知の既読をサーバーに送信
-	public async read<K extends keyof pushNotificationDataMap>(data: pushNotificationDataMap[K]) {
-		if (data.type !== 'notification' || !(data.userId in this.accounts)) return;
+	public async read<K extends keyof pushNotificationDataMap>(
+		data: pushNotificationDataMap[K],
+	) {
+		if (data.type !== "notification" || !(data.userId in this.accounts)) return;
 
 		const account = this.accounts[data.userId];
 
@@ -41,7 +43,7 @@ class SwNotificationReadManager {
 			if (account.timeout) clearTimeout(account.timeout);
 			const notificationIds = account.queue;
 			account.queue = [];
-			await api('notifications/read', data.userId, { notificationIds });
+			await api("notifications/read", data.userId, { notificationIds });
 			return;
 		}
 
@@ -52,9 +54,9 @@ class SwNotificationReadManager {
 
 			const notificationIds = account.queue;
 			account.queue = [];
-			api('notifications/read', data.userId, { notificationIds });
+			api("notifications/read", data.userId, { notificationIds });
 		}, 200);
 	}
 }
 
-export const swNotificationRead = (new SwNotificationReadManager()).construct();
+export const swNotificationRead = new SwNotificationReadManager().construct();

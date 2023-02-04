@@ -1,9 +1,9 @@
-import tinycolor from 'tinycolor2';
-import { Hpml } from './evaluator';
-import { values, utils } from '@syuilo/aiscript';
-import { Fn, HpmlScope } from '.';
-import { Expr } from './expr';
-import seedrandom from 'seedrandom';
+import tinycolor from "tinycolor2";
+import { Hpml } from "./evaluator";
+import { values, utils } from "@syuilo/aiscript";
+import { Fn, HpmlScope } from ".";
+import { Expr } from "./expr";
+import seedrandom from "seedrandom";
 
 /* TODO: https://www.chartjs.org/docs/latest/configuration/canvas-background.html#color
 // https://stackoverflow.com/questions/38493564/chart-area-background-color-chartjs
@@ -22,34 +22,137 @@ Chart.pluginService.register({
 
 export function initAiLib(hpml: Hpml) {
 	return {
-		'MkPages:updated': values.FN_NATIVE(([callback]) => {
-			hpml.pageVarUpdatedCallback = (callback as values.VFn);
+		"MkPages:updated": values.FN_NATIVE(([callback]) => {
+			hpml.pageVarUpdatedCallback = callback as values.VFn;
 		}),
-		'MkPages:get_canvas': values.FN_NATIVE(([id]) => {
+		"MkPages:get_canvas": values.FN_NATIVE(([id]) => {
 			utils.assertString(id);
 			const canvas = hpml.canvases[id.value];
-			const ctx = canvas.getContext('2d');
-			return values.OBJ(new Map([
-				['clear_rect', values.FN_NATIVE(([x, y, width, height]) => { ctx.clearRect(x.value, y.value, width.value, height.value); })],
-				['fill_rect', values.FN_NATIVE(([x, y, width, height]) => { ctx.fillRect(x.value, y.value, width.value, height.value); })],
-				['stroke_rect', values.FN_NATIVE(([x, y, width, height]) => { ctx.strokeRect(x.value, y.value, width.value, height.value); })],
-				['fill_text', values.FN_NATIVE(([text, x, y, width]) => { ctx.fillText(text.value, x.value, y.value, width ? width.value : undefined); })],
-				['stroke_text', values.FN_NATIVE(([text, x, y, width]) => { ctx.strokeText(text.value, x.value, y.value, width ? width.value : undefined); })],
-				['set_line_width', values.FN_NATIVE(([width]) => { ctx.lineWidth = width.value; })],
-				['set_font', values.FN_NATIVE(([font]) => { ctx.font = font.value; })],
-				['set_fill_style', values.FN_NATIVE(([style]) => { ctx.fillStyle = style.value; })],
-				['set_stroke_style', values.FN_NATIVE(([style]) => { ctx.strokeStyle = style.value; })],
-				['begin_path', values.FN_NATIVE(() => { ctx.beginPath(); })],
-				['close_path', values.FN_NATIVE(() => { ctx.closePath(); })],
-				['move_to', values.FN_NATIVE(([x, y]) => { ctx.moveTo(x.value, y.value); })],
-				['line_to', values.FN_NATIVE(([x, y]) => { ctx.lineTo(x.value, y.value); })],
-				['arc', values.FN_NATIVE(([x, y, radius, startAngle, endAngle]) => { ctx.arc(x.value, y.value, radius.value, startAngle.value, endAngle.value); })],
-				['rect', values.FN_NATIVE(([x, y, width, height]) => { ctx.rect(x.value, y.value, width.value, height.value); })],
-				['fill', values.FN_NATIVE(() => { ctx.fill(); })],
-				['stroke', values.FN_NATIVE(() => { ctx.stroke(); })],
-			]));
+			const ctx = canvas.getContext("2d");
+			return values.OBJ(
+				new Map([
+					[
+						"clear_rect",
+						values.FN_NATIVE(([x, y, width, height]) => {
+							ctx.clearRect(x.value, y.value, width.value, height.value);
+						}),
+					],
+					[
+						"fill_rect",
+						values.FN_NATIVE(([x, y, width, height]) => {
+							ctx.fillRect(x.value, y.value, width.value, height.value);
+						}),
+					],
+					[
+						"stroke_rect",
+						values.FN_NATIVE(([x, y, width, height]) => {
+							ctx.strokeRect(x.value, y.value, width.value, height.value);
+						}),
+					],
+					[
+						"fill_text",
+						values.FN_NATIVE(([text, x, y, width]) => {
+							ctx.fillText(
+								text.value,
+								x.value,
+								y.value,
+								width ? width.value : undefined,
+							);
+						}),
+					],
+					[
+						"stroke_text",
+						values.FN_NATIVE(([text, x, y, width]) => {
+							ctx.strokeText(
+								text.value,
+								x.value,
+								y.value,
+								width ? width.value : undefined,
+							);
+						}),
+					],
+					[
+						"set_line_width",
+						values.FN_NATIVE(([width]) => {
+							ctx.lineWidth = width.value;
+						}),
+					],
+					[
+						"set_font",
+						values.FN_NATIVE(([font]) => {
+							ctx.font = font.value;
+						}),
+					],
+					[
+						"set_fill_style",
+						values.FN_NATIVE(([style]) => {
+							ctx.fillStyle = style.value;
+						}),
+					],
+					[
+						"set_stroke_style",
+						values.FN_NATIVE(([style]) => {
+							ctx.strokeStyle = style.value;
+						}),
+					],
+					[
+						"begin_path",
+						values.FN_NATIVE(() => {
+							ctx.beginPath();
+						}),
+					],
+					[
+						"close_path",
+						values.FN_NATIVE(() => {
+							ctx.closePath();
+						}),
+					],
+					[
+						"move_to",
+						values.FN_NATIVE(([x, y]) => {
+							ctx.moveTo(x.value, y.value);
+						}),
+					],
+					[
+						"line_to",
+						values.FN_NATIVE(([x, y]) => {
+							ctx.lineTo(x.value, y.value);
+						}),
+					],
+					[
+						"arc",
+						values.FN_NATIVE(([x, y, radius, startAngle, endAngle]) => {
+							ctx.arc(
+								x.value,
+								y.value,
+								radius.value,
+								startAngle.value,
+								endAngle.value,
+							);
+						}),
+					],
+					[
+						"rect",
+						values.FN_NATIVE(([x, y, width, height]) => {
+							ctx.rect(x.value, y.value, width.value, height.value);
+						}),
+					],
+					[
+						"fill",
+						values.FN_NATIVE(() => {
+							ctx.fill();
+						}),
+					],
+					[
+						"stroke",
+						values.FN_NATIVE(() => {
+							ctx.stroke();
+						}),
+					],
+				]),
+			);
 		}),
-		'MkPages:chart': values.FN_NATIVE(([id, opts]) => {
+		"MkPages:chart": values.FN_NATIVE(([id, opts]) => {
 			/* TODO
 			utils.assertString(id);
 			utils.assertObject(opts);
@@ -129,52 +232,246 @@ export function initAiLib(hpml: Hpml) {
 	};
 }
 
-export const funcDefs: Record<string, { in: any[]; out: any; category: string; icon: any; }> = {
-	if: { in: ['boolean', 0, 0], out: 0, category: 'flow', icon: 'ph-share-network-bold ph-lg' },
-	for: { in: ['number', 'function'], out: null, category: 'flow', icon: 'ph-recycle-bold ph-lg' },
-	not: { in: ['boolean'], out: 'boolean', category: 'logical', icon: 'ph-flag-bold ph-lg' },
-	or: { in: ['boolean', 'boolean'], out: 'boolean', category: 'logical', icon: 'ph-flag-bold ph-lg' },
-	and: { in: ['boolean', 'boolean'], out: 'boolean', category: 'logical', icon: 'ph-flag-bold ph-lg' },
-	add: { in: ['number', 'number'], out: 'number', category: 'operation', icon: 'ph-plus-bold ph-lg' },
-	subtract: { in: ['number', 'number'], out: 'number', category: 'operation', icon: 'ph-minus-bold ph-lg' },
-	multiply: { in: ['number', 'number'], out: 'number', category: 'operation', icon: 'ph-x-bold ph-lg' },
-	divide: { in: ['number', 'number'], out: 'number', category: 'operation', icon: 'ph-divide-bold ph-lg' },
-	mod: { in: ['number', 'number'], out: 'number', category: 'operation', icon: 'ph-divide-bold ph-lg' },
-	round: { in: ['number'], out: 'number', category: 'operation', icon: 'ph-calculator-bold ph-lg' },
-	eq: { in: [0, 0], out: 'boolean', category: 'comparison', icon: 'ph-equals-bold ph-lg' },
-	notEq: { in: [0, 0], out: 'boolean', category: 'comparison', icon: 'ph-prohibit-insert-bold ph-lg' },
-	gt: { in: ['number', 'number'], out: 'boolean', category: 'comparison', icon: 'ph-caret-right-bold ph-lg' },
-	lt: { in: ['number', 'number'], out: 'boolean', category: 'comparison', icon: 'ph-caret-left-bold ph-lg' },
-	gtEq: { in: ['number', 'number'], out: 'boolean', category: 'comparison', icon: 'ph-caret-double-right-bold ph-lg' },
-	ltEq: { in: ['number', 'number'], out: 'boolean', category: 'comparison', icon: 'ph-caret-double-right-bold ph-lg' },
-	strLen: { in: ['string'], out: 'number', category: 'text', icon: 'ph-quotes-bold ph-lg' },
-	strPick: { in: ['string', 'number'], out: 'string', category: 'text', icon: 'ph-quotes-bold ph-lg' },
-	strReplace: { in: ['string', 'string', 'string'], out: 'string', category: 'text', icon: 'ph-quotes-bold ph-lg' },
-	strReverse: { in: ['string'], out: 'string', category: 'text', icon: 'ph-quotes-bold ph-lg' },
-	join: { in: ['stringArray', 'string'], out: 'string', category: 'text', icon: 'ph-quotes-bold ph-lg' },
-	stringToNumber: { in: ['string'], out: 'number', category: 'convert', icon: 'ph-swap-bold ph-lg' },
-	numberToString: { in: ['number'], out: 'string', category: 'convert', icon: 'ph-swap-bold ph-lg' },
-	splitStrByLine: { in: ['string'], out: 'stringArray', category: 'convert', icon: 'ph-swap-bold ph-lg' },
-	pick: { in: [null, 'number'], out: null, category: 'list', icon: 'ph-text-indent-bold ph-lg' },
-	listLen: { in: [null], out: 'number', category: 'list', icon: 'ph-text-indent-bold ph-lg' },
-	rannum: { in: ['number', 'number'], out: 'number', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	dailyRannum: { in: ['number', 'number'], out: 'number', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	seedRannum: { in: [null, 'number', 'number'], out: 'number', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	random: { in: ['number'], out: 'boolean', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	dailyRandom: { in: ['number'], out: 'boolean', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	seedRandom: { in: [null, 'number'], out: 'boolean', category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	randomPick: { in: [0], out: 0, category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	dailyRandomPick: { in: [0], out: 0, category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	seedRandomPick: { in: [null, 0], out: 0, category: 'random', icon: 'ph-dice-five-bold ph-lg' },
-	DRPWPM: { in: ['stringArray'], out: 'string', category: 'random', icon: 'ph-dice-five-bold ph-lg' }, // dailyRandomPickWithProbabilityMapping
+export const funcDefs: Record<
+	string,
+	{ in: any[]; out: any; category: string; icon: any }
+> = {
+	if: {
+		in: ["boolean", 0, 0],
+		out: 0,
+		category: "flow",
+		icon: "ph-share-network-bold ph-lg",
+	},
+	for: {
+		in: ["number", "function"],
+		out: null,
+		category: "flow",
+		icon: "ph-recycle-bold ph-lg",
+	},
+	not: {
+		in: ["boolean"],
+		out: "boolean",
+		category: "logical",
+		icon: "ph-flag-bold ph-lg",
+	},
+	or: {
+		in: ["boolean", "boolean"],
+		out: "boolean",
+		category: "logical",
+		icon: "ph-flag-bold ph-lg",
+	},
+	and: {
+		in: ["boolean", "boolean"],
+		out: "boolean",
+		category: "logical",
+		icon: "ph-flag-bold ph-lg",
+	},
+	add: {
+		in: ["number", "number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-plus-bold ph-lg",
+	},
+	subtract: {
+		in: ["number", "number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-minus-bold ph-lg",
+	},
+	multiply: {
+		in: ["number", "number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-x-bold ph-lg",
+	},
+	divide: {
+		in: ["number", "number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-divide-bold ph-lg",
+	},
+	mod: {
+		in: ["number", "number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-divide-bold ph-lg",
+	},
+	round: {
+		in: ["number"],
+		out: "number",
+		category: "operation",
+		icon: "ph-calculator-bold ph-lg",
+	},
+	eq: {
+		in: [0, 0],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-equals-bold ph-lg",
+	},
+	notEq: {
+		in: [0, 0],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-prohibit-insert-bold ph-lg",
+	},
+	gt: {
+		in: ["number", "number"],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-caret-right-bold ph-lg",
+	},
+	lt: {
+		in: ["number", "number"],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-caret-left-bold ph-lg",
+	},
+	gtEq: {
+		in: ["number", "number"],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-caret-double-right-bold ph-lg",
+	},
+	ltEq: {
+		in: ["number", "number"],
+		out: "boolean",
+		category: "comparison",
+		icon: "ph-caret-double-right-bold ph-lg",
+	},
+	strLen: {
+		in: ["string"],
+		out: "number",
+		category: "text",
+		icon: "ph-quotes-bold ph-lg",
+	},
+	strPick: {
+		in: ["string", "number"],
+		out: "string",
+		category: "text",
+		icon: "ph-quotes-bold ph-lg",
+	},
+	strReplace: {
+		in: ["string", "string", "string"],
+		out: "string",
+		category: "text",
+		icon: "ph-quotes-bold ph-lg",
+	},
+	strReverse: {
+		in: ["string"],
+		out: "string",
+		category: "text",
+		icon: "ph-quotes-bold ph-lg",
+	},
+	join: {
+		in: ["stringArray", "string"],
+		out: "string",
+		category: "text",
+		icon: "ph-quotes-bold ph-lg",
+	},
+	stringToNumber: {
+		in: ["string"],
+		out: "number",
+		category: "convert",
+		icon: "ph-swap-bold ph-lg",
+	},
+	numberToString: {
+		in: ["number"],
+		out: "string",
+		category: "convert",
+		icon: "ph-swap-bold ph-lg",
+	},
+	splitStrByLine: {
+		in: ["string"],
+		out: "stringArray",
+		category: "convert",
+		icon: "ph-swap-bold ph-lg",
+	},
+	pick: {
+		in: [null, "number"],
+		out: null,
+		category: "list",
+		icon: "ph-text-indent-bold ph-lg",
+	},
+	listLen: {
+		in: [null],
+		out: "number",
+		category: "list",
+		icon: "ph-text-indent-bold ph-lg",
+	},
+	rannum: {
+		in: ["number", "number"],
+		out: "number",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	dailyRannum: {
+		in: ["number", "number"],
+		out: "number",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	seedRannum: {
+		in: [null, "number", "number"],
+		out: "number",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	random: {
+		in: ["number"],
+		out: "boolean",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	dailyRandom: {
+		in: ["number"],
+		out: "boolean",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	seedRandom: {
+		in: [null, "number"],
+		out: "boolean",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	randomPick: {
+		in: [0],
+		out: 0,
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	dailyRandomPick: {
+		in: [0],
+		out: 0,
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	seedRandomPick: {
+		in: [null, 0],
+		out: 0,
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	},
+	DRPWPM: {
+		in: ["stringArray"],
+		out: "string",
+		category: "random",
+		icon: "ph-dice-five-bold ph-lg",
+	}, // dailyRandomPickWithProbabilityMapping
 };
 
-export function initHpmlLib(expr: Expr, scope: HpmlScope, randomSeed: string, visitor?: any) {
+export function initHpmlLib(
+	expr: Expr,
+	scope: HpmlScope,
+	randomSeed: string,
+	visitor?: any,
+) {
 	const date = new Date();
-	const day = `${visitor ? visitor.id : ''} ${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+	const day = `${visitor ? visitor.id : ""} ${date.getFullYear()}/${
+		date.getMonth() + 1
+	}/${date.getDate()}`;
 
 	// SHOULD be fine to ignore since it's intended + function shape isn't defined
-	// eslint-disable-next-line @typescript-eslint/ban-types
 	const funcs: Record<string, Function> = {
 		not: (a: boolean) => !a,
 		or: (a: boolean, b: boolean) => a || b,
@@ -185,13 +482,15 @@ export function initHpmlLib(expr: Expr, scope: HpmlScope, randomSeed: string, vi
 		lt: (a: number, b: number) => a < b,
 		gtEq: (a: number, b: number) => a >= b,
 		ltEq: (a: number, b: number) => a <= b,
-		if: (bool: boolean, a: any, b: any) => bool ? a : b,
+		if: (bool: boolean, a: any, b: any) => (bool ? a : b),
 		for: (times: number, fn: Fn) => {
 			const result: any[] = [];
 			for (let i = 0; i < times; i++) {
-				result.push(fn.exec({
-					[fn.slots[0]]: i + 1,
-				}));
+				result.push(
+					fn.exec({
+						[fn.slots[0]]: i + 1,
+					}),
+				);
 			}
 			return result;
 		},
@@ -204,29 +503,39 @@ export function initHpmlLib(expr: Expr, scope: HpmlScope, randomSeed: string, vi
 		strLen: (a: string) => a.length,
 		strPick: (a: string, b: number) => a[b - 1],
 		strReplace: (a: string, b: string, c: string) => a.split(b).join(c),
-		strReverse: (a: string) => a.split('').reverse().join(''),
-		join: (texts: string[], separator: string) => texts.join(separator || ''),
+		strReverse: (a: string) => a.split("").reverse().join(""),
+		join: (texts: string[], separator: string) => texts.join(separator || ""),
 		stringToNumber: (a: string) => parseInt(a),
 		numberToString: (a: number) => a.toString(),
-		splitStrByLine: (a: string) => a.split('\n'),
+		splitStrByLine: (a: string) => a.split("\n"),
 		pick: (list: any[], i: number) => list[i - 1],
 		listLen: (list: any[]) => list.length,
-		random: (probability: number) => Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * 100) < probability,
-		rannum: (min: number, max: number) => min + Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * (max - min + 1)),
-		randomPick: (list: any[]) => list[Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * list.length)],
-		dailyRandom: (probability: number) => Math.floor(seedrandom(`${day}:${expr.id}`)() * 100) < probability,
-		dailyRannum: (min: number, max: number) => min + Math.floor(seedrandom(`${day}:${expr.id}`)() * (max - min + 1)),
-		dailyRandomPick: (list: any[]) => list[Math.floor(seedrandom(`${day}:${expr.id}`)() * list.length)],
-		seedRandom: (seed: any, probability: number) => Math.floor(seedrandom(seed)() * 100) < probability,
-		seedRannum: (seed: any, min: number, max: number) => min + Math.floor(seedrandom(seed)() * (max - min + 1)),
-		seedRandomPick: (seed: any, list: any[]) => list[Math.floor(seedrandom(seed)() * list.length)],
+		random: (probability: number) =>
+			Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * 100) < probability,
+		rannum: (min: number, max: number) =>
+			min +
+			Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * (max - min + 1)),
+		randomPick: (list: any[]) =>
+			list[Math.floor(seedrandom(`${randomSeed}:${expr.id}`)() * list.length)],
+		dailyRandom: (probability: number) =>
+			Math.floor(seedrandom(`${day}:${expr.id}`)() * 100) < probability,
+		dailyRannum: (min: number, max: number) =>
+			min + Math.floor(seedrandom(`${day}:${expr.id}`)() * (max - min + 1)),
+		dailyRandomPick: (list: any[]) =>
+			list[Math.floor(seedrandom(`${day}:${expr.id}`)() * list.length)],
+		seedRandom: (seed: any, probability: number) =>
+			Math.floor(seedrandom(seed)() * 100) < probability,
+		seedRannum: (seed: any, min: number, max: number) =>
+			min + Math.floor(seedrandom(seed)() * (max - min + 1)),
+		seedRandomPick: (seed: any, list: any[]) =>
+			list[Math.floor(seedrandom(seed)() * list.length)],
 		DRPWPM: (list: string[]) => {
 			const xs: any[] = [];
 			let totalFactor = 0;
 			for (const x of list) {
-				const parts = x.split(' ');
+				const parts = x.split(" ");
 				const factor = parseInt(parts.pop()!, 10);
-				const text = parts.join(' ');
+				const text = parts.join(" ");
 				totalFactor += factor;
 				xs.push({ factor, text });
 			}

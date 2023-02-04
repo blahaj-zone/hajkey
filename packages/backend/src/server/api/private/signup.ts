@@ -1,14 +1,14 @@
-import Koa from 'koa';
-import rndstr from 'rndstr';
-import bcrypt from 'bcryptjs';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { verifyHcaptcha, verifyRecaptcha } from '@/misc/captcha.js';
-import { Users, RegistrationTickets, UserPendings } from '@/models/index.js';
-import { signup } from '../common/signup.js';
-import config from '@/config/index.js';
-import { sendEmail } from '@/services/send-email.js';
-import { genId } from '@/misc/gen-id.js';
-import { validateEmailForAccount } from '@/services/validate-email-for-account.js';
+import type Koa from "koa";
+import rndstr from "rndstr";
+import bcrypt from "bcryptjs";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { verifyHcaptcha, verifyRecaptcha } from "@/misc/captcha.js";
+import { Users, RegistrationTickets, UserPendings } from "@/models/index.js";
+import { signup } from "../common/signup.js";
+import config from "@/config/index.js";
+import { sendEmail } from "@/services/send-email.js";
+import { genId } from "@/misc/gen-id.js";
+import { validateEmailForAccount } from "@/services/validate-email-for-account.js";
 
 export default async (ctx: Koa.Context) => {
 	const body = ctx.request.body;
@@ -17,28 +17,35 @@ export default async (ctx: Koa.Context) => {
 
 	// Verify *Captcha
 	// ただしテスト時はこの機構は障害となるため無効にする
-	if (process.env.NODE_ENV !== 'test') {
+	if (process.env.NODE_ENV !== "test") {
 		if (instance.enableHcaptcha && instance.hcaptchaSecretKey) {
-			await verifyHcaptcha(instance.hcaptchaSecretKey, body['hcaptcha-response']).catch(e => {
+			await verifyHcaptcha(
+				instance.hcaptchaSecretKey,
+				body["hcaptcha-response"],
+			).catch((e) => {
 				ctx.throw(400, e);
 			});
 		}
 
 		if (instance.enableRecaptcha && instance.recaptchaSecretKey) {
-			await verifyRecaptcha(instance.recaptchaSecretKey, body['g-recaptcha-response']).catch(e => {
+			await verifyRecaptcha(
+				instance.recaptchaSecretKey,
+				body["g-recaptcha-response"],
+			).catch((e) => {
 				ctx.throw(400, e);
 			});
 		}
 	}
 
-	const username = body['username'];
-	const password = body['password'];
-	const host: string | null = process.env.NODE_ENV === 'test' ? (body['host'] || null) : null;
-	const invitationCode = body['invitationCode'];
-	const emailAddress = body['emailAddress'];
+	const username = body["username"];
+	const password = body["password"];
+	const host: string | null =
+		process.env.NODE_ENV === "test" ? body["host"] || null : null;
+	const invitationCode = body["invitationCode"];
+	const emailAddress = body["emailAddress"];
 
 	if (instance.emailRequiredForSignup) {
-		if (emailAddress == null || typeof emailAddress !== 'string') {
+		if (emailAddress == null || typeof emailAddress !== "string") {
 			ctx.status = 400;
 			return;
 		}
@@ -51,7 +58,7 @@ export default async (ctx: Koa.Context) => {
 	}
 
 	if (instance.disableRegistration) {
-		if (invitationCode == null || typeof invitationCode !== 'string') {
+		if (invitationCode == null || typeof invitationCode !== "string") {
 			ctx.status = 400;
 			return;
 		}
@@ -69,7 +76,7 @@ export default async (ctx: Koa.Context) => {
 	}
 
 	if (instance.emailRequiredForSignup) {
-		const code = rndstr('a-z0-9', 16);
+		const code = rndstr("a-z0-9", 16);
 
 		// Generate hash of password
 		const salt = await bcrypt.genSalt(8);
@@ -86,15 +93,20 @@ export default async (ctx: Koa.Context) => {
 
 		const link = `${config.url}/signup-complete/${code}`;
 
-		sendEmail(emailAddress, 'Signup',
+		sendEmail(
+			emailAddress,
+			"Signup",
 			`To complete signup, please click this link:<br><a href="${link}">${link}</a>`,
-			`To complete signup, please click this link: ${link}`);
+			`To complete signup, please click this link: ${link}`,
+		);
 
 		ctx.status = 204;
 	} else {
 		try {
 			const { account, secret } = await signup({
-				username, password, host,
+				username,
+				password,
+				host,
 			});
 
 			const res = await Users.pack(account, account, {

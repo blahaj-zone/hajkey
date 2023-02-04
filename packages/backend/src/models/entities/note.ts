@@ -1,9 +1,16 @@
-import { Entity, Index, JoinColumn, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { DriveFile } from './drive-file.js';
-import { id } from '../id.js';
-import { noteVisibilities } from '../../types.js';
-import { Channel } from './channel.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	PrimaryColumn,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import type { DriveFile } from "./drive-file.js";
+import { id } from "../id.js";
+import { noteVisibilities } from "../../types.js";
+import { Channel } from "./channel.js";
 
 @Entity()
 @Index('IDX_NOTE_TAGS', { synchronize: false })
@@ -25,7 +32,7 @@ export class Note {
 		nullable: true,
 		comment: 'The ID of reply target.',
 	})
-	public replyId: Note['id'] | null;
+	public replyId: Note["id"] | null;
 
 	@ManyToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -39,7 +46,7 @@ export class Note {
 		nullable: true,
 		comment: 'The ID of renote target.',
 	})
-	public renoteId: Note['id'] | null;
+	public renoteId: Note["id"] | null;
 
 	@ManyToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -73,7 +80,7 @@ export class Note {
 		...id(),
 		comment: 'The ID of author.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -133,7 +140,7 @@ export class Note {
 		...id(),
 		array: true, default: '{}',
 	})
-	public fileIds: DriveFile['id'][];
+	public fileIds: DriveFile["id"][];
 
 	@Index()
 	@Column('varchar', {
@@ -146,14 +153,14 @@ export class Note {
 		...id(),
 		array: true, default: '{}',
 	})
-	public visibleUserIds: User['id'][];
+	public visibleUserIds: User["id"][];
 
 	@Index()
 	@Column({
 		...id(),
 		array: true, default: '{}',
 	})
-	public mentions: User['id'][];
+	public mentions: User["id"][];
 
 	@Column('text', {
 		default: '[]',
@@ -182,7 +189,7 @@ export class Note {
 		nullable: true,
 		comment: 'The ID of source channel.',
 	})
-	public channelId: Channel['id'] | null;
+	public channelId: Channel["id"] | null;
 
 	@ManyToOne(type => Channel, {
 		onDelete: 'CASCADE',
@@ -203,7 +210,7 @@ export class Note {
 		nullable: true,
 		comment: '[Denormalized]',
 	})
-	public replyUserId: User['id'] | null;
+	public replyUserId: User["id"] | null;
 
 	@Column('varchar', {
 		length: 128, nullable: true,
@@ -216,7 +223,7 @@ export class Note {
 		nullable: true,
 		comment: '[Denormalized]',
 	})
-	public renoteUserId: User['id'] | null;
+	public renoteUserId: User["id"] | null;
 
 	@Column('varchar', {
 		length: 128, nullable: true,

@@ -4,7 +4,7 @@
 		<span v-if="note.deletedAt" style="opacity: 0.5">({{ i18n.ts.deleted }})</span>
 		<MkA v-if="note.replyId" class="reply" :to="`/notes/${note.replyId}`"><i class="ph-arrow-bend-up-left-bold ph-lg"></i></MkA>
 		<Mfm v-if="note.text" :text="note.text" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
-		<MkA v-if="note.renoteId" class="rp" :to="`/notes/${note.renoteId}`">RN: ...</MkA>
+		<MkA v-if="note.renoteId" class="rp" :to="`/notes/${note.renoteId}`">{{ i18n.ts.quoteAttached }}: ...</MkA>
 	</div>
 	<div v-if="note.files.length > 0">
 		<summary>({{ i18n.t('withNFiles', { n: note.files.length }) }})</summary>
@@ -65,7 +65,11 @@ const collapsed = $ref(props.note.cw == null && isLong);
 		position: relative;
 		max-height: 9em;
 		overflow: hidden;
-
+		> .body {
+			max-height: 9em;
+			mask: linear-gradient(black calc(100% - 64px), transparent);
+			-webkit-mask: linear-gradient(black calc(100% - 64px), transparent);
+		}
 		> .fade {
 			display: block;
 			position: absolute;
@@ -73,7 +77,6 @@ const collapsed = $ref(props.note.cw == null && isLong);
 			left: 0;
 			width: 100%;
 			height: 64px;
-			background: linear-gradient(0deg, var(--panel), var(--X15));
 
 			> span {
 				display: inline-block;

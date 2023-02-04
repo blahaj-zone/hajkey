@@ -1,27 +1,40 @@
-import { ref } from 'vue';
-import { DriveFile } from 'calckey-js/built/entities';
-import * as os from '@/os';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
-import { defaultStore } from '@/store';
-import { uploadFile } from '@/scripts/upload';
+import { ref } from "vue";
+import { DriveFile } from "calckey-js/built/entities";
+import * as os from "@/os";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
+import { defaultStore } from "@/store";
+import { uploadFile } from "@/scripts/upload";
 
-function select(src: any, label: string | null, multiple: boolean): Promise<DriveFile | DriveFile[]> {
+function select(
+	src: any,
+	label: string | null,
+	multiple: boolean,
+): Promise<DriveFile | DriveFile[]> {
 	return new Promise((res, rej) => {
 		const keepOriginal = ref(defaultStore.state.keepOriginalUploading);
 
 		const chooseFileFromPc = () => {
-			const input = document.createElement('input');
-			input.type = 'file';
+			const input = document.createElement("input");
+			input.type = "file";
 			input.multiple = multiple;
 			input.onchange = () => {
-				const promises = Array.from(input.files).map(file => uploadFile(file, defaultStore.state.uploadFolder, undefined, keepOriginal.value));
+				const promises = Array.from(input.files).map((file) =>
+					uploadFile(
+						file,
+						defaultStore.state.uploadFolder,
+						undefined,
+						keepOriginal.value,
+					),
+				);
 
-				Promise.all(promises).then(driveFiles => {
-					res(multiple ? driveFiles : driveFiles[0]);
-				}).catch(err => {
-					// アップロードのエラーは uploadFile 内でハンドリングされているためアラートダイアログを出したりはしてはいけない
-				});
+				Promise.all(promises)
+					.then((driveFiles) => {
+						res(multiple ? driveFiles : driveFiles[0]);
+					})
+					.catch((err) => {
+						// アップロードのエラーは uploadFile 内でハンドリングされているためアラートダイアログを出したりはしてはいけない
+					});
 
 				// 一応廃棄
 				(window as any).__misskey_input_ref__ = null;
@@ -35,7 +48,7 @@ function select(src: any, label: string | null, multiple: boolean): Promise<Driv
 		};
 
 		const chooseFileFromDrive = () => {
-			os.selectDriveFile(multiple).then(files => {
+			os.selectDriveFile(multiple).then((files) => {
 				res(files);
 			});
 		};
@@ -43,22 +56,22 @@ function select(src: any, label: string | null, multiple: boolean): Promise<Driv
 		const chooseFileFromUrl = () => {
 			os.inputText({
 				title: i18n.ts.uploadFromUrl,
-				type: 'url',
+				type: "url",
 				placeholder: i18n.ts.uploadFromUrlDescription,
 			}).then(({ canceled, result: url }) => {
 				if (canceled) return;
 
 				const marker = Math.random().toString(); // TODO: UUIDとか使う
 
-				const connection = stream.useChannel('main');
-				connection.on('urlUploadFinished', urlResponse => {
+				const connection = stream.useChannel("main");
+				connection.on("urlUploadFinished", (urlResponse) => {
 					if (urlResponse.marker === marker) {
 						res(multiple ? [urlResponse.file] : urlResponse.file);
 						connection.dispose();
 					}
 				});
 
-				os.api('drive/files/upload-from-url', {
+				os.api("drive/files/upload-from-url", {
 					url: url,
 					folderId: defaultStore.state.uploadFolder,
 					marker,
@@ -71,33 +84,50 @@ function select(src: any, label: string | null, multiple: boolean): Promise<Driv
 			});
 		};
 
-		os.popupMenu([label ? {
-			text: label,
-			type: 'label',
-		} : undefined, {
-			type: 'switch',
-			text: i18n.ts.keepOriginalUploading,
-			ref: keepOriginal,
-		}, {
-			text: i18n.ts.upload,
-			icon: 'ph-upload-simple-bold ph-lg',
-			action: chooseFileFromPc,
-		}, {
-			text: i18n.ts.fromDrive,
-			icon: 'ph-cloud-bold ph-lg',
-			action: chooseFileFromDrive,
-		}, {
-			text: i18n.ts.fromUrl,
-			icon: 'ph-link-simple-bold ph-lg',
-			action: chooseFileFromUrl,
-		}], src);
+		os.popupMenu(
+			[
+				label
+					? {
+							text: label,
+							type: "label",
+					  }
+					: undefined,
+				{
+					type: "switch",
+					text: i18n.ts.keepOriginalUploading,
+					ref: keepOriginal,
+				},
+				{
+					text: i18n.ts.upload,
+					icon: "ph-upload-simple-bold ph-lg",
+					action: chooseFileFromPc,
+				},
+				{
+					text: i18n.ts.fromDrive,
+					icon: "ph-cloud-bold ph-lg",
+					action: chooseFileFromDrive,
+				},
+				{
+					text: i18n.ts.fromUrl,
+					icon: "ph-link-simple-bold ph-lg",
+					action: chooseFileFromUrl,
+				},
+			],
+			src,
+		);
 	});
 }
 
-export function selectFile(src: any, label: string | null = null): Promise<DriveFile> {
+export function selectFile(
+	src: any,
+	label: string | null = null,
+): Promise<DriveFile> {
 	return select(src, label, false) as Promise<DriveFile>;
 }
 
-export function selectFiles(src: any, label: string | null = null): Promise<DriveFile[]> {
+export function selectFiles(
+	src: any,
+	label: string | null = null,
+): Promise<DriveFile[]> {
 	return select(src, label, true) as Promise<DriveFile[]>;
 }

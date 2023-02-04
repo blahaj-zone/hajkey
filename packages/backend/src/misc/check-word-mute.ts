@@ -1,28 +1,32 @@
-import RE2 from 're2';
-import { Note } from '@/models/entities/note.js';
-import { User } from '@/models/entities/user.js';
+import RE2 from "re2";
+import type { Note } from "@/models/entities/note.js";
+import type { User } from "@/models/entities/user.js";
 
 type NoteLike = {
-	userId: Note['userId'];
-	text: Note['text'];
+	userId: Note["userId"];
+	text: Note["text"];
 };
 
 type UserLike = {
-	id: User['id'];
+	id: User["id"];
 };
 
-export async function checkWordMute(note: NoteLike, me: UserLike | null | undefined, mutedWords: Array<string | string[]>): Promise<boolean> {
+export async function checkWordMute(
+	note: NoteLike,
+	me: UserLike | null | undefined,
+	mutedWords: Array<string | string[]>,
+): Promise<boolean> {
 	// 自分自身
-	if (me && (note.userId === me.id)) return false;
+	if (me && note.userId === me.id) return false;
 
 	if (mutedWords.length > 0) {
-		const text = ((note.cw ?? '') + '\n' + (note.text ?? '')).trim();
+		const text = ((note.cw ?? "") + "\n" + (note.text ?? "")).trim();
 
-		if (text === '') return false;
+		if (text === "") return false;
 
-		const matched = mutedWords.some(filter => {
+		const matched = mutedWords.some((filter) => {
 			if (Array.isArray(filter)) {
-				return filter.every(keyword => text.includes(keyword));
+				return filter.every((keyword) => text.includes(keyword));
 			} else {
 				// represents RegExp
 				const regexp = filter.match(/^\/(.+)\/(.*)$/);

@@ -1,11 +1,9 @@
-import { db } from '@/db/postgre.js';
-import { Hashtag } from '@/models/entities/hashtag.js';
-import { Packed } from '@/misc/schema.js';
+import { db } from "@/db/postgre.js";
+import { Hashtag } from "@/models/entities/hashtag.js";
+import type { Packed } from "@/misc/schema.js";
 
 export const HashtagRepository = db.getRepository(Hashtag).extend({
-	async pack(
-		src: Hashtag,
-	): Promise<Packed<'Hashtag'>> {
+	async pack(src: Hashtag): Promise<Packed<"Hashtag">> {
 		return {
 			tag: src.name,
 			mentionedUsersCount: src.mentionedUsersCount,
@@ -17,9 +15,7 @@ export const HashtagRepository = db.getRepository(Hashtag).extend({
 		};
 	},
 
-	packMany(
-		hashtags: Hashtag[],
-	) {
-		return Promise.all(hashtags.map(x => this.pack(x)));
+	packMany(hashtags: Hashtag[]) {
+		return Promise.all(hashtags.map((x) => this.pack(x)));
 	},
 });

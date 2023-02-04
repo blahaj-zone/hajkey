@@ -1,13 +1,11 @@
-import { db } from '@/db/postgre.js';
-import { GalleryLike } from '@/models/entities/gallery-like.js';
-import { GalleryPosts } from '../index.js';
+import { db } from "@/db/postgre.js";
+import { GalleryLike } from "@/models/entities/gallery-like.js";
+import { GalleryPosts } from "../index.js";
 
 export const GalleryLikeRepository = db.getRepository(GalleryLike).extend({
-	async pack(
-		src: GalleryLike['id'] | GalleryLike,
-		me?: any
-	) {
-		const like = typeof src === 'object' ? src : await this.findOneByOrFail({ id: src });
+	async pack(src: GalleryLike["id"] | GalleryLike, me?: any) {
+		const like =
+			typeof src === "object" ? src : await this.findOneByOrFail({ id: src });
 
 		return {
 			id: like.id,
@@ -15,10 +13,7 @@ export const GalleryLikeRepository = db.getRepository(GalleryLike).extend({
 		};
 	},
 
-	packMany(
-		likes: any[],
-		me: any
-	) {
-		return Promise.all(likes.map(x => this.pack(x, me)));
+	packMany(likes: any[], me: any) {
+		return Promise.all(likes.map((x) => this.pack(x, me)));
 	},
 });

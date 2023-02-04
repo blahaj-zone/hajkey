@@ -1,11 +1,18 @@
-import { Entity, Index, JoinColumn, ManyToOne, Column, PrimaryColumn } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
-import { Note } from './note.js';
-import { FollowRequest } from './follow-request.js';
-import { UserGroupInvitation } from './user-group-invitation.js';
-import { AccessToken } from './access-token.js';
-import { notificationTypes } from '@/types.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	ManyToOne,
+	Column,
+	PrimaryColumn,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
+import { Note } from "./note.js";
+import { FollowRequest } from "./follow-request.js";
+import { UserGroupInvitation } from "./user-group-invitation.js";
+import { AccessToken } from "./access-token.js";
+import { notificationTypes } from "@/types.js";
 
 @Entity()
 export class Notification {
@@ -26,7 +33,7 @@ export class Notification {
 		...id(),
 		comment: 'The ID of recipient user of the Notification.',
 	})
-	public notifieeId: User['id'];
+	public notifieeId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -43,7 +50,7 @@ export class Notification {
 		nullable: true,
 		comment: 'The ID of sender user of the Notification.',
 	})
-	public notifierId: User['id'] | null;
+	public notifierId: User["id"] | null;
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',
@@ -87,7 +94,7 @@ export class Notification {
 		...id(),
 		nullable: true,
 	})
-	public noteId: Note['id'] | null;
+	public noteId: Note["id"] | null;
 
 	@ManyToOne(type => Note, {
 		onDelete: 'CASCADE',
@@ -99,7 +106,7 @@ export class Notification {
 		...id(),
 		nullable: true,
 	})
-	public followRequestId: FollowRequest['id'] | null;
+	public followRequestId: FollowRequest["id"] | null;
 
 	@ManyToOne(type => FollowRequest, {
 		onDelete: 'CASCADE',
@@ -111,7 +118,7 @@ export class Notification {
 		...id(),
 		nullable: true,
 	})
-	public userGroupInvitationId: UserGroupInvitation['id'] | null;
+	public userGroupInvitationId: UserGroupInvitation["id"] | null;
 
 	@ManyToOne(type => UserGroupInvitation, {
 		onDelete: 'CASCADE',
@@ -163,7 +170,7 @@ export class Notification {
 		...id(),
 		nullable: true,
 	})
-	public appAccessTokenId: AccessToken['id'] | null;
+	public appAccessTokenId: AccessToken["id"] | null;
 
 	@ManyToOne(type => AccessToken, {
 		onDelete: 'CASCADE',

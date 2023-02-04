@@ -1,9 +1,11 @@
-import { URL } from 'node:url';
-import config from '@/config/index.js';
-import { toASCII } from 'punycode';
+import { URL } from "node:url";
+import config from "@/config/index.js";
+import { toASCII } from "punycode";
 
 export function getFullApAccount(username: string, host: string | null) {
-	return host ? `${username}@${toPuny(host)}` : `${username}@${toPuny(config.host)}`;
+	return host
+		? `${username}@${toPuny(host)}`
+		: `${username}@${toPuny(config.host)}`;
 }
 
 export function isSelfHost(host: string) {

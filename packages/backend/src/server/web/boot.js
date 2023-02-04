@@ -281,7 +281,6 @@
 		`)
 	}
 
-	// eslint-disable-next-line no-inner-declarations
 	async function checkUpdate() {
 		try {
 			const res = await fetch('/api/meta', {
@@ -302,7 +301,6 @@
 		}
 	}
 
-	// eslint-disable-next-line no-inner-declarations
 	function refresh() {
 		// Clear cache (service worker)
 		try {

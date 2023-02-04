@@ -1,40 +1,42 @@
-import define from '../../../define.js';
-import { Users } from '@/models/index.js';
-import { signup } from '../../../common/signup.js';
-import { IsNull } from 'typeorm';
+import define from "../../../define.js";
+import { Users } from "@/models/index.js";
+import { signup } from "../../../common/signup.js";
+import { IsNull } from "typeorm";
 
 export const meta = {
-	tags: ['admin'],
+	tags: ["admin"],
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
-		ref: 'User',
+		type: "object",
+		optional: false,
+		nullable: false,
+		ref: "User",
 		properties: {
 			token: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
 		username: Users.localUsernameSchema,
 		password: Users.passwordSchema,
 	},
-	required: ['username', 'password'],
+	required: ["username", "password"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, _me) => {
 	const me = _me ? await Users.findOneByOrFail({ id: _me.id }) : null;
-	const noUsers = (await Users.countBy({
-		host: IsNull(),
-	})) === 0;
-	if (!noUsers && !me?.isAdmin) throw new Error('access denied');
+	const noUsers =
+		(await Users.countBy({
+			host: IsNull(),
+		})) === 0;
+	if (!(noUsers || me?.isAdmin)) throw new Error("access denied");
 
 	const { account, secret } = await signup({
 		username: ps.username,

@@ -145,6 +145,12 @@ id: 'aid'
 #  '127.0.0.1/32'
 #]
 
+# TWA
+#twa:
+#  nameSpace: android_app
+#  packageName: tld.domain.twa
+#  sha256CertFingerprints: ['AB:CD:EF']
+
 # Upload or download file size limits (bytes)
 #maxFileSize: 262144000
 

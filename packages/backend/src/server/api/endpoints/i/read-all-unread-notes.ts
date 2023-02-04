@@ -1,22 +1,21 @@
-import { publishMainStream } from '@/services/stream.js';
-import define from '../../define.js';
-import { NoteUnreads } from '@/models/index.js';
+import { publishMainStream } from "@/services/stream.js";
+import define from "../../define.js";
+import { NoteUnreads } from "@/models/index.js";
 
 export const meta = {
-	tags: ['account'],
+	tags: ["account"],
 
 	requireCredential: true,
 
-	kind: 'write:account',
+	kind: "write:account",
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	// Remove documents
 	await NoteUnreads.delete({
@@ -24,6 +23,6 @@ export default define(meta, paramDef, async (ps, user) => {
 	});
 
 	// 全て既読になったイベントを発行
-	publishMainStream(user.id, 'readAllUnreadMentions');
-	publishMainStream(user.id, 'readAllUnreadSpecifiedNotes');
+	publishMainStream(user.id, "readAllUnreadMentions");
+	publishMainStream(user.id, "readAllUnreadSpecifiedNotes");
 });

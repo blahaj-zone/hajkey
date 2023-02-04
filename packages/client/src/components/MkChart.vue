@@ -8,11 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable id-denylist --
-  Chart.js has a `data` attribute in most chart definitions, which triggers the
-  id-denylist violation when setting it. This is causing about 60+ lint issues.
-  As this is part of Chart.js's API it makes sense to disable the check here.
-*/
 import { onMounted, ref, watch, PropType, onUnmounted } from 'vue';
 import {
 	Chart,
@@ -856,7 +851,6 @@ watch(() => [props.src, props.span], fetchAndRender);
 onMounted(() => {
 	fetchAndRender();
 });
-/* eslint-enable id-denylist */
 </script>
 
 <style lang="scss" scoped>

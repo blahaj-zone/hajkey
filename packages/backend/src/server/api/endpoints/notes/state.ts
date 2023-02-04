@@ -1,41 +1,49 @@
-import { NoteFavorites, Notes, NoteThreadMutings, NoteWatchings } from '@/models/index.js';
-import { getNote } from '../../common/getters.js';
-import define from '../../define.js';
+import {
+	NoteFavorites,
+	Notes,
+	NoteThreadMutings,
+	NoteWatchings,
+} from "@/models/index.js";
+import { getNote } from "../../common/getters.js";
+import define from "../../define.js";
 
 export const meta = {
-	tags: ['notes'],
+	tags: ["notes"],
 
 	requireCredential: true,
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 		properties: {
 			isFavorited: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			isWatching: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 			isMutedThread: {
-				type: 'boolean',
-				optional: false, nullable: false,
+				type: "boolean",
+				optional: false,
+				nullable: false,
 			},
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		noteId: { type: 'string', format: 'misskey:id' },
+		noteId: { type: "string", format: "misskey:id" },
 	},
-	required: ['noteId'],
+	required: ["noteId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const note = await getNote(ps.noteId, user);
 

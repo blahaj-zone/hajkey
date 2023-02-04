@@ -1,12 +1,12 @@
-import * as http from 'node:http';
-import { EventEmitter } from 'events';
-import { ParsedUrlQuery } from 'querystring';
-import * as websocket from 'websocket';
+import type * as http from "node:http";
+import { EventEmitter } from "events";
+import type { ParsedUrlQuery } from "querystring";
+import * as websocket from "websocket";
 
-import { subscriber as redisClient } from '@/db/redis.js';
-import { Users } from '@/models/index.js';
-import MainStreamConnection from './stream/index.js';
-import authenticate from './authenticate.js';
+import { subscriber as redisClient } from "@/db/redis.js";
+import { Users } from "@/models/index.js";
+import MainStreamConnection from "./stream/index.js";
+import authenticate from "./authenticate.js";
 
 export const initializeStreamingServer = (server: http.Server) => {
 	// Init websocket server
@@ -14,15 +14,17 @@ export const initializeStreamingServer = (server: http.Server) => {
 		httpServer: server,
 	});
 
-	ws.on('request', async (request) => {
+	ws.on("request", async (request) => {
 		const q = request.resourceURL.query as ParsedUrlQuery;
 
-		const [user, app] = await authenticate(request.httpRequest.headers.authorization, q.i)
-			.catch(err => {
-				request.reject(403, err.message);
-				return [];
-			});
-		if (typeof user === 'undefined') {
+		const [user, app] = await authenticate(
+			request.httpRequest.headers.authorization,
+			q.i,
+		).catch((err) => {
+			request.reject(403, err.message);
+			return [];
+		});
+		if (typeof user === "undefined") {
 			return;
 		}
 
@@ -40,31 +42,33 @@ export const initializeStreamingServer = (server: http.Server) => {
 			ev.emit(parsed.channel, parsed.message);
 		}
 
-		redisClient.on('message', onRedisMessage);
+		redisClient.on("message", onRedisMessage);
 
 		const main = new MainStreamConnection(connection, ev, user, app);
 
-		const intervalId = user ? setInterval(() => {
-			Users.update(user.id, {
-				lastActiveDate: new Date(),
-			});
-		}, 1000 * 60 * 5) : null;
+		const intervalId = user
+			? setInterval(() => {
+					Users.update(user.id, {
+						lastActiveDate: new Date(),
+					});
+			  }, 1000 * 60 * 5)
+			: null;
 		if (user) {
 			Users.update(user.id, {
 				lastActiveDate: new Date(),
 			});
 		}
 
-		connection.once('close', () => {
+		connection.once("close", () => {
 			ev.removeAllListeners();
 			main.dispose();
-			redisClient.off('message', onRedisMessage);
+			redisClient.off("message", onRedisMessage);
 			if (intervalId) clearInterval(intervalId);
 		});
 
-		connection.on('message', async (data) => {
-			if (data.type === 'utf8' && data.utf8Data === 'ping') {
-				connection.send('pong');
+		connection.on("message", async (data) => {
+			if (data.type === "utf8" && data.utf8Data === "ping") {
+				connection.send("pong");
 			}
 		});
 	});

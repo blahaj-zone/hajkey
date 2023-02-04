@@ -1,9 +1,9 @@
-import bcrypt from 'bcryptjs';
-import * as speakeasy from 'speakeasy';
-import * as QRCode from 'qrcode';
-import config from '@/config/index.js';
-import { UserProfiles } from '@/models/index.js';
-import define from '../../../define.js';
+import bcrypt from "bcryptjs";
+import * as speakeasy from "speakeasy";
+import * as QRCode from "qrcode";
+import config from "@/config/index.js";
+import { UserProfiles } from "@/models/index.js";
+import define from "../../../define.js";
 
 export const meta = {
 	requireCredential: true,
@@ -12,14 +12,13 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		password: { type: 'string' },
+		password: { type: "string" },
 	},
-	required: ['password'],
+	required: ["password"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
@@ -27,7 +26,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	const same = await bcrypt.compare(ps.password, profile.password!);
 
 	if (!same) {
-		throw new Error('incorrect password');
+		throw new Error("incorrect password");
 	}
 
 	// Generate user's secret key
@@ -42,7 +41,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	// Get the data URL of the authenticator URL
 	const url = speakeasy.otpauthURL({
 		secret: secret.base32,
-		encoding: 'base32',
+		encoding: "base32",
 		label: user.username,
 		issuer: config.host,
 	});

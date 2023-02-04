@@ -1,27 +1,27 @@
-import { Signins, UserProfiles, Users } from '@/models/index.js';
-import define from '../../define.js';
+import { Signins, UserProfiles, Users } from "@/models/index.js";
+import define from "../../define.js";
 
 export const meta = {
-	tags: ['admin'],
+	tags: ["admin"],
 
 	requireCredential: true,
 	requireModerator: true,
 
 	res: {
-		type: 'object',
-		nullable: false, optional: false,
+		type: "object",
+		nullable: false,
+		optional: false,
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		userId: { type: 'string', format: 'misskey:id' },
+		userId: { type: "string", format: "misskey:id" },
 	},
-	required: ['userId'],
+	required: ["userId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
 	const [user, profile] = await Promise.all([
 		Users.findOneBy({ id: ps.userId }),
@@ -29,12 +29,12 @@ export default define(meta, paramDef, async (ps, me) => {
 	]);
 
 	if (user == null || profile == null) {
-		throw new Error('user not found');
+		throw new Error("user not found");
 	}
 
 	const _me = await Users.findOneByOrFail({ id: me.id });
-	if ((_me.isModerator && !_me.isAdmin) && user.isAdmin) {
-		throw new Error('cannot show info of admin');
+	if (_me.isModerator && !_me.isAdmin && user.isAdmin) {
+		throw new Error("cannot show info of admin");
 	}
 
 	if (!_me.isAdmin) {
@@ -45,9 +45,11 @@ export default define(meta, paramDef, async (ps, me) => {
 		};
 	}
 
-	const maskedKeys = ['accessToken', 'accessTokenSecret', 'refreshToken'];
-	Object.keys(profile.integrations).forEach(integration => {
-		maskedKeys.forEach(key => profile.integrations[integration][key] = '<MASKED>');
+	const maskedKeys = ["accessToken", "accessTokenSecret", "refreshToken"];
+	Object.keys(profile.integrations).forEach((integration) => {
+		maskedKeys.forEach(
+			(key) => (profile.integrations[integration][key] = "<MASKED>"),
+		);
 	});
 
 	const signins = await Signins.findBy({ userId: user.id });

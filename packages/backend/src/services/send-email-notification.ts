@@ -1,14 +1,14 @@
-import { UserProfiles } from '@/models/index.js';
-import { User } from '@/models/entities/user.js';
-import { sendEmail } from './send-email.js';
-import { I18n } from '@/misc/i18n.js';
-import * as Acct from '@/misc/acct.js';
+import { UserProfiles } from "@/models/index.js";
+import type { User } from "@/models/entities/user.js";
+import { sendEmail } from "./send-email.js";
+import { I18n } from "@/misc/i18n.js";
+import * as Acct from "@/misc/acct.js";
 // TODO
 //const locales = await import('../../../../locales/index.js');
 
 // TODO: locale ファイルをクライアント用とサーバー用で分けたい
 
-async function follow(userId: User['id'], follower: User) {
+async function follow(userId: User["id"], follower: User) {
 	/*
 	const userProfile = await UserProfiles.findOneByOrFail({ userId: userId });
 	if (!userProfile.email || !userProfile.emailNotificationTypes.includes('follow')) return;
@@ -19,7 +19,7 @@ async function follow(userId: User['id'], follower: User) {
 	*/
 }
 
-async function receiveFollowRequest(userId: User['id'], follower: User) {
+async function receiveFollowRequest(userId: User["id"], follower: User) {
 	/*
 	const userProfile = await UserProfiles.findOneByOrFail({ userId: userId });
 	if (!userProfile.email || !userProfile.emailNotificationTypes.includes('receiveFollowRequest')) return;

@@ -143,6 +143,8 @@ const previewable = (file: misskey.entities.DriveFile): boolean => {
 		position: relative;
 		width: 100%;
 		margin-top: 4px;
+		border-radius: var(--radius);
+		overflow: hidden;
 
 		&:before {
 			content: '';

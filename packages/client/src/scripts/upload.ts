@@ -1,11 +1,11 @@
-import { reactive, ref } from 'vue';
-import * as Misskey from 'calckey-js';
-import { readAndCompressImage } from 'browser-image-resizer';
-import { defaultStore } from '@/store';
-import { apiUrl } from '@/config';
-import { $i } from '@/account';
-import { alert } from '@/os';
-import { i18n } from '@/i18n';
+import { reactive, ref } from "vue";
+import * as Misskey from "calckey-js";
+import { readAndCompressImage } from "browser-image-resizer";
+import { defaultStore } from "@/store";
+import { apiUrl } from "@/config";
+import { $i } from "@/account";
+import { alert } from "@/os";
+import { i18n } from "@/i18n";
 
 type Uploading = {
 	id: string;
@@ -17,16 +17,16 @@ type Uploading = {
 export const uploads = ref<Uploading[]>([]);
 
 const compressTypeMap = {
-	'image/jpeg': { quality: 0.85, mimeType: 'image/jpeg' },
-	'image/webp': { quality: 0.85, mimeType: 'image/png' },
-	'image/svg+xml': { quality: 1, mimeType: 'image/png' },
+	"image/jpeg": { quality: 0.85, mimeType: "image/jpeg" },
+	"image/webp": { quality: 0.85, mimeType: "image/png" },
+	"image/svg+xml": { quality: 1, mimeType: "image/png" },
 } as const;
 
 const mimeTypeMap = {
-	'image/webp': 'webp',
-	'image/jpeg': 'jpg',
-	'image/png': 'png',
-	'image/avif': 'avif',
+	"image/webp": "webp",
+	"image/jpeg": "jpg",
+	"image/png": "png",
+	"image/avif": "avif",
 } as const;
 
 export function uploadFile(
@@ -35,7 +35,7 @@ export function uploadFile(
 	name?: string,
 	keepOriginal: boolean = defaultStore.state.keepOriginalUploading,
 ): Promise<Misskey.entities.DriveFile> {
-	if (folder && typeof folder === 'object') folder = folder.id;
+	if (folder && typeof folder === "object") folder = folder.id;
 
 	return new Promise((resolve, reject) => {
 		const id = Math.random().toString();
@@ -44,7 +44,7 @@ export function uploadFile(
 		reader.onload = async (ev) => {
 			const ctx = reactive<Uploading>({
 				id: id,
-				name: name || file.name || 'untitled',
+				name: name || file.name || "untitled",
 				progressMax: undefined,
 				progressValue: undefined,
 				img: window.URL.createObjectURL(file),
@@ -65,52 +65,65 @@ export function uploadFile(
 
 				try {
 					resizedImage = await readAndCompressImage(file, config);
-					ctx.name = file.type !== imgConfig.mimeType ? `${ctx.name}.${mimeTypeMap[compressTypeMap[file.type].mimeType]}` : ctx.name;
+					ctx.name =
+						file.type !== imgConfig.mimeType
+							? `${ctx.name}.${
+									mimeTypeMap[compressTypeMap[file.type].mimeType]
+							  }`
+							: ctx.name;
 				} catch (err) {
-					console.error('Failed to resize image', err);
+					console.error("Failed to resize image", err);
 				}
 			}
 
 			const formData = new FormData();
-			formData.append('force', 'true');
-			formData.append('file', resizedImage || file);
-			formData.append('name', ctx.name);
-			if (folder) formData.append('folderId', folder);
+			formData.append("force", "true");
+			formData.append("file", resizedImage || file);
+			formData.append("name", ctx.name);
+			if (folder) formData.append("folderId", folder);
 
 			const xhr = new XMLHttpRequest();
-			xhr.open('POST', apiUrl + '/drive/files/create', true);
-			xhr.setRequestHeader('Authorization', `Bearer ${$i.token}`);
+			xhr.open("POST", `${apiUrl}/drive/files/create`, true);
+			xhr.setRequestHeader("Authorization", `Bearer ${$i.token}`);
 			xhr.onload = (ev) => {
-				if (xhr.status !== 200 || ev.target == null || ev.target.response == null) {
+				if (
+					xhr.status !== 200 ||
+					ev.target == null ||
+					ev.target.response == null
+				) {
 					// TODO: 消すのではなくて(ネットワーク的なエラーなら)再送できるようにしたい
-					uploads.value = uploads.value.filter(x => x.id !== id);
+					uploads.value = uploads.value.filter((x) => x.id !== id);
 
 					if (ev.target?.response) {
 						const res = JSON.parse(ev.target.response);
-						if (res.error?.id === 'bec5bd69-fba3-43c9-b4fb-2894b66ad5d2') {
+						if (res.error?.id === "bec5bd69-fba3-43c9-b4fb-2894b66ad5d2") {
 							alert({
-								type: 'error',
+								type: "error",
 								title: i18n.ts.failedToUpload,
 								text: i18n.ts.cannotUploadBecauseInappropriate,
 							});
-						} else if (res.error?.id === 'd08dbc37-a6a9-463a-8c47-96c32ab5f064') {
+						} else if (
+							res.error?.id === "d08dbc37-a6a9-463a-8c47-96c32ab5f064"
+						) {
 							alert({
-								type: 'error',
+								type: "error",
 								title: i18n.ts.failedToUpload,
 								text: i18n.ts.cannotUploadBecauseNoFreeSpace,
 							});
 						} else {
 							alert({
-								type: 'error',
+								type: "error",
 								title: i18n.ts.failedToUpload,
 								text: `${res.error?.message}\n${res.error?.code}\n${res.error?.id}`,
 							});
 						}
 					} else {
 						alert({
-							type: 'error',
-							title: 'Failed to upload',
-							text: `${JSON.stringify(ev.target?.response)}, ${JSON.stringify(xhr.response)}`,
+							type: "error",
+							title: "Failed to upload",
+							text: `${JSON.stringify(ev.target?.response)}, ${JSON.stringify(
+								xhr.response,
+							)}`,
 						});
 					}
 
@@ -122,10 +135,10 @@ export function uploadFile(
 
 				resolve(driveFile);
 
-				uploads.value = uploads.value.filter(x => x.id !== id);
+				uploads.value = uploads.value.filter((x) => x.id !== id);
 			};
 
-			xhr.upload.onprogress = ev => {
+			xhr.upload.onprogress = (ev) => {
 				if (ev.lengthComputable) {
 					ctx.progressMax = ev.total;
 					ctx.progressValue = ev.loaded;

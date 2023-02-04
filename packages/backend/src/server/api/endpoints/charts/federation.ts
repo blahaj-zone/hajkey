@@ -1,9 +1,9 @@
-import { getJsonSchema } from '@/services/chart/core.js';
-import { federationChart } from '@/services/chart/index.js';
-import define from '../../define.js';
+import { getJsonSchema } from "@/services/chart/core.js";
+import { federationChart } from "@/services/chart/index.js";
+import define from "../../define.js";
 
 export const meta = {
-	tags: ['charts'],
+	tags: ["charts"],
 	requireCredentialPrivateMode: true,
 
 	res: getJsonSchema(federationChart.schema),
@@ -13,16 +13,19 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		span: { type: 'string', enum: ['day', 'hour'] },
-		limit: { type: 'integer', minimum: 1, maximum: 500, default: 30 },
-		offset: { type: 'integer', nullable: true, default: null },
+		span: { type: "string", enum: ["day", "hour"] },
+		limit: { type: "integer", minimum: 1, maximum: 500, default: 30 },
+		offset: { type: "integer", nullable: true, default: null },
 	},
-	required: ['span'],
+	required: ["span"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
-	return await federationChart.getChart(ps.span, ps.limit, ps.offset ? new Date(ps.offset) : null);
+	return await federationChart.getChart(
+		ps.span,
+		ps.limit,
+		ps.offset ? new Date(ps.offset) : null,
+	);
 });

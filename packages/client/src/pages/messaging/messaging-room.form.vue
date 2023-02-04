@@ -190,7 +190,6 @@ function saveDraft() {
 
 	drafts[draftKey] = {
 		updatedAt: new Date(),
-		// eslint-disable-next-line id-denylist
 		data: {
 			text: text,
 			file: file,

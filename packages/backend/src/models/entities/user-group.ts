@@ -1,6 +1,13 @@
-import { Entity, Index, JoinColumn, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import {
+	Entity,
+	Index,
+	JoinColumn,
+	Column,
+	PrimaryColumn,
+	ManyToOne,
+} from "typeorm";
+import { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class UserGroup {
@@ -23,7 +30,7 @@ export class UserGroup {
 		...id(),
 		comment: 'The ID of owner.',
 	})
-	public userId: User['id'];
+	public userId: User["id"];
 
 	@ManyToOne(type => User, {
 		onDelete: 'CASCADE',

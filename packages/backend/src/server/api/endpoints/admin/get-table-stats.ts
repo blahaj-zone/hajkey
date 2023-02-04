@@ -1,15 +1,16 @@
-import { db } from '@/db/postgre.js';
-import define from '../../define.js';
+import { db } from "@/db/postgre.js";
+import define from "../../define.js";
 
 export const meta = {
 	requireCredential: true,
 	requireModerator: true,
 
-	tags: ['admin'],
+	tags: ["admin"],
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 		example: {
 			migrations: {
 				count: 66,
@@ -20,22 +21,21 @@ export const meta = {
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {},
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
-	const sizes = await
-		db.query(`
+	const sizes = await db
+		.query(`
 			SELECT relname AS "table", reltuples as "count", pg_total_relation_size(C.oid) AS "size"
 			FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
 			WHERE nspname NOT IN ('pg_catalog', 'information_schema')
 				AND C.relkind <> 'i'
 				AND nspname !~ '^pg_toast';`)
-		.then(recs => {
-			const res = {} as Record<string, { count: number; size: number; }>;
+		.then((recs) => {
+			const res = {} as Record<string, { count: number; size: number }>;
 			for (const rec of recs) {
 				res[rec.table] = {
 					count: parseInt(rec.count, 10),

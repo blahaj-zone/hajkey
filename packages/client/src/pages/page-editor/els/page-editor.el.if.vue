@@ -1,5 +1,5 @@
 <template>
-<!-- eslint-disable vue/no-mutating-props -->
+
 <XContainer :draggable="true" @remove="() => $emit('remove')">
 	<template #header><i class="ph-question-bold ph-lg"></i> {{ i18n.ts._pages.blocks.if }}</template>
 	<template #func>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable vue/no-mutating-props */
+
 import { defineAsyncComponent, inject } from 'vue';
 import { v4 as uuid } from 'uuid';
 import XContainer from '../page-editor.container.vue';

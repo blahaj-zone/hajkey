@@ -1,27 +1,31 @@
-import { computed, reactive } from 'vue';
-import * as Misskey from 'calckey-js';
-import { api } from './os';
+import { computed, reactive } from "vue";
+import { api } from "./os";
+import type * as Misskey from "calckey-js";
 
 // TODO: 他のタブと永続化されたstateを同期
 
-const instanceData = localStorage.getItem('instance');
+const instanceData = localStorage.getItem("instance");
 
 // TODO: instanceをリアクティブにするかは再考の余地あり
 
-export const instance: Misskey.entities.InstanceMetadata = reactive(instanceData ? JSON.parse(instanceData) : {
-	// TODO: set default values
-});
+export const instance: Misskey.entities.InstanceMetadata = reactive(
+	instanceData
+		? JSON.parse(instanceData)
+		: {
+				// TODO: set default values
+		  },
+);
 
 export async function fetchInstance() {
-	const meta = await api('meta', {
-		detail: false
+	const meta = await api("meta", {
+		detail: false,
 	});
 
 	for (const [k, v] of Object.entries(meta)) {
 		instance[k] = v;
 	}
 
-	localStorage.setItem('instance', JSON.stringify(instance));
+	localStorage.setItem("instance", JSON.stringify(instance));
 }
 
 export const emojiCategories = computed(() => {
@@ -45,7 +49,7 @@ export const emojiTags = computed(() => {
 });
 
 // このファイルに書きたくないけどここに書かないと何故かVeturが認識しない
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
 	interface ComponentCustomProperties {
 		$instance: typeof instance;
 	}

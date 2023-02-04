@@ -1,5 +1,5 @@
-import * as misskey from 'calckey-js';
-import { i18n } from '@/i18n';
+import * as misskey from "calckey-js";
+import { i18n } from "@/i18n";
 
 /**
  * 投稿を表す文字列を取得します。
@@ -12,18 +12,18 @@ export const getNoteSummary = (note: misskey.entities.Note): string => {
 	}
 	*/
 
-	let summary = '';
+	let summary = "";
 
 	// 本文
 	if (note.cw != null) {
 		summary += note.cw;
 	} else {
-		summary += note.text ? note.text : '';
+		summary += note.text ? note.text : "";
 	}
 
 	// ファイルが添付されているとき
 	if ((note.files || []).length !== 0) {
-		summary += ` (${i18n.t('withNFiles', { n: note.files.length })})`;
+		summary += ` (${i18n.t("withNFiles", { n: note.files.length })})`;
 	}
 
 	// 投票が添付されているとき

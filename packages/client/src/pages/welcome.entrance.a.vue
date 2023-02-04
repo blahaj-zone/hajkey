@@ -24,12 +24,10 @@
 			<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
 			<div class="fg">
 				<h1>
-					<!-- 背景色によってはロゴが見えなくなるのでとりあえず無効に -->
-					<!-- <img class="logo" v-if="meta.logoImageUrl" :src="meta.logoImageUrl"><span v-else class="text">{{ instanceName }}</span> -->
-					<span class="text">{{ instanceName }}</span>
+					<img class="logo" v-if="meta.logoImageUrl" :src="meta.logoImageUrl">
+					<span v-else class="text">{{ instanceName }}</span>
 				</h1>
 				<div class="about">
-					<!-- eslint-disable-next-line vue/no-v-html -->
 					<div class="desc" v-html="meta.description || i18n.ts.headlineMisskey"></div>
 				</div>
 				<div class="action">
@@ -122,12 +120,6 @@ function showMenu(ev) {
 		icon: 'ph-info-bold ph-lg',
 		action: () => {
 			os.pageWindow('/about-calckey');
-		},
-	}, null, {
-		text: i18n.ts.help,
-		icon: 'ph-question-bold ph-lg',
-		action: () => {
-			window.open('https://misskey-hub.net/help.md', '_blank');
 		},
 	}], ev.currentTarget ?? ev.target);
 }

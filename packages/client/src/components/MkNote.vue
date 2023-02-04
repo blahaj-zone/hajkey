@@ -10,32 +10,35 @@
 	:class="{ renote: isRenote }"
 >
 	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
-	<div v-if="pinned" class="info"><i class="ph-push-pin-bold ph-lg"></i> {{ i18n.ts.pinnedNote }}</div>
-	<div v-if="appearNote._prId_" class="info"><i class="ph-megaphone-simple-bold ph-lg"></i> {{ i18n.ts.promotion }}<button class="_textButton hide" @click="readPromo()">{{ i18n.ts.hideThisNote }} <i class="ph-x-bold ph-lg"></i></button></div>
-	<div v-if="appearNote._featuredId_" class="info"><i class="ph-lightning-bold ph-lg"></i> {{ i18n.ts.featured }}</div>
-	<div v-if="isRenote" class="renote">
-		<MkAvatar class="avatar" :user="note.user"/>
-		<i class="ph-repeat-bold ph-lg"></i>
-		<I18n :src="i18n.ts.renotedBy" tag="span">
-			<template #user>
-				<MkA v-user-preview="note.userId" class="name" :to="userPage(note.user)">
-					<MkUserName :user="note.user"/>
-				</MkA>
-			</template>
-		</I18n>
-		<div class="info">
-			<button ref="renoteTime" class="_button time" @click="showRenoteMenu()">
-				<i v-if="isMyRenote" class="ph-dots-three-outline-bold ph-lg dropdownIcon"></i>
-				<MkTime :time="note.createdAt"/>
-			</button>
-			<MkVisibility :note="note"/>
+	<div class="note-context">
+		<div class="line"></div>
+		<div v-if="appearNote._prId_" class="info"><i class="ph-megaphone-simple-bold ph-lg"></i> {{ i18n.ts.promotion }}<button class="_textButton hide" @click="readPromo()">{{ i18n.ts.hideThisNote }} <i class="ph-x-bold ph-lg"></i></button></div>
+		<div v-if="appearNote._featuredId_" class="info"><i class="ph-lightning-bold ph-lg"></i> {{ i18n.ts.featured }}</div>
+		<div v-if="pinned" class="info"><i class="ph-push-pin-bold ph-lg"></i>{{ i18n.ts.pinnedNote }}</div>
+		<div v-if="isRenote" class="renote">
+			<i class="ph-repeat-bold ph-lg"></i>
+			<I18n :src="i18n.ts.renotedBy" tag="span">
+				<template #user>
+					<MkA v-user-preview="note.userId" class="name" :to="userPage(note.user)">
+						<MkUserName :user="note.user"/>
+					</MkA>
+				</template>
+			</I18n>
+			<div class="info">
+				<button ref="renoteTime" class="_button time" @click="showRenoteMenu()">
+					<i v-if="isMyRenote" class="ph-dots-three-outline-bold ph-lg dropdownIcon"></i>
+					<MkTime :time="note.createdAt"/>
+				</button>
+				<MkVisibility :note="note"/>
+			</div>
 		</div>
 	</div>
 	<article class="article" @contextmenu.stop="onContextmenu" @click.self="router.push(notePage(appearNote))">
-		<MkAvatar class="avatar" :user="appearNote.user"/>
 		<div class="main" @click.self="router.push(notePage(appearNote))">
-			<XNoteHeader class="header" :note="appearNote" :mini="true"/>
-			<MkInstanceTicker v-if="showTicker" class="ticker" :instance="appearNote.user.instance"/>
+			<div class="header-container">
+				<MkAvatar class="avatar" :user="appearNote.user"/>
+				<XNoteHeader class="header" :note="appearNote" :mini="true"/>
+			</div>
 			<div class="body">
 				<p v-if="appearNote.cw != null" class="cw">
 					<Mfm v-if="appearNote.cw != ''" class="text" :text="appearNote.cw" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
@@ -43,9 +46,8 @@
 				</p>
 				<div v-show="appearNote.cw == null || showContent" class="content" :class="{ collapsed, isLong }">
 					<div class="text" @click.self="router.push(notePage(appearNote))">
-						<MkA v-if="appearNote.replyId" class="reply" :to="`/notes/${appearNote.replyId}`"><i class="ph-arrow-bend-up-left-bold ph-lg"></i></MkA>
 						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
-						<a v-if="appearNote.renote != null" class="rp">RN:</a>
+						<!-- <a v-if="appearNote.renote != null" class="rp">RN:</a> -->
 						<div v-if="translating || translation" class="translation">
 							<MkLoading v-if="translating" mini/>
 							<div v-else class="translated">
@@ -344,146 +346,138 @@ function readPromo() {
 		opacity: 1;
 	}
 
-	> .info {
-		display: flex;
-		align-items: center;
-		padding: 16px 32px 8px 32px;
-		line-height: 24px;
-		font-size: 90%;
-		white-space: pre;
-		color: #f6c177;
-
-		> i {
-			margin-right: 4px;
-		}
-
-		> .hide {
-			margin-left: auto;
-			color: inherit;
-		}
-	}
-
-	> .info + .article {
-		padding-top: 8px;
-	}
-
 	> .reply-to {
-		opacity: 0.7;
-		padding-bottom: 0;
+		& + .note-context {
+			.line::before {
+				content: "";
+				display: block;
+				margin-bottom: -10px;
+				width: 2px;
+				background-color: var(--divider);
+				margin-inline: auto;
+			}
+		}
 	}
 
-	> .renote {
+	.note-context {
+		padding: 0 32px 0 32px;
 		display: flex;
-		align-items: center;
-		padding: 16px 32px 8px 32px;
-		line-height: 28px;
-		white-space: pre;
-		color: var(--renote);
-
-		> .avatar {
-			flex-shrink: 0;
-			display: inline-block;
-			width: 28px;
-			height: 28px;
-			margin: 0 8px 0 0;
-			border-radius: 6px;
+		&:first-child {
+			margin-top: 20px;
 		}
-
-		> i {
-			margin-right: 4px;
+		> :not(.line) {
+			width: 0;
+			flex-grow: 1;
+			position: relative;
+			margin-bottom: -10px;
+			line-height: 28px;
 		}
+		> .line {
+			width: var(--avatarSize);
+			display: flex;
+			margin-right: 14px;
+			margin-top: 0;
+			flex-grow: 0;
+		}
+		
+		> div > i {
+			margin-left: -.5px;
+		}
+		> .info {
+			display: flex;
+			align-items: center;
+			font-size: 90%;
+			white-space: pre;
+			color: #f6c177;
 
-		> span {
-			overflow: hidden;
-			flex-shrink: 1;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+			> i {
+				margin-right: 4px;
+			}
 
-			> .name {
-				font-weight: bold;
+			> .hide {
+				margin-left: auto;
+				color: inherit;
 			}
 		}
 
-		> .info {
-			margin-left: auto;
-			font-size: 0.9em;
 
-			> .time {
-				flex-shrink: 0;
-				color: inherit;
+		> .renote {
+			display: flex;
+			align-items: center;
+			white-space: pre;
+			color: var(--renote);
 
-				> .dropdownIcon {
-					margin-right: 4px;
+			
+			> i {
+				margin-right: 4px;
+			}
+
+			> span {
+				overflow: hidden;
+				flex-shrink: 1;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				
+				> .name {
+					font-weight: bold;
+				}
+			}
+
+			> .info {
+				margin-left: auto;
+				font-size: 0.9em;
+				display: flex;
+
+				> .time {
+					flex-shrink: 0;
+					color: inherit;
+					display: inline-flex;
+					align-items: center;
+					> .dropdownIcon {
+						margin-right: 4px;
+					}
 				}
 			}
 		}
-	}
 
-	> .renote + .article {
-		padding-top: 8px;
+		& + .article {
+			padding-top: 10px !important;
+		}
+
 	}
 
 	> .article {
-		padding: 28px 32px 18px;
+		padding: 28px 32px 16px;
 		cursor: pointer;
-		display: grid;
-		align-items: center;
-		grid-template-columns: 58px;
 
 		@media (pointer: coarse) {
 			cursor: default;
 		}
 
-		> .avatar {
-			flex-shrink: 0;
-			display: block;
-			margin: 0 14px 8px 0;
-			grid-row: 1 / span 2;
-			width: 48px;
-			height: 48px;
-			position: relative;
-			top: 0;
-			left: 0;
+		.header-container {
+			display: flex;
+			> .avatar {
+				flex-shrink: 0;
+				display: block;
+				margin: 0 14px 0 0;
+				width: var(--avatarSize);
+				height: var(--avatarSize);
+				position: relative;
+				top: 0;
+				left: 0;
+			}
+			> .header {
+				width: 0;
+				flex-grow: 1;
+			}
 		}
-
 		> .main {
 			flex: 1;
 			min-width: 0;
-			display: contents;
-
-			> header.header {
-				display: contents;
-			
-				> .name, .info {
-					grid-row: 1;
-				}
-			}
-
-			> :not(.ticker) {
-				grid-column: 1 / span 3;
-				width: 100%;
-				max-width: 100%;
-			}
-
-			> .name, .info {
-				grid-row: 1;
-			}
-
-			> .ticker {
-				grid-row: 2;
-				align-self: flex-start;
-				margin-left: auto;
-			}
-
-			> .ticker {
-				font-size: 0.9em;
-			}
 
 			> .body {
-				margin-top: .2em;
+				margin-top: .7em;
 				overflow: hidden;
-				margin-inline: -100px;
-				padding-inline: 100px;
 
 				> .cw {
 					cursor: default;
@@ -520,7 +514,11 @@ function readPromo() {
 						position: relative;
 						max-height: 9em;
 						overflow: hidden;
-
+						> .text {
+							max-height: 9em;
+							mask: linear-gradient(black calc(100% - 64px), transparent);
+							-webkit-mask: linear-gradient(black calc(100% - 64px), transparent);
+						}
 						> .fade {
 							display: block;
 							position: absolute;
@@ -528,7 +526,6 @@ function readPromo() {
 							left: 0;
 							width: 100%;
 							height: 64px;
-							background: linear-gradient(0deg, var(--panel), var(--X15));
 
 							> span {
 								display: inline-block;
@@ -569,6 +566,10 @@ function readPromo() {
 						}
 					}
 
+					> .files {
+						margin-top: .4em;
+						margin-bottom: .4em;
+					}
 					> .url-preview {
 						margin-top: 8px;
 					}
@@ -595,15 +596,19 @@ function readPromo() {
 			}
 
 			> .footer {
+				display: flex;
+				flex-wrap: wrap;
 				> .button {
 					margin: 0;
 					padding: 8px;
 					opacity: 0.7;
-
-					&:not(:last-child) {
-						margin-right: 16px;
+					flex-grow: 1;
+					max-width: 3.5em;
+					width: max-content;
+					min-width: max-content;
+					&:first-of-type {
+						margin-left: -.5em;
 					}
-
 					&:hover {
 						color: var(--fgHighlighted);
 					}
@@ -628,67 +633,35 @@ function readPromo() {
 
 	&.max-width_500px {
 		font-size: 0.9em;
-
-		> .article {
-			> .avatar {
-				width: 50px;
-				height: 50px;
-			}
-		}
 	}
 
 	&.max-width_450px {
-		> .renote {
-			padding: 8px 16px 0 16px;
+		--avatarSize: 46px;
+		padding-top: 6px;
+		> .note-context {
+			padding-inline: 16px;
+			margin-top: 0;
+			> :not(.line) {
+				margin-top: 5px;
+			}
+			> .line {
+				margin-right: 10px;
+			}
 		}
-
-		> .info {
-			padding: 8px 16px 0 16px;
-		}
-
 		> .article {
-			padding: 14px 16px 9px;
+			padding: 16px 16px 9px;
 
-			> .avatar {
-				margin: 0 10px 8px 0;
-				width: 46px;
-				height: 46px;
+			> .main > .header-container > .avatar {
+				margin-right: 10px;
 				// top: calc(14px + var(--stickyTop, 0px));
 			}
 		}
 	}
 
-	&.max-width_350px {
-		> .article {
-			> .main {
-				> .footer {
-					> .button {
-						&:not(:last-child) {
-							margin-right: 18px;
-						}
-					}
-				}
-			}
-		}
-	}
+
 
 	&.max-width_300px {
-		> .article {
-			> .avatar {
-				width: 44px;
-				height: 44px;
-			}
-
-			> .main {
-				> .footer {
-					> .button {
-						&:not(:last-child) {
-							margin-right: 12px;
-						}
-					}
-				}
-			}
-		}
+		--avatarSize: 40px;
 	}
 }
 

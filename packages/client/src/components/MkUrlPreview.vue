@@ -210,14 +210,12 @@ onUnmounted(() => {
 		position: relative;
 		display: block;
 		font-size: 14px;
-		box-shadow: 0 0 0 1px var(--divider);
+		border: 1px solid var(--divider);
 		border-radius: 8px;
 		overflow: hidden;
 
 		&:hover {
 			text-decoration: none;
-			border-color: rgba(0, 0, 0, 0.2);
-
 			> article > header > h1 {
 				text-decoration: underline;
 			}

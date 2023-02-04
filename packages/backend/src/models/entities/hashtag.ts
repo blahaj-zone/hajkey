@@ -1,6 +1,6 @@
-import { Entity, PrimaryColumn, Index, Column } from 'typeorm';
-import { User } from './user.js';
-import { id } from '../id.js';
+import { Entity, PrimaryColumn, Index, Column } from "typeorm";
+import type { User } from "./user.js";
+import { id } from "../id.js";
 
 @Entity()
 export class Hashtag {
@@ -17,7 +17,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public mentionedUserIds: User['id'][];
+	public mentionedUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {
@@ -29,7 +29,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public mentionedLocalUserIds: User['id'][];
+	public mentionedLocalUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {
@@ -41,7 +41,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public mentionedRemoteUserIds: User['id'][];
+	public mentionedRemoteUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {
@@ -53,7 +53,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public attachedUserIds: User['id'][];
+	public attachedUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {
@@ -65,7 +65,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public attachedLocalUserIds: User['id'][];
+	public attachedLocalUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {
@@ -77,7 +77,7 @@ export class Hashtag {
 		...id(),
 		array: true,
 	})
-	public attachedRemoteUserIds: User['id'][];
+	public attachedRemoteUserIds: User["id"][];
 
 	@Index()
 	@Column('integer', {

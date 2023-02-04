@@ -1,21 +1,27 @@
-import { In, IsNull } from 'typeorm';
-import config from '@/config/index.js';
-import { Note, IMentionedRemoteUsers } from '@/models/entities/note.js';
-import { DriveFile } from '@/models/entities/drive-file.js';
-import { DriveFiles, Notes, Users, Emojis, Polls } from '@/models/index.js';
-import { Emoji } from '@/models/entities/emoji.js';
-import { Poll } from '@/models/entities/poll.js';
-import toHtml from '../misc/get-note-html.js';
-import renderEmoji from './emoji.js';
-import renderMention from './mention.js';
-import renderHashtag from './hashtag.js';
-import renderDocument from './document.js';
+import { In, IsNull } from "typeorm";
+import config from "@/config/index.js";
+import type { Note, IMentionedRemoteUsers } from "@/models/entities/note.js";
+import type { DriveFile } from "@/models/entities/drive-file.js";
+import { DriveFiles, Notes, Users, Emojis, Polls } from "@/models/index.js";
+import type { Emoji } from "@/models/entities/emoji.js";
+import type { Poll } from "@/models/entities/poll.js";
+import toHtml from "../misc/get-note-html.js";
+import renderEmoji from "./emoji.js";
+import renderMention from "./mention.js";
+import renderHashtag from "./hashtag.js";
+import renderDocument from "./document.js";
 
-export default async function renderNote(note: Note, dive = true, isTalk = false): Promise<Record<string, unknown>> {
+export default async function renderNote(
+	note: Note,
+	dive = true,
+	isTalk = false,
+): Promise<Record<string, unknown>> {
 	const getPromisedFiles = async (ids: string[]) => {
 		if (!ids || ids.length === 0) return [];
 		const items = await DriveFiles.findBy({ id: In(ids) });
-		return ids.map(id => items.find(item => item.id === id)).filter(item => item != null) as DriveFile[];
+		return ids
+			.map((id) => items.find((item) => item.id === id))
+			.filter((item) => item != null) as DriveFile[];
 	};
 
 	let inReplyTo;
@@ -55,34 +61,39 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 
 	const attributedTo = `${config.url}/users/${note.userId}`;
 
-	const mentions = (JSON.parse(note.mentionedRemoteUsers) as IMentionedRemoteUsers).map(x => x.uri);
+	const mentions = (
+		JSON.parse(note.mentionedRemoteUsers) as IMentionedRemoteUsers
+	).map((x) => x.uri);
 
 	let to: string[] = [];
 	let cc: string[] = [];
 
-	if (note.visibility === 'public') {
-		to = ['https://www.w3.org/ns/activitystreams#Public'];
+	if (note.visibility === "public") {
+		to = ["https://www.w3.org/ns/activitystreams#Public"];
 		cc = [`${attributedTo}/followers`].concat(mentions);
-	} else if (note.visibility === 'home') {
+	} else if (note.visibility === "home") {
 		to = [`${attributedTo}/followers`];
-		cc = ['https://www.w3.org/ns/activitystreams#Public'].concat(mentions);
-	} else if (note.visibility === 'followers') {
+		cc = ["https://www.w3.org/ns/activitystreams#Public"].concat(mentions);
+	} else if (note.visibility === "followers") {
 		to = [`${attributedTo}/followers`];
 		cc = mentions;
 	} else {
 		to = mentions;
 	}
 
-	const mentionedUsers = note.mentions.length > 0 ? await Users.findBy({
-		id: In(note.mentions),
-	}) : [];
+	const mentionedUsers =
+		note.mentions.length > 0
+			? await Users.findBy({
+					id: In(note.mentions),
+			  })
+			: [];
 
-	const hashtagTags = (note.tags || []).map(tag => renderHashtag(tag));
-	const mentionTags = mentionedUsers.map(u => renderMention(u));
+	const hashtagTags = (note.tags || []).map((tag) => renderHashtag(tag));
+	const mentionTags = mentionedUsers.map((u) => renderMention(u));
 
 	const files = await getPromisedFiles(note.fileIds);
 
-	const text = note.text ?? '';
+	const text = note.text ?? "";
 	let poll: Poll | null = null;
 
 	if (note.hasPoll) {
@@ -95,44 +106,49 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		apText += `\n\nRE: ${quote}`;
 	}
 
-	const summary = note.cw === '' ? String.fromCharCode(0x200B) : note.cw;
+	const summary = note.cw === "" ? String.fromCharCode(0x200b) : note.cw;
 
-	const content = toHtml(Object.assign({}, note, {
-		text: apText,
-	}));
+	const content = toHtml(
+		Object.assign({}, note, {
+			text: apText,
+		}),
+	);
 
 	const emojis = await getEmojis(note.emojis);
-	const apemojis = emojis.map(emoji => renderEmoji(emoji));
+	const apemojis = emojis.map((emoji) => renderEmoji(emoji));
 
-	const tag = [
-		...hashtagTags,
-		...mentionTags,
-		...apemojis,
-	];
+	const tag = [...hashtagTags, ...mentionTags, ...apemojis];
 
-	const asPoll = poll ? {
-		type: 'Question',
-		content: toHtml(Object.assign({}, note, {
-			text: text,
-		})),
-		[poll.expiresAt && poll.expiresAt < new Date() ? 'closed' : 'endTime']: poll.expiresAt,
-		[poll.multiple ? 'anyOf' : 'oneOf']: poll.choices.map((text, i) => ({
-			type: 'Note',
-			name: text,
-			replies: {
-				type: 'Collection',
-				totalItems: poll!.votes[i],
-			},
-		})),
-	} : {};
+	const asPoll = poll
+		? {
+				type: "Question",
+				content: toHtml(
+					Object.assign({}, note, {
+						text: text,
+					}),
+				),
+				[poll.expiresAt && poll.expiresAt < new Date() ? "closed" : "endTime"]:
+					poll.expiresAt,
+				[poll.multiple ? "anyOf" : "oneOf"]: poll.choices.map((text, i) => ({
+					type: "Note",
+					name: text,
+					replies: {
+						type: "Collection",
+						totalItems: poll!.votes[i],
+					},
+				})),
+		  }
+		: {};
 
-	const asTalk = isTalk ? {
-		_misskey_talk: true,
-	} : {};
+	const asTalk = isTalk
+		? {
+				_misskey_talk: true,
+		  }
+		: {};
 
 	return {
 		id: `${config.url}/notes/${note.id}`,
-		type: 'Note',
+		type: "Note",
 		attributedTo,
 		summary,
 		content,
@@ -149,7 +165,7 @@ export default async function renderNote(note: Note, dive = true, isTalk = false
 		cc,
 		inReplyTo,
 		attachment: files.map(renderDocument),
-		sensitive: note.cw != null || files.some(file => file.isSensitive),
+		sensitive: note.cw != null || files.some((file) => file.isSensitive),
 		tag,
 		...asPoll,
 		...asTalk,
@@ -160,11 +176,13 @@ export async function getEmojis(names: string[]): Promise<Emoji[]> {
 	if (names == null || names.length === 0) return [];
 
 	const emojis = await Promise.all(
-		names.map(name => Emojis.findOneBy({
-			name,
-			host: IsNull(),
-		})),
+		names.map((name) =>
+			Emojis.findOneBy({
+				name,
+				host: IsNull(),
+			}),
+		),
 	);
 
-	return emojis.filter(emoji => emoji != null) as Emoji[];
+	return emojis.filter((emoji) => emoji != null) as Emoji[];
 }

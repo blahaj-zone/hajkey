@@ -1,7 +1,7 @@
 <template>
 <div class="xubzgfgb" :class="{ cover }" :title="title">
 	<canvas v-if="!loaded" ref="canvas" :width="size" :height="size" :title="title"/>
-	<img v-if="src" :src="src" :title="title" :alt="alt" @load="onLoad"/>
+	<img v-if="src" :src="src" :title="title" :type="type" :alt="alt" @load="onLoad"/>
 </div>
 </template>
 
@@ -13,11 +13,13 @@ const props = withDefaults(defineProps<{
 	src?: string | null;
 	hash?: string;
 	alt?: string;
+	type?: string | null;
 	title?: string | null;
 	size?: number;
 	cover?: boolean;
 }>(), {
 	src: null,
+	type: null,
 	alt: '',
 	title: null,
 	size: 64,

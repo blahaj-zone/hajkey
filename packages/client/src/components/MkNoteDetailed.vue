@@ -54,9 +54,7 @@
 				</p>
 				<div v-show="appearNote.cw == null || showContent" class="content">
 					<div class="text" @click.self="router.push(notePage(appearNote))">
-						<MkA v-if="appearNote.replyId" class="reply" :to="`/notes/${appearNote.replyId}`"><i class="ph-arrow-bend-up-left-bold ph-lg"></i></MkA>
 						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
-						<a v-if="appearNote.renote != null" class="rp">RN:</a>
 						<div v-if="translating || translation" class="translation">
 							<MkLoading v-if="translating" mini/>
 							<div v-else class="translated">
@@ -338,14 +336,12 @@ if (appearNote.replyId) {
 	&:hover > .article > .main > .footer > .button {
 		opacity: 1;
 	}
-
 	> .reply-to {
-		opacity: 0.7;
-		padding-bottom: 0;
+		margin-bottom: -16px;
 	}
 
 	> .reply-to-more {
-		opacity: 0.7;
+		// opacity: 0.7;
 		cursor: pointer;
 
 		@media (pointer: coarse) {
@@ -416,21 +412,26 @@ if (appearNote.replyId) {
 			> .avatar {
 				display: block;
 				flex-shrink: 0;
-				width: 52px;
-				height: 52px;
+				width: var(--avatarSize);
+				height: var(--avatarSize);
 			}
 
 			> .body {
+				width: 0;
 				flex: 1;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				padding-left: 16px;
+				padding-left: 14px;
 				font-size: 0.95em;
 
 				> .top {
+					display: flex;
+					align-items: center;
 					> .name {
 						font-weight: bold;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 
 					> .is-bot {
@@ -557,7 +558,7 @@ if (appearNote.replyId) {
 
 	> .reply, .reply-to, .reply-to-more {
 		transition: background-color 0.25s ease-in-out;
-
+		
 		&:hover {
 			background-color: var(--panelHighlight);
 		}
@@ -568,18 +569,18 @@ if (appearNote.replyId) {
 	}
 
 	&.max-width_450px {
+
+		> .reply-to-more:first-child {
+			padding-top: 14px;
+		}
 		> .renote {
 			padding: 8px 16px 0 16px;
 		}
 
 		> .article {
 			padding: 16px;
-
-			> .header {
-				> .avatar {
-					width: 50px;
-					height: 50px;
-				}
+			> .header > .body {
+				padding-left: 10px;
 			}
 		}
 	}
@@ -602,12 +603,6 @@ if (appearNote.replyId) {
 		font-size: 0.825em;
 
 		> .article {
-			> .header {
-				> .avatar {
-					width: 50px;
-					height: 50px;
-				}
-			}
 
 			> .main {
 				> .footer {

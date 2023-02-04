@@ -1,12 +1,16 @@
-import Resolver from '../../resolver.js';
-import { CacheableRemoteUser } from '@/models/entities/user.js';
-import announceNote from './note.js';
-import { IAnnounce, getApId } from '../../type.js';
-import { apLogger } from '../../logger.js';
+import Resolver from "../../resolver.js";
+import type { CacheableRemoteUser } from "@/models/entities/user.js";
+import announceNote from "./note.js";
+import type { IAnnounce } from "../../type.js";
+import { getApId } from "../../type.js";
+import { apLogger } from "../../logger.js";
 
 const logger = apLogger;
 
-export default async (actor: CacheableRemoteUser, activity: IAnnounce): Promise<void> => {
+export default async (
+	actor: CacheableRemoteUser,
+	activity: IAnnounce,
+): Promise<void> => {
 	const uri = getApId(activity);
 
 	logger.info(`Announce: ${uri}`);

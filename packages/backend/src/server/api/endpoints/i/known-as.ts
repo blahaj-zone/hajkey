@@ -49,7 +49,6 @@ export const paramDef = {
 	required: ["alsoKnownAs"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	if (!ps.alsoKnownAs) throw new ApiError(meta.errors.noSuchUser);
 
@@ -59,7 +58,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	if (!unfiltered) {
 		updates.alsoKnownAs = null;
 	} else {
-		if (unfiltered.startsWith('acct:')) unfiltered = unfiltered.substring(5);
+		if (unfiltered.startsWith("acct:")) unfiltered = unfiltered.substring(5);
 		if (unfiltered.startsWith("@")) unfiltered = unfiltered.substring(1);
 		if (!unfiltered.includes("@")) throw new ApiError(meta.errors.notRemote);
 
@@ -68,10 +67,10 @@ export default define(meta, paramDef, async (ps, user) => {
 			(e) => {
 				apiLogger.warn(`failed to resolve remote user: ${e}`);
 				throw new ApiError(meta.errors.noSuchUser);
-			}
+			},
 		);
 
-		let toUrl: string | null = knownAs.uri;
+		const toUrl: string | null = knownAs.uri;
 		if (!toUrl) {
 			throw new ApiError(meta.errors.uriNull);
 		}

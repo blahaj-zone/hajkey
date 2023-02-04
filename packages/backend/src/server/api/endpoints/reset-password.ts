@@ -1,31 +1,28 @@
-import bcrypt from 'bcryptjs';
-import { publishMainStream } from '@/services/stream.js';
-import { Users, UserProfiles, PasswordResetRequests } from '@/models/index.js';
-import define from '../define.js';
-import { ApiError } from '../error.js';
+import bcrypt from "bcryptjs";
+import { publishMainStream } from "@/services/stream.js";
+import { Users, UserProfiles, PasswordResetRequests } from "@/models/index.js";
+import define from "../define.js";
+import { ApiError } from "../error.js";
 
 export const meta = {
-	tags: ['reset password'],
+	tags: ["reset password"],
 
 	requireCredential: false,
 
-	description: 'Complete the password reset that was previously requested.',
+	description: "Complete the password reset that was previously requested.",
 
-	errors: {
-
-	},
+	errors: {},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		token: { type: 'string' },
-		password: { type: 'string' },
+		token: { type: "string" },
+		password: { type: "string" },
 	},
-	required: ['token', 'password'],
+	required: ["token", "password"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
 	const req = await PasswordResetRequests.findOneByOrFail({
 		token: ps.token,

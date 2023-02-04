@@ -1,49 +1,51 @@
-import { v4 as uuid } from 'uuid';
-import config from '@/config/index.js';
-import define from '../../../define.js';
-import { ApiError } from '../../../error.js';
-import { Apps, AuthSessions } from '@/models/index.js';
-import { genId } from '@/misc/gen-id.js';
+import { v4 as uuid } from "uuid";
+import config from "@/config/index.js";
+import define from "../../../define.js";
+import { ApiError } from "../../../error.js";
+import { Apps, AuthSessions } from "@/models/index.js";
+import { genId } from "@/misc/gen-id.js";
 
 export const meta = {
-	tags: ['auth'],
+	tags: ["auth"],
 
 	requireCredential: false,
 
 	res: {
-		type: 'object',
-		optional: false, nullable: false,
+		type: "object",
+		optional: false,
+		nullable: false,
 		properties: {
 			token: {
-				type: 'string',
-				optional: false, nullable: false,
+				type: "string",
+				optional: false,
+				nullable: false,
 			},
 			url: {
-				type: 'string',
-				optional: false, nullable: false,
-				format: 'url',
+				type: "string",
+				optional: false,
+				nullable: false,
+				format: "url",
 			},
 		},
 	},
 
 	errors: {
 		noSuchApp: {
-			message: 'No such app.',
-			code: 'NO_SUCH_APP',
-			id: '92f93e63-428e-4f2f-a5a4-39e1407fe998',
+			message: "No such app.",
+			code: "NO_SUCH_APP",
+			id: "92f93e63-428e-4f2f-a5a4-39e1407fe998",
 		},
 	},
 } as const;
 
 export const paramDef = {
-	type: 'object',
+	type: "object",
 	properties: {
-		appSecret: { type: 'string' },
+		appSecret: { type: "string" },
 	},
-	required: ['appSecret'],
+	required: ["appSecret"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
 	// Lookup app
 	const app = await Apps.findOneBy({
@@ -63,7 +65,7 @@ export default define(meta, paramDef, async (ps) => {
 		createdAt: new Date(),
 		appId: app.id,
 		token: token,
-	}).then(x => AuthSessions.findOneByOrFail(x.identifiers[0]));
+	}).then((x) => AuthSessions.findOneByOrFail(x.identifiers[0]));
 
 	return {
 		token: doc.token,
