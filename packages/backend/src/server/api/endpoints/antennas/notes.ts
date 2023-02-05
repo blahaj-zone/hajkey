@@ -65,7 +65,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		ps.sinceDate,
 		ps.untilDate,
 	)
-		.innerJoin(
+		.innerJoinAndSelect(
 			AntennaNotes.metadata.targetName,
 			"antennaNote",
 			"antennaNote.noteId = note.id",
