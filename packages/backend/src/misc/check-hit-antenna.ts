@@ -98,7 +98,7 @@ export async function checkHitAntenna(
 	}
 
 	const reWhitespace = /\s+/;
-	const reEscapes = /[/\-\\^$*+?.()|[\]{}]/g;
+	const reEscapes = /[/\\\^$*+?.()|[\]{}]/g;
 
 	const compileKeyphrase = (keyphrase: string): matchFunction => {
 		const now = Date.now();
@@ -139,12 +139,12 @@ export async function checkHitAntenna(
 					);
 			}
 			
-			const kpReText: string = `(?<=\\b|[^\\p{L}\\p{N}]|^)${words.join(`\\p{Z}+`)}(?=\\b|[^\\p{L}\\p{N}]|$)`;
+			const kpReText: string = `(?<=\\b|[^\\p{L}\\p{N}]|^)${words.join('\\p{Z}+')}(?=\\b|[^\\p{L}\\p{N}]|$)`;
 			let kpRe: RegExp;
 			try {
 				kpRe = new RegExp(kpReText, antenna.caseSensitive ? 'u' : 'iu')
 			} catch (ex) {
-				console.log('failed to compile keyphrase regex', kpReText)
+				console.log('failed to compile keyphrase regex', kpReText, ex)
 				return alwaysFalseMatcher;
 			}
 
