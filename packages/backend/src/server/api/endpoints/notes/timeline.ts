@@ -143,7 +143,9 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 	//#endregion
 
-	const timeline = await query.take(ps.limit).getMany();
+	// We fetch more than requested because some may be filtered out, and if there's less than
+	// requested, the pagination stops. But if there's more nobody cares.
+	const timeline = await query.take(Math.floor(ps.limit * 1.5)).getMany();
 
 	process.nextTick(() => {
 		activeUsersChart.read(user);
