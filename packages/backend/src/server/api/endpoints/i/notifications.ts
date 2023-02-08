@@ -162,7 +162,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		query.andWhere("notification.isRead = false");
 	}
 
-	const notifications = await query.take(ps.limit).getMany();
+	const notifications = await query.take(Math.floor(ps.limit * 1.5)).getMany();
 
 	// Mark all as read
 	if (notifications.length > 0 && ps.markAsRead) {
