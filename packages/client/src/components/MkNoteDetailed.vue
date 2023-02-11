@@ -142,7 +142,6 @@ import { i18n } from '@/i18n';
 import { getNoteMenu } from '@/scripts/get-note-menu';
 import { useNoteCapture } from '@/scripts/use-note-capture';
 import { deepClone } from '@/scripts/clone';
-import { stream } from '@/stream';
 
 const router = useRouter();
 
