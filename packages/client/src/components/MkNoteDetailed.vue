@@ -142,6 +142,7 @@ import { i18n } from '@/i18n';
 import { getNoteMenu } from '@/scripts/get-note-menu';
 import { useNoteCapture } from '@/scripts/use-note-capture';
 import { deepClone } from '@/scripts/clone';
+import { stream } from '@/stream';
 
 const router = useRouter();
 
@@ -302,6 +303,15 @@ if (appearNote.replyId) {
 		conversation.value = res.reverse();
 	});
 }
+
+const connection = stream.useChannel('main');
+connection.on('reply', (note: misskey.entities.Note) => {
+	if (note.replyId === appearNote.id) {
+		replies.value.unshift(note);
+		directReplies.value.unshift(note);
+	}
+});
+
 </script>
 
 <style lang="scss" scoped>
