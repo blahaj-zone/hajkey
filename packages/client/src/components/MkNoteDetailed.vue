@@ -304,14 +304,6 @@ if (appearNote.replyId) {
 	});
 }
 
-const connection = stream.useChannel('main');
-connection.on('reply', (note: misskey.entities.Note) => {
-	if (note.replyId === appearNote.id) {
-		replies.value.unshift(note);
-		directReplies.value.unshift(note);
-	}
-});
-
 </script>
 
 <style lang="scss" scoped>
