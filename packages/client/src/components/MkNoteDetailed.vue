@@ -142,6 +142,8 @@ import { i18n } from '@/i18n';
 import { getNoteMenu } from '@/scripts/get-note-menu';
 import { useNoteCapture } from '@/scripts/use-note-capture';
 import { deepClone } from '@/scripts/clone';
+import { stream } from '@/stream';
+import { NoteUpdatedEvent } from 'calckey-js/built/streaming.types';
 
 const router = useRouter();
 
@@ -303,6 +305,39 @@ if (appearNote.replyId) {
 	});
 }
 
+function onNoteReplied(noteData: NoteUpdatedEvent): void {
+	const { type, id, body } = noteData;
+	/* TODO - Update calckey-js streamingTypes for NoteUpdatedEvent to include type `replied`:
+		{
+			id: Note['id'];
+			type: 'replied';
+			body: {
+				id: Note['id'];
+			}
+		}
+	*/
+	// TODO - remove .toString() and recasting to unknown when calckey-js is updated.
+	if (type.toString() === 'replied' && id === appearNote.id) {
+		const { id: createdId } = body as unknown as { id: string };
+
+		os.api('notes/show', {
+			noteId: createdId,
+		}).then(note => {
+			if (note.replyId === appearNote.id) {
+				replies.value.unshift(note);
+				directReplies.value.unshift(note);
+			}
+		});
+	}
+	
+}
+
+onMounted(() => {
+	stream.on("noteUpdated", onNoteReplied);
+});
+onUnmounted(() => {
+	stream.off("noteUpdated", onNoteReplied);
+});
 </script>
 
 <style lang="scss" scoped>

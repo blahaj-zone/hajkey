@@ -1,6 +1,6 @@
 import * as mfm from "mfm-js";
 import es from "../../db/elasticsearch.js";
-import { publishMainStream, publishNotesStream } from "@/services/stream.js";
+import { publishMainStream, publishNotesStream, publishNoteStream } from "@/services/stream.js";
 import DeliverManager from "@/remote/activitypub/deliver-manager.js";
 import renderNote from "@/remote/activitypub/renderer/note.js";
 import renderCreate from "@/remote/activitypub/renderer/create.js";
@@ -430,6 +430,12 @@ export default async (
 			}
 
 			publishNotesStream(note);
+			if (note.replyId != null) {
+				// Only provide the reply note id here as the recipient may not be authorized to see the note.
+				publishNoteStream(note.replyId, "replied", {
+					id: note.id,
+				});
+			}
 
 			const webhooks = await getActiveWebhooks().then((webhooks) =>
 				webhooks.filter((x) => x.userId === user.id && x.on.includes("note")),
