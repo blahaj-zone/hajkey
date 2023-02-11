@@ -52,7 +52,7 @@ export const packedAntennaSchema = {
 			type: "string",
 			optional: false,
 			nullable: false,
-			enum: ["home", "all", "users", "list", "group"],
+			enum: ["home", "all", "users", "list", "group", "instances"],
 		},
 		userListId: {
 			type: "string",
@@ -67,6 +67,16 @@ export const packedAntennaSchema = {
 			format: "id",
 		},
 		users: {
+			type: "array",
+			optional: false,
+			nullable: false,
+			items: {
+				type: "string",
+				optional: false,
+				nullable: false,
+			},
+		},
+		instances: {
 			type: "array",
 			optional: false,
 			nullable: false,

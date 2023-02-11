@@ -545,6 +545,21 @@ export async function selectUser() {
 	});
 }
 
+export async function selectInstance(): Promise<Misskey.entities.Instance> {
+	return new Promise((resolve, reject) => {
+		popup(
+			defineAsyncComponent(() => import("@/components/MkInstanceSelectDialog.vue")),
+			{},
+			{
+				ok: (instance) => {
+					resolve(instance);
+				},
+			},
+			"closed",
+		);
+	});
+}
+
 export async function selectDriveFile(multiple: boolean) {
 	return new Promise((resolve, reject) => {
 		popup(

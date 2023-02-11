@@ -102,10 +102,13 @@ export default define(meta, paramDef, async (ps, me) => {
 	if (typeof ps.blocked === "boolean") {
 		const meta = await fetchMeta(true);
 		if (ps.blocked) {
+			if (meta.blockedHosts.length === 0) {
+				return [];
+			}
 			query.andWhere("instance.host IN (:...blocks)", {
 				blocks: meta.blockedHosts,
 			});
-		} else {
+		} else if (meta.blockedHosts.length > 0) {
 			query.andWhere("instance.host NOT IN (:...blocks)", {
 				blocks: meta.blockedHosts,
 			});

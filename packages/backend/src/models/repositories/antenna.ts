@@ -25,6 +25,7 @@ export const AntennaRepository = db.getRepository(Antenna).extend({
 			userListId: antenna.userListId,
 			userGroupId: userGroupJoining ? userGroupJoining.userGroupId : null,
 			users: antenna.users,
+			instances: antenna.instances,
 			caseSensitive: antenna.caseSensitive,
 			notify: antenna.notify,
 			withReplies: antenna.withReplies,

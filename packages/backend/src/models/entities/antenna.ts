@@ -40,8 +40,8 @@ export class Antenna {
 	})
 	public name: string;
 
-	@Column('enum', { enum: ['home', 'all', 'users', 'list', 'group', 'hosts'] })
-	public src: 'home' | 'all' | 'users' | 'list' | 'group' | 'hosts';
+	@Column('enum', { enum: ['home', 'all', 'users', 'list', 'group', 'instances'] })
+	public src: "home" | "all" | "users" | "list" | "group" | "instances";
 
 	@Column({
 		...id(),
@@ -72,6 +72,11 @@ export class Antenna {
 		default: '{}',
 	})
 	public users: string[];
+
+	@Column('jsonb', {
+		default: [],
+	})
+	public instances: string[];
 
 	@Column('jsonb', {
 		default: [],
