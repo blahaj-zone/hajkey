@@ -7,7 +7,6 @@ import type { Note } from "@/models/entities/note.js";
 import type { Antenna } from "@/models/entities/antenna.js";
 import type { DriveFile } from "@/models/entities/drive-file.js";
 import type { DriveFolder } from "@/models/entities/drive-folder.js";
-import { Emoji } from "@/models/entities/emoji.js";
 import type { UserList } from "@/models/entities/user-list.js";
 import type { MessagingMessage } from "@/models/entities/messaging-message.js";
 import type { UserGroup } from "@/models/entities/user-group.js";
@@ -23,7 +22,10 @@ export interface InternalStreamTypes {
 		id: User["id"];
 		isSuspended: User["isSuspended"];
 	};
-	userChangeSilencedState: { id: User["id"]; isSilenced: User["isSilenced"] };
+	userChangeSilencedState: {
+		id: User["id"];
+		isSilenced: User["isSilenced"];
+	};
 	userChangeModeratorState: {
 		id: User["id"];
 		isModerator: User["isModerator"];
@@ -33,7 +35,12 @@ export interface InternalStreamTypes {
 		oldToken: User["token"];
 		newToken: User["token"];
 	};
-	remoteUserUpdated: { id: User["id"] };
+	localUserUpdated: {
+		id: User["id"];
+	};
+	remoteUserUpdated: {
+		id: User["id"];
+	};
 	webhookCreated: Webhook;
 	webhookDeleted: Webhook;
 	webhookUpdated: Webhook;

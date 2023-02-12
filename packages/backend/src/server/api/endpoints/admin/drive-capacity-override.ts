@@ -1,7 +1,7 @@
 import define from "../../define.js";
 import { Users } from "@/models/index.js";
-import { User } from "@/models/entities/user.js";
 import { insertModerationLog } from "@/services/insert-moderation-log.js";
+import { publishInternalEvent } from "@/services/stream.js";
 export const meta = {
 	tags: ["admin"],
 
@@ -29,15 +29,12 @@ export default define(meta, paramDef, async (ps, me) => {
 		throw new Error("user is not local user");
 	}
 
-	/*if (user.isAdmin) {
-		throw new Error('cannot suspend admin');
-	}
-	if (user.isModerator) {
-		throw new Error('cannot suspend moderator');
-	}*/
-
 	await Users.update(user.id, {
 		driveCapacityOverrideMb: ps.overrideMb,
+	});
+
+	publishInternalEvent("localUserUpdated", {
+		id: user.id,
 	});
 
 	insertModerationLog(me, "change-drive-capacity-override", {
