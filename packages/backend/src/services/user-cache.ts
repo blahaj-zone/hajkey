@@ -21,6 +21,16 @@ subscriber.on("message", async (_, data) => {
 	if (obj.channel === "internal") {
 		const { type, body } = obj.message;
 		switch (type) {
+			case "localUserUpdated": {
+				userByIdCache.delete(body.id);
+				localUserByIdCache.delete(body.id);
+				localUserByNativeTokenCache.cache.forEach((v, k) => {
+					if (v.value?.id === body.id) {
+						localUserByNativeTokenCache.delete(k);
+					}
+				});
+				break;
+			}
 			case "userChangeSuspendedState":
 			case "userChangeSilencedState":
 			case "userChangeModeratorState":
