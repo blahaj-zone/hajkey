@@ -2,7 +2,7 @@
 	"name": "sw",
 	"private": true,
 	"scripts": {
-		"build": "pnpm swc src -d built -D",
+		"build": "webpack",
 		"watch": "pnpm swc src -d built -D -w",
 		"lint": "pnpm rome check \"src/**/*.ts\""
 	},
@@ -17,6 +17,7 @@
 	},
 	"devDependencies": {
 		"swc-loader": "^0.2.3",
-		"webpack": "^5.75.0"
+		"webpack": "^5.75.0",
+		"webpack-cli": "^5.0.1"
 	}
 }
