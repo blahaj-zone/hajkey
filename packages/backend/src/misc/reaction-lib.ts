@@ -4,73 +4,68 @@ import { Emojis } from "@/models/index.js";
 import { toPunyNullable } from "./convert-host.js";
 import { IsNull } from "typeorm";
 
-const legacies: Record<string, string> = {
-	like: "👍",
-	love: "❤️", // ここに記述する場合は異体字セレクタを入れない <- not that good because modern browsers just display it as the red heart so just convert it to it to not end up with two seperate reactions of "the same emoji" for the user
-	laugh: "😆",
-	hmm: "🤔",
-	surprise: "😮",
-	congrats: "🎉",
-	angry: "💢",
-	confused: "😥",
-	rip: "😇",
-	pudding: "🍮",
-	star: "⭐",
-};
+const legacies = new Map([
+	['like', '👍'],
+	['love', '❤️'],
+	['laugh', '😆'],
+	['hmm', '🤔'],
+	['surprise', '😮'],
+	['congrats', '🎉'],
+	['angry', '💢'],
+	['confused', '😥'],
+	['rip', '😇'],
+	['pudding', '🍮'],
+	['star', '⭐'],
+]);
 
-export async function getFallbackReaction(): Promise<string> {
+export async function getFallbackReaction() {
 	const meta = await fetchMeta();
 	return meta.defaultReaction;
 }
 
 export function convertLegacyReactions(reactions: Record<string, number>) {
-	const _reactions = {} as Record<string, number>;
+	const _reactions = new Map();
+	const decodedReactions = new Map();
 
-	for (const reaction of Object.keys(reactions)) {
+	for (const reaction in reactions) {
 		if (reactions[reaction] <= 0) continue;
 
-		if (Object.keys(legacies).includes(reaction)) {
-			if (_reactions[legacies[reaction]]) {
-				_reactions[legacies[reaction]] += reactions[reaction];
-			} else {
-				_reactions[legacies[reaction]] = reactions[reaction];
-			}
-		} else if (reaction === "♥️") {
-			if (_reactions["❤️"]) {
-				_reactions["❤️"] += reactions[reaction];
-			} else {
-				_reactions["❤️"] = reactions[reaction];
-			}
+		let decodedReaction;
+		if (decodedReactions.has(reaction)) {
+			decodedReaction = decodedReactions.get(reaction);
 		} else {
-			if (_reactions[reaction]) {
-				_reactions[reaction] += reactions[reaction];
-			} else {
-				_reactions[reaction] = reactions[reaction];
-			}
+			decodedReaction = decodeReaction(reaction);
+			decodedReactions.set(reaction, decodedReaction);
+		}
+
+		let emoji = legacies.get(decodedReaction.reaction);
+		if (emoji) {
+			_reactions.set(emoji, (_reactions.get(emoji) || 0) + reactions[reaction]);
+		} else {
+			_reactions.set(reaction, (_reactions.get(reaction) || 0) + reactions[reaction]);
 		}
 	}
 
-	const _reactions2 = {} as Record<string, number>;
-
-	for (const reaction of Object.keys(_reactions)) {
-		_reactions2[decodeReaction(reaction).reaction] = _reactions[reaction];
+	const _reactions2 = new Map();
+	for (const [reaction, count] of _reactions) {
+		const decodedReaction = decodedReactions.get(reaction);
+		_reactions2.set(decodedReaction.reaction, count);
 	}
 
-	return _reactions2;
+	return Object.fromEntries(_reactions2);
 }
 
 export async function toDbReaction(
 	reaction?: string | null,
 	reacterHost?: string | null,
 ): Promise<string> {
-	if (reaction == null) return await getFallbackReaction();
+	if (!reaction) return await getFallbackReaction();
 
 	reacterHost = toPunyNullable(reacterHost);
 
 	// Convert string-type reactions to unicode
-	if (Object.keys(legacies).includes(reaction)) return legacies[reaction];
-	// Convert old heart to new
-	if (reaction === "♥️") return "❤️";
+	const emoji = legacies.get(reaction) || (reaction === "♥️" ? "❤️" : null);
+	if (emoji) return emoji;
 
 	// Allow unicode reactions
 	const match = emojiRegex.exec(reaction);
@@ -83,7 +78,7 @@ export async function toDbReaction(
 	if (custom) {
 		const name = custom[1];
 		const emoji = await Emojis.findOneBy({
-			host: reacterHost ?? IsNull(),
+			host: reacterHost || IsNull(),
 			name,
 		});
 
@@ -132,7 +127,7 @@ export function decodeReaction(str: string): DecodedReaction {
 }
 
 export function convertLegacyReaction(reaction: string): string {
-	reaction = decodeReaction(reaction).reaction;
-	if (Object.keys(legacies).includes(reaction)) return legacies[reaction];
-	return reaction;
+  const decoded = decodeReaction(reaction).reaction;
+  if (legacies.has(decoded)) return legacies.get(decoded)!;
+  return decoded;
 }
