@@ -19,7 +19,7 @@
 	>
 		<div v-show="showBody" ref="content" class="content" :class="{ omitted }">
 			<slot></slot>
-			<button v-if="omitted" class="fade _button" @click="() => { ignoreOmit = true; omitted = false; }">
+			<button v-if="omitted" class="fade _button" @click.stop.prevent="() => { ignoreOmit = true; omitted = false; }">
 				<span>{{ i18n.ts.showMore }}</span>
 			</button>
 		</div>
