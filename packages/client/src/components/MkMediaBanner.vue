@@ -1,6 +1,6 @@
 <template>
 <div class="mk-media-banner">
-	<div v-if="media.isSensitive && hide" class="sensitive" @click="hide = false">
+	<div v-if="media.isSensitive && hide" class="sensitive" @click.stop.prevent="hide = false">
 		<span class="icon"><i class="ph-warning-bold ph-lg"></i></span>
 		<b>{{ i18n.ts.sensitive }}</b>
 		<span>{{ i18n.ts.clickToShow }}</span>
