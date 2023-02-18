@@ -9,8 +9,8 @@
 	:tabindex="!isDeleted ? '-1' : null"
 	:class="{ renote: isRenote }"
 >
-	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note" @click.self="router.push(notePage(note))"/>
-	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to" @click.self="router.push(notePage(appearNote))"/>
+	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note" @click.self="$log('router pushing from detailed replytomore'); router.push(notePage(note))"/>
+	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to" @click.self="$log('router pushing from detailed replyto'); router.push(notePage(appearNote))"/>
 	<div v-if="isRenote" class="renote">
 		<MkAvatar class="avatar" :user="note.user"/>
 		<i class="ph-repeat-bold ph-lg"></i>
@@ -53,7 +53,7 @@
 					<XCwButton v-model="showContent" :note="appearNote"/>
 				</p>
 				<div v-show="appearNote.cw == null || showContent" class="content">
-					<div class="text" @click.self="router.push(notePage(appearNote))">
+					<div class="text" @click.self="$log('router pushing from detailed text'); router.push(notePage(appearNote))">
 						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
 						<div v-if="translating || translation" class="translation">
 							<MkLoading v-if="translating" mini/>
@@ -99,7 +99,7 @@
 			</footer>
 		</div>
 	</article>
-	<MkNoteSub v-for="note in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" @click.self="router.push(notePage(note))"/>
+	<MkNoteSub v-for="note in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" @click.self="$log('router pushing from detailed reply'); router.push(notePage(note))"/>
 </div>
 <div v-else class="_panel muted" @click="muted = false">
 	<I18n :src="i18n.ts.userSaysSomething" tag="small">

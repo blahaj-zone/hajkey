@@ -1,6 +1,6 @@
 <template>
 <div v-size="{ max: [450] }" class="wrpstxzv" :class="{ children: depth > 1 }">
-	<div class="main" @click="router.push(notePage(note))">
+	<div class="main" @click="$log('router pushing from sub main'); router.push(notePage(note))">
 		<div class="avatar-container">
 			<MkAvatar class="avatar" :user="note.user"/>
 			<div class="line"></div>
@@ -12,7 +12,7 @@
 					<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
 					<XCwButton v-model="showContent" :note="note"/>
 				</p>
-				<div v-show="note.cw == null || showContent" class="content" @click="router.push(notePage(note))">
+				<div v-show="note.cw == null || showContent" class="content" @click="$log('router pushing from sub content'); router.push(notePage(note))">
 					<MkSubNoteContent class="text" :note="note"/>
 				</div>
 			</div>

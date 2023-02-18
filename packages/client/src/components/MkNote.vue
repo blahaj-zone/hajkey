@@ -33,8 +33,8 @@
 			</div>
 		</div>
 	</div>
-	<article class="article" @contextmenu.stop="onContextmenu" @click.self="router.push(notePage(appearNote))">
-		<div class="main" @click.self="router.push(notePage(appearNote))">
+	<article class="article" @contextmenu.stop="onContextmenu" @click.self="$log('router pushing from note article'); router.push(notePage(appearNote))">
+		<div class="main" @click.self="$log('router pushing from note main'); router.push(notePage(appearNote))">
 			<div class="header-container">
 				<MkAvatar class="avatar" :user="appearNote.user"/>
 				<XNoteHeader class="header" :note="appearNote" :mini="true"/>
@@ -45,7 +45,7 @@
 					<XCwButton v-model="showContent" :note="appearNote"/>
 				</p>
 				<div v-show="appearNote.cw == null || showContent" class="content" :class="{ collapsed, isLong }">
-					<div class="text" @click.self="router.push(notePage(appearNote))">
+					<div class="text" @click.self="$log('router pushing from note text'); router.push(notePage(appearNote))">
 						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
 						<!-- <a v-if="appearNote.renote != null" class="rp">RN:</a> -->
 						<div v-if="translating || translation" class="translation">
