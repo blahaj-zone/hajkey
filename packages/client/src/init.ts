@@ -197,6 +197,8 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
 	if (_DEV_) {
 		app.config.performance = true;
+	} else {
+		console.log = () => {};
 	}
 
 	app.config.globalProperties = {
