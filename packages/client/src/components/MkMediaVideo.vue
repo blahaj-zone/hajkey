@@ -5,7 +5,7 @@
 		<span>{{ i18n.ts.clickToShow }}</span>
 	</div>
 </div>
-<div v-else class="kkjnbbplepmiyuadieoenjgutgcmtsvu" @click.stop>
+<div v-else class="kkjnbbplepmiyuadieoenjgutgcmtsvu">
 	<VuePlyr
 		:options="{
 			controls: [

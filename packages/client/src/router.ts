@@ -84,6 +84,16 @@ export const routes = [
 				component: page(() => import("./pages/settings/reaction.vue")),
 			},
 			{
+				path: "/appearance",
+				name: "appearance",
+				component: page(() => import("./pages/settings/appearance.vue")),
+			},
+			{
+				path: "/behavior",
+				name: "behavior",
+				component: page(() => import("./pages/settings/behavior.vue")),
+			},
+			{
 				path: "/drive",
 				name: "drive",
 				component: page(() => import("./pages/settings/drive.vue")),

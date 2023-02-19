@@ -1,5 +1,5 @@
 <template>
-<div class="wrmlmaau" :class="{ collapsed, isLong }">
+<div v-if="!muted" class="wrmlmaau" :class="{ collapsed, isLong }">
 	<div class="body">
 		<span v-if="note.deletedAt" style="opacity: 0.5">({{ i18n.ts.deleted }})</span>
 		<MkA v-if="note.replyId" class="reply" :to="`/notes/${note.replyId}`"><i class="ph-arrow-bend-up-left-bold ph-lg"></i></MkA>
@@ -21,27 +21,72 @@
 		<span>{{ i18n.ts.showLess }}</span>
 	</button>
 </div>
+<div v-else class="muted" @click="muted = false">
+	<I18n :src="i18n.ts.userSaysSomething" tag="small">
+		<template #name>
+			<MkA v-user-preview="appearNote.userId" class="name" :to="userPage(appearNote.user)">
+				<MkUserName :user="appearNote.user"/>
+			</MkA>
+		</template>
+	</I18n>
+</div>
+
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import * as misskey from 'calckey-js';
+import { ref } from 'vue';
+import type * as misskey from 'calckey-js';
 import XMediaList from '@/components/MkMediaList.vue';
 import XPoll from '@/components/MkPoll.vue';
 import { i18n } from '@/i18n';
+import { deviceKind } from '@/scripts/device-kind';
+import { defaultStore } from '@/store';
+import { checkWordMute } from '@/scripts/check-word-mute';
+import { $i } from '@/account';
+import { userPage } from '@/filters/user';
 
 const props = defineProps<{
 	note: misskey.entities.Note;
 }>();
 
+const note = props.note;
 
-const isLong = (
-	props.note.cw == null && props.note.text != null && (
-		(props.note.text.split('\n').length > 9) ||
-		(props.note.text.length > 500)
-	)
+const isRenote = (
+	note.renote != null &&
+	note.text == null &&
+	note.fileIds.length === 0 &&
+	note.poll == null
 );
-const collapsed = $ref(props.note.cw == null && isLong);
+
+let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
+
+const MOBILE_THRESHOLD = 500;
+const isMobile = ref(
+	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD
+);
+const exceedsCharacterLimit = (
+	defaultStore.state.expandPostMaxCharacters > 0 &&
+	appearNote.text != null &&
+	appearNote.text.length > defaultStore.state.expandPostMaxCharacters
+)
+const estimatedLines = (
+	appearNote.text != null
+		? appearNote.text
+			.split('\n')
+			.map(line => Math.ceil(line.length/(isMobile.value ? 40 : 90)))
+			.reduce((a, b) => a + b, 0)
+		: 1
+)
+const exceedsLinesLimit = (
+	defaultStore.state.expandPostMaxLines > 0 &&
+	estimatedLines > defaultStore.state.expandPostMaxLines
+);
+
+const isLong = (appearNote.cw == null && appearNote.text != null && (
+	exceedsCharacterLimit || exceedsLinesLimit
+));
+const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
+const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
 </script>
 
 <style lang="scss" scoped>

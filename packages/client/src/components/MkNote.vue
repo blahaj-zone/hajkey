@@ -129,6 +129,7 @@ import { checkWordMute } from '@/scripts/check-word-mute';
 import { useRouter } from '@/router';
 import { userPage } from '@/filters/user';
 import * as os from '@/os';
+import { deviceKind } from '@/scripts/device-kind';
 import { defaultStore, noteViewInterruptors } from '@/store';
 import { reactionPicker } from '@/scripts/reaction-picker';
 import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
@@ -168,20 +169,42 @@ const isRenote = (
 	note.poll == null
 );
 
+let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
+
+const MOBILE_THRESHOLD = 500;
+const isMobile = ref(
+	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD
+);
+const exceedsCharacterLimit = (
+	defaultStore.state.expandPostMaxCharacters > 0 &&
+	appearNote.text != null &&
+	appearNote.text.length > defaultStore.state.expandPostMaxCharacters
+)
+const estimatedLines = (
+	appearNote.text != null
+		? appearNote.text
+			.split('\n')
+			.map(line => Math.ceil(line.length/(isMobile.value ? 40 : 90)))
+			.reduce((a, b) => a + b, 0)
+		: 1
+)
+const exceedsLinesLimit = (
+	defaultStore.state.expandPostMaxLines > 0 &&
+	estimatedLines > defaultStore.state.expandPostMaxLines
+);
+
 const el = ref<HTMLElement>();
 const menuButton = ref<HTMLElement>();
 const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
-let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
 const isMyRenote = $i && ($i.id === note.userId);
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.autoShowCw);
 const isLong = (appearNote.cw == null && appearNote.text != null && (
-	(appearNote.text.split('\n').length > 9) ||
-	(appearNote.text.length > 500)
+	exceedsCharacterLimit || exceedsLinesLimit
 ));
-const collapsed = ref(appearNote.cw == null && isLong);
+const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
 const isDeleted = ref(false);
 const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);

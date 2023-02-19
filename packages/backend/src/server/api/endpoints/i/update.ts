@@ -77,7 +77,7 @@ export const paramDef = {
 		birthday: { ...Users.birthdaySchema, nullable: true },
 		lang: {
 			type: "string",
-			enum: [null, ...Object.keys(langmap)],
+			enum: [...Object.keys(langmap)],
 			nullable: true,
 		},
 		avatarId: { type: "string", format: "misskey:id", nullable: true },
@@ -131,6 +131,11 @@ export const paramDef = {
 				type: "string",
 			},
 		},
+		autoWatchReplied: { type: "boolean" },
+		autoWatchBoosted: { type: "boolean" },
+		autoWatchQuoted: { type: "boolean" },
+		autoWatchReacted: { type: "boolean" },
+		autoWatchVoted: { type: "boolean" },
 	},
 } as const;
 
@@ -245,6 +250,26 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 			});
 	}
 
+	if (ps.autoWatchReplied !== undefined) {
+		profileUpdates.autoWatchReplied = ps.autoWatchReplied;
+	}
+
+	if (ps.autoWatchBoosted !== undefined) {
+		profileUpdates.autoWatchBoosted = ps.autoWatchBoosted;
+	}
+
+	if (ps.autoWatchQuoted !== undefined) {
+		profileUpdates.autoWatchQuoted = ps.autoWatchQuoted;
+	}
+
+	if (ps.autoWatchReacted !== undefined) {
+		profileUpdates.autoWatchReacted = ps.autoWatchReacted;
+	}
+
+	if (ps.autoWatchVoted !== undefined) {
+		profileUpdates.autoWatchVoted = ps.autoWatchVoted;
+	}
+
 	//#region emojis/tags
 
 	let emojis = [] as string[];
@@ -290,7 +315,7 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 	publishUserEvent(
 		user.id,
 		"updateUserProfile",
-		await UserProfiles.findOneBy({ userId: user.id }),
+		await UserProfiles.findOneBy({ userId: user.id }) ?? undefined,
 	);
 
 	// 鍵垢を解除したとき、溜まっていたフォローリクエストがあるならすべて承認

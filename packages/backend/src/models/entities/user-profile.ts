@@ -229,6 +229,31 @@ export class UserProfile {
 	public userHost: string | null;
 	//#endregion
 
+	@Column('boolean', {
+		default: false, select: false,
+	})
+	public autoWatchReplied: boolean;
+
+	@Column('boolean', {
+		default: false, select: false,
+	})
+	public autoWatchBoosted: boolean;
+
+	@Column('boolean', {
+		default: false, select: false,
+	})
+	public autoWatchQuoted: boolean;
+
+	@Column('boolean', {
+		default: false, select: false,
+	})
+	public autoWatchReacted: boolean;
+
+	@Column('boolean', {
+		default: false, select: false,
+	})
+	public autoWatchVoted: boolean;
+
 	constructor(data: Partial<UserProfile>) {
 		if (data == null) return;
 

@@ -52,8 +52,9 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
 (async () => {
 	console.info(`Calckey v${version}`);
+	const dev = true
 
-	if (_DEV_) {
+	if (_DEV_ || dev) {
 		console.warn("Development mode!!!");
 
 		console.info(`vue ${vueVersion}`);
@@ -140,13 +141,13 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
 	//#region Fetch user
 	if ($i?.token) {
-		if (_DEV_) {
+		if (_DEV_ || dev) {
 			console.log("account cache found. refreshing...");
 		}
 
 		refreshAccount();
 	} else {
-		if (_DEV_) {
+		if (_DEV_ || dev) {
 			console.log("no account cache found.");
 		}
 
@@ -154,7 +155,7 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 		const i = (document.cookie.match(/igi=(\w+)/) || [null, null])[1];
 
 		if (i != null && i !== "null") {
-			if (_DEV_) {
+			if (_DEV_ || dev) {
 				console.log("signing...");
 			}
 
@@ -167,7 +168,7 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 				document.body.innerHTML = '<div id="err">Oops!</div>';
 			}
 		} else {
-			if (_DEV_) {
+			if (_DEV_ || dev) {
 				console.log("not signed in");
 			}
 		}
@@ -195,10 +196,8 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 			: defineAsyncComponent(() => import("@/ui/universal.vue")),
 	);
 
-	if (_DEV_) {
+	if (_DEV_ || dev) {
 		app.config.performance = true;
-	} else {
-		console.log = () => {};
 	}
 
 	app.config.globalProperties = {

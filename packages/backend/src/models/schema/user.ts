@@ -489,6 +489,21 @@ export const packedMeDetailedOnlySchema = {
 				optional: false,
 			},
 		},
+		autoWatchReplied: {
+			type: "boolean",
+		},
+		autoWatchBoosted: {
+			type: "boolean",
+		},
+		autoWatchQuoted: {
+			type: "boolean",
+		},
+		autoWatchReacted: {
+			type: "boolean",
+		},
+		autoWatchVoted: {
+			type: "boolean",
+		},
 		//#region secrets
 		email: {
 			type: "string",

@@ -19,10 +19,10 @@
 		</div>
 	</div>
 	<template v-if="conversation">
-		<template v-if="depth < 5">
-			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" class="reply" :conversation="conversation" :depth="depth + 1"/>
+		<template v-if="depth < repliesDepth">
+			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" :class="`reply divider-${(depth % 8)}`" :conversation="conversation" :depth="depth + 1"/>
 		</template>
-		<div v-else-if="replies.length > 0" class="more">
+		<div v-else-if="replies.length > 0" :class="`more divider-${(depth % 8)}`">
 			<MkA class="text _link" :to="notePage(note)">{{ i18n.ts.continueThread }} <i class="ph-caret-double-right-bold ph-lg"></i></MkA>
 		</div>
 	</template>
@@ -38,6 +38,7 @@ import XCwButton from '@/components/MkCwButton.vue';
 import { notePage } from '@/filters/note';
 import { useRouter } from '@/router';
 import * as os from '@/os';
+import { defaultStore } from '@/store';
 import { i18n } from '@/i18n';
 
 const router = useRouter();
@@ -52,7 +53,8 @@ const props = withDefaults(defineProps<{
 	depth: 1,
 });
 
-let showContent = $ref(false);
+let showContent = $ref(defaultStore.state.autoShowCw);
+const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] = props.conversation?.filter(item => item.replyId === props.note.id || item.renoteId === props.note.id) ?? [];
 </script>
 
@@ -124,6 +126,55 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	> .reply, > .more {
 		border-left: solid 0.5px var(--divider);
 		margin-top: 10px;
+	}
+
+	.compact & {
+		.reply, .more {
+			padding-left: 3px;
+			&.max-width_450px {
+				padding-left: 2px;
+			}
+		}
+	}
+
+	.colorize & {
+		.reply, .more {
+			border-left-width: 3px;
+			border-bottom-left-radius: 10px;
+
+			&.divider-1 {
+				border-left-color: #ffbfb7;
+				background-image: linear-gradient(to right, #ffbfb730, transparent 5%);
+			}
+			&.divider-2 {
+				border-left-color: #97c8eb;
+				background-image: linear-gradient(to right, #97c8eb30, transparent 5%);
+			}
+			&.divider-3{
+				border-left-color: #ffd666;
+				background-image: linear-gradient(to right, #ffd66630, transparent 5%);
+			}
+			&.divider-4 {
+				border-left-color: #9b779e;
+				background-image: linear-gradient(to right, #9b779e30, transparent 5%);
+			}
+			&.divider-5 {
+				border-left-color: #e27084;
+				background-image: linear-gradient(to right, #e2708430, transparent 5%);
+			}
+			&.divider-6 {
+				border-left-color: #c2eabd;
+				background-image: linear-gradient(to right, #c2eabd30, transparent 5%);
+			}
+			&.divider-7 {
+				border-left-color: #f0b67f;
+				background-image: linear-gradient(to right, #f0b67f30, transparent 5%);
+			}
+			&.divider-8 {
+				border-left-color: #40798c;
+				background-image: linear-gradient(to right, #40798c30, transparent 5%);
+			}
+		}
 	}
 
 	> .more {

@@ -8,7 +8,7 @@
 		</div>
 	</div>
 </div>
-<div v-else class="gqnyydlz" @click.stop>
+<div v-else class="gqnyydlz">
 	<a
 		:href="image.url"
 		:title="image.name"

@@ -161,7 +161,8 @@ export default async (
 	data: Option,
 	silent = false,
 ) =>
-	new Promise<Note>(async (res, rej) => {
+// rome-ignore lint/suspicious/noAsyncPromiseExecutor: future cleanup
+new  Promise<Note>(async (res, rej) => {
 		// If you reply outside the channel, match the scope of the target.
 		// TODO (I think it's a process that could be done on the client side, but it's server side for now.)
 		if (

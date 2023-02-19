@@ -8,8 +8,10 @@ export const noteActions = [];
 export const noteViewInterruptors = [];
 export const notePostInterruptors = [];
 
-// TODO: それぞれいちいちwhereとかdefaultというキーを付けなきゃいけないの冗長なのでなんとかする(ただ型定義が面倒になりそう)
-//       あと、現行の定義の仕方なら「whereが何であるかに関わらずキー名の重複不可」という制約を付けられるメリットもあるからそのメリットを引き継ぐ方法も考えないといけない
+// TODO: Each one has to add the key of WHERE or default, so it is a redundant, so I will do something
+// (just the type definition seems to be troublesome)
+// Also, in the case of the current definition, there is also the merit that "the key name cannot be 
+// duplicated regardless of what is the WHERE is", so you have to think about how to take over the benefits.
 export const defaultStore = markRaw(
 	new Storage("base", {
 		tutorial: {
@@ -283,6 +285,54 @@ export const defaultStore = markRaw(
 		},
 		woozyMode: {
 			where: "device",
+			default: false,
+		},
+		repliesDepth: {
+			where: "device",
+			default: 5,
+		},
+		replyDividerColorize: {
+			where: "device",
+			default: true,
+		},
+		replyIndentCompact: {
+			where: "device",
+			default: false,
+		},
+		autoShowCw: {
+			where: "device",
+			default: false,
+		},
+		expandPostAlways: {
+			where: "device",
+			default: false,
+		},
+		expandPostMaxLines: {
+			where: "device",
+			default: 9,
+		},
+		expandPostMaxCharacters: {
+			where: "device",
+			default: 500,
+		},
+		autoWatchReplied: {
+			where: "account",
+			default: false,
+		},
+		autoWatchBoosted: {
+			where: "account",
+			default: false,
+		},
+		autoWatchQuoted: {
+			where: "account",
+			default: false,
+		},
+		autoWatchReacted: {
+			where: "account",
+			default: false,
+		},
+		autoWatchVoted: {
+			where: "account",
 			default: false,
 		},
 	}),

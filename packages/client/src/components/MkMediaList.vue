@@ -1,5 +1,5 @@
 <template>
-<div class="hoawjimk">
+<div class="hoawjimk" @click.stop>
 	<XBanner v-for="media in mediaList.filter(media => !previewable(media))" :key="media.id" :media="media"/>
 	<div v-if="mediaList.filter(media => previewable(media)).length > 0" class="gird-container" :class="{ dmWidth: inDm }">
 		<div ref="gallery" :data-count="mediaList.filter(media => previewable(media)).length">

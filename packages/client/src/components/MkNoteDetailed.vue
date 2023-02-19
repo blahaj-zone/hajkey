@@ -7,7 +7,7 @@
 	v-size="{ max: [500, 450, 350, 300] }"
 	class="lxwezrsl _block"
 	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote }"
+	:class="{ renote: isRenote, colorize, compact }"
 >
 	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note" @click.self="$log('router pushing from detailed replytomore'); router.push(notePage(note))"/>
 	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to" @click.self="$log('router pushing from detailed replyto'); router.push(notePage(appearNote))"/>
@@ -153,6 +153,8 @@ const props = defineProps<{
 }>();
 
 const inChannel = inject('inChannel', null);
+const colorize = defaultStore.state.replyDividerColorize;
+const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
 
@@ -192,6 +194,7 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
+const repliesDepth = defaultStore.state.repliesDepth;
 
 const keymap = {
 	'r': () => reply(true),
@@ -291,7 +294,7 @@ function blur() {
 os.api('notes/children', {
 	noteId: appearNote.id,
 	limit: 30,
-	depth: 6,
+	depth: repliesDepth + 1,
 }).then(res => {
 	replies.value = res;
 	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id);
