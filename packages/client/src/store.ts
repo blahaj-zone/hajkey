@@ -293,7 +293,7 @@ export const defaultStore = markRaw(
 		},
 		replyDividerColorize: {
 			where: "device",
-			default: true,
+			default: false,
 		},
 		replyIndentCompact: {
 			where: "device",
