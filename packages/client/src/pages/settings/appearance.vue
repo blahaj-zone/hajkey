@@ -1,5 +1,6 @@
 <template>
 <div class="_formRoot">
+	<h3>Note: A page reload is required to apply these settings.</h3>
 	<FormSection>
 		<template #label>{{ i18n.ts.repliesLabel }}</template>
 

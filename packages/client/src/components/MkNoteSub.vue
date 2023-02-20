@@ -1,6 +1,6 @@
 <template>
 <div v-size="{ max: [450] }" class="wrpstxzv" :class="{ children: depth > 1 }">
-	<div class="main" @click="$log('router pushing from sub main'); router.push(notePage(note))">
+	<div class="main" :class="`header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
 		<div class="avatar-container">
 			<MkAvatar class="avatar" :user="note.user"/>
 			<div class="line"></div>
@@ -20,9 +20,9 @@
 	</div>
 	<template v-if="conversation">
 		<template v-if="depth < repliesDepth">
-			<div v-for="reply in replies" :key="reply.id" :class="`divider divider-${(depth % 8)}`">
+			<div v-for="(reply, index) in replies" :key="reply.id" :class="`divider divider-${((depth + offset + index) % 8)} x-child-${child} x-index-${index} ${index > 0?'divider-next': ''}`">
 				<div :class="`divider-over`">
-					<MkNoteSub :note="reply" :class="`reply`" :conversation="conversation" :depth="depth + 1"/>
+					<MkNoteSub :note="reply" :class="`reply`" :conversation="conversation" :depth="depth + 1" :offset="offset + index" :child="index"/>
 				</div>
 			</div>
 		</template>
@@ -53,8 +53,12 @@ const props = withDefaults(defineProps<{
 
 	// how many notes are in between this one and the note being viewed in detail
 	depth?: number;
+	offset?: number;
+	child?: number;
 }>(), {
 	depth: 1,
+	offset: 0,
+	child: 0,
 });
 
 let showContent = $ref(defaultStore.state.autoShowCw);
@@ -141,7 +145,48 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 	}
 
+	.colorize & .main {
+		> .avatar-container {
+			border-left: 3px solid red;
+			border-top-left-radius: 5px;
+		}
+		&.header-solo > .avatar-container {
+			border-left-color: transparent;
+			border-top-left-radius: 0;
+		}
+		&.header-0 > .avatar-container {
+			border-left-color: #40798c;
+		}
+		&.header-1 > .avatar-container {
+			border-left-color: #ffbfb7;
+		}
+		&.header-2 > .avatar-container {
+			border-left-color: #97c8eb;
+		}
+		&.header-3 > .avatar-container {
+			border-left-color: #ffd666;
+		}
+		&.header-4 > .avatar-container {
+			border-left-color: #9b779e;
+		}
+		&.header-5 > .avatar-container {
+			border-left-color: #e27084;
+		}
+		&.header-6 > .avatar-container {
+			border-left-color: #c2eabd;
+		}
+		&.header-7 > .avatar-container {
+			border-left-color: #f0b67f;
+		}
+	}
+
 	.colorize & .divider {
+
+		border-bottom-left-radius: 10px;
+		&.divider-next {
+			border-top-left-radius: 10px;
+		}
+
 		.reply, .more {
 			border-left-width: 0;
 		}
@@ -150,30 +195,35 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				border-top: 0.5px solid var(--divider);
 				border-bottom-left-radius: 10px;
 		}
+		&.divider-next {
+			> .divider-over {
+				border-top-left-radius: 10px;
+			}
+		}
 
-		&.divider-1 .divider-over {
+		&.divider-0 > .divider-over {
+				border-left-color: #40798c;
+		}
+		&.divider-1 > .divider-over {
 				border-left-color: #ffbfb7;
 		}
-		&.divider-2 .divider-over {
+		&.divider-2 > .divider-over {
 				border-left-color: #97c8eb;
 		}
-		&.divider-3 .divider-over{
+		&.divider-3 > .divider-over{
 				border-left-color: #ffd666;
 		}
-		&.divider-4 .divider-over {
+		&.divider-4 > .divider-over {
 				border-left-color: #9b779e;
 		}
-		&.divider-5 .divider-over {
+		&.divider-5 > .divider-over {
 				border-left-color: #e27084;
 		}
-		&.divider-6 .divider-over {
+		&.divider-6 > .divider-over {
 				border-left-color: #c2eabd;
 		}
-		&.divider-7 .divider-over {
+		&.divider-7 > .divider-over {
 				border-left-color: #f0b67f;
-		}
-		&.divider-8 .divider-over {
-				border-left-color: #40798c;
 		}
 	}
 
@@ -183,29 +233,29 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			&.divider-1 .divider-over {
+			&.divider-0 > .divider-over {
+				background-image: linear-gradient(to right, #40798c30, transparent 5%);
+			}
+			&.divider-1 > .divider-over {
 				background-image: linear-gradient(to right, #ffbfb730, transparent 5%);
 			}
-			&.divider-2 .divider-over {
+			&.divider-2 > .divider-over {
 				background-image: linear-gradient(to right, #97c8eb30, transparent 5%);
 			}
-			&.divider-3 .divider-over{
+			&.divider-3 > .divider-over{
 				background-image: linear-gradient(to right, #ffd66630, transparent 5%);
 			}
-			&.divider-4 .divider-over {
+			&.divider-4 > .divider-over {
 				background-image: linear-gradient(to right, #9b779e30, transparent 5%);
 			}
-			&.divider-5 .divider-over {
+			&.divider-5 > .divider-over {
 				background-image: linear-gradient(to right, #e2708430, transparent 5%);
 			}
-			&.divider-6 .divider-over {
+			&.divider-6 > .divider-over {
 				background-image: linear-gradient(to right, #c2eabd30, transparent 5%);
 			}
-			&.divider-7 .divider-over {
+			&.divider-7 > .divider-over {
 				background-image: linear-gradient(to right, #f0b67f30, transparent 5%);
-			}
-			&.divider-8 .divider-over {
-				background-image: linear-gradient(to right, #40798c30, transparent 5%);
 			}
 		}
 	}
@@ -216,29 +266,29 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			&.divider-1 .divider-over {
+			&.divider-0 > .divider-over {
+				background-color: #40798c30;
+			}
+			&.divider-1 > .divider-over {
 				background-color: #ffbfb730;
 			}
-			&.divider-2 .divider-over {
+			&.divider-2 > .divider-over {
 				background-color: #97c8eb30;
 			}
-			&.divider-3 .divider-over{
+			&.divider-3 > .divider-over{
 				background-color: #ffd66630;
 			}
-			&.divider-4 .divider-over {
+			&.divider-4 > .divider-over {
 				background-color: #9b779e30;
 			}
-			&.divider-5 .divider-over {
+			&.divider-5 > .divider-over {
 				background-color: #e2708430;
 			}
-			&.divider-6 .divider-over {
+			&.divider-6 > .divider-over {
 				background-color: #c2eabd30;
 			}
-			&.divider-7 .divider-over {
+			&.divider-7 > .divider-over {
 				background-color: #f0b67f30;
-			}
-			&.divider-8 .divider-over {
-				background-color: #40798c30;
 			}
 		}
 	}
