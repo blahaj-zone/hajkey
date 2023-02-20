@@ -4,24 +4,26 @@
 	<FormSection>
 		<template #label>{{ i18n.ts.repliesLabel }}</template>
 
-		<FormInput v-model="repliesDepth" type="number" min="1" max="20" step="1" class="_formBlock" @update:modelValue="save()">
-			<template #label>{{ i18n.ts.repliesDepth }}</template>
-			<template #prefix><i class="ph-tree-structure-bold ph-lg"></i></template>
+		<FormRange v-model="repliesDepth" :min="1" :max="20" :step="1" easing class="_formBlock">
+			<template #label>
+				<i class="ph-tree-structure-bold ph-lg"></i>
+				{{ i18n.ts.repliesDepth }}
+			</template>
 			<template #caption>{{ i18n.ts.repliesDepthDescription }}</template>
-		</FormInput>
+		</FormRange>
 
-		<FormSwitch v-model="replyDividerColorize" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="replyDividerColorize" class="_formBlock">
 			{{ i18n.ts.replyDividerColorize }}
 			<template #caption>{{ i18n.ts.replyDividerColorizeDescription }}</template>
 		</FormSwitch>
-		<FormSwitch v-model="replyDividerColorGrad" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="replyDividerColorGrad" class="_formBlock">
 			{{ i18n.ts.replyDividerColorGrad }}
 		</FormSwitch>
-		<FormSwitch v-model="replyDividerColorBg" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="replyDividerColorBg" class="_formBlock">
 			{{ i18n.ts.replyDividerColorBg }}
 		</FormSwitch>
 
-		<FormSwitch v-model="replyIndentCompact" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="replyIndentCompact" class="_formBlock">
 			{{ i18n.ts.replyIndentCompact }}
 			<template #caption>{{ i18n.ts.replyIndentCompactDescription }}</template>
 		</FormSwitch>
@@ -30,25 +32,35 @@
 	<FormSection>
 		<template #label>{{ i18n.ts.contentWarningsLabel }}</template>
 
-		<FormSwitch v-model="autoShowCw" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="autoShowCw" class="_formBlock">
 			{{ i18n.ts.autoShowCw }}
 			<template #caption>{{ i18n.ts.autoShowCwDescription }}</template>
 		</FormSwitch>
+
+		<FormSelect v-model="nsfw" class="_formBlock">
+			<template #label>
+				<i class="ph-eye-off-bold ph-lg"></i>
+				{{ i18n.ts.nsfw }}
+			</template>
+			<option value="respect">{{ i18n.ts._nsfw.respect }}</option>
+			<option value="ignore">{{ i18n.ts._nsfw.ignore }}</option>
+			<option value="force">{{ i18n.ts._nsfw.force }}</option>
+		</FormSelect>
 	</FormSection>
 
 	<FormSection>
 		<template #label>{{ i18n.ts.expandPostLabel }}</template>
 
-		<FormSwitch v-model="expandPostAlways" class="_formBlock" @update:modelValue="save()">
+		<FormSwitch v-model="expandPostAlways" class="_formBlock">
 			{{ i18n.ts.expandPostAlways }}
 			<template #caption>{{ i18n.ts.expandPostAlwaysDescription }}</template>
 		</FormSwitch>
-		<FormInput v-model="expandPostMaxLines" type="number" class="_formBlock" @update:modelValue="save()">
+		<FormInput v-model="expandPostMaxLines" type="number" class="_formBlock">
 			<template #label>{{ i18n.ts.expandPostMaxLines }}</template>
 			<template #prefix><i class="ph-list-numbers-bold ph-lg"></i></template>
 			<template #caption>{{ i18n.ts.expandPostMaxLinesDescription }}</template>
 		</FormInput>
-		<FormInput v-model="expandPostMaxCharacters" type="number" class="_formBlock" @update:modelValue="save()">
+		<FormInput v-model="expandPostMaxCharacters" type="number" class="_formBlock">
 			<template #label>{{ i18n.ts.expandPostMaxCharacters }}</template>
 			<template #prefix><i class="ph-hash-bold ph-lg"></i></template>
 			<template #caption>{{ i18n.ts.expandPostMaxCharactersDescription }}</template>
@@ -59,27 +71,28 @@
 
 <script lang="ts" setup>
 import { } from 'vue';
-import FormSwitch from '@/components/form/switch.vue';
-import FormSection from '@/components/form/section.vue';
-import FormInput from '@/components/form/input.vue';
-import { defaultStore } from '@/store';
 import { i18n } from '@/i18n';
+import { defaultStore } from '@/store';
 import { definePageMetadata } from '@/scripts/page-metadata';
 
-let repliesDepth = $computed(defaultStore.makeGetterSetter('repliesDepth'));
-let replyDividerColorize = $computed(defaultStore.makeGetterSetter('replyDividerColorize'));
-let replyDividerColorGrad = $computed(defaultStore.makeGetterSetter('replyDividerColorGrad'));
-let replyDividerColorBg = $computed(defaultStore.makeGetterSetter('replyDividerColorBg'));
-let replyIndentCompact = $computed(defaultStore.makeGetterSetter('replyIndentCompact'));
+import FormInput from '@/components/form/input.vue';
+import FormRange from '@/components/form/range.vue';
+import FormSection from '@/components/form/section.vue';
+import FormSelect from '@/components/form/select.vue';
+import FormSwitch from '@/components/form/switch.vue';
 
-let autoShowCw = $computed(defaultStore.makeGetterSetter('autoShowCw'));
+const repliesDepth = $computed(defaultStore.makeGetterSetter('repliesDepth'));
+const replyDividerColorize = $computed(defaultStore.makeGetterSetter('replyDividerColorize'));
+const replyDividerColorGrad = $computed(defaultStore.makeGetterSetter('replyDividerColorGrad'));
+const replyDividerColorBg = $computed(defaultStore.makeGetterSetter('replyDividerColorBg'));
+const replyIndentCompact = $computed(defaultStore.makeGetterSetter('replyIndentCompact'));
 
-let expandPostAlways = $computed(defaultStore.makeGetterSetter('expandPostAlways'));
-let expandPostMaxLines = $computed(defaultStore.makeGetterSetter('expandPostMaxLines'));
-let expandPostMaxCharacters = $computed(defaultStore.makeGetterSetter('expandPostMaxCharacters'));
+const autoShowCw = $computed(defaultStore.makeGetterSetter('autoShowCw'));
+const nsfw = $computed(defaultStore.makeGetterSetter('nsfw'));
 
-function save() {
-}
+const expandPostAlways = $computed(defaultStore.makeGetterSetter('expandPostAlways'));
+const expandPostMaxLines = $computed(defaultStore.makeGetterSetter('expandPostMaxLines'));
+const expandPostMaxCharacters = $computed(defaultStore.makeGetterSetter('expandPostMaxCharacters'));
 
 definePageMetadata({
 	title: i18n.ts.appearance,

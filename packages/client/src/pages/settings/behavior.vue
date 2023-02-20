@@ -32,22 +32,22 @@
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import FormSwitch from '@/components/form/switch.vue';
-import FormSection from '@/components/form/section.vue';
 import * as os from '@/os';
+import { } from 'vue';
 import { i18n } from '@/i18n';
 import { $i } from '@/account';
 import { definePageMetadata } from '@/scripts/page-metadata';
+import FormSwitch from '@/components/form/switch.vue';
+import FormSection from '@/components/form/section.vue';
 
-let autoWatchReplied = $computed($i.autoWatchReplied);
-let autoWatchBoosted = $computed($i.autoWatchBoosted);
-let autoWatchQuoted = $computed($i.autoWatchQuoted);
-let autoWatchReacted = $computed($i.autoWatchReacted);
-let autoWatchVoted = $computed($i.autoWatchVoted);
+const autoWatchReplied = $ref($i!.autoWatchReplied);
+const autoWatchBoosted = $ref($i!.autoWatchBoosted);
+const autoWatchQuoted = $ref($i!.autoWatchQuoted);
+const autoWatchReacted = $ref($i!.autoWatchReacted);
+const autoWatchVoted = $ref($i!.autoWatchVoted);
 
-function save() {
-	os.api('i/update', {
+async function save() {
+	await os.api('i/update', {
 		autoWatchReplied: !!autoWatchReplied,
 		autoWatchBoosted: !!autoWatchBoosted,
 		autoWatchQuoted: !!autoWatchQuoted,
