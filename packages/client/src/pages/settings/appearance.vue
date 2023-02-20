@@ -43,15 +43,12 @@
 				{{ i18n.ts.nsfw }}
 			</template>
 			<option value="respect">
-				<i class="ph-eye-closed-bold ph-lg"></i>
 				{{ i18n.ts._nsfw.respect }}
 			</option>
 			<option value="ignore">
-				<i class="ph-eye-bold ph-lg"></i>
 				{{ i18n.ts._nsfw.ignore }}
 			</option>
 			<option value="force">
-				<i class="ph-eye-slash-bold ph-lg"></i>
 				{{ i18n.ts._nsfw.force }}
 			</option>
 		</FormSelect>
