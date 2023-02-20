@@ -37,14 +37,23 @@
 			<template #caption>{{ i18n.ts.autoShowCwDescription }}</template>
 		</FormSwitch>
 
-		<FormSelect v-model="nsfw" class="_formBlock">
+		<FormSelect v-model="nsfw" :large="true" class="_formBlock">
 			<template #label>
-				<i class="ph-eye-off-bold ph-lg"></i>
+				<i class="ph-shield-check-bold ph-lg"></i>
 				{{ i18n.ts.nsfw }}
 			</template>
-			<option value="respect">{{ i18n.ts._nsfw.respect }}</option>
-			<option value="ignore">{{ i18n.ts._nsfw.ignore }}</option>
-			<option value="force">{{ i18n.ts._nsfw.force }}</option>
+			<option value="respect">
+				<i class="ph-eye-closed-bold ph-lg"></i>
+				{{ i18n.ts._nsfw.respect }}
+			</option>
+			<option value="ignore">
+				<i class="ph-eye-bold ph-lg"></i>
+				{{ i18n.ts._nsfw.ignore }}
+			</option>
+			<option value="force">
+				<i class="ph-eye-slash-bold ph-lg"></i>
+				{{ i18n.ts._nsfw.force }}
+			</option>
 		</FormSelect>
 	</FormSection>
 
