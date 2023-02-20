@@ -20,9 +20,13 @@
 	</div>
 	<template v-if="conversation">
 		<template v-if="depth < repliesDepth">
-			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" :class="`reply divider-${(depth % 8)}`" :conversation="conversation" :depth="depth + 1"/>
+			<div v-for="reply in replies" :key="reply.id" :class="`divider divider-${(depth % 8)}`">
+				<div :class="`divider-over`">
+					<MkNoteSub :note="reply" :class="`reply`" :conversation="conversation" :depth="depth + 1"/>
+				</div>
+			</div>
 		</template>
-		<div v-else-if="replies.length > 0" :class="`more divider-${(depth % 8)}`">
+		<div v-else-if="replies.length > 0" :class="more">
 			<MkA class="text _link" :to="notePage(note)">{{ i18n.ts.continueThread }} <i class="ph-caret-double-right-bold ph-lg"></i></MkA>
 		</div>
 	</template>
@@ -137,42 +141,104 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 	}
 
-	.colorize & {
+	.colorize & .divider {
 		.reply, .more {
-			border-left-width: 3px;
-			border-bottom-left-radius: 10px;
+			border-left-width: 0;
+		}
+		.divider-over {
+				border-left: 3px solid var(--divider);
+				border-top: 0.5px solid var(--divider);
+				border-bottom-left-radius: 10px;
+		}
 
-			&.divider-1 {
+		&.divider-1 .divider-over {
 				border-left-color: #ffbfb7;
+		}
+		&.divider-2 .divider-over {
+				border-left-color: #97c8eb;
+		}
+		&.divider-3 .divider-over{
+				border-left-color: #ffd666;
+		}
+		&.divider-4 .divider-over {
+				border-left-color: #9b779e;
+		}
+		&.divider-5 .divider-over {
+				border-left-color: #e27084;
+		}
+		&.divider-6 .divider-over {
+				border-left-color: #c2eabd;
+		}
+		&.divider-7 .divider-over {
+				border-left-color: #f0b67f;
+		}
+		&.divider-8 .divider-over {
+				border-left-color: #40798c;
+		}
+	}
+
+	.colorgrad & {
+		.divider {
+			background-color: var(--panel);
+			&:hover {
+				background-color: var(--panelHighlight);
+			}
+			&.divider-1 .divider-over {
 				background-image: linear-gradient(to right, #ffbfb730, transparent 5%);
 			}
-			&.divider-2 {
-				border-left-color: #97c8eb;
+			&.divider-2 .divider-over {
 				background-image: linear-gradient(to right, #97c8eb30, transparent 5%);
 			}
-			&.divider-3{
-				border-left-color: #ffd666;
+			&.divider-3 .divider-over{
 				background-image: linear-gradient(to right, #ffd66630, transparent 5%);
 			}
-			&.divider-4 {
-				border-left-color: #9b779e;
+			&.divider-4 .divider-over {
 				background-image: linear-gradient(to right, #9b779e30, transparent 5%);
 			}
-			&.divider-5 {
-				border-left-color: #e27084;
+			&.divider-5 .divider-over {
 				background-image: linear-gradient(to right, #e2708430, transparent 5%);
 			}
-			&.divider-6 {
-				border-left-color: #c2eabd;
+			&.divider-6 .divider-over {
 				background-image: linear-gradient(to right, #c2eabd30, transparent 5%);
 			}
-			&.divider-7 {
-				border-left-color: #f0b67f;
+			&.divider-7 .divider-over {
 				background-image: linear-gradient(to right, #f0b67f30, transparent 5%);
 			}
-			&.divider-8 {
-				border-left-color: #40798c;
+			&.divider-8 .divider-over {
 				background-image: linear-gradient(to right, #40798c30, transparent 5%);
+			}
+		}
+	}
+
+	.colorbg & {
+		.divider {
+			background-color: var(--panel);
+			&:hover {
+				background-color: var(--panelHighlight);
+			}
+			&.divider-1 .divider-over {
+				background-color: #ffbfb730;
+			}
+			&.divider-2 .divider-over {
+				background-color: #97c8eb30;
+			}
+			&.divider-3 .divider-over{
+				background-color: #ffd66630;
+			}
+			&.divider-4 .divider-over {
+				background-color: #9b779e30;
+			}
+			&.divider-5 .divider-over {
+				background-color: #e2708430;
+			}
+			&.divider-6 .divider-over {
+				background-color: #c2eabd30;
+			}
+			&.divider-7 .divider-over {
+				background-color: #f0b67f30;
+			}
+			&.divider-8 .divider-over {
+				background-color: #40798c30;
 			}
 		}
 	}

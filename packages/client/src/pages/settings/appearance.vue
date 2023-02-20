@@ -3,7 +3,7 @@
 	<FormSection>
 		<template #label>{{ i18n.ts.repliesLabel }}</template>
 
-		<FormInput v-model="repliesDepth" type="number" class="_formBlock" @update:modelValue="save()">
+		<FormInput v-model="repliesDepth" type="number" min="1" max="20" step="1" class="_formBlock" @update:modelValue="save()">
 			<template #label>{{ i18n.ts.repliesDepth }}</template>
 			<template #prefix><i class="ph-tree-structure-bold ph-lg"></i></template>
 			<template #caption>{{ i18n.ts.repliesDepthDescription }}</template>
@@ -12,6 +12,12 @@
 		<FormSwitch v-model="replyDividerColorize" class="_formBlock" @update:modelValue="save()">
 			{{ i18n.ts.replyDividerColorize }}
 			<template #caption>{{ i18n.ts.replyDividerColorizeDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="replyDividerColorGrad" class="_formBlock" @update:modelValue="save()">
+			{{ i18n.ts.replyDividerColorGrad }}
+		</FormSwitch>
+		<FormSwitch v-model="replyDividerColorBg" class="_formBlock" @update:modelValue="save()">
+			{{ i18n.ts.replyDividerColorBg }}
 		</FormSwitch>
 
 		<FormSwitch v-model="replyIndentCompact" class="_formBlock" @update:modelValue="save()">
@@ -61,6 +67,8 @@ import { definePageMetadata } from '@/scripts/page-metadata';
 
 let repliesDepth = $computed(defaultStore.makeGetterSetter('repliesDepth'));
 let replyDividerColorize = $computed(defaultStore.makeGetterSetter('replyDividerColorize'));
+let replyDividerColorGrad = $computed(defaultStore.makeGetterSetter('replyDividerColorGrad'));
+let replyDividerColorBg = $computed(defaultStore.makeGetterSetter('replyDividerColorBg'));
 let replyIndentCompact = $computed(defaultStore.makeGetterSetter('replyIndentCompact'));
 
 let autoShowCw = $computed(defaultStore.makeGetterSetter('autoShowCw'));

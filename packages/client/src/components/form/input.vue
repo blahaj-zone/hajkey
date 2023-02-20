@@ -16,6 +16,8 @@
 			:autocomplete="autocomplete"
 			:spellcheck="spellcheck"
 			:step="step"
+			:min="min"
+			:max="max"
 			:list="id"
 			@focus="focused = true"
 			@blur="focused = false"
@@ -52,6 +54,8 @@ const props = defineProps<{
 	autocomplete?: boolean;
 	spellcheck?: boolean;
 	step?: any;
+	min?: any;
+	max?: any;
 	datalist?: string[];
 	inline?: boolean;
 	debounce?: boolean;

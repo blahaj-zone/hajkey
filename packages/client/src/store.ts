@@ -295,6 +295,14 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		replyDividerColorGrad: {
+			where: "device",
+			default: false,
+		},
+		replyDividerColorBg: {
+			where: "device",
+			default: false,
+		},
 		replyIndentCompact: {
 			where: "device",
 			default: false,
