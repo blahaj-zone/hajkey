@@ -77,7 +77,7 @@ export const paramDef = {
 		birthday: { ...Users.birthdaySchema, nullable: true },
 		lang: {
 			type: "string",
-			enum: [...Object.keys(langmap)],
+			enum: [null, ...Object.keys(langmap)],
 			nullable: true,
 		},
 		avatarId: { type: "string", format: "misskey:id", nullable: true },
