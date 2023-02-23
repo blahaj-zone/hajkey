@@ -230,27 +230,27 @@ export class UserProfile {
 	//#endregion
 
 	@Column('boolean', {
-		default: false, select: false,
+		default: false, select: true,
 	})
 	public autoWatchReplied: boolean;
 
 	@Column('boolean', {
-		default: false, select: false,
+		default: false, select: true,
 	})
 	public autoWatchBoosted: boolean;
 
 	@Column('boolean', {
-		default: false, select: false,
+		default: false, select: true,
 	})
 	public autoWatchQuoted: boolean;
 
 	@Column('boolean', {
-		default: false, select: false,
+		default: false, select: true,
 	})
 	public autoWatchReacted: boolean;
 
 	@Column('boolean', {
-		default: false, select: false,
+		default: false, select: true,
 	})
 	public autoWatchVoted: boolean;
 

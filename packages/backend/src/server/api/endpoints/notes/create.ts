@@ -7,6 +7,7 @@ import {
 	Notes,
 	Channels,
 	Blockings,
+	UserProfiles,
 } from "@/models/index.js";
 import type { DriveFile } from "@/models/entities/drive-file.js";
 import type { Note } from "@/models/entities/note.js";
@@ -17,6 +18,7 @@ import { ApiError } from "../../error.js";
 import define from "../../define.js";
 import { HOUR } from "@/const.js";
 import { getNote } from "../../common/getters.js";
+import watch from "@/services/note/watch.js";
 
 export const meta = {
 	tags: ["notes"],
@@ -301,6 +303,30 @@ export default define(meta, paramDef, async (ps, user) => {
 		apHashtags: ps.noExtractHashtags ? [] : undefined,
 		apEmojis: ps.noExtractEmojis ? [] : undefined,
 	});
+
+	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
+
+	console.log (`got create.note`, renote,reply,profile,user)
+
+	try {
+		if (renote && ps.text) {
+			if (profile.autoWatchQuoted) {
+				watch(user.id, renote)
+			}
+		} else if (renote) {
+			if (profile.autoWatchBoosted) {
+				watch(user.id, renote)
+			}
+		} else if (reply) {
+			if (profile.autoWatchReplied) {
+				watch(user.id, reply)
+			}
+		}
+	} catch (e) {
+		
+	}
+
+	
 
 	return {
 		createdNote: await Notes.pack(note, user),

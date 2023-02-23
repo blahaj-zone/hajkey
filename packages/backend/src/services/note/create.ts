@@ -61,6 +61,7 @@ import { Cache } from "@/misc/cache.js";
 import type { UserProfile } from "@/models/entities/user-profile.js";
 import { db } from "@/db/postgre.js";
 import { getActiveWebhooks } from "@/misc/webhook-cache.js";
+import watch from "@/services/note/watch.js";
 
 const mutedWordsCache = new Cache<
 	{ userId: UserProfile["userId"]; mutedWords: UserProfile["mutedWords"] }[]
@@ -453,10 +454,22 @@ new  Promise<Note>(async (res, rej) => {
 
 			await createMentionedEvents(mentionedUsers, note, nm);
 
+			const profile = Users.isLocalUser(user)
+				? await UserProfiles.findOneByOrFail({ userId: user.id })
+				: {} as UserProfile;
+
 			// If has in reply to note
 			if (data.reply) {
 				// Fetch watchers
 				nmRelatedPromises.push(notifyToWatchersOfReplyee(data.reply, user, nm));
+
+				try {
+					if (profile.autoWatchReplied) {		
+						watch(user.id, data.reply);		
+					}
+				} catch (e) {
+					
+				}
 
 				// 通知
 				if (data.reply.userHost === null) {
@@ -505,6 +518,16 @@ new  Promise<Note>(async (res, rej) => {
 				nmRelatedPromises.push(
 					notifyToWatchersOfRenotee(data.renote, user, nm, type),
 				);
+
+			  if (type === "quote") {
+					if (profile.autoWatchQuoted) {
+						watch(user.id, data.renote);
+					}
+				} else {
+					if (profile.autoWatchBoosted){
+						watch(user.id, data.renote);
+					}
+				}
 
 				// Publish event
 				if (user.id !== data.renote.userId && data.renote.userHost === null) {

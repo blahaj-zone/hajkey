@@ -11,12 +11,14 @@ import {
 	Users,
 	Polls,
 	Blockings,
+	UserProfiles,
 } from "@/models/index.js";
 import type { IRemoteUser } from "@/models/entities/user.js";
 import { genId } from "@/misc/gen-id.js";
 import { getNote } from "../../../common/getters.js";
 import { ApiError } from "../../../error.js";
 import define from "../../../define.js";
+import watch from "@/services/note/watch.js";
 
 export const meta = {
 	tags: ["notes"],
@@ -165,6 +167,16 @@ export default define(meta, paramDef, async (ps, user) => {
 			});
 		}
 	});
+
+  const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
+
+	try {
+		if (profile.autoWatchVoted !== false) {		
+			watch(user.id, note);		
+		}	
+	} catch (e) {
+
+	}
 
 	// リモート投票の場合リプライ送信
 	if (note.userHost != null) {

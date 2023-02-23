@@ -2,6 +2,10 @@ import createReaction from "@/services/note/reaction/create.js";
 import define from "../../../define.js";
 import { getNote } from "../../../common/getters.js";
 import { ApiError } from "../../../error.js";
+import {
+	UserProfiles,
+} from "@/models/index.js";
+import watch from "@/services/note/watch.js";
 
 export const meta = {
 	tags: ["reactions", "notes"],
@@ -60,5 +64,15 @@ export default define(meta, paramDef, async (ps, user) => {
 			throw new ApiError(meta.errors.youHaveBeenBlocked);
 		throw e;
 	});
+
+	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
+
+	try {
+		if (profile.autoWatchReacted) {
+			watch(user.id, note)
+		}
+	} catch (e) {
+	}	
+
 	return;
 });
