@@ -552,6 +552,11 @@ export const UserRepository = db.getRepository(User).extend({
 						mutingNotificationTypes: profile!.mutingNotificationTypes,
 						emailNotificationTypes: profile!.emailNotificationTypes,
 						showTimelineReplies: user.showTimelineReplies || falsy,
+						autoWatchBoosted: profile!.autoWatchBoosted || falsy,
+						autoWatchQuoted: profile!.autoWatchQuoted || falsy,
+						autoWatchReacted: profile!.autoWatchReacted || falsy,
+						autoWatchReplied: profile!.autoWatchReplied || falsy,
+						autoWatchVoted: profile!.autoWatchVoted || falsy,
 				  }
 				: {}),
 
