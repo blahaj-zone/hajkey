@@ -10,7 +10,7 @@
 	<div>
 		<transition name="fade" mode="out-in">
 			<div v-if="user">
-				<XHome v-if="tab === 'home'" :user="user"/>
+				<XHome v-if="tab === 'home'" :user="user" @refresh="fetchUser()"/>
 				<XReactions v-else-if="tab === 'reactions'" :user="user"/>
 				<XClips v-else-if="tab === 'clips'" :user="user"/>
 				<XPages v-else-if="tab === 'pages'" :user="user"/>

@@ -11,10 +11,5 @@ pipeline:
       password:
         # Secret 'docker_password' needs to be set in the CI settings
         from_secret: docker_password
-    when:
-      # Push new version of tag latest if new push on main-branch
-      event: push
-      branch: main
 
-depends_on:
-  - prSecurityCheck
+branch: main

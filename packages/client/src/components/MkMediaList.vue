@@ -2,7 +2,7 @@
 <div class="hoawjimk" @click.stop>
 	<XBanner v-for="media in mediaList.filter(media => !previewable(media))" :key="media.id" :media="media"/>
 	<div v-if="mediaList.filter(media => previewable(media)).length > 0" class="gird-container" :class="{ dmWidth: inDm }">
-		<div ref="gallery" :data-count="mediaList.filter(media => previewable(media)).length">
+		<div ref="gallery" :data-count="mediaList.filter(media => previewable(media)).length" @click.stop.prevent>
 			<template v-for="media in mediaList.filter(media => previewable(media))">
 				<XVideo v-if="media.type.startsWith('video')" :key="media.id" :video="media"/>
 				<XImage v-else-if="media.type.startsWith('image')" :key="media.id" class="image" :data-id="media.id" :image="media" :raw="raw"/>

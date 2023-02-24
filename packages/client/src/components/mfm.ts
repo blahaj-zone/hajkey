@@ -379,10 +379,7 @@ export default defineComponent({
 							if (!this.nowrap) {
 								return [
 									h(
-										"div",
-										{
-											class: "quote",
-										},
+										"blockquote",
 										genEl(token.children),
 									),
 								];

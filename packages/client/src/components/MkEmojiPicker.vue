@@ -316,7 +316,7 @@ function done(query?: any): boolean | void {
 	if (query == null) query = q.value;
 	if (query == null || typeof query !== 'string') return;
 
-	const q2 = query.replace(/:/g, '');
+	const q2 = query.replaceAll(':', '');
 	const exactMatchCustom = customEmojis.find(emoji => emoji.name === q2);
 	if (exactMatchCustom) {
 		chosen(exactMatchCustom);

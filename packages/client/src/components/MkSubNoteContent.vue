@@ -14,10 +14,10 @@
 		<summary>{{ i18n.ts.poll }}</summary>
 		<XPoll :note="note"/>
 	</div>
-	<button v-if="isLong && collapsed" class="fade _button" @click="collapsed = false">
+	<button v-if="isLong && collapsed" class="fade _button" @click.stop.prevent="collapsed = false">
 		<span>{{ i18n.ts.showMore }}</span>
 	</button>
-	<button v-if="isLong && !collapsed" class="showLess _button" @click="collapsed = true">
+	<button v-if="isLong && !collapsed" class="showLess _button" @click.stop.prevent="collapsed = true">
 		<span>{{ i18n.ts.showLess }}</span>
 	</button>
 </div>

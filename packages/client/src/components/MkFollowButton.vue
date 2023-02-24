@@ -1,12 +1,21 @@
 <template>
 <button
 	class="kpoogebi _button"
-	:class="{ wait, active: isFollowing || hasPendingFollowRequestFromYou, full, large }"
+	:class="{
+		wait,
+		active: isFollowing || hasPendingFollowRequestFromYou,
+		full,
+		large,
+		blocking: isBlocking
+	}"
 	:disabled="wait"
 	@click="onClick"
 >
 	<template v-if="!wait">
-		<template v-if="hasPendingFollowRequestFromYou && user.isLocked">
+		<template v-if="isBlocking">
+			<span v-if="full">{{ i18n.ts.blocked }}</span><i class="ph-prohibit-bold ph-lg"></i>
+		</template>
+		<template v-else-if="hasPendingFollowRequestFromYou && user.isLocked">
 			<span v-if="full">{{ i18n.ts.followRequestPending }}</span><i class="ph-hourglass-medium-bold ph-lg"></i>
 		</template>
 		<template v-else-if="hasPendingFollowRequestFromYou && !user.isLocked">
@@ -30,12 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted } from 'vue';
 import type * as Misskey from 'calckey-js';
 import * as os from '@/os';
 import { stream } from '@/stream';
 import { i18n } from '@/i18n';
 
+const emit = defineEmits(['refresh'])
 const props = withDefaults(defineProps<{
 		user: Misskey.entities.UserDetailed,
 		full?: boolean,
@@ -44,6 +54,8 @@ const props = withDefaults(defineProps<{
 	full: false,
 	large: false,
 });
+
+const isBlocking = computed(() => props.user.isBlocking);
 
 let isFollowing = $ref(props.user.isFollowing);
 let hasPendingFollowRequestFromYou = $ref(props.user.hasPendingFollowRequestFromYou);
@@ -68,7 +80,24 @@ async function onClick() {
 	wait = true;
 
 	try {
-		if (isFollowing) {
+		if (isBlocking.value) {
+			const { canceled } = await os.confirm({
+				type: 'warning',
+				text: i18n.t('unblockConfirm'),
+			});
+			if (canceled) return
+
+			await os.api("blocking/delete", {
+				userId: props.user.id,
+			})
+			if (props.user.isMuted) {
+				await os.api("mute/delete", {
+					userId: props.user.id,
+				})
+			}
+			emit('refresh')
+		}
+		else if (isFollowing) {
 			const { canceled } = await os.confirm({
 				type: 'warning',
 				text: i18n.t('unfollowConfirm', { name: props.user.name || props.user.username }),
@@ -183,5 +212,10 @@ onBeforeUnmount(() => {
 	> span {
 		margin-right: 6px;
 	}
+}
+
+.blocking {
+	background-color: var(--bg) !important;
+	border: none;
 }
 </style>

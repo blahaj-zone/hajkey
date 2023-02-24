@@ -169,13 +169,12 @@ const props = withDefaults(defineProps<{
 		text-overflow: ellipsis;
 	}
 
-	::v-deep(.quote) {
+	::v-deep(blockquote) {
 		display: block;
-		margin: 8px;
-		padding: 6px 0 6px 12px;
-		color: var(--fg);
-		border-left: solid 3px var(--fg);
-		opacity: 0.7;
+		margin: 8px 0;
+		padding-left: 12px;
+		color: var(--fgTransparentWeak);
+		border-left: solid 4px var(--fgTransparent);
 	}
 
 	::v-deep(pre) {

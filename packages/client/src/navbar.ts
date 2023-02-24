@@ -5,6 +5,10 @@ import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { ui } from "@/config";
 import { unisonReload } from "@/scripts/unison-reload";
+import { defaultStore } from '@/store';
+import { instance } from '@/instance';
+import { host } from '@/config';
+import XTutorial from '@/components/MkTutorialDialog.vue';
 
 export const navbarItemDef = reactive({
 	notifications: {
@@ -142,6 +146,61 @@ export const navbarItemDef = reactive({
 		icon: "ph-arrows-clockwise-bold ph-lg",
 		action: (ev) => {
 			location.reload();
+		},
+	},
+	help: {
+		title: "help",
+		icon: "ph-question-bold ph-lg",
+		action: (ev) => {
+			os.popupMenu([{
+				text: instance.name ?? host,
+				type: 'label',
+			}, {
+				type: 'link',
+				text: i18n.ts.instanceInfo,
+				icon: 'ph-info-bold ph-lg',
+				to: '/about',
+			}, {
+				type: 'link',
+				text: i18n.ts.aboutMisskey,
+				icon: 'ph-lightbulb-bold ph-lg',
+				to: '/about-calckey',
+			}, {
+				type: 'link',
+				text: i18n.ts._apps.apps,
+				icon: 'ph-device-mobile-bold ph-lg',
+				to: '/apps',
+			}, {
+					type: 'button',
+					action: async () => {
+						defaultStore.set('tutorial', 0);
+						os.popup(XTutorial, {}, {}, 'closed');
+					},
+					text: i18n.ts.replayTutorial,
+					icon: 'ph-circle-wavy-question-bold ph-lg',
+				}, null, {
+					type: 'parent',
+					text: i18n.ts.developer,
+					icon: 'ph-code-bold ph-lg',
+					children: [{
+						type: 'link',
+						to: '/api-console',
+						text: 'API Console',
+						icon: 'ph-terminal-window-bold ph-lg',
+					}, {
+						text: i18n.ts.document,
+						icon: 'ph-file-doc-bold ph-lg',
+						action: () => {
+							window.open('/api-doc', '_blank');
+						},
+					}, {
+						type: 'link',
+						to: '/scratchpad',
+						text: 'AiScript Scratchpad',
+						icon: 'ph-scribble-loop-bold ph-lg',
+					}]
+				}], ev.currentTarget ?? ev.target,
+			);
 		},
 	},
 });

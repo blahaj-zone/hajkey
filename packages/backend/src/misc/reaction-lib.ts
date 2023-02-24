@@ -72,6 +72,13 @@ export async function toDbReaction(
 	// Convert old heart to new
 	if (reaction === "♥️") return "❤️";
 
+	// Allow unicode reactions
+	const match = emojiRegex.exec(reaction);
+	if (match) {
+		const unicode = match[0];
+		return unicode;
+	}
+
 	const custom = reaction.match(/^:([\w+-]+)(?:@\.)?:$/);
 	if (custom) {
 		const name = custom[1];

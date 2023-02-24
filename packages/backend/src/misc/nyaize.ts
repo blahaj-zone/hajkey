@@ -2,9 +2,9 @@ export function nyaize(text: string): string {
 	return (
 		text
 			// ja-JP
-			.replace(/な/g, "にゃ")
-			.replace(/ナ/g, "ニャ")
-			.replace(/ﾅ/g, "ﾆｬ")
+			.replaceAll("な", "にゃ")
+			.replaceAll("ナ", "ニャ")
+			.replaceAll("ﾅ", "ﾆｬ")
 			// en-US
 			.replace(/(?<=n)a/gi, (x) => (x === "A" ? "YA" : "ya"))
 			.replace(/(?<=morn)ing/gi, (x) => (x === "ING" ? "YAN" : "yan"))

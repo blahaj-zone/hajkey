@@ -39,9 +39,10 @@
 				<FormSection>
 					<template #label>{{ i18n.ts._aboutMisskey.contributors }}</template>
 					<div class="_formLinks">
-						<FormLink to="/@t1c@i.calckey.cloud"><Mfm :text="'$[sparkle @t1c@i.calckey.cloud] (Main developer)'"/></FormLink>
+						<FormLink to="/@kainoa@calckey.social"><Mfm :text="'$[sparkle @kainoa@calckey.social] (Main developer)'"/></FormLink>
 						<FormLink to="/@cleo@bz.pawdev.me"><Mfm :text="'@cleo@bz.pawdev.me (Maintainer)'"/></FormLink>
-						<FormLink to="/@syuilo@misskey.io"><Mfm :text="'@syuilo@misskey.io (Original Misskey developer)'"/></FormLink>
+						<FormLink to="/@panos@i.calckey.cloud"><Mfm :text="'@panos@i.calckey.cloud (Management)'"/></FormLink>
+						<FormLink to="/@freeplay@bz.pawdev.me"><Mfm :text="'@freeplay@bz.pawdev.me (UI/UX Designer)'"/></FormLink>
 						<FormLink to="https://www.youtube.com/c/Henkiwashere" external>Henki (error images artist)</FormLink>
 					</div>
 					<template #caption><MkLink url="https://codeberg.org/calckey/calckey/activity">{{ i18n.ts._aboutMisskey.allContributors }}</MkLink></template>

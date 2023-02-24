@@ -125,11 +125,20 @@ export function getUserMenu(user, router: Router = mainRouter) {
 		)
 			return;
 
-		os.apiWithDialog(user.isBlocking ? "blocking/delete" : "blocking/create", {
+		await os.apiWithDialog(user.isBlocking ? "blocking/delete" : "blocking/create", {
 			userId: user.id,
-		}).then(() => {
-			user.isBlocking = !user.isBlocking;
-		});
+		})
+		user.isBlocking = !user.isBlocking;
+		await os.api(user.isBlocking ? "mute/create" : "mute/delete", {
+			userId: user.id,
+		})
+		user.isMuted = user.isBlocking;
+		if (user.isBlocking) {
+			await os.api('following/delete', {
+				userId: user.id,
+			});
+			user.isFollowing = false
+		}
 	}
 
 	async function toggleSilence() {
@@ -192,6 +201,8 @@ export function getUserMenu(user, router: Router = mainRouter) {
 	}
 
 	async function invalidateFollow() {
+		if (!(await getConfirmed(i18n.ts.breakFollowConfirm))) return;
+
 		os.apiWithDialog("following/invalidate", {
 			userId: user.id,
 		}).then(() => {
@@ -250,6 +261,7 @@ export function getUserMenu(user, router: Router = mainRouter) {
 			{
 				icon: user.isMuted ? "ph-eye-bold ph-lg" : "ph-eye-slash-bold ph-lg",
 				text: user.isMuted ? i18n.ts.unmute : i18n.ts.mute,
+				hidden: user.isBlocking === true,
 				action: toggleMute,
 			},
 			{

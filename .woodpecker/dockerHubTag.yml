@@ -17,5 +17,3 @@ pipeline:
       event: tag
       tag: v*
 
-depends_on:
-  - prSecurityCheck

@@ -44,7 +44,7 @@
 					</div>
 					<div class="follow-container">
 						<div class="actions">
-							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" :inline="true" :transparent="false" :full="!narrow" class="koudoku"/>
+							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" @refresh="emit('refresh')" :inline="true" :transparent="false" :full="!narrow" class="koudoku"/>
 							<button class="menu _button" @click="menu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
 							<!-- <MkFollowButton v-else-if="$i == null" :user="user" :remote="true" :inline="true" :transparent="false" :full="true" class="koudoku"/> -->
 						</div>
@@ -142,6 +142,7 @@ import { host } from '@/config';
 const XPhotos = defineAsyncComponent(() => import('./index.photos.vue'));
 const XActivity = defineAsyncComponent(() => import('./index.activity.vue'));
 
+const emit = defineEmits(['refresh']);
 const props = withDefaults(defineProps<{
 	user: misskey.entities.UserDetailed;
 }>(), {

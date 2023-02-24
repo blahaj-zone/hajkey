@@ -2,7 +2,34 @@
 
 All changes from v13.0.0 onwards, for a full list of differences read CALCKEY.md
 
-## [13.1.1] - 2023-02-04
+## [13.1.3] - 2023-02-09
+
+### Bug Fixes
+
+- Fix: Hide unmute option when the user is blocked
+
+### Features
+
+- Feat: Mute and unfollow when blocking a user
+
+- Feat: Unblock with follow button
+
+- Refresh user when changed
+
+- Feature/help_menu ([#9587](https://github.com/orhun/git-cliff/issues/9587))
+
+Co-authored-by: ThatOneCalculator <kainoa@t1c.dev>
+Reviewed-on: https://codeberg.org/calckey/calckey/pulls/9587
+
+
+### Miscellaneous Tasks
+
+- Chore: up vite
+
+- Chore: update credits
+
+
+## [13.1.2] - 2023-02-06
 
 ### Bug Fixes
 
@@ -95,6 +122,14 @@ Closes #9426
 
 - Fix: Use ❤️ instead of ♥️
 
+- Fix: :bug: following issues
+
+Closes #9544
+
+- Fix: :lock: improve tag search security
+
+- Fix: reactions using unicode weren't processed
+
 
 ### Documentation
 
@@ -128,6 +163,10 @@ closes #9501
 - Add back pfp in compose box when replying
 
 - Feat: PWA icons
+
+- Feat: :sparkles: dialog to remove follower
+
+co-authored-by: atsu1125 <atsu1125@github>
 
 
 ### Miscellaneous Tasks
@@ -169,6 +208,10 @@ why was this ever needed
 - Chore: up pnpm
 
 - Chore: update german translations
+
+- Update changelog
+
+- Chore: formatting
 
 
 ### Performance

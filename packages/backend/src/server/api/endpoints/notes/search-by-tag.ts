@@ -93,7 +93,7 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	try {
 		if (ps.tag) {
-			if (!safeForSql(ps.tag)) throw new Error("Injection");
+			if (!safeForSql(normalizeForSearch(ps.tag))) throw "Injection";
 			query.andWhere(`'{"${normalizeForSearch(ps.tag)}"}' <@ note.tags`);
 		} else {
 			query.andWhere(
@@ -102,7 +102,8 @@ export default define(meta, paramDef, async (ps, me) => {
 						qb.orWhere(
 							new Brackets((qb) => {
 								for (const tag of tags) {
-									if (!safeForSql(tag)) throw new Error("Injection");
+									if (!safeForSql(normalizeForSearch(ps.tag)))
+										throw "Injection";
 									qb.andWhere(`'{"${normalizeForSearch(tag)}"}' <@ note.tags`);
 								}
 							}),

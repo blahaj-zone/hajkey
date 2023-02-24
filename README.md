@@ -97,8 +97,9 @@ If you have access to a server that supports one of the sources below, I recomme
 ```sh
 git clone --depth 1 https://codeberg.org/calckey/calckey.git
 cd calckey/
-# git checkout main # if you want only stable versions
 ```
+
+By default, you're on the development branch. Run `git checkout beta` or `git checkout main` to switch to the Beta/Main branches.
 
 ## 📩 Install dependencies
 

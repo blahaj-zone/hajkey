@@ -1,16 +1,48 @@
-.autogen
-.github
-.travis
-.vscode
-.config
+# Visual Studio Code
+/.vscode
+!/.vscode/extensions.json
+
+# Intelij-IDEA
+/.idea
+packages/backend/.idea/backend.iml
+packages/backend/.idea/modules.xml
+packages/backend/.idea/vcs.xml
+
+# Node.js
+node_modules
+report.*.json
+
+# Cypress
+cypress/screenshots
+cypress/videos
+
+# Coverage
+coverage
+
+# config
+/.config/*
+!/.config/example.yml
+!/.config/docker_example.env
+
+#docker dev config
+/dev/docker-compose.yml
+
+# misskey
+built
+db
+elasticsearch
+redis
+npm-debug.log
+*.pem
+run.bat
+api-docs.json
+*.log
+*.code-workspace
+.DS_Store
+files
+ormconfig.json
+packages/backend/assets/instance.css
+
+# dockerignore custom
+.git
 Dockerfile
-build/
-built/
-db/
-docker-compose.yml
-elasticsearch/
-node_modules/
-redis/
-files/
-misskey-assets/
-.pnp.*

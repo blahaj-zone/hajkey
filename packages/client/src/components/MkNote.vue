@@ -62,10 +62,10 @@
 					<XPoll v-if="appearNote.poll" ref="pollViewer" :note="appearNote" class="poll"/>
 					<MkUrlPreview v-for="url in urls" :key="url" :url="url" :compact="true" :detail="false" class="url-preview"/>
 					<div v-if="appearNote.renote" class="renote"><XNoteSimple :note="appearNote.renote"/></div>
-					<button v-if="isLong && collapsed" class="fade _button" @click="collapsed = false">
+					<button v-if="isLong && collapsed" class="fade _button" @click.stop.prevent="collapsed = false">
 						<span>{{ i18n.ts.showMore }}</span>
 					</button>
-					<button v-else-if="isLong && !collapsed" class="showLess _button" @click="collapsed = true">
+					<button v-else-if="isLong && !collapsed" class="showLess _button" @click.stop.prevent="collapsed = true">
 						<span>{{ i18n.ts.showLess }}</span>
 					</button>
 				</div>

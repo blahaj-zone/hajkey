@@ -28,6 +28,7 @@ export type MenuUser = {
 	user: Misskey.entities.User;
 	active?: boolean;
 	indicate?: boolean;
+	hidden?: boolean;
 	action: MenuAction;
 };
 export type MenuSwitch = {
@@ -43,6 +44,7 @@ export type MenuButton = {
 	indicate?: boolean;
 	danger?: boolean;
 	active?: boolean;
+	hidden?: boolean;
 	avatar?: Misskey.entities.User;
 	action: MenuAction;
 };

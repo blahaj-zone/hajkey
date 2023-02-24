@@ -209,12 +209,12 @@ export default async function (
 		await Blockings.delete(blocking.id);
 	} else {
 		// それ以外は単純に例外
-		if (blocking != null)
+		if (blocking)
 			throw new IdentifiableError(
 				"710e8fb0-b8c3-4922-be49-d5d93d8e6a6e",
 				"blocking",
 			);
-		if (blocked != null)
+		if (blocked)
 			throw new IdentifiableError(
 				"3338392a-f764-498d-8855-db939dcf8c48",
 				"blocked",
