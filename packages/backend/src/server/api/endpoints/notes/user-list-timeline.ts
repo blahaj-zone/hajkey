@@ -44,6 +44,7 @@ export const paramDef = {
 		includeMyRenotes: { type: "boolean", default: true },
 		includeRenotedMyNotes: { type: "boolean", default: true },
 		includeLocalRenotes: { type: "boolean", default: true },
+		includeReplies: { type: "boolean", default: true },
 		withFiles: {
 			type: "boolean",
 			default: false,
@@ -131,6 +132,10 @@ export default define(meta, paramDef, async (ps, user) => {
 				);
 			}),
 		);
+	}
+
+	if (ps.includeReplies === false) {
+		query.andWhere("note.replyId IS NULL");
 	}
 
 	if (ps.withFiles) {
