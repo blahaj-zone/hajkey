@@ -30,6 +30,38 @@
 	</FormSection>
 
 	<FormSection>
+		<template #label>{{ i18n.ts._defaultTimeline.header }}</template>
+
+		<FormSelect v-model="defaultTimeline" :large="true" class="_formBlock">
+			<template #label>
+				{{ i18n.ts._defaultTimeline.label }}
+			</template>
+			<template #prefix>
+				<i class="ph-article-bold ph-lg"></i>
+			</template>
+
+			<option value="">
+				{{ i18n.ts._defaultTimeline.last }}
+			</option>
+			<option value="home">
+				{{ i18n.ts._defaultTimeline.home }}
+			</option>
+			<option value="local">
+				{{ i18n.ts._defaultTimeline.local }}
+			</option>
+			<option value="recommended">
+				{{ i18n.ts._defaultTimeline.recommended }}
+			</option>
+			<option value="social">
+				{{ i18n.ts._defaultTimeline.social }}
+			</option>
+			<option value="global">
+				{{ i18n.ts._defaultTimeline.global }}
+			</option>
+		</FormSelect>
+	</FormSection>
+
+	<FormSection>
 		<template #label>{{ i18n.ts.contentWarningsLabel }}</template>
 
 		<FormSwitch v-model="autoShowCw" class="_formBlock">
@@ -39,9 +71,12 @@
 
 		<FormSelect v-model="nsfw" :large="true" class="_formBlock">
 			<template #label>
-				<i class="ph-shield-check-bold ph-lg"></i>
 				{{ i18n.ts.nsfw }}
 			</template>
+			<template #prefix>
+				<i class="ph-shield-check-bold ph-lg"></i>
+			</template>
+			
 			<option value="respect">
 				{{ i18n.ts._nsfw.respect }}
 			</option>
@@ -99,6 +134,8 @@ const nsfw = $computed(defaultStore.makeGetterSetter('nsfw'));
 const expandPostAlways = $computed(defaultStore.makeGetterSetter('expandPostAlways'));
 const expandPostMaxLines = $computed(defaultStore.makeGetterSetter('expandPostMaxLines'));
 const expandPostMaxCharacters = $computed(defaultStore.makeGetterSetter('expandPostMaxCharacters'));
+
+const defaultTimeline = $computed(defaultStore.makeGetterSetter('defaultTimeline'));
 
 definePageMetadata({
 	title: i18n.ts.appearance,

@@ -94,6 +94,14 @@ const keymap = {
 	t: focus,
 };
 
+const timelinesAvailability = {
+	home: true,
+	local: isLocalTimelineAvailable,
+	recommended: isRecommendedTimelineAvailable,
+	social: isLocalTimelineAvailable,
+	global: isGlobalTimelineAvailable,
+};
+
 let timelines = ['home'];
 
 if (isLocalTimelineAvailable) {
@@ -301,7 +309,28 @@ function syncSlide(index) {
 }
 
 onMounted(() => {
-	syncSlide(timelines.indexOf(swiperRef.activeIndex));
+	console.log('stored state', defaultStore.state.tl);
+	console.log('isRecommendedTimelineAvailable', isRecommendedTimelineAvailable);
+	let loadSrc = defaultStore.state.tl?.src
+	if (!loadSrc && isRecommendedTimelineAvailable) {
+		loadSrc = 'recommended';
+	}
+	if (!loadSrc && isLocalTimelineAvailable) {
+		loadSrc = 'social';
+	}
+	if (!loadSrc) {
+		loadSrc = 'home';
+	}
+
+	const defaultTimeline = defaultStore.state.defaultTimeline
+	if (defaultTimeline && timelinesAvailability[defaultTimeline]) {
+		loadSrc = defaultTimeline;
+	}
+
+	const loadIndex = timelines.indexOf(loadSrc);
+
+	console.log('selected src', loadSrc, loadIndex);
+	syncSlide(loadIndex > -1 ? loadIndex : swiperRef.activeIndex);
 });
 
 </script>

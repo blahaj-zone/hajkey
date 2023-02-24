@@ -126,7 +126,7 @@ export const defaultStore = markRaw(
 		tl: {
 			where: "deviceAccount",
 			default: {
-				src: "home" as "home" | "local" | "social" | "global",
+				src: "home" as "home" | "local" | "recommended" | "social" | "global",
 				arg: null,
 			},
 		},
@@ -342,6 +342,10 @@ export const defaultStore = markRaw(
 		autoWatchVoted: {
 			where: "account",
 			default: false,
+		},
+		defaultTimeline: {
+			where: "device",
+			default: "" as "" | "home" | "local" | "recommended" | "social" | "global",
 		},
 	}),
 );
