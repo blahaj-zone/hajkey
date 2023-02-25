@@ -634,6 +634,11 @@ export const routes = [
 		loginRequired: true,
 	},
 	{
+		path: "/wiki/:mode/:slug",
+		component: page(() => import("./pages/wiki.vue")),
+		loginRequired: false,
+	},
+	{
 		name: "index",
 		path: "/",
 		component: $i
