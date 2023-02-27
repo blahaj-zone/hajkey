@@ -326,6 +326,9 @@ import * as ep___users_show from "./endpoints/users/show.js";
 import * as ep___users_stats from "./endpoints/users/stats.js";
 import * as ep___fetchRss from "./endpoints/fetch-rss.js";
 import * as ep___admin_driveCapOverride from "./endpoints/admin/drive-capacity-override.js";
+import * as ep___wiki_list from "./endpoints/wiki/list.js";
+import * as ep___wiki_show from "./endpoints/wiki/show.js";
+import * as ep___wiki_save from "./endpoints/wiki/save.js";
 
 //Calckey Move
 import * as ep___i_move from "./endpoints/i/move.js";
@@ -666,6 +669,9 @@ const eps = [
 	["users/stats", ep___users_stats],
 	["admin/drive-capacity-override", ep___admin_driveCapOverride],
 	["fetch-rss", ep___fetchRss],
+	["wiki/list", ep___wiki_list],
+	["wiki/show", ep___wiki_show],
+	["wiki/save", ep___wiki_save],
 ];
 
 export interface IEndpointMeta {
