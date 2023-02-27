@@ -347,6 +347,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: "" as "" | "home" | "local" | "recommended" | "social" | "global",
 		},
+		allowSwipe: {
+			where: "device",
+			default: true,
+		},
 	}),
 );
 

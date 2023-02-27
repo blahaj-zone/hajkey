@@ -30,6 +30,20 @@
 	</FormSection>
 
 	<FormSection>
+		<template #label>{{ i18n.ts.allowSwipeLabel }}</template>
+
+		<FormSwitch v-model="allowSwipe" class="_formBlock">
+			{{ i18n.ts.allowSwipe }}
+			<template #caption>{{ i18n.ts.allowSwipeDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="swipeOnDesktop" class="_formBlock">
+			{{ i18n.ts.swipeOnDesktop }}
+			<template #caption>{{ i18n.ts.swipeOnDesktopDescription }}</template>
+		</FormSwitch>
+
+	</FormSection>
+
+	<FormSection>
 		<template #label>{{ i18n.ts._defaultTimeline.header }}</template>
 
 		<FormSelect v-model="defaultTimeline" :large="true" class="_formBlock">
@@ -136,6 +150,9 @@ const expandPostMaxLines = $computed(defaultStore.makeGetterSetter('expandPostMa
 const expandPostMaxCharacters = $computed(defaultStore.makeGetterSetter('expandPostMaxCharacters'));
 
 const defaultTimeline = $computed(defaultStore.makeGetterSetter('defaultTimeline'));
+
+const allowSwipe = $computed(defaultStore.makeGetterSetter('allowSwipe'));
+const swipeOnDesktop = $computed(defaultStore.makeGetterSetter('swipeOnDesktop'));
 
 definePageMetadata({
 	title: i18n.ts.appearance,
