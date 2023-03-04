@@ -479,7 +479,7 @@ export const UserRepository = db.getRepository(User).extend({
 										// Therefore the forward is no longer valid and in a perfect
 										// world, the forwarding instance would remove the forward.
 										if (e instanceof StatusError && e.statusCode === 410) {
-											apLogger.warn(`User ${user.id} has a forward to a deleted user ${user.movedToUri}, ignoring...`);
+											logger.warn(`User ${user.id} has a forward to a deleted user ${user.movedToUri}, ignoring...`);
 											return null;
 										}
 										

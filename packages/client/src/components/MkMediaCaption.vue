@@ -39,6 +39,7 @@ import MkButton from '@/components/MkButton.vue';
 import bytes from '@/filters/bytes';
 import number from '@/filters/number';
 import { i18n } from '@/i18n';
+import { instance } from '@/instance';
 
 export default defineComponent({
 	components: {
@@ -87,8 +88,9 @@ export default defineComponent({
 
 	computed: {
 		remainingLength(): number {
-			if (typeof this.inputValue !== "string") return 512;
-			return 512 - length(this.inputValue);
+			const maxCaptionLength = instance.maxCaptionTextLength ?? 512;
+			if (typeof this.inputValue !== "string") return maxCaptionLength;
+			return maxCaptionLength - length(this.inputValue);
 		}
 	},
 

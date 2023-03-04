@@ -9,6 +9,7 @@ import {
 import { id } from "../id.js";
 import { User } from "./user.js";
 import { DriveFolder } from "./drive-folder.js";
+import { DB_MAX_IMAGE_COMMENT_LENGTH } from "@/misc/hard-limits.js";
 
 @Entity()
 @Index(['userId', 'folderId', 'id'])
@@ -69,7 +70,8 @@ export class DriveFile {
 	public size: number;
 
 	@Column('varchar', {
-		length: 512, nullable: true,
+		length: DB_MAX_IMAGE_COMMENT_LENGTH,
+		nullable: true,
 		comment: 'The comment of the DriveFile.',
 	})
 	public comment: string | null;
