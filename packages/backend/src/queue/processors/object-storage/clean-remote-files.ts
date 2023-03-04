@@ -3,7 +3,7 @@ import type Bull from "bull";
 import { queueLogger } from "../../logger.js";
 import { deleteFileSync } from "@/services/drive/delete-file.js";
 import { DriveFiles } from "@/models/index.js";
-import { MoreThan, Not, IsNull } from "typeorm";
+import { MoreThan, LessThan, Not, IsNull } from "typeorm";
 
 const logger = queueLogger.createSubLogger("clean-remote-files");
 
@@ -21,6 +21,7 @@ export default async function cleanRemoteFiles(
 			where: {
 				userHost: Not(IsNull()),
 				isLink: false,
+				createdAt: LessThan(new Date(Date.now() - 1000 * 60 * 60 * 12)),
 				...(cursor ? { id: MoreThan(cursor) } : {}),
 			},
 			take: 8,
