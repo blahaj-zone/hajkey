@@ -38,6 +38,7 @@ import {
 	UserSecurityKeys,
 } from "../index.js";
 import type { Instance } from "../entities/instance.js";
+import { StatusError } from "../../misc/fetch.js";
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
@@ -467,7 +468,19 @@ export const UserRepository = db.getRepository(User).extend({
 						url: profile!.url,
 						uri: user.uri,
 						movedToUri: user.movedToUri
-							? await this.userFromURI(user.movedToUri)
+							? await this
+									.userFromURI(user.movedToUri)
+									.catch((e) => {
+										// If there's a 410 error, it means the user was deleted
+										// on the remote instance.
+										// Therefore the forward is no longer valid and in a perfect
+										// world, the forwarding instance would remove the forward.
+										if (e instanceof StatusError && e.statusCode === 410)
+											return null;
+										
+										// Rethrow all other errors
+										throw e;
+									})
 							: null,
 						alsoKnownAs: user.alsoKnownAs,
 						createdAt: user.createdAt.toISOString(),
