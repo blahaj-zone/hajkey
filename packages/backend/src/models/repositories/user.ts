@@ -39,6 +39,7 @@ import {
 } from "../index.js";
 import type { Instance } from "../entities/instance.js";
 import { StatusError } from "../../misc/fetch.js";
+import { apLogger } from "@/services/logger.js";
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
@@ -475,8 +476,10 @@ export const UserRepository = db.getRepository(User).extend({
 										// on the remote instance.
 										// Therefore the forward is no longer valid and in a perfect
 										// world, the forwarding instance would remove the forward.
-										if (e instanceof StatusError && e.statusCode === 410)
+										if (e instanceof StatusError && e.statusCode === 410) {
+											apLogger.warn(`User ${user.id} has a forward to a deleted user ${user.movedToUri}, ignoring...`);
 											return null;
+										}
 										
 										// Rethrow all other errors
 										throw e;
