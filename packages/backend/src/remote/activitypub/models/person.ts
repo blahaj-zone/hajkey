@@ -401,8 +401,8 @@ export async function updatePerson(
 		isBot: getApType(object) === "Service",
 		isCat: (person as any).isCat === true,
 		isLocked: !!person.manuallyApprovesFollowers,
-		movedToUri: person.movedTo,
-		alsoKnownAs: person.alsoKnownAs,
+		movedToUri: person.movedTo || null,
+		alsoKnownAs: person.alsoKnownAs || null,
 		isExplorable: !!person.discoverable,
 	} as Partial<User>;
 
