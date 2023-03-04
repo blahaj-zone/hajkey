@@ -39,7 +39,9 @@ import {
 } from "../index.js";
 import type { Instance } from "../entities/instance.js";
 import { StatusError } from "../../misc/fetch.js";
-import { apLogger } from "@/services/logger.js";
+import { repoLogger } from "./logger.js";
+
+const logger = repoLogger.createSubLogger("user");
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
