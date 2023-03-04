@@ -69,7 +69,9 @@ export default class Resolver {
 			// URLs with fragment parts cannot be resolved correctly because
 			// the fragment part does not get transmitted over HTTP(S).
 			// Avoid strange behaviour by not trying to resolve these at all.
-			throw new Error(`cannot resolve URL with fragment: ${value}`);
+			//throw new Error(`cannot resolve URL with fragment: ${value}`);
+			console.warn(`ignoring fragment in resolve URL: ${value}`);
+			value = value.split("#")[0];
 		}
 
 		if (this.history.has(value)) {
