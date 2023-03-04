@@ -74,7 +74,7 @@ export type Source = {
 	maxUserSignups?: number;
 	isManagedHosting?: boolean;
 	maxNoteLength?: number;
-	maxCommentLength?: number;
+	maxCaptionLength?: number;
 	deepl: {
 		managed?: boolean;
 		authKey?: string;
