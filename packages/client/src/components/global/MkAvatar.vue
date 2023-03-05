@@ -141,7 +141,9 @@ watch(() => props.user.avatarBlurhash, () => {
 
 		> img.inner {
 			border-radius: 50%;
-	    border: 2px solid currentColor;
+			border: 2px solid currentColor;
+			margin-left: -2px;
+			margin-top: 2px;
 		}
 	}
 }
