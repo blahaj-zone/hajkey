@@ -17,9 +17,11 @@ const props = withDefaults(defineProps<{
 	to: string;
 	activeClass?: null | string;
 	behavior?: null | 'window' | 'browser' | 'modalWindow';
+	callback?: null | ((ev: MouseEvent) => Promise<boolean | string>);
 }>(), {
 	activeClass: null,
 	behavior: null,
+	callback: null,
 });
 
 const router = useRouter();
@@ -79,9 +81,19 @@ function popout() {
 	popout_(props.to);
 }
 
-function nav(ev: MouseEvent) {
+async function nav(ev: MouseEvent) {
+	let to = props.to;
+	if (props.callback) {
+		const ret = await props.callback(ev);
+		if ('string' === typeof ret) {
+			to = ret;
+		} else if (!ret) {
+			return;
+		}
+	}
+
 	if (props.behavior === 'browser') {
-		location.href = props.to;
+		location.href = to;
 		return;
 	}
 
@@ -97,6 +109,6 @@ function nav(ev: MouseEvent) {
 		return openWindow();
 	}
 
-	router.push(props.to, ev.ctrlKey ? 'forcePage' : null);
+	router.push(to, ev.ctrlKey ? 'forcePage' : null);
 }
 </script>

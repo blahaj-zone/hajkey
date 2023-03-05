@@ -28,6 +28,7 @@ const props = defineProps<{
 	external?: boolean;
 	behavior?: null | 'window' | 'browser' | 'modalWindow';
 	inline?: boolean;
+	callback?: ((ev: MouseEvent) => Promise<boolean | string>);
 }>();
 </script>
 
