@@ -138,6 +138,11 @@ watch(() => props.user.avatarBlurhash, () => {
 				animation: earwiggleright 1s infinite;
 			}
 		}
+		
+		> img.inner {
+			border-radius: 50%;
+	    border: 2px solid rgb(141, 117, 114);
+		}
 	}
 }
 </style>
