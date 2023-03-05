@@ -20,7 +20,7 @@
 	</div>
 	<template v-if="conversation">
 		<template v-if="depth < repliesDepth">
-			<div v-for="(reply, index) in replies" :key="reply.id" :class="`divider divider-${((depth + offset + index) % 8)} x-child-${child} x-index-${index} ${index > 0?'divider-next': ''}`">
+			<div v-for="(reply, index) in replies" :key="reply.id" :class="`divider divider-${((depth + offset) % 8)} x-child-${child} x-index-${index} ${index > 0?'divider-next': ''}`">
 				<div :class="`divider-over`">
 					<MkNoteSub :note="reply" :class="`reply`" :conversation="conversation" :depth="depth + 1" :offset="offset + index" :child="index"/>
 				</div>
@@ -184,7 +184,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 		border-bottom-left-radius: 10px;
 		&.divider-next {
-			border-top-left-radius: 10px;
+			border-top-left-radius: 0px;
 		}
 
 		.reply, .more {
@@ -197,7 +197,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 		&.divider-next {
 			> .divider-over {
-				border-top-left-radius: 10px;
+				border-top-left-radius: 0px;
 			}
 		}
 
