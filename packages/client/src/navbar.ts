@@ -72,6 +72,7 @@ export const navbarItemDef = reactive({
 		title: "antennas",
 		icon: "ph-flying-saucer-bold ph-lg",
 		show: computed(() => $i != null),
+		indicated: computed(() => $i?.hasUnreadAntenna),
 		to: "/my/antennas",
 	},
 	favorites: {
@@ -99,6 +100,7 @@ export const navbarItemDef = reactive({
 	channels: {
 		title: "channel",
 		icon: "ph-television-bold ph-lg",
+		indicated: computed(() => $i?.hasUnreadChannel),
 		to: "/channels",
 	},
 	groups: {
