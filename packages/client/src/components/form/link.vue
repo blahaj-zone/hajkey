@@ -8,7 +8,7 @@
 			<i class="ph-arrow-square-out-bold ph-lg icon"></i>
 		</span>
 	</a>
-	<MkA v-else class="main _button" :class="{ active }" :to="to" :behavior="behavior">
+	<MkA v-else class="main _button" :class="{ active }" :to="to" :behavior="behavior" :callback="callback">
 		<span class="icon"><slot name="icon"></slot></span>
 		<span class="text"><slot></slot></span>
 		<span class="right">
