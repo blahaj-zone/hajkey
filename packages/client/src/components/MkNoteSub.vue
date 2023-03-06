@@ -183,6 +183,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 		> .avatar-container {
 			border-left: 3px solid rgb(var(--swatch-color));
+			border-top: 0.5px solid rgb(var(--swatch-color));
 			border-top-left-radius: 10px;
 			border-bottom-left-radius: 10px;
 		}
