@@ -1,7 +1,8 @@
 import define from "../../define.js";
-import { Antennas, AntennaNotes } from "@/models/index.js";
+import { Antennas, AntennaNotes, Users } from "@/models/index.js";
 import { FindOptionsWhere } from "typeorm";
 import { AntennaNote } from "@/models/entities/antenna-note.js";
+import { publishMainStream } from "@/services/stream.js";
 
 export const meta = {
 	tags: ["antennas", "account"],
@@ -38,6 +39,14 @@ export default define(meta, paramDef, async (ps, me) => {
 			read: true,
 		},
 	);
+
+	publishMainStream(me.id, "readAntenna", antenna);
+
+	Users.getHasUnreadAntenna(me.id).then((unread: boolean) => {
+		if (!unread) {
+			publishMainStream(me.id, "readAllAntennas");
+		}
+	});
 
 	return true;
 });
