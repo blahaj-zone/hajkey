@@ -83,49 +83,51 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	}
 
 	> .main {
-		display: flex;
+		> .header-over {
+			display: flex;
 
-		> .header-over > .avatar-container {
-			margin-right: 8px;
-			> .avatar {
-				flex-shrink: 0;
-				display: block;
-				width: 38px;
-				height: 38px;
-				border-radius: 8px;
-			}
-		}
-
-		> .body {
-			flex: 1;
-			min-width: 0;
-			cursor: pointer;
-			@media (pointer: coarse) {
-				cursor: default;
-			}
-			
-			> .header {
-				margin-bottom: 2px;
-				cursor: auto;
+				> .avatar-container {
+				margin-right: 8px;
+				> .avatar {
+					flex-shrink: 0;
+					display: block;
+					width: 38px;
+					height: 38px;
+					border-radius: 8px;
+				}
 			}
 
 			> .body {
-				> .cw {
+				flex: 1;
+				min-width: 0;
+				cursor: pointer;
+				@media (pointer: coarse) {
 					cursor: default;
-					display: block;
-					margin: 0;
-					padding: 0;
-					overflow-wrap: break-word;
-
-					> .text {
-						margin-right: 8px;
-					}
+				}
+				
+				> .header {
+					margin-bottom: 2px;
+					cursor: auto;
 				}
 
-				> .content {
-					> .text {
+				> .body {
+					> .cw {
+						cursor: default;
+						display: block;
 						margin: 0;
 						padding: 0;
+						overflow-wrap: break-word;
+
+						> .text {
+							margin-right: 8px;
+						}
+					}
+
+					> .content {
+						> .text {
+							margin: 0;
+							padding: 0;
+						}
 					}
 				}
 			}
