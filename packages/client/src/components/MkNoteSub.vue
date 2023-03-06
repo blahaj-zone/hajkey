@@ -70,7 +70,6 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 .wrpstxzv {
 	padding: 16px 32px;
 
-
 	&.children {
 		padding: 10px 0 0 16px;
 		font-size: 1em;
@@ -145,43 +144,54 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 	}
 
+	--swatch-color: 128, 128, 128;
+	--swatch-0: 64, 121, 140;  // # 40798c
+	--swatch-1: 255, 191, 183; // # ffbfb7
+	--swatch-2: 151, 200, 235; // # 97c8eb
+	--swatch-3: 255, 214, 102; // # ffd666
+	--swatch-4: 155, 119, 158; // # 9b779e
+	--swatch-5: 226, 112, 132; // # e27084
+	--swatch-6: 194, 234, 189; // # c2eabd
+	--swatch-7: 240, 182, 127; // # f0b67f
+
+	.divider-0, .header-0 {
+		--swatch-color: var(--swatch-0);
+	}
+	.divider-1, .header-1 {
+		--swatch-color: var(--swatch-1);
+	}
+	.divider-2, .header-2 {
+		--swatch-color: var(--swatch-2);
+	}
+	.divider-3, .header-3 {
+		--swatch-color: var(--swatch-3);
+	}
+	.divider-4, .header-4 {
+		--swatch-color: var(--swatch-4);
+	}
+	.divider-5, .header-5 {
+		--swatch-color: var(--swatch-5);
+	}
+	.divider-6, .header-6 {
+		--swatch-color: var(--swatch-6);
+	}
+	.divider-7, .header-7 {
+		--swatch-color: var(--swatch-7);
+	}
+
 	.colorize & .main {
+
 		> .avatar-container {
-			border-left: 3px solid red;
+			border-left: 3px solid var(--swatch-color);
 			border-top-left-radius: 5px;
 		}
 		&.header-solo > .avatar-container {
 			border-left-color: transparent;
 			border-top-left-radius: 0;
 		}
-		&.header-0 > .avatar-container {
-			border-left-color: #40798c;
-		}
-		&.header-1 > .avatar-container {
-			border-left-color: #ffbfb7;
-		}
-		&.header-2 > .avatar-container {
-			border-left-color: #97c8eb;
-		}
-		&.header-3 > .avatar-container {
-			border-left-color: #ffd666;
-		}
-		&.header-4 > .avatar-container {
-			border-left-color: #9b779e;
-		}
-		&.header-5 > .avatar-container {
-			border-left-color: #e27084;
-		}
-		&.header-6 > .avatar-container {
-			border-left-color: #c2eabd;
-		}
-		&.header-7 > .avatar-container {
-			border-left-color: #f0b67f;
-		}
 	}
 
 	.colorize & .divider {
-
 		border-bottom-left-radius: 10px;
 		&.divider-next {
 			border-top-left-radius: 0px;
@@ -191,7 +201,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			border-left-width: 0;
 		}
 		.divider-over {
-				border-left: 3px solid var(--divider);
+				border-left: 3px solid var(--swatch-color);
 				border-top: 0.5px solid var(--divider);
 				border-bottom-left-radius: 10px;
 		}
@@ -200,62 +210,21 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				border-top-left-radius: 0px;
 			}
 		}
-
-		&.divider-0 > .divider-over {
-				border-left-color: #40798c;
-		}
-		&.divider-1 > .divider-over {
-				border-left-color: #ffbfb7;
-		}
-		&.divider-2 > .divider-over {
-				border-left-color: #97c8eb;
-		}
-		&.divider-3 > .divider-over{
-				border-left-color: #ffd666;
-		}
-		&.divider-4 > .divider-over {
-				border-left-color: #9b779e;
-		}
-		&.divider-5 > .divider-over {
-				border-left-color: #e27084;
-		}
-		&.divider-6 > .divider-over {
-				border-left-color: #c2eabd;
-		}
-		&.divider-7 > .divider-over {
-				border-left-color: #f0b67f;
-		}
 	}
 
 	.colorgrad & {
 		.divider {
 			background-color: var(--panel);
+
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			&.divider-0 > .divider-over {
-				background-image: linear-gradient(to right, #40798c30, transparent 5%);
-			}
-			&.divider-1 > .divider-over {
-				background-image: linear-gradient(to right, #ffbfb730, transparent 5%);
-			}
-			&.divider-2 > .divider-over {
-				background-image: linear-gradient(to right, #97c8eb30, transparent 5%);
-			}
-			&.divider-3 > .divider-over{
-				background-image: linear-gradient(to right, #ffd66630, transparent 5%);
-			}
-			&.divider-4 > .divider-over {
-				background-image: linear-gradient(to right, #9b779e30, transparent 5%);
-			}
-			&.divider-5 > .divider-over {
-				background-image: linear-gradient(to right, #e2708430, transparent 5%);
-			}
-			&.divider-6 > .divider-over {
-				background-image: linear-gradient(to right, #c2eabd30, transparent 5%);
-			}
-			&.divider-7 > .divider-over {
-				background-image: linear-gradient(to right, #f0b67f30, transparent 5%);
+
+			> .divider-over {
+				background-image:
+				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
+				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
+				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
 			}
 		}
 	}
@@ -266,29 +235,8 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			&.divider-0 > .divider-over {
-				background-color: #40798c30;
-			}
-			&.divider-1 > .divider-over {
-				background-color: #ffbfb730;
-			}
-			&.divider-2 > .divider-over {
-				background-color: #97c8eb30;
-			}
-			&.divider-3 > .divider-over{
-				background-color: #ffd66630;
-			}
-			&.divider-4 > .divider-over {
-				background-color: #9b779e30;
-			}
-			&.divider-5 > .divider-over {
-				background-color: #e2708430;
-			}
-			&.divider-6 > .divider-over {
-				background-color: #c2eabd30;
-			}
-			&.divider-7 > .divider-over {
-				background-color: #f0b67f30;
+			> .divider-over {
+				background-color: color(var(--swatch-color), 0.18);
 			}
 		}
 	}
