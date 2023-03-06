@@ -219,14 +219,13 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-
-			> .divider-over, > .main.header-over {
-				background-position: bottom left;
-				background-image:
-					linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
-					linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
-					linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
-			}
+		}
+		.divider > .divider-over, > .main.header-over {
+			background-position: bottom left;
+			background-image:
+				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
+				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
+				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
 		}
 	}
 
@@ -236,9 +235,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			> .divider-over, > .main.header-over {
-				background-color: rgba(var(--swatch-color), 0.18);
-			}
+		}
+		.divider > .divider-over, > .main.header-over {
+			background-color: rgba(var(--swatch-color), 0.18);
 		}
 	}
 
