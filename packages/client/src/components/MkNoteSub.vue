@@ -154,35 +154,35 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	--swatch-6: 194, 234, 189; // # c2eabd
 	--swatch-7: 240, 182, 127; // # f0b67f
 
-	.divider-0, .header-0 {
+	> .divider-0, > .header-0 {
 		--swatch-color: var(--swatch-0);
 	}
-	.divider-1, .header-1 {
+	> .divider-1, > .header-1 {
 		--swatch-color: var(--swatch-1);
 	}
-	.divider-2, .header-2 {
+	> .divider-2, > .header-2 {
 		--swatch-color: var(--swatch-2);
 	}
-	.divider-3, .header-3 {
+	> .divider-3, > .header-3 {
 		--swatch-color: var(--swatch-3);
 	}
-	.divider-4, .header-4 {
+	> .divider-4, > .header-4 {
 		--swatch-color: var(--swatch-4);
 	}
-	.divider-5, .header-5 {
+	> .divider-5, > .header-5 {
 		--swatch-color: var(--swatch-5);
 	}
-	.divider-6, .header-6 {
+	> .divider-6, > .header-6 {
 		--swatch-color: var(--swatch-6);
 	}
-	.divider-7, .header-7 {
+	> .divider-7, > .header-7 {
 		--swatch-color: var(--swatch-7);
 	}
 
 	.colorize & .main {
 
 		> .avatar-container {
-			border-left: 3px solid var(--swatch-color);
+			border-left: 3px solid rgb(var(--swatch-color));
 			border-top-left-radius: 5px;
 		}
 		&.header-solo > .avatar-container {
@@ -200,8 +200,8 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		.reply, .more {
 			border-left-width: 0;
 		}
-		.divider-over {
-				border-left: 3px solid var(--swatch-color);
+		> .divider-over {
+				border-left: 3px solid rgb(var(--swatch-color));
 				border-top: 0.5px solid var(--divider);
 				border-bottom-left-radius: 10px;
 		}
@@ -222,9 +222,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 			> .divider-over {
 				background-image:
-				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
-				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
-				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
+					linear-gradient(85deg, rgba(var(--swatch-color) 0.09), transparent 30px),
+					linear-gradient(50deg, rgba(var(--swatch-color) 0.18), transparent 150px),
+					linear-gradient(1deg, rgba(var(--swatch-color) 0.14), transparent 15px);
 			}
 		}
 	}
@@ -236,7 +236,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				background-color: var(--panelHighlight);
 			}
 			> .divider-over {
-				background-color: color(var(--swatch-color), 0.18);
+				background-color: rgba(var(--swatch-color), 0.18);
 			}
 		}
 	}
