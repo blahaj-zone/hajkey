@@ -85,7 +85,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	> .main {
 		display: flex;
 
-		> .avatar-container {
+		> .header-over > .avatar-container {
 			margin-right: 8px;
 			> .avatar {
 				flex-shrink: 0;
