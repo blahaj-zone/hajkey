@@ -223,7 +223,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	}
 
 	.colorgrad & {
-		.divider, .main {
+		.divider, .main:not(.header-solo) {
 			background-color: var(--panel);
 
 			&:hover {
@@ -243,7 +243,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	}
 
 	.colorbg & {
-		.divider {
+		.divider, .main:not(.header-solo) {
 			background-color: var(--panel);
 			&:hover {
 				background-color: var(--panelHighlight);
