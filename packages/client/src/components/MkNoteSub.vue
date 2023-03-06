@@ -188,9 +188,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			border-bottom-left-radius: 10px;
 		}
 		&.header-solo > .avatar-container {
-			border-left-color: transparent;
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
+			//border-left-color: transparent;
+			border-top-left-radius: 3px;
+			border-bottom-left-radius: 3px;
 		}
 	}
 
