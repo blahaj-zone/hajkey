@@ -1,19 +1,21 @@
 <template>
 <div v-size="{ max: [450] }" class="wrpstxzv" :class="{ children: depth > 1 }">
-	<div class="main" :class="`header-over header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
-		<div class="avatar-container">
-			<MkAvatar class="avatar" :user="note.user"/>
-			<div class="line"></div>
-		</div>
-		<div class="body">
-			<XNoteHeader class="header" :note="note" :mini="true"/>
+	<div class="main" :class="`header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
+		<div class="header-over">
+			<div class="avatar-container">
+				<MkAvatar class="avatar" :user="note.user"/>
+				<div class="line"></div>
+			</div>
 			<div class="body">
-				<p v-if="note.cw != null" class="cw">
-					<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
-					<XCwButton v-model="showContent" :note="note"/>
-				</p>
-				<div v-show="note.cw == null || showContent" class="content" @click="$log('router pushing from sub content'); router.push(notePage(note))">
-					<MkSubNoteContent class="text" :note="note"/>
+				<XNoteHeader class="header" :note="note" :mini="true"/>
+				<div class="body">
+					<p v-if="note.cw != null" class="cw">
+						<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
+						<XCwButton v-model="showContent" :note="note"/>
+					</p>
+					<div v-show="note.cw == null || showContent" class="content" @click="$log('router pushing from sub content'); router.push(notePage(note))">
+						<MkSubNoteContent class="text" :note="note"/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -181,20 +183,20 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 	.colorize & .main {
 
-		> .avatar-container {
+		> .header-over > .avatar-container {
 			padding-left: 3px;
 			border-left: 3px solid rgb(var(--swatch-color));
 			border-top: 0.5px solid rgb(var(--swatch-color));
 			border-top-left-radius: 10px;
 			border-bottom-left-radius: 10px;
 		}
-		&.header-solo > .avatar-container {
+		&.header-solo > .header-over > .avatar-container {
 			border-top-left-radius: 3px;
 			border-bottom-left-radius: 3px;
 		}
 	}
 
-	.colorize & .reply.children > .main.header-solo > .avatar-container {
+	.colorize & .reply.children > .main.header-solo > .header-over > .avatar-container {
 		border-top: none;
 		border-left: none;
 	}
@@ -223,22 +225,22 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 	}
 
 	.colorgrad & {
-		.divider {
+		.divider, .main {
 			background-color: var(--panel);
 
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
 		}
-		.divider > .divider-over, > .main.header-over {
+		.divider > .divider-over, > .main > .header-over {
 			background-position: bottom left;
 			background-image:
 				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
 				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
 				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
-			&.header-solo {
-				background: transparent;
-			}
+		}
+		> .main > .header-over.header-solo  {
+			background: transparent;
 		}
 	}
 
