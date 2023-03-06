@@ -136,7 +136,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 	> .divider > .divider-over {
 		> .reply, > .more {
-			border-left: solid 0.5px var(--divider);
+			border-left: solid 2px var(--divider);
 			margin-top: 10px;
 		}
 	}
