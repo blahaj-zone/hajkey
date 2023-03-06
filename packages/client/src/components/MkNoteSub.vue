@@ -192,10 +192,6 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			border-top-left-radius: 10px;
 			border-bottom-left-radius: 10px;
 		}
-		&.header-solo > .header-over > .avatar-container {
-			border-top-left-radius: 3px;
-			border-bottom-left-radius: 3px;
-		}
 	}
 
 	.colorize & .reply.children > .main.header-solo > .header-over > .avatar-container {
@@ -241,9 +237,6 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
 				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
 		}
-		> .main > .header-over.header-solo  {
-			background: transparent;
-		}
 	}
 
 	.colorbg & {
@@ -253,11 +246,8 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				background-color: var(--panelHighlight);
 			}
 		}
-		.divider > .divider-over, > .main.header-over {
+		.divider > .divider-over, > .main > .header-over {
 			background-color: rgba(var(--swatch-color), 0.18);
-			&.header-solo {
-				background: transparent;
-			}
 		}
 	}
 
