@@ -134,9 +134,11 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 	}
 
-	> .reply, > .more {
-		border-left: solid 0.5px var(--divider);
-		margin-top: 10px;
+	> .divider > .divider-over {
+		> .reply, > .more {
+			border-left: solid 0.5px var(--divider);
+			margin-top: 10px;
+		}
 	}
 
 	.compact & {
