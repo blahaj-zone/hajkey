@@ -1,6 +1,6 @@
 <template>
 <div v-size="{ max: [450] }" class="wrpstxzv" :class="{ children: depth > 1 }">
-	<div class="main" :class="`header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
+	<div class="main" :class="`header-over header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
 		<div class="avatar-container">
 			<MkAvatar class="avatar" :user="note.user"/>
 			<div class="line"></div>
@@ -220,7 +220,8 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				background-color: var(--panelHighlight);
 			}
 
-			> .divider-over {
+			> .divider-over, > .main.header-over {
+				background-position: bottom left;
 				background-image:
 					linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
 					linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
@@ -235,7 +236,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			&:hover {
 				background-color: var(--panelHighlight);
 			}
-			> .divider-over {
+			> .divider-over, > .main.header-over {
 				background-color: rgba(var(--swatch-color), 0.18);
 			}
 		}
