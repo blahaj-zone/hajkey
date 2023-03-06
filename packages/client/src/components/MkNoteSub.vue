@@ -194,8 +194,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		}
 	}
 
-	.colorize & .children > .main.header-solo > .avatar-container {
+	.colorize & .reply.children > .main.header-solo > .avatar-container {
 		border-top: none;
+		border-left: none;
 	}
 
 	.colorize & .divider {
