@@ -221,6 +221,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			}
 		}
 		.divider > .divider-over, > .main.header-over {
+			padding: 3px;
 			background-position: bottom left;
 			background-image:
 				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
@@ -237,6 +238,7 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 			}
 		}
 		.divider > .divider-over, > .main.header-over {
+			padding: 3px;
 			background-color: rgba(var(--swatch-color), 0.18);
 		}
 	}
