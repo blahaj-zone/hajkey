@@ -1,6 +1,6 @@
 <template>
 <div v-size="{ max: [450] }" class="wrpstxzv" :class="{ children: depth > 1 }">
-	<div class="main" :class="`header-${replies.length === 0 ? 'solo' : ((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
+	<div class="main" :class="`${replies.length === 0 ? 'header-solo ' : ''} header-${((depth + offset) % 8)}`" @click="$log('router pushing from sub main'); router.push(notePage(note))">
 		<div class="header-over">
 			<div class="avatar-container">
 				<MkAvatar class="avatar" :user="note.user"/>
