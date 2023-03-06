@@ -222,9 +222,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 
 			> .divider-over {
 				background-image:
-					linear-gradient(85deg, rgba(var(--swatch-color) 0.09), transparent 30px),
-					linear-gradient(50deg, rgba(var(--swatch-color) 0.18), transparent 150px),
-					linear-gradient(1deg, rgba(var(--swatch-color) 0.14), transparent 15px);
+					linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
+					linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
+					linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
 			}
 		}
 	}
