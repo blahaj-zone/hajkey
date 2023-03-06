@@ -227,6 +227,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 				linear-gradient(85deg, rgba(var(--swatch-color), 0.09), transparent 30px),
 				linear-gradient(50deg, rgba(var(--swatch-color), 0.18), transparent 150px),
 				linear-gradient(1deg, rgba(var(--swatch-color), 0.14), transparent 15px);
+			&.header-solo {
+				background: transparent;
+			}
 		}
 	}
 
@@ -240,6 +243,9 @@ const replies: misskey.entities.Note[] = props.conversation?.filter(item => item
 		.divider > .divider-over, > .main.header-over {
 			padding: 3px;
 			background-color: rgba(var(--swatch-color), 0.18);
+			&.header-solo {
+				background: transparent;
+			}
 		}
 	}
 
