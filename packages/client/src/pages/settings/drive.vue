@@ -23,7 +23,12 @@
 	</FormSection>
 
 	<FormSection>
-		<FormLink @click="chooseUploadFolder()">
+		<FormLink to=""
+			:callback="async () => {
+				await chooseUploadFolder();
+				return false;
+			}"
+		>
 			{{ i18n.ts.uploadFolder }}
 			<template #suffix>{{ uploadFolder ? uploadFolder.name : '-' }}</template>
 			<template #suffixIcon><i class="ph-folder-notch-open-bold ph-lg"></i></template>
