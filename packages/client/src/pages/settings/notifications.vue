@@ -1,24 +1,24 @@
 <template>
 <div class="_formRoot">
 	<FormLink class="_formBlock" to=""
-		@callback="async () => { configure(); return false; }"
+		:callback="async () => { configure(); return false; }"
 	>
 		<template #icon><i class="ph-gear-six-bold ph-lg"></i></template>
 		{{ i18n.ts.notificationSetting }}
 	</FormLink>
 	<FormSection>
 		<FormLink class="_formBlock" to=""
-			@callback="async () => { await readAllNotifications(); return false; }"
+			:callback="async () => { await readAllNotifications(); return false; }"
 		>
 			{{ i18n.ts.markAsReadAllNotifications }}
 		</FormLink>
 		<FormLink class="_formBlock" to=""
-			@callback="async () => { await readAllUnreadNotes(); return false; }"
+			:callback="async () => { await readAllUnreadNotes(); return false; }"
 		>
 			{{ i18n.ts.markAsReadAllUnreadNotes }}
 		</FormLink>
 		<FormLink class="_formBlock" to=""
-			@callback="async () => { await readAllMessagingMessages(); return false; }"
+			:callback="async () => { await readAllMessagingMessages(); return false; }"
 		>
 			{{ i18n.ts.markAsReadAllTalkMessages }}
 		</FormLink>
