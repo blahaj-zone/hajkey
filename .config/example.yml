@@ -78,7 +78,7 @@ redis:
 #sonic:
 #  host: localhost
 #  port: 1491
-#  auth: SecretAuth
+#  auth: SecretPassword
 #  collection: notes
 #  bucket: default
 
