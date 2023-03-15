@@ -36,12 +36,11 @@ export default async function indexAllNotes(
 
 		cursor = notes[notes.length - 1].id;
 		
+		await Promise.all(notes.map(async (note) => index(note)));
+
 		const total = await Notes.count();
-		for (const note of notes) {
-			await index(note);
-			indexedCount++;
-			job.progress(indexedCount / total);
-		}
+		indexedCount += notes.length;
+		job.progress(indexedCount / total);
 	}
 
 	logger.succ("All notes have been indexed.");
