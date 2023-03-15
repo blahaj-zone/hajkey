@@ -609,7 +609,7 @@ new  Promise<Note>(async (res, rej) => {
 		}
 
 		// Register to search database
-		index(note);
+		await index(note);
 	});
 
 async function renderNoteOrRenoteActivity(data: Option, note: Note) {
@@ -749,7 +749,7 @@ async function insertNote(
 	}
 }
 
-export function index(note: Note) {
+export async function index(note: Note): Promise<void> {
 	if (note.text == null) return;
 
 	if (config.elasticsearch && es) {
@@ -765,7 +765,7 @@ export function index(note: Note) {
 	}
 
 	if (config.sonic && sonic) {
-		sonic.ingest.push(
+		await sonic.ingest.push(
 			config.sonic.collection ?? "notes",
 			config.sonic.bucket ?? "default",
 			JSON.stringify({

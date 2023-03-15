@@ -22,6 +22,12 @@ const search = config.sonic
 			error: (error) => {
 				logger.warn("Sonic search error", error);
 			},
+			retrying: () => {
+				logger.info("Sonic search retrying");
+			},
+			timeout: () => {
+				logger.warn("Sonic search timeout");
+			},
 		})
 	: null;
 
@@ -39,6 +45,12 @@ const ingest = config.sonic
 			},
 			error: (error) => {
 				logger.warn("Sonic ingest error", error);
+			},
+			retrying: () => {
+				logger.info("Sonic ingest retrying");
+			},
+			timeout: () => {
+				logger.warn("Sonic ingest timeout");
 			}
 		})
 	: null;
