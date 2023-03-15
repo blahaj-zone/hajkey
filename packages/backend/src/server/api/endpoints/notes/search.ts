@@ -1,13 +1,14 @@
 import { In } from "typeorm";
 import { Notes } from "@/models/index.js";
+import { Note } from "@/models/entities/note.js";
 import config from "@/config/index.js";
 import es from "../../../../db/elasticsearch.js";
+import sonic from "../../../../db/sonic.js";
 import define from "../../define.js";
 import { makePaginationQuery } from "../../common/make-pagination-query.js";
 import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
 import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
 import { generateBlockedUserQuery } from "../../common/generate-block-query.js";
-import safe from "safe-regex";
 
 export const meta = {
 	tags: ["notes"],
@@ -63,7 +64,7 @@ const max = (a:number, b:number): number => a > b ? b : 1;
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
-	if (es == null) {
+	if (es == null && sonic == null) {
 		const query = makePaginationQuery(
 			Notes.createQueryBuilder("note"),
 			ps.sinceId,
@@ -78,30 +79,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			});
 		}
 
-		const reStart = ps.query.indexOf("/");
-		const reEnd = ps.query.lastIndexOf("/");
-
-		if (
-			ps.query.length > 3 &&
-			reStart === 0 &&
-			reEnd >= max(3, ps.query.length - 2)
-		) {
-			const reMatch = ps.query.slice(reStart + 1, reEnd);
-			const reOpts = ps.query.slice(reEnd + 1);
-
-			if (!safe(reMatch)) {
-				return null;
-			}
-
-			if (reOpts.includes("i")) {
-				query.andWhere("note.text ~* :q", { q: reMatch });
-			} else {
-				query.andWhere("note.text ~ :q", { q: reMatch });
-			}
-		} else {
-			query.andWhere("note.text ILIKE :q", { q: `%${ps.query}%` });
-		}
-
+		query.andWhere("note.text ILIKE :q", { q: `%${ps.query}%` });
 		query
 			.innerJoinAndSelect("note.user", "user")
 			.leftJoinAndSelect("user.avatar", "avatar")
@@ -122,6 +100,63 @@ export default define(meta, paramDef, async (ps, me) => {
 		const notes = await query.take(ps.limit).getMany();
 
 		return await Notes.packMany(notes, me);
+	} else if (sonic) {
+		let start = ps.offset
+		const chunkSize = 1000
+
+		const found = []
+		while (found.length < ps.limit) {
+			const results = await sonic.search.query(
+				"notes", "default",
+				ps.query, {
+					limit: chunkSize,
+					offset: start,
+				},
+			);
+
+			start += chunkSize;
+
+			if (results.length === 0) {
+				break;
+			}
+
+			const ids = results
+				.map((k) => JSON.parse(k))
+				.filter((key) => {
+					if (ps.userId && key.userId !== ps.userId) {
+						return false;
+					}
+					if (ps.channelId && key.channelId !== ps.channelId) {
+						return false;
+					}
+					if (ps.sinceId && key.id < ps.sinceId) {
+						return false;
+					}
+					if (ps.untilId && key.id > ps.untilId) {
+						return false;
+					}
+					return true;
+				})
+				.map((key) => key.id);
+
+			const notes: Note[] = await Notes.find({
+				where: {
+					id: In(ids),
+				},
+				order: {
+					id: "DESC",
+				},
+			});
+
+			found.push(...await Notes.packMany(notes, me));
+		}
+
+		found.sort((a, b) => b.id < a.id ? -1 : 1);
+		if (found.length > ps.limit) {
+			found.length = ps.limit;
+		}
+
+		return found;
 	} else {
 		const userQuery =
 			ps.userId != null

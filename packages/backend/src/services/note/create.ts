@@ -1,5 +1,6 @@
 import * as mfm from "mfm-js";
 import es from "../../db/elasticsearch.js";
+import sonic from "../../db/sonic.js";
 import { publishMainStream, publishNotesStream, publishNoteStream } from "@/services/stream.js";
 import DeliverManager from "@/remote/activitypub/deliver-manager.js";
 import renderNote from "@/remote/activitypub/renderer/note.js";
@@ -748,18 +749,33 @@ async function insertNote(
 	}
 }
 
-function index(note: Note) {
-	if (note.text == null || config.elasticsearch == null) return;
+export function index(note: Note) {
+	if (note.text == null) return;
 
-	es!.index({
-		index: config.elasticsearch.index || "misskey_note",
-		id: note.id.toString(),
-		body: {
-			text: normalizeForSearch(note.text),
-			userId: note.userId,
-			userHost: note.userHost,
-		},
-	});
+	if (config.elasticsearch && es) {
+		es.index({
+			index: config.elasticsearch.index || "misskey_note",
+			id: note.id.toString(),
+			body: {
+				text: normalizeForSearch(note.text),
+				userId: note.userId,
+				userHost: note.userHost,
+			},
+		});
+	}
+
+	if (config.sonic && sonic) {
+		sonic.ingest.push(
+			"notes", "default",
+			JSON.stringify({
+				id: note.id,
+				userId: note.userId,
+				userHost: note.userHost,
+				channelId: note.channelId,
+			}),
+			note.text,
+		);
+	}
 }
 
 async function notifyToWatchersOfRenotee(

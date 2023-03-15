@@ -24,6 +24,7 @@ import {
 	objectStorageQueue,
 	endedPollNotificationQueue,
 	webhookDeliverQueue,
+	backgroundQueue,
 } from "./queues.js";
 import type { ThinUser } from "./types.js";
 
@@ -418,6 +419,17 @@ export function createCleanRemoteFilesJob() {
 	);
 }
 
+export function createIndexAllNotesJob() {
+	return backgroundQueue.add(
+		"indexAllNotes",
+		{},
+		{
+			removeOnComplete: true,
+			removeOnFail: true,
+		},
+	);
+}
+
 export function webhookDeliver(
 	webhook: Webhook,
 	type: typeof webhookEventTypes[number],
@@ -454,6 +466,7 @@ export default function () {
 	webhookDeliverQueue.process(64, processWebhookDeliver);
 	processDb(dbQueue);
 	processObjectStorage(objectStorageQueue);
+	processBackground(backgroundQueue);
 
 	systemQueue.add(
 		"tickCharts",
