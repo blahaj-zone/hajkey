@@ -1,6 +1,11 @@
 import * as SonicChannel from "sonic-channel";
+import { dbLogger } from "./logger.js";
 
 import config from "@/config/index.js";
+
+const logger = dbLogger.createSubLogger("sonic", "gray", false);
+
+logger.info("Connecting to Sonic");
 
 const search = config.sonic
 	? new SonicChannel.Search({
@@ -9,13 +14,13 @@ const search = config.sonic
 			auth: config.sonic.auth ?? "SecretPassword",
 		}).connect({
 			connected: () => {
-				console.log("Connected to Sonic search");
+				logger.succ("Connected to Sonic search");
 			},
 			disconnected: (error) => {
-				console.error("Disconnected from Sonic search", error);
+				logger.warn("Disconnected from Sonic search", error);
 			},
 			error: (error) => {
-				console.error("Sonic search error", error);
+				logger.warn("Sonic search error", error);
 			},
 		})
 	: null;
@@ -27,13 +32,13 @@ const ingest = config.sonic
 			auth: config.sonic.auth ?? "SecretPassword",
 		}).connect({
 			connected: () => {
-				console.log("Connected to Sonic ingest");
+				logger.succ("Connected to Sonic ingest");
 			},
 			disconnected: (error) => {
-				console.error("Disconnected from Sonic ingest", error);
+				logger.warn("Disconnected from Sonic ingest", error);
 			},
 			error: (error) => {
-				console.error("Sonic ingest error", error);
+				logger.warn("Sonic ingest error", error);
 			}
 		})
 	: null;
