@@ -29,7 +29,8 @@ import proxyServer from "./proxy/index.js";
 import webServer from "./web/index.js";
 import { initializeStreamingServer } from "./api/streaming.js";
 
-import "./db/sonic.js";
+// Force sonic stream to connect at start if enabled
+import "../db/sonic.js";
 
 export const serverLogger = new Logger("server", "gray", false);
 
