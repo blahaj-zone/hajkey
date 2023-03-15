@@ -72,6 +72,16 @@ redis:
 #  user: 
 #  pass: 
 
+#   ┌─────────────------──┐
+#───┘ Sonic configuration └─────────────────────────────────────
+
+#sonic:
+#  host: localhost
+#  portt: 1491
+#  auth: SecretAuth
+#  collection: notes
+#  bucket: default
+
 #   ┌───────────────┐
 #───┘ ID generation └───────────────────────────────────────────
 
