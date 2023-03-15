@@ -102,7 +102,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		return await Notes.packMany(notes, me);
 	} else if (sonic) {
 		let start = ps.offset
-		const chunkSize = 1000
+		const chunkSize = 100
 
 		const found = []
 		while (found.length < ps.limit) {
