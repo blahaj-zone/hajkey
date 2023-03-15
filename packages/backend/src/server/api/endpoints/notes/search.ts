@@ -97,7 +97,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		if (me) generateMutedUserQuery(query, me);
 		if (me) generateBlockedUserQuery(query, me);
 
-		const notes = await query.take(ps.limit).getMany();
+		const notes: Note[] = await query.take(ps.limit).getMany();
 
 		return await Notes.packMany(notes, me);
 	} else if (sonic) {
@@ -107,8 +107,10 @@ export default define(meta, paramDef, async (ps, me) => {
 		const found = []
 		while (found.length < ps.limit) {
 			const results = await sonic.search.query(
-				"notes", "default",
-				ps.query, {
+				config.sonic.collection ?? "notes",
+				config.sonic.bucket ?? "default",
+				ps.query,
+				{
 					limit: chunkSize,
 					offset: start,
 				},

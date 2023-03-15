@@ -36,6 +36,8 @@ export type Source = {
 		host: string;
 		port: number;
 		auth?: string;
+		collection?: string;
+		bucket?: string;
 	};
 
 	proxy?: string;

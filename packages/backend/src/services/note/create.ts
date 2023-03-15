@@ -766,7 +766,8 @@ export function index(note: Note) {
 
 	if (config.sonic && sonic) {
 		sonic.ingest.push(
-			"notes", "default",
+			config.sonic.collection ?? "notes",
+			config.sonic.bucket ?? "default",
 			JSON.stringify({
 				id: note.id,
 				userId: note.userId,
