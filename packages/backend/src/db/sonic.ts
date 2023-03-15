@@ -7,7 +7,17 @@ const search = config.sonic
 			host: config.sonic.host ?? "localhost",
 			port: config.sonic.port ?? 1491,
 			auth: config.sonic.auth ?? "SecretPassword",
-		}).connect({})
+		}).connect({
+			connected: () => {
+				console.log("Connected to Sonic search");
+			},
+			disconnected: (error) => {
+				console.error("Disconnected from Sonic search", error);
+			},
+			error: (error) => {
+				console.error("Sonic search error", error);
+			},
+		})
 	: null;
 
 const ingest = config.sonic
@@ -15,7 +25,17 @@ const ingest = config.sonic
 			host: config.sonic.host ?? "localhost",
 			port: config.sonic.port ?? 1491,
 			auth: config.sonic.auth ?? "SecretPassword",
-		}).connect({})
+		}).connect({
+			connected: () => {
+				console.log("Connected to Sonic ingest");
+			},
+			disconnected: (error) => {
+				console.error("Disconnected from Sonic ingest", error);
+			},
+			error: (error) => {
+				console.error("Sonic ingest error", error);
+			}
+		})
 	: null;
 
 export default search && ingest
