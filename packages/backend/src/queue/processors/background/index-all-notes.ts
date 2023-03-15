@@ -6,7 +6,7 @@ import { MoreThan, LessThan, Not, IsNull } from "typeorm";
 import { index } from "@/services/note/create.js"
 import { Note } from "@/models/entities/note.js";
 
-const logger = queueLogger.createSubLogger("clean-remote-files");
+const logger = queueLogger.createSubLogger("index-all-notes");
 
 export default async function indexAllNotes(
 	job: Bull.Job<Record<string, unknown>>,
