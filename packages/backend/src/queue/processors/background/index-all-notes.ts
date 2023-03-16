@@ -18,33 +18,50 @@ export default async function indexAllNotes(
 	let cursor: string|null = null;
 	let total = 0;
 
-	const size = 100;
+	const take = 50000;
+	const batch = 100;
 	while (true) {
 		logger.info(`Indexing notes ${indexedCount}/${total ? total : '?'} at ${cursor}`);
 
-		const notes: Note[] = await Notes.find({
-			where: {
-				...(cursor ? { id: MoreThan(cursor) } : {}),
-			},
-			take: size,
-			order: {
-				id: 1,
-			},
-		});
+		let notes: Note[] = [];
+		try {
+			notes = await Notes.find({
+				where: {
+					...(cursor ? { id: MoreThan(cursor) } : {}),
+				},
+				take: take,
+				order: {
+					id: 1,
+				},
+			});
+		} catch (e) {
+			logger.error(`Failed to query notes ${e}`);
+			continue;
+		}
 
 		if (notes.length === 0) {
 			job.progress(100);
 			break;
 		}
 
+		try {
+			const count = await Notes.count();
+			total = count;
+		} catch (e) {
+		}
+
+		for (let i = 0; i < notes.length; i += batch) {
+			const chunk = notes.slice(i, i + batch);
+			await Promise.all(chunk.map(note => index(note)));
+
+			indexedCount += notes.length;
+			const pct = (indexedCount / total);
+			job.progress(+(pct.toFixed(2)));
+			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
+		}
 		cursor = notes[notes.length - 1].id;
 		
 		await Promise.all(notes.map(note => index(note)));
-
-		total = await Notes.count();
-		indexedCount += notes.length;
-		const pct = (indexedCount / total);
-		job.progress(+(pct.toFixed(2)));
 	}
 
 	logger.succ("All notes have been indexed.");
