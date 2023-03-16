@@ -16,9 +16,12 @@ export default async function indexAllNotes(
 
 	let indexedCount = 0;
 	let cursor: string|null = null;
+	let total = 0;
 
 	const size = 100;
 	while (true) {
+		logger.info(`Indexing notes ${indexedCount}/${total ? total : '?'} at ${cursor}`);
+
 		const notes: Note[] = await Notes.find({
 			where: {
 				...(cursor ? { id: MoreThan(cursor) } : {}),
@@ -36,11 +39,12 @@ export default async function indexAllNotes(
 
 		cursor = notes[notes.length - 1].id;
 		
-		await Promise.all(notes.map(async (note) => index(note)));
+		await Promise.all(notes.map(note => index(note)));
 
-		const total = await Notes.count();
+		total = await Notes.count();
 		indexedCount += notes.length;
-		job.progress(indexedCount / total);
+		const pct = (indexedCount / total);
+		job.progress(+(pct.toFixed(2)));
 	}
 
 	logger.succ("All notes have been indexed.");
