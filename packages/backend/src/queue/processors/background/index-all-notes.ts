@@ -21,7 +21,7 @@ export default async function indexAllNotes(
 	const take = 50000;
 	const batch = 100;
 	while (true) {
-		logger.info(`Indexing notes ${indexedCount}/${total ? total : '?'} at ${cursor}`);
+		logger.info(`Querying for ${take} notes ${indexedCount}/${total ? total : '?'} at ${cursor}`);
 
 		let notes: Note[] = [];
 		try {
@@ -60,8 +60,6 @@ export default async function indexAllNotes(
 			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
 		}
 		cursor = notes[notes.length - 1].id;
-		
-		await Promise.all(notes.map(note => index(note)));
 	}
 
 	logger.succ("All notes have been indexed.");
