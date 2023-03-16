@@ -55,8 +55,8 @@ export default async function indexAllNotes(
 			await Promise.all(chunk.map(note => index(note)));
 
 			indexedCount += chunk.length;
-			const pct = (indexedCount / total);
-			job.progress(+(pct.toFixed(2)));
+			const pct = (indexedCount / total)*100;
+			job.progress(+(pct.toFixed(1)));
 			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
 		}
 		cursor = notes[notes.length - 1].id;
