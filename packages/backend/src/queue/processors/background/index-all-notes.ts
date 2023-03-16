@@ -54,7 +54,7 @@ export default async function indexAllNotes(
 			const chunk = notes.slice(i, i + batch);
 			await Promise.all(chunk.map(note => index(note)));
 
-			indexedCount += notes.length;
+			indexedCount += chunk.length;
 			const pct = (indexedCount / total);
 			job.progress(+(pct.toFixed(2)));
 			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
