@@ -750,7 +750,7 @@ async function insertNote(
 }
 
 export async function index(note: Note): Promise<void> {
-	if (note.text == null) return;
+	if (!note.text) return;
 
 	if (config.elasticsearch && es) {
 		es.index({
