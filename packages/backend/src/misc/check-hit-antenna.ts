@@ -21,7 +21,7 @@ const matcherCache = new Cache<matchFunction>(1000 * 60 * 60);
 /**
  * noteUserFollowers / antennaUserFollowing はどちらか一方が指定されていればよい
  */
-export async function fir(
+export async function checkHitAntenna(
 	antenna: Antenna,
 	note: Note | Packed<"Note">,
 	noteUser: { id: User["id"]; username: string; host: string | null },
