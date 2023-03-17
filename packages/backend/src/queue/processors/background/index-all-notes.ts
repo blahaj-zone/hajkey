@@ -2,7 +2,7 @@ import type Bull from "bull";
 
 import { queueLogger } from "../../logger.js";
 import { Notes } from "@/models/index.js";
-import { MoreThan, LessThan, Not, IsNull } from "typeorm";
+import { MoreThan } from "typeorm";
 import { index } from "@/services/note/create.js"
 import { Note } from "@/models/entities/note.js";
 
@@ -14,9 +14,9 @@ export default async function indexAllNotes(
 ): Promise<void> {
 	logger.info("Indexing all notes...");
 
-	let indexedCount = 0;
-	let cursor: string|null = null;
-	let total = 0;
+	let cursor: string|null = job.data.cursor as string ?? null;
+	let indexedCount: number = job.data.indexedCount as number ?? 0;
+	let total: number = job.data.total as number ?? 0;
 
 	let running = true;
 	const take = 50000;
@@ -49,6 +49,7 @@ export default async function indexAllNotes(
 		try {
 			const count = await Notes.count();
 			total = count;
+			job.update({ indexedCount, cursor, total })
 		} catch (e) {
 		}
 
@@ -58,10 +59,12 @@ export default async function indexAllNotes(
 
 			indexedCount += chunk.length;
 			const pct = (indexedCount / total)*100;
+			job.update({ indexedCount, cursor, total })
 			job.progress(+(pct.toFixed(1)));
 			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
 		}
 		cursor = notes[notes.length - 1].id;
+		job.update({ indexedCount, cursor, total })
 
 		if (notes.length < take) {
 			running = false;
