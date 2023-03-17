@@ -764,10 +764,10 @@ export async function index(note: Note): Promise<void> {
 		});
 	}
 
-	if (config.sonic && sonic) {
+	if (sonic) {
 		await sonic.ingest.push(
-			config.sonic.collection ?? "notes",
-			config.sonic.bucket ?? "default",
+			sonic.collection,
+			sonic.bucket,
 			JSON.stringify({
 				id: note.id,
 				userId: note.userId,

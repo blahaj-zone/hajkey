@@ -107,8 +107,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		const found = []
 		while (found.length < ps.limit) {
 			const results = await sonic.search.query(
-				config.sonic.collection ?? "notes",
-				config.sonic.bucket ?? "default",
+				sonic.collection,
+				sonic.bucket,
 				ps.query,
 				{
 					limit: chunkSize,
