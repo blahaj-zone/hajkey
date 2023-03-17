@@ -134,7 +134,7 @@ export default define(meta, paramDef, async (ps, me) => {
 					if (ps.sinceId && key.id <= ps.sinceId) {
 						return false;
 					}
-					if (ps.untilId && key.id > ps.untilId) {
+					if (ps.untilId && key.id >= ps.untilId) {
 						return false;
 					}
 					return true;
