@@ -131,7 +131,7 @@ export default define(meta, paramDef, async (ps, me) => {
 					if (ps.channelId && key.channelId !== ps.channelId) {
 						return false;
 					}
-					if (ps.sinceId && key.id < ps.sinceId) {
+					if (ps.sinceId && key.id <= ps.sinceId) {
 						return false;
 					}
 					if (ps.untilId && key.id > ps.untilId) {

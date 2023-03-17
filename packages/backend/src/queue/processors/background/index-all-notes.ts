@@ -18,9 +18,10 @@ export default async function indexAllNotes(
 	let cursor: string|null = null;
 	let total = 0;
 
+	let running = true;
 	const take = 50000;
 	const batch = 100;
-	while (true) {
+	while (running) {
 		logger.info(`Querying for ${take} notes ${indexedCount}/${total ? total : '?'} at ${cursor}`);
 
 		let notes: Note[] = [];
@@ -41,6 +42,7 @@ export default async function indexAllNotes(
 
 		if (notes.length === 0) {
 			job.progress(100);
+			running = false;
 			break;
 		}
 
@@ -60,8 +62,12 @@ export default async function indexAllNotes(
 			logger.info(`Indexed notes ${indexedCount}/${total ? total : '?'}`);
 		}
 		cursor = notes[notes.length - 1].id;
+
+		if (notes.length < take) {
+			running = false;
+		}
 	}
 
-	logger.succ("All notes have been indexed.");
 	done();
+	logger.info("All notes have been indexed.");
 }
