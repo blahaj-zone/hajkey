@@ -121,6 +121,35 @@
 			<template #caption>{{ i18n.ts.expandPostMaxCharactersDescription }}</template>
 		</FormInput>
 	</FormSection>
+
+	<FormSection>
+		<template #label>{{ i18n.ts._indicators.header }}</template>
+
+		<FormSwitch v-model="indicateNotification" class="_formBlock">
+			{{ i18n.ts._indicators.notification }}
+			<template #caption>{{ i18n.ts._indicators.notificationDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="indicateMessaging" class="_formBlock">
+			{{ i18n.ts._indicators.messaging }}
+			<template #caption>{{ i18n.ts._indicators.messagingDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="indicateFollows" class="_formBlock">
+			{{ i18n.ts._indicators.follows }}
+			<template #caption>{{ i18n.ts._indicators.followsDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="indicateAnnouncements" class="_formBlock">
+			{{ i18n.ts._indicators.announcements }}
+			<template #caption>{{ i18n.ts._indicators.announcementsDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="indicateAntennas" class="_formBlock">
+			{{ i18n.ts._indicators.antennas }}
+			<template #caption>{{ i18n.ts._indicators.antennasDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="indicateChannels" class="_formBlock">
+			{{ i18n.ts._indicators.channels }}
+			<template #caption>{{ i18n.ts._indicators.channelsDescription }}</template>
+		</FormSwitch>
+	</FormSection>
 </div>
 </template>
 
@@ -153,6 +182,13 @@ const defaultTimeline = $computed(defaultStore.makeGetterSetter('defaultTimeline
 
 const allowSwipe = $computed(defaultStore.makeGetterSetter('allowSwipe'));
 const swipeOnDesktop = $computed(defaultStore.makeGetterSetter('swipeOnDesktop'));
+
+const indicateNotification = $computed(defaultStore.makeGetterSetter('indicateNotification'));
+const indicateMessaging = $computed(defaultStore.makeGetterSetter('indicateMessaging'));
+const indicateFollows = $computed(defaultStore.makeGetterSetter('indicateFollows'));
+const indicateAnnouncements = $computed(defaultStore.makeGetterSetter('indicateAnnouncements'));
+const indicateAntennas = $computed(defaultStore.makeGetterSetter('indicateAntennas'));
+const indicateChannels = $computed(defaultStore.makeGetterSetter('indicateChannels'));
 
 definePageMetadata({
 	title: i18n.ts.appearance,

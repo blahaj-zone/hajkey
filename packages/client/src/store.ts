@@ -351,6 +351,30 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: true,
 		},
+		indicateNotification: {
+			where: "device",
+			default:true,
+		},
+		indicateMessaging: {
+			where: "device",
+			default:true,
+		},
+		indicateFollows: {
+			where: "device",
+			default:true,
+		},
+		indicateAnnouncements: {
+			where: "device",
+			default:true,
+		},
+		indicateAntennas: {
+			where: "device",
+			default:true,
+		},
+		indicateChannels: {
+			where: "device",
+			default:true,
+		},
 	}),
 );
 

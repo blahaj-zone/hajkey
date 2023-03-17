@@ -15,14 +15,14 @@ export const navbarItemDef = reactive({
 		title: "notifications",
 		icon: "ph-bell-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadNotification),
+		indicated: computed(() => $i?.hasUnreadNotification && defaultStore.state.indicateNotification),
 		to: "/my/notifications",
 	},
 	messaging: {
 		title: "messaging",
 		icon: "ph-chats-teardrop-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadMessagingMessage),
+		indicated: computed(() => $i?.hasUnreadMessagingMessage && defaultStore.state.indicateMessaging),
 		to: "/my/messaging",
 	},
 	drive: {
@@ -35,7 +35,7 @@ export const navbarItemDef = reactive({
 		title: "followRequests",
 		icon: "ph-hand-waving-bold ph-lg",
 		show: computed(() => $i?.isLocked),
-		indicated: computed(() => $i?.hasPendingReceivedFollowRequest),
+		indicated: computed(() => $i?.hasPendingReceivedFollowRequest && defaultStore.state.indicateFollows),
 		to: "/my/follow-requests",
 	},
 	explore: {
@@ -46,7 +46,7 @@ export const navbarItemDef = reactive({
 	announcements: {
 		title: "announcements",
 		icon: "ph-megaphone-simple-bold ph-lg",
-		indicated: computed(() => $i?.hasUnreadAnnouncement),
+		indicated: computed(() => $i?.hasUnreadAnnouncement && defaultStore.state.indicateAnnouncements),
 		to: "/announcements",
 	},
 	search: {
@@ -72,7 +72,7 @@ export const navbarItemDef = reactive({
 		title: "antennas",
 		icon: "ph-flying-saucer-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadAntenna),
+		indicated: computed(() => $i?.hasUnreadAntenna && defaultStore.state.indicateAntennas),
 		to: "/my/antennas",
 	},
 	favorites: {
@@ -100,7 +100,7 @@ export const navbarItemDef = reactive({
 	channels: {
 		title: "channel",
 		icon: "ph-television-bold ph-lg",
-		indicated: computed(() => $i?.hasUnreadChannel),
+		indicated: computed(() => $i?.hasUnreadChannel && defaultStore.state.indicateChannels),
 		to: "/channels",
 	},
 	groups: {
