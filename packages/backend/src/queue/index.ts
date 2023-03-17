@@ -420,10 +420,10 @@ export function createCleanRemoteFilesJob() {
 	);
 }
 
-export function createIndexAllNotesJob() {
+export function createIndexAllNotesJob(data = {}) {
 	return backgroundQueue.add(
 		"indexAllNotes",
-		{},
+		data,
 		{
 			removeOnComplete: true,
 			removeOnFail: true,

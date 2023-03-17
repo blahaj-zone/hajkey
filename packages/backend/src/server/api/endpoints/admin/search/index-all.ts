@@ -10,10 +10,19 @@ export const meta = {
 
 export const paramDef = {
 	type: "object",
-	properties: {},
+	properties: {
+		cursor: {
+			type: "string",
+			format: "misskey:id",
+			nullable: true,
+			default: null,
+		},
+	},
 	required: [],
 } as const;
 
-export default define(meta, paramDef, async (ps, me) => {
-	createIndexAllNotesJob();
+export default define(meta, paramDef, async (ps, _me) => {
+	createIndexAllNotesJob({
+		cursor: ps.cursor ?? undefined,
+	});
 });
