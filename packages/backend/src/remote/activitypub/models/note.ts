@@ -111,6 +111,16 @@ export async function createNote(
 
 	const note: IPost = object;
 
+	if (note.id && !note.id.startsWith('https://')) {
+		throw new Error(`unexpected shcema of note.id: ${note.id}`);
+	}
+
+	const url = getOneApHrefNullable(note.url);
+
+	if (url && !url.startsWith('https://')) {
+		throw new Error(`unexpected shcema of note url: ${url}`);
+	}
+
 	logger.debug(`Note fetched: ${JSON.stringify(note, null, 2)}`);
 
 	logger.info(`Creating the Note: ${note.id}`);
@@ -123,7 +133,8 @@ export async function createNote(
 
 	// Skip if author is suspended.
 	if (actor.isSuspended) {
-		throw new Error("actor has been suspended");
+		logger.debug(`User ${actor.usernameLower}@${actor.host} suspended; discarding.`)
+		return null;
 	}
 
 	const noteAudience = await parseAudience(actor, note.to, note.cc);
@@ -344,7 +355,7 @@ export async function createNote(
 			apEmojis,
 			poll,
 			uri: note.id,
-			url: getOneApHrefNullable(note.url),
+			url: url,
 		},
 		silent,
 	);

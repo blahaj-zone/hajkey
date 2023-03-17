@@ -20,6 +20,8 @@ import { createTemp } from "@/misc/create-temp.js";
 import { publishMainStream } from "@/services/stream.js";
 import * as Acct from "@/misc/acct.js";
 import { envOption } from "@/env.js";
+import { koaBody } from 'koa-body';
+import megalodon, { MegalodonInterface } from '@cutls/megalodon';
 import activityPub from "./activitypub.js";
 import nodeinfo from "./nodeinfo.js";
 import wellKnown from "./well-known.js";
@@ -130,6 +132,34 @@ router.get("/verify-email/:code", async (ctx) => {
 		);
 	} else {
 		ctx.status = 404;
+	}
+});
+
+router.get("/oauth/authorize", async (ctx) => {
+	const client_id = ctx.request.query.client_id;
+	console.log(ctx.request.req);
+	ctx.redirect(Buffer.from(client_id?.toString() || '', 'base64').toString());
+});
+
+router.post("/oauth/token", async (ctx) => {
+	const body: any = ctx.request.body;
+	const BASE_URL = `${ctx.request.protocol}://${ctx.request.hostname}`;
+	const generator = (megalodon as any).default;
+	const client = generator('misskey', BASE_URL, null) as MegalodonInterface;
+	const m = body.code.match(/^[a-zA-Z0-9-]+/);
+	if (!m.length) return { error: 'Invalid code' }
+	try {
+		const atData = await client.fetchAccessToken(null, body.client_secret, m[0]);
+		ctx.body = {
+			access_token: atData.accessToken,
+			token_type: 'Bearer',
+			scope: 'read write follow',
+			created_at: new Date().getTime() / 1000
+		};
+	} catch (err: any) {
+		console.error(err);
+		ctx.status = 401;
+		ctx.body = err.response.data;
 	}
 });
 

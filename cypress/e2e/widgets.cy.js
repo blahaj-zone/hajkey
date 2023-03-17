@@ -2,7 +2,6 @@ describe('After user signed in', () => {
 	beforeEach(() => {
 		cy.resetState();
 		cy.viewport('macbook-16');
-
 		// インスタンス初期セットアップ
 		cy.registerUser('admin', 'pass', true);
 

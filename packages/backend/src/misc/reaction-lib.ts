@@ -5,17 +5,17 @@ import { toPunyNullable } from "./convert-host.js";
 import { IsNull } from "typeorm";
 
 const legacies = new Map([
-	['like', '👍'],
-	['love', '❤️'],
-	['laugh', '😆'],
-	['hmm', '🤔'],
-	['surprise', '😮'],
-	['congrats', '🎉'],
-	['angry', '💢'],
-	['confused', '😥'],
-	['rip', '😇'],
-	['pudding', '🍮'],
-	['star', '⭐'],
+	["like", "👍"],
+	["love", "❤️"],
+	["laugh", "😆"],
+	["hmm", "🤔"],
+	["surprise", "😮"],
+	["congrats", "🎉"],
+	["angry", "💢"],
+	["confused", "😥"],
+	["rip", "😇"],
+	["pudding", "🍮"],
+	["star", "⭐"],
 ]);
 
 export async function getFallbackReaction() {
@@ -42,7 +42,10 @@ export function convertLegacyReactions(reactions: Record<string, number>) {
 		if (emoji) {
 			_reactions.set(emoji, (_reactions.get(emoji) || 0) + reactions[reaction]);
 		} else {
-			_reactions.set(reaction, (_reactions.get(reaction) || 0) + reactions[reaction]);
+			_reactions.set(
+				reaction,
+				(_reactions.get(reaction) || 0) + reactions[reaction],
+			);
 		}
 	}
 
@@ -127,7 +130,7 @@ export function decodeReaction(str: string): DecodedReaction {
 }
 
 export function convertLegacyReaction(reaction: string): string {
-  const decoded = decodeReaction(reaction).reaction;
-  if (legacies.has(decoded)) return legacies.get(decoded)!;
-  return decoded;
+	const decoded = decodeReaction(reaction).reaction;
+	if (legacies.has(decoded)) return legacies.get(decoded)!;
+	return decoded;
 }

@@ -12,4 +12,4 @@ pipeline:
         # Secret 'docker_password' needs to be set in the CI settings
         from_secret: docker_password
 
-branch: main
+branches: main

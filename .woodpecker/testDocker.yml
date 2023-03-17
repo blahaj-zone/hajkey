@@ -8,4 +8,4 @@ pipeline:
       no_push: true
 
 branches:
-  include: [ main, develop ]
+  include: [ main, develop, beta ]

@@ -197,6 +197,8 @@ export const NoteRepository = db.getRepository(Note).extend({
 			.map((x) => decodeReaction(x).reaction)
 			.map((x) => x.replace(/:/g, ""));
 
+		const noteEmoji = await populateEmojis(note.emojis.concat(reactionEmojiNames), host);
+		const reactionEmoji = await populateEmojis(reactionEmojiNames, host);
 		const packed: Packed<"Note"> = await awaitAll({
 			id: note.id,
 			createdAt: note.createdAt.toISOString(),
@@ -213,8 +215,9 @@ export const NoteRepository = db.getRepository(Note).extend({
 			renoteCount: note.renoteCount,
 			repliesCount: note.repliesCount,
 			reactions: convertLegacyReactions(note.reactions),
+			reactionEmojis: reactionEmoji,
+			emojis: noteEmoji,
 			tags: note.tags.length > 0 ? note.tags : undefined,
-			emojis: populateEmojis(note.emojis.concat(reactionEmojiNames), host),
 			fileIds: note.fileIds,
 			files: DriveFiles.packMany(note.fileIds),
 			replyId: note.replyId,

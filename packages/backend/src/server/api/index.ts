@@ -7,6 +7,7 @@ import Router from "@koa/router";
 import multer from "@koa/multer";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
+import { apiMastodonCompatible } from './mastodon/ApiMastodonCompatibleService.js';
 import { Instances, AccessTokens, Users } from "@/models/index.js";
 import config from "@/config/index.js";
 import endpoints from "./endpoints.js";
@@ -56,6 +57,8 @@ const upload = multer({
 
 // Init router
 const router = new Router();
+
+apiMastodonCompatible(router);
 
 /**
  * Register endpoint handlers

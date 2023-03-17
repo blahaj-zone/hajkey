@@ -634,6 +634,10 @@ router.get("/streaming", async (ctx) => {
 	ctx.status = 503;
 	ctx.set("Cache-Control", "private, max-age=0");
 });
+router.get("/api/v1/streaming", async (ctx) => {
+	ctx.status = 503;
+	ctx.set("Cache-Control", "private, max-age=0");
+});
 
 // Render base html for all requests
 router.get("(.*)", async (ctx) => {

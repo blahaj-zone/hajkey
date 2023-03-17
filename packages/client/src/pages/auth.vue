@@ -78,8 +78,11 @@ export default defineComponent({
 	methods: {
 		accepted() {
 			this.state = 'accepted';
+			const getUrlParams = () => window.location.search.substring(1).split('&').reduce((result, query) => { const [k, v] = query.split('='); result[k] = decodeURI(v); return result; }, {});
 			if (this.session.app.callbackUrl) {
-				location.href = `${this.session.app.callbackUrl}?token=${this.session.token}`;
+				const url = new URL(this.session.app.callbackUrl);
+				if (['javascript:', 'file:', 'data:', 'mailto:', 'tel:'].includes(url.protocol)) throw new Error('invalid url');
+				location.href = `${this.session.app.callbackUrl}?token=${this.session.token}&code=${this.session.token}&state=${getUrlParams().state || ''}`;
 			}
 		}, onLogin(res) {
 			login(res.i);

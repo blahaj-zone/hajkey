@@ -16,10 +16,13 @@ export const initializeStreamingServer = (server: http.Server) => {
 
 	ws.on("request", async (request) => {
 		const q = request.resourceURL.query as ParsedUrlQuery;
+		const headers = request.httpRequest.headers['sec-websocket-protocol'] || '';
+		const cred = q.i || q.access_token || headers;
+		const accessToken = cred.toString();
 
 		const [user, app] = await authenticate(
 			request.httpRequest.headers.authorization,
-			q.i,
+			accessToken,
 		).catch((err) => {
 			request.reject(403, err.message);
 			return [];
@@ -43,8 +46,11 @@ export const initializeStreamingServer = (server: http.Server) => {
 		}
 
 		redisClient.on("message", onRedisMessage);
+		const host = `https://${request.host}`;
+		const prepareStream = q.stream?.toString();
+		console.log('start', q);
 
-		const main = new MainStreamConnection(connection, ev, user, app);
+		const main = new MainStreamConnection(connection, ev, user, app, host, accessToken, prepareStream);
 
 		const intervalId = user
 			? setInterval(() => {
