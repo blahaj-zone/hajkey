@@ -43,37 +43,53 @@ import { $i } from '@/account';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
 
+type ChannelInfo = {
+	id: string;
+	name: string;
+	userId: string;
+	bannerUrl: string;
+	description: string;
+	hasUnreadNote: boolean;
+	isFollowing: boolean;
+	usersCount: number;
+	notesCount: number;
+	createdAt: string;
+	lastNotedAt: string;
+};
+
 const router = useRouter();
 
 const props = defineProps<{
 	channelId: string;
 }>();
 
-let channel = $ref(null);
+let channel: ChannelInfo|null = $ref(null);
 let showBanner = $ref(true);
-const pagination = {
-	endpoint: 'channels/timeline' as const,
-	limit: 10,
-	params: computed(() => ({
-		channelId: props.channelId,
-	})),
-};
 
 watch(() => props.channelId, async () => {
 	channel = await os.api('channels/show', {
 		channelId: props.channelId,
-	});
+	}) as ChannelInfo;
 }, { immediate: true });
 
 function edit() {
-	router.push(`/channels/${channel.id}/edit`);
+	router.push(`/channels/${channel?.id}/edit`);
 }
 
-const headerActions = $computed(() => channel && channel.userId ? [{
-	icon: 'ph-gear-six-bold ph-lg',
-	text: i18n.ts.edit,
-	handler: edit,
-}] : null);
+const headerActions = $computed(() =>  [
+	...(
+		channel
+		&& channel?.userId === $i?.id
+		? [
+			{
+				icon: 'ph-gear-six ph-bold ph-lg',
+				text: i18n.ts.edit,
+				handler: edit,
+			}
+		]
+		: []
+	),
+]);
 
 const headerTabs = $computed(() => []);
 
