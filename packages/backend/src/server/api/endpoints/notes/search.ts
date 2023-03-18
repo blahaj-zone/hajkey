@@ -101,11 +101,12 @@ export default define(meta, paramDef, async (ps, me) => {
 
 		return await Notes.packMany(notes, me);
 	} else if (sonic) {
-		let start = ps.offset
-		const chunkSize = 100
+		let start = 0;
+		const chunkSize = 100;
 
-		const found = []
-		while (found.length < ps.limit) {
+		// Use sonic to fetch and step through all search results that could match the requirements
+		const ids = [];
+		while (true) {
 			const results = await sonic.search.query(
 				sonic.collection,
 				sonic.bucket,
@@ -122,7 +123,7 @@ export default define(meta, paramDef, async (ps, me) => {
 				break;
 			}
 
-			const ids = results
+			const res = results
 				.map((k) => JSON.parse(k))
 				.filter((key) => {
 					if (ps.userId && key.userId !== ps.userId) {
@@ -141,19 +142,32 @@ export default define(meta, paramDef, async (ps, me) => {
 				})
 				.map((key) => key.id);
 
+				ids.push(...res);
+		}
+
+		// Sort all the results by note id DESC (newest first)
+		ids.sort((a, b) => b - a);
+
+		// Fetch the notes from the database until we have enough to satisfy the limit
+		start = 0;
+		const found = [];
+		while (found.length < ps.limit && start < ids.length) {
+			const chunk = ids.slice(start, start + chunkSize);
 			const notes: Note[] = await Notes.find({
 				where: {
-					id: In(ids),
+					id: In(chunk),
 				},
 				order: {
 					id: "DESC",
 				},
 			});
 
+			// The notes are checked for visibility and muted/blocked users when packed
 			found.push(...await Notes.packMany(notes, me));
+			start += chunkSize;
 		}
 
-		found.sort((a, b) => b.id < a.id ? -1 : 1);
+		// If we have more results than the limit, trim them
 		if (found.length > ps.limit) {
 			found.length = ps.limit;
 		}
