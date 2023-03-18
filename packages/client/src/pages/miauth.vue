@@ -78,6 +78,10 @@ async function accept(): Promise<void> {
 	}
 }
 
+function deny(): void { 
+	state = 'denied';
+}
+
 function onLogin(res): void {
 	login(res.i);
 }

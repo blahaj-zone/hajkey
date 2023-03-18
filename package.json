@@ -1,10 +1,10 @@
 {
 	"name": "calckey",
-	"version": "13.1.4-kt.15",
+	"version": "13.1.4.1-kt.15",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
-		"url": "https://codeberg.org/calckey/calckey.git"
+		"url": "https://codeberg.org/supakaity/hajkey.git"
 	},
 	"packageManager": "pnpm@7.27.0",
 	"private": true,
