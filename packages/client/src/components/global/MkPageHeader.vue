@@ -359,8 +359,8 @@ onUnmounted(() => {
 			height: 100%;
 			font-weight: normal;
 			opacity: 0.7;
-			width: 38px;
-			--width: 38px;
+			width: 40px;
+			--width: 40px;
 			overflow: hidden;
 			transition: color .2s, opacity .2s, width .2s;
 
