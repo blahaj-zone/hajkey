@@ -100,7 +100,7 @@
 			</footer>
 		</div>
 	</article>
-	<MkNoteSub v-for="note in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies"/>
+	<MkNoteSub v-for="(note, index) in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" :offset="index" :child="index"/>
 </div>
 <div v-else class="_panel muted" @click="muted = false">
 	<I18n :src="i18n.ts.userSaysSomething" tag="small">
@@ -654,7 +654,7 @@ onUnmounted(() => {
 		&:hover, &:focus-within {
 			&::before {
 				opacity: 1;
-			}
+	}
 		}
 		// @media (pointer: coarse) {
 		// 	&:has(.button:focus-within) {

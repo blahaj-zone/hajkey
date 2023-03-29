@@ -2,7 +2,12 @@
 <div ref="el" 
 	v-size="{ max: [450, 500] }"
 	class="wrpstxzv"
-	:class="{ children: depth > 1, singleStart: replies.length == 1, firstColumn: depth == 1 && conversation }"
+	:class="{
+		children: depth > 1,
+		singleStart: replies.length == 1,
+		firstColumn: depth == 1 && conversation,
+		[`level${((depth + offset) % 8)}`]: true,
+	}"
 >
 	<div v-if="conversation && depth > 1" class="line"></div>
 	<div class="main" @click="noteClick">
@@ -61,10 +66,10 @@
 	</div>
 	<template v-if="conversation">
 		<template v-if="replies.length == 1">
-			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" class="reply single" :conversation="conversation" :depth="depth" :parentId="note.replyId"/>
+			<MkNoteSub v-for="(reply, index) in replies" :key="reply.id" :note="reply" class="reply single" :conversation="conversation" :depth="depth" :offset="offset + index" :parentId="note.replyId"/>
 		</template>
-		<template v-else-if="depth < 5">
-			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" class="reply" :conversation="conversation" :depth="depth + 1" :parentId="note.replyId"/>
+		<template v-else-if="depth < repliesDepth">
+			<MkNoteSub v-for="(reply, index) in replies" :key="reply.id" :note="reply" class="reply" :conversation="conversation" :depth="depth + 1" :offset="offset + index" :parentId="note.replyId"/>
 		</template>
 		<div v-else-if="replies.length > 0" class="more">
 			<div class="line"></div>
@@ -94,7 +99,7 @@ import { reactionPicker } from '@/scripts/reaction-picker';
 import { i18n } from '@/i18n';
 import { deepClone } from '@/scripts/clone';
 import { useNoteCapture } from '@/scripts/use-note-capture';
-
+import { defaultStore } from '@/store';
 
 const router = useRouter();
 
@@ -105,8 +110,12 @@ const props = withDefaults(defineProps<{
 
 	// how many notes are in between this one and the note being viewed in detail
 	depth?: number;
+	offset?: number;
+	child?: number;
 }>(), {
 	depth: 1,
+	offset: 0,
+	child: 0,
 });
 
 let note = $ref(deepClone(props.note));
@@ -128,6 +137,7 @@ const isDeleted = ref(false);
 const translation = ref(null);
 const translating = ref(false);
 let showContent = $ref(false);
+const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] = props.conversation?.filter(item => item.replyId === props.note.id || item.renoteId === props.note.id).reverse() ?? [];
 
 useNoteCapture({
