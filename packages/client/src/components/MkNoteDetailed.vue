@@ -7,7 +7,7 @@
 	v-size="{ max: [500, 450, 350, 300] }"
 	class="lxwezrsl _block"
 	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote, colorize, colorgrad, colorbg, compact }"
+	:class="{ renote: isRenote, colorize, colorgrad, colorbg, colorborder, compact }"
 >
 	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note"/>
 	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
@@ -157,6 +157,7 @@ const inChannel = inject('inChannel', null);
 const colorize = defaultStore.state.replyDividerColorize;
 const colorbg = defaultStore.state.replyDividerColorBg;
 const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
+const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));

@@ -267,6 +267,7 @@ function noteClick(e) {
 		> .main {
 			background-image:
 				linear-gradient(0deg, rgba(var(--colorizeColor), 0.18), rgba(var(--colorizeColor), 0.18));
+			border-radius: 10px;
 		}
 	}
 
@@ -277,6 +278,14 @@ function noteClick(e) {
 				linear-gradient(85deg, rgba(var(--colorizeColor), 0.09), transparent 30px),
 				linear-gradient(50deg, rgba(var(--colorizeColor), 0.18), transparent 150px),
 				linear-gradient(1deg, rgba(var(--colorizeColor), 0.14), transparent 15px);
+			border-radius: 10px;
+		}
+	}
+
+	.colorborder & {
+		> .main {
+			border: 1px solid rgba(var(--colorizeColor), 0.18);
+			border-radius: 10px;
 		}
 	}
 
