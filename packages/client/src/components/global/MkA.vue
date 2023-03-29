@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
-<a :href="to" :class="active ? activeClass : null" @click.stop.prevent="nav" @contextmenu.prevent.stop="onContextmenu">
-=======
 <a :href="to" :class="active ? activeClass : null" @click="nav" @contextmenu.prevent.stop="onContextmenu" @click.stop>
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 	<slot></slot>
 </a>
 </template>
@@ -108,10 +104,5 @@ function nav(ev: MouseEvent) {
 
 		router.push(props.to, ev.ctrlKey ? 'forcePage' : null);
 	}
-<<<<<<< HEAD
-
-	router.push(to, ev.ctrlKey ? 'forcePage' : null);
-=======
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 }
 </script>

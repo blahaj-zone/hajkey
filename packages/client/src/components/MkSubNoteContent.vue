@@ -1,5 +1,5 @@
 <template>
-<div v-if="!muted" class="wrmlmaau" :class="{ collapsed, isLong }">
+<div class="wrmlmaau" :class="{ collapsed, isLong }">
 	<div class="body">
 		<span v-if="note.deletedAt" style="opacity: 0.5">({{ i18n.ts.deleted }})</span>
 		<template v-if="!note.cw">
@@ -33,16 +33,6 @@
 		<span>{{ i18n.ts.showLess }}</span>
 	</button>
 </div>
-<div v-else class="muted" @click="muted = false">
-	<I18n :src="i18n.ts.userSaysSomething" tag="small">
-		<template #name>
-			<MkA v-user-preview="appearNote.userId" class="name" :to="userPage(appearNote.user)">
-				<MkUserName :user="appearNote.user"/>
-			</MkA>
-		</template>
-	</I18n>
-</div>
-
 </template>
 
 <script lang="ts" setup>
@@ -55,11 +45,6 @@ import XPoll from '@/components/MkPoll.vue';
 import MkUrlPreview from '@/components/MkUrlPreview.vue';
 import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
 import { i18n } from '@/i18n';
-import { deviceKind } from '@/scripts/device-kind';
-import { defaultStore } from '@/store';
-import { checkWordMute } from '@/scripts/check-word-mute';
-import { $i } from '@/account';
-import { userPage } from '@/filters/user';
 
 const props = defineProps<{
 	note: misskey.entities.Note;
@@ -68,46 +53,6 @@ const props = defineProps<{
 	detailed?: boolean;
 }>();
 
-<<<<<<< HEAD
-const note = props.note;
-
-const isRenote = (
-	note.renote != null &&
-	note.text == null &&
-	note.fileIds.length === 0 &&
-	note.poll == null
-);
-
-let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
-
-const MOBILE_THRESHOLD = 500;
-const isMobile = ref(
-	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD
-);
-const exceedsCharacterLimit = (
-	defaultStore.state.expandPostMaxCharacters > 0 &&
-	appearNote.text != null &&
-	appearNote.text.length > defaultStore.state.expandPostMaxCharacters
-)
-const estimatedLines = (
-	appearNote.text != null
-		? appearNote.text
-			.split('\n')
-			.map(line => Math.ceil(line.length/(isMobile.value ? 40 : 90)))
-			.reduce((a, b) => a + b, 0)
-		: 1
-)
-const exceedsLinesLimit = (
-	defaultStore.state.expandPostMaxLines > 0 &&
-	estimatedLines > defaultStore.state.expandPostMaxLines
-);
-
-const isLong = (appearNote.cw == null && appearNote.text != null && (
-	exceedsCharacterLimit || exceedsLinesLimit
-));
-const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
-const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
-=======
 const isLong = (
 	props.note.cw == null && props.note.text != null && (
 		(props.note.text.split('\n').length > 9) ||
@@ -117,7 +62,6 @@ const isLong = (
 const collapsed = $ref(props.note.cw == null && isLong);
 const urls = props.note.text ? extractUrlFromMfm(mfm.parse(props.note.text)) : null;
 
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 </script>
 
 <style lang="scss" scoped>

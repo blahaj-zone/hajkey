@@ -1,5 +1,5 @@
 <template>
-<div v-if="hide" class="qjewsnkg" @click.stop.prevent="hide = false">
+<div v-if="hide" class="qjewsnkg" @click="hide = false">
 	<ImgWithBlurhash class="bg" :hash="image.blurhash" :title="image.comment" :alt="image.comment"/>
 	<div class="text">
 		<div class="wrapper">
@@ -16,7 +16,7 @@
 		<ImgWithBlurhash :hash="image.blurhash" :src="url" :alt="image.comment" :type="image.type" :title="image.comment" :cover="false"/>
 		<div v-if="image.type === 'image/gif'" class="gif">GIF</div>
 	</a>
-	<button v-tooltip="i18n.ts.hide" class="_button hide" @click.stop.prevent="hide = true"><i class="ph-eye-slash ph-bold ph-lg"></i></button>
+	<button v-tooltip="i18n.ts.hide" class="_button hide" @click="hide = true"><i class="ph-eye-slash ph-bold ph-lg"></i></button>
 </div>
 </template>
 

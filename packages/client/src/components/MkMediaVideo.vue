@@ -1,5 +1,5 @@
 <template>
-<div v-if="hide" class="icozogqfvdetwohsdglrbswgrejoxbdj" @click.stop.prevent="hide = false">
+<div v-if="hide" class="icozogqfvdetwohsdglrbswgrejoxbdj" @click="hide = false">
 	<div>
 		<b><i class="ph-warning ph-bold ph-lg"></i> {{ i18n.ts.sensitive }}</b>
 		<span>{{ i18n.ts.clickToShow }}</span>
@@ -36,7 +36,7 @@
 			>
 		</video>
 	</VuePlyr>
-	<i class="ph-eye-slash ph-bold ph-lg" @click.stop.prevent="hide = true"></i>
+	<i class="ph-eye-slash ph-bold ph-lg" @click="hide = true"></i>
 </div>
 </template>
 

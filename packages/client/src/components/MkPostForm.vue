@@ -609,10 +609,10 @@ async function post() {
 		let message: string[] = [];
 
 		const sendMessage = (msg: string) => {
-			os.alert({
-				type: 'error',
-				text: msg,
-			});
+		os.alert({
+			type: 'error',
+			text: msg,
+		});
 		};
 
 		let n: number;

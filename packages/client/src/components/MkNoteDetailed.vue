@@ -7,7 +7,7 @@
 	v-size="{ max: [500, 450, 350, 300] }"
 	class="lxwezrsl _block"
 	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote, colorize, colorgrad, colorbg, compact }"
+	:class="{ renote: isRenote }"
 >
 	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note"/>
 	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
@@ -154,10 +154,6 @@ const props = defineProps<{
 }>();
 
 const inChannel = inject('inChannel', null);
-const colorize = defaultStore.state.replyDividerColorize;
-const colorbg = defaultStore.state.replyDividerColorBg;
-const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
-const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
 
@@ -188,7 +184,7 @@ const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
 let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
 const isMyRenote = $i && ($i.id === note.userId);
-const showContent = ref(defaultStore.state.autoShowCw);
+const showContent = ref(false);
 const isDeleted = ref(false);
 const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -198,12 +194,8 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
-<<<<<<< HEAD
-const repliesDepth = defaultStore.state.repliesDepth;
-=======
 let isScrolling;
 
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 
 const keymap = {
 	'r': () => reply(true),
@@ -303,11 +295,7 @@ function blur() {
 os.api('notes/children', {
 	noteId: appearNote.id,
 	limit: 30,
-<<<<<<< HEAD
-	depth: repliesDepth + 1,
-=======
 	depth: 12,
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 }).then(res => {
 	replies.value = res;
 	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id).reverse();
@@ -325,23 +313,8 @@ if (appearNote.replyId) {
 
 function onNoteReplied(noteData: NoteUpdatedEvent): void {
 	const { type, id, body } = noteData;
-<<<<<<< HEAD
-	/* TODO - Update calckey-js streamingTypes for NoteUpdatedEvent to include type `replied`:
-		{
-			id: Note['id'];
-			type: 'replied';
-			body: {
-				id: Note['id'];
-			}
-		}
-	*/
-	// TODO - remove .toString() and recasting to unknown when calckey-js is updated.
-	if (type.toString() === 'replied' && id === appearNote.id) {
-		const { id: createdId } = body as unknown as { id: string };
-=======
 	if (type === 'replied' && id === appearNote.id) {
 		const { id: createdId } = body;
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 
 		os.api('notes/show', {
 			noteId: createdId,
@@ -355,14 +328,6 @@ function onNoteReplied(noteData: NoteUpdatedEvent): void {
 	
 }
 
-<<<<<<< HEAD
-onMounted(() => {
-	stream.on("noteUpdated", onNoteReplied);
-});
-onUnmounted(() => {
-	stream.off("noteUpdated", onNoteReplied);
-});
-=======
 document.addEventListener("wheel", () => {
 	isScrolling = true;
 })
@@ -383,7 +348,6 @@ onUnmounted(() => {
 	stream.off("noteUpdated", onNoteReplied);
 });
 
->>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 </script>
 
 <style lang="scss" scoped>
