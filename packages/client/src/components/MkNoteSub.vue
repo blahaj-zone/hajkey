@@ -379,10 +379,15 @@ function noteClick(e) {
 			margin-bottom: -16px;
 		}
 	}
-	
+
+	--subNoteOutdent: 5px;
+	.compact & {
+		--subNoteOutdent: 15px;
+	}
+
 	// Reply Lines
 	&.reply, &.reply-to, &.reply-to-more {
-		--indent: calc(var(--avatarSize) - 5px);
+		--indent: calc(var(--avatarSize) - var(--subNoteOutdent));
 		> .main {
 			> .avatar-container {
 				display: flex;

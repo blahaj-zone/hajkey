@@ -7,7 +7,7 @@
 	v-size="{ max: [500, 450, 350, 300] }"
 	class="lxwezrsl _block"
 	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote }"
+	:class="{ renote: isRenote, colorize, colorgrad, colorbg, compact }"
 >
 	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note"/>
 	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
@@ -154,6 +154,10 @@ const props = defineProps<{
 }>();
 
 const inChannel = inject('inChannel', null);
+const colorize = defaultStore.state.replyDividerColorize;
+const colorbg = defaultStore.state.replyDividerColorBg;
+const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
+const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
 
@@ -184,7 +188,7 @@ const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
 let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
 const isMyRenote = $i && ($i.id === note.userId);
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.autoShowCw);
 const isDeleted = ref(false);
 const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -194,8 +198,8 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
+const repliesDepth = defaultStore.state.repliesDepth;
 let isScrolling;
-
 
 const keymap = {
 	'r': () => reply(true),
@@ -295,7 +299,7 @@ function blur() {
 os.api('notes/children', {
 	noteId: appearNote.id,
 	limit: 30,
-	depth: 12,
+	depth: repliesDepth + 1,
 }).then(res => {
 	replies.value = res;
 	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id).reverse();
@@ -629,7 +633,7 @@ onUnmounted(() => {
 		&.reply-to, &.reply-to-more {
 			&::before {
 				inset: 0px 8px;
-			}
+	}
 			&:first-of-type::before {
 				top: 12px;
 			}
@@ -668,9 +672,9 @@ onUnmounted(() => {
 	&.max-width_500px {
 		font-size: 0.9em;
 	}
-	
+
 	&.max-width_450px {
-		
+
 		> .reply-to-more:first-child {
 			padding-top: 14px;
 		}
