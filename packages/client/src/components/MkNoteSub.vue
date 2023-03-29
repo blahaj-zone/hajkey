@@ -259,14 +259,17 @@ function noteClick(e) {
 	--subNoteOutdent: 5px;
 	
 	.compact & {
-		--subNoteOutdent: 10px;
-		--avatarSize: 24px;
+		--subNoteOutdent: 15px;
+		--avatarSize: 28px;
+		&.reply {
+			--avatarSize: 22px;
+		} 
 	}
 
 	.colorbg &, .colorgrad &, .colorborder & {
 		> .main {
 			border-radius: 10px;
-			padding: 3px;
+			padding-right: 5px;
 		}
 	}
 
