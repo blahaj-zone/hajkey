@@ -317,7 +317,7 @@ export const defaultStore = markRaw(
 		},
 		replyCollapseSingles: {
 			where: "device",
-			default: false,
+			default: true,
 		},
 		autoShowCw: {
 			where: "device",
