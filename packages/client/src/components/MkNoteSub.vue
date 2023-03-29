@@ -136,7 +136,7 @@ let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note
 const isDeleted = ref(false);
 const translation = ref(null);
 const translating = ref(false);
-let showContent = $ref(false);
+let showContent = $ref(defaultStore.state.autoShowCw);
 const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] = props.conversation?.filter(item => item.replyId === props.note.id || item.renoteId === props.note.id).reverse() ?? [];
 
@@ -284,7 +284,7 @@ function noteClick(e) {
 
 	.colorborder & {
 		> .main {
-			border: 1px solid rgba(var(--colorizeColor), 0.18);
+			border: 0.5px solid rgb(var(--colorizeColor));
 			border-radius: 10px;
 		}
 	}

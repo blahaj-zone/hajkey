@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
+import { ref } from 'vue';
 import * as misskey from 'calckey-js';
 import * as mfm from 'mfm-js';
 import XNoteSimple from '@/components/MkNoteSimple.vue';
@@ -45,6 +45,8 @@ import XPoll from '@/components/MkPoll.vue';
 import MkUrlPreview from '@/components/MkUrlPreview.vue';
 import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
 import { i18n } from '@/i18n';
+import { deviceKind } from '@/scripts/device-kind';
+import { defaultStore } from '@/store';
 
 const props = defineProps<{
 	note: misskey.entities.Note;
@@ -53,13 +55,43 @@ const props = defineProps<{
 	detailed?: boolean;
 }>();
 
-const isLong = (
-	props.note.cw == null && props.note.text != null && (
-		(props.note.text.split('\n').length > 9) ||
-		(props.note.text.length > 500)
-	)
+const note = props.note;
+
+const isRenote = (
+	note.renote != null &&
+	note.text == null &&
+	note.fileIds.length === 0 &&
+	note.poll == null
 );
-const collapsed = $ref(props.note.cw == null && isLong);
+
+let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
+
+const MOBILE_THRESHOLD = 500;
+const isMobile = ref(
+	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD
+);
+const exceedsCharacterLimit = (
+	defaultStore.state.expandPostMaxCharacters > 0 &&
+	appearNote.text != null &&
+	appearNote.text.length > defaultStore.state.expandPostMaxCharacters
+)
+const estimatedLines = (
+	appearNote.text != null
+		? appearNote.text
+			.split('\n')
+			.map(line => Math.ceil(line.length/(isMobile.value ? 40 : 90)))
+			.reduce((a, b) => a + b, 0)
+		: 1
+)
+const exceedsLinesLimit = (
+	defaultStore.state.expandPostMaxLines > 0 &&
+	estimatedLines > defaultStore.state.expandPostMaxLines
+);
+
+const isLong = (appearNote.cw == null && appearNote.text != null && (
+	exceedsCharacterLimit || exceedsLinesLimit
+));
+const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
 const urls = props.note.text ? extractUrlFromMfm(mfm.parse(props.note.text)) : null;
 
 </script>
