@@ -1,6 +1,6 @@
 <template>
 <MkContainer :show-header="widgetProps.showHeader" class="mkw-aiscript">
-	<template #header><i class="ph-terminal-window-bold ph-lg"></i>{{ i18n.ts._widgets.aiscript }}</template>
+	<template #header><i class="ph-terminal-window ph-bold ph-lg"></i>{{ i18n.ts._widgets.aiscript }}</template>
 
 	<div class="uylguesu _monospace">
 		<textarea v-model="widgetProps.script" placeholder="(1 + 1)"></textarea>

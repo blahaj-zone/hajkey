@@ -1,19 +1,19 @@
 <template>
-<MkModal ref="modal" :prefer-type="'dialog'" @click="onBgClick" @closed="$emit('closed')">
-	<div ref="rootEl" class="ebkgoccj _narrow_" :style="{ width: `${width}px`, height: scroll ? (height ? `${height}px` : null) : (height ? `min(${height}px, 100%)` : '100%') }" @keydown="onKeydown">
-		<div ref="headerEl" class="header">
-			<button v-if="withOkButton" class="_button" @click="$emit('close')"><i class="ph-x-bold ph-lg"></i></button>
-			<span class="title">
-				<slot name="header"></slot>
-			</span>
-			<button v-if="!withOkButton" class="_button" @click="$emit('close')"><i class="ph-x-bold ph-lg"></i></button>
-			<button v-if="withOkButton" class="_button" :disabled="okButtonDisabled" @click="$emit('ok')"><i class="ph-check-bold ph-lg"></i></button>
+	<MkModal ref="modal" :prefer-type="'dialog'" @click="onBgClick" @closed="$emit('closed')">
+		<div ref="rootEl" class="ebkgoccj" :style="{ width: `${width}px`, height: scroll ? (height ? `${height}px` : null) : (height ? `min(${height}px, 100%)` : '100%') }" @keydown="onKeydown">
+			<div ref="headerEl" class="header">
+				<button v-if="withOkButton" class="_button" @click="$emit('close')"><i class="ph-x ph-bold ph-lg"></i></button>
+				<span class="title">
+					<slot name="header"></slot>
+				</span>
+				<button v-if="!withOkButton" class="_button" @click="$emit('close')"><i class="ph-x ph-bold ph-lg"></i></button>
+				<button v-if="withOkButton" class="_button" :disabled="okButtonDisabled" @click="$emit('ok')"><i class="ph-check ph-bold ph-lg"></i></button>
+			</div>
+			<div class="body">
+				<slot :width="bodyWidth" :height="bodyHeight"></slot>
+			</div>
 		</div>
-		<div class="body">
-			<slot :width="bodyWidth" :height="bodyHeight"></slot>
-		</div>
-	</div>
-</MkModal>
+	</MkModal>
 </template>
 
 <script lang="ts" setup>
@@ -41,9 +41,9 @@ const emit = defineEmits<{
 	(event: 'ok'): void;
 }>();
 
-let modal = $ref<InstanceType<typeof MkModal>>();
-let rootEl = $ref<HTMLElement>();
-let headerEl = $ref<HTMLElement>();
+let modal = $shallowRef<InstanceType<typeof MkModal>>();
+let rootEl = $shallowRef<HTMLElement>();
+let headerEl = $shallowRef<HTMLElement>();
 let bodyWidth = $ref(0);
 let bodyHeight = $ref(0);
 
@@ -85,12 +85,13 @@ defineExpose({
 
 <style lang="scss" scoped>
 .ebkgoccj {
+	margin: auto;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	contain: content;
+	container-type: inline-size;
 	border-radius: var(--radius);
-	transition: all 0.2s;
 
 	--root-margin: 24px;
 
@@ -145,3 +146,4 @@ defineExpose({
 	}
 }
 </style>
+	

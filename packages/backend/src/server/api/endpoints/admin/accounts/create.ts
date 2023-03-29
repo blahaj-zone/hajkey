@@ -35,6 +35,7 @@ export default define(meta, paramDef, async (ps, _me) => {
 	const noUsers =
 		(await Users.countBy({
 			host: IsNull(),
+			isAdmin: true,
 		})) === 0;
 	if (!(noUsers || me?.isAdmin)) throw new Error("access denied");
 

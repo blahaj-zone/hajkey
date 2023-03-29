@@ -78,7 +78,7 @@ async function accept(): Promise<void> {
 	}
 }
 
-function deny(): void { 
+function deny(): void {
 	state = 'denied';
 }
 

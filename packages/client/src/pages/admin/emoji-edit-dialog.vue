@@ -22,7 +22,10 @@
 				<template #label>{{ i18n.ts.tags }}</template>
 				<template #caption>{{ i18n.ts.setMultipleBySeparatingWithSpace }}</template>
 			</MkInput>
-			<MkButton danger @click="del()"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.delete }}</MkButton>
+			<MkTextarea v-model="license" class="_formBlock">
+				<template #label>{{ i18n.ts.license }}</template>
+			</MkTextarea>
+			<MkButton danger @click="del()"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.delete }}</MkButton>
 		</div>
 	</div>
 </XModalWindow>
@@ -33,6 +36,7 @@ import { } from 'vue';
 import XModalWindow from '@/components/MkModalWindow.vue';
 import MkButton from '@/components/MkButton.vue';
 import MkInput from '@/components/form/input.vue';
+import MkTextarea from '@/components/form/textarea.vue';
 import * as os from '@/os';
 import { unique } from '@/scripts/array';
 import { i18n } from '@/i18n';
@@ -47,6 +51,7 @@ let name: string = $ref(props.emoji.name);
 let category: string = $ref(props.emoji.category);
 let aliases: string = $ref(props.emoji.aliases.join(' '));
 let categories: string[] = $ref(emojiCategories);
+let license: string = $ref(props.emoji.license ?? '');
 
 const emit = defineEmits<{
 	(ev: 'done', v: { deleted?: boolean, updated?: any }): void,
@@ -63,6 +68,7 @@ async function update() {
 		name,
 		category,
 		aliases: aliases.split(' '),
+		license: license === '' ? null : license,
 	});
 
 	emit('done', {
@@ -71,6 +77,7 @@ async function update() {
 			name,
 			category,
 			aliases: aliases.split(' '),
+			license: license === '' ? null : license,
 		},
 	});
 

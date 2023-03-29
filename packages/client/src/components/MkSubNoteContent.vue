@@ -2,22 +2,34 @@
 <div v-if="!muted" class="wrmlmaau" :class="{ collapsed, isLong }">
 	<div class="body">
 		<span v-if="note.deletedAt" style="opacity: 0.5">({{ i18n.ts.deleted }})</span>
-		<MkA v-if="note.replyId" class="reply" :to="`/notes/${note.replyId}`"><i class="ph-arrow-bend-up-left-bold ph-lg"></i></MkA>
+		<template v-if="!note.cw">
+			<MkA v-if="note.replyId"  :to="`/notes/${note.replyId}`" class="reply-icon" @click.stop>
+				<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+			</MkA>
+			<MkA v-if="conversation && note.renoteId && note.renoteId != parentId" :to="`/notes/${note.renoteId}`" class="reply-icon" @click.stop>
+				<i class="ph-quotes ph-bold ph-lg"></i>
+			</MkA>
+		</template>
 		<Mfm v-if="note.text" :text="note.text" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
 		<MkA v-if="note.renoteId" class="rp" :to="`/notes/${note.renoteId}`">{{ i18n.ts.quoteAttached }}: ...</MkA>
 	</div>
 	<div v-if="note.files.length > 0">
-		<summary>({{ i18n.t('withNFiles', { n: note.files.length }) }})</summary>
 		<XMediaList :media-list="note.files"/>
 	</div>
 	<div v-if="note.poll">
 		<summary>{{ i18n.ts.poll }}</summary>
 		<XPoll :note="note"/>
 	</div>
-	<button v-if="isLong && collapsed" class="fade _button" @click.stop.prevent="collapsed = false">
+	<template v-if="detailed">
+		<!-- <div v-if="note.renoteId" class="renote">
+			<XNoteSimple :note="note.renote"/>
+		</div> -->
+		<MkUrlPreview v-for="url in urls" :key="url" :url="url" :compact="true" :detail="false" class="url-preview"/>
+	</template>
+	<button v-if="isLong && collapsed" class="fade _button" @click.stop="collapsed = false">
 		<span>{{ i18n.ts.showMore }}</span>
 	</button>
-	<button v-if="isLong && !collapsed" class="showLess _button" @click.stop.prevent="collapsed = true">
+	<button v-if="isLong && !collapsed" class="showLess _button" @click.stop="collapsed = true">
 		<span>{{ i18n.ts.showLess }}</span>
 	</button>
 </div>
@@ -34,10 +46,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import type * as misskey from 'calckey-js';
+import { } from 'vue';
+import * as misskey from 'calckey-js';
+import * as mfm from 'mfm-js';
+import XNoteSimple from '@/components/MkNoteSimple.vue';
 import XMediaList from '@/components/MkMediaList.vue';
 import XPoll from '@/components/MkPoll.vue';
+import MkUrlPreview from '@/components/MkUrlPreview.vue';
+import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
 import { i18n } from '@/i18n';
 import { deviceKind } from '@/scripts/device-kind';
 import { defaultStore } from '@/store';
@@ -47,8 +63,12 @@ import { userPage } from '@/filters/user';
 
 const props = defineProps<{
 	note: misskey.entities.Note;
+	parentId?;
+	conversation?;
+	detailed?: boolean;
 }>();
 
+<<<<<<< HEAD
 const note = props.note;
 
 const isRenote = (
@@ -87,23 +107,44 @@ const isLong = (appearNote.cw == null && appearNote.text != null && (
 ));
 const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
 const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
+=======
+const isLong = (
+	props.note.cw == null && props.note.text != null && (
+		(props.note.text.split('\n').length > 9) ||
+		(props.note.text.length > 500)
+	)
+);
+const collapsed = $ref(props.note.cw == null && isLong);
+const urls = props.note.text ? extractUrlFromMfm(mfm.parse(props.note.text)) : null;
+
+>>>>>>> 6e898249ef76a14993d8869e2156f2ab13780f2f
 </script>
 
 <style lang="scss" scoped>
 .wrmlmaau {
 	overflow-wrap: break-word;
-
+	
 	> .body {
-		> .reply {
-			margin-right: 6px;
-			color: var(--accent);
-		}
-
 		> .rp {
 			margin-left: 4px;
 			font-style: oblique;
 			color: var(--renote);
 		}
+		.reply-icon {
+			display: inline-block;
+			border-radius: 6px;
+			padding: .2em .2em;
+			margin-right: .2em;
+			color: var(--accent);
+			transition: background .2s;
+			&:hover, &:focus {
+				background: var(--buttonHoverBg);
+			}
+		}
+	}
+
+	> .mk-url-preview {
+		margin-top: 8px;
 	}
 
 	&.collapsed {

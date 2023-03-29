@@ -40,5 +40,10 @@ export const packedEmojiSchema = {
 			optional: false,
 			nullable: false,
 		},
+		license: {
+			type: "string",
+			optional: false,
+			nullable: true,
+		},
 	},
 } as const;

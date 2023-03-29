@@ -32,7 +32,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.signup,
-	icon: 'ph-user-bold ph-lg',
+	icon: 'ph-user ph-bold ph-lg',
 });
 </script>
 

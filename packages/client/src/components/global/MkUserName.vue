@@ -1,5 +1,5 @@
 <template>
-<Mfm :text="user.name || user.username" :plain="true" :nowrap="nowrap" :custom-emojis="user.emojis"/>
+<Mfm :class="$style.root" :text="user.name || user.username" :plain="true" :nowrap="nowrap" :custom-emojis="user.emojis"/>
 </template>
 
 <script lang="ts" setup>
@@ -13,3 +13,9 @@ const props = withDefaults(defineProps<{
 	nowrap: true,
 });
 </script>
+
+<style lang="scss" module>
+.root {
+	unicode-bidi: isolate;
+}
+</style>

@@ -64,14 +64,14 @@ export default defineComponent({
 				}, [
 					h('span', [
 						h('i', {
-							class: 'ph-caret-up-bold ph-lg icon',
+							class: 'ph-caret-up ph-bold ph-lg icon',
 						}),
 						getDateText(item.createdAt),
 					]),
 					h('span', [
 						getDateText(props.items[i + 1].createdAt),
 						h('i', {
-							class: 'ph-caret-down-bold ph-lg icon',
+							class: 'ph-caret-down ph-bold ph-lg icon',
 						}),
 					]),
 				]));

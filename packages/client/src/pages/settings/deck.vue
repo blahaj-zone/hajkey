@@ -34,6 +34,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.deck,
-	icon: 'ph-layout-bold ph-lg',
+	icon: 'ph-layout ph-bold ph-lg',
 });
 </script>

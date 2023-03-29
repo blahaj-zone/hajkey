@@ -69,8 +69,8 @@ exportRequested: "Has sol·licitat una exportació. Això pot trigar una estona.
 importRequested: "Has sol·licitat una importació. Això pot trigar una estona."
 lists: "Llistes"
 noLists: "No tens cap llista"
-note: "Nota"
-notes: "Notes"
+note: "Post"
+notes: "Posts"
 following: "Seguint"
 followers: "Seguidors"
 followsYou: "Et segueix"
@@ -141,7 +141,7 @@ _theme:
     mention: "Menció"
     renote: "Renotar"
 _sfx:
-  note: "Notes"
+  note: "Posts"
   notification: "Notificacions"
 _2fa:
   step2Url: "També pots inserir aquest enllaç i utilitzes una aplicació d'escriptori:"

@@ -13,17 +13,17 @@
 				<div class="_footer navigation">
 					<div class="step">
 						<button class="arrow _button" :disabled="tutorial === 0" @click="tutorial--">
-							<i class="ph-caret-left-bold ph-lg"></i>
+							<i class="ph-caret-left ph-bold ph-lg"></i>
 						</button>
 						<span>{{ tutorial + 1 }} / 6</span>
 						<button class="arrow _button" :disabled="tutorial === 5" @click="tutorial++">
-							<i class="ph-caret-right-bold ph-lg"></i>
+							<i class="ph-caret-right ph-bold ph-lg"></i>
 						</button>
 					</div>
-					<MkButton v-if="tutorial === 5" class="ok" primary @click="close"><i class="ph-check-bold ph-lg"></i> {{ i18n.ts.gotIt }}</MkButton>
-					<MkButton v-else class="ok" primary @click="tutorial++"><i class="ph-check-bold ph-lg"></i> {{ i18n.ts.next }}</MkButton>
+					<MkButton v-if="tutorial === 5" class="ok" primary @click="close"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.gotIt }}</MkButton>
+					<MkButton v-else class="ok" primary @click="tutorial++"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.next }}</MkButton>
 				</div>
-				<h2 class="_title title"><i class="ph-info-bold ph-lg"></i> {{ i18n.ts._tutorial.title }}</h2>
+				<h2 class="_title title"><i class="ph-info ph-bold ph-lg"></i> {{ i18n.ts._tutorial.title }}</h2>
 				<Transition name="fade">
 					<div v-if="tutorial === 0" key="1" class="_content">
 						<h3>{{ i18n.ts._tutorial.step1_1 }}</h3>
@@ -41,7 +41,7 @@
 						<div>{{ i18n.ts._tutorial.step3_2 }}</div>
 						<XFeaturedUsers/>
 						<br/>
-						<MkButton class="ok" primary @click="tutorial++"><i class="ph-check-bold ph-lg"></i> {{ i18n.ts.next }}</MkButton>
+						<MkButton class="ok" primary @click="tutorial++"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.next }}</MkButton>
 					</div>
 					<div v-else-if="tutorial === 3" key="4" class="_content">
 						<h3>{{ i18n.ts._tutorial.step4_1 }}</h3>
@@ -64,35 +64,35 @@
 							<li>
 								<I18n :src="i18n.ts._tutorial.step5_3" tag="div">
 									<template #icon>
-										<i class="ph-house-bold ph-lg"/>
+										<i class="ph-house ph-bold ph-lg"/>
 									</template>
 								</I18n>
 							</li>
 							<li v-if="timelines.includes('local')">
 								<I18n :src="i18n.ts._tutorial.step5_4" tag="div">
 									<template #icon>
-										<i class="ph-users-bold ph-lg"/>
+										<i class="ph-users ph-bold ph-lg"/>
 									</template>
 								</I18n>
 							</li>
 							<li v-if="timelines.includes('recommended')">
 								<I18n :src="i18n.ts._tutorial.step5_5" tag="div">
 									<template #icon>
-										<i class="ph-thumbs-up-bold ph-lg"/>
+										<i class="ph-thumbs-up ph-bold ph-lg"/>
 									</template>
 								</I18n>
 							</li>
 							<li v-if="timelines.includes('social')">
 								<I18n :src="i18n.ts._tutorial.step5_6" tag="div">
 									<template #icon>
-										<i class="ph-handshake-bold ph-lg"/>
+										<i class="ph-handshake ph-bold ph-lg"/>
 									</template>
 								</I18n>
 							</li>
 							<li v-if="timelines.includes('global')">
 								<I18n :src="i18n.ts._tutorial.step5_7" tag="div">
 									<template #icon>
-										<i class="ph-planet-bold ph-lg"/>
+										<i class="ph-planet ph-bold ph-lg"/>
 									</template>
 								</I18n>
 							</li>

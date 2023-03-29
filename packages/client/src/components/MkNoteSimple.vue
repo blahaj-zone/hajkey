@@ -6,6 +6,7 @@
 		<div class="body">
 			<p v-if="note.cw != null" class="cw">
 				<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
+				<br/>
 				<XCwButton v-model="showContent" :note="note"/>
 			</p>
 			<div v-show="note.cw == null || showContent" class="content">

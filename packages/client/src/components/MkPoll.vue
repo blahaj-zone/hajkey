@@ -1,10 +1,10 @@
 <template>
 <div class="tivcixzd" :class="{ done: closed || isVoted }">
 	<ul>
-		<li v-for="(choice, i) in note.poll.choices" :key="i" :class="{ voted: choice.voted }" @click="vote(i)">
+		<li v-for="(choice, i) in note.poll.choices" :key="i" :class="{ voted: choice.voted }" @click.stop="vote(i)">
 			<div class="backdrop" :style="{ 'width': `${showResult ? (choice.votes / total * 100) : 0}%` }"></div>
 			<span>
-				<template v-if="choice.isVoted"><i class="ph-check-bold ph-lg"></i></template>
+				<template v-if="choice.isVoted"><i class="ph-check ph-bold ph-lg"></i></template>
 				<Mfm :text="choice.text" :plain="true" :custom-emojis="note.emojis"/>
 				<span v-if="showResult" class="votes">({{ i18n.t('_poll.votesCount', { n: choice.votes }) }})</span>
 			</span>
@@ -13,7 +13,7 @@
 	<p v-if="!readOnly">
 		<span>{{ i18n.t('_poll.totalVotes', { n: total }) }}</span>
 		<span> · </span>
-		<a v-if="!closed && !isVoted" @click="showResult = !showResult">{{ showResult ? i18n.ts._poll.vote : i18n.ts._poll.showResult }}</a>
+		<a v-if="!closed && !isVoted" @click.stop="showResult = !showResult">{{ showResult ? i18n.ts._poll.vote : i18n.ts._poll.showResult }}</a>
 		<span v-if="isVoted">{{ i18n.ts._poll.voted }}</span>
 		<span v-else-if="closed">{{ i18n.ts._poll.closed }}</span>
 		<span v-if="remaining > 0"> · {{ timer }}</span>

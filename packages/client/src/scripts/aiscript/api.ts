@@ -27,7 +27,7 @@ export function createAiScriptEnv(opts) {
 			if (token) {
 				utils.assertString(token);
 				// バグがあればundefinedもあり得るため念のため
-				if (typeof token.value !== 'string') throw new Error('invalid token');
+				if (typeof token.value !== "string") throw new Error("invalid token");
 			}
 			apiRequests++;
 			if (apiRequests > 16) return values.NULL;

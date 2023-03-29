@@ -40,7 +40,7 @@
 							<template #n><b>{{ onlineUsersCount }}</b></template>
 						</I18n>
 					</div>
-					<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
+					<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline ph-bold ph-lg"></i></button>
 				</div>
 			</div>
 			<nav class="nav">
@@ -125,13 +125,13 @@ export default defineComponent({
 		showMenu(ev) {
 			os.popupMenu([{
 				text: i18n.t('aboutX', { x: instanceName }),
-				icon: 'ph-info-bold ph-lg',
+				icon: 'ph-info ph-bold ph-lg',
 				action: () => {
 					os.pageWindow('/about');
 				},
 			}, {
 				text: i18n.ts.aboutMisskey,
-				icon: 'ph-info-bold ph-lg',
+				icon: 'ph-info ph-bold ph-lg',
 				action: () => {
 					os.pageWindow('/about-calckey');
 				},

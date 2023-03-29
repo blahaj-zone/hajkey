@@ -5,7 +5,7 @@
 	class="eddddedb _button"
 	@click="quote()"
 >
-	<i class="ph-quotes-bold ph-lg"></i>
+	<i class="ph-quotes ph-bold ph-lg"></i>
 </button>
 </template>
 

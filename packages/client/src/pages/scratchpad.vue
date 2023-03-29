@@ -2,7 +2,7 @@
 <div class="iltifgqe">
 	<div class="editor _panel _gap">
 		<PrismEditor v-model="code" class="_code code" :highlight="highlighter" :line-numbers="false"/>
-		<MkButton style="position: absolute; top: 8px; right: 8px;" primary @click="run()"><i class="ph-play-bold ph-lg"></i></MkButton>
+		<MkButton style="position: absolute; top: 8px; right: 8px;" primary @click="run()"><i class="ph-play ph-bold ph-lg"></i></MkButton>
 	</div>
 
 	<MkContainer :foldable="true" class="_gap">
@@ -112,7 +112,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.scratchpad,
-	icon: 'ph-terminal-window-bold ph-lg',
+	icon: 'ph-terminal-window ph-bold ph-lg',
 });
 </script>
 

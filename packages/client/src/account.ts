@@ -242,7 +242,7 @@ export async function openAccountMenu(
 					...accountItemPromises,
 					{
 						type: "parent",
-						icon: "ph-plus-bold ph-lg",
+						icon: "ph-plus ph-bold ph-lg",
 						text: i18n.ts.addAccount,
 						children: [
 							{
@@ -261,13 +261,13 @@ export async function openAccountMenu(
 					},
 					{
 						type: "link",
-						icon: "ph-users-bold ph-lg",
+						icon: "ph-users ph-bold ph-lg",
 						text: i18n.ts.manageAccounts,
 						to: "/settings/accounts",
 					},
 					{
 						type: "button",
-						icon: "ph-sign-out-bold ph-lg",
+						icon: "ph-sign-out ph-bold ph-lg",
 						text: i18n.ts.logout,
 						action: () => {
 							signout();

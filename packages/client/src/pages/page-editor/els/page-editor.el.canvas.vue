@@ -1,11 +1,11 @@
 <template>
 
 <XContainer :draggable="true" @remove="() => $emit('remove')">
-	<template #header><i class="ph-paint-brush-household-bold ph-lg"></i> {{ i18n.ts._pages.blocks.canvas }}</template>
+	<template #header><i class="ph-paint-brush-household ph-bold ph-lg"></i> {{ i18n.ts._pages.blocks.canvas }}</template>
 
 	<section style="padding: 0 16px 0 16px;">
 		<MkInput v-model="value.name">
-			<template #prefix><i class="ph-magic-wand-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-magic-wand ph-bold ph-lg"></i></template>
 			<template #label>{{ i18n.ts._pages.blocks._canvas.id }}</template>
 		</MkInput>
 		<MkInput v-model="value.width" type="number">

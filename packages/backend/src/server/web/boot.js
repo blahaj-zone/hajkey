@@ -9,120 +9,122 @@
  * 注: webpackは介さないため、このファイルではrequireやimportは使えません。
  */
 
-'use strict';
+"use strict";
 
 // ブロックの中に入れないと、定義した変数がブラウザのグローバルスコープに登録されてしまい邪魔なので
 (async () => {
 	window.onerror = (e) => {
 		console.error(e);
-		renderError('SOMETHING_HAPPENED', e);
+		renderError("SOMETHING_HAPPENED", e);
 	};
 	window.onunhandledrejection = (e) => {
 		console.error(e);
-		renderError('SOMETHING_HAPPENED_IN_PROMISE', e);
+		renderError("SOMETHING_HAPPENED_IN_PROMISE", e);
 	};
 
 	//#region Detect language & fetch translations
-	const v = localStorage.getItem('v') || VERSION;
+	const v = localStorage.getItem("v") || VERSION;
 
 	const supportedLangs = LANGS;
-	let lang = localStorage.getItem('lang');
+	let lang = localStorage.getItem("lang");
 	if (lang == null || !supportedLangs.includes(lang)) {
 		if (supportedLangs.includes(navigator.language)) {
 			lang = navigator.language;
 		} else {
-			lang = supportedLangs.find(x => x.split('-')[0] === navigator.language);
+			lang = supportedLangs.find((x) => x.split("-")[0] === navigator.language);
 
 			// Fallback
-			if (lang == null) lang = 'en-US';
+			if (lang == null) lang = "en-US";
 		}
 	}
 
 	const res = await fetch(`/assets/locales/${lang}.${v}.json`);
 	if (res.status === 200) {
-		localStorage.setItem('lang', lang);
-		localStorage.setItem('locale', await res.text());
-		localStorage.setItem('localeVersion', v);
+		localStorage.setItem("lang", lang);
+		localStorage.setItem("locale", await res.text());
+		localStorage.setItem("localeVersion", v);
 	} else {
 		await checkUpdate();
-		renderError('LOCALE_FETCH');
+		renderError("LOCALE_FETCH");
 		return;
 	}
 	//#endregion
 
 	//#region Script
 	function importAppScript() {
-		import(`/assets/${CLIENT_ENTRY}`)
-			.catch(async e => {
-				await checkUpdate();
-				console.error(e);
-				renderError('APP_IMPORT', e);
-			});
+		import(`/assets/${CLIENT_ENTRY}`).catch(async (e) => {
+			await checkUpdate();
+			console.error(e);
+			renderError("APP_IMPORT", e);
+		});
 	}
 
 	// タイミングによっては、この時点でDOMの構築が済んでいる場合とそうでない場合とがある
-	if (document.readyState !== 'loading') {
+	if (document.readyState !== "loading") {
 		importAppScript();
 	} else {
-		window.addEventListener('DOMContentLoaded', () => {
+		window.addEventListener("DOMContentLoaded", () => {
 			importAppScript();
 		});
 	}
 	//#endregion
 
 	//#region Theme
-	const theme = localStorage.getItem('theme');
+	const theme = localStorage.getItem("theme");
 	if (theme) {
 		for (const [k, v] of Object.entries(JSON.parse(theme))) {
 			document.documentElement.style.setProperty(`--${k}`, v.toString());
 
 			// HTMLの theme-color 適用
-			if (k === 'htmlThemeColor') {
+			if (k === "htmlThemeColor") {
 				for (const tag of document.head.children) {
-					if (tag.tagName === 'META' && tag.getAttribute('name') === 'theme-color') {
-						tag.setAttribute('content', v);
+					if (
+						tag.tagName === "META" &&
+						tag.getAttribute("name") === "theme-color"
+					) {
+						tag.setAttribute("content", v);
 						break;
 					}
 				}
 			}
 		}
 	}
-	const colorSchema = localStorage.getItem('colorSchema');
+	const colorSchema = localStorage.getItem("colorSchema");
 	if (colorSchema) {
-		document.documentElement.style.setProperty('color-schema', colorSchema);
+		document.documentElement.style.setProperty("color-schema", colorSchema);
 	}
 	//#endregion
 
-	const fontSize = localStorage.getItem('fontSize');
+	const fontSize = localStorage.getItem("fontSize");
 	if (fontSize) {
-		document.documentElement.classList.add('f-' + fontSize);
+		document.documentElement.classList.add("f-" + fontSize);
 	}
 
-	const useSystemFont = localStorage.getItem('useSystemFont');
+	const useSystemFont = localStorage.getItem("useSystemFont");
 	if (useSystemFont) {
-		document.documentElement.classList.add('useSystemFont');
+		document.documentElement.classList.add("useSystemFont");
 	}
 
-	const wallpaper = localStorage.getItem('wallpaper');
+	const wallpaper = localStorage.getItem("wallpaper");
 	if (wallpaper) {
 		document.documentElement.style.backgroundImage = `url(${wallpaper})`;
 	}
 
-	const customCss = localStorage.getItem('customCss');
+	const customCss = localStorage.getItem("customCss");
 	if (customCss && customCss.length > 0) {
-		const style = document.createElement('style');
+		const style = document.createElement("style");
 		style.innerHTML = customCss;
 		document.head.appendChild(style);
 	}
 
 	async function addStyle(styleText) {
-		let css = document.createElement('style');
+		let css = document.createElement("style");
 		css.appendChild(document.createTextNode(styleText));
 		document.head.appendChild(css);
 	}
 
 	function renderError(code, details) {
-		let errorsElement = document.getElementById('errors');
+		let errorsElement = document.getElementById("errors");
 
 		if (!errorsElement) {
 			document.body.innerHTML = `
@@ -158,9 +160,9 @@
 			<br>
 			<div id="errors"></div>
 			`;
-			errorsElement = document.getElementById('errors');
+			errorsElement = document.getElementById("errors");
 		}
-		const detailsElement = document.createElement('details');
+		const detailsElement = document.createElement("details");
 		detailsElement.innerHTML = `
 		<br>
 		<summary>
@@ -278,25 +280,25 @@
 			details {
 				width: 50%;
 			}
-		`)
+		`);
 	}
 
 	async function checkUpdate() {
 		try {
-			const res = await fetch('/api/meta', {
-				method: 'POST',
-				cache: 'no-cache'
+			const res = await fetch("/api/meta", {
+				method: "POST",
+				cache: "no-cache",
 			});
 
 			const meta = await res.json();
 
 			if (meta.version != v) {
-				localStorage.setItem('v', meta.version);
+				localStorage.setItem("v", meta.version);
 				refresh();
 			}
 		} catch (e) {
 			console.error(e);
-			renderError('UPDATE_CHECK', e);
+			renderError("UPDATE_CHECK", e);
 			throw e;
 		}
 	}
@@ -304,9 +306,9 @@
 	function refresh() {
 		// Clear cache (service worker)
 		try {
-			navigator.serviceWorker.controller.postMessage('clear');
-			navigator.serviceWorker.getRegistrations().then(registrations => {
-				registrations.forEach(registration => registration.unregister());
+			navigator.serviceWorker.controller.postMessage("clear");
+			navigator.serviceWorker.getRegistrations().then((registrations) => {
+				registrations.forEach((registration) => registration.unregister());
 			});
 		} catch (e) {
 			console.error(e);

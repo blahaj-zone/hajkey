@@ -5,16 +5,16 @@
 		<MkAvatar v-else-if="notification.user" class="icon" :user="notification.user"/>
 		<img v-else-if="notification.icon" class="icon" :src="notification.icon" alt=""/>
 		<div class="sub-icon" :class="notification.type">
-			<i v-if="notification.type === 'follow'" class="ph-hand-waving-bold"></i>
-			<i v-else-if="notification.type === 'receiveFollowRequest'" class="ph-clock-bold"></i>
-			<i v-else-if="notification.type === 'followRequestAccepted'" class="ph-check-bold"></i>
-			<i v-else-if="notification.type === 'groupInvited'" class="ph-identification-card-bold"></i>
-			<i v-else-if="notification.type === 'renote'" class="ph-repeat-bold"></i>
-			<i v-else-if="notification.type === 'reply'" class="ph-arrow-bend-up-left-bold"></i>
-			<i v-else-if="notification.type === 'mention'" class="ph-at-bold"></i>
-			<i v-else-if="notification.type === 'quote'" class="ph-quotes-bold"></i>
-			<i v-else-if="notification.type === 'pollVote'" class="ph-microphone-stage-bold"></i>
-			<i v-else-if="notification.type === 'pollEnded'" class="ph-microphone-stage-bold"></i>
+			<i v-if="notification.type === 'follow'" class="ph-hand-waving ph-bold"></i>
+			<i v-else-if="notification.type === 'receiveFollowRequest'" class="ph-clock ph-bold"></i>
+			<i v-else-if="notification.type === 'followRequestAccepted'" class="ph-check ph-bold"></i>
+			<i v-else-if="notification.type === 'groupInvited'" class="ph-identification-card ph-bold"></i>
+			<i v-else-if="notification.type === 'renote'" class="ph-repeat ph-bold"></i>
+			<i v-else-if="notification.type === 'reply'" class="ph-arrow-bend-up-left ph-bold"></i>
+			<i v-else-if="notification.type === 'mention'" class="ph-at ph-bold"></i>
+			<i v-else-if="notification.type === 'quote'" class="ph-quotes ph-bold"></i>
+			<i v-else-if="notification.type === 'pollVote'" class="ph-microphone-stage ph-bold"></i>
+			<i v-else-if="notification.type === 'pollEnded'" class="ph-microphone-stage ph-bold"></i>
 			<!-- notification.reaction が null になることはまずないが、ここでoptional chaining使うと一部ブラウザで刺さるので念の為 -->
 			<XReactionIcon
 				v-else-if="notification.type === 'reaction'"
@@ -33,14 +33,14 @@
 			<MkTime v-if="withTime" :time="notification.createdAt" class="time"/>
 		</header>
 		<MkA v-if="notification.type === 'reaction'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 		</MkA>
 		<MkA v-if="notification.type === 'renote'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note.renote)">
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 			<Mfm :text="getNoteSummary(notification.note.renote)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.renote.emojis"/>
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 		</MkA>
 		<MkA v-if="notification.type === 'reply'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
@@ -52,14 +52,14 @@
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
 		</MkA>
 		<MkA v-if="notification.type === 'pollVote'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 		</MkA>
 		<MkA v-if="notification.type === 'pollEnded'" class="text" :to="notePage(notification.note)" :title="getNoteSummary(notification.note)">
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 			<Mfm :text="getNoteSummary(notification.note)" :plain="true" :nowrap="!full" :custom-emojis="notification.note.emojis"/>
-			<i class="ph-quotes-fill ph-lg"></i>
+			<i class="ph-quotes ph-fill ph-lg"></i>
 		</MkA>
 		<span v-if="notification.type === 'follow'" class="text" style="opacity: 0.6;">{{ i18n.ts.youGotNewFollower }}<div v-if="full"><MkFollowButton :user="notification.user" :full="true"/></div></span>
 		<span v-if="notification.type === 'followRequestAccepted'" class="text" style="opacity: 0.6;">{{ i18n.ts.followRequestAccepted }}</span>

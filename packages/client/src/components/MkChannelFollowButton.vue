@@ -6,14 +6,14 @@
 >
 	<template v-if="!wait">
 		<template v-if="isFollowing">
-			<span v-if="full">{{ i18n.ts.unfollow }}</span><i class="ph-minus-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.unfollow }}</span><i class="ph-minus ph-bold ph-lg"></i>
 		</template>
 		<template v-else>
-			<span v-if="full">{{ i18n.ts.follow }}</span><i class="ph-plus-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.follow }}</span><i class="ph-plus ph-bold ph-lg"></i>
 		</template>
 	</template>
 	<template v-else>
-		<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch-bold ph-lg fa-pulse ph-fw ph-lg"></i>
+		<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
 	</template>
 </button>
 </template>

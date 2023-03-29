@@ -9,30 +9,30 @@
 		</div>
 		<div class="middle">
 			<MkA v-click-anime class="item index" active-class="active" to="/" exact>
-				<i class="icon ph-house-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.timeline }}</span>
+				<i class="icon ph-house ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.timeline }}</span>
 			</MkA>
 			<template v-for="item in menu">
 				<div v-if="item === '-'" class="divider"></div>
 				<component :is="navbarItemDef[item].to ? 'MkA' : 'button'" v-else-if="navbarItemDef[item] && (navbarItemDef[item].show !== false)" v-click-anime class="item _button" :class="[item, { active: navbarItemDef[item].active }]" active-class="active" :to="navbarItemDef[item].to" v-on="navbarItemDef[item].action ? { click: navbarItemDef[item].action } : {}">
 					<i class="icon ph-fw ph-lg" :class="navbarItemDef[item].icon"></i><span class="text">{{ i18n.ts[navbarItemDef[item].title] }}</span>
-					<span v-if="navbarItemDef[item].indicated" class="indicator"><i class="icon ph-circle-fill"></i></span>
+					<span v-if="navbarItemDef[item].indicated" class="indicator"><i class="icon ph-circle ph-fill"></i></span>
 				</component>
 			</template>
 			<div class="divider"></div>
 			<MkA v-if="$i.isAdmin || $i.isModerator" v-click-anime class="item" active-class="active" to="/admin">
-				<i class="icon ph-door-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.controlPanel }}</span>
+				<i class="icon ph-door ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.controlPanel }}</span>
 			</MkA>
 			<button v-click-anime class="item _button" @click="more">
-				<i class="icon ph-dots-three-outline-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.more }}</span>
-				<span v-if="otherMenuItemIndicated" class="indicator"><i class="icon ph-circle-fill"></i></span>
+				<i class="icon ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.more }}</span>
+				<span v-if="otherMenuItemIndicated" class="indicator"><i class="icon ph-circle ph-fill"></i></span>
 			</button>
 			<MkA v-click-anime class="item" active-class="active" to="/settings">
-				<i class="icon ph-gear-six-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.settings }}</span>
+				<i class="icon ph-gear-six ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.settings }}</span>
 			</MkA>
 		</div>
 		<div class="bottom">
 			<button class="item _button post" data-cy-open-post-form @click="os.post">
-				<i class="icon ph-pencil-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.note }}</span>
+				<i class="icon ph-pencil ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.note }}</span>
 			</button>
 		</div>
 	</div>
@@ -119,7 +119,8 @@ function more() {
 
 			> .post {
 				position: relative;
-				display: block;
+				display: flex;
+				align-items: center;
 				width: 100%;
 				height: 40px;
 				color: var(--fgOnAccent);

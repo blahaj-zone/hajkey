@@ -161,8 +161,9 @@ export const packedNoteSchema = {
 			nullable: false,
 		},
 		emojis: {
-			type: 'object',
-			optional: true, nullable: true,
+			type: "object",
+			optional: true,
+			nullable: true,
 		},
 		reactions: {
 			type: "object",

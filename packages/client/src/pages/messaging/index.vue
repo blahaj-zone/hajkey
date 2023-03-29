@@ -13,7 +13,7 @@
 			>
 				<swiper-slide>
 					<div class="_content yweeujhr dms">
-						<MkButton primary class="start" @click="startUser"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
+						<MkButton primary class="start" @click="startUser"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
 						<MkPagination v-slot="{items}" :pagination="dmsPagination">
 							<MkChatPreview v-for="message in items" :key="message.id" class="yweeujhr message _block" :message="message"/>
 						</MkPagination>
@@ -22,8 +22,8 @@
 				<swiper-slide>
 					<div class="_content yweeujhr groups">
 						<div class="groupsbuttons">
-							<MkButton primary class="start" :link="true" to="/my/groups"><i class="ph-user-circle-gear-bold ph-lg"></i> {{ i18n.ts.manageGroups }}</MkButton>
-							<MkButton primary class="start" @click="startGroup"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
+							<MkButton primary class="start" :link="true" to="/my/groups"><i class="ph-user-circle-gear ph-bold ph-lg"></i> {{ i18n.ts.manageGroups }}</MkButton>
+							<MkButton primary class="start" @click="startGroup"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
 						</div>
 						<MkPagination v-slot="{items}" :pagination="groupsPagination">
 							<MkChatPreview v-for="message in items" :key="message.id" class="yweeujhr message _block" :message="message"/>
@@ -66,7 +66,7 @@ watch($$(tab), () => (syncSlide(tabs.indexOf(tab))));
 
 const headerActions = $computed(() => [{
 	asFullButton: true,
-	icon: 'ph-plus-bold ph-lg',
+	icon: 'ph-plus ph-bold ph-lg',
 	text: i18n.ts.addUser,
 	handler: startMenu,
 }]);
@@ -74,16 +74,16 @@ const headerActions = $computed(() => [{
 const headerTabs = $computed(() => [{
 	key: 'dms',
 	title: i18n.ts._messaging.dms,
-	icon: 'ph-user-bold ph-lg',
+	icon: 'ph-user ph-bold ph-lg',
 }, {
 	key: 'groups',
 	title: i18n.ts._messaging.groups,
-	icon: 'ph-users-three-bold ph-lg',
+	icon: 'ph-users-three ph-bold ph-lg',
 }]);
 
 definePageMetadata({
 	title: i18n.ts.messaging,
-	icon: 'ph-chats-teardrop-bold ph-lg',
+	icon: 'ph-chats-teardrop ph-bold ph-lg',
 });
 
 const dmsPagination = {
@@ -130,11 +130,11 @@ function onRead(ids): void {
 function startMenu(ev) {
 	os.popupMenu([{
 		text: i18n.ts.messagingWithUser,
-		icon: 'ph-user-bold ph-lg',
+		icon: 'ph-user ph-bold ph-lg',
 		action: () => { startUser(); },
 	}, {
 		text: i18n.ts.messagingWithGroup,
-		icon: 'ph-users-three-bold ph-lg',
+		icon: 'ph-users-three ph-bold ph-lg',
 		action: () => { startGroup(); },
 	}], ev.currentTarget ?? ev.target);
 }

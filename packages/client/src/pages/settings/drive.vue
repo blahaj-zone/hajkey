@@ -31,7 +31,7 @@
 		>
 			{{ i18n.ts.uploadFolder }}
 			<template #suffix>{{ uploadFolder ? uploadFolder.name : '-' }}</template>
-			<template #suffixIcon><i class="ph-folder-notch-open-bold ph-lg"></i></template>
+			<template #suffixIcon><i class="ph-folder-notch-open ph-bold ph-lg"></i></template>
 		</FormLink>
 		<FormSwitch v-model="keepOriginalUploading" class="_formBlock">
 			<template #label>{{ i18n.ts.keepOriginalUploading }}</template>
@@ -125,7 +125,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.drive,
-	icon: 'ph-cloud-bold ph-lg',
+	icon: 'ph-cloud ph-bold ph-lg',
 });
 </script>
 

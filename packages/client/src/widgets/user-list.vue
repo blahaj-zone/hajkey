@@ -1,8 +1,8 @@
 <template>
 	<MkContainer :show-header="widgetProps.showHeader" class="mkw-userList">
-		<template #header><i class="ph-user-list-bold ph-lg"></i> {{ list ? list.name : i18n.ts._widgets.userList }}</template>
-		<template #func="{ buttonStyleClass }"><button class="_button" :class="buttonStyleClass" @click="configure()"><i class="ph-gear-six-bold ph-lg"></i></button></template>
-	
+		<template #header><i class="ph-user-list ph-bold ph-lg"></i> {{ list ? list.name : i18n.ts._widgets.userList }}</template>
+		<template #func="{ buttonStyleClass }"><button class="_button" :class="buttonStyleClass" @click="configure()"><i class="ph-gear-six ph-bold ph-lg"></i></button></template>
+
 		<div class="wsdlkfj">
 			<div v-if="widgetProps.listId == null" class="init">
 				<MkButton primary @click="chooseList">{{ i18n.ts._widgets._userList.chooseList }}</MkButton>
@@ -14,7 +14,7 @@
 		</div>
 	</MkContainer>
 </template>
-	
+
 <script lang="ts" setup>
 import { useWidgetPropsManager, Widget, WidgetComponentExpose } from './widget';
 import { GetFormResultType } from '@/scripts/form';
@@ -92,7 +92,7 @@ defineExpose<WidgetComponentExpose>({
 	id: props.widget ? props.widget.id : null,
 });
 </script>
-	
+
 <style lang="scss" module>
 .wsdlkfj {
 	> .init {

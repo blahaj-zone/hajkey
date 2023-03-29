@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 import locales from '../../locales';
 import meta from '../../package.json';
 import pluginJson5 from './vite.json5';
+import viteCompression from 'vite-plugin-compression';
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json', '.json5', '.svg', '.sass', '.scss', '.css', '.vue'];
 
@@ -20,6 +21,9 @@ export default defineConfig(({ command, mode }) => {
 				reactivityTransform: true,
 			}),
 			pluginJson5(),
+			viteCompression({
+				algorithm: 'brotliCompress'
+			}),
 		],
 
 		resolve: {

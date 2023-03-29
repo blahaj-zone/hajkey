@@ -122,7 +122,7 @@ export function getNoteMenu(props: {
 		os.popupMenu(
 			[
 				{
-					icon: "ph-plus-bold ph-lg",
+					icon: "ph-plus ph-bold ph-lg",
 					text: i18n.ts.createNew,
 					action: async () => {
 						const { canceled, result } = await os.form(i18n.ts.createNewClip, {
@@ -223,6 +223,19 @@ export function getNoteMenu(props: {
 		});
 	}
 
+	function showReactions(): void {
+		os.popup(
+			defineAsyncComponent(
+				() => import("@/components/MkReactedUsersDialog.vue"),
+			),
+			{
+				noteId: appearNote.id,
+			},
+			{},
+			"closed",
+		);
+	}
+
 	async function translate(): Promise<void> {
 		if (props.translation.value != null) return;
 		props.translating.value = true;
@@ -244,7 +257,7 @@ export function getNoteMenu(props: {
 			...(props.currentClipPage?.value.userId === $i.id
 				? [
 						{
-							icon: "ph-minus-circle-bold ph-lg",
+							icon: "ph-minus-circle ph-bold ph-lg",
 							text: i18n.ts.unclip,
 							danger: true,
 							action: unclip,
@@ -253,18 +266,23 @@ export function getNoteMenu(props: {
 				  ]
 				: []),
 			{
-				icon: "ph-clipboard-text-bold ph-lg",
+				icon: "ph-smiley ph-bold ph-lg",
+				text: i18n.ts.reaction,
+				action: showReactions,
+			},
+			{
+				icon: "ph-clipboard-text ph-bold ph-lg",
 				text: i18n.ts.copyContent,
 				action: copyContent,
 			},
 			{
-				icon: "ph-link-simple-bold ph-lg",
+				icon: "ph-link-simple ph-bold ph-lg",
 				text: i18n.ts.copyLink,
 				action: copyLink,
 			},
 			appearNote.url || appearNote.uri
 				? {
-						icon: "ph-arrow-square-out-bold ph-lg",
+						icon: "ph-arrow-square-out ph-bold ph-lg",
 						text: i18n.ts.showOnRemote,
 						action: () => {
 							window.open(appearNote.url || appearNote.uri, "_blank");
@@ -273,14 +291,14 @@ export function getNoteMenu(props: {
 				: undefined,
 			shareAvailable()
 				? {
-						icon: "ph-share-network-bold ph-lg",
+						icon: "ph-share-network ph-bold ph-lg",
 						text: i18n.ts.share,
 						action: share,
 				  }
 				: undefined,
 			instance.translatorAvailable
 				? {
-						icon: "ph-translate-bold ph-lg",
+						icon: "ph-translate ph-bold ph-lg",
 						text: i18n.ts.translate,
 						action: translate,
 				  }
@@ -289,18 +307,18 @@ export function getNoteMenu(props: {
 			statePromise.then((state) =>
 				state?.isFavorited
 					? {
-							icon: "ph-bookmark-simple-bold ph-lg",
+							icon: "ph-bookmark-simple ph-bold ph-lg",
 							text: i18n.ts.unfavorite,
 							action: () => toggleFavorite(false),
 					  }
 					: {
-							icon: "ph-bookmark-simple-bold ph-lg",
+							icon: "ph-bookmark-simple ph-bold ph-lg",
 							text: i18n.ts.favorite,
 							action: () => toggleFavorite(true),
 					  },
 			),
 			{
-				icon: "ph-paperclip-bold ph-lg",
+				icon: "ph-paperclip ph-bold ph-lg",
 				text: i18n.ts.clip,
 				action: () => clip(),
 			},
@@ -308,12 +326,12 @@ export function getNoteMenu(props: {
 				? statePromise.then((state) =>
 						state.isWatching
 							? {
-									icon: "ph-eye-slash-bold ph-lg",
+									icon: "ph-eye-slash ph-bold ph-lg",
 									text: i18n.ts.unwatch,
 									action: () => toggleWatch(false),
 							  }
 							: {
-									icon: "ph-eye-bold ph-lg",
+									icon: "ph-eye ph-bold ph-lg",
 									text: i18n.ts.watch,
 									action: () => toggleWatch(true),
 							  },
@@ -322,12 +340,12 @@ export function getNoteMenu(props: {
 			statePromise.then((state) =>
 				state.isMutedThread
 					? {
-							icon: "ph-speaker-x-bold ph-lg",
+							icon: "ph-speaker-x ph-bold ph-lg",
 							text: i18n.ts.unmuteThread,
 							action: () => toggleThreadMute(false),
 					  }
 					: {
-							icon: "ph-speaker-x-bold ph-lg",
+							icon: "ph-speaker-x ph-bold ph-lg",
 							text: i18n.ts.muteThread,
 							action: () => toggleThreadMute(true),
 					  },
@@ -335,12 +353,12 @@ export function getNoteMenu(props: {
 			appearNote.userId === $i.id
 				? ($i.pinnedNoteIds || []).includes(appearNote.id)
 					? {
-							icon: "ph-push-pin-bold ph-lg",
+							icon: "ph-push-pin ph-bold ph-lg",
 							text: i18n.ts.unpin,
 							action: () => togglePin(false),
 					  }
 					: {
-							icon: "ph-push-pin-bold ph-lg",
+							icon: "ph-push-pin ph-bold ph-lg",
 							text: i18n.ts.pin,
 							action: () => togglePin(true),
 					  }
@@ -349,7 +367,7 @@ export function getNoteMenu(props: {
 		...($i.isModerator || $i.isAdmin ? [
 			null,
 			{
-				icon: 'ph-megaphone-simple-bold ph-lg',
+				icon: 'ph-megaphone-simple ph-bold ph-lg',
 				text: i18n.ts.promote,
 				action: promote
 			}]
@@ -359,7 +377,7 @@ export function getNoteMenu(props: {
 				? [
 						null,
 						{
-							icon: "ph-warning-circle-bold ph-lg",
+							icon: "ph-warning-circle ph-bold ph-lg",
 							text: i18n.ts.reportAbuse,
 							action: () => {
 								const u =
@@ -386,13 +404,13 @@ export function getNoteMenu(props: {
 						null,
 						appearNote.userId === $i.id
 							? {
-									icon: "ph-eraser-bold ph-lg",
+									icon: "ph-eraser ph-bold ph-lg",
 									text: i18n.ts.deleteAndEdit,
 									action: delEdit,
 							  }
 							: undefined,
 						{
-							icon: "ph-trash-bold ph-lg",
+							icon: "ph-trash ph-bold ph-lg",
 							text: i18n.ts.delete,
 							danger: true,
 							action: del,
@@ -403,18 +421,18 @@ export function getNoteMenu(props: {
 	} else {
 		menu = [
 			{
-				icon: "ph-clipboard-text-bold ph-lg",
+				icon: "ph-clipboard-text ph-bold ph-lg",
 				text: i18n.ts.copyContent,
 				action: copyContent,
 			},
 			{
-				icon: "ph-link-simple-bold ph-lg",
+				icon: "ph-link-simple ph-bold ph-lg",
 				text: i18n.ts.copyLink,
 				action: copyLink,
 			},
 			appearNote.url || appearNote.uri
 				? {
-						icon: "ph-arrow-square-out-bold ph-lg",
+						icon: "ph-arrow-square-out ph-bold ph-lg",
 						text: i18n.ts.showOnRemote,
 						action: () => {
 							window.open(appearNote.url || appearNote.uri, "_blank");
@@ -428,7 +446,7 @@ export function getNoteMenu(props: {
 		menu = menu.concat([
 			null,
 			...noteActions.map((action) => ({
-				icon: "ph-plug-bold ph-lg",
+				icon: "ph-plug ph-bold ph-lg",
 				text: action.title,
 				action: () => {
 					action.handler(appearNote);

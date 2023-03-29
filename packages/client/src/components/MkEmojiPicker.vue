@@ -46,7 +46,7 @@
 			</section>
 
 			<section>
-				<header><i class="ph-alarm-bold ph-fw ph-lg"></i> {{ i18n.ts.recentUsed }}</header>
+				<header><i class="ph-alarm ph-bold ph-fw ph-lg"></i> {{ i18n.ts.recentUsed }}</header>
 				<div class="body">
 					<button
 						v-for="emoji in recentlyUsedEmojis"
@@ -69,10 +69,10 @@
 		</div>
 	</div>
 	<div class="tabs">
-		<button class="_button tab" :class="{ active: tab === 'index' }" @click="tab = 'index'"><i class="ph-asterisk-bold ph-lg ph-fw ph-lg"></i></button>
-		<button class="_button tab" :class="{ active: tab === 'custom' }" @click="tab = 'custom'"><i class="ph-smiley-bold ph-lg ph-fw ph-lg"></i></button>
-		<button class="_button tab" :class="{ active: tab === 'unicode' }" @click="tab = 'unicode'"><i class="ph-leaf-bold ph-lg ph-fw ph-lg"></i></button>
-		<button class="_button tab" :class="{ active: tab === 'tags' }" @click="tab = 'tags'"><i class="ph-hash-bold ph-lg ph-fw ph-lg"></i></button>
+		<button class="_button tab" :class="{ active: tab === 'index' }" @click="tab = 'index'"><i class="ph-asterisk ph-bold ph-lg ph-fw ph-lg"></i></button>
+		<button class="_button tab" :class="{ active: tab === 'custom' }" @click="tab = 'custom'"><i class="ph-smiley ph-bold ph-lg ph-fw ph-lg"></i></button>
+		<button class="_button tab" :class="{ active: tab === 'unicode' }" @click="tab = 'unicode'"><i class="ph-leaf ph-bold ph-lg ph-fw ph-lg"></i></button>
+		<button class="_button tab" :class="{ active: tab === 'tags' }" @click="tab = 'tags'"><i class="ph-hash ph-bold ph-lg ph-fw ph-lg"></i></button>
 	</div>
 </div>
 </template>

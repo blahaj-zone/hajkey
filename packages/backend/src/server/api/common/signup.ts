@@ -107,6 +107,7 @@ export async function signup(opts: {
 				isAdmin:
 					(await Users.countBy({
 						host: IsNull(),
+						isAdmin: true,
 					})) === 0,
 			}),
 		);

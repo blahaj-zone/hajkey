@@ -1,7 +1,7 @@
 <template>
 <XColumn :menu="menu" :column="column" :is-stacked="isStacked" @parent-focus="$event => emit('parent-focus', $event)">
 	<template #header>
-		<i class="ph-list-bullets-bold ph-lg"></i><span style="margin-left: 8px;">{{ column.name }}</span>
+		<i class="ph-list-bullets ph-bold ph-lg"></i><span style="margin-left: 8px;">{{ column.name }}</span>
 	</template>
 
 	<XTimeline v-if="column.listId" ref="timeline" src="list" :list="column.listId" @after="() => emit('loaded')"/>
@@ -48,7 +48,7 @@ async function setList() {
 }
 
 const menu = [{
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 	text: i18n.ts.selectList,
 	action: setList,
 }];

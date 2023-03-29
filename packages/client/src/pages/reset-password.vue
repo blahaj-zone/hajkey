@@ -4,7 +4,7 @@
 	<MkSpacer v-if="token" :content-max="700" :margin-min="16" :margin-max="32">
 		<div class="_formRoot">
 			<FormInput v-model="password" type="password" class="_formBlock">
-				<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+				<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 				<template #label>{{ i18n.ts.newPassword }}</template>
 			</FormInput>
 		
@@ -50,7 +50,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.resetPassword,
-	icon: 'ph-lock-bold ph-lg',
+	icon: 'ph-lock ph-bold ph-lg',
 });
 </script>
 

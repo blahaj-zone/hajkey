@@ -13,27 +13,27 @@
 >
 	<template v-if="!wait">
 		<template v-if="isBlocking">
-			<span v-if="full">{{ i18n.ts.blocked }}</span><i class="ph-prohibit-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.blocked }}</span><i class="ph-prohibit ph-bold ph-lg"></i>
 		</template>
 		<template v-else-if="hasPendingFollowRequestFromYou && user.isLocked">
-			<span v-if="full">{{ i18n.ts.followRequestPending }}</span><i class="ph-hourglass-medium-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.followRequestPending }}</span><i class="ph-hourglass-medium ph-bold ph-lg"></i>
 		</template>
 		<template v-else-if="hasPendingFollowRequestFromYou && !user.isLocked">
 			<!-- つまりリモートフォローの場合。 -->
-			<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch-bold ph-lg fa-pulse"></i>
+			<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch ph-bold ph-lg fa-pulse"></i>
 		</template>
 		<template v-else-if="isFollowing">
-			<span v-if="full">{{ i18n.ts.unfollow }}</span><i class="ph-minus-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.unfollow }}</span><i class="ph-minus ph-bold ph-lg"></i>
 		</template>
 		<template v-else-if="!isFollowing && user.isLocked">
-			<span v-if="full">{{ i18n.ts.followRequest }}</span><i class="ph-plus-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.followRequest }}</span><i class="ph-plus ph-bold ph-lg"></i>
 		</template>
 		<template v-else-if="!isFollowing && !user.isLocked">
-			<span v-if="full">{{ i18n.ts.follow }}</span><i class="ph-plus-bold ph-lg"></i>
+			<span v-if="full">{{ i18n.ts.follow }}</span><i class="ph-plus ph-bold ph-lg"></i>
 		</template>
 	</template>
 	<template v-else>
-		<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch-bold ph-lg fa-pulse ph-fw ph-lg"></i>
+		<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
 	</template>
 </button>
 </template>
@@ -144,13 +144,12 @@ onBeforeUnmount(() => {
 	display: inline-block;
 	font-weight: bold;
 	color: var(--accent);
-	background: transparent;
 	border: solid 1px var(--accent);
 	padding: 0;
 	height: 31px;
 	font-size: 16px;
 	border-radius: 32px;
-	background: #fff;
+	background: var(--bg);
 
 	&.full {
 		padding: 0 8px 0 12px;

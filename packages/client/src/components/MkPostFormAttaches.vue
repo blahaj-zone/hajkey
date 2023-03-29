@@ -5,7 +5,7 @@
 			<div class="file" @click="showFileMenu(element, $event)" @contextmenu.prevent="showFileMenu(element, $event)">
 				<MkDriveFileThumbnail :data-id="element.id" class="thumbnail" :file="element" fit="cover"/>
 				<div v-if="element.isSensitive" class="sensitive">
-					<i class="ph-warning-bold ph-lg icon"></i>
+					<i class="ph-warning ph-bold ph-lg icon"></i>
 				</div>
 			</div>
 		</template>
@@ -115,19 +115,19 @@ export default defineComponent({
 			if (this.menu) return;
 			this.menu = os.popupMenu([{
 				text: i18n.ts.renameFile,
-				icon: 'ph-cursor-text-bold ph-lg',
+				icon: 'ph-cursor-text ph-bold ph-lg',
 				action: () => { this.rename(file); },
 			}, {
 				text: file.isSensitive ? i18n.ts.unmarkAsSensitive : i18n.ts.markAsSensitive,
-				icon: file.isSensitive ? 'ph-eye-slash-bold ph-lg' : 'ph-eye-bold ph-lg',
+				icon: file.isSensitive ? 'ph-eye-slash ph-bold ph-lg' : 'ph-eye ph-bold ph-lg',
 				action: () => { this.toggleSensitive(file); },
 			}, {
 				text: i18n.ts.describeFile,
-				icon: 'ph-cursor-text-bold ph-lg',
+				icon: 'ph-cursor-text ph-bold ph-lg',
 				action: () => { this.describe(file); },
 			}, {
 				text: i18n.ts.attachCancel,
-				icon: 'ph-circle-wavy-warning-bold ph-lg',
+				icon: 'ph-circle-wavy-warning ph-bold ph-lg',
 				action: () => { this.detachMedia(file.id); },
 			}], ev.currentTarget ?? ev.target).then(() => this.menu = null);
 		},

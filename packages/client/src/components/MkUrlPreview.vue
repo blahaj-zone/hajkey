@@ -1,16 +1,16 @@
 <template>
-<div v-if="playerEnabled" class="player" :style="`padding: ${(player.height || 0) / (player.width || 1) * 100}% 0 0`">
-	<button class="disablePlayer" :title="i18n.ts.disablePlayer" @click="playerEnabled = false"><i class="ph-x-bold ph-lg"></i></button>
+<div v-if="playerEnabled" class="player" :style="`padding: ${(player.height || 0) / (player.width || 1) * 100}% 0 0`" @click.stop>
+	<button class="disablePlayer" :title="i18n.ts.disablePlayer" @click="playerEnabled = false"><i class="ph-x ph-bold ph-lg"></i></button>
 	<iframe :src="player.url + (player.url.match(/\?/) ? '&autoplay=1&auto_play=1' : '?autoplay=1&auto_play=1')" :width="player.width || '100%'" :heigth="player.height || 250" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen/>
 </div>
-<div v-else-if="tweetId && tweetExpanded" ref="twitter" class="twitter">
+<div v-else-if="tweetId && tweetExpanded" ref="twitter" class="twitter" @click.stop>
 	<iframe ref="tweet" scrolling="no" frameborder="no" :style="{ position: 'relative', width: '100%', height: `${tweetHeight}px` }" :src="`https://platform.twitter.com/embed/index.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${$store.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"></iframe>
 </div>
-<div v-else v-size="{ max: [400, 350] }" class="mk-url-preview">
+<div v-else v-size="{ max: [400, 350] }" class="mk-url-preview" @click.stop>
 	<transition :name="$store.state.animation ? 'zoom' : ''" mode="out-in">
 		<component :is="self ? 'MkA' : 'a'" v-if="!fetching" class="link" :class="{ compact }" :[attr]="self ? url.substr(local.length) : url" rel="nofollow noopener" :target="target" :title="url">
 			<div v-if="thumbnail" class="thumbnail" :style="`background-image: url('${thumbnail}')`">
-				<button v-if="!playerEnabled && player.url" class="_button" :title="i18n.ts.enablePlayer" @click.prevent="playerEnabled = true"><i class="ph-play-circle-bold ph-lg"></i></button>
+				<button v-if="!playerEnabled && player.url" class="_button" :title="i18n.ts.enablePlayer" @click.prevent="playerEnabled = true"><i class="ph-play-circle ph-bold ph-lg"></i></button>
 			</div>
 			<article>
 				<header>
@@ -26,7 +26,7 @@
 	</transition>
 	<div v-if="tweetId" class="expandTweet">
 		<a @click="tweetExpanded = true">
-			<i class="ph-twitter-logo-bold ph-lg"></i> {{ i18n.ts.expandTweet }}
+			<i class="ph-twitter-logo ph-bold ph-lg"></i> {{ i18n.ts.expandTweet }}
 		</a>
 	</div>
 </div>
@@ -214,9 +214,10 @@ onUnmounted(() => {
 		border: 1px solid var(--divider);
 		border-radius: 8px;
 		overflow: hidden;
-
-		&:hover {
+		transition: background .2s;
+		&:hover, &:focus-within {
 			text-decoration: none;
+			background-color: var(--panelHighlight);
 			> article > header > h1 {
 				text-decoration: underline;
 			}

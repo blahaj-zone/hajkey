@@ -1,7 +1,7 @@
 <template>
 <div class="mk-media-banner">
 	<div v-if="media.isSensitive && hide" class="sensitive" @click.stop.prevent="hide = false">
-		<span class="icon"><i class="ph-warning-bold ph-lg"></i></span>
+		<span class="icon"><i class="ph-warning ph-bold ph-lg"></i></span>
 		<b>{{ i18n.ts.sensitive }}</b>
 		<span>{{ i18n.ts.clickToShow }}</span>
 	</div>
@@ -37,7 +37,7 @@
 		:title="media.name"
 		:download="media.name"
 	>
-		<span class="icon"><i class="ph-download-simple-bold ph-lg"></i></span>
+		<span class="icon"><i class="ph-download-simple ph-bold ph-lg"></i></span>
 		<b>{{ media.name }}</b>
 	</a>
 </div>

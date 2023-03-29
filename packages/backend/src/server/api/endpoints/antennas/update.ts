@@ -43,7 +43,10 @@ export const paramDef = {
 	properties: {
 		antennaId: { type: "string", format: "misskey:id" },
 		name: { type: "string", minLength: 1, maxLength: 100 },
-		src: { type: "string", enum: ["home", "all", "users", "list", "group", "instances"] },
+		src: {
+			type: "string",
+			enum: ["home", "all", "users", "list", "group", "instances"],
+		},
 		userListId: { type: "string", format: "misskey:id", nullable: true },
 		userGroupId: { type: "string", format: "misskey:id", nullable: true },
 		keywords: {

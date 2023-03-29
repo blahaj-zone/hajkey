@@ -18,11 +18,11 @@
 		>
 			<slot></slot>
 		</select>
-		<div ref="suffixEl" class="suffix"><i class="ph-caret-down-bold ph-lg"></i></div>
+		<div ref="suffixEl" class="suffix"><i class="ph-caret-down ph-bold ph-lg"></i></div>
 	</div>
 	<div class="caption"><slot name="caption"></slot></div>
 
-	<MkButton v-if="manualSave && changed" primary @click="updated"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
+	<MkButton v-if="manualSave && changed" primary @click="updated"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 </div>
 </template>
 

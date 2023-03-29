@@ -14,17 +14,17 @@
 			<div class="">
 				<div v-for="file in files" :key="file.id" class="wqugxsfx" :style="{ backgroundImage: file ? `url(${ file.thumbnailUrl })` : null }">
 					<div class="name">{{ file.name }}</div>
-					<button v-tooltip="i18n.ts.remove" class="remove _button" @click="remove(file)"><i class="ph-x-bold ph-lg"></i></button>
+					<button v-tooltip="i18n.ts.remove" class="remove _button" @click="remove(file)"><i class="ph-x ph-bold ph-lg"></i></button>
 				</div>
-				<FormButton primary @click="selectFile"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.attachFile }}</FormButton>
+				<FormButton primary @click="selectFile"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.attachFile }}</FormButton>
 			</div>
 
 			<FormSwitch v-model="isSensitive">{{ i18n.ts.markAsSensitive }}</FormSwitch>
 
-			<FormButton v-if="postId" primary @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
-			<FormButton v-else primary @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.publish }}</FormButton>
+			<FormButton v-if="postId" primary @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
+			<FormButton v-else primary @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.publish }}</FormButton>
 
-			<FormButton v-if="postId" danger @click="del"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.delete }}</FormButton>
+			<FormButton v-if="postId" danger @click="del"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.delete }}</FormButton>
 		</FormSuspense>
 	</MkSpacer>
 </MkStickyContainer>
@@ -115,10 +115,10 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata(computed(() => props.postId ? {
 	title: i18n.ts.edit,
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 } : {
 	title: i18n.ts.postToGallery,
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 }));
 </script>
 

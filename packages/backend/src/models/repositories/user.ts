@@ -70,7 +70,7 @@ const nameSchema = { type: "string", minLength: 1, maxLength: 50 } as const;
 const descriptionSchema = {
 	type: "string",
 	minLength: 1,
-	maxLength: 500,
+	maxLength: 2048,
 } as const;
 const locationSchema = { type: "string", minLength: 1, maxLength: 50 } as const;
 const birthdaySchema = {

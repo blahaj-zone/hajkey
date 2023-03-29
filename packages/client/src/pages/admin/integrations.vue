@@ -4,19 +4,13 @@
 	<MkSpacer :content-max="700" :margin-min="16" :margin-max="32">
 		<FormSuspense :p="init">
 			<FormFolder class="_formBlock">
-				<template #icon><i class="ph-twitter-logo-bold ph-lg"></i></template>
-				<template #label>Twitter</template>
-				<template #suffix>{{ enableTwitterIntegration ? i18n.ts.enabled : i18n.ts.disabled }}</template>
-				<XTwitter/>
-			</FormFolder>
-			<FormFolder class="_formBlock">
-				<template #icon><i class="ph-github-logo-bold ph-lg"></i></template>
+				<template #icon><i class="ph-github-logo ph-bold ph-lg"></i></template>
 				<template #label>GitHub</template>
 				<template #suffix>{{ enableGithubIntegration ? i18n.ts.enabled : i18n.ts.disabled }}</template>
 				<XGithub/>
 			</FormFolder>
 			<FormFolder class="_formBlock">
-				<template #icon><i class="ph-discord-logo-bold ph-lg"></i></template>
+				<template #icon><i class="ph-discord-logo ph-bold ph-lg"></i></template>
 				<template #label>Discord</template>
 				<template #suffix>{{ enableDiscordIntegration ? i18n.ts.enabled : i18n.ts.disabled }}</template>
 				<XDiscord/>
@@ -28,7 +22,6 @@
 
 <script lang="ts" setup>
 import { } from 'vue';
-import XTwitter from './integrations.twitter.vue';
 import XGithub from './integrations.github.vue';
 import XDiscord from './integrations.discord.vue';
 import FormSuspense from '@/components/form/suspense.vue';
@@ -54,6 +47,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.integration,
-	icon: 'ph-plug-bold ph-lg',
+	icon: 'ph-plug ph-bold ph-lg',
 });
 </script>

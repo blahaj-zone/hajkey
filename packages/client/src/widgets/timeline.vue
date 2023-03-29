@@ -2,14 +2,14 @@
 <MkContainer :show-header="widgetProps.showHeader" :style="`height: ${widgetProps.height}px;`" :scrollable="true" class="mkw-timeline">
 	<template #header>
 		<button class="_button" @click="choose">
-			<i v-if="widgetProps.src === 'home'" class="ph-house-bold ph-lg"></i>
-			<i v-else-if="widgetProps.src === 'local'" class="ph-chats-circle-bold ph-lg"></i>
-			<i v-else-if="widgetProps.src === 'social'" class="ph-share-network-bold ph-lg"></i>
-			<i v-else-if="widgetProps.src === 'global'" class="ph-planet-bold ph-lg"></i>
-			<i v-else-if="widgetProps.src === 'list'" class="ph-list-bullets-bold ph-lg"></i>
-			<i v-else-if="widgetProps.src === 'antenna'" class="ph-television-bold ph-lg"></i>
+			<i v-if="widgetProps.src === 'home'" class="ph-house ph-bold ph-lg"></i>
+			<i v-else-if="widgetProps.src === 'local'" class="ph-chats-circle ph-bold ph-lg"></i>
+			<i v-else-if="widgetProps.src === 'social'" class="ph-share-network ph-bold ph-lg"></i>
+			<i v-else-if="widgetProps.src === 'global'" class="ph-planet ph-bold ph-lg"></i>
+			<i v-else-if="widgetProps.src === 'list'" class="ph-list-bullets ph-bold ph-lg"></i>
+			<i v-else-if="widgetProps.src === 'antenna'" class="ph-television ph-bold ph-lg"></i>
 			<span style="margin-left: 8px;">{{ widgetProps.src === 'list' ? widgetProps.list.name : widgetProps.src === 'antenna' ? widgetProps.antenna.name : i18n.t('_timelines.' + widgetProps.src) }}</span>
-			<i :class="menuOpened ? 'ph-caret-up-bold ph-lg' : 'ph-caret-down-bold ph-lg'" style="margin-left: 8px;"></i>
+			<i :class="menuOpened ? 'ph-caret-up ph-bold ph-lg' : 'ph-caret-down ph-bold ph-lg'" style="margin-left: 8px;"></i>
 		</button>
 	</template>
 
@@ -86,7 +86,7 @@ const choose = async (ev) => {
 	]);
 	const antennaItems = antennas.map(antenna => ({
 		text: antenna.name,
-		icon: 'ph-flying-saucer-bold ph-lg',
+		icon: 'ph-flying-saucer ph-bold ph-lg',
 		action: () => {
 			widgetProps.antenna = antenna;
 			setSrc('antenna');
@@ -94,7 +94,7 @@ const choose = async (ev) => {
 	}));
 	const listItems = lists.map(list => ({
 		text: list.name,
-		icon: 'ph-list-bullets-bold ph-lg',
+		icon: 'ph-list-bullets ph-bold ph-lg',
 		action: () => {
 			widgetProps.list = list;
 			setSrc('list');
@@ -102,19 +102,19 @@ const choose = async (ev) => {
 	}));
 	os.popupMenu([{
 		text: i18n.ts._timelines.home,
-		icon: 'ph-house-bold ph-lg',
+		icon: 'ph-house ph-bold ph-lg',
 		action: () => { setSrc('home'); }
 	}, {
 		text: i18n.ts._timelines.local,
-		icon: 'ph-chats-teardrop-bold ph-lg',
+		icon: 'ph-chats-teardrop ph-bold ph-lg',
 		action: () => { setSrc('local'); }
 	}, {
 		text: i18n.ts._timelines.social,
-		icon: 'ph-share-network-bold ph-lg',
+		icon: 'ph-share-network ph-bold ph-lg',
 		action: () => { setSrc('social'); }
 	}, {
 		text: i18n.ts._timelines.global,
-		icon: 'ph-planet-bold ph-lg',
+		icon: 'ph-planet ph-bold ph-lg',
 		action: () => { setSrc('global'); }
 	}, antennaItems.length > 0 ? null : undefined, ...antennaItems, listItems.length > 0 ? null : undefined, ...listItems], ev.currentTarget ?? ev.target).then(() => {
 		menuOpened.value = false;

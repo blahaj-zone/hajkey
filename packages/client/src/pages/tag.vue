@@ -30,6 +30,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata(computed(() => ({
 	title: props.tag,
-	icon: 'ph-hash-bold ph-lg',
+	icon: 'ph-hash ph-bold ph-lg',
 })));
 </script>

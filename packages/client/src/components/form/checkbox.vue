@@ -10,7 +10,7 @@
 		@keydown.enter="toggle"
 	>
 	<span ref="button" v-adaptive-border v-tooltip="checked ? i18n.ts.itsOn : i18n.ts.itsOff" class="button" @click.prevent="toggle">
-		<i class="check ph-check-bold ph-lg"></i>
+		<i class="check ph-check ph-bold ph-lg"></i>
 	</span>
 	<span class="label">
 		<!-- TODO: 無名slotの方は廃止 -->

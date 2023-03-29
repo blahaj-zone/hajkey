@@ -1,8 +1,10 @@
-import { onUnmounted, ref } from "vue";
+import { onUnmounted, onDeactivated, ref } from "vue";
 import * as os from "@/os";
 import MkChartTooltip from "@/components/MkChartTooltip.vue";
 
-export function useChartTooltip() {
+export function useChartTooltip(
+	opts: { position: "top" | "middle" } = { position: "top" },
+) {
 	const tooltipShowing = ref(false);
 	const tooltipX = ref(0);
 	const tooltipY = ref(0);
@@ -28,6 +30,10 @@ export function useChartTooltip() {
 		if (disposeTooltipComponent) disposeTooltipComponent();
 	});
 
+	onDeactivated(() => {
+		tooltipShowing.value = false;
+	});
+
 	function handler(context) {
 		if (context.tooltip.opacity === 0) {
 			tooltipShowing.value = false;
@@ -45,7 +51,11 @@ export function useChartTooltip() {
 
 		tooltipShowing.value = true;
 		tooltipX.value = rect.left + window.pageXOffset + context.tooltip.caretX;
-		tooltipY.value = rect.top + window.pageYOffset + context.tooltip.caretY;
+		if (opts.position === "top") {
+			tooltipY.value = rect.top + window.pageYOffset;
+		} else if (opts.position === "middle") {
+			tooltipY.value = rect.top + window.pageYOffset + context.tooltip.caretY;
+		}
 	}
 
 	return {

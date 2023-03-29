@@ -7,6 +7,8 @@ import * as Misskey from "calckey-js";
 import { apiUrl, url } from "@/config";
 import MkPostFormDialog from "@/components/MkPostFormDialog.vue";
 import MkWaitingDialog from "@/components/MkWaitingDialog.vue";
+import MkToast from "@/components/MkToast.vue";
+import MkDialog from "@/components/MkDialog.vue";
 import { MenuItem } from "@/types/menu";
 import { $i } from "@/account";
 
@@ -247,7 +249,7 @@ export function modalPageWindow(path: string) {
 
 export function toast(message: string) {
 	popup(
-		defineAsyncComponent(() => import("@/components/MkToast.vue")),
+		MkToast,
 		{
 			message,
 		},
@@ -263,7 +265,7 @@ export function alert(props: {
 }): Promise<void> {
 	return new Promise((resolve, reject) => {
 		popup(
-			defineAsyncComponent(() => import("@/components/MkDialog.vue")),
+			MkDialog,
 			props,
 			{
 				done: (result) => {
@@ -279,10 +281,12 @@ export function confirm(props: {
 	type: "error" | "info" | "success" | "warning" | "waiting" | "question";
 	title?: string | null;
 	text?: string | null;
+	okText?: string;
+	cancelText?: string;
 }): Promise<{ canceled: boolean }> {
 	return new Promise((resolve, reject) => {
 		popup(
-			defineAsyncComponent(() => import("@/components/MkDialog.vue")),
+			MkDialog,
 			{
 				...props,
 				showCancelButton: true,
@@ -341,6 +345,40 @@ export function inputText(props: {
 				text: props.text,
 				input: {
 					type: props.type,
+					placeholder: props.placeholder,
+					default: props.default,
+				},
+			},
+			{
+				done: (result) => {
+					resolve(result ? result : { canceled: true });
+				},
+			},
+			"closed",
+		);
+	});
+}
+
+export function inputParagraph(props: {
+	title?: string | null;
+	text?: string | null;
+	placeholder?: string | null;
+	default?: string | null;
+}): Promise<
+	| { canceled: true; result: undefined }
+	| {
+			canceled: false;
+			result: string;
+	  }
+> {
+	return new Promise((resolve, reject) => {
+		popup(
+			defineAsyncComponent(() => import("@/components/MkDialog.vue")),
+			{
+				title: props.title,
+				text: props.text,
+				input: {
+					type: "paragraph",
 					placeholder: props.placeholder,
 					default: props.default,
 				},
@@ -548,7 +586,9 @@ export async function selectUser() {
 export async function selectInstance(): Promise<Misskey.entities.Instance> {
 	return new Promise((resolve, reject) => {
 		popup(
-			defineAsyncComponent(() => import("@/components/MkInstanceSelectDialog.vue")),
+			defineAsyncComponent(
+				() => import("@/components/MkInstanceSelectDialog.vue"),
+			),
 			{},
 			{
 				ok: (instance) => {

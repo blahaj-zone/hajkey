@@ -2,7 +2,7 @@
 <div class="taeiyria">
 	<div class="query">
 		<MkInput v-model="host" :debounce="true" class="">
-			<template #prefix><i class="ph-magnifying-glass-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-magnifying-glass ph-bold ph-lg"></i></template>
 			<template #label>{{ i18n.ts.host }}</template>
 		</MkInput>
 		<FormSplit style="margin-top: var(--margin);">

@@ -1,6 +1,6 @@
 <template>
 <XColumn :column="column" :is-stacked="isStacked" :menu="menu" @parent-focus="$event => emit('parent-focus', $event)">
-	<template #header><i class="ph-bell-bold ph-lg" style="margin-right: 8px;"></i>{{ column.name }}</template>
+	<template #header><i class="ph-bell ph-bold ph-lg" style="margin-right: 8px;"></i>{{ column.name }}</template>
 
 	<XNotifications :include-types="column.includingTypes"/>
 </XColumn>
@@ -38,7 +38,7 @@ function func(): void {
 }
 
 const menu = [{
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 	text: i18n.ts.notificationSetting,
 	action: func,
 }];

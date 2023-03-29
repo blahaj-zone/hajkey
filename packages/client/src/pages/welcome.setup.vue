@@ -10,7 +10,7 @@
 		</MkInput>
 		<MkInput v-model="password" type="password" data-cy-admin-password class="_formBlock">
 			<template #label>{{ i18n.ts.password }}</template>
-			<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 		</MkInput>
 		<div class="bottom _formBlock">
 			<MkButton gradate type="submit" :disabled="submitting" data-cy-admin-ok>

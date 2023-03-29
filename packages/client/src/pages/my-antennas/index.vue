@@ -3,13 +3,13 @@
 	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
 	<MkSpacer :content-max="700">
 		<div class="ieepwinx">
-			<MkButton :link="true" to="/my/antennas/create" primary class="add"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.add }}</MkButton>
+			<MkButton :link="true" to="/my/antennas/create" primary class="add"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.add }}</MkButton>
 
 			<div class="">
 				<MkPagination v-slot="{items}" ref="list" :pagination="pagination">
 					<div v-for="antenna in items" :key="antenna.id">
 						<MkA class="uopelskx" :link="true" :to="`/timeline/antenna/${antenna.id}`">
-							<i class="ph-flying-saucer-bold ph-lg"></i><i :class="`${antenna.hasUnreadNote ? 'ph-circle-fill' : 'ph-check'} ph-xs notify-icon`"></i>
+							<i class="ph-flying-saucer ph-bold ph-lg"></i><i :class="`${antenna.hasUnreadNote ? 'ph-circle ph-fill' : 'ph-check'} ph-xs notify-icon`"></i>
 						</MkA>
 						<MkA class="ljoevbzj" :to="`/my/antennas/${antenna.id}`">
 							<div class="name">{{ antenna.name }}</div>
@@ -65,7 +65,7 @@ onDeactivated(() => {
 
 definePageMetadata({
 	title: i18n.ts.manageAntennas,
-	icon: 'ph-flying-saucer-bold ph-lg',
+	icon: 'ph-flying-saucer ph-bold ph-lg',
 });
 </script>
 
@@ -112,7 +112,7 @@ definePageMetadata({
     top: -1em;
     left: -0.5em;
 
-		&.ph-circle-fill {
+		&.ph-circle ph-fill {
 			color: var(--indicator);
 			animation: blink 1s infinite;
 		}

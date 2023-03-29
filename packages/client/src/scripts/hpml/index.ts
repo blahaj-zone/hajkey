@@ -17,29 +17,29 @@ export const literalDefs: Record<
 	string,
 	{ out: any; category: string; icon: any }
 > = {
-	text: { out: "string", category: "value", icon: "ph-quotes-bold ph-lg" },
+	text: { out: "string", category: "value", icon: "ph-quotes ph-bold ph-lg" },
 	multiLineText: {
 		out: "string",
 		category: "value",
-		icon: "ph-align-left-bold ph-lg",
+		icon: "ph-align-left ph-bold ph-lg",
 	},
 	textList: {
 		out: "stringArray",
 		category: "value",
-		icon: "ph-list-bold ph-lg",
+		icon: "ph-list ph-bold ph-lg",
 	},
 	number: {
 		out: "number",
 		category: "value",
-		icon: "ph-sort-descending-up-bold ph-lg",
+		icon: "ph-sort-descending-up ph-bold ph-lg",
 	},
-	ref: { out: null, category: "value", icon: "ph-magic-wand-bold ph-lg" },
+	ref: { out: null, category: "value", icon: "ph-magic-wand ph-bold ph-lg" },
 	aiScriptVar: {
 		out: null,
 		category: "value",
-		icon: "ph-magic-wand-bold ph-lg",
+		icon: "ph-magic-wand ph-bold ph-lg",
 	},
-	fn: { out: "function", category: "value", icon: "ph-radical-bold ph-lg" },
+	fn: { out: "function", category: "value", icon: "ph-radical ph-bold ph-lg" },
 };
 
 export const blockDefs = [

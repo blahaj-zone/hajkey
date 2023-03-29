@@ -547,7 +547,7 @@
 	{ "category": "animals_and_nature", "char": "🦤", "name": "dodo", "keywords": ["animal", "nature"] },
 	{ "category": "animals_and_nature", "char": "🪶", "name": "feather", "keywords": ["animal", "nature"] },
 	{ "category": "animals_and_nature", "char": "🦭", "name": "seal", "keywords": ["animal", "nature"] },
-	{ "category": "animals_and_nature", "char": "🐾", "name": "paw_prints", "keywords": ["animal", "tracking", "footprints", "dog", "cat", "pet", "feet"] },
+	{ "category": "animals_and_nature", "char": "🐾", "name": "paw_prints", "keywords": ["animal", "tracking", "footprints", "dog", "cat", "pet", "feet", "paws", "kitty"] },
 	{ "category": "animals_and_nature", "char": "🐉", "name": "dragon", "keywords": ["animal", "myth", "nature", "chinese", "green"] },
 	{ "category": "animals_and_nature", "char": "🐲", "name": "dragon_face", "keywords": ["animal", "myth", "nature", "chinese", "green"] },
 	{ "category": "animals_and_nature", "char": "🦧", "name": "orangutan", "keywords": ["animal", "nature"] },

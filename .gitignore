@@ -42,6 +42,9 @@ api-docs.json
 files
 ormconfig.json
 packages/backend/assets/instance.css
+packages/backend/assets/sounds/None.mp3
+
+!packages/backend/src/db
 
 # blender backups
 *.blend1

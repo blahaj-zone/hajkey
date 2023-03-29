@@ -2,53 +2,53 @@
 <form class="qlvuhzng _formRoot" autocomplete="new-password" @submit.prevent="onSubmit">
 	<MkInput v-if="instance.disableRegistration" v-model="invitationCode" class="_formBlock" type="text" :spellcheck="false" required data-cy-signup-invitation-code @update:modelValue="onChangeInvitationCode">
 		<template #label>{{ i18n.ts.invitationCode }}</template>
-		<template #prefix><i class="ph-key-bold ph-lg"></i></template>
+		<template #prefix><i class="ph-key ph-bold ph-lg"></i></template>
 	</MkInput>
 	<div v-if="!instance.disableRegistration || (instance.disableRegistration && invitationState === 'entered')">
 		<MkInput v-model="username" class="_formBlock" type="text" pattern="^[a-zA-Z0-9_]{1,20}$" :spellcheck="false" required data-cy-signup-username @update:modelValue="onChangeUsername">
-			<template #label>{{ i18n.ts.username }} <div v-tooltip:dialog="i18n.ts.usernameInfo" class="_button _help"><i class="ph-question-bold"></i></div></template>
+			<template #label>{{ i18n.ts.username }} <div v-tooltip:dialog="i18n.ts.usernameInfo" class="_button _help"><i class="ph-question ph-bold"></i></div></template>
 			<template #prefix>@</template>
 			<template #suffix>@{{ host }}</template>
 			<template #caption>
-				<span v-if="usernameState === 'wait'" style="color:#6e6a86"><i class="ph-circle-notch-bold ph-lg fa-pulse ph-fw ph-lg"></i> {{ i18n.ts.checking }}</span>
-				<span v-else-if="usernameState === 'ok'" style="color: var(--success)"><i class="ph-check-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.available }}</span>
-				<span v-else-if="usernameState === 'unavailable'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.unavailable }}</span>
-				<span v-else-if="usernameState === 'error'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.error }}</span>
-				<span v-else-if="usernameState === 'invalid-format'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.usernameInvalidFormat }}</span>
-				<span v-else-if="usernameState === 'min-range'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.tooShort }}</span>
-				<span v-else-if="usernameState === 'max-range'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.tooLong }}</span>
+				<span v-if="usernameState === 'wait'" style="color:#6e6a86"><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i> {{ i18n.ts.checking }}</span>
+				<span v-else-if="usernameState === 'ok'" style="color: var(--success)"><i class="ph-check ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.available }}</span>
+				<span v-else-if="usernameState === 'unavailable'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.unavailable }}</span>
+				<span v-else-if="usernameState === 'error'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.error }}</span>
+				<span v-else-if="usernameState === 'invalid-format'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.usernameInvalidFormat }}</span>
+				<span v-else-if="usernameState === 'min-range'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.tooShort }}</span>
+				<span v-else-if="usernameState === 'max-range'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.tooLong }}</span>
 			</template>
 		</MkInput>
 		<MkInput v-if="instance.emailRequiredForSignup" v-model="email" class="_formBlock" :debounce="true" type="email" :spellcheck="false" required data-cy-signup-email @update:modelValue="onChangeEmail">
-			<template #label>{{ i18n.ts.emailAddress }} <div v-tooltip:dialog="i18n.ts._signup.emailAddressInfo" class="_button _help"><i class="ph-question-bold"></i></div></template>
-			<template #prefix><i class="ph-envelope-simple-open-bold ph-lg"></i></template>
+			<template #label>{{ i18n.ts.emailAddress }} <div v-tooltip:dialog="i18n.ts._signup.emailAddressInfo" class="_button _help"><i class="ph-question ph-bold"></i></div></template>
+			<template #prefix><i class="ph-envelope-simple-open ph-bold ph-lg"></i></template>
 			<template #caption>
-				<span v-if="emailState === 'wait'" style="color:#6e6a86"><i class="ph-circle-notch-bold ph-lg fa-pulse ph-fw ph-lg"></i> {{ i18n.ts.checking }}</span>
-				<span v-else-if="emailState === 'ok'" style="color: var(--success)"><i class="ph-check-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.available }}</span>
-				<span v-else-if="emailState === 'unavailable:used'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.used }}</span>
-				<span v-else-if="emailState === 'unavailable:format'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.format }}</span>
-				<span v-else-if="emailState === 'unavailable:disposable'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.disposable }}</span>
-				<span v-else-if="emailState === 'unavailable:mx'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.mx }}</span>
-				<span v-else-if="emailState === 'unavailable:smtp'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.smtp }}</span>
-				<span v-else-if="emailState === 'unavailable'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.unavailable }}</span>
-				<span v-else-if="emailState === 'error'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.error }}</span>
+				<span v-if="emailState === 'wait'" style="color:#6e6a86"><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i> {{ i18n.ts.checking }}</span>
+				<span v-else-if="emailState === 'ok'" style="color: var(--success)"><i class="ph-check ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.available }}</span>
+				<span v-else-if="emailState === 'unavailable:used'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.used }}</span>
+				<span v-else-if="emailState === 'unavailable:format'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.format }}</span>
+				<span v-else-if="emailState === 'unavailable:disposable'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.disposable }}</span>
+				<span v-else-if="emailState === 'unavailable:mx'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.mx }}</span>
+				<span v-else-if="emailState === 'unavailable:smtp'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts._emailUnavailable.smtp }}</span>
+				<span v-else-if="emailState === 'unavailable'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.unavailable }}</span>
+				<span v-else-if="emailState === 'error'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.error }}</span>
 			</template>
 		</MkInput>
 		<MkInput v-model="password" class="_formBlock" type="password" autocomplete="new-password" required data-cy-signup-password @update:modelValue="onChangePassword">
 			<template #label>{{ i18n.ts.password }}</template>
-			<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 			<template #caption>
-				<span v-if="passwordStrength == 'low'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.weakPassword }}</span>
-				<span v-if="passwordStrength == 'medium'" style="color: var(--warn)"><i class="ph-check-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.normalPassword }}</span>
-				<span v-if="passwordStrength == 'high'" style="color: var(--success)"><i class="ph-check-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.strongPassword }}</span>
+				<span v-if="passwordStrength == 'low'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.weakPassword }}</span>
+				<span v-if="passwordStrength == 'medium'" style="color: var(--warn)"><i class="ph-check ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.normalPassword }}</span>
+				<span v-if="passwordStrength == 'high'" style="color: var(--success)"><i class="ph-check ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.strongPassword }}</span>
 			</template>
 		</MkInput>
 		<MkInput v-model="retypedPassword" class="_formBlock" type="password" autocomplete="new-password" required data-cy-signup-password-retype @update:modelValue="onChangePasswordRetype">
 			<template #label>{{ i18n.ts.password }} ({{ i18n.ts.retype }})</template>
-			<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 			<template #caption>
-				<span v-if="passwordRetypeState == 'match'" style="color: var(--success)"><i class="ph-check-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.passwordMatched }}</span>
-				<span v-if="passwordRetypeState == 'not-match'" style="color: var(--error)"><i class="ph-warning-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.passwordNotMatched }}</span>
+				<span v-if="passwordRetypeState == 'match'" style="color: var(--success)"><i class="ph-check ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.passwordMatched }}</span>
+				<span v-if="passwordRetypeState == 'not-match'" style="color: var(--error)"><i class="ph-warning ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.passwordNotMatched }}</span>
 			</template>
 		</MkInput>
 		<MkSwitch v-if="instance.tosUrl" v-model="ToSAgreement" class="_formBlock tou">

@@ -15,10 +15,12 @@ const props = withDefaults(defineProps<{
 	inline?: boolean;
 	colored?: boolean;
 	mini?: boolean;
+	em?: boolean;
 }>(), {
 	inline: false,
 	colored: true,
 	mini: false,
+	em: false,
 });
 </script>
 
@@ -69,6 +71,12 @@ const props = withDefaults(defineProps<{
 	&.mini {
 		padding: 16px;
 		--size: 32px;
+	}
+	&.em {
+		display: inline-block;
+		vertical-align: middle;
+		padding: 0;
+		--size: 1em;
 	}
 }
 

@@ -20,8 +20,7 @@ import { createTemp } from "@/misc/create-temp.js";
 import { publishMainStream } from "@/services/stream.js";
 import * as Acct from "@/misc/acct.js";
 import { envOption } from "@/env.js";
-import { koaBody } from 'koa-body';
-import megalodon, { MegalodonInterface } from '@cutls/megalodon';
+import megalodon, { MegalodonInterface } from "@calckey/megalodon";
 import activityPub from "./activitypub.js";
 import nodeinfo from "./nodeinfo.js";
 import wellKnown from "./well-known.js";
@@ -30,12 +29,17 @@ import fileServer from "./file/index.js";
 import proxyServer from "./proxy/index.js";
 import webServer from "./web/index.js";
 import { initializeStreamingServer } from "./api/streaming.js";
+import { koaBody } from "koa-body";
+import removeTrailingSlash from "koa-remove-trailing-slashes";
+import {v4 as uuid} from "uuid";
 
 export const serverLogger = new Logger("server", "gray", false);
 
 // Init app
 const app = new Koa();
 app.proxy = true;
+
+app.use(removeTrailingSlash());
 
 if (!["production", "test"].includes(process.env.NODE_ENV || "")) {
 	// Logger
@@ -70,6 +74,25 @@ app.use(mount("/proxy", proxyServer));
 
 // Init router
 const router = new Router();
+const mastoRouter = new Router();
+
+mastoRouter.use(
+	koaBody({
+		urlencoded: true,
+		multipart: true,
+	}),
+);
+
+mastoRouter.use(async (ctx, next) => {
+	if (ctx.request.query) {
+		if (!ctx.request.body || Object.keys(ctx.request.body).length === 0) {
+			ctx.request.body = ctx.request.query;
+		} else {
+			ctx.request.body = { ...ctx.request.body, ...ctx.request.query };
+		}
+	}
+	await next();
+});
 
 // Routing
 router.use(activityPub.routes());
@@ -135,27 +158,67 @@ router.get("/verify-email/:code", async (ctx) => {
 	}
 });
 
-router.get("/oauth/authorize", async (ctx) => {
-	const client_id = ctx.request.query.client_id;
+mastoRouter.get("/oauth/authorize", async (ctx) => {
+	const { client_id, state, redirect_uri } = ctx.request.query;
 	console.log(ctx.request.req);
-	ctx.redirect(Buffer.from(client_id?.toString() || '', 'base64').toString());
+	let param = "mastodon=true";
+	if (state)
+		param += `&state=${state}`;
+	if (redirect_uri)
+		param += `&redirect_uri=${redirect_uri}`;
+	const client = client_id? client_id : "";
+	ctx.redirect(`${Buffer.from(client.toString(), 'base64').toString()}?${param}`);
 });
 
-router.post("/oauth/token", async (ctx) => {
-	const body: any = ctx.request.body;
+mastoRouter.post("/oauth/token", async (ctx) => {
+	const body: any = ctx.request.body || ctx.request.query;
+	console.log('token-request', body);
+	console.log('token-query', ctx.request.query);
+	if (body.grant_type === 'client_credentials') {
+		const ret = {
+			access_token: uuid(),
+			token_type: "Bearer",
+			scope: "read",
+			created_at: Math.floor(new Date().getTime() / 1000),
+		};
+		ctx.body = ret;
+		return;
+	}
+	let client_id: any = body.client_id;
 	const BASE_URL = `${ctx.request.protocol}://${ctx.request.hostname}`;
 	const generator = (megalodon as any).default;
-	const client = generator('misskey', BASE_URL, null) as MegalodonInterface;
-	const m = body.code.match(/^[a-zA-Z0-9-]+/);
-	if (!m.length) return { error: 'Invalid code' }
+	const client = generator("misskey", BASE_URL, null) as MegalodonInterface;
+	let m = null;
+	let token = null;
+	if (body.code) {
+		//m = body.code.match(/^([a-zA-Z0-9]{8})([a-zA-Z0-9]{4})([a-zA-Z0-9]{4})([a-zA-Z0-9]{4})([a-zA-Z0-9]{12})/);
+		//if (!m.length) {
+		//	ctx.body = { error: "Invalid code" };
+		//	return;
+		//}
+		//token = `${m[1]}-${m[2]}-${m[3]}-${m[4]}-${m[5]}`
+		console.log(body.code, token)
+		token = body.code
+	}
+	if (client_id instanceof Array) {
+		client_id = client_id.toString();
+	} else if (!client_id) {
+		client_id = null;
+	}
 	try {
-		const atData = await client.fetchAccessToken(null, body.client_secret, m[0]);
-		ctx.body = {
+		const atData = await client.fetchAccessToken(
+			client_id,
+			body.client_secret,
+			token ? token : "",
+		);
+		const ret = {
 			access_token: atData.accessToken,
-			token_type: 'Bearer',
-			scope: 'read write follow',
-			created_at: new Date().getTime() / 1000
+			token_type: "Bearer",
+			scope: body.scope || 'read write follow push',
+			created_at: Math.floor(new Date().getTime() / 1000),
 		};
+		console.log('token-response', ret)
+		ctx.body = ret;
 	} catch (err: any) {
 		console.error(err);
 		ctx.status = 401;
@@ -164,6 +227,7 @@ router.post("/oauth/token", async (ctx) => {
 });
 
 // Register router
+app.use(mastoRouter.routes());
 app.use(router.routes());
 
 app.use(mount(webServer));

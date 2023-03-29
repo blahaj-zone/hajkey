@@ -7,7 +7,7 @@
 	@dragleave="onDragleave"
 	@drop.stop="onDrop"
 >
-	<i v-if="folder == null" class="ph-cloud-bold ph-lg"></i>
+	<i v-if="folder == null" class="ph-cloud ph-bold ph-lg"></i>
 	<span>{{ folder == null ? i18n.ts.drive : folder.name }}</span>
 </div>
 </template>

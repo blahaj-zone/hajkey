@@ -1,12 +1,12 @@
 <template>
-<MkA v-if="url.startsWith('/')" v-user-preview="canonical" class="akbvjaqn" :class="{ isMe }" :to="url" :style="{ background: bgCss }">
+<MkA v-if="url.startsWith('/')" v-user-preview="canonical" class="akbvjaqn" :class="{ isMe }" :to="url" :style="{ background: bgCss }" @click.stop>
 	<img class="icon" :src="`/avatar/@${username}@${host}`" alt="">
 	<span class="main">
 		<span class="username">@{{ username }}</span>
 		<span v-if="(host != localHost) || $store.state.showFullAcct" class="host">@{{ toUnicode(host) }}</span>
 	</span>
 </MkA>
-<a v-else class="akbvjaqn" :href="url" target="_blank" rel="noopener" :style="{ background: bgCss }">
+<a v-else class="akbvjaqn" :href="url" target="_blank" rel="noopener" :style="{ background: bgCss }" @click.stop>
 	<span class="main">
 		<span class="username">@{{ username }}</span>
 		<span class="host">@{{ toUnicode(host) }}</span>
@@ -42,8 +42,13 @@ const bgCss = bg.toRgbString();
 <style lang="scss" scoped>
 .akbvjaqn {
 	display: inline-block;
-	padding: 4px 8px 4px 4px;
+	padding: 2px 8px 2px 2px;
+	margin-block: 2px;
 	border-radius: 999px;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: clip;
+	text-overflow: ellipsis;
 	color: var(--mention);
 
 	&.isMe {

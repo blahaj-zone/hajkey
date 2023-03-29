@@ -73,6 +73,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		originalUrl: driveFile.url,
 		publicUrl: driveFile.webpublicUrl ?? driveFile.url,
 		type: driveFile.webpublicType ?? driveFile.type,
+		license: emoji.license,
 	}).then((x) => Emojis.findOneByOrFail(x.identifiers[0]));
 
 	await db.queryResultCache!.remove(["meta_emojis"]);

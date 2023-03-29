@@ -5,7 +5,7 @@
 		<FormSuspense :p="init">
 			<div class="_formRoot">
 				<FormFolder class="_formBlock">
-					<template #icon><i class="ph-robot-bold ph-lg"></i></template>
+					<template #icon><i class="ph-robot ph-bold ph-lg"></i></template>
 					<template #label>{{ i18n.ts.botProtection }}</template>
 					<template v-if="enableHcaptcha" #suffix>hCaptcha</template>
 					<template v-else-if="enableRecaptcha" #suffix>reCAPTCHA</template>
@@ -15,7 +15,7 @@
 				</FormFolder>
 
 				<FormFolder class="_formBlock">
-					<template #icon><i class="ph-eye-slash-bold ph-lg"></i></template>
+					<template #icon><i class="ph-eye-slash ph-bold ph-lg"></i></template>
 					<template #label>{{ i18n.ts.sensitiveMediaDetection }}</template>
 					<template v-if="sensitiveMediaDetection === 'all'" #suffix>{{ i18n.ts.all }}</template>
 					<template v-else-if="sensitiveMediaDetection === 'local'" #suffix>{{ i18n.ts.localOnly }}</template>
@@ -53,7 +53,7 @@
 						</FormSwitch>
 						-->
 
-						<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
+						<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
 					</div>
 				</FormFolder>
 
@@ -87,11 +87,11 @@
 
 					<div class="_formRoot">
 						<FormInput v-model="summalyProxy" class="_formBlock">
-							<template #prefix><i class="ph-link-simple-bold ph-lg"></i></template>
+							<template #prefix><i class="ph-link-simple ph-bold ph-lg"></i></template>
 							<template #label>Summaly Proxy URL</template>
 						</FormInput>
 
-						<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
+						<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
 					</div>
 				</FormFolder>
 
@@ -111,7 +111,7 @@
 							<template #label>{{ i18n.ts.allowedInstances }}</template>
 							<template #caption>{{ i18n.ts.allowedInstancesDescription }}</template>
 						</FormTextarea>
-						<FormButton primary class="_formBlock" @click="saveInstance"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
+						<FormButton primary class="_formBlock" @click="saveInstance"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
 					</div>
 				</FormFolder>
 			</div>
@@ -209,6 +209,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.security,
-	icon: 'ph-lock-bold ph-lg',
+	icon: 'ph-lock ph-bold ph-lg',
 });
 </script>

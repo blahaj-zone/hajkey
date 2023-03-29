@@ -218,9 +218,14 @@ onUnmounted(() => {
 		}
 		> .tabs {
 			padding-inline: 12px;
-			mask: linear-gradient(to right, black 80%, transparent);
-			-webkit-mask: linear-gradient(to right, black 80%, transparent);
+			mask: linear-gradient(to right, transparent, black 10px 80%, transparent);
+			-webkit-mask: linear-gradient(to right, transparent, black 10px 80%, transparent);
+			margin-left: -10px;
+			padding-left: 22px;
 			scrollbar-width: none;
+			&::before {
+				content: unset;
+			}
 			&::-webkit-scrollbar {
 				display: none;
 			}
@@ -350,6 +355,16 @@ onUnmounted(() => {
 		overflow-x: auto;
 		white-space: nowrap;
 		contain: strict;
+
+		&::before {
+			content: "";
+			display: inline-block;
+			height: 40%;
+			border-left: 1px solid var(--divider);
+			margin-right: 1em;
+			margin-left: 10px;
+			vertical-align: -1px;
+		}
 
 		> .tab {
 			display: inline-flex;

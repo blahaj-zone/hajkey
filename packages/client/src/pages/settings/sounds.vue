@@ -9,11 +9,11 @@
 		<FormLink v-for="type in Object.keys(sounds)" :key="type" style="margin-bottom: 8px;" :callback="async () => { await edit(type); return false; }" to="">
 			{{ i18n.t('_sfx.' + type) }}
 			<template #suffix>{{ sounds[type].type || i18n.ts.none }}</template>
-			<template #suffixIcon><i class="ph-caret-down-bold ph-lg"></i></template>
+			<template #suffixIcon><i class="ph-caret-down ph-bold ph-lg"></i></template>
 		</FormLink>
 	</FormSection>
 
-	<FormButton danger class="_formBlock" @click.stop.prevent="() => reset()"><i class="ph-arrow-clockwise-bold ph-lg"></i> {{ i18n.ts.default }}</FormButton>
+	<FormButton danger class="_formBlock" @click="reset()"><i class="ph-arrow-clockwise ph-bold ph-lg"></i> {{ i18n.ts.default }}</FormButton>
 </div>
 </template>
 
@@ -38,7 +38,7 @@ const masterVolume = computed({
 	},
 });
 
-const volumeIcon = computed(() => masterVolume.value === 0 ? 'ph-speaker-none-bold ph-lg' : 'ph-speaker-high-bold ph-lg');
+const volumeIcon = computed(() => masterVolume.value === 0 ? 'ph-speaker-none ph-bold ph-lg' : 'ph-speaker-high ph-bold ph-lg');
 
 const sounds = ref({
 	note: ColdDeviceStorage.get('sound_note'),
@@ -50,32 +50,8 @@ const sounds = ref({
 	channel: ColdDeviceStorage.get('sound_channel'),
 });
 
-const soundsTypes = [
-	null,
-	'syuilo/up',
-	'syuilo/down',
-	'syuilo/pope1',
-	'syuilo/pope2',
-	'syuilo/waon',
-	'syuilo/popo',
-	'syuilo/triple',
-	'syuilo/poi1',
-	'syuilo/poi2',
-	'syuilo/pirori',
-	'syuilo/pirori-wet',
-	'syuilo/pirori-square-wet',
-	'syuilo/square-pico',
-	'syuilo/reverved',
-	'syuilo/ryukyu',
-	'syuilo/kick',
-	'syuilo/snare',
-	'syuilo/queue-jammed',
-	'aisha/1',
-	'aisha/2',
-	'aisha/3',
-	'noizenecio/kick_gaba',
-	'noizenecio/kick_gaba2',
-];
+const soundsTypes = await os.api('get-sounds')
+
 
 async function edit(type) {
 	const { canceled, result } = await os.form(i18n.t('_sfx.' + type), {
@@ -130,6 +106,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.sounds,
-	icon: 'ph-speaker-high-bold ph-lg',
+	icon: 'ph-speaker-high ph-bold ph-lg',
 });
 </script>

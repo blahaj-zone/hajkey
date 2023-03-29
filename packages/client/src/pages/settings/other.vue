@@ -10,9 +10,9 @@
 
 	<FormLink to="/settings/account-info" class="_formBlock">{{ i18n.ts.accountInfo }}</FormLink>
 
-	<FormLink to="/registry" class="_formBlock"><template #icon><i class="ph-gear-six-bold ph-lg"></i></template>{{ i18n.ts.registry }}</FormLink>
+	<FormLink to="/registry" class="_formBlock"><template #icon><i class="ph-gear-six ph-bold ph-lg"></i></template>{{ i18n.ts.registry }}</FormLink>
 
-	<FormLink to="/settings/delete-account" class="_formBlock"><template #icon><i class="ph-warning-bold ph-lg"></i></template>{{ i18n.ts.closeAccount }}</FormLink>
+	<FormLink to="/settings/delete-account" class="_formBlock"><template #icon><i class="ph-warning ph-bold ph-lg"></i></template>{{ i18n.ts.closeAccount }}</FormLink>
 </div>
 </template>
 
@@ -44,6 +44,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.other,
-	icon: 'ph-dots-three-outline-bold ph-lg',
+	icon: 'ph-dots-three-outline ph-bold ph-lg',
 });
 </script>

@@ -24,7 +24,7 @@
 			</MkKeyValue>
 		</div>
 	</div>
-	<MkButton primary inline :disabled="!changed" @click="save()"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
+	<MkButton primary inline :disabled="!changed" @click="save()"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 </div>
 </template>
 
@@ -123,6 +123,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.wordMute,
-	icon: 'ph-speaker-x-bold ph-lg',
+	icon: 'ph-speaker-x ph-bold ph-lg',
 });
 </script>

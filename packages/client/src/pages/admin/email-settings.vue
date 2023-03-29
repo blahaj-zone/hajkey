@@ -107,12 +107,12 @@ function save() {
 
 const headerActions = $computed(() => [{
 	asFullButton: true,
-	icon: 'ph-test-tube-bold ph-lg',
+	icon: 'ph-test-tube ph-bold ph-lg',
 	text: i18n.ts.testEmail,
 	handler: testEmail,
 }, {
 	asFullButton: true,
-	icon: 'ph-check-bold ph-lg',
+	icon: 'ph-check ph-bold ph-lg',
 	text: i18n.ts.save,
 	handler: save,
 }]);
@@ -121,6 +121,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.emailServer,
-	icon: 'ph-envelope-simple-open-bold ph-lg',
+	icon: 'ph-envelope-simple-open ph-bold ph-lg',
 });
 </script>
