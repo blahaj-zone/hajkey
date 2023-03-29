@@ -30,6 +30,10 @@
 			{{ i18n.ts.replyIndentCompact }}
 			<template #caption>{{ i18n.ts.replyIndentCompactDescription }}</template>
 		</FormSwitch>
+		<FormSwitch v-model="replyCollapseSingles" class="_formBlock">
+			{{ i18n.ts.replyCollapseSingles }}
+			<template #caption>{{ i18n.ts.replyCollapseSinglesDescription }}</template>
+		</FormSwitch>
 	</FormSection>
 
 	<FormSection>
@@ -174,6 +178,7 @@ const replyDividerColorGrad = $computed(defaultStore.makeGetterSetter('replyDivi
 const replyDividerColorBg = $computed(defaultStore.makeGetterSetter('replyDividerColorBg'));
 const replyDividerColorBorder = $computed(defaultStore.makeGetterSetter('replyDividerColorBorder'));
 const replyIndentCompact = $computed(defaultStore.makeGetterSetter('replyIndentCompact'));
+const replyCollapseSingles = $computed(defaultStore.makeGetterSetter('replyCollapseSingles'));
 
 const autoShowCw = $computed(defaultStore.makeGetterSetter('autoShowCw'));
 const nsfw = $computed(defaultStore.makeGetterSetter('nsfw'));

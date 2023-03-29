@@ -65,8 +65,8 @@
 		</div>
 	</div>
 	<template v-if="conversation">
-		<template v-if="replies.length == 1">
-			<MkNoteSub v-for="(reply, index) in replies" :key="reply.id" :note="reply" class="reply single" :conversation="conversation" :depth="depth" :offset="offset + index" :parentId="note.replyId"/>
+		<template v-if="replies.length == 1 && depth < repliesDepth && !collapseSingles">
+			<MkNoteSub v-for="reply in replies" :key="reply.id" :note="reply" class="reply single" :conversation="conversation" :depth="depth" :offset="offset" :parentId="note.replyId"/>
 		</template>
 		<template v-else-if="depth < repliesDepth">
 			<MkNoteSub v-for="(reply, index) in replies" :key="reply.id" :note="reply" class="reply" :conversation="conversation" :depth="depth + 1" :offset="offset + index" :parentId="note.replyId"/>
@@ -139,6 +139,7 @@ const translating = ref(false);
 let showContent = $ref(defaultStore.state.autoShowCw);
 const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] = props.conversation?.filter(item => item.replyId === props.note.id || item.renoteId === props.note.id).reverse() ?? [];
+let collapseSingles = $ref(defaultStore.state.replyCollapseSingles);
 
 useNoteCapture({
 	rootEl: el,
