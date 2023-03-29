@@ -249,11 +249,11 @@ function noteClick(e) {
 	.colorbg & {
 		> .main {
 			background-image:
-				linear-gradient(0deg, --panel, --panel),
+				linear-gradient(0deg, var(--panel), var(--panel)),
 				linear-gradient(0deg, rgba(var(--colorizeColor), 0.18), rgba(var(--colorizeColor), 0.18));
 			&:hover {
 				background-image:
-					linear-gradient(0deg, --panelHighlight, --panelHighlight),
+					linear-gradient(0deg, var(--panelHighlight), var(--panelHighlight)),
 					linear-gradient(0deg, rgba(var(--colorizeColor), 0.18), rgba(var(--colorizeColor), 0.18));
 			}
 		}
@@ -263,13 +263,13 @@ function noteClick(e) {
 		> .main {
 			background-position: bottom left;
 			background-image:
-				linear-gradient(0deg, --panel, --panel),
+				linear-gradient(0deg, var(--panel), var(--panel)),
 				linear-gradient(85deg, rgba(var(--colorizeColor), 0.09), transparent 30px),
 				linear-gradient(50deg, rgba(var(--colorizeColor), 0.18), transparent 150px),
 				linear-gradient(1deg, rgba(var(--colorizeColor), 0.14), transparent 15px);
 			&:hover {
 				background-image:
-					linear-gradient(0deg, --panel, --panel),
+					linear-gradient(0deg, var(--panelHighlight), var(--panelHighlight)),
 					linear-gradient(85deg, rgba(var(--colorizeColor), 0.09), transparent 30px),
 					linear-gradient(50deg, rgba(var(--colorizeColor), 0.18), transparent 150px),
 					linear-gradient(1deg, rgba(var(--colorizeColor), 0.14), transparent 15px);
