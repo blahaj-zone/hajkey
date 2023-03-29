@@ -281,12 +281,14 @@ function noteClick(e) {
 	}
 
 	.colorize & {
-		&.reply, &.reply-to, &.reply-to-more, &.main > .avatar-container {
-			> .line {
-				&::before, &::after {
-					border-left-width: 3px;
-					border-left-color: rgb(var(--colorizeColor));
-					border-bottom-color: rgb(var(--colorizeColor));
+		&.reply, &.reply-to, &.reply-to-more, > .main > .avatar-container {
+			&.children:not(.single), & {
+				> .line {
+					&::before, &::after {
+						border-left-width: 3px;
+						border-left-color: rgb(var(--colorizeColor));
+						border-bottom-color: rgb(var(--colorizeColor));
+					}
 				}
 			}
 		}
