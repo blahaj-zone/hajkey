@@ -216,28 +216,44 @@ function noteClick(e) {
 	--colorize7: 240, 182, 127; // # f0b67f
 
 	&.level0 {
-		--colorizeColor: var(--colorize0);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize0);
+		}
 	}
 	&.level1 {
-		--colorizeColor: var(--colorize1);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize1);
+		}
 	}
 	&.level2 {
-		--colorizeColor: var(--colorize2);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize2);
+		}
 	}
 	&.level3 {
-		--colorizeColor: var(--colorize3);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize3);
+		}
 	}
 	&.level4 {
-		--colorizeColor: var(--colorize4);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize4);
+		}
 	}
 	&.level5 {
-		--colorizeColor: var(--colorize5);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize5);
+		}
 	}
 	&.level6 {
-		--colorizeColor: var(--colorize6);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize6);
+		}
 	}
 	&.level7 {
-		--colorizeColor: var(--colorize7);
+		> .main, > .line, > .body {
+				--colorizeColor: var(--colorize7);
+		}
 	}
 	
 	--subNoteOutdent: 5px;
@@ -265,9 +281,11 @@ function noteClick(e) {
 	}
 
 	.colorize & {
-		> .line::before {
-				border-width: 3px;
-				border-color: rgb(var(--colorizeColor));
+		&.reply, &.reply-to, &.reply-to-more {
+			> .line::before {
+					border-left-width: 3px;
+					border-left-color: rgb(var(--colorizeColor));
+			}
 		}
 	}
 
