@@ -281,7 +281,7 @@ function noteClick(e) {
 	}
 
 	.colorize & {
-		&.reply, &.reply-to, &.reply-to-more {
+		&.reply, &.reply-to, &.reply-to-more, &.avatar-container {
 			> .line::before {
 					border-left-width: 3px;
 					border-left-color: rgb(var(--colorizeColor));
