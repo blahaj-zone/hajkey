@@ -205,6 +205,85 @@ function noteClick(e) {
 
 <style lang="scss" scoped>
 .wrpstxzv {
+	--colorizeColor: 128, 128, 128;
+	--colorize0: 64, 121, 140;  // # 40798c
+	--colorize1: 255, 191, 183; // # ffbfb7
+	--colorize2: 151, 200, 235; // # 97c8eb
+	--colorize3: 255, 214, 102; // # ffd666
+	--colorize4: 155, 119, 158; // # 9b779e
+	--colorize5: 226, 112, 132; // # e27084
+	--colorize6: 194, 234, 189; // # c2eabd
+	--colorize7: 240, 182, 127; // # f0b67f
+
+	&.level0 {
+		--colorizeColor: var(--colorize0);
+	}
+	&.level1 {
+		--colorizeColor: var(--colorize1);
+	}
+	&.level2 {
+		--colorizeColor: var(--colorize2);
+	}
+	&.level3 {
+		--colorizeColor: var(--colorize3);
+	}
+	&.level4 {
+		--colorizeColor: var(--colorize4);
+	}
+	&.level5 {
+		--colorizeColor: var(--colorize5);
+	}
+	&.level6 {
+		--colorizeColor: var(--colorize6);
+	}
+	&.level7 {
+		--colorizeColor: var(--colorize7);
+	}
+	
+	--subNoteOutdent: 5px;
+	
+	.compact & {
+		--subNoteOutdent: 20px;
+	}
+
+	.colorbg & {
+		> .main {
+			background-image:
+				linear-gradient(0deg, --panel, --panel),
+				linear-gradient(0deg, rgba(var(--colorizeColor), 0.18), rgba(var(--colorizeColor), 0.18));
+			&:hover {
+				background-image:
+					linear-gradient(0deg, --panelHighlight, --panelHighlight),
+					linear-gradient(0deg, rgba(var(--colorizeColor), 0.18), rgba(var(--colorizeColor), 0.18));
+			}
+		}
+	}
+
+	.colorgrad & {
+		> .main {
+			background-position: bottom left;
+			background-image:
+				linear-gradient(0deg, --panel, --panel),
+				linear-gradient(85deg, rgba(var(--colorizeColor), 0.09), transparent 30px),
+				linear-gradient(50deg, rgba(var(--colorizeColor), 0.18), transparent 150px),
+				linear-gradient(1deg, rgba(var(--colorizeColor), 0.14), transparent 15px);
+			&:hover {
+				background-image:
+					linear-gradient(0deg, --panel, --panel),
+					linear-gradient(85deg, rgba(var(--colorizeColor), 0.09), transparent 30px),
+					linear-gradient(50deg, rgba(var(--colorizeColor), 0.18), transparent 150px),
+					linear-gradient(1deg, rgba(var(--colorizeColor), 0.14), transparent 15px);
+			}
+		}
+	}
+
+	.colorize & {
+		> .line::before {
+				border-width: 3px;
+				border-color: rgb(var(--colorizeColor));
+		}
+	}
+
 	padding: 16px 32px;
 	&.children {
 		padding: 10px 0 0 var(--indent);
@@ -388,11 +467,6 @@ function noteClick(e) {
 		.line::before {
 			margin-bottom: -16px;
 		}
-	}
-
-	--subNoteOutdent: 5px;
-	.compact & {
-		--subNoteOutdent: 15px;
 	}
 
 	// Reply Lines
