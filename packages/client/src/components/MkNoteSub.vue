@@ -259,10 +259,9 @@ function noteClick(e) {
 	--subNoteOutdent: 5px;
 	
 	.compact & {
-		--subNoteOutdent: 15px;
-		--avatarSize: 28px;
+		--subNoteOutdent: 24px;
 		&.reply {
-			--avatarSize: 22px;
+			--avatarSize: 32px;
 		} 
 	}
 
