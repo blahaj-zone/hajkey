@@ -1,10 +1,10 @@
 <template>
 
 <XContainer :draggable="true" @remove="() => $emit('remove')">
-	<template #header><i class="ph-question-bold ph-lg"></i> {{ i18n.ts._pages.blocks.if }}</template>
+	<template #header><i class="ph-question ph-bold ph-lg"></i> {{ i18n.ts._pages.blocks.if }}</template>
 	<template #func>
 		<button class="_button" @click="add()">
-			<i class="ph-plus-bold ph-lg"></i>
+			<i class="ph-plus ph-bold ph-lg"></i>
 		</button>
 	</template>
 

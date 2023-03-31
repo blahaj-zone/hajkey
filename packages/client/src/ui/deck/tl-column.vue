@@ -1,16 +1,16 @@
 <template>
 <XColumn :menu="menu" :column="column" :is-stacked="isStacked" :indicated="indicated" @change-active-state="onChangeActiveState" @parent-focus="$event => emit('parent-focus', $event)">
 	<template #header>
-		<i v-if="column.tl === 'home'" class="ph-house-bold ph-lg"></i>
-		<i v-else-if="column.tl === 'local'" class="ph-chats-circle-bold ph-lg"></i>
-		<i v-else-if="column.tl === 'social'" class="ph-share-network-bold ph-lg"></i>
-		<i v-else-if="column.tl === 'global'" class="ph-planet-bold ph-lg"></i>
+		<i v-if="column.tl === 'home'" class="ph-house ph-bold ph-lg"></i>
+		<i v-else-if="column.tl === 'local'" class="ph-chats-circle ph-bold ph-lg"></i>
+		<i v-else-if="column.tl === 'social'" class="ph-share-network ph-bold ph-lg"></i>
+		<i v-else-if="column.tl === 'global'" class="ph-planet ph-bold ph-lg"></i>
 		<span style="margin-left: 8px;">{{ column.name }}</span>
 	</template>
 
 	<div v-if="disabled" class="iwaalbte">
 		<p>
-			<i class="ph-minus-circle-bold ph-lg"></i>
+			<i class="ph-minus-circle ph-bold ph-lg"></i>
 			{{ i18n.t('disabled-timeline.title') }}
 		</p>
 		<p class="desc">{{ i18n.t('disabled-timeline.description') }}</p>
@@ -101,7 +101,7 @@ function onChangeActiveState(state) {
 }
 
 const menu = [{
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 	text: i18n.ts.timeline,
 	action: setType,
 }];

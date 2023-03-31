@@ -12,7 +12,7 @@
 		>
 			<swiper-slide>
 				<MkFolder class="_gap">
-					<template #header><i class="ph-clock-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
+					<template #header><i class="ph-clock ph-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
 					<MkPagination v-slot="{items}" :pagination="recentPostsPagination" :disable-auto-load="true">
 						<div class="vfpdbgtk">
 							<MkGalleryPostPreview v-for="post in items" :key="post.id" :post="post" class="post"/>
@@ -20,7 +20,7 @@
 					</MkPagination>
 				</MkFolder>
 				<MkFolder class="_gap">
-					<template #header><i class="ph-fire-simple-bold ph-lg"></i> {{ i18n.ts.popularPosts }}</template>
+					<template #header><i class="ph-fire-simple ph-bold ph-lg"></i> {{ i18n.ts.popularPosts }}</template>
 					<MkPagination v-slot="{items}" :pagination="popularPostsPagination" :disable-auto-load="true">
 						<div class="vfpdbgtk">
 							<MkGalleryPostPreview v-for="post in items" :key="post.id" :post="post" class="post"/>
@@ -36,7 +36,7 @@
 				</MkPagination>
 			</swiper-slide>
 			<swiper-slide>
-				<MkA to="/gallery/new" class="_link" style="margin: 16px;"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.postToGallery }}</MkA>
+				<MkA to="/gallery/new" class="_link" style="margin: 16px;"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.postToGallery }}</MkA>
 				<MkPagination v-slot="{items}" :pagination="myPostsPagination">
 					<div class="vfpdbgtk">
 						<MkGalleryPostPreview v-for="post in items" :key="post.id" :post="post" class="post"/>
@@ -97,7 +97,7 @@ watch(() => props.tag, () => {
 });
 
 const headerActions = $computed(() => [{
-	icon: 'ph-plus-bold ph-lg',
+	icon: 'ph-plus ph-bold ph-lg',
 	text: i18n.ts.create,
 	handler: () => {
 		router.push('/gallery/new');
@@ -107,20 +107,20 @@ const headerActions = $computed(() => [{
 const headerTabs = $computed(() => [{
 	key: 'explore',
 	title: i18n.ts.gallery,
-	icon: 'ph-image-square-bold ph-lg',
+	icon: 'ph-image-square ph-bold ph-lg',
 }, {
 	key: 'liked',
 	title: i18n.ts._gallery.liked,
-	icon: 'ph-heart-bold ph-lg',
+	icon: 'ph-heart ph-bold ph-lg',
 }, {
 	key: 'my',
 	title: i18n.ts._gallery.my,
-	icon: 'ph-crown-simple-bold ph-lg',
+	icon: 'ph-crown-simple ph-bold ph-lg',
 }]);
 
 definePageMetadata({
 	title: i18n.ts.gallery,
-	icon: 'ph-image-square-bold ph-lg',
+	icon: 'ph-image-square ph-bold ph-lg',
 });
 
 let swiperRef = null;

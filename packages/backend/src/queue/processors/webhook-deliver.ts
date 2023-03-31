@@ -20,6 +20,7 @@ export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 				"X-Calckey-Host": config.host,
 				"X-Calckey-Hook-Id": job.data.webhookId,
 				"X-Calckey-Hook-Secret": job.data.secret,
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				hookId: job.data.webhookId,

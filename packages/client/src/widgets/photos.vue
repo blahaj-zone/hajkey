@@ -1,6 +1,6 @@
 <template>
 <MkContainer :show-header="widgetProps.showHeader" :naked="widgetProps.transparent" :class="$style.root" :data-transparent="widgetProps.transparent ? true : null" class="mkw-photos">
-	<template #header><i class="ph-camera-bold ph-lg"></i>{{ i18n.ts._widgets.photos }}</template>
+	<template #header><i class="ph-camera ph-bold ph-lg"></i>{{ i18n.ts._widgets.photos }}</template>
 
 	<div class="">
 		<MkLoading v-if="fetching"/>

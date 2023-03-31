@@ -102,16 +102,26 @@ const timelinesAvailability = {
 	global: isGlobalTimelineAvailable,
 };
 
-let timelines = ['home'];
+let timelines: string[] = [];
+
+if (isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home') {
+	timelines.push('social');
+} else {
+	timelines.push('home');
+}
 
 if (isLocalTimelineAvailable) {
 	timelines.push('local');
 }
+
+if (isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home') {
+	timelines.push('home');
+} else if (isLocalTimelineAvailable) {
+	timelines.push('social');
+}
+
 if (isRecommendedTimelineAvailable) {
 	timelines.push('recommended');
-}
-if (isLocalTimelineAvailable) {
-	timelines.push('social');
 }
 if (isGlobalTimelineAvailable) {
 	timelines.push('global');
@@ -155,7 +165,7 @@ async function chooseList(ev: MouseEvent): Promise<void> {
 	const items = [{
 		type: 'link' as const,
 		text: i18n.ts.manageLists,
-		icon: 'ph-faders-horizontal-bold ph-lg',
+		icon: 'ph-faders-horizontal ph-bold ph-lg',
 		to: '/my/lists',
 	}].concat(lists.map((list) => ({
 		type: 'link' as const,
@@ -172,7 +182,7 @@ async function chooseAntenna(ev: MouseEvent): Promise<void> {
 		type: 'link' as const,
 		indicate: false,
 		text: i18n.ts.manageAntennas,
-		icon: 'ph-faders-horizontal-bold ph-lg',
+		icon: 'ph-faders-horizontal ph-bold ph-lg',
 		to: '/my/antennas',
 	}].concat(antennas.map((antenna) => ({
 		type: 'link' as const,
@@ -208,39 +218,70 @@ function focus(): void {
 
 const headerActions = $computed(() => [
 	{
-		icon: 'ph-list-bullets-bold ph-lg',
+		icon: 'ph-list-bullets ph-bold ph-lg',
 		title: i18n.ts.lists,
 		text: i18n.ts.lists,
 		iconOnly: true,
 		handler: chooseList,
 	},
 	{
-		icon: 'ph-flying-saucer-bold ph-lg',
+		icon: 'ph-flying-saucer ph-bold ph-lg',
 		title: i18n.ts.antennas,
 		text: i18n.ts.antennas,
 		iconOnly: true,
 		handler: chooseAntenna,
 	} /* **TODO: fix timetravel** {
-	icon: 'ph-calendar-blank-bold ph-lg',
+	icon: 'ph-calendar-blank ph-bold ph-lg',
 	title: i18n.ts.jumpToSpecifiedDate,
 	iconOnly: true,
 	handler: timetravel,
 }*/,
 ]);
 
+// Swap home timeline with social's functionality
+
 const headerTabs = $computed(() => [
-	{
-		key: 'home',
-		title: i18n.ts._timelines.home,
-		icon: 'ph-house-bold ph-lg',
-		iconOnly: true,
-	},
+	...(isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home'
+		? [
+			{
+				key: 'social',
+				title: i18n.ts._timelines.home,
+				icon: 'ph-house ph-bold ph-lg',
+				iconOnly: true,
+			},
+		]
+		: [
+			{
+				key: 'home',
+				title: i18n.ts._timelines.home,
+				icon: 'ph-house ph-bold ph-lg',
+				iconOnly: true,
+			}
+		]),
 	...(isLocalTimelineAvailable
 		? [
 			{
 				key: 'local',
 				title: i18n.ts._timelines.local,
-				icon: 'ph-users-bold ph-lg',
+				icon: 'ph-users ph-bold ph-lg',
+				iconOnly: true,
+			},
+		]
+		: []),
+	...(isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home'
+		? [
+			{
+				key: 'home',
+				title: i18n.ts._timelines.social,
+				icon: 'ph-handshake ph-bold ph-lg',
+				iconOnly: true,
+			},
+		]
+		: isLocalTimelineAvailable ? [
+ 			{
+				key: 'social',
+				title: i18n.ts._timelines.social,
+				icon: 'ph-handshake ph-bold ph-lg',
 				iconOnly: true,
 			},
 		]
@@ -250,17 +291,7 @@ const headerTabs = $computed(() => [
 			{
 				key: 'recommended',
 				title: i18n.ts._timelines.recommended,
-				icon: 'ph-thumbs-up-bold ph-lg',
-				iconOnly: true,
-			},
-		]
-		: []),
-	...(isLocalTimelineAvailable
-		? [
-			{
-				key: 'social',
-				title: i18n.ts._timelines.social,
-				icon: 'ph-handshake-bold ph-lg',
+				icon: 'ph-thumbs-up ph-bold ph-lg',
 				iconOnly: true,
 			},
 		]
@@ -270,7 +301,7 @@ const headerTabs = $computed(() => [
 			{
 				key: 'global',
 				title: i18n.ts._timelines.global,
-				icon: 'ph-planet-bold ph-lg',
+				icon: 'ph-planet ph-bold ph-lg',
 				iconOnly: true,
 			},
 		]
@@ -282,14 +313,18 @@ definePageMetadata(
 		title: i18n.ts.timeline,
 		icon:
 			src === 'local'
-				? 'ph-users-bold ph-lg'
-				: src === 'social'
-					? 'ph-handshake-bold ph-lg'
-					: src === 'recommended'
-						? 'ph-thumbs-up-bold ph-lg'
-						: src === 'global'
-							? 'ph-planet-bold ph-lg'
-							: 'ph-house-bold ph-lg',
+				? 'ph-users ph-bold ph-lg'
+				: src === 'social' && defaultStore.state.showLocalPostsInTimeline === 'home'
+					? 'ph-house ph-bold ph-lg'
+					: src === 'social'
+						? 'ph-handshake ph-bold ph-lg'
+						: src === 'recommended'
+							? 'ph-thumbs-up ph-bold ph-lg'
+							: src === 'global'
+								? 'ph-planet ph-bold ph-lg'
+								: src === 'home' && defaultStore.state.showLocalPostsInTimeline === 'home'
+									? 'ph-handshake ph-bold ph-lg'
+									: 'ph-house ph-bold ph-lg',
 	})),
 );
 

@@ -494,6 +494,7 @@ export default define(meta, paramDef, async (ps, me) => {
 					requireSetup:
 						(await Users.countBy({
 							host: IsNull(),
+							isAdmin: true,
 						})) === 0,
 			  }
 			: {}),

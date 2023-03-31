@@ -15,9 +15,15 @@
 	<FormRadios v-model="overridedDeviceKind" class="_formBlock">
 		<template #label>{{ i18n.ts.overridedDeviceKind }}</template>
 		<option :value="null">{{ i18n.ts.auto }}</option>
-		<option value="smartphone"><i class="ph-device-mobile-bold ph-lg"/> {{ i18n.ts.smartphone }}</option>
-		<option value="tablet"><i class="ph-device-tablet-bold ph-lg"/> {{ i18n.ts.tablet }}</option>
-		<option value="desktop"><i class="ph-desktop-bold ph-lg"/> {{ i18n.ts.desktop }}</option>
+		<option value="smartphone"><i class="ph-device-mobile ph-bold ph-lg"/> {{ i18n.ts.smartphone }}</option>
+		<option value="tablet"><i class="ph-device-tablet ph-bold ph-lg"/> {{ i18n.ts.tablet }}</option>
+		<option value="desktop"><i class="ph-desktop ph-bold ph-lg"/> {{ i18n.ts.desktop }}</option>
+	</FormRadios>
+
+	<FormRadios v-model="showLocalPostsInTimeline" class="_formBlock">
+		<template #label>{{ i18n.ts.showLocalPosts }}</template>
+		<option value="home"><i class="ph-house ph-bold ph-lg"/> {{ i18n.ts.homeTimeline }}</option>
+		<option value="social"><i class="ph-handshake ph-bold ph-lg"/> {{ i18n.ts.socialTimeline }}</option>
 	</FormRadios>
 
 	<FormSwitch v-model="showFixedPostForm" class="_formBlock">{{ i18n.ts.showFixedPostForm }}</FormSwitch>
@@ -91,7 +97,7 @@
 
 	<FormLink to="/settings/deck" class="_formBlock">{{ i18n.ts.deck }}</FormLink>
 
-	<FormLink to="/settings/custom-css" class="_formBlock"><template #icon><i class="ph-code-bold ph-lg"></i></template>{{ i18n.ts.customCss }}</FormLink>
+	<FormLink to="/settings/custom-css" class="_formBlock"><template #icon><i class="ph-code ph-bold ph-lg"></i></template>{{ i18n.ts.customCss }}</FormLink>
 </div>
 </template>
 
@@ -127,6 +133,7 @@ async function reloadAsk() {
 }
 
 const overridedDeviceKind = computed(defaultStore.makeGetterSetter('overridedDeviceKind'));
+const showLocalPostsInTimeline = computed(defaultStore.makeGetterSetter('showLocalPostsInTimeline'));
 const serverDisconnectedBehavior = computed(defaultStore.makeGetterSetter('serverDisconnectedBehavior'));
 const reduceAnimation = computed(defaultStore.makeGetterSetter('animation', v => !v, v => !v));
 const useBlurEffectForModal = computed(defaultStore.makeGetterSetter('useBlurEffectForModal'));
@@ -183,6 +190,7 @@ watch([
 	showGapBetweenNotesInTimeline,
 	instanceTicker,
 	overridedDeviceKind,
+	showLocalPostsInTimeline,
 	showAds,
 	showUpdates,
 	swipeOnDesktop,
@@ -198,6 +206,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.general,
-	icon: 'ph-gear-six-bold ph-lg',
+	icon: 'ph-gear-six ph-bold ph-lg',
 });
 </script>

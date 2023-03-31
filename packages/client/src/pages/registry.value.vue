@@ -24,14 +24,14 @@
 				<template #label>{{ i18n.ts.value }} (JSON)</template>
 			</FormTextarea>
 
-			<MkButton class="_formBlock" primary @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
+			<MkButton class="_formBlock" primary @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 
 			<MkKeyValue class="_formBlock">
 				<template #key>{{ i18n.ts.updatedAt }}</template>
 				<template #value><MkTime :time="value.updatedAt" mode="detail"/></template>
 			</MkKeyValue>
 
-			<MkButton danger @click="del"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.delete }}</MkButton>
+			<MkButton danger @click="del"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.delete }}</MkButton>
 		</template>
 	</MkSpacer>
 </MkStickyContainer>
@@ -115,7 +115,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.registry,
-	icon: 'ph-gear-six-bold ph-lg',
+	icon: 'ph-gear-six ph-bold ph-lg',
 });
 </script>
 

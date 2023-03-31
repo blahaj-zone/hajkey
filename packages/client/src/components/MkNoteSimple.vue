@@ -6,6 +6,7 @@
 		<div class="body">
 			<p v-if="note.cw != null" class="cw">
 				<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
+				<br/>
 				<XCwButton v-model="showContent" :note="note"/>
 			</p>
 			<div v-show="note.cw == null || showContent" class="content">
@@ -17,61 +18,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import type * as misskey from 'calckey-js';
+import { } from 'vue';
+import * as misskey from 'calckey-js';
 import XNoteHeader from '@/components/MkNoteHeader.vue';
 import MkSubNoteContent from '@/components/MkSubNoteContent.vue';
 import XCwButton from '@/components/MkCwButton.vue';
-import { deviceKind } from '@/scripts/device-kind';
-import { defaultStore } from '@/store';
-import { checkWordMute } from '@/scripts/check-word-mute';
-import { $i } from '@/account';
-import { userPage } from '@/filters/user';
 
 const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
 }>();
 
-const note = props.note;
-
-const isRenote = (
-	note.renote != null &&
-	note.text == null &&
-	note.fileIds.length === 0 &&
-	note.poll == null
-);
-
-let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
-
-const MOBILE_THRESHOLD = 500;
-const isMobile = ref(
-	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD
-);
-const exceedsCharacterLimit = (
-	defaultStore.state.expandPostMaxCharacters > 0 &&
-	appearNote.text != null &&
-	appearNote.text.length > defaultStore.state.expandPostMaxCharacters
-)
-const estimatedLines = (
-	appearNote.text != null
-		? appearNote.text
-			.split('\n')
-			.map(line => Math.ceil(line.length/(isMobile.value ? 40 : 90)))
-			.reduce((a, b) => a + b, 0)
-		: 1
-)
-const exceedsLinesLimit = (
-	defaultStore.state.expandPostMaxLines > 0 &&
-	estimatedLines > defaultStore.state.expandPostMaxLines
-);
-
-const isLong = (appearNote.cw == null && appearNote.text != null && (
-	exceedsCharacterLimit || exceedsLinesLimit
-));
-const collapsed = ref(appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways);
-const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
-const showContent = ref(defaultStore.state.alwaysShowCw);
+const showContent = $ref(false);
 </script>
 
 <style lang="scss" scoped>

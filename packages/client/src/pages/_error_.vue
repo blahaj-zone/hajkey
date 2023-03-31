@@ -3,7 +3,7 @@
 <transition :name="$store.state.animation ? 'zoom' : ''" appear>
 	<div v-show="loaded" class="mjndxjch">
 		<img src="/static-assets/badges/error.png" class="_ghost" alt="Error"/>
-		<p><b><i class="ph-warning-bold ph-lg"></i> {{ i18n.ts.pageLoadError }}</b></p>
+		<p><b><i class="ph-warning ph-bold ph-lg"></i> {{ i18n.ts.pageLoadError }}</b></p>
 		<p v-if="meta && (version === meta.version)">{{ i18n.ts.pageLoadErrorDescription }}</p>
 		<p v-else-if="serverIsDead">{{ i18n.ts.serverIsDead }}</p>
 		<template v-else>
@@ -58,7 +58,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.error,
-	icon: 'ph-warning-bold ph-lg',
+	icon: 'ph-warning ph-bold ph-lg',
 });
 </script>
 

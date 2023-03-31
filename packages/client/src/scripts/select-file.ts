@@ -99,17 +99,17 @@ function select(
 				},
 				{
 					text: i18n.ts.upload,
-					icon: "ph-upload-simple-bold ph-lg",
+					icon: "ph-upload-simple ph-bold ph-lg",
 					action: chooseFileFromPc,
 				},
 				{
 					text: i18n.ts.fromDrive,
-					icon: "ph-cloud-bold ph-lg",
+					icon: "ph-cloud ph-bold ph-lg",
 					action: chooseFileFromDrive,
 				},
 				{
 					text: i18n.ts.fromUrl,
-					icon: "ph-link-simple-bold ph-lg",
+					icon: "ph-link-simple ph-bold ph-lg",
 					action: chooseFileFromUrl,
 				},
 			],

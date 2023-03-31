@@ -5,8 +5,8 @@
 		<transition :name="$store.state.animation ? 'fade' : ''" mode="out-in">
 			<div v-if="page" :key="page.id" v-size="{ max: [450] }" class="xcukqgmh">
 				<div class="footer">
-					<div><i class="ph-alarm-bold"/> {{ i18n.ts.createdAt }}: <MkTime :time="page.createdAt" mode="detail"/></div>
-					<div v-if="page.createdAt != page.updatedAt"><i class="ph-alarm-bold"></i> {{ i18n.ts.updatedAt }}: <MkTime :time="page.updatedAt" mode="detail"/></div>
+					<div><i class="ph-alarm ph-bold"/> {{ i18n.ts.createdAt }}: <MkTime :time="page.createdAt" mode="detail"/></div>
+					<div v-if="page.createdAt != page.updatedAt"><i class="ph-alarm ph-bold"></i> {{ i18n.ts.updatedAt }}: <MkTime :time="page.updatedAt" mode="detail"/></div>
 				</div>
 				<div class="_block main">
 					<div class="banner">
@@ -15,12 +15,12 @@
 								<h1>{{ page.title }}</h1>
 							</div>
 							<div class="menu-actions">
-								<button v-tooltip="i18n.ts.copyUrl" @click="copyUrl" class="menu _button"><i class="ph-link-simple-bold ph-lg"/></button>
-								<MkA v-tooltip="i18n.ts._pages.viewSource" :to="`/@${username}/pages/${pageName}/view-source`" class="menu _button"><i class="ph-code-bold ph-lg"/></MkA>
+								<button v-tooltip="i18n.ts.copyUrl" @click="copyUrl" class="menu _button"><i class="ph-link-simple ph-bold ph-lg"/></button>
+								<MkA v-tooltip="i18n.ts._pages.viewSource" :to="`/@${username}/pages/${pageName}/view-source`" class="menu _button"><i class="ph-code ph-bold ph-lg"/></MkA>
 								<template v-if="$i && $i.id === page.userId">
-									<MkA v-tooltip="i18n.ts._pages.editPage" class="menu _button" :to="`/pages/edit/${page.id}`"><i class="ph-pencil-bold ph-lg"/></MkA>
-									<button v-if="$i.pinnedPageId === page.id" v-tooltip="i18n.ts.unpin" class="menu _button" @click="pin(false)"><i class="ph-push-pin-slash-bold ph-lg"/></button>
-									<button v-else v-tooltip="i18n.ts.pin" class="menu _button" @click="pin(true)"><i class="ph-push-pin-bold ph-lg"/></button>
+									<MkA v-tooltip="i18n.ts._pages.editPage" class="menu _button" :to="`/pages/edit/${page.id}`"><i class="ph-pencil ph-bold ph-lg"/></MkA>
+									<button v-if="$i.pinnedPageId === page.id" v-tooltip="i18n.ts.unpin" class="menu _button" @click="pin(false)"><i class="ph-push-pin-slash ph-bold ph-lg"/></button>
+									<button v-else v-tooltip="i18n.ts.pin" class="menu _button" @click="pin(true)"><i class="ph-push-pin ph-bold ph-lg"/></button>
 								</template>
 							</div>
 						</div>
@@ -30,12 +30,12 @@
 					</div>
 					<div class="actions">
 						<div class="like">
-							<MkButton v-if="page.isLiked" v-tooltip="i18n.ts._pages.unlike" class="button" primary @click="unlike()"><i class="ph-heart-fill ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
-							<MkButton v-else v-tooltip="i18n.ts._pages.like" class="button" @click="like()"><i class="ph-heart-bold"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
+							<MkButton v-if="page.isLiked" v-tooltip="i18n.ts._pages.unlike" class="button" primary @click="unlike()"><i class="ph-heart ph-fill ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
+							<MkButton v-else v-tooltip="i18n.ts._pages.like" class="button" @click="like()"><i class="ph-heart ph-bold"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
 						</div>
 						<div class="other">
-							<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat-bold ph-lg ph-fw ph-lg"></i></button>
-							<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
+							<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat ph-bold ph-lg ph-fw ph-lg"></i></button>
+							<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network ph-bold ph-lg ph-fw ph-lg"></i></button>
 						</div>
 						<div class="user">
 							<MkAvatar :user="page.user" class="avatar"/>
@@ -57,7 +57,7 @@
 				</div>
 				<MkAd :prefer="['horizontal', 'horizontal-big']"/>
 				<MkContainer :max-height="300" :foldable="true" :expanded="false" class="other">
-					<template #header><i class="ph-clock-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
+					<template #header><i class="ph-clock ph-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
 					<MkPagination v-slot="{items}" :pagination="otherPostsPagination">
 						<MkPagePreview v-for="page in items" :key="page.id" :page="page" class="_gap"/>
 					</MkPagination>

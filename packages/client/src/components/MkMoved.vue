@@ -1,6 +1,6 @@
 <template>
 <div class="msjugskd _block">
-	<i class="ph-airplane-takeoff-bold ph-lg" style="margin-right: 8px;"/>
+	<i class="ph-airplane-takeoff ph-bold ph-lg" style="margin-right: 8px;"/>
 	{{ i18n.ts.accountMoved }}
 	<MkMention class="link" :username="acct" :host="host"/>
 </div>

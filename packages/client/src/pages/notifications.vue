@@ -88,7 +88,7 @@ function setFilter(ev) {
 		},
 	}));
 	const items = includeTypes != null ? [{
-		icon: 'ph-x-bold ph-lg',
+		icon: 'ph-x ph-bold ph-lg',
 		text: i18n.ts.clear,
 		action: () => {
 			includeTypes = null;
@@ -99,12 +99,12 @@ function setFilter(ev) {
 
 const headerActions = $computed(() => [tab === 'all' ? {
 	text: i18n.ts.filter,
-	icon: 'ph-funnel-bold ph-lg',
+	icon: 'ph-funnel ph-bold ph-lg',
 	highlighted: includeTypes != null,
 	handler: setFilter,
 } : undefined, tab === 'all' ? {
 	text: i18n.ts.markAllAsRead,
-	icon: 'ph-check-bold ph-lg',
+	icon: 'ph-check ph-bold ph-lg',
 	handler: () => {
 		os.apiWithDialog('notifications/mark-all-as-read');
 	},
@@ -113,24 +113,24 @@ const headerActions = $computed(() => [tab === 'all' ? {
 const headerTabs = $computed(() => [{
 	key: 'all',
 	title: i18n.ts.all,
-	icon: 'ph-bell-bold ph-lg',
+	icon: 'ph-bell ph-bold ph-lg',
 }, {
 	key: 'unread',
 	title: i18n.ts.unread,
-	icon: 'ph-circle-wavy-warning-bold ph-lg',
+	icon: 'ph-circle-wavy-warning ph-bold ph-lg',
 }, {
 	key: 'mentions',
 	title: i18n.ts.mentions,
-	icon: 'ph-at-bold ph-lg',
+	icon: 'ph-at ph-bold ph-lg',
 }, {
 	key: 'directNotes',
 	title: i18n.ts.directNotes,
-	icon: 'ph-envelope-simple-open-bold ph-lg',
+	icon: 'ph-envelope-simple-open ph-bold ph-lg',
 }]);
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.notifications,
-	icon: 'ph-bell-bold ph-lg',
+	icon: 'ph-bell ph-bold ph-lg',
 })));
 
 let swiperRef = null;

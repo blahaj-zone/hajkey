@@ -4,7 +4,7 @@
 	ref="buttonRef"
 	v-ripple="canToggle"
 	class="hkzvhatu _button"
-	:class="{ reacted: note.myReaction == reaction, canToggle }"
+	:class="{ reacted: note.myReaction == reaction, canToggle, newlyAdded: !isInitial }"
 	@click="toggleReaction()"
 >
 	<XReactionIcon class="icon" :reaction="reaction" :custom-emojis="note.emojis"/>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import * as misskey from 'calckey-js';
 import XDetails from '@/components/MkReactionsViewer.details.vue';
 import XReactionIcon from '@/components/MkReactionIcon.vue';
@@ -55,20 +55,6 @@ const toggleReaction = () => {
 	}
 };
 
-const anime = () => {
-	if (document.hidden) return;
-
-	// TODO: 新しくリアクションが付いたことが視覚的に分かりやすいアニメーション
-};
-
-watch(() => props.count, (newCount, oldCount) => {
-	if (oldCount < newCount) anime();
-});
-
-onMounted(() => {
-	if (!props.isInitial) anime();
-});
-
 useTooltip(buttonRef, async (showing) => {
 	const reactions = await os.apiGet('notes/reactions', {
 		noteId: props.note.id,
@@ -97,7 +83,25 @@ useTooltip(buttonRef, async (showing) => {
 	margin: 2px;
 	padding: 0 6px;
 	border-radius: 4px;
-
+	pointer-events: all;
+	&.newlyAdded {
+		animation: scaleInSmall .3s cubic-bezier(0,0,0,1.2);
+		:deep(.mk-emoji) {
+			animation: scaleIn .4s cubic-bezier(0.7, 0, 0, 1.5);
+		}
+	}
+	:deep(.mk-emoji) {
+		transition: transform .4s cubic-bezier(0,0,0,6);
+	}
+	&.reacted :deep(.mk-emoji) {
+		transition: transform .4s cubic-bezier(0,0,0,1);
+	}
+	&:active {
+		:deep(.mk-emoji) {
+			transition: transform .4s cubic-bezier(0,0,0,1);
+			transform: scale(.85);
+		}
+	}
 	&.canToggle {
 		background: rgba(0, 0, 0, 0.05);
 
@@ -119,6 +123,7 @@ useTooltip(buttonRef, async (showing) => {
 
 		> .count {
 			color: var(--fgOnAccent);
+			font-weight: 600;
 		}
 
 		> .icon {

@@ -10,7 +10,7 @@
 					<img v-if="announcement.imageUrl" :src="announcement.imageUrl"/>
 				</div>
 				<div v-if="$i && !announcement.isRead" class="_footer">
-					<MkButton primary @click="read(items, announcement, i)"><i class="ph-check-bold ph-lg"></i> {{ i18n.ts.gotIt }}</MkButton>
+					<MkButton primary @click="read(items, announcement, i)"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.gotIt }}</MkButton>
 				</div>
 			</section>
 		</MkPagination>
@@ -46,7 +46,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.announcements,
-	icon: 'ph-megaphone-simple-bold ph-lg',
+	icon: 'ph-megaphone-simple ph-bold ph-lg',
 });
 </script>
 

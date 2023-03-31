@@ -31,7 +31,7 @@ FROM node:19-alpine
 WORKDIR /calckey
 
 # Install runtime dependencies
-RUN apk add --no-cache --no-progress tini ffmpeg
+RUN apk add --no-cache --no-progress tini ffmpeg vips-dev
 
 COPY . ./
 

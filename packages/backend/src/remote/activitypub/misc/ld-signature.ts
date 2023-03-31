@@ -70,13 +70,13 @@ export class LdSignature {
 			...options,
 			"@context": "https://w3id.org/identity/v1",
 		};
-		transformedOptions["type"] = undefined;
-		transformedOptions["id"] = undefined;
-		transformedOptions["signatureValue"] = undefined;
+		delete transformedOptions["type"];
+		delete transformedOptions["id"];
+		delete transformedOptions["signatureValue"];
 		const canonizedOptions = await this.normalize(transformedOptions);
 		const optionsHash = this.sha256(canonizedOptions);
 		const transformedData = { ...data };
-		transformedData["signature"] = undefined;
+		delete transformedData["signature"];
 		const cannonidedData = await this.normalize(transformedData);
 		if (this.debug) console.debug(`cannonidedData: ${cannonidedData}`);
 		const documentHash = this.sha256(cannonidedData);

@@ -6,11 +6,11 @@
 	class="eddddedb _button canRenote"
 	@click="renote(false, $event)"
 >
-	<i class="ph-repeat-bold ph-lg"></i>
+	<i class="ph-repeat ph-bold ph-lg"></i>
 	<p v-if="count > 0" class="count">{{ count }}</p>
 </button>
 <button v-else class="eddddedb _button">
-	<i class="ph-prohibit-bold ph-lg"></i>
+	<i class="ph-prohibit ph-bold ph-lg"></i>
 </button>
 </template>
 
@@ -66,7 +66,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 
 	let buttonActions = [{
 		text: i18n.ts.renote,
-		icon: 'ph-repeat-bold ph-lg',
+		icon: 'ph-repeat ph-bold ph-lg',
 		danger: false,
 		action: () => {
 			os.api('notes/create', {
@@ -86,7 +86,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 	if (!defaultStore.state.seperateRenoteQuote) {
 		buttonActions.push({
 			text: i18n.ts.quote,
-			icon: 'ph-quotes-bold ph-lg',
+			icon: 'ph-quotes ph-bold ph-lg',
 			danger: false,
 			action: () => {
 				os.post({
@@ -99,7 +99,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 	if (hasRenotedBefore) {
 		buttonActions.push({
 			text: i18n.ts.unrenote,
-			icon: 'ph-trash-bold ph-lg',
+			icon: 'ph-trash ph-bold ph-lg',
 			danger: true,
 			action: () => {
 				os.api('notes/unrenote', {

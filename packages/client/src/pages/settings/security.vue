@@ -17,8 +17,8 @@
 				<div>
 					<div v-for="item in items" :key="item.id" v-panel class="timnmucd">
 						<header>
-							<i v-if="item.success" class="ph-check-bold ph-lg icon succ"></i>
-							<i v-else class="ph-circle-wavy-warning-bold ph-lg icon fail"></i>
+							<i v-if="item.success" class="ph-check ph-bold ph-lg icon succ"></i>
+							<i v-else class="ph-circle-wavy-warning ph-bold ph-lg icon fail"></i>
 							<code class="ip _monospace">{{ item.ip }}</code>
 							<MkTime :time="item.createdAt" class="time"/>
 						</header>
@@ -30,7 +30,7 @@
 
 	<FormSection>
 		<FormSlot>
-			<FormButton danger @click="regenerateToken"><i class="ph-arrows-clockwise-bold ph-lg"></i> {{ i18n.ts.regenerateLoginToken }}</FormButton>
+			<FormButton danger @click="regenerateToken"><i class="ph-arrows-clockwise ph-bold ph-lg"></i> {{ i18n.ts.regenerateLoginToken }}</FormButton>
 			<template #caption>{{ i18n.ts.regenerateLoginTokenDescription }}</template>
 		</FormSlot>
 	</FormSection>
@@ -103,7 +103,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.security,
-	icon: 'ph-lock-bold ph-lg',
+	icon: 'ph-lock ph-bold ph-lg',
 });
 </script>
 

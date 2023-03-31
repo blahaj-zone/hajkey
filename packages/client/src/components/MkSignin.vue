@@ -11,7 +11,7 @@
 				<template #suffix>@{{ host }}</template>
 			</MkInput>
 			<MkInput v-if="!user || user && !user.usePasswordLessLogin" v-model="password" class="_formBlock" :placeholder="i18n.ts.password" type="password" :with-password-toggle="true" required data-cy-signin-password>
-				<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+				<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 				<template #caption><button class="_textButton" type="button" @click="resetPassword">{{ i18n.ts.forgotPassword }}</button></template>
 			</MkInput>
 			<MkButton class="_formBlock" type="submit" primary :disabled="signing" style="margin: 0 auto;">{{ signing ? i18n.ts.loggingIn : i18n.ts.login }}</MkButton>
@@ -30,20 +30,20 @@
 				<p style="margin-bottom:0;">{{ i18n.ts.twoStepAuthentication }}</p>
 				<MkInput v-if="user && user.usePasswordLessLogin" v-model="password" type="password" :with-password-toggle="true" required>
 					<template #label>{{ i18n.ts.password }}</template>
-					<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+					<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 				</MkInput>
 				<MkInput v-model="token" type="text" pattern="^[0-9]{6}$" autocomplete="off" :spellcheck="false" required>
 					<template #label>{{ i18n.ts.token }}</template>
-					<template #prefix><i class="ph-poker-chip-bold ph-lg"></i></template>
+					<template #prefix><i class="ph-poker-chip ph-bold ph-lg"></i></template>
 				</MkInput>
 				<MkButton type="submit" :disabled="signing" primary style="margin: 0 auto;">{{ signing ? i18n.ts.loggingIn : i18n.ts.login }}</MkButton>
 			</div>
 		</div>
 	</div>
 	<div class="social _section">
-		<a v-if="meta && meta.enableTwitterIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/twitter`"><i class="ph-twitter-logo-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'Twitter' }) }}</a>
-		<a v-if="meta && meta.enableGithubIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/github`"><i class="ph-github-logo-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'GitHub' }) }}</a>
-		<a v-if="meta && meta.enableDiscordIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/discord`"><i class="ph-discord-logo-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'Discord' }) }}</a>
+		<a v-if="meta && meta.enableTwitterIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/twitter`"><i class="ph-twitter-logo ph-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'Twitter' }) }}</a>
+		<a v-if="meta && meta.enableGithubIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/github`"><i class="ph-github-logo ph-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'GitHub' }) }}</a>
+		<a v-if="meta && meta.enableDiscordIntegration" class="_borderButton _gap" :href="`${apiUrl}/signin/discord`"><i class="ph-discord-logo ph-bold ph-lg" style="margin-right: 4px;"></i>{{ i18n.t('signinWith', { x: 'Discord' }) }}</a>
 	</div>
 </form>
 </template>

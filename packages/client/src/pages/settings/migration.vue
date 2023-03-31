@@ -3,7 +3,7 @@
 	<FormSection>
 		<template #label>{{ i18n.ts.moveTo }}</template>
 		<FormInput v-model="moveToAccount" class="_formBlock">
-			<template #prefix><i class="ph-airplane-takeoff-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-airplane-takeoff ph-bold ph-lg"></i></template>
 			<template #label>{{ i18n.ts.moveToLabel }}</template>
 		</FormInput>
 		<FormButton primary danger @click="move(moveToAccount)">
@@ -15,11 +15,11 @@
 	<FormSection>
 		<template #label>{{ i18n.ts.moveFrom }}</template>
 		<FormInput v-model="accountAlias" class="_formBlock">
-			<template #prefix><i class="ph-airplane-landing-bold ph-lg"></i></template>
+			<template #prefix><i class="ph-airplane-landing ph-bold ph-lg"></i></template>
 			<template #label>{{ i18n.ts.moveFromLabel }}</template>
 		</FormInput>
 		<FormButton class="button" inline primary @click="save(accountAlias.toString())">
-			<i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}
+			<i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}
 		</FormButton>
 		<div class="description">{{ i18n.ts.moveFromDescription }}</div>
 	</FormSection>
@@ -56,7 +56,7 @@ async function move(account): Promise<void> {
 
 definePageMetadata({
 	title: i18n.ts.security,
-	icon: 'ph-lock-bold ph-lg',
+	icon: 'ph-lock ph-bold ph-lg',
 });
 </script>
 

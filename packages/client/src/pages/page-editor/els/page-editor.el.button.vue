@@ -1,7 +1,7 @@
 <template>
 
 <XContainer :draggable="true" @remove="() => $emit('remove')">
-	<template #header><i class="ph-lightning-bold ph-lg"></i> {{ i18n.ts._pages.blocks.button }}</template>
+	<template #header><i class="ph-lightning ph-bold ph-lg"></i> {{ i18n.ts._pages.blocks.button }}</template>
 
 	<section class="xfhsjczc">
 		<MkInput v-model="value.text"><template #label>{{ i18n.ts._pages.blocks._button.text }}</template></MkInput>

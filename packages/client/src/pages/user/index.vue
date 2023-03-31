@@ -83,26 +83,26 @@ const headerTabs = $computed(() =>
 			{
 				key: 'home',
 				title: i18n.ts.overview,
-				icon: 'ph-user-bold ph-lg',
+				icon: 'ph-user ph-bold ph-lg',
 			},
 			...(($i && $i.id === user.id) || user.publicReactions
 				? [{
 					key: 'reactions',
 					title: i18n.ts.reaction,
-					icon: 'ph-smiley-bold ph-lg',
+					icon: 'ph-smiley ph-bold ph-lg',
 				}] : []),
 			...(user.instance == null ? [{
 				key: 'clips',
 				title: i18n.ts.clips,
-				icon: 'ph-paperclip-bold ph-lg',
+				icon: 'ph-paperclip ph-bold ph-lg',
 			}, {
 				key: 'pages',
 				title: i18n.ts.pages,
-				icon: 'ph-file-text-bold ph-lg',
+				icon: 'ph-file-text ph-bold ph-lg',
 			}, {
 				key: 'gallery',
 				title: i18n.ts.gallery,
-				icon: 'ph-image-square-bold ph-lg',
+				icon: 'ph-image-square ph-bold ph-lg',
 			}] : []),
 		]
 		: null,
@@ -112,7 +112,7 @@ definePageMetadata(
 	computed(() =>
 		user
 			? {
-				icon: 'ph-user-bold ph-lg',
+				icon: 'ph-user ph-bold ph-lg',
 				title: user.name
 					? `${user.name} (@${user.username})`
 					: `@${user.username}`,

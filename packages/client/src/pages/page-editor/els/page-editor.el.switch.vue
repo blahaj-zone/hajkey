@@ -1,10 +1,10 @@
 <template>
 
 <XContainer :draggable="true" @remove="() => $emit('remove')">
-	<template #header><i class="ph-lightning-bold ph-lg"></i> {{ i18n.ts._pages.blocks.switch }}</template>
+	<template #header><i class="ph-lightning ph-bold ph-lg"></i> {{ i18n.ts._pages.blocks.switch }}</template>
 
 	<section class="kjuadyyj">
-		<MkInput v-model="value.name"><template #prefix><i class="ph-magic-wand-bold ph-lg"></i></template><template #label>{{ i18n.ts._pages.blocks._switch.name }}</template></MkInput>
+		<MkInput v-model="value.name"><template #prefix><i class="ph-magic-wand ph-bold ph-lg"></i></template><template #label>{{ i18n.ts._pages.blocks._switch.name }}</template></MkInput>
 		<MkInput v-model="value.text"><template #label>{{ i18n.ts._pages.blocks._switch.text }}</template></MkInput>
 		<MkSwitch v-model="value.default"><span>{{ i18n.ts._pages.blocks._switch.default }}</span></MkSwitch>
 	</section>

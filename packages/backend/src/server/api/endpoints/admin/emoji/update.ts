@@ -34,6 +34,10 @@ export const paramDef = {
 				type: "string",
 			},
 		},
+		license: {
+			type: "string",
+			nullable: true,
+		},
 	},
 	required: ["id", "name", "aliases"],
 } as const;
@@ -48,6 +52,7 @@ export default define(meta, paramDef, async (ps) => {
 		name: ps.name,
 		category: ps.category,
 		aliases: ps.aliases,
+		license: ps.license,
 	});
 
 	await db.queryResultCache!.remove(["meta_emojis"]);

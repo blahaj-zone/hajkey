@@ -16,8 +16,8 @@
 					</MkInput>
 					<p v-if="announcement.reads">{{ i18n.t('nUsersRead', { n: announcement.reads }) }}</p>
 					<div class="buttons">
-						<MkButton class="button" inline primary @click="save(announcement)"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
-						<MkButton class="button" inline @click="remove(announcement)"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.remove }}</MkButton>
+						<MkButton class="button" inline primary @click="save(announcement)"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
+						<MkButton class="button" inline @click="remove(announcement)"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.remove }}</MkButton>
 					</div>
 				</div>
 			</section>
@@ -91,7 +91,7 @@ function save(announcement) {
 
 const headerActions = $computed(() => [{
 	asFullButton: true,
-	icon: 'ph-plus-bold ph-lg',
+	icon: 'ph-plus ph-bold ph-lg',
 	text: i18n.ts.add,
 	handler: add,
 }]);
@@ -100,7 +100,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.announcements,
-	icon: 'ph-megaphone-simple-bold ph-lg',
+	icon: 'ph-megaphone-simple ph-bold ph-lg',
 });
 </script>
 

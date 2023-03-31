@@ -23,7 +23,6 @@ importers:
       gulp-terser: 2.1.0
       install-peers: ^1.0.4
       js-yaml: 4.1.0
-      phosphor-icons: ^1.4.2
       rome: ^11.0.0
       safe-regex: ^2.1.1
       seedrandom: ^3.0.5
@@ -35,8 +34,6 @@ importers:
       '@tensorflow/tfjs': 3.21.0_seedrandom@3.0.5
       calckey-js: 0.0.22
       js-yaml: 4.1.0
-      phosphor-icons: 1.4.2
-      safe-regex: 2.1.1
       seedrandom: 3.0.5
     devDependencies:
       '@types/gulp': 4.0.10
@@ -59,7 +56,7 @@ importers:
       '@bull-board/api': ^4.6.4
       '@bull-board/koa': ^4.6.4
       '@bull-board/ui': ^4.6.4
-      '@cutls/megalodon': 5.1.15
+      '@calckey/megalodon': 5.1.22
       '@discordapp/twemoji': 14.0.2
       '@elastic/elasticsearch': 7.17.0
       '@koa/cors': 3.4.3
@@ -102,6 +99,7 @@ importers:
       '@types/pug': 2.0.6
       '@types/punycode': 2.1.0
       '@types/qrcode': 1.5.0
+      '@types/qs': 6.9.7
       '@types/random-seed': 0.3.3
       '@types/ratelimiter': 3.4.4
       '@types/redis': 4.0.11
@@ -163,6 +161,7 @@ importers:
       koa-json-body: 5.3.0
       koa-logger: 3.2.1
       koa-mount: 4.0.0
+      koa-remove-trailing-slashes: 2.0.3
       koa-send: 5.0.1
       koa-slow: 2.1.0
       koa-views: 7.0.2
@@ -185,6 +184,7 @@ importers:
       punycode: 2.1.1
       pureimage: 0.3.15
       qrcode: 1.5.1
+      qs: 6.9.7
       random-seed: 0.3.0
       ratelimiter: 3.4.1
       re2: 1.18.0
@@ -226,7 +226,7 @@ importers:
       '@bull-board/api': 4.10.2
       '@bull-board/koa': 4.10.2_6tybghmia4wsnt33xeid7y4rby
       '@bull-board/ui': 4.10.2
-      '@cutls/megalodon': 5.1.15
+      '@calckey/megalodon': 5.1.22
       '@discordapp/twemoji': 14.0.2
       '@elastic/elasticsearch': 7.17.0
       '@koa/cors': 3.4.3
@@ -278,6 +278,7 @@ importers:
       koa-json-body: 5.3.0
       koa-logger: 3.2.1
       koa-mount: 4.0.0
+      koa-remove-trailing-slashes: 2.0.3
       koa-send: 5.0.1
       koa-slow: 2.1.0
       koa-views: 7.0.2_6tybghmia4wsnt33xeid7y4rby
@@ -298,6 +299,7 @@ importers:
       punycode: 2.1.1
       pureimage: 0.3.15
       qrcode: 1.5.1
+      qs: 6.9.7
       random-seed: 0.3.0
       ratelimiter: 3.4.1
       re2: 1.18.0
@@ -361,6 +363,7 @@ importers:
       '@types/pug': 2.0.6
       '@types/punycode': 2.1.0
       '@types/qrcode': 1.5.0
+      '@types/qs': 6.9.7
       '@types/random-seed': 0.3.3
       '@types/ratelimiter': 3.4.4
       '@types/redis': 4.0.11
@@ -396,6 +399,7 @@ importers:
     specifiers:
       '@discordapp/twemoji': 14.0.2
       '@khmyznikov/pwa-install': ^0.2.0
+      '@phosphor-icons/web': ^2.0.3
       '@rollup/plugin-alias': 3.1.9
       '@rollup/plugin-json': 4.1.0
       '@rollup/pluginutils': ^4.2.1
@@ -421,8 +425,10 @@ importers:
       calckey-js: ^0.0.22
       chart.js: 4.1.1
       chartjs-adapter-date-fns: 2.0.1
+      chartjs-chart-matrix: ^2.0.1
       chartjs-plugin-gradient: 0.5.1
       chartjs-plugin-zoom: 1.2.1
+      city-timezones: ^1.2.1
       compare-versions: 5.0.3
       cropperjs: 2.0.0-beta.2
       cross-env: 7.0.3
@@ -430,6 +436,7 @@ importers:
       date-fns: 2.29.3
       escape-regexp: 0.0.1
       eventemitter3: 4.0.7
+      gsap: ^3.11.4
       idb-keyval: 6.2.0
       insert-text-at-cursor: 0.3.0
       json5: 2.2.3
@@ -467,15 +474,16 @@ importers:
       uuid: 9.0.0
       vanilla-tilt: 1.8.0
       vite: ^4.1.1
+      vite-plugin-compression: ^0.5.1
       vue: 3.2.45
       vue-isyourpasswordsafe: ^2.0.0
       vue-plyr: ^7.0.0
       vue-prism-editor: 2.0.0-alpha.2
       vuedraggable: 4.1.0
-    dependencies:
-      '@khmyznikov/pwa-install': 0.2.0
     devDependencies:
       '@discordapp/twemoji': 14.0.2
+      '@khmyznikov/pwa-install': 0.2.0
+      '@phosphor-icons/web': 2.0.3
       '@rollup/plugin-alias': 3.1.9_rollup@3.9.1
       '@rollup/plugin-json': 4.1.0_rollup@3.9.1
       '@rollup/pluginutils': 4.2.1
@@ -501,8 +509,10 @@ importers:
       calckey-js: 0.0.22
       chart.js: 4.1.1
       chartjs-adapter-date-fns: 2.0.1_chart.js@4.1.1
+      chartjs-chart-matrix: 2.0.1_chart.js@4.1.1
       chartjs-plugin-gradient: 0.5.1_chart.js@4.1.1
       chartjs-plugin-zoom: 1.2.1_chart.js@4.1.1
+      city-timezones: 1.2.1
       compare-versions: 5.0.3
       cropperjs: 2.0.0-beta.2
       cross-env: 7.0.3
@@ -510,6 +520,7 @@ importers:
       date-fns: 2.29.3
       escape-regexp: 0.0.1
       eventemitter3: 4.0.7
+      gsap: 3.11.4
       idb-keyval: 6.2.0
       insert-text-at-cursor: 0.3.0
       json5: 2.2.3
@@ -547,6 +558,7 @@ importers:
       uuid: 9.0.0
       vanilla-tilt: 1.8.0
       vite: 4.1.1_sass@1.57.1
+      vite-plugin-compression: 0.5.1_vite@4.1.1
       vue: 3.2.45
       vue-isyourpasswordsafe: 2.0.0
       vue-plyr: 7.0.0
@@ -764,6 +776,30 @@ packages:
       '@bull-board/api': 4.10.2
     dev: false
 
+  /@calckey/megalodon/5.1.22:
+    resolution: {integrity: sha512-/wJ4XPyTL2RXGj7Tawy6uT3Imlh78zwpse6xf+m6loZXlpROxdSKJTq87+ffmAJHDoS6gHPTOfYdIxE699oTww==}
+    engines: {node: '>=15.0.0'}
+    dependencies:
+      '@types/oauth': 0.9.1
+      '@types/ws': 8.5.4
+      axios: 1.2.2
+      dayjs: 1.11.7
+      form-data: 4.0.0
+      https-proxy-agent: 5.0.1
+      oauth: 0.10.0
+      object-assign-deep: 0.4.0
+      parse-link-header: 2.0.0
+      socks-proxy-agent: 7.0.0
+      typescript: 4.9.4
+      uuid: 9.0.0
+      ws: 8.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - supports-color
+      - utf-8-validate
+    dev: false
+
   /@colors/colors/1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
@@ -864,30 +900,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
-
-  /@cutls/megalodon/5.1.15:
-    resolution: {integrity: sha512-4+mIKUYYr2CLY3idSxXk56WSTG9ww3opeenmsPRxftTwcjQTYxGntNkWmJWEbzeJ4rPslnvpwD7cFR62bPf41g==}
-    engines: {node: '>=15.0.0'}
-    dependencies:
-      '@types/oauth': 0.9.1
-      '@types/ws': 8.5.4
-      axios: 1.2.2
-      dayjs: 1.11.7
-      form-data: 4.0.0
-      https-proxy-agent: 5.0.1
-      oauth: 0.10.0
-      object-assign-deep: 0.4.0
-      parse-link-header: 2.0.0
-      socks-proxy-agent: 7.0.0
-      typescript: 4.9.4
-      uuid: 9.0.0
-      ws: 8.12.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - supports-color
-      - utf-8-validate
-    dev: false
 
   /@cypress/request/2.88.11:
     resolution: {integrity: sha512-M83/wfQ1EkspjkE2lNWNV5ui2Cv7UCv1swW1DqljahbzLVWltcsexQh8jYtuS/vzFXP+HySntGM83ZXA9fn17w==}
@@ -1249,7 +1261,7 @@ packages:
     dependencies:
       '@lit/localize': 0.11.4
       lit: 2.6.1
-    dev: false
+    dev: true
 
   /@koa/cors/3.4.3:
     resolution: {integrity: sha512-WPXQUaAeAMVaLTEFpoq3T2O1C+FstkjJnDQqy95Ck1UdILajsRhu6mhJ8H2f4NFPRBoCNN+qywTJfq/gGki5mw==}
@@ -1286,20 +1298,20 @@ packages:
 
   /@lit-labs/ssr-dom-shim/1.0.0:
     resolution: {integrity: sha512-ic93MBXfApIFTrup4a70M/+ddD8xdt2zxxj9sRwHQzhS9ag/syqkD8JPdTXsc1gUy2K8TTirhlCqyTEM/sifNw==}
-    dev: false
+    dev: true
 
   /@lit/localize/0.11.4:
     resolution: {integrity: sha512-RRIwIX2tAm3+DuEndoXSJrFjGrAK5cb5IXo5K6jcJ6sbgD829B8rSqHC5MaKVUmXTVLIR1bk5IZOZDf9wFereA==}
     dependencies:
       '@lit/reactive-element': 1.6.1
       lit: 2.6.1
-    dev: false
+    dev: true
 
   /@lit/reactive-element/1.6.1:
     resolution: {integrity: sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==}
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.0.0
-    dev: false
+    dev: true
 
   /@mapbox/node-pre-gyp/1.0.9:
     resolution: {integrity: sha512-aDF3S3rK9Q2gey/WAttUlISduDItz5BU3306M9Eyv6/oS40aMprnopshtlKTykxRNIBEZuRMaZAnbrQ4QtKGyw==}
@@ -1429,6 +1441,10 @@ packages:
       jsprim: 1.4.2
       sshpk: 1.17.0
     dev: false
+
+  /@phosphor-icons/web/2.0.3:
+    resolution: {integrity: sha512-9oYmohi2fo87w3DbtfjBoJxrklVojgXq2wuGcqxKccj2TxMq7UIusKDrGUZYOQHM9pUKkh+kvfmutETMGDR6gg==}
+    dev: true
 
   /@redis/bloom/1.1.0_@redis+client@1.4.2:
     resolution: {integrity: sha512-9QovlxmpRtvxVbN0UBcv8WfdSMudNZZTFqCsnBszcQXqaZb/TVe30ScgGEO7u1EAIacTPAo7/oCYjYAxiHLanQ==}
@@ -2553,7 +2569,7 @@ packages:
 
   /@types/trusted-types/2.0.2:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
-    dev: false
+    dev: true
 
   /@types/undertaker-registry/1.0.1:
     resolution: {integrity: sha512-Z4TYuEKn9+RbNVk1Ll2SS4x1JeLHecolIbM/a8gveaHsW0Hr+RQMraZACwTO2VD7JvepgA6UO1A1VrbktQrIbQ==}
@@ -3403,7 +3419,7 @@ packages:
   /axios/0.25.0_debug@4.3.4:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.2_debug@4.3.4
     transitivePeerDependencies:
       - debug
     dev: true
@@ -4033,6 +4049,14 @@ packages:
       chart.js: 4.1.1
     dev: true
 
+  /chartjs-chart-matrix/2.0.1_chart.js@4.1.1:
+    resolution: {integrity: sha512-BGfeY+/PHnITyDlc7WfnKJ1RyOfgOzIqWp/gxzzl7pUjyoGzHDcw51qd2xJF9gdT9Def7ZwOnOMm8GJUXDxI0w==}
+    peerDependencies:
+      chart.js: '>=3.0.0'
+    dependencies:
+      chart.js: 4.1.1
+    dev: true
+
   /chartjs-plugin-gradient/0.5.1_chart.js@4.1.1:
     resolution: {integrity: sha512-vhwlYGZWan4MGZZ4Wj64Y4aIql1uCPCU1JcggLWn3cgYEv4G7pXp1YgM4XH5ugmyn6BVCgQqAhiJ2h6hppzHmQ==}
     peerDependencies:
@@ -4108,6 +4132,12 @@ packages:
   /ci-info/3.7.1:
     resolution: {integrity: sha512-4jYS4MOAaCIStSRwiuxc4B8MYhIe676yO1sYGzARnjXkWpmzZMMYxY6zu8WYWDhSuth5zhrQ1rhNSibyyvv4/w==}
     engines: {node: '>=8'}
+    dev: true
+
+  /city-timezones/1.2.1:
+    resolution: {integrity: sha512-hruuB611QFoUFMsan7xd9B2VPMrA8XC716O/999WW34kmaJUT1hxKF2W8TSXAWkhSqgvbu70DjcDv7/wpM6vow==}
+    dependencies:
+      lodash: 4.17.21
     dev: true
 
   /clap/1.2.3:
@@ -4261,7 +4291,7 @@ packages:
     resolution: {integrity: sha512-sX/LQ7LqUhgyaxzbe7IqwPeTr2yfpfUIQ/dgpKo6ZI4y4lpQA0YxAomWIY+7I7rHWcG02PG+OuPREzMW/5tszQ==}
     dependencies:
       inflation: 2.0.0
-      qs: 6.11.0
+      qs: 6.9.7
       raw-body: 2.5.1
       type-is: 1.6.18
     dev: false
@@ -4270,7 +4300,7 @@ packages:
     resolution: {integrity: sha512-m7pOT6CdLN7FuXUcpuz/8lfQ/L77x8SchHCF4G0RBTJO20Wzmhn5Sp4/5WsKy8OSpifBSUrmg83qEqaDHdyFuQ==}
     dependencies:
       inflation: 2.0.0
-      qs: 6.11.0
+      qs: 6.9.7
       raw-body: 2.5.1
       type-is: 1.6.18
     dev: false
@@ -4848,6 +4878,12 @@ packages:
   /core-js/3.27.1:
     resolution: {integrity: sha512-GutwJLBChfGCpwwhbYoqfv03LAfmiz7e7D/BNxzeMxwQf10GRSzqiOjx7AmtEk+heiD/JWmBuyBPgFtx0Sg1ww==}
     requiresBuild: true
+    dev: false
+
+  /core-js/3.29.0:
+    resolution: {integrity: sha512-VG23vuEisJNkGl6XQmFJd3rEG/so/CNatqeE+7uZAwTSwFeB/qaO0be8xZYUNWprJ/GIwL8aMt9cj1kvbpTZhg==}
+    requiresBuild: true
+    dev: true
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -6393,6 +6429,19 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dev: false
+
+  /follow-redirects/1.15.2_debug@4.3.4:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dependencies:
+      debug: 4.3.4
+    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -6486,6 +6535,15 @@ packages:
 
   /fs-constants/1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
+
+  /fs-extra/10.1.0:
+    resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.10
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
 
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
@@ -6917,6 +6975,10 @@ packages:
 
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
+
+  /gsap/3.11.4:
+    resolution: {integrity: sha512-McHhEguHyExMMnjqKA8G+7TvxmlKQGMbjgwAilnFe1e4id7V/tFveRQ2YMZhTYu0oxHGWvbPltdVYQOu3z1SCA==}
+    dev: true
 
   /gulp-cli/2.3.0:
     resolution: {integrity: sha512-zzGBl5fHo0EKSXsHzjspp3y5CONegCm8ErO5Qh0UzFzk2y4tMvzLWhoDokADbarfZRL2pGpRp7yt6gfJX4ph7A==}
@@ -8274,6 +8336,10 @@ packages:
       - supports-color
     dev: false
 
+  /koa-remove-trailing-slashes/2.0.3:
+    resolution: {integrity: sha512-NFFF9Sl1wxFo5h0I3OzrHDINdFPaqG+Hx19590F7PNOcmm7yYeFW71p4XicVuSovbcx75GWGb3fi6N6kI6E/3g==}
+    dev: false
+
   /koa-router/10.1.1:
     resolution: {integrity: sha512-z/OzxVjf5NyuNO3t9nJpx7e1oR3FSBAauiwXtMQu4ppcnuNZzTaQ4p21P8A6r2Es8uJJM339oc4oVW+qX7SqnQ==}
     engines: {node: '>= 8.0.0'}
@@ -8610,13 +8676,13 @@ packages:
     dependencies:
       '@lit/reactive-element': 1.6.1
       lit-html: 2.6.1
-    dev: false
+    dev: true
 
   /lit-html/2.6.1:
     resolution: {integrity: sha512-Z3iw+E+3KKFn9t2YKNjsXNEu/LRLI98mtH/C6lnFg7kvaqPIzPn124Yd4eT/43lyqrejpc5Wb6BHq3fdv4S8Rw==}
     dependencies:
       '@types/trusted-types': 2.0.2
-    dev: false
+    dev: true
 
   /lit/2.6.1:
     resolution: {integrity: sha512-DT87LD64f8acR7uVp7kZfhLRrHkfC/N4BVzAtnw9Yg8087mbBJ//qedwdwX0kzDbxgPccWRW6mFwGbRQIxy0pw==}
@@ -8624,7 +8690,7 @@ packages:
       '@lit/reactive-element': 1.6.1
       lit-element: 3.2.2
       lit-html: 2.6.1
-    dev: false
+    dev: true
 
   /load-json-file/1.1.0:
     resolution: {integrity: sha512-cy7ZdNRXdablkXYNI049pthVeXFurRyb9+hA/dZzerZ0pGTx42z+y+ssxBaVV2l70t1muq5IdKhn4UtcoGUY9A==}
@@ -10106,10 +10172,6 @@ packages:
       split2: 4.1.0
     dev: false
 
-  /phosphor-icons/1.4.2:
-    resolution: {integrity: sha512-vDyuRWLSEb87dxpoOGpP1GCjr/TFzA0Ljt0TtJcwXO7/iPdSZW0e/2m1jsANH1ML5ZyZXcjeWx6pzT0A0tgYDA==}
-    dev: false
-
   /photoswipe/5.3.4:
     resolution: {integrity: sha512-SN+RWHqxJvdwzXJsh8KrG+ajjPpdTX5HpKglEd0k9o6o5fW+QHPkW8//Bo11MB+NQwTa/hFw8BDv2EdxiDXjNw==}
     engines: {node: '>= 0.12.0'}
@@ -10744,6 +10806,11 @@ packages:
 
   /qs/6.5.3:
     resolution: {integrity: sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==}
+    engines: {node: '>=0.6'}
+    dev: false
+
+  /qs/6.9.7:
+    resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}
     engines: {node: '>=0.6'}
     dev: false
 
@@ -12964,6 +13031,19 @@ packages:
       replace-ext: 1.0.1
     dev: true
 
+  /vite-plugin-compression/0.5.1_vite@4.1.1:
+    resolution: {integrity: sha512-5QJKBDc+gNYVqL/skgFAP81Yuzo9R+EAf19d+EtsMF/i8kFUpNi3J/H01QD3Oo8zBQn+NzoCIFkpPLynoOzaJg==}
+    peerDependencies:
+      vite: '>=2.0.0'
+    dependencies:
+      chalk: 4.1.2
+      debug: 4.3.4
+      fs-extra: 10.1.0
+      vite: 4.1.1_sass@1.57.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /vite/4.1.1_sass@1.57.1:
     resolution: {integrity: sha512-LM9WWea8vsxhr782r9ntg+bhSFS06FJgCvvB0+8hf8UWtvaiDagKYWXndjfX6kGl74keHJUcpzrQliDXZlF5yg==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -13623,7 +13703,7 @@ packages:
     name: plyr
     version: 3.7.0
     dependencies:
-      core-js: 3.27.1
+      core-js: 3.29.0
       custom-event-polyfill: 1.0.7
       loadjs: 4.2.0
       rangetouch: 2.0.1

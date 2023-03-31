@@ -21,7 +21,7 @@
 		</div>
 		<div class="main">
 			<img :src="$instance.iconUrl || $instance.faviconUrl || '/favicon.ico'" alt="" class="icon"/>
-			<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
+			<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline ph-bold ph-lg"></i></button>
 			<div class="fg">
 				<h1>
 					<img class="logo" v-if="meta.logoImageUrl" :src="meta.logoImageUrl">
@@ -111,13 +111,13 @@ function signup() {
 function showMenu(ev) {
 	os.popupMenu([{
 		text: i18n.ts.instanceInfo,
-		icon: 'ph-info-bold ph-lg',
+		icon: 'ph-info ph-bold ph-lg',
 		action: () => {
 			os.pageWindow('/about');
 		},
 	}, {
 		text: i18n.ts.aboutMisskey,
-		icon: 'ph-info-bold ph-lg',
+		icon: 'ph-info ph-bold ph-lg',
 		action: () => {
 			os.pageWindow('/about-calckey');
 		},

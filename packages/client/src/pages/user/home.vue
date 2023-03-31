@@ -3,8 +3,8 @@
 	<div ref="rootEl" v-size="{ max: [500] }" class="ftskorzw" :class="{ wide: !narrow }">
 		<div class="main">
 			<!-- TODO -->
-			<!-- <div class="punished" v-if="user.isSuspended"><i class="ph-warning-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSuspended }}</div> -->
-			<!-- <div class="punished" v-if="user.isSilenced"><i class="ph-warning-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSilenced }}</div> -->
+			<!-- <div class="punished" v-if="user.isSuspended"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSuspended }}</div> -->
+			<!-- <div class="punished" v-if="user.isSilenced"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSilenced }}</div> -->
 
 			<div class="profile">
 				<MkMoved v-if="user.movedToUri" :host="user.movedToUri.host" :acct="user.movedToUri.username"/>
@@ -21,10 +21,10 @@
 							</div>
 							<div class="bottom">
 								<span class="username"><MkAcct :user="user" :detail="true"/></span>
-								<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple-fill ph-lg"></i></span>
-								<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple-bold"></i></span>
-								<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock-bold ph-lg"></i></span>
-								<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot-bold ph-lg"></i></span>
+								<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple ph-fill ph-lg"></i></span>
+								<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple ph-bold"></i></span>
+								<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock ph-bold ph-lg"></i></span>
+								<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot ph-bold ph-lg"></i></span>
 							</div>
 						</div>
 					</div>
@@ -36,16 +36,16 @@
 						</div>
 						<div class="bottom">
 							<span class="username"><MkAcct :user="user" :detail="true"/></span>
-							<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple-fill ph-lg"></i></span>
-							<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple-bold"></i></span>
-							<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock-bold ph-lg"></i></span>
-							<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot-bold ph-lg"></i></span>
+							<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple ph-fill ph-lg"></i></span>
+							<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple ph-bold"></i></span>
+							<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock ph-bold ph-lg"></i></span>
+							<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot ph-bold ph-lg"></i></span>
 						</div>
 					</div>
 					<div class="follow-container">
 						<div class="actions">
 							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" @refresh="emit('refresh')" :inline="true" :transparent="false" :full="!narrow" class="koudoku"/>
-							<button class="menu _button" @click="menu"><i class="ph-dots-three-outline-bold ph-lg"></i></button>
+							<button class="menu _button" @click="menu"><i class="ph-dots-three-outline ph-bold ph-lg"></i></button>
 							<!-- <MkFollowButton v-else-if="$i == null" :user="user" :remote="true" :inline="true" :transparent="false" :full="true" class="koudoku"/> -->
 						</div>
 					</div>
@@ -55,15 +55,15 @@
 					</div>
 					<div class="fields system">
 						<dl v-if="user.location" class="field">
-							<dt class="name"><i class="ph-map-pin-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.location }}</dt>
-							<dd class="value">{{ user.location }}</dd>
+							<dt class="name"><i class="ph-map-pin ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.location }}</dt>
+							<dd class="value">{{ user.location }}{{ timeForThem }}</dd>
 						</dl>
 						<dl v-if="user.birthday" class="field">
-							<dt class="name"><i class="ph-cake-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.birthday }}</dt>
+							<dt class="name"><i class="ph-cake ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.birthday }}</dt>
 							<dd class="value">{{ user.birthday.replace('-', '/').replace('-', '/') }} ({{ i18n.t('yearsOld', { age }) }})</dd>
 						</dl>
 						<dl class="field">
-							<dt class="name"><i class="ph-calendar-blank-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.registeredDate }}</dt>
+							<dt class="name"><i class="ph-calendar-blank ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.registeredDate }}</dt>
 							<dd class="value">{{ new Date(user.createdAt).toLocaleString() }} (<MkTime :time="user.createdAt"/>)</dd>
 						</dl>
 					</div>
@@ -117,27 +117,24 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, computed, inject, onMounted, onUnmounted, watch } from 'vue';
+import { defineAsyncComponent, onMounted, onUnmounted } from 'vue';
 import calcAge from 's-age';
+import cityTimezones from 'city-timezones';
 import XUserTimeline from './index.timeline.vue';
 import type * as misskey from 'calckey-js';
 import XNote from '@/components/MkNote.vue';
 import MkFollowButton from '@/components/MkFollowButton.vue';
-import MkContainer from '@/components/MkContainer.vue';
-import MkFolder from '@/components/MkFolder.vue';
 import MkRemoteCaution from '@/components/MkRemoteCaution.vue';
-import MkTab from '@/components/MkTab.vue';
 import MkInfo from '@/components/MkInfo.vue';
 import MkMoved from '@/components/MkMoved.vue';
 import { getScrollPosition } from '@/scripts/scroll';
 import { getUserMenu } from '@/scripts/get-user-menu';
 import number from '@/filters/number';
-import { userPage, acct as getAcct } from '@/filters/user';
+import { userPage } from '@/filters/user';
 import * as os from '@/os';
 import { useRouter } from '@/router';
 import { i18n } from '@/i18n';
 import { $i } from '@/account';
-import { host } from '@/config';
 
 const XPhotos = defineAsyncComponent(() => import('./index.photos.vue'));
 const XActivity = defineAsyncComponent(() => import('./index.activity.vue'));
@@ -165,6 +162,14 @@ const style = $computed(() => {
 const age = $computed(() => {
 	return calcAge(props.user.birthday);
 });
+
+const timeForThem = $computed(() => {
+	const tzInfo = cityTimezones.lookupViaCity(props.user.location!.replace(/\s.*/,''));
+	if (tzInfo.length == 0) return "";
+	const tz = tzInfo[0].timezone;
+	const theirTime = new Date().toLocaleString("en-US", { timeZone: tz, hour12: false });
+	return ` (${theirTime.split(",")[1].trim().split(":")[0]}:${theirTime.split(" ")[1].slice(-5,-3)})`;
+})
 
 function menu(ev) {
 	os.popupMenu(getUserMenu(props.user, router), ev.currentTarget ?? ev.target);

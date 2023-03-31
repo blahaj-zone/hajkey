@@ -5,8 +5,8 @@
 		<span class="text"><slot name="label"></slot></span>
 		<span class="right">
 			<span class="text"><slot name="suffix"></slot></span>
-			<i v-if="opened" class="ph-caret-up-bold ph-lg icon"></i>
-			<i v-else class="ph-caret-down-bold ph-lg icon"></i>
+			<i v-if="opened" class="ph-caret-up ph-bold ph-lg icon"></i>
+			<i v-else class="ph-caret-down ph-bold ph-lg icon"></i>
 		</span>
 	</div>
 	<KeepAlive>

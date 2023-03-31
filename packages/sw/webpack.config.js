@@ -7,6 +7,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
     mode: isProduction ? "production" : "development",
+		stats: "errors-only",
     entry: "./src/sw.ts",
     output: {
         path: path.resolve(__dirname, "../../built/_sw_dist_"),

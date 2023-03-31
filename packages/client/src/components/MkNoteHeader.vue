@@ -2,7 +2,7 @@
 <header class="kkwtjztg">
 	<div class="user-info">
 		<div>
-			<MkA v-user-preview="note.user.id" class="name" :to="userPage(note.user)">
+			<MkA v-user-preview="note.user.id" class="name" :to="userPage(note.user)" @click.stop>
 				<MkUserName :user="note.user" class="mkusername">
 					<span v-if="note.user.isBot" class="is-bot">bot</span>
 				</MkUserName>
@@ -47,6 +47,8 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 
 <style lang="scss" scoped>
 .kkwtjztg {
+	position: relative;
+	z-index: 2;
 	display: flex;
 	align-items: center;
 	white-space: nowrap;

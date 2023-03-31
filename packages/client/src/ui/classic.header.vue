@@ -3,34 +3,34 @@
 	<div class="body">
 		<div class="left">
 			<MkA v-click-anime v-tooltip="i18n.ts.timeline" class="item index" active-class="active" to="/" exact>
-				<i class="ph-house-bold ph-lg ph-fw ph-lg"></i>
+				<i class="ph-house ph-bold ph-lg ph-fw ph-lg"></i>
 			</MkA>
 			<template v-for="item in menu">
 				<div v-if="item === '-'" class="divider"></div>
 				<component :is="navbarItemDef[item].to ? 'MkA' : 'button'" v-else-if="navbarItemDef[item] && (navbarItemDef[item].show !== false)" v-click-anime v-tooltip="$ts[navbarItemDef[item].title]" class="item _button" :class="item" active-class="active" :to="navbarItemDef[item].to" v-on="navbarItemDef[item].action ? { click: navbarItemDef[item].action } : {}">
 					<i class="ph-fw ph-lg" :class="navbarItemDef[item].icon"></i>
-					<span v-if="navbarItemDef[item].indicated" class="indicator"><i class="ph-circle-fill"></i></span>
+					<span v-if="navbarItemDef[item].indicated" class="indicator"><i class="ph-circle ph-fill"></i></span>
 				</component>
 			</template>
 			<div class="divider"></div>
 			<MkA v-if="$i.isAdmin || $i.isModerator" v-click-anime v-tooltip="i18n.ts.controlPanel" class="item" active-class="active" to="/admin" :behavior="settingsWindowed ? 'modalWindow' : null">
-				<i class="ph-door-bold ph-lg ph-fw ph-lg"></i>
+				<i class="ph-door ph-bold ph-lg ph-fw ph-lg"></i>
 			</MkA>
 			<button v-click-anime class="item _button" @click="more">
-				<i class="ph-dots-three-outline-bold ph-lg ph-fw ph-lg"></i>
-				<span v-if="otherNavItemIndicated" class="indicator"><i class="ph-circle-fill"></i></span>
+				<i class="ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"></i>
+				<span v-if="otherNavItemIndicated" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</button>
 		</div>
 		<div class="right">
 			<MkA v-click-anime v-tooltip="i18n.ts.settings" class="item" active-class="active" to="/settings" :behavior="settingsWindowed ? 'modalWindow' : null">
-				<i class="ph-gear-six-bold ph-lg ph-fw ph-lg"></i>
+				<i class="ph-gear-six ph-bold ph-lg ph-fw ph-lg"></i>
 			</MkA>
 			<button v-click-anime class="item _button account" @click="openAccountMenu">
 				<MkAvatar :user="$i" class="avatar"/><MkAcct class="acct" :user="$i"/>
 			</button>
 			<div class="post" @click="post">
 				<MkButton class="button" gradate full rounded>
-					<i class="ph-pencil-bold ph-lg ph-fw ph-lg"></i>
+					<i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i>
 				</MkButton>
 			</div>
 		</div>

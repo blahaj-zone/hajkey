@@ -1,7 +1,7 @@
 <template>
 <MkContainer :style="`height: ${widgetProps.height}px;`" :show-header="widgetProps.showHeader" :scrollable="true" class="mkw-notifications">
-	<template #header><i class="ph-bell-bold ph-lg"></i>{{ i18n.ts.notifications }}</template>
-	<template #func><button class="_button" @click="os.apiWithDialog('notifications/mark-all-as-read');"><i class="ph-check-bold ph-lg"></i></button><button class="_button" @click="configureNotification()"><i class="ph-gear-six-bold ph-lg"></i></button></template>
+	<template #header><i class="ph-bell ph-bold ph-lg"></i>{{ i18n.ts.notifications }}</template>
+	<template #func><button class="_button" @click="os.apiWithDialog('notifications/mark-all-as-read');"><i class="ph-check ph-bold ph-lg"></i></button><button class="_button" @click="configureNotification()"><i class="ph-gear-six ph-bold ph-lg"></i></button></template>
 	<div>
 		<XNotifications :include-types="widgetProps.includingTypes"/>
 	</div>

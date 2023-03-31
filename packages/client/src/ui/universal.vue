@@ -16,37 +16,37 @@
 		<XWidgets @mounted="attachSticky"/>
 	</div>
 
-	<button v-if="!isDesktop && !isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ph-stack-bold ph-lg"></i></button>
+	<button v-if="!isDesktop && !isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ph-stack ph-bold ph-lg"></i></button>
 
 	<div v-if="isMobile" class="buttons">
 		<button class="button nav _button" @click="drawerMenuShowing = true">
 			<div class="button-wrapper">
-				<i class="ph-list-bold ph-lg"></i><span v-if="menuIndicated" class="indicator"><i class="ph-circle-fill"></i></span>
+				<i class="ph-list ph-bold ph-lg"></i><span v-if="menuIndicated" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</div>
 		</button>
 		<button class="button home _button" @click="mainRouter.currentRoute.value.name === 'index' ? top() : mainRouter.push('/'); updateButtonState();">
 			<div class="button-wrapper" :class="buttonAnimIndex === 0 ? 'on' : ''">
-				<i class="ph-house-bold ph-lg"></i>
+				<i class="ph-house ph-bold ph-lg"></i>
 			</div>
 		</button>
 		<button class="button notifications _button" @click="mainRouter.push('/my/notifications'); updateButtonState();">
 			<div class="button-wrapper" :class="buttonAnimIndex === 1 ? 'on' : ''">
-				<i class="ph-bell-bold ph-lg"></i><span v-if="$i?.hasUnreadNotification" class="indicator"><i class="ph-circle-fill"></i></span>
+				<i class="ph-bell ph-bold ph-lg"></i><span v-if="$i?.hasUnreadNotification" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</div>
 		</button>
 		<button class="button messaging _button" @click="mainRouter.push('/my/messaging'); updateButtonState();">
 			<div class="button-wrapper" :class="buttonAnimIndex === 2 ? 'on' : ''">
-				<i class="ph-chats-teardrop-bold ph-lg"></i><span v-if="$i?.hasUnreadMessagingMessage" class="indicator"><i class="ph-circle-fill"></i></span>
+				<i class="ph-chats-teardrop ph-bold ph-lg"></i><span v-if="$i?.hasUnreadMessagingMessage" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</div>
 		</button>
 		<button class="button widget _button" @click="widgetsShowing = true">
 			<div class="button-wrapper">
-				<i class="ph-stack-bold ph-lg"></i>
+				<i class="ph-stack ph-bold ph-lg"></i>
 			</div>
 		</button>
 	</div>
 
-	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'index'" ref="postButton" class="postButton button post _button" @click="os.post()"><i class="ph-pencil-bold ph-lg"></i></button>
+	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'index'" ref="postButton" class="postButton button post _button" @click="os.post()"><i class="ph-pencil ph-bold ph-lg"></i></button>
 
 	<transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
 		<div
@@ -196,7 +196,7 @@ const onContextmenu = (ev: MouseEvent) => {
 		type: 'label',
 		text: path,
 	}, {
-		icon: 'ph-browser-bold ph-lg',
+		icon: 'ph-browser ph-bold ph-lg',
 		text: i18n.ts.openInWindow,
 		action: () => {
 			os.pageWindow(path);
@@ -376,10 +376,8 @@ const wallpaper = localStorage.getItem('wallpaper') != null;
 			}
 
 			> .button-wrapper {
-
-				> i {
-					transform: translateY(0.05em);
-				}
+				display: inline-flex;
+				justify-content: center;
 
 				&.on {
 					background-color: var(--accentedBg);

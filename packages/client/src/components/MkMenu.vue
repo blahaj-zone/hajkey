@@ -19,16 +19,16 @@
 				<i v-if="item.icon" class="ph-fw ph-lg" :class="item.icon"></i>
 				<MkAvatar v-if="item.avatar" :user="item.avatar" class="avatar"/>
 				<span>{{ item.text }}</span>
-				<span v-if="item.indicate" class="indicator"><i class="ph-circle-fill"></i></span>
+				<span v-if="item.indicate" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</MkA>
 			<a v-else-if="item.type === 'a'" :href="item.href" :target="item.target" :download="item.download" :tabindex="i" class="_button item" @click="close(true)" @mouseenter.passive="onItemMouseEnter(item)" @mouseleave.passive="onItemMouseLeave(item)">
 				<i v-if="item.icon" class="ph-fw ph-lg" :class="item.icon"></i>
 				<span>{{ item.text }}</span>
-				<span v-if="item.indicate" class="indicator"><i class="ph-circle-fill"></i></span>
+				<span v-if="item.indicate" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</a>
 			<button v-else-if="item.type === 'user' && !items.hidden" :tabindex="i" class="_button item" :class="{ active: item.active }" :disabled="item.active" @click="clicked(item.action, $event)" @mouseenter.passive="onItemMouseEnter(item)" @mouseleave.passive="onItemMouseLeave(item)">
 				<MkAvatar :user="item.user" class="avatar"/><MkUserName :user="item.user"/>
-				<span v-if="item.indicate" class="indicator"><i class="ph-circle-fill"></i></span>
+				<span v-if="item.indicate" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</button>
 			<span v-else-if="item.type === 'switch'" :tabindex="i" class="item" @mouseenter.passive="onItemMouseEnter(item)" @mouseleave.passive="onItemMouseLeave(item)">
 				<FormSwitch v-model="item.ref" :disabled="item.disabled" class="form-switch">{{ item.text }}</FormSwitch>
@@ -36,13 +36,13 @@
 			<button v-else-if="item.type === 'parent'" :tabindex="i" class="_button item parent" :class="{ childShowing: childShowingItem === item }" @mouseenter="showChildren(item, $event)">
 				<i v-if="item.icon" class="ph-fw ph-lg" :class="item.icon"></i>
 				<span>{{ item.text }}</span>
-				<span class="caret"><i class="ph-caret-right-bold ph-lg ph-fw ph-lg"></i></span>
+				<span class="caret"><i class="ph-caret-right ph-bold ph-lg ph-fw ph-lg"></i></span>
 			</button>
 			<button v-else-if="!item.hidden" :tabindex="i" class="_button item" :class="{ danger: item.danger, active: item.active }" :disabled="item.active" @click="clicked(item.action, $event)" @mouseenter.passive="onItemMouseEnter(item)" @mouseleave.passive="onItemMouseLeave(item)">
 				<i v-if="item.icon" class="ph-fw ph-lg" :class="item.icon"></i>
 				<MkAvatar v-if="item.avatar" :user="item.avatar" class="avatar"/>
 				<span>{{ item.text }}</span>
-				<span v-if="item.indicate" class="indicator"><i class="ph-circle-fill"></i></span>
+				<span v-if="item.indicate" class="indicator"><i class="ph-circle ph-fill"></i></span>
 			</button>
 		</template>
 		<span v-if="items2.length === 0" class="none item">

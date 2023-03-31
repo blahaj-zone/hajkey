@@ -29,6 +29,7 @@ import * as ep___admin_emoji_list from "./endpoints/admin/emoji/list.js";
 import * as ep___admin_emoji_removeAliasesBulk from "./endpoints/admin/emoji/remove-aliases-bulk.js";
 import * as ep___admin_emoji_setAliasesBulk from "./endpoints/admin/emoji/set-aliases-bulk.js";
 import * as ep___admin_emoji_setCategoryBulk from "./endpoints/admin/emoji/set-category-bulk.js";
+import * as ep___admin_emoji_setLicenseBulk from "./endpoints/admin/emoji/set-license-bulk.js";
 import * as ep___admin_emoji_update from "./endpoints/admin/emoji/update.js";
 import * as ep___admin_federation_deleteAllFiles from "./endpoints/admin/federation/delete-all-files.js";
 import * as ep___admin_federation_refreshRemoteInstanceMetadata from "./endpoints/admin/federation/refresh-remote-instance-metadata.js";
@@ -132,6 +133,7 @@ import * as ep___drive_folders_show from "./endpoints/drive/folders/show.js";
 import * as ep___drive_folders_update from "./endpoints/drive/folders/update.js";
 import * as ep___drive_stream from "./endpoints/drive/stream.js";
 import * as ep___emailAddress_available from "./endpoints/email-address/available.js";
+import * as ep___emoji from "./endpoints/emoji.js";
 import * as ep___endpoint from "./endpoints/endpoint.js";
 import * as ep___endpoints from "./endpoints/endpoints.js";
 import * as ep___exportCustomEmojis from "./endpoints/export-custom-emojis.js";
@@ -199,7 +201,7 @@ import * as ep___i_readAnnouncement from "./endpoints/i/read-announcement.js";
 import * as ep___i_regenerateToken from "./endpoints/i/regenerate-token.js";
 import * as ep___i_registry_getAll from "./endpoints/i/registry/get-all.js";
 import * as ep___i_registry_getDetail from "./endpoints/i/registry/get-detail.js";
-import * as ep___i_registry_getUnsecure from './endpoints/i/registry/get-unsecure.js';
+import * as ep___i_registry_getUnsecure from "./endpoints/i/registry/get-unsecure.js";
 import * as ep___i_registry_get from "./endpoints/i/registry/get.js";
 import * as ep___i_registry_keysWithType from "./endpoints/i/registry/keys-with-type.js";
 import * as ep___i_registry_keys from "./endpoints/i/registry/keys.js";
@@ -223,6 +225,7 @@ import * as ep___messaging_messages_create from "./endpoints/messaging/messages/
 import * as ep___messaging_messages_delete from "./endpoints/messaging/messages/delete.js";
 import * as ep___messaging_messages_read from "./endpoints/messaging/messages/read.js";
 import * as ep___meta from "./endpoints/meta.js";
+import * as ep___sounds from "./endpoints/get-sounds.js";
 import * as ep___miauth_genToken from "./endpoints/miauth/gen-token.js";
 import * as ep___mute_create from "./endpoints/mute/create.js";
 import * as ep___mute_delete from "./endpoints/mute/delete.js";
@@ -366,6 +369,7 @@ const eps = [
 	["admin/emoji/remove-aliases-bulk", ep___admin_emoji_removeAliasesBulk],
 	["admin/emoji/set-aliases-bulk", ep___admin_emoji_setAliasesBulk],
 	["admin/emoji/set-category-bulk", ep___admin_emoji_setCategoryBulk],
+	["admin/emoji/set-license-bulk", ep___admin_emoji_setLicenseBulk],
 	["admin/emoji/update", ep___admin_emoji_update],
 	["admin/federation/delete-all-files", ep___admin_federation_deleteAllFiles],
 	[
@@ -475,6 +479,7 @@ const eps = [
 	["drive/folders/update", ep___drive_folders_update],
 	["drive/stream", ep___drive_stream],
 	["email-address/available", ep___emailAddress_available],
+	["emoji", ep___emoji],
 	["endpoint", ep___endpoint],
 	["endpoints", ep___endpoints],
 	["export-custom-emojis", ep___exportCustomEmojis],
@@ -676,6 +681,7 @@ const eps = [
 	["wiki/list", ep___wiki_list],
 	["wiki/show", ep___wiki_show],
 	["wiki/save", ep___wiki_save],
+	["get-sounds", ep___sounds],
 ];
 
 export interface IEndpointMeta {
@@ -775,10 +781,10 @@ export interface IEndpointMeta {
 }
 
 export interface IEndpoint {
-	name: string,
-	exec: any, // TODO: may be obosolete @ThatOneCalculator
-	meta: IEndpointMeta,
-	params: Schema,
+	name: string;
+	exec: any; // TODO: may be obosolete @ThatOneCalculator
+	meta: IEndpointMeta;
+	params: Schema;
 }
 
 const endpoints: IEndpoint[] = (eps as [string, any]).map(([name, ep]) => {

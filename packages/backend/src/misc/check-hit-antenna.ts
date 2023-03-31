@@ -91,10 +91,6 @@ export async function checkHitAntenna(
 			});
 		if (!instances.includes(noteUser.host?.toLowerCase() ?? "")) return false;
 	}
-	else if (antenna.src === 'hosts') {
-		const hosts = antenna.users
-		if (!hosts.includes(noteUser.host?.toLowerCase() ?? '')) return false;
-	}
 
 	const text = antenna.caseSensitive ? note.text : note.text?.toLowerCase();
 

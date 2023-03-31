@@ -1,9 +1,9 @@
 <template>
 <component :is="self ? 'MkA' : 'a'" ref="el" class="xlcxczvw _link" :[attr]="self ? url.substr(local.length) : url" :rel="rel" :target="target"
-	:title="url"
+	:title="url" @click.stop
 >
 	<slot></slot>
-	<i v-if="target === '_blank'" class="ph-arrow-square-out-bold ph-lg icon"></i>
+	<i v-if="target === '_blank'" class="ph-arrow-square-out ph-bold ph-lg icon"></i>
 </component>
 </template>
 

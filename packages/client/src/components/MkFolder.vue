@@ -4,8 +4,8 @@
 		<div class="title"><slot name="header"></slot></div>
 		<div class="divider"></div>
 		<button class="_button">
-			<template v-if="showBody"><i class="ph-caret-up-bold ph-lg"></i></template>
-			<template v-else><i class="ph-caret-down-bold ph-lg"></i></template>
+			<template v-if="showBody"><i class="ph-caret-up ph-bold ph-lg"></i></template>
+			<template v-else><i class="ph-caret-down ph-bold ph-lg"></i></template>
 		</button>
 	</header>
 	<transition

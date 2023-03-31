@@ -1,8 +1,11 @@
 <template>
 	<div v-if="show" ref="el" class="fdidabkb" :class="{ slim: narrow, thin: thin_ }" :style="{ background: bg }" @click="onClick">
-		<template v-if="metadata">
-			<div v-if="!hideTitle" class="titleContainer" @click="showTabsPopup">
-				<MkAvatar v-if="metadata.avatar" class="avatar" :user="metadata.avatar" :disable-preview="true" :show-indicator="true"/>
+		<div v-if="narrow" class="buttons left" @click="openAccountMenu">
+		<MkAvatar v-if="props.displayMyAvatar && $i" class="avatar" :user="$i" :disable-preview="true"/>
+	</div>
+	<template v-if="metadata">
+		<div v-if="!hideTitle" class="titleContainer" @click="showTabsPopup">
+			<MkAvatar v-if="metadata.avatar" class="avatar" :user="metadata.avatar" :disable-preview="true" :show-indicator="true"/>
 				<i v-else-if="metadata.icon && !narrow" class="icon" :class="metadata.icon"></i>
 
 				<div class="title">
@@ -16,7 +19,7 @@
 			<div ref="tabsEl" v-if="hasTabs" class="tabs">
 				<button v-for="tab in tabs" :ref="(el) => tabRefs[tab.key] = el" v-tooltip.noDelay="tab.title" class="tab _button" :class="{ active: tab.key != null && tab.key === props.tab }" @mousedown="(ev) => onTabMousedown(tab, ev)" @click="(ev) => onTabClick(tab, ev)">
 					<i v-if="tab.icon" class="icon" :class="tab.icon"></i>
-					<span v-if="!tab.iconOnly && (deviceKind !== 'desktop' || isTouchUsing || (!tab.iconOnlyDesktop && !narrow))" class="title">{{ tab.title }}</span>
+					<span class="title">{{ tab.title }}</span>
 				</button>
 				<div ref="tabHighlightEl" class="highlight"></div>
 			</div>
@@ -43,7 +46,6 @@ type Tab = {
 	title: string;
 	icon?: string;
 	iconOnly?: boolean;
-	iconOnlyDesktop?: boolean;
 	onClick?: (ev: MouseEvent) => void;
 };
 
@@ -218,9 +220,14 @@ onUnmounted(() => {
 		}
 		> .tabs {
 			padding-inline: 12px;
-			mask: linear-gradient(to right, black 80%, transparent);
-			-webkit-mask: linear-gradient(to right, black 80%, transparent);
+			mask: linear-gradient(to right, transparent, black 10px 80%, transparent);
+			-webkit-mask: linear-gradient(to right, transparent, black 10px 80%, transparent);
+			margin-left: -10px;
+			padding-left: 22px;
 			scrollbar-width: none;
+			&::before {
+				content: unset;
+			}
 			&::-webkit-scrollbar {
 				display: none;
 			}
@@ -351,6 +358,16 @@ onUnmounted(() => {
 		white-space: nowrap;
 		contain: strict;
 
+		&::before {
+			content: "";
+			display: inline-block;
+			height: 40%;
+			border-left: 1px solid var(--divider);
+			margin-right: 1em;
+			margin-left: 10px;
+			vertical-align: -1px;
+		}
+
 		> .tab {
 			display: inline-flex;
 			align-items: center;
@@ -359,8 +376,8 @@ onUnmounted(() => {
 			height: 100%;
 			font-weight: normal;
 			opacity: 0.7;
-			width: 40px;
-			--width: 40px;
+			width: 38px;
+			--width: 38px;
 			overflow: hidden;
 			transition: color .2s, opacity .2s, width .2s;
 

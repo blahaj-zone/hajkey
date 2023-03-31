@@ -67,7 +67,7 @@ defineExpose<WidgetComponentExpose>({
 
 	> .text {
 		::v-deep(b) {
-			color: #41b781;
+			color: var(--badge);
 		}
 
 		::v-deep(span) {

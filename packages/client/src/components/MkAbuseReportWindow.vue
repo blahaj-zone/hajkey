@@ -1,7 +1,7 @@
 <template>
 <XWindow ref="uiWindow" :initial-width="400" :initial-height="500" :can-resize="true" @closed="emit('closed')">
 	<template #header>
-		<i class="ph-warning-circle-bold ph-lg" style="margin-right: 0.5em;"></i>
+		<i class="ph-warning-circle ph-bold ph-lg" style="margin-right: 0.5em;"></i>
 		<I18n :src="i18n.ts.reportAbuseOf" tag="span">
 			<template #name>
 				<b><MkAcct :user="user"/></b>

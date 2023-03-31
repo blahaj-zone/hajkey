@@ -9,7 +9,7 @@
 	</FormInput>
 
 	<FormInput v-model="secret" class="_formBlock">
-		<template #prefix><i class="ph-lock-bold ph-lg"></i></template>
+		<template #prefix><i class="ph-lock ph-bold ph-lg"></i></template>
 		<template #label>Secret</template>
 	</FormInput>
 
@@ -26,7 +26,7 @@
 	</FormSection>
 
 	<div class="_formBlock" style="display: flex; gap: var(--margin); flex-wrap: wrap;">
-		<FormButton primary inline @click="create"><i class="ph-check-bold ph-lg"></i> {{ i18n.ts.create }}</FormButton>
+		<FormButton primary inline @click="create"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.create }}</FormButton>
 	</div>
 </div>
 </template>
@@ -77,6 +77,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: 'Create new webhook',
-	icon: 'ph-lightning-bold ph-lg',
+	icon: 'ph-lightning ph-bold ph-lg',
 });
 </script>

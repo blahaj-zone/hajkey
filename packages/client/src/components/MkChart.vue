@@ -666,7 +666,7 @@ const fetchInstanceNotesChart = async (total: boolean): Promise<typeof chartData
 	const raw = await os.apiGet('charts/instance', { host: props.args.host, limit: props.limit, span: props.span });
 	return {
 		series: [{
-			name: 'Notes',
+			name: 'Posts',
 			type: 'area',
 			color: '#31748f',
 			data: format(total

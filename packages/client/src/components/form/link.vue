@@ -5,7 +5,7 @@
 		<span class="text"><slot></slot></span>
 		<span class="right">
 			<span class="text"><slot name="suffix"></slot></span>
-			<i class="ph-arrow-square-out-bold ph-lg icon"></i>
+			<i class="ph-arrow-square-out ph-bold ph-lg icon"></i>
 		</span>
 	</a>
 	<MkA v-else class="main _button" :class="{ active }" :to="to" :behavior="behavior" :callback="callback">
@@ -13,7 +13,7 @@
 		<span class="text"><slot></slot></span>
 		<span class="right">
 			<span class="text"><slot name="suffix"></slot></span>
-			<i class="ph-caret-right-bold ph-lg icon"></i>
+			<i class="ph-caret-right ph-bold ph-lg icon"></i>
 		</span>
 	</MkA>
 </div>

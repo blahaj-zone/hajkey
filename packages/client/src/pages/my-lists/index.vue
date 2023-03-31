@@ -4,8 +4,8 @@
 	<MkSpacer :content-max="700">
 		<div class="qkcjvfiv">
 			<div class="buttonWrapper">
-				<MkButton primary class="add" @click="create"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts.createList }}</MkButton>
-				<MkButton @click="deleteAll"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts.deleteAll }}</MkButton>
+				<MkButton primary class="add" @click="create"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.createList }}</MkButton>
+				<MkButton @click="deleteAll"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.deleteAll }}</MkButton>
 			</div>
 
 			<MkPagination v-slot="{items}" ref="pagingComponent" :pagination="pagination" class="lists _content">
@@ -61,9 +61,9 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.manageLists,
-	icon: 'ph-list-bullets-bold ph-lg',
+	icon: 'ph-list-bullets ph-bold ph-lg',
 	action: {
-		icon: 'ph-plus-bold ph-lg',
+		icon: 'ph-plus ph-bold ph-lg',
 		handler: create,
 	},
 });

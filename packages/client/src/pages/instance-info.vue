@@ -13,7 +13,7 @@
 			<swiper-slide>
 				<div class="_formRoot">
 					<div class="fnfelxur">
-						<img :src="instance.iconUrl || instance.faviconUrl" alt="" class="icon"/>
+						<img :src="faviconUrl" alt="" class="icon"/>
 						<span class="name">{{ instance.name || `(${i18n.ts.unknown})` }}</span>
 					</div>
 					<MkKeyValue :copy="host" oneline style="margin: 1em 0;">
@@ -37,7 +37,7 @@
 						<template #label>Moderation</template>
 						<FormSwitch v-model="suspended" class="_formBlock" @update:modelValue="toggleSuspend">{{ i18n.ts.stopActivityDelivery }}</FormSwitch>
 						<FormSwitch v-model="isBlocked" class="_formBlock" @update:modelValue="toggleBlock">{{ i18n.ts.blockThisInstance }}</FormSwitch>
-						<MkButton @click="refreshMetadata"><i class="ph-arrows-clockwise-bold ph-lg"></i> Refresh metadata</MkButton>
+						<MkButton @click="refreshMetadata"><i class="ph-arrows-clockwise ph-bold ph-lg"></i> Refresh metadata</MkButton>
 					</FormSection>
 
 					<FormSection>
@@ -156,6 +156,7 @@ import MkUserCardMini from '@/components/MkUserCardMini.vue';
 import MkPagination from '@/components/MkPagination.vue';
 import 'swiper/scss';
 import 'swiper/scss/virtual';
+import { getProxiedImageUrlNullable } from '@/scripts/media-proxy';
 
 const props = defineProps<{
 	host: string;
@@ -171,6 +172,7 @@ let meta = $ref<misskey.entities.DetailedInstanceMetadata | null>(null);
 let instance = $ref<misskey.entities.Instance | null>(null);
 let suspended = $ref(false);
 let isBlocked = $ref(false);
+let faviconUrl = $ref(null);
 
 const usersPagination = {
 	endpoint: iAmModerator ? 'admin/show-users' : 'users' as const,
@@ -189,6 +191,7 @@ async function fetch() {
 	});
 	suspended = instance.isSuspended;
 	isBlocked = instance.isBlocked;
+	faviconUrl = getProxiedImageUrlNullable(instance.faviconUrl, 'preview') ?? getProxiedImageUrlNullable(instance.iconUrl, 'preview');
 }
 
 async function toggleBlock(ev) {
@@ -218,7 +221,7 @@ fetch();
 
 const headerActions = $computed(() => [{
 	text: `https://${props.host}`,
-	icon: 'ph-arrow-square-out-bold ph-lg',
+	icon: 'ph-arrow-square-out ph-bold ph-lg',
 	handler: () => {
 		window.open(`https://${props.host}`, '_blank');
 	},
@@ -227,7 +230,7 @@ const headerActions = $computed(() => [{
 let theTabs = [{
 	key: 'overview',
 	title: i18n.ts.overview,
-	icon: 'ph-info-bold ph-lg',
+	icon: 'ph-info ph-bold ph-lg',
 }];
 
 if (iAmModerator) {
@@ -235,15 +238,15 @@ if (iAmModerator) {
 		{
 			key: 'chart',
 			title: i18n.ts.charts,
-			icon: 'ph-chart-bar-bold ph-lg',
+			icon: 'ph-chart-bar ph-bold ph-lg',
 		}, {
 			key: 'users',
 			title: i18n.ts.users,
-			icon: 'ph-users-bold ph-lg',
+			icon: 'ph-users ph-bold ph-lg',
 		}, {
 			key: 'raw',
 			title: 'Raw',
-			icon: 'ph-code-bold ph-lg',
+			icon: 'ph-code ph-bold ph-lg',
 		},
 	);
 }
@@ -252,7 +255,7 @@ let headerTabs = $computed(() => theTabs);
 
 definePageMetadata({
 	title: props.host,
-	icon: 'ph-hard-drives-bold ph-lg',
+	icon: 'ph-hard-drives ph-bold ph-lg',
 });
 
 let swiperRef = null;

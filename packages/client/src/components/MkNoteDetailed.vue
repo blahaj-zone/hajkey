@@ -7,13 +7,13 @@
 	v-size="{ max: [500, 450, 350, 300] }"
 	class="lxwezrsl _block"
 	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote, colorize, colorgrad, colorbg, compact }"
+	:class="{ renote: isRenote, colorize, colorgrad, colorbg, colorborder, compact }"
 >
-	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note" @click.self="$log('router pushing from detailed replytomore'); router.push(notePage(note))"/>
-	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to" @click.self="$log('router pushing from detailed replyto'); router.push(notePage(appearNote))"/>
+	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note"/>
+	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
 	<div v-if="isRenote" class="renote">
 		<MkAvatar class="avatar" :user="note.user"/>
-		<i class="ph-repeat-bold ph-lg"></i>
+		<i class="ph-repeat ph-bold ph-lg"></i>
 		<I18n :src="i18n.ts.renotedBy" tag="span">
 			<template #user>
 				<MkA v-user-preview="note.userId" class="name" :to="userPage(note.user)">
@@ -23,13 +23,13 @@
 		</I18n>
 		<div class="info">
 			<button ref="renoteTime" class="_button time" @click="showRenoteMenu()">
-				<i v-if="isMyRenote" class="ph-dots-three-outline-bold ph-lg dropdownIcon"></i>
+				<i v-if="isMyRenote" class="ph-dots-three-outline ph-bold ph-lg dropdownIcon"></i>
 				<MkTime :time="note.createdAt"/>
 			</button>
 			<MkVisibility :note="note"/>
 		</div>
 	</div>
-	<article class="article" @contextmenu.stop="onContextmenu">
+	<article ref="noteEl" class="article" @contextmenu.stop="onContextmenu" tabindex="-1">
 		<header class="header">
 			<MkAvatar class="avatar" :user="appearNote.user" :show-indicator="true"/>
 			<div class="body">
@@ -48,12 +48,13 @@
 		</header>
 		<div class="main">
 			<div class="body">
-				<p v-if="appearNote.cw != null" class="cw">
+				<div v-if="appearNote.cw != null" class="cw">
 					<Mfm v-if="appearNote.cw != ''" class="text" :text="appearNote.cw" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
+					<br/>
 					<XCwButton v-model="showContent" :note="appearNote"/>
-				</p>
+				</div>
 				<div v-show="appearNote.cw == null || showContent" class="content">
-					<div class="text" @click.self="$log('router pushing from detailed text'); router.push(notePage(appearNote))">
+					<div class="text">
 						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
 						<div v-if="translating || translation" class="translation">
 							<MkLoading v-if="translating" mini/>
@@ -68,9 +69,9 @@
 					</div>
 					<XPoll v-if="appearNote.poll" ref="pollViewer" :note="appearNote" class="poll"/>
 					<MkUrlPreview v-for="url in urls" :key="url" :url="url" :compact="true" :detail="true" class="url-preview"/>
-					<div v-if="appearNote.renote" class="renote"><XNoteSimple :note="appearNote.renote"/></div>
+					<div v-if="appearNote.renote" class="renote"><XNoteSimple :note="appearNote.renote" @click.stop="router.push(notePage(appearNote.renote))"/></div>
 				</div>
-				<MkA v-if="appearNote.channel && !inChannel" class="channel" :to="`/channels/${appearNote.channel.id}`"><i class="ph-television-bold ph-lg"></i> {{ appearNote.channel.name }}</MkA>
+				<MkA v-if="appearNote.channel && !inChannel" class="channel" :to="`/channels/${appearNote.channel.id}`"><i class="ph-television ph-bold ph-lg"></i> {{ appearNote.channel.name }}</MkA>
 			</div>
 			<footer class="footer">
 				<div class="info">
@@ -80,26 +81,26 @@
 				</div>
 				<XReactionsViewer ref="reactionsViewer" :note="appearNote"/>
 				<button v-tooltip.noDelay.bottom="i18n.ts.reply" class="button _button" @click="reply()">
-					<template v-if="appearNote.reply"><i class="ph-arrow-u-up-left-bold ph-lg"></i></template>
-					<template v-else><i class="ph-arrow-bend-up-left-bold ph-lg"></i></template>
+					<template v-if="appearNote.reply"><i class="ph-arrow-u-up-left ph-bold ph-lg"></i></template>
+					<template v-else><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i></template>
 					<p v-if="appearNote.repliesCount > 0" class="count">{{ appearNote.repliesCount }}</p>
 				</button>
 				<XRenoteButton ref="renoteButton" class="button" :note="appearNote" :count="appearNote.renoteCount"/>
 				<XStarButton v-if="appearNote.myReaction == null" ref="starButton" class="button" :note="appearNote"/>
 				<button v-if="appearNote.myReaction == null" ref="reactButton" v-tooltip.noDelay.bottom="i18n.ts.reaction" class="button _button" @click="react()">
-					<i class="ph-smiley-bold ph-lg"></i>
+					<i class="ph-smiley ph-bold ph-lg"></i>
 				</button>
 				<button v-if="appearNote.myReaction != null" ref="reactButton" class="button _button reacted" @click="undoReact(appearNote)">
-					<i class="ph-minus-bold ph-lg"></i>
+					<i class="ph-minus ph-bold ph-lg"></i>
 				</button>
 				<XQuoteButton class="button" :note="appearNote"/>
 				<button ref="menuButton" v-tooltip.noDelay.bottom="i18n.ts.more" class="button _button" @click="menu()">
-					<i class="ph-dots-three-outline-bold ph-lg"></i>
+					<i class="ph-dots-three-outline ph-bold ph-lg"></i>
 				</button>
 			</footer>
 		</div>
 	</article>
-	<MkNoteSub v-for="(note, index) in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" :offset="index" :child="index" @click.self="$log('router pushing from detailed reply'); router.push(notePage(note))"/>
+	<MkNoteSub v-for="(note, index) in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" :offset="index" :child="index"/>
 </div>
 <div v-else class="_panel muted" @click="muted = false">
 	<I18n :src="i18n.ts.userSaysSomething" tag="small">
@@ -113,7 +114,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, inject, onMounted, onUnmounted, onUpdated, reactive, ref } from 'vue';
 import * as mfm from 'mfm-js';
 import type * as misskey from 'calckey-js';
 import MkNoteSub from '@/components/MkNoteSub.vue';
@@ -156,6 +157,7 @@ const inChannel = inject('inChannel', null);
 const colorize = defaultStore.state.replyDividerColorize;
 const colorbg = defaultStore.state.replyDividerColorBg;
 const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
+const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
@@ -179,6 +181,7 @@ const isRenote = (
 );
 
 const el = ref<HTMLElement>();
+const noteEl = $ref();
 const menuButton = ref<HTMLElement>();
 const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
@@ -191,12 +194,13 @@ const isDeleted = ref(false);
 const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
-const urls = appearNote.text ? extractUrlFromMfm(mfm.parse(appearNote.text)) : null;
+const urls = appearNote.text ? extractUrlFromMfm(mfm.parse(appearNote.text)).slice(0, 5) : null;
 const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultStore.state.instanceTicker === 'remote' && appearNote.user.instance);
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
 const repliesDepth = defaultStore.state.repliesDepth;
+let isScrolling;
 
 const keymap = {
 	'r': () => reply(true),
@@ -272,7 +276,7 @@ function showRenoteMenu(viaKeyboard = false): void {
 	if (!isMyRenote) return;
 	os.popupMenu([{
 		text: i18n.ts.unrenote,
-		icon: 'ph-trash-bold ph-lg',
+		icon: 'ph-trash ph-bold ph-lg',
 		danger: true,
 		action: () => {
 			os.api('notes/delete', {
@@ -286,11 +290,11 @@ function showRenoteMenu(viaKeyboard = false): void {
 }
 
 function focus() {
-	el.value.focus();
+	noteEl.focus();
 }
 
 function blur() {
-	el.value.blur();
+	noteEl.blur();
 }
 
 os.api('notes/children', {
@@ -299,31 +303,23 @@ os.api('notes/children', {
 	depth: repliesDepth + 1,
 }).then(res => {
 	replies.value = res;
-	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id);
+	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id).reverse();
 });
 
 if (appearNote.replyId) {
 	os.api('notes/conversation', {
 		noteId: appearNote.replyId,
+		limit: 30,
 	}).then(res => {
 		conversation.value = res.reverse();
+		focus();
 	});
 }
 
 function onNoteReplied(noteData: NoteUpdatedEvent): void {
 	const { type, id, body } = noteData;
-	/* TODO - Update calckey-js streamingTypes for NoteUpdatedEvent to include type `replied`:
-		{
-			id: Note['id'];
-			type: 'replied';
-			body: {
-				id: Note['id'];
-			}
-		}
-	*/
-	// TODO - remove .toString() and recasting to unknown when calckey-js is updated.
-	if (type.toString() === 'replied' && id === appearNote.id) {
-		const { id: createdId } = body as unknown as { id: string };
+	if (type === 'replied' && id === appearNote.id) {
+		const { id: createdId } = body;
 
 		os.api('notes/show', {
 			noteId: createdId,
@@ -337,19 +333,32 @@ function onNoteReplied(noteData: NoteUpdatedEvent): void {
 	
 }
 
+document.addEventListener("wheel", () => {
+	isScrolling = true;
+})
+
 onMounted(() => {
 	stream.on("noteUpdated", onNoteReplied);
+	isScrolling = false;
+	noteEl.scrollIntoView();
 });
+
+onUpdated(() => {
+	if (!isScrolling) {
+		noteEl.scrollIntoView()
+	}
+})
+
 onUnmounted(() => {
 	stream.off("noteUpdated", onNoteReplied);
 });
+
 </script>
 
 <style lang="scss" scoped>
 .lxwezrsl {
 	position: relative;
 	transition: box-shadow 0.1s ease;
-	overflow: hidden;
 	contain: content;
 
 	&:focus-visible {
@@ -443,8 +452,14 @@ onUnmounted(() => {
 
 	> .article {
 		padding: 32px;
+		padding-bottom: 6px;
+		&:last-child {
+			padding-bottom: 24px;
+		}
 		font-size: 1.2em;
-
+		overflow: clip;
+		outline: none;
+		scroll-margin-top: calc(var(--stickyTop) + 20vh);
 		> .header {
 			display: flex;
 			position: relative;
@@ -544,6 +559,10 @@ onUnmounted(() => {
 							padding: 16px;
 							border: solid 1px var(--renote);
 							border-radius: 8px;
+							transition: background .2s;
+							&:hover, &:focus-within {
+								background-color: var(--panelHighlight);
+							}
 						}
 					}
 				}
@@ -591,19 +610,65 @@ onUnmounted(() => {
 	> .reply {
 		border-top: solid 0.5px var(--divider);
 		cursor: pointer;
-
+		padding-top: 24px;
+		padding-bottom: 10px;
 		@media (pointer: coarse) {
 			cursor: default;
 		}
 	}
 
-	> .reply, .reply-to, .reply-to-more {
-		transition: background-color 0.25s ease-in-out;
-		
-		&:hover {
-			background-color: var(--panelHighlight);
+	// Hover
+	.reply :deep(.main), .reply-to, .reply-to-more, :deep(.more) {
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			inset: -12px -24px;
+			bottom: -0px;
+			background: var(--panelHighlight);
+			border-radius: var(--radius);
+			opacity: 0;
+			transition: opacity .2s;
+			z-index: -1;
 		}
+		&.reply-to, &.reply-to-more {
+			&::before {
+				inset: 0px 8px;
 	}
+			&:first-of-type::before {
+				top: 12px;
+			}
+		}
+		// &::after {
+		// 	content: "";
+		// 	position: absolute;
+		// 	inset: -9999px;
+		// 	background: var(--modalBg);
+		// 	opacity: 0;
+		// 	z-index: -2;
+		// 	pointer-events: none;
+		// 	transition: opacity .2s;
+		// }
+		&.more::before {
+			inset: 0 !important;
+		}
+		&:hover, &:focus-within {
+			&::before {
+				opacity: 1;
+	}
+		}
+		// @media (pointer: coarse) {
+		// 	&:has(.button:focus-within) {
+		// 		z-index: 2;
+		// 		--X13: transparent;
+		// 		&::after {
+		// 			opacity: 1;
+		// 			backdrop-filter: var(--modalBgFilter);
+		// 		}
+		// 	}
+		// }
+	}
+	
 
 	&.max-width_500px {
 		font-size: 0.9em;

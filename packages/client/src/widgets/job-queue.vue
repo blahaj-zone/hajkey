@@ -1,7 +1,7 @@
 <template>
 <div class="mkw-jobQueue _monospace" :class="{ _panel: !widgetProps.transparent }">
 	<div class="inbox">
-		<div class="label">Inbox queue<i v-if="current.inbox.waiting > 0" class="ph-warning-bold ph-lg icon"></i></div>
+		<div class="label">Inbox queue<i v-if="current.inbox.waiting > 0" class="ph-warning ph-bold ph-lg icon"></i></div>
 		<div class="values">
 			<div>
 				<div>Process</div>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="deliver">
-		<div class="label">Deliver queue<i v-if="current.deliver.waiting > 0" class="ph-warning-bold ph-lg icon"></i></div>
+		<div class="label">Deliver queue<i v-if="current.deliver.waiting > 0" class="ph-warning ph-bold ph-lg icon"></i></div>
 		<div class="values">
 			<div>
 				<div>Process</div>

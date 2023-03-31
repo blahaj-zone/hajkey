@@ -1,5 +1,5 @@
 <template>
-<a :href="to" :class="active ? activeClass : null" @click.stop.prevent="nav" @contextmenu.prevent.stop="onContextmenu">
+<a :href="to" :class="active ? activeClass : null" @click="nav" @contextmenu.prevent.stop="onContextmenu" @click.stop>
 	<slot></slot>
 </a>
 </template>
@@ -43,25 +43,25 @@ function onContextmenu(ev) {
 		type: 'label',
 		text: props.to,
 	}, {
-		icon: 'ph-browser-bold ph-lg',
+		icon: 'ph-browser ph-bold ph-lg',
 		text: i18n.ts.openInWindow,
 		action: () => {
 			os.pageWindow(props.to);
 		},
 	}, {
-		icon: 'ph-arrows-out-simple-bold ph-lg',
+		icon: 'ph-arrows-out-simple ph-bold ph-lg',
 		text: i18n.ts.showInPage,
 		action: () => {
 			router.push(props.to, 'forcePage');
 		},
 	}, null, {
-		icon: 'ph-arrow-square-out-bold ph-lg',
+		icon: 'ph-arrow-square-out ph-bold ph-lg',
 		text: i18n.ts.openInNewTab,
 		action: () => {
 			window.open(props.to, '_blank');
 		},
 	}, {
-		icon: 'ph-link-simple-bold ph-lg',
+		icon: 'ph-link-simple ph-bold ph-lg',
 		text: i18n.ts.copyLink,
 		action: () => {
 			copyToClipboard(`${url}${props.to}`);
@@ -81,34 +81,28 @@ function popout() {
 	popout_(props.to);
 }
 
-async function nav(ev: MouseEvent) {
-	let to = props.to;
-	if (props.callback) {
-		const ret = await props.callback(ev);
-		if ('string' === typeof ret) {
-			to = ret;
-		} else if (!ret) {
+function nav(ev: MouseEvent) {
+	if (!ev.ctrlKey) {
+		ev.preventDefault();
+
+		if (props.behavior === 'browser') {
+			location.href = props.to;
 			return;
 		}
-	}
 
-	if (props.behavior === 'browser') {
-		location.href = to;
-		return;
-	}
-
-	if (props.behavior) {
-		if (props.behavior === 'window') {
-			return openWindow();
-		} else if (props.behavior === 'modalWindow') {
-			return modalWindow();
+		if (props.behavior) {
+			if (props.behavior === 'window') {
+				return openWindow();
+			} else if (props.behavior === 'modalWindow') {
+				return modalWindow();
+			}
 		}
-	}
 
-	if (ev.shiftKey) {
-		return openWindow();
-	}
+		if (ev.shiftKey) {
+			return openWindow();
+		}
 
-	router.push(to, ev.ctrlKey ? 'forcePage' : null);
+		router.push(props.to, ev.ctrlKey ? 'forcePage' : null);
+	}
 }
 </script>

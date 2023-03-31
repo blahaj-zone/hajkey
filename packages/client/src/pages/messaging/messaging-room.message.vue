@@ -29,7 +29,7 @@
 				<span v-if="isMe && message.isRead" class="read">{{ i18n.ts.messageRead }}</span>
 			</template>
 			<MkTime :time="message.createdAt"/>
-			<template v-if="message.is_edited"><i class="ph-pencil-bold ph-lg"></i></template>
+			<template v-if="message.is_edited"><i class="ph-pencil ph-bold ph-lg"></i></template>
 		</footer>
 	</div>
 </div>

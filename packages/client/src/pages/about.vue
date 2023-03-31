@@ -140,15 +140,15 @@ const headerActions = $computed(() => []);
 let theTabs = [{
 	key: 'overview',
 	title: i18n.ts.overview,
-	icon: 'ph-map-trifold-bold ph-lg',
+	icon: 'ph-map-trifold ph-bold ph-lg',
 }, {
 	key: 'emojis',
 	title: i18n.ts.customEmojis,
-	icon: 'ph-smiley-bold ph-lg',
+	icon: 'ph-smiley ph-bold ph-lg',
 }, {
 	key: 'charts',
 	title: i18n.ts.charts,
-	icon: 'ph-chart-bar-bold ph-lg',
+	icon: 'ph-chart-bar ph-bold ph-lg',
 }];
 
 if (iAmModerator) {
@@ -156,7 +156,7 @@ if (iAmModerator) {
 		{
 			key: 'federation',
 			title: i18n.ts.federation,
-			icon: 'ph-planet-bold ph-lg',
+			icon: 'ph-planet ph-bold ph-lg',
 		},
 	);
 }
@@ -165,7 +165,7 @@ let headerTabs = $computed(() => theTabs);
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.instanceInfo,
-	icon: 'ph-info-bold ph-lg',
+	icon: 'ph-info ph-bold ph-lg',
 })));
 
 async function sleep(seconds) {

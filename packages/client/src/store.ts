@@ -135,6 +135,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: null as null | "smartphone" | "tablet" | "desktop",
 		},
+		showLocalPostsInTimeline: {
+			where: "device",
+			default: "home" as "home" | "social",
+		},
 		serverDisconnectedBehavior: {
 			where: "device",
 			default: "nothing" as "nothing" | "quiet" | "reload" | "dialog",
@@ -303,9 +307,17 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		replyDividerColorBorder: {
+			where: "device",
+			default: false,
+		},
 		replyIndentCompact: {
 			where: "device",
 			default: false,
+		},
+		replyCollapseSingles: {
+			where: "device",
+			default: true,
 		},
 		autoShowCw: {
 			where: "device",

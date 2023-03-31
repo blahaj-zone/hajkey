@@ -8,7 +8,7 @@ services:
     depends_on:
       - db
       - redis
-#      - es
+      - sonic
     ports:
       - "3000:3000"
     networks:
@@ -40,16 +40,14 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
 
-#  es:
-#   restart: unless-stopped
-#   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.2
-#   environment:
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#      - "TAKE_FILE_OWNERSHIP=111"
-#    networks:
-#      - calcnet
-#    volumes:
-#      - ./elasticsearch:/usr/share/elasticsearch/data
+  sonic:
+    restart: unless-stopped
+    image: docker.io/valeriansaliou/sonic:v1.4.0
+    networks:
+      - calcnet
+    volumes:
+      - ./sonic:/var/lib/sonic/store
+      - ./sonic/config.cfg:/etc/sonic.cfg
 
 networks:
   calcnet:

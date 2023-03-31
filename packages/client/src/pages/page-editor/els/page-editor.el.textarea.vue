@@ -1,7 +1,7 @@
 <template>
 
 <XContainer :draggable="true" @remove="() => $emit('remove')">
-	<template #header><i class="ph-align-left-bold ph-lg"></i> {{ i18n.ts._pages.blocks.textarea }}</template>
+	<template #header><i class="ph-align-left ph-bold ph-lg"></i> {{ i18n.ts._pages.blocks.textarea }}</template>
 
 	<section class="ihymsbbe">
 		<textarea v-model="value.text"></textarea>

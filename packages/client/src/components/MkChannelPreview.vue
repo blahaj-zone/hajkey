@@ -2,10 +2,10 @@
 <MkA :to="`/channels/${channel.id}`" class="eftoefju _panel" tabindex="-1">
 	<div class="banner" :style="bannerStyle">
 		<div class="fade"></div>
-		<div class="name"><i class="ph-television-bold ph-lg"></i> {{ channel.name }}</div>
+		<div class="name"><i class="ph-television ph-bold ph-lg"></i> {{ channel.name }}</div>
 		<div class="status">
 			<div>
-				<i class="ph-users-bold ph-lg ph-fw ph-lg"></i>
+				<i class="ph-users ph-bold ph-lg ph-fw ph-lg"></i>
 				<I18n :src="i18n.ts._channel.usersCount" tag="span" style="margin-left: 4px;">
 					<template #n>
 						<b>{{ channel.usersCount }}</b>
@@ -13,7 +13,7 @@
 				</I18n>
 			</div>
 			<div>
-				<i class="ph-pencil-bold ph-lg ph-fw ph-lg"></i>
+				<i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i>
 				<I18n :src="i18n.ts._channel.notesCount" tag="span" style="margin-left: 4px;">
 					<template #n>
 						<b>{{ channel.notesCount }}</b>

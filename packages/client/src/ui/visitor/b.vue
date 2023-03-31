@@ -30,11 +30,11 @@
 
 	<transition :name="$store.state.animation ? 'tray' : ''">
 		<div v-if="showMenu" class="menu">
-			<MkA to="/" class="link" active-class="active"><i class="ph-house-bold ph-lg icon"></i>{{ i18n.ts.home }}</MkA>
-			<MkA to="/explore" class="link" active-class="active"><i class="ph-compass-bold ph-lg icon"></i>{{ i18n.ts.explore }}</MkA>
-			<MkA to="/channels" class="link" active-class="active"><i class="ph-television-bold ph-lg icon"></i>{{ i18n.ts.channel }}</MkA>
-			<MkA to="/pages" class="link" active-class="active"><i class="ph-file-text-bold ph-lg icon"></i>{{ i18n.ts.pages }}</MkA>
-			<MkA to="/gallery" class="link" active-class="active"><i class="ph-image-square-bold ph-lg icon"></i>{{ i18n.ts.gallery }}</MkA>
+			<MkA to="/" class="link" active-class="active"><i class="ph-house ph-bold ph-lg icon"></i>{{ i18n.ts.home }}</MkA>
+			<MkA to="/explore" class="link" active-class="active"><i class="ph-compass ph-bold ph-lg icon"></i>{{ i18n.ts.explore }}</MkA>
+			<MkA to="/channels" class="link" active-class="active"><i class="ph-television ph-bold ph-lg icon"></i>{{ i18n.ts.channel }}</MkA>
+			<MkA to="/pages" class="link" active-class="active"><i class="ph-file-text ph-bold ph-lg icon"></i>{{ i18n.ts.pages }}</MkA>
+			<MkA to="/gallery" class="link" active-class="active"><i class="ph-image-square ph-bold ph-lg icon"></i>{{ i18n.ts.gallery }}</MkA>
 			<div class="action">
 				<button class="_buttonPrimary" @click="signup()">{{ i18n.ts.signup }}</button>
 				<button class="_button" @click="signin()">{{ i18n.ts.login }}</button>

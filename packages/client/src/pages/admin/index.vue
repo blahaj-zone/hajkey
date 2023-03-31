@@ -13,7 +13,7 @@
 				<MkInfo v-if="noEmailServer" warn class="info">{{ i18n.ts.noEmailServerWarning }} <MkA to="/admin/email-settings" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
 				<MkInfo v-if="updateAvailable" warn class="info">{{ i18n.ts.updateAvailable }} <a href="https://codeberg.org/calckey/calckey/releases" target="_bank" class="_link">{{ i18n.ts.check }}</a></MkInfo>
 
-				<MkSuperMenu :def="menuDef" :grid="currentPage?.route.name == null"></MkSuperMenu>
+				<MkSuperMenu :def="menuDef" :grid="narrow"></MkSuperMenu>
 			</div>
 		</MkSpacer>
 	</div>
@@ -44,7 +44,7 @@ const router = useRouter();
 
 const indexInfo = {
 	title: i18n.ts.controlPanel,
-	icon: 'ph-gear-six-bold ph-lg',
+	icon: 'ph-gear-six ph-bold ph-lg',
 	hideHeader: true,
 };
 
@@ -90,59 +90,59 @@ const menuDef = $computed(() => [{
 	title: i18n.ts.quickAction,
 	items: [{
 		type: 'button',
-		icon: 'ph-magnifying-glass-bold ph-lg',
+		icon: 'ph-magnifying-glass ph-bold ph-lg',
 		text: i18n.ts.lookup,
 		action: lookup,
 	}, ...(instance.disableRegistration ? [{
 		type: 'button',
-		icon: 'ph-user-plus-bold ph-lg',
+		icon: 'ph-user-plus ph-bold ph-lg',
 		text: i18n.ts.invite,
 		action: invite,
 	}] : [])],
 }, {
 	title: i18n.ts.administration,
 	items: [{
-		icon: 'ph-gauge-bold ph-lg',
+		icon: 'ph-gauge ph-bold ph-lg',
 		text: i18n.ts.dashboard,
 		to: '/admin/overview',
 		active: currentPage?.route.name === 'overview',
 	}, {
-		icon: 'ph-users-bold ph-lg',
+		icon: 'ph-users ph-bold ph-lg',
 		text: i18n.ts.users,
 		to: '/admin/users',
 		active: currentPage?.route.name === 'users',
 	}, {
-		icon: 'ph-smiley-bold ph-lg',
+		icon: 'ph-smiley ph-bold ph-lg',
 		text: i18n.ts.customEmojis,
 		to: '/admin/emojis',
 		active: currentPage?.route.name === 'emojis',
 	}, {
-		icon: 'ph-planet-bold ph-lg',
+		icon: 'ph-planet ph-bold ph-lg',
 		text: i18n.ts.federation,
 		to: '/admin/federation',
 		active: currentPage?.route.name === 'federation',
 	}, {
-		icon: 'ph-clipboard-text-bold ph-lg',
+		icon: 'ph-clipboard-text ph-bold ph-lg',
 		text: i18n.ts.jobQueue,
 		to: '/admin/queue',
 		active: currentPage?.route.name === 'queue',
 	}, {
-		icon: 'ph-cloud-bold ph-lg',
+		icon: 'ph-cloud ph-bold ph-lg',
 		text: i18n.ts.files,
 		to: '/admin/files',
 		active: currentPage?.route.name === 'files',
 	}, {
-		icon: 'ph-megaphone-simple-bold ph-lg',
+		icon: 'ph-megaphone-simple ph-bold ph-lg',
 		text: i18n.ts.announcements,
 		to: '/admin/announcements',
 		active: currentPage?.route.name === 'announcements',
 	}, {
-		icon: 'ph-money-bold ph-lg',
+		icon: 'ph-money ph-bold ph-lg',
 		text: i18n.ts.ads,
 		to: '/admin/ads',
 		active: currentPage?.route.name === 'ads',
 	}, {
-		icon: 'ph-warning-circle-bold ph-lg',
+		icon: 'ph-warning-circle ph-bold ph-lg',
 		text: i18n.ts.abuseReports,
 		to: '/admin/abuses',
 		active: currentPage?.route.name === 'abuses',
@@ -150,42 +150,42 @@ const menuDef = $computed(() => [{
 }, ...($i?.isAdmin ? [{
 	title: i18n.ts.settings,
 	items: [{
-		icon: 'ph-gear-six-bold ph-lg',
+		icon: 'ph-gear-six ph-bold ph-lg',
 		text: i18n.ts.general,
 		to: '/admin/settings',
 		active: currentPage?.route.name === 'settings',
 	}, {
-		icon: 'ph-envelope-simple-open-bold ph-lg',
+		icon: 'ph-envelope-simple-open ph-bold ph-lg',
 		text: i18n.ts.emailServer,
 		to: '/admin/email-settings',
 		active: currentPage?.route.name === 'email-settings',
 	}, {
-		icon: 'ph-cloud-bold ph-lg',
+		icon: 'ph-cloud ph-bold ph-lg',
 		text: i18n.ts.objectStorage,
 		to: '/admin/object-storage',
 		active: currentPage?.route.name === 'object-storage',
 	}, {
-		icon: 'ph-lock-bold ph-lg',
+		icon: 'ph-lock ph-bold ph-lg',
 		text: i18n.ts.security,
 		to: '/admin/security',
 		active: currentPage?.route.name === 'security',
 	}, {
-		icon: 'ph-flow-arrow-bold ph-lg',
+		icon: 'ph-flow-arrow ph-bold ph-lg',
 		text: i18n.ts.relays,
 		to: '/admin/relays',
 		active: currentPage?.route.name === 'relays',
 	}, {
-		icon: 'ph-plug-bold ph-lg',
+		icon: 'ph-plug ph-bold ph-lg',
 		text: i18n.ts.integration,
 		to: '/admin/integrations',
 		active: currentPage?.route.name === 'integrations',
 	}, {
-		icon: 'ph-prohibit-bold ph-lg',
+		icon: 'ph-prohibit ph-bold ph-lg',
 		text: i18n.ts.instanceBlocking,
 		to: '/admin/instance-block',
 		active: currentPage?.route.name === 'instance-block',
 	}, {
-		icon: 'ph-ghost-bold ph-lg',
+		icon: 'ph-ghost ph-bold ph-lg',
 		text: i18n.ts.proxyAccount,
 		to: '/admin/proxy-account',
 		active: currentPage?.route.name === 'proxy-account',
@@ -193,7 +193,7 @@ const menuDef = $computed(() => [{
 }] : []), {
 	title: i18n.ts.info,
 	items: [{
-		icon: 'ph-database-bold ph-lg',
+		icon: 'ph-database ph-bold ph-lg',
 		text: i18n.ts.database,
 		to: '/admin/database',
 		active: currentPage?.route.name === 'database',
@@ -217,6 +217,12 @@ onMounted(() => {
 
 onUnmounted(() => {
 	ro.disconnect();
+});
+
+watch(router.currentRef, (to) => {
+	if (to.route.path === "/admin" && to.child?.route.name == null && !narrow) {
+		router.replace('/admin/overview');
+	}
 });
 
 provideMetadataReceiver((info) => {
@@ -244,25 +250,25 @@ const invite = () => {
 const lookup = (ev) => {
 	os.popupMenu([{
 		text: i18n.ts.user,
-		icon: 'ph-user-bold ph-lg',
+		icon: 'ph-user ph-bold ph-lg',
 		action: () => {
 			lookupUser();
 		},
 	}, {
 		text: i18n.ts.note,
-		icon: 'ph-pencil-bold ph-lg',
+		icon: 'ph-pencil ph-bold ph-lg',
 		action: () => {
 			alert('TODO');
 		},
 	}, {
 		text: i18n.ts.file,
-		icon: 'ph-cloud-bold ph-lg',
+		icon: 'ph-cloud ph-bold ph-lg',
 		action: () => {
 			alert('TODO');
 		},
 	}, {
 		text: i18n.ts.instance,
-		icon: 'ph-planet-bold ph-lg',
+		icon: 'ph-planet ph-bold ph-lg',
 		action: () => {
 			alert('TODO');
 		},

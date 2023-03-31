@@ -58,7 +58,7 @@
 					<div class="_formBlock">
 						<MkKeyValue v-if="user.host" oneline style="margin: 1em 0;">
 							<template #key>{{ i18n.ts.instanceInfo }}</template>
-							<template #value><MkA :to="`/instance-info/${user.host}`" class="_link">{{ user.host }} <i class="ph-caret-right-bold ph-lg"></i></MkA></template>
+							<template #value><MkA :to="`/instance-info/${user.host}`" class="_link">{{ user.host }} <i class="ph-caret-right ph-bold ph-lg"></i></MkA></template>
 						</MkKeyValue>
 						<MkKeyValue v-else oneline style="margin: 1em 0;">
 							<template #key>{{ i18n.ts.instanceInfo }}</template>
@@ -74,7 +74,7 @@
 						</MkKeyValue>
 					</div>
 
-					<FormButton v-if="user.host != null" class="_formBlock" @click="updateRemoteUser"><i class="ph-arrows-clockwise-bold ph-lg"></i> {{ i18n.ts.updateRemoteUser }}</FormButton>
+					<FormButton v-if="user.host != null" class="_formBlock" @click="updateRemoteUser"><i class="ph-arrows-clockwise ph-bold ph-lg"></i> {{ i18n.ts.updateRemoteUser }}</FormButton>
 
 					<FormFolder class="_formBlock">
 						<template #label>Raw</template>
@@ -90,7 +90,7 @@
 				<FormSwitch v-model="suspended" class="_formBlock" @update:modelValue="toggleSuspend">{{ i18n.ts.suspend }}</FormSwitch>
 				{{ i18n.ts.reflectMayTakeTime }}
 				<div class="_formBlock">
-					<FormButton v-if="user.host == null && iAmModerator" inline style="margin-right: 8px;" @click="resetPassword"><i class="ph-key-bold ph-lg"></i> {{ i18n.ts.resetPassword }}</FormButton>
+					<FormButton v-if="user.host == null && iAmModerator" inline style="margin-right: 8px;" @click="resetPassword"><i class="ph-key ph-bold ph-lg"></i> {{ i18n.ts.resetPassword }}</FormButton>
 					<FormButton v-if="$i.isAdmin" inline danger @click="deleteAccount">{{ i18n.ts.deleteAccount }}</FormButton>
 				</div>
 				<FormTextarea v-model="moderationNote" manual-save class="_formBlock">
@@ -364,24 +364,24 @@ const headerActions = $computed(() => []);
 const headerTabs = $computed(() => [{
 	key: 'overview',
 	title: i18n.ts.overview,
-	icon: 'ph-info-bold ph-lg',
+	icon: 'ph-info ph-bold ph-lg',
 }, iAmModerator ? {
 	key: 'moderation',
 	title: i18n.ts.moderation,
-	icon: 'ph-shield-bold ph-lg',
+	icon: 'ph-shield ph-bold ph-lg',
 } : null, {
 	key: 'chart',
 	title: i18n.ts.charts,
-	icon: 'ph-chart-bar-bold ph-lg',
+	icon: 'ph-chart-bar ph-bold ph-lg',
 }, {
 	key: 'raw',
 	title: 'Raw',
-	icon: 'ph-code-bold ph-lg',
+	icon: 'ph-code ph-bold ph-lg',
 }].filter(x => x != null));
 
 definePageMetadata(computed(() => ({
 	title: user ? acct(user) : i18n.ts.userInfo,
-	icon: 'ph-info-bold ph-lg',
+	icon: 'ph-info ph-bold ph-lg',
 })));
 </script>
 

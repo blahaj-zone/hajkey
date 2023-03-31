@@ -26,7 +26,7 @@
 			</swiper-slide>
 			<swiper-slide>
 				<div class="_content grwlizim owned">
-					<MkButton class="new" @click="create()"><i class="ph-plus-bold ph-lg"></i></MkButton>
+					<MkButton class="new" @click="create()"><i class="ph-plus ph-bold ph-lg"></i></MkButton>
 					<MkPagination v-slot="{items}" :pagination="ownedPagination">
 						<MkChannelPreview v-for="channel in items" :key="channel.id" class="_gap" :channel="channel"/>
 					</MkPagination>
@@ -77,7 +77,7 @@ function create() {
 }
 
 const headerActions = $computed(() => [{
-	icon: 'ph-plus-bold ph-lg',
+	icon: 'ph-plus ph-bold ph-lg',
 	text: i18n.ts.create,
 	handler: create,
 }]);
@@ -85,20 +85,20 @@ const headerActions = $computed(() => [{
 const headerTabs = $computed(() => [{
 	key: 'featured',
 	title: i18n.ts._channel.featured,
-	icon: 'ph-fire-simple-bold ph-lg',
+	icon: 'ph-fire-simple ph-bold ph-lg',
 }, {
 	key: 'following',
 	title: i18n.ts._channel.following,
-	icon: 'ph-heart-bold ph-lg',
+	icon: 'ph-heart ph-bold ph-lg',
 }, {
 	key: 'owned',
 	title: i18n.ts._channel.owned,
-	icon: 'ph-crown-simple-bold ph-lg',
+	icon: 'ph-crown-simple ph-bold ph-lg',
 }]);
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.channel,
-	icon: 'ph-television-bold ph-lg',
+	icon: 'ph-television ph-bold ph-lg',
 })));
 
 let swiperRef = null;

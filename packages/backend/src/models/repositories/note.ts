@@ -197,7 +197,10 @@ export const NoteRepository = db.getRepository(Note).extend({
 			.map((x) => decodeReaction(x).reaction)
 			.map((x) => x.replace(/:/g, ""));
 
-		const noteEmoji = await populateEmojis(note.emojis.concat(reactionEmojiNames), host);
+		const noteEmoji = await populateEmojis(
+			note.emojis.concat(reactionEmojiNames),
+			host,
+		);
 		const reactionEmoji = await populateEmojis(reactionEmojiNames, host);
 		const packed: Packed<"Note"> = await awaitAll({
 			id: note.id,

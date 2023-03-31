@@ -8,35 +8,35 @@
 	@drop.stop="onDrop"
 >
 	<header>
-		<button v-if="!fixed" class="cancel _button" @click="cancel"><i class="ph-x-bold ph-lg"></i></button>
+		<button v-if="!fixed" class="cancel _button" @click="cancel"><i class="ph-x ph-bold ph-lg"></i></button>
 		<button v-click-anime v-tooltip="i18n.ts.switchAccount" class="account _button" @click="openAccountMenu">
 			<MkAvatar :user="postAccount ?? $i" class="avatar"/>
 		</button>
 		<div class="right">
 			<span class="text-count" :class="{ over: textLength > maxTextLength }">{{ maxTextLength - textLength }}</span>
-			<span v-if="localOnly" class="local-only"><i class="ph-hand-fist-bold ph-lg"></i></span>
+			<span v-if="localOnly" class="local-only"><i class="ph-hand-fist ph-bold ph-lg"></i></span>
 			<button ref="visibilityButton" v-tooltip="i18n.ts.visibility" class="_button visibility" :disabled="channel != null" @click="setVisibility">
-				<span v-if="visibility === 'public'"><i class="ph-planet-bold ph-lg"></i></span>
-				<span v-if="visibility === 'home'"><i class="ph-house-bold ph-lg"></i></span>
-				<span v-if="visibility === 'followers'"><i class="ph-lock-simple-open-bold ph-lg"></i></span>
-				<span v-if="visibility === 'specified'"><i class="ph-envelope-simple-open-bold ph-lg"></i></span>
+				<span v-if="visibility === 'public'"><i class="ph-planet ph-bold ph-lg"></i></span>
+				<span v-if="visibility === 'home'"><i class="ph-house ph-bold ph-lg"></i></span>
+				<span v-if="visibility === 'followers'"><i class="ph-lock-simple-open ph-bold ph-lg"></i></span>
+				<span v-if="visibility === 'specified'"><i class="ph-envelope-simple-open ph-bold ph-lg"></i></span>
 			</button>
-			<button v-tooltip="i18n.ts.previewNoteText" class="_button preview" :class="{ active: showPreview }" @click="showPreview = !showPreview"><i class="ph-file-code-bold ph-lg"></i></button>
-			<button class="submit _buttonGradate" :disabled="!canPost" data-cy-open-post-form-submit @click="post">{{ submitText }}<i :class="reply ? 'ph-arrow-bend-up-left-bold ph-lg' : renote ? 'ph-quotes-bold ph-lg' : 'ph-paper-plane-tilt-bold ph-lg'"></i></button>
+			<button v-tooltip="i18n.ts.previewNoteText" class="_button preview" :class="{ active: showPreview }" @click="showPreview = !showPreview"><i class="ph-file-code ph-bold ph-lg"></i></button>
+			<button class="submit _buttonGradate" :disabled="!canPost" data-cy-open-post-form-submit @click="post">{{ submitText }}<i :class="reply ? 'ph-arrow-u-up-left ph-bold ph-lg' : renote ? 'ph-quotes ph-bold ph-lg' : 'ph-paper-plane-tilt ph-bold ph-lg'"></i></button>
 		</div>
 	</header>
 	<div class="form" :class="{ fixed }">
 		<XNoteSimple v-if="reply" class="preview" :note="reply"/>
 		<XNoteSimple v-if="renote" class="preview" :note="renote"/>
-		<div v-if="quoteId" class="with-quote"><i class="ph-quotes-bold ph-lg"></i> {{ i18n.ts.quoteAttached }}<button @click="quoteId = null"><i class="ph-x-bold ph-lg"></i></button></div>
+		<div v-if="quoteId" class="with-quote"><i class="ph-quotes ph-bold ph-lg"></i> {{ i18n.ts.quoteAttached }}<button @click="quoteId = null"><i class="ph-x ph-bold ph-lg"></i></button></div>
 		<div v-if="visibility === 'specified'" class="to-specified">
 			<span style="margin-right: 8px;">{{ i18n.ts.recipient }}</span>
 			<div class="visibleUsers">
 				<span v-for="u in visibleUsers" :key="u.id">
 					<MkAcct :user="u"/>
-					<button class="_button" @click="removeVisibleUser(u)"><i class="ph-x-bold ph-lg"></i></button>
+					<button class="_button" @click="removeVisibleUser(u)"><i class="ph-x ph-bold ph-lg"></i></button>
 				</span>
-				<button class="_button" @click="addVisibleUser"><i class="ph-plus-bold ph-md ph-fw ph-lg"></i></button>
+				<button class="_button" @click="addVisibleUser"><i class="ph-plus ph-bold ph-md ph-fw ph-lg"></i></button>
 			</div>
 		</div>
 		<MkInfo v-if="hasNotSpecifiedMentions" warn class="hasNotSpecifiedMentions">{{ i18n.ts.notSpecifiedMentionWarning }} - <button class="_textButton" @click="addMissingMention()">{{ i18n.ts.add }}</button></MkInfo>
@@ -47,14 +47,14 @@
 		<XPollEditor v-if="poll" v-model="poll" @destroyed="poll = null"/>
 		<XNotePreview v-if="showPreview" class="preview" :text="text"/>
 		<footer>
-			<button v-tooltip="i18n.ts.attachFile" class="_button" @click="chooseFileFrom"><i class="ph-upload-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts.poll" class="_button" :class="{ active: poll }" @click="togglePoll"><i class="ph-microphone-stage-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts.useCw" class="_button" :class="{ active: useCw }" @click="useCw = !useCw"><i class="ph-eye-slash-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts.mention" class="_button" @click="insertMention"><i class="ph-at-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts.hashtags" class="_button" :class="{ active: withHashtags }" @click="withHashtags = !withHashtags"><i class="ph-hash-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts.emoji" class="_button" @click="insertEmoji"><i class="ph-smiley-bold ph-lg"></i></button>
-			<button v-if="postFormActions.length > 0" v-tooltip="i18n.ts.plugin" class="_button" @click="showActions"><i class="ph-plug-bold ph-lg"></i></button>
-			<button v-tooltip="i18n.ts._mfm.cheatSheet" class="_button right" @click="openCheatSheet"><i class="ph-question-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.attachFile" class="_button" @click="chooseFileFrom"><i class="ph-upload ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.poll" class="_button" :class="{ active: poll }" @click="togglePoll"><i class="ph-microphone-stage ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.useCw" class="_button" :class="{ active: useCw }" @click="useCw = !useCw"><i class="ph-eye-slash ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.mention" class="_button" @click="insertMention"><i class="ph-at ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.hashtags" class="_button" :class="{ active: withHashtags }" @click="withHashtags = !withHashtags"><i class="ph-hash ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts.emoji" class="_button" @click="insertEmoji"><i class="ph-smiley ph-bold ph-lg"></i></button>
+			<button v-if="postFormActions.length > 0" v-tooltip="i18n.ts.plugin" class="_button" @click="showActions"><i class="ph-plug ph-bold ph-lg"></i></button>
+			<button v-tooltip="i18n.ts._mfm.cheatSheet" class="_button right" @click="openCheatSheet"><i class="ph-question ph-bold ph-lg"></i></button>
 		</footer>
 		<datalist id="hashtags">
 			<option v-for="hashtag in recentHashtags" :key="hashtag" :value="hashtag"/>
@@ -609,10 +609,10 @@ async function post() {
 		let message: string[] = [];
 
 		const sendMessage = (msg: string) => {
-			os.alert({
-				type: 'error',
-				text: msg,
-			});
+		os.alert({
+			type: 'error',
+			text: msg,
+		});
 		};
 
 		let n: number;
@@ -839,6 +839,8 @@ onMounted(() => {
 			}
 
 			> .submit {
+				display: inline-flex;
+				align-items: center;
 				margin: 16px 16px 16px 0;
 				padding: 0 12px;
 				line-height: 34px;

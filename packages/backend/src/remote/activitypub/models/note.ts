@@ -111,19 +111,36 @@ export async function createNote(
 
 	const note: IPost = object;
 
-	if (note.id && !note.id.startsWith('https://')) {
+	if (note.id && !note.id.startsWith("https://")) {
 		throw new Error(`unexpected shcema of note.id: ${note.id}`);
 	}
 
 	const url = getOneApHrefNullable(note.url);
 
-	if (url && !url.startsWith('https://')) {
+	if (url && !url.startsWith("https://")) {
 		throw new Error(`unexpected shcema of note url: ${url}`);
 	}
 
 	logger.debug(`Note fetched: ${JSON.stringify(note, null, 2)}`);
-
 	logger.info(`Creating the Note: ${note.id}`);
+
+	// Skip if note is made before 2007 (1yr before Fedi was created)
+	// OR skip if note is made 3 days in advance
+	if (note.published) {
+		const DateChecker = new Date(note.published);
+		const FutureCheck = new Date();
+		FutureCheck.setDate(FutureCheck.getDate() + 3); // Allow some wiggle room for misconfigured hosts
+		if (DateChecker.getFullYear() < 2007) {
+			logger.warn(
+				"Note somehow made before Activitypub was created; discarding",
+			);
+			return null;
+		}
+		if (DateChecker > FutureCheck) {
+			logger.warn("Note somehow made after today; discarding");
+			return null;
+		}
+	}
 
 	// Fetch author
 	const actor = (await resolvePerson(
@@ -133,7 +150,9 @@ export async function createNote(
 
 	// Skip if author is suspended.
 	if (actor.isSuspended) {
-		logger.debug(`User ${actor.usernameLower}@${actor.host} suspended; discarding.`)
+		logger.debug(
+			`User ${actor.usernameLower}@${actor.host} suspended; discarding.`,
+		);
 		return null;
 	}
 

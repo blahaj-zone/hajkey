@@ -1,11 +1,6 @@
 <template>
 <div class="_formRoot">
-	<FormLink class="_formBlock" to=""
-		:callback="async () => { configure(); return false; }"
-	>
-		<template #icon><i class="ph-gear-six-bold ph-lg"></i></template>
-		{{ i18n.ts.notificationSetting }}
-	</FormLink>
+	<FormLink class="_formBlock" @click="configure"><template #icon><i class="ph-gear-six ph-bold ph-lg"></i></template>{{ i18n.ts.notificationSetting }}</FormLink>
 	<FormSection>
 		<FormLink class="_formBlock" to=""
 			:callback="async () => { await readAllNotifications(); return false; }"
@@ -71,6 +66,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.notifications,
-	icon: 'ph-bell-bold ph-lg',
+	icon: 'ph-bell ph-bold ph-lg',
 });
 </script>

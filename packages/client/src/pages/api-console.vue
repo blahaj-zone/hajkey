@@ -15,7 +15,7 @@
 				</MkSwitch>
 				<MkButton class="_formBlock" primary :disabled="sending" @click="send">
 					<template v-if="sending"><MkEllipsis/></template>
-					<template v-else><i class="ph-paper-plane-tilt-bold ph-lg"></i> Send</template>
+					<template v-else><i class="ph-paper-plane-tilt ph-bold ph-lg"></i> Send</template>
 				</MkButton>
 			</div>
 			<div v-if="res" class="_formBlock">
@@ -84,6 +84,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: 'API console',
-	icon: 'ph-terminal-window-bold ph-lg',
+	icon: 'ph-terminal-window ph-bold ph-lg',
 });
 </script>

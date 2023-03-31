@@ -2,8 +2,8 @@
 <div class="ngbfujlo">
 	<MkTextarea :model-value="text" readonly style="margin: 0;"></MkTextarea>
 	<MkButton class="button" primary :disabled="posting || posted" @click="post()">
-		<i v-if="posted" class="ph-check-bold ph-lg"></i>
-		<i v-else class="ph-paper-plane-tilt-bold ph-lg"></i>
+		<i v-if="posted" class="ph-check ph-bold ph-lg"></i>
+		<i v-else class="ph-paper-plane-tilt ph-bold ph-lg"></i>
 	</MkButton>
 </div>
 </template>

@@ -22,10 +22,17 @@
 		<FormSwitch v-model="replyDividerColorBg" class="_formBlock">
 			{{ i18n.ts.replyDividerColorBg }}
 		</FormSwitch>
+		<FormSwitch v-model="replyDividerColorBorder" class="_formBlock">
+			{{ i18n.ts.replyDividerColorBorder }}
+		</FormSwitch>
 
 		<FormSwitch v-model="replyIndentCompact" class="_formBlock">
 			{{ i18n.ts.replyIndentCompact }}
 			<template #caption>{{ i18n.ts.replyIndentCompactDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="replyCollapseSingles" class="_formBlock">
+			{{ i18n.ts.replyCollapseSingles }}
+			<template #caption>{{ i18n.ts.replyCollapseSinglesDescription }}</template>
 		</FormSwitch>
 	</FormSection>
 
@@ -169,7 +176,9 @@ const repliesDepth = $computed(defaultStore.makeGetterSetter('repliesDepth'));
 const replyDividerColorize = $computed(defaultStore.makeGetterSetter('replyDividerColorize'));
 const replyDividerColorGrad = $computed(defaultStore.makeGetterSetter('replyDividerColorGrad'));
 const replyDividerColorBg = $computed(defaultStore.makeGetterSetter('replyDividerColorBg'));
+const replyDividerColorBorder = $computed(defaultStore.makeGetterSetter('replyDividerColorBorder'));
 const replyIndentCompact = $computed(defaultStore.makeGetterSetter('replyIndentCompact'));
+const replyCollapseSingles = $computed(defaultStore.makeGetterSetter('replyCollapseSingles'));
 
 const autoShowCw = $computed(defaultStore.makeGetterSetter('autoShowCw'));
 const nsfw = $computed(defaultStore.makeGetterSetter('nsfw'));

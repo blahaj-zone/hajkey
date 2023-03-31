@@ -75,6 +75,7 @@ export async function importCustomEmojis(
 				originalUrl: driveFile.url,
 				publicUrl: driveFile.webpublicUrl ?? driveFile.url,
 				type: driveFile.webpublicType ?? driveFile.type,
+				license: emojiInfo.license,
 			}).then((x) => Emojis.findOneByOrFail(x.identifiers[0]));
 		}
 

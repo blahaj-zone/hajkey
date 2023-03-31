@@ -12,14 +12,14 @@
 			</MkTextarea>
 
 			<div class="banner">
-				<MkButton v-if="bannerId == null" @click="setBannerImage"><i class="ph-plus-bold ph-lg"></i> {{ i18n.ts._channel.setBanner }}</MkButton>
+				<MkButton v-if="bannerId == null" @click="setBannerImage"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts._channel.setBanner }}</MkButton>
 				<div v-else-if="bannerUrl">
 					<img :src="bannerUrl" style="width: 100%;"/>
-					<MkButton @click="removeBannerImage()"><i class="ph-trash-bold ph-lg"></i> {{ i18n.ts._channel.removeBanner }}</MkButton>
+					<MkButton @click="removeBannerImage()"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts._channel.removeBanner }}</MkButton>
 				</div>
 			</div>
 			<div class="_formBlock">
-				<MkButton primary @click="save()"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ channelId ? i18n.ts.save : i18n.ts.create }}</MkButton>
+				<MkButton primary @click="save()"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ channelId ? i18n.ts.save : i18n.ts.create }}</MkButton>
 			</div>
 		</div>
 	</MkSpacer>
@@ -110,10 +110,10 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata(computed(() => props.channelId ? {
 	title: i18n.ts._channel.edit,
-	icon: 'ph-television-bold ph-lg',
+	icon: 'ph-television ph-bold ph-lg',
 } : {
 	title: i18n.ts._channel.create,
-	icon: 'ph-television-bold ph-lg',
+	icon: 'ph-television ph-bold ph-lg',
 }));
 </script>
 

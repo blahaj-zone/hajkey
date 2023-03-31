@@ -14,17 +14,17 @@
 						<div class="title">{{ post.title }}</div>
 						<div class="description"><Mfm :text="post.description"/></div>
 						<div class="info">
-							<i class="ph-clock-bold ph-lg"></i> <MkTime :time="post.createdAt" mode="detail"/>
+							<i class="ph-clock ph-bold ph-lg"></i> <MkTime :time="post.createdAt" mode="detail"/>
 						</div>
 						<div class="actions">
 							<div class="like">
-								<MkButton v-if="post.isLiked" v-tooltip="i18n.ts._gallery.unlike" class="button" primary @click="unlike()"><i class="ph-heart-fill ph-lg"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
-								<MkButton v-else v-tooltip="i18n.ts._gallery.like" class="button" @click="like()"><i class="ph-heart-bold"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
+								<MkButton v-if="post.isLiked" v-tooltip="i18n.ts._gallery.unlike" class="button" primary @click="unlike()"><i class="ph-heart ph-fill ph-lg"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
+								<MkButton v-else v-tooltip="i18n.ts._gallery.like" class="button" @click="like()"><i class="ph-heart ph-bold"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
 							</div>
 							<div class="other">
-								<button v-if="$i && $i.id === post.user.id" v-tooltip="i18n.ts.edit" v-click-anime class="_button" @click="edit"><i class="ph-pencil-bold ph-lg ph-fw ph-lg"></i></button>
-								<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat-bold ph-lg ph-fw ph-lg"></i></button>
-								<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network-bold ph-lg ph-fw ph-lg"></i></button>
+								<button v-if="$i && $i.id === post.user.id" v-tooltip="i18n.ts.edit" v-click-anime class="_button" @click="edit"><i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i></button>
+								<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat ph-bold ph-lg ph-fw ph-lg"></i></button>
+								<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network ph-bold ph-lg ph-fw ph-lg"></i></button>
 							</div>
 						</div>
 						<div class="user">
@@ -38,7 +38,7 @@
 					</div>
 					<MkAd :prefer="['horizontal', 'horizontal-big']"/>
 					<MkContainer :max-height="300" :foldable="true" class="other">
-						<template #header><i class="ph-clock-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
+						<template #header><i class="ph-clock ph-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
 						<MkPagination v-slot="{items}" :pagination="otherPostsPagination">
 							<div class="sdrarzaf">
 								<MkGalleryPostPreview v-for="post in items" :key="post.id" :post="post" class="post"/>
@@ -135,7 +135,7 @@ function edit() {
 watch(() => props.postId, fetchPost, { immediate: true });
 
 const headerActions = $computed(() => [{
-	icon: 'ph-pencil-bold ph-lg',
+	icon: 'ph-pencil ph-bold ph-lg',
 	text: i18n.ts.edit,
 	handler: edit,
 }]);

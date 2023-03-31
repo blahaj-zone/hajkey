@@ -21,6 +21,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata(computed(() => ({
 	title: i18n.ts.federation,
-	icon: 'ph-planet-bold ph-lg',
+	icon: 'ph-planet ph-bold ph-lg',
 })));
 </script>

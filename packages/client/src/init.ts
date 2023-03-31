@@ -6,7 +6,8 @@
 import "vite/modulepreload-polyfill";
 
 import "@/style.scss";
-import "@/icons.scss";
+import "@phosphor-icons/web/bold";
+import "@phosphor-icons/web/fill";
 
 //#region account indexedDB migration
 import { set } from "@/scripts/idb-proxy";
@@ -255,6 +256,7 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
 	// クライアントが更新されたか？
 	const lastVersion = localStorage.getItem("lastVersion");
+
 	if (lastVersion !== version) {
 		localStorage.setItem("lastVersion", version);
 

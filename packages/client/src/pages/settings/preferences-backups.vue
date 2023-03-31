@@ -55,6 +55,7 @@ const defaultStoreSaveKeys: (keyof typeof defaultStore['state'])[] = [
 	'widgets',
 	'tl',
 	'overridedDeviceKind',
+	'showLocalPostsInTimeline',
 	'serverDisconnectedBehavior',
 	'nsfw',
 	'showAds',
@@ -380,25 +381,25 @@ function menu(ev: MouseEvent, profileId: string) {
 
 	return os.popupMenu([{
 		text: ts._preferencesBackups.apply,
-		icon: 'ph-caret-circle-down-bold ph-lg',
+		icon: 'ph-caret-circle-down ph-bold ph-lg',
 		action: () => applyProfile(profileId),
 	}, {
 		type: 'a',
 		text: ts.download,
-		icon: 'ph-download-simple-bold ph-lg',
+		icon: 'ph-download-simple ph-bold ph-lg',
 		href: URL.createObjectURL(new Blob([JSON.stringify(profiles[profileId], null, 2)], { type: 'application/json' })),
 		download: `${profiles[profileId].name}.json`,
 	}, null, {
 		text: ts.rename,
-		icon: 'ph-cursor-text-bold ph-lg',
+		icon: 'ph-cursor-text ph-bold ph-lg',
 		action: () => rename(profileId),
 	}, {
 		text: ts._preferencesBackups.save,
-		icon: 'ph-floppy-disk-bold ph-lg',
+		icon: 'ph-floppy-disk ph-bold ph-lg',
 		action: () => save(profileId),
 	}, null, {
 		text: ts._preferencesBackups.delete,
-		icon: 'ph-trash-bold ph-lg',
+		icon: 'ph-trash ph-bold ph-lg',
 		action: () => deleteProfile(profileId),
 		danger: true,
 	}], ev.currentTarget ?? ev.target);
@@ -420,7 +421,7 @@ onUnmounted(() => {
 
 definePageMetadata(computed(() => ({
 	title: ts.preferencesBackups,
-	icon: 'ph-floppy-disk-bold ph-lg',
+	icon: 'ph-floppy-disk ph-bold ph-lg',
 	bg: 'var(--bg)',
 })));
 </script>

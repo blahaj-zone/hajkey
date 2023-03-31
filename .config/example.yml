@@ -62,6 +62,16 @@ redis:
   #prefix: example-prefix
   #db: 1
 
+#   ┌─────────────────────┐
+#───┘ Sonic configuration └─────────────────────────────────────
+
+#sonic:
+#  host: localhost
+#  port: 1491
+#  auth: SecretPassword
+#  collection: notes
+#  bucket: default
+
 #   ┌─────────────────────────────┐
 #───┘ Elasticsearch configuration └─────────────────────────────
 

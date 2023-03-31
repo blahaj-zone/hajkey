@@ -57,7 +57,7 @@ const buttonsLeft = $computed(() => {
 
 	if (history.length > 1) {
 		buttons.push({
-			icon: 'ph-caret-left-bold ph-lg',
+			icon: 'ph-caret-left ph-bold ph-lg',
 			onClick: back,
 		});
 	}
@@ -66,7 +66,7 @@ const buttonsLeft = $computed(() => {
 });
 const buttonsRight = $computed(() => {
 	const buttons = [{
-		icon: 'ph-arrows-out-simple-bold ph-lg',
+		icon: 'ph-arrows-out-simple ph-bold ph-lg',
 		title: i18n.ts.showInPage,
 		onClick: expand,
 	}];
@@ -86,22 +86,22 @@ provide('shouldOmitHeaderTitle', true);
 provide('shouldHeaderThin', true);
 
 const contextmenu = $computed(() => ([{
-	icon: 'ph-arrows-out-simple-bold ph-lg',
+	icon: 'ph-arrows-out-simple ph-bold ph-lg',
 	text: i18n.ts.showInPage,
 	action: expand,
 }, {
-	icon: 'ph-arrow-square-out-bold ph-lg',
+	icon: 'ph-arrow-square-out ph-bold ph-lg',
 	text: i18n.ts.popout,
 	action: popout,
 }, {
-	icon: 'ph-arrow-square-out-bold ph-lg',
+	icon: 'ph-arrow-square-out ph-bold ph-lg',
 	text: i18n.ts.openInNewTab,
 	action: () => {
 		window.open(url + router.getCurrentPath(), '_blank');
 		windowEl.close();
 	},
 }, {
-	icon: 'ph-link-simple-bold ph-lg',
+	icon: 'ph-link-simple ph-bold ph-lg',
 	text: i18n.ts.copyLink,
 	action: () => {
 		copyToClipboard(url + router.getCurrentPath());

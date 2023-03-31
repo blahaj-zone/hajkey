@@ -1,16 +1,16 @@
 <template>
 <div ref="thumbnail" class="zdjebgpv">
 	<ImgWithBlurhash v-if="isThumbnailAvailable" :hash="file.blurhash" :src="file.thumbnailUrl" :alt="file.name" :title="file.name" :cover="fit !== 'contain'"/>
-	<i v-else-if="is === 'image'" class="ph-file-image-bold ph-lg icon"></i>
-	<i v-else-if="is === 'video'" class="ph-file-video-bold ph-lg icon"></i>
-	<i v-else-if="is === 'audio' || is === 'midi'" class="ph-file-audio-bold ph-lg icon"></i>
-	<i v-else-if="is === 'csv'" class="ph-file-csv-bold ph-lg icon"></i>
-	<i v-else-if="is === 'pdf'" class="ph-file-pdf-bold ph-lg icon"></i>
-	<i v-else-if="is === 'textfile'" class="ph-file-text-bold ph-lg icon"></i>
-	<i v-else-if="is === 'archive'" class="ph-file-zip-bold ph-lg icon"></i>
-	<i v-else class="ph-file-bold ph-lg icon"></i>
+	<i v-else-if="is === 'image'" class="ph-file-image ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'video'" class="ph-file-video ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'audio' || is === 'midi'" class="ph-file-audio ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'csv'" class="ph-file-csv ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'pdf'" class="ph-file-pdf ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'textfile'" class="ph-file-text ph-bold ph-lg icon"></i>
+	<i v-else-if="is === 'archive'" class="ph-file-zip ph-bold ph-lg icon"></i>
+	<i v-else class="ph-file ph-bold ph-lg icon"></i>
 
-	<i v-if="isThumbnailAvailable && is === 'video'" class="ph-file-video-bold ph-lg icon-sub"></i>
+	<i v-if="isThumbnailAvailable && is === 'video'" class="ph-file-video ph-bold ph-lg icon-sub"></i>
 </div>
 </template>
 

@@ -14,7 +14,7 @@ There is a `docker-compose.yml` in the root of the project that you can use to b
 
 Rename the files:
 
-`cp .config/default_example.yml .config/default.yml`
+`cp .config/example.yml .config/default.yml`
 
 `cp .config/example.env .config/docker.env`
 
@@ -23,6 +23,7 @@ You can configure `docker.env` with anything you like, but you will have to pay 
 - `url` should be set to the URL you will be hosting the web interface for the instance at.
 - `host`, `db`, `user`, `pass` will have to be configured in the `PostgreSQL configuration` section - `host` is the name of the postgres container (eg: *calckey_db_1*), and the others should match your `docker.env`.
 - `host`will need to be configured in the *Redis configuration* section - it is the name of the redis container (eg: *calckey_redis_1*)
+- `auth` will need to be configured in the *Sonic* section - cannot be the default `SecretPassword`
 
 Everything else can be left as-is.
 

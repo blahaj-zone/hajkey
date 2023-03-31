@@ -1,18 +1,29 @@
-import { Entity } from "@cutls/megalodon";
+import { Entity } from "@calckey/megalodon";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import { Users, Notes } from "@/models/index.js";
+import { IsNull, MoreThan } from "typeorm";
+
 // TODO: add calckey features
-export function getInstance(response: Entity.Instance) {
+export async function getInstance(response: Entity.Instance) {
+	const meta = await fetchMeta(true);
+	const totalUsers = Users.count({ where: { host: IsNull() } });
+	const totalStatuses = Notes.count({ where: { userHost: IsNull() } });
 	return {
 		uri: response.uri,
-		title: response.title || "",
-		short_description: response.description || "",
-		description: response.description || "",
+		title: response.title || "Calckey",
+		short_description: response.description.substring(0, 50) || "See real server website",
+		description: response.description || "This is a vanilla Calckey Instance. It doesnt seem to have a description. BTW you are using the Mastodon api to access this server :)",
 		email: response.email || "",
-		version: "3.0.0 compatible (Calckey)",
+		version: "3.0.0 compatible (3.5+ Calckey)", //I hope this version string is correct, we will need to test it.
 		urls: response.urls,
-		stats: response.stats,
-		thumbnail: response.thumbnail || "",
-		languages: ["en", "de", "ja"],
-		registrations: response.registrations,
+		stats: {
+			user_count: (await totalUsers),
+			status_count: (await totalStatuses),
+			domain_count: response.stats.domain_count
+		},
+		thumbnail: response.thumbnail || 'https://http.cat/404',
+		languages: meta.langs,
+		registrations: !meta.disableRegistration || response.registrations,
 		approval_required: !response.registrations,
 		invites_enabled: response.registrations,
 		configuration: {
@@ -77,17 +88,17 @@ export function getInstance(response: Entity.Instance) {
 			bot: true,
 			discoverable: false,
 			group: false,
-			created_at: "1971-01-01T00:00:00.000Z",
-			note: "",
-			url: "https://http.cat/404",
-			avatar: "https://http.cat/404",
-			avatar_static: "https://http.cat/404",
+			created_at: new Date().toISOString(),
+			note: "<p>Please refer to the original instance for the actual admin contact.</p>",
+			url: `${response.uri}/`,
+			avatar: `${response.uri}/static-assets/badges/info.png`,
+			avatar_static: `${response.uri}/static-assets/badges/info.png`,
 			header: "https://http.cat/404",
 			header_static: "https://http.cat/404",
 			followers_count: -1,
 			following_count: 0,
 			statuses_count: 0,
-			last_status_at: "1971-01-01T00:00:00.000Z",
+			last_status_at: new Date().toISOString(),
 			noindex: true,
 			emojis: [],
 			fields: [],

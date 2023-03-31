@@ -8,7 +8,7 @@
 				<template #caption>{{ i18n.ts.blockedInstancesDescription }}</template>
 			</FormTextarea>
 
-			<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
+			<FormButton primary class="_formBlock" @click="save"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</FormButton>
 		</FormSuspense>
 	</MkSpacer>
 </MkStickyContainer>
@@ -45,6 +45,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.instanceBlocking,
-	icon: 'ph-prohibit-bold ph-lg',
+	icon: 'ph-prohibit ph-bold ph-lg',
 });
 </script>

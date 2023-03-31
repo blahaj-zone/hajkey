@@ -1,7 +1,7 @@
 <template>
 <MkContainer :show-header="widgetProps.showHeader" :naked="widgetProps.transparent">
-	<template #header><i class="ph-hard-drives-bold ph-lg"></i>{{ i18n.ts._widgets.serverMetric }}</template>
-	<template #func><button class="_button" @click="toggleView()"><i class="ph-sort-ascending-bold ph-lg"></i></button></template>
+	<template #header><i class="ph-hard-drives ph-bold ph-lg"></i>{{ i18n.ts._widgets.serverMetric }}</template>
+	<template #func><button class="_button" @click="toggleView()"><i class="ph-sort-ascending ph-bold ph-lg"></i></button></template>
 
 	<div v-if="meta" class="mkw-serverMetric">
 		<XCpuMemory v-if="widgetProps.view === 0" :connection="connection" :meta="meta"/>

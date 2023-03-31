@@ -16,7 +16,11 @@
 	</div>
 	<div v-if="state == 'accepted'" class="accepted">
 		<h1>{{ session.app.isAuthorized ? i18n.t('already-authorized') : i18n.ts.allowed }}</h1>
-		<p v-if="session.app.callbackUrl">{{ i18n.ts._auth.callback }}<MkEllipsis/></p>
+		<p v-if="session.app.callbackUrl && !auth_code">{{ i18n.ts._auth.callback }}<MkEllipsis/></p>
+		<MkKeyValue v-if="session.app.callbackUrl && auth_code" :copy="auth_code">
+			<template #key>{{ i18n.ts._auth.copyAsk }}</template>
+			<template #value>{{ auth_code }}</template>
+		</MkKeyValue>
 		<p v-if="!session.app.callbackUrl">{{ i18n.ts._auth.pleaseGoBack }}</p>
 	</div>
 	<div v-if="state == 'fetch-session-error'" class="error">
@@ -32,6 +36,7 @@
 import { defineComponent } from 'vue';
 import XForm from './auth.form.vue';
 import MkSignin from '@/components/MkSignin.vue';
+import MkKeyValue from '@/components/MkKeyValue.vue';
 import * as os from '@/os';
 import { login } from '@/account';
 import { i18n } from '@/i18n';
@@ -40,6 +45,7 @@ export default defineComponent({
 	components: {
 		XForm,
 		MkSignin,
+		MkKeyValue
 	},
 	props: ['token'],
 	data() {
@@ -48,6 +54,7 @@ export default defineComponent({
 			session: null,
 			fetching: true,
 			i18n,
+			auth_code: null
 		};
 	},
 	mounted() {
@@ -79,10 +86,18 @@ export default defineComponent({
 		accepted() {
 			this.state = 'accepted';
 			const getUrlParams = () => window.location.search.substring(1).split('&').reduce((result, query) => { const [k, v] = query.split('='); result[k] = decodeURI(v); return result; }, {});
-			if (this.session.app.callbackUrl) {
+			const isMastodon = !!getUrlParams().mastodon
+			if (this.session.app.callbackUrl && isMastodon) {
+				const stateParam = !!getUrlParams().state ? `&state=$(getUrlParams().state)` : ''; 
+				location.href = `${this.session.app.callbackUrl}?code=${this.session.token}${stateParam}`;
+			} else if (this.session.app.callbackUrl) {
 				const url = new URL(this.session.app.callbackUrl);
 				if (['javascript:', 'file:', 'data:', 'mailto:', 'tel:'].includes(url.protocol)) throw new Error('invalid url');
-				location.href = `${this.session.app.callbackUrl}?token=${this.session.token}&code=${this.session.token}&state=${getUrlParams().state || ''}`;
+				if (this.session.app.callbackUrl === "urn:ietf:wg:oauth:2.0:oob") {
+					this.auth_code = this.session.token;
+				} else {
+					location.href = `${this.session.app.callbackUrl}?token=${this.session.token}&code=${this.session.token}&state=${getUrlParams().state || ''}`;
+				}
 			}
 		}, onLogin(res) {
 			login(res.i);
