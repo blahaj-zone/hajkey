@@ -275,7 +275,7 @@ router.get(reUser, async (ctx, next) => {
 
 	ctx.params = groups;
 
-	console.log(ctx, ctx.params);
+	//console.log(ctx, ctx.params);
 	if (groups.feed) {
 		if (groups.sub) {
 			await next();

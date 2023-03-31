@@ -48,7 +48,7 @@ export const initializeStreamingServer = (server: http.Server) => {
 		redisClient.on("message", onRedisMessage);
 		const host = `https://${request.host}`;
 		const prepareStream = q.stream?.toString();
-		console.log("start", q);
+		//console.log("start", q);
 
 		const main = new MainStreamConnection(
 			connection,

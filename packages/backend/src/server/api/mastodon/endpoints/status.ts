@@ -383,7 +383,7 @@ async function getFirstReaction(
 		});
 		const reactRaw = api.data;
 		react = Array.isArray(reactRaw) ? api.data[0] : "⭐";
-		console.log(api.data);
+		//console.log(api.data);
 		return react;
 	} catch (e) {
 		return react;

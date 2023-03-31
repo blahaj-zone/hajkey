@@ -71,7 +71,7 @@ export function apiSearchMastodon(router: Router): void {
 				accessTokens,
 				query.limit || 20,
 			);
-			console.log(data);
+			//console.log(data);
 			ctx.body = data;
 		} catch (e: any) {
 			console.error(e);
@@ -116,7 +116,7 @@ async function getFeaturedUser(
 			state: "alive",
 		});
 		const data: MisskeyEntity.UserDetail[] = api.data;
-		console.log(data);
+		//console.log(data);
 		return data.map((u) => {
 			return {
 				source: "past_interactions",

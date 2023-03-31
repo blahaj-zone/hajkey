@@ -58,7 +58,7 @@ export default class Connection {
 		accessToken: string,
 		prepareStream: string | undefined,
 	) {
-		console.log("constructor", prepareStream);
+		//console.log("constructor", prepareStream);
 		this.wsConnection = wsConnection;
 		this.subscriber = subscriber;
 		if (user) this.user = user;
@@ -86,7 +86,7 @@ export default class Connection {
 
 			this.subscriber.on(`user:${this.user.id}`, this.onUserEvent);
 		}
-		console.log("prepare", prepareStream);
+		//console.log("prepare", prepareStream);
 		if (prepareStream) {
 			this.onWsConnectionMessage({
 				type: "utf8",
@@ -244,7 +244,7 @@ export default class Connection {
 
 		for (const obj of objs) {
 			const { type, body } = obj;
-			console.log(type, body);
+			//console.log(type, body);
 			switch (type) {
 				case "readNotification":
 					this.onReadNotification(body);
@@ -391,7 +391,7 @@ export default class Connection {
 	 * クライアントにメッセージ送信
 	 */
 	public sendMessageToWs(type: string, payload: any) {
-		console.log(payload, this.isMastodonCompatible);
+		//console.log(payload, this.isMastodonCompatible);
 		if (this.isMastodonCompatible) {
 			if (payload.type === "note") {
 				this.wsConnection.send(

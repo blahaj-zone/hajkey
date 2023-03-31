@@ -70,7 +70,7 @@ export function apiAuthMastodon(router: Router): void {
 				client_id: Buffer.from(appData.url || "").toString("base64"),
 				client_secret: appData.clientSecret
 			};
-			console.log(returns)
+			//console.log(returns)
 			ctx.body = returns;
 		} catch (e: any) {
 			console.error(e);

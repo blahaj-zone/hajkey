@@ -45,7 +45,7 @@ export function apiAccountMastodon(router: Router): void {
 				sensitive: false,
 				language: "",
 			};
-			console.log(acct);
+			//console.log(acct);
 			ctx.body = acct;
 		} catch (e: any) {
 			console.error(e);

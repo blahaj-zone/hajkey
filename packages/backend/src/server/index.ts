@@ -160,7 +160,7 @@ router.get("/verify-email/:code", async (ctx) => {
 
 mastoRouter.get("/oauth/authorize", async (ctx) => {
 	const { client_id, state, redirect_uri } = ctx.request.query;
-	console.log(ctx.request.req);
+	//console.log(ctx.request.req);
 	let param = "mastodon=true";
 	if (state)
 		param += `&state=${state}`;
@@ -172,8 +172,8 @@ mastoRouter.get("/oauth/authorize", async (ctx) => {
 
 mastoRouter.post("/oauth/token", async (ctx) => {
 	const body: any = ctx.request.body || ctx.request.query;
-	console.log('token-request', body);
-	console.log('token-query', ctx.request.query);
+	//console.log('token-request', body);
+	//console.log('token-query', ctx.request.query);
 	if (body.grant_type === 'client_credentials') {
 		const ret = {
 			access_token: uuid(),
@@ -197,7 +197,7 @@ mastoRouter.post("/oauth/token", async (ctx) => {
 		//	return;
 		//}
 		//token = `${m[1]}-${m[2]}-${m[3]}-${m[4]}-${m[5]}`
-		console.log(body.code, token)
+		//console.log(body.code, token)
 		token = body.code
 	}
 	if (client_id instanceof Array) {
@@ -217,7 +217,7 @@ mastoRouter.post("/oauth/token", async (ctx) => {
 			scope: body.scope || 'read write follow push',
 			created_at: Math.floor(new Date().getTime() / 1000),
 		};
-		console.log('token-response', ret)
+		//console.log('token-response', ret)
 		ctx.body = ret;
 	} catch (err: any) {
 		console.error(err);

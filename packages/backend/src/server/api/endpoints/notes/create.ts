@@ -306,7 +306,7 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
-	console.log (`got create.note`, renote,reply,profile,user)
+	//console.log (`got create.note`, renote,reply,profile,user)
 
 	try {
 		if (renote && ps.text) {
