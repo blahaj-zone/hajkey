@@ -17,6 +17,7 @@ import {
 } from "@/prelude/time.js";
 import { getChartInsertLock } from "@/misc/app-lock.js";
 import { db } from "@/db/postgre.js";
+import promiseLimit from "promise-limit";
 
 const logger = new Logger("chart", "white", process.env.NODE_ENV !== "test");
 
@@ -648,12 +649,19 @@ export default abstract class Chart<T extends Schema> {
 
 		const groups = removeDuplicates(this.buffer.map((log) => log.group));
 
+		// Limit the number of concurrent chart update queries executed on the database
+		// to 25 at a time, so as avoid excessive IO spinlocks like when 8k queries are
+		// sent out at once.
+		const limit = promiseLimit(25);
+
 		await Promise.all(
-			groups.map((group) =>
-				Promise.all([
-					this.claimCurrentLog(group, "hour"),
-					this.claimCurrentLog(group, "day"),
-				]).then(([logHour, logDay]) => update(logHour, logDay)),
+			groups.map((group) => 
+				limit(() =>
+					Promise.all([
+						this.claimCurrentLog(group, "hour"),
+						this.claimCurrentLog(group, "day"),
+					]).then(([logHour, logDay]) => update(logHour, logDay)),
+				),
 			),
 		);
 	}
@@ -684,6 +692,8 @@ export default abstract class Chart<T extends Schema> {
 			logHour: RawRecord<T>,
 			logDay: RawRecord<T>,
 		): Promise<void> => {
+
+			
 			await Promise.all([
 				this.repositoryForHour
 					.createQueryBuilder()
