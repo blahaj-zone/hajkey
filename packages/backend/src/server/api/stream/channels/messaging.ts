@@ -20,7 +20,7 @@ export default class extends Channel {
 	private subCh:
 		| `messagingStream:${User["id"]}-${User["id"]}`
 		| `messagingStream:${UserGroup["id"]}`;
-	private typers: Record<User["id"], Date> = {};
+	private typers: Map<User["id"], Date> = new Map();
 	private emitTypersIntervalId: ReturnType<typeof setInterval>;
 
 	constructor(id: string, connection: Channel["connection"]) {
@@ -66,8 +66,8 @@ export default class extends Channel {
 	) {
 		if (data.type === "typing") {
 			const id = data.body;
-			const begin = this.typers[id] == null;
-			this.typers[id] = new Date();
+			const begin = !this.typers.has(id);
+			this.typers.set(id, new Date());
 			if (begin) {
 				this.emitTypers();
 			}
@@ -107,12 +107,13 @@ export default class extends Channel {
 		const now = new Date();
 
 		// Remove not typing users
-		for (const [userId, date] of Object.entries(this.typers)) {
+		for (const [userId, date] of this.typers.entries()) {
 			if (now.getTime() - date.getTime() > 5000)
-				this.typers[userId] = undefined;
+				this.typers.delete(userId);
 		}
 
-		const users = await Users.packMany(Object.keys(this.typers), null, {
+		const ids = Array.from(this.typers.keys());
+		const users = await Users.packMany(ids, null, {
 			detail: false,
 		});
 
