@@ -473,7 +473,8 @@ export default abstract class Chart<T extends Schema> {
 	protected commit(diff: Commit<T>, group: string | null = null): void {
 		for (const [k, v] of Object.entries(diff)) {
 			if (v == null || v === 0 || (Array.isArray(v) && v.length === 0))
-				diff[k] = undefined;
+				// rome-ignore lint/performance/noDelete: needs to be deleted not just set to undefined
+				delete diff[k];
 		}
 		this.buffer.push({
 			diff,
@@ -661,39 +662,6 @@ export default abstract class Chart<T extends Schema> {
 		// sent out at once.
 		const limit = promiseLimit(25);
 
-		const accumulator = (
-			acc: number,
-			q: { diff: Commit<T>; group: string | null; },
-			_idx: number, 
-			_arr: { diff: Commit<T>; group: string | null; }[],
-		): number => {
-			for (const [k, v] of Object.entries(q.diff)) {
-				if (v == null) {
-					logger.warn(`Null value for ${q.group}: ${k} in ${this.name}`);
-				} else if (typeof v.uniqueIncrement === "number") {
-					acc += v.uniqueIncrement;
-				} else if (typeof v === "number") {
-					acc += v;
-				} else if (Array.isArray(v)) {
-					acc += v.length;
-				} else {
-					logger.info(
-						`unknown for ${q.group}: ${k} in ${this.name}: ${v.uniqueIncrement}`,
-					);
-					console.log("value: ", v);
-				}
-			}
-			return acc
-		}
-
-		for (const group of groups) {
-			const items = this.buffer.filter((q) => q.group === group);
-			const count = items.reduce(accumulator, 0);
-			logger.info(
-				`${count} ${this.name} count for ${group} (${items.length} items)`,
-			);
-		}
-
 		const startTime = Date.now();
 		await Promise.all(
 			groups.map((group) => 
@@ -706,11 +674,9 @@ export default abstract class Chart<T extends Schema> {
 			),
 		);
 
-		const endTime = Date.now();
-		const duration = endTime - startTime;
-		const endCount = this.buffer.length;
+		const duration = Date.now() - startTime;
 		logger.info(
-			`Saved ${startCount} (${groupCount} unique) ${this.name} items in ${duration}ms (${endCount} remaining)`,
+			`Saved ${startCount} (${groupCount} unique) ${this.name} items in ${duration}ms (${this.buffer.length} remaining)`,
 		);
 	}
 

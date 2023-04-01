@@ -10,7 +10,7 @@ export default class extends Channel {
 	public static shouldShare = false;
 	public static requireCredential = false;
 	private channelId: string;
-	private typers: Record<User["id"], Date> = {};
+	private typers: Map<User["id"], Date> = new Map();
 	private emitTypersIntervalId: ReturnType<typeof setInterval>;
 
 	constructor(id: string, connection: Channel["connection"]) {
@@ -44,8 +44,8 @@ export default class extends Channel {
 	private onEvent(data: StreamMessages["channel"]["payload"]) {
 		if (data.type === "typing") {
 			const id = data.body;
-			const begin = this.typers[id] == null;
-			this.typers[id] = new Date();
+			const begin = !this.typers.has(id);
+			this.typers.set(id, new Date());
 			if (begin) {
 				this.emitTypers();
 			}
@@ -58,10 +58,11 @@ export default class extends Channel {
 		// Remove not typing users
 		for (const [userId, date] of Object.entries(this.typers)) {
 			if (now.getTime() - date.getTime() > 5000)
-				this.typers[userId] = undefined;
+				this.typers.delete(userId);
 		}
 
-		const users = await Users.packMany(Object.keys(this.typers), null, {
+		const keys = Array.from(this.typers.keys());
+		const users = await Users.packMany(keys, null, {
 			detail: false,
 		});
 
