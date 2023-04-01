@@ -555,7 +555,7 @@ export default abstract class Chart<T extends Schema> {
 
 			// bake unique count
 			for (const [k, v] of Object.entries(finalDiffs)) {
-				if (this.schema[k].uniqueIncrement) {
+				if (this.schema[k].uniqueIncrement && Array.isArray(v) && v.length > 0) {
 					const name = (columnPrefix +
 						k.replaceAll(".", columnDot)) as keyof Columns<T>;
 					const tempColumnName = (uniqueTempColumnPrefix +
@@ -642,15 +642,13 @@ export default abstract class Chart<T extends Schema> {
 			);
 
 			// TODO: この一連の処理が始まった後に新たにbufferに入ったものは消さないようにする
-			if (q.group != null) {
-				this.buffer = this.buffer.filter(
-					(q) => {
-						const keep = q.group !== logHour.group;
-						if (!keep) logger.info(`Removed ${q.group} from buffer for ${this.name}`);
-						return keep;
-					},
-				);
-			}
+			this.buffer = this.buffer.filter(
+				(q) => {
+					const keep = q.group != null && q.group !== logHour.group;
+					if (!keep) logger.info(`Removed ${q.group} from buffer for ${this.name}`);
+					return keep;
+				},
+			);
 		};
 
 		const startCount = this.buffer.length;
@@ -670,7 +668,7 @@ export default abstract class Chart<T extends Schema> {
 			_arr: { diff: Commit<T>; group: string | null; }[],
 		): number => {
 			for (const [k, v] of Object.entries(q.diff)) {
-				acc += v;
+				acc += v.uniqueIncrement;
 			}
 			return acc
 		}
