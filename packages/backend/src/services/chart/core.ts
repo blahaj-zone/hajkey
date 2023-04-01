@@ -642,18 +642,48 @@ export default abstract class Chart<T extends Schema> {
 			);
 
 			// TODO: この一連の処理が始まった後に新たにbufferに入ったものは消さないようにする
-			this.buffer = this.buffer.filter(
-				(q) => q.group != null && q.group !== logHour.group,
-			);
+			if (q.group != null) {
+				this.buffer = this.buffer.filter(
+					(q) => {
+						const keep = q.group !== logHour.group;
+						if (!keep) logger.info(`Removed ${q.group} from buffer for ${this.name}`);
+						return keep;
+					},
+				);
+			}
 		};
 
+		const startCount = this.buffer.length;
+
 		const groups = removeDuplicates(this.buffer.map((log) => log.group));
+		const groupCount = groups.length;
 
 		// Limit the number of concurrent chart update queries executed on the database
 		// to 25 at a time, so as avoid excessive IO spinlocks like when 8k queries are
 		// sent out at once.
 		const limit = promiseLimit(25);
 
+		const accumulator = (
+			acc: number,
+			q: { diff: Commit<T>; group: string | null; },
+			_idx: number, 
+			_arr: { diff: Commit<T>; group: string | null; }[],
+		): number => {
+			for (const [k, v] of Object.entries(q.diff)) {
+				acc += v;
+			}
+			return acc
+		}
+
+		for (const group of groups) {
+			const items = this.buffer.filter((q) => q.group === group);
+			const count = items.reduce(accumulator, 0);
+			logger.info(
+				`${count} ${this.name} count for ${group} (${items.length} items)`,
+			);
+		}
+
+		const startTime = Date.now();
 		await Promise.all(
 			groups.map((group) => 
 				limit(() =>
@@ -663,6 +693,13 @@ export default abstract class Chart<T extends Schema> {
 					]).then(([logHour, logDay]) => update(logHour, logDay)),
 				),
 			),
+		);
+
+		const endTime = Date.now();
+		const duration = endTime - startTime;
+		const endCount = this.buffer.length;
+		logger.info(
+			`Saved ${startCount} (${groupCount} unique) ${this.name} items in ${duration}ms (${endCount} remaining)`,
 		);
 	}
 
