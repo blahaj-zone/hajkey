@@ -672,7 +672,13 @@ export default abstract class Chart<T extends Schema> {
 					logger.warn(`Null value for ${q.group}: ${k} in ${this.name}`);
 					continue;
 				}
-				acc += v.uniqueIncrement;
+				if (typeof v.uniqueIncrement === "number")
+					acc += v.uniqueIncrement;
+				else {
+					logger.info(
+						`Non-numeric uniqueIncrement for ${q.group}: ${k} in ${this.name}: ${v.uniqueIncrement}`,
+					)
+				}
 			}
 			return acc
 		}
