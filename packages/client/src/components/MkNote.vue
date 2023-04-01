@@ -202,7 +202,7 @@ const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
 const isMyRenote = $i && ($i.id === note.userId);
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.autoShowCw);
 const isLong = (appearNote.cw == null && appearNote.text != null && (
 	exceedsCharacterLimit || exceedsLinesLimit
 ));

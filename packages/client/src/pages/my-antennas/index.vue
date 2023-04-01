@@ -9,7 +9,8 @@
 				<MkPagination v-slot="{items}" ref="list" :pagination="pagination">
 					<div v-for="antenna in items" :key="antenna.id">
 						<MkA class="uopelskx" :link="true" :to="`/timeline/antenna/${antenna.id}`">
-							<i class="ph-flying-saucer ph-bold ph-lg"></i><i :class="`${antenna.hasUnreadNote ? 'ph-circle ph-fill' : 'ph-check'} ph-xs notify-icon`"></i>
+							<i class="ph-flying-saucer ph-bold ph-lg"></i>
+							<i :class="`${antenna.hasUnreadNote ? 'ph-circle ph-fill' : 'ph-check'} ph-xs notify-icon`"></i>
 						</MkA>
 						<MkA class="ljoevbzj" :to="`/my/antennas/${antenna.id}`">
 							<div class="name">{{ antenna.name }}</div>
@@ -112,7 +113,7 @@ definePageMetadata({
     top: -1em;
     left: -0.5em;
 
-		&.ph-circle ph-fill {
+		&.ph-circle.ph-fill {
 			color: var(--indicator);
 			animation: blink 1s infinite;
 		}
