@@ -668,6 +668,10 @@ export default abstract class Chart<T extends Schema> {
 			_arr: { diff: Commit<T>; group: string | null; }[],
 		): number => {
 			for (const [k, v] of Object.entries(q.diff)) {
+				if (v == null) {
+					logger.warn(`Null value for ${q.group}: ${k} in ${this.name}`);
+					continue;
+				}
 				acc += v.uniqueIncrement;
 			}
 			return acc
