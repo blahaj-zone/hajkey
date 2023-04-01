@@ -670,14 +670,17 @@ export default abstract class Chart<T extends Schema> {
 			for (const [k, v] of Object.entries(q.diff)) {
 				if (v == null) {
 					logger.warn(`Null value for ${q.group}: ${k} in ${this.name}`);
-					continue;
-				}
-				if (typeof v.uniqueIncrement === "number")
+				} else if (typeof v.uniqueIncrement === "number") {
 					acc += v.uniqueIncrement;
-				else {
+				} else if (typeof v === "number") {
+					acc += v;
+				} else if (Array.isArray(v)) {
+					acc += v.length;
+				} else {
 					logger.info(
-						`Non-numeric uniqueIncrement for ${q.group}: ${k} in ${this.name}: ${v.uniqueIncrement}`,
-					)
+						`unknown for ${q.group}: ${k} in ${this.name}: ${v.uniqueIncrement}`,
+					);
+					console.log("value: ", v);
 				}
 			}
 			return acc
