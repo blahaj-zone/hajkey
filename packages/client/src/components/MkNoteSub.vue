@@ -268,7 +268,7 @@ function noteClick(e) {
 
 	.colorbg &, .colorgrad &, .colorborder & {
 		> .main {
-			border-radius: 10px;
+			border-radius: 7px;
 			padding-right: 5px;
 		}
 	}
@@ -292,7 +292,7 @@ function noteClick(e) {
 
 	.colorborder & {
 		> .main {
-			border: 0.5px solid rgb(var(--colorizeColor));
+			outline: 0.5px solid rgb(var(--colorizeColor));
 		}
 	}
 
