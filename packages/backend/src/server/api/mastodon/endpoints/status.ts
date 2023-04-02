@@ -2,13 +2,13 @@ import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import { emojiRegexAtStartToEnd } from "@/misc/emoji-regex.js";
 import axios from "axios";
-import querystring from 'node:querystring'
-import qs from 'qs'
+import querystring from "node:querystring";
+import qs from "qs";
 import { limitToInt } from "./timeline.js";
 
 function normalizeQuery(data: any) {
-    const str = querystring.stringify(data);
-    return qs.parse(str);
+	const str = querystring.stringify(data);
+	return qs.parse(str);
 }
 
 export function apiStatusMastodon(router: Router): void {
@@ -18,11 +18,14 @@ export function apiStatusMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		try {
 			let body: any = ctx.request.body;
-			if ((!body.poll && body['poll[options][]']) || (!body.media_ids && body['media_ids[]'])) {
-				body = normalizeQuery(body)
+			if (
+				(!body.poll && body["poll[options][]"]) ||
+				(!body.media_ids && body["media_ids[]"])
+			) {
+				body = normalizeQuery(body);
 			}
 			const text = body.status;
-			const removed = text.replace(/@\S+/g, "").replace(/\s|​/g, '')
+			const removed = text.replace(/@\S+/g, "").replace(/\s|​/g, "");
 			const isDefaultEmoji = emojiRegexAtStartToEnd.test(removed);
 			const isCustomEmoji = /^:[a-zA-Z0-9@_]+:$/.test(removed);
 			if ((body.in_reply_to_id && isDefaultEmoji) || isCustomEmoji) {
@@ -46,9 +49,10 @@ export function apiStatusMastodon(router: Router): void {
 				}
 			}
 			if (!body.media_ids) body.media_ids = undefined;
-			if (body.media_ids && !body.media_ids.length) body.media_ids = undefined;		             
-			const { sensitive } = body
-			body.sensitive = typeof sensitive === 'string' ? sensitive === 'true' : sensitive
+			if (body.media_ids && !body.media_ids.length) body.media_ids = undefined;
+			const { sensitive } = body;
+			body.sensitive =
+				typeof sensitive === "string" ? sensitive === "true" : sensitive;
 			const data = await client.postStatus(text, body);
 			ctx.body = data.data;
 		} catch (e: any) {
@@ -57,38 +61,32 @@ export function apiStatusMastodon(router: Router): void {
 			ctx.body = e.response.data;
 		}
 	});
-	router.get<{ Params: { id: string } }>(
-		"/v1/statuses/:id",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.getStatus(ctx.params.id);
-				ctx.body = data.data;
-			} catch (e: any) {
-				console.error(e);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
-	router.delete<{ Params: { id: string } }>(
-		"/v1/statuses/:id",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.deleteStatus(ctx.params.id);
-				ctx.body = data.data;
-			} catch (e: any) {
-				console.error(e.response.data, request.params.id);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
+	router.get<{ Params: { id: string } }>("/v1/statuses/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getStatus(ctx.params.id);
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
+	router.delete<{ Params: { id: string } }>("/v1/statuses/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.deleteStatus(ctx.params.id);
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e.response.data, request.params.id);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
 	interface IReaction {
 		id: string;
 		createdAt: string;
@@ -103,12 +101,15 @@ export function apiStatusMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const id = ctx.params.id;
-				const data = await client.getStatusContext(id, limitToInt(ctx.query as any));
+				const data = await client.getStatusContext(
+					id,
+					limitToInt(ctx.query as any),
+				);
 				const status = await client.getStatus(id);
 				let reqInstance = axios.create({
 					headers: {
-						Authorization : ctx.headers.authorization
-					}
+						Authorization: ctx.headers.authorization,
+					},
 				});
 				const reactionsAxios = await reqInstance.get(
 					`${BASE_URL}/api/notes/reactions?noteId=${id}`,
@@ -296,57 +297,48 @@ export function apiStatusMastodon(router: Router): void {
 			}
 		},
 	);
-	router.get<{ Params: { id: string } }>(
-		"/v1/media/:id",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.getMedia(ctx.params.id);
-				ctx.body = data.data;
-			} catch (e: any) {
-				console.error(e);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
-	router.put<{ Params: { id: string } }>(
-		"/v1/media/:id",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.updateMedia(
-					ctx.params.id,
-					ctx.request.body as any,
-				);
-				ctx.body = data.data;
-			} catch (e: any) {
-				console.error(e);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
-	router.get<{ Params: { id: string } }>(
-		"/v1/polls/:id",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.getPoll(ctx.params.id);
-				ctx.body = data.data;
-			} catch (e: any) {
-				console.error(e);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
+	router.get<{ Params: { id: string } }>("/v1/media/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getMedia(ctx.params.id);
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
+	router.put<{ Params: { id: string } }>("/v1/media/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.updateMedia(
+				ctx.params.id,
+				ctx.request.body as any,
+			);
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
+	router.get<{ Params: { id: string } }>("/v1/polls/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getPoll(ctx.params.id);
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
 	router.post<{ Params: { id: string } }>(
 		"/v1/polls/:id/votes",
 		async (ctx) => {

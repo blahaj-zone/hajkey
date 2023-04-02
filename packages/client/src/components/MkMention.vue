@@ -47,7 +47,6 @@ const bgCss = bg.toRgbString();
 	border-radius: 999px;
 	max-width: 100%;
 	white-space: nowrap;
-	overflow: clip;
 	text-overflow: ellipsis;
 	color: var(--mention);
 

@@ -339,10 +339,10 @@ export default class Connection {
 	private onSubscribeNote(payload: any) {
 		if (!payload.id) return;
 
-		const c = this.subscribingNotes.get(payload.id) || 0;
-		this.subscribingNotes.set(payload.id, c + 1);
+		const current = this.subscribingNotes.get(payload.id) || 0;
+		this.subscribingNotes.set(payload.id, current + 1);
 
-		if (!c) {
+		if (!current) {
 			this.subscriber.on(`noteStream:${payload.id}`, this.onNoteStreamMessage);
 		}
 	}
@@ -353,13 +353,13 @@ export default class Connection {
 	private onUnsubscribeNote(payload: any) {
 		if (!payload.id) return;
 
-		const c = this.subscribingNotes.get(payload.id) || 0;
-		if (c <= 1) {
+		const current = this.subscribingNotes.get(payload.id) || 0;
+		if (current <= 1) {
 			this.subscribingNotes.delete(payload.id);
 			this.subscriber.off(`noteStream:${payload.id}`, this.onNoteStreamMessage);
 			return;
 		}
-		this.subscribingNotes.set(payload.id, c - 1);
+		this.subscribingNotes.set(payload.id, current - 1);
 	}
 
 	private async onNoteStreamMessage(data: StreamMessages["note"]["payload"]) {
@@ -413,7 +413,7 @@ export default class Connection {
 				const client = getClient(this.host, this.accessToken);
 				client.getStatus(payload.id).then((data) => {
 					const newPost = toTextWithReaction([data.data], this.host);
-					const targetPost = newPost[0]
+					const targetPost = newPost[0];
 					for (const stream of this.currentSubscribe) {
 						this.wsConnection.send(
 							JSON.stringify({

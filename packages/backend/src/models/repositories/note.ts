@@ -265,12 +265,22 @@ export const NoteRepository = db.getRepository(Note).extend({
 
 		if (packed.user.isCat && packed.text) {
 			const tokens = packed.text ? mfm.parse(packed.text) : [];
-			mfm.inspect(tokens, (node) => {
-				if (node.type === "text") {
-					// TODO: quoteなtextはskip
+			function nyaizeNode(node: mfm.MfmNode) {
+				if (node.type === "quote")
+					return;
+				if (node.type === "text")
 					node.props.text = nyaize(node.props.text);
+
+				if (node.children) {
+					for (const child of node.children) {
+						nyaizeNode(child);
+					}
 				}
-			});
+			}
+
+			for (const node of tokens)
+				nyaizeNode(node);
+
 			packed.text = mfm.toString(tokens);
 		}
 

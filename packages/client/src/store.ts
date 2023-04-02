@@ -93,6 +93,7 @@ export const defaultStore = markRaw(
 				"favorites",
 				"channels",
 				"search",
+				"ui",
 			],
 		},
 		visibility: {
@@ -387,6 +388,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default:true,
 		},
+		enableCustomKaTeXMacro: {
+			where: "device",
+			default: false,
+		},
 	}),
 );
 
@@ -417,7 +422,7 @@ export class ColdDeviceStorage {
 		plugins: [] as Plugin[],
 		mediaVolume: 0.5,
 		sound_masterVolume: 0.3,
-		sound_note: { type: "None", volume: 0 },
+		sound_note: { type: "none", volume: 0 },
 		sound_noteMy: { type: "syuilo/up", volume: 1 },
 		sound_notification: { type: "syuilo/pope2", volume: 1 },
 		sound_chat: { type: "syuilo/pope1", volume: 1 },

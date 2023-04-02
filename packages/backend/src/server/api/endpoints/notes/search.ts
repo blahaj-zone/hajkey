@@ -142,7 +142,7 @@ export default define(meta, paramDef, async (ps, me) => {
 				})
 				.map((key) => key.id);
 
-				ids.push(...res);
+			ids.push(...res);
 		}
 
 		// Sort all the results by note id DESC (newest first)
@@ -163,7 +163,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			});
 
 			// The notes are checked for visibility and muted/blocked users when packed
-			found.push(...await Notes.packMany(notes, me));
+			found.push(...(await Notes.packMany(notes, me)));
 			start += chunkSize;
 		}
 

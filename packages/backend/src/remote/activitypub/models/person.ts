@@ -205,7 +205,9 @@ export async function createPerson(
 
 	if (typeof person.followers === "string") {
 		try {
-			let data = await fetch(person.followers, { headers: { "Accept": "application/json" } });
+			let data = await fetch(person.followers, {
+				headers: { Accept: "application/json" },
+			});
 			let json_data = JSON.parse(await data.text());
 
 			followersCount = json_data.totalItems;
@@ -218,7 +220,9 @@ export async function createPerson(
 
 	if (typeof person.following === "string") {
 		try {
-			let data = await fetch(person.following, { headers: { "Accept": "application/json" } });
+			let data = await fetch(person.following, {
+				headers: { Accept: "application/json" },
+			});
 			let json_data = JSON.parse(await data.text());
 
 			followingCount = json_data.totalItems;
@@ -226,7 +230,6 @@ export async function createPerson(
 			followingCount = undefined;
 		}
 	}
-
 
 	// Create user
 	let user: IRemoteUser;
@@ -255,14 +258,20 @@ export async function createPerson(
 					followersUri: person.followers
 						? getApId(person.followers)
 						: undefined,
-					followersCount: followersCount !== undefined
-						? followersCount
-						: person.followers && typeof person.followers !== "string" && isCollectionOrOrderedCollection(person.followers)
+					followersCount:
+						followersCount !== undefined
+							? followersCount
+							: person.followers &&
+							  typeof person.followers !== "string" &&
+							  isCollectionOrOrderedCollection(person.followers)
 							? person.followers.totalItems
 							: undefined,
-					followingCount: followingCount !== undefined
-						? followingCount
-						: person.following && typeof person.following !== "string" && isCollectionOrOrderedCollection(person.following)
+					followingCount:
+						followingCount !== undefined
+							? followingCount
+							: person.following &&
+							  typeof person.following !== "string" &&
+							  isCollectionOrOrderedCollection(person.following)
 							? person.following.totalItems
 							: undefined,
 					featured: person.featured ? getApId(person.featured) : undefined,
@@ -440,7 +449,9 @@ export async function updatePerson(
 
 	if (typeof person.followers === "string") {
 		try {
-			let data = await fetch(person.followers, { headers: { "Accept": "application/json" } } );
+			let data = await fetch(person.followers, {
+				headers: { Accept: "application/json" },
+			});
 			let json_data = JSON.parse(await data.text());
 
 			followersCount = json_data.totalItems;
@@ -449,12 +460,13 @@ export async function updatePerson(
 		}
 	}
 
-
 	let followingCount: number | undefined;
 
 	if (typeof person.following === "string") {
 		try {
-			let data = await fetch(person.following, { headers: { "Accept": "application/json" } } );
+			let data = await fetch(person.following, {
+				headers: { Accept: "application/json" },
+			});
 			let json_data = JSON.parse(await data.text());
 
 			followingCount = json_data.totalItems;
@@ -470,14 +482,20 @@ export async function updatePerson(
 			person.sharedInbox ||
 			(person.endpoints ? person.endpoints.sharedInbox : undefined),
 		followersUri: person.followers ? getApId(person.followers) : undefined,
-		followersCount: followersCount !== undefined
-			? followersCount
-			: person.followers && typeof person.followers !== "string" && isCollectionOrOrderedCollection(person.followers)
+		followersCount:
+			followersCount !== undefined
+				? followersCount
+				: person.followers &&
+				  typeof person.followers !== "string" &&
+				  isCollectionOrOrderedCollection(person.followers)
 				? person.followers.totalItems
 				: undefined,
-		followingCount: followingCount !== undefined
-			? followingCount
-			: person.following && typeof person.following !== "string" && isCollectionOrOrderedCollection(person.following)
+		followingCount:
+			followingCount !== undefined
+				? followingCount
+				: person.following &&
+				  typeof person.following !== "string" &&
+				  isCollectionOrOrderedCollection(person.following)
 				? person.following.totalItems
 				: undefined,
 		featured: person.featured,

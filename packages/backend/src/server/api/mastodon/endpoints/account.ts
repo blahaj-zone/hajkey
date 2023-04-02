@@ -77,7 +77,10 @@ export function apiAccountMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		const client = getClient(BASE_URL, accessTokens);
 		try {
-			const data = await client.search((ctx.request.query as any).acct, 'accounts');
+			const data = await client.search(
+				(ctx.request.query as any).acct,
+				"accounts",
+			);
 			let resp = data.data.accounts[0];
 			resp.id = convertId(resp.id, IdType.MastodonId);
 			ctx.body = resp;
@@ -88,26 +91,23 @@ export function apiAccountMastodon(router: Router): void {
 			ctx.body = e.response.data;
 		}
 	});
-	router.get<{ Params: { id: string } }>(
-		"/v1/accounts/:id(^.*\\d.*$)",
-		async (ctx) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const calcId = convertId(ctx.params.id, IdType.CalckeyId);
-				const data = await client.getAccount(calcId);
-				let resp = data.data;
-				resp.id = convertId(resp.id, IdType.MastodonId);
-				ctx.body = resp;
-			} catch (e: any) {
-				console.error(e);
-				console.error(e.response.data);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
+	router.get<{ Params: { id: string } }>("/v1/accounts/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const calcId = convertId(ctx.params.id, IdType.CalckeyId);
+			const data = await client.getAccount(calcId);
+			let resp = data.data;
+			resp.id = convertId(resp.id, IdType.MastodonId);
+			ctx.body = resp;
+		} catch (e: any) {
+			console.error(e);
+			console.error(e.response.data);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
 	router.get<{ Params: { id: string } }>(
 		"/v1/accounts/:id/statuses",
 		async (ctx) => {
@@ -122,11 +122,19 @@ export function apiAccountMastodon(router: Router): void {
 				let resp = data.data;
 				for (let statIdx = 0; statIdx < resp.length; statIdx++) {
 					resp[statIdx].id = convertId(resp[statIdx].id, IdType.MastodonId);
-					resp[statIdx].in_reply_to_account_id = resp[statIdx].in_reply_to_account_id ? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId) : null;
-					resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id ? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId) : null;
-					let mentions = resp[statIdx].mentions
+					resp[statIdx].in_reply_to_account_id = resp[statIdx]
+						.in_reply_to_account_id
+						? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId)
+						: null;
+					resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id
+						? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId)
+						: null;
+					let mentions = resp[statIdx].mentions;
 					for (let mtnIdx = 0; mtnIdx < mentions.length; mtnIdx++) {
-						resp[statIdx].mentions[mtnIdx].id = convertId(mentions[mtnIdx].id, IdType.MastodonId);
+						resp[statIdx].mentions[mtnIdx].id = convertId(
+							mentions[mtnIdx].id,
+							IdType.MastodonId,
+						);
 					}
 				}
 				ctx.body = resp;
@@ -210,7 +218,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.followAccount(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.followAccount(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let acct = data.data;
 				acct.following = true;
 				acct.id = convertId(acct.id, IdType.MastodonId);
@@ -230,7 +240,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.unfollowAccount(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.unfollowAccount(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let acct = data.data;
 				acct.id = convertId(acct.id, IdType.MastodonId);
 				acct.following = false;
@@ -250,7 +262,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.blockAccount(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.blockAccount(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let resp = data.data;
 				resp.id = convertId(resp.id, IdType.MastodonId);
 				ctx.body = resp;
@@ -269,7 +283,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.unblockAccount(convertId(ctx.params.id, IdType.MastodonId));
+				const data = await client.unblockAccount(
+					convertId(ctx.params.id, IdType.MastodonId),
+				);
 				let resp = data.data;
 				resp.id = convertId(resp.id, IdType.MastodonId);
 				ctx.body = resp;
@@ -310,7 +326,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.unmuteAccount(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.unmuteAccount(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let resp = data.data;
 				resp.id = convertId(resp.id, IdType.MastodonId);
 				ctx.body = resp;
@@ -344,7 +362,7 @@ export function apiAccountMastodon(router: Router): void {
 			for (let i = 0; i < ids.length; i++) {
 				reqIds.push(convertId(ids[i], IdType.CalckeyId));
 			}
-			
+
 			const data = await client.getRelationships(reqIds);
 			let resp = data.data;
 			for (let acctIdx = 0; acctIdx < resp.length; acctIdx++) {
@@ -365,15 +383,25 @@ export function apiAccountMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		const client = getClient(BASE_URL, accessTokens);
 		try {
-			const data = (await client.getBookmarks(limitToInt(ctx.query as any))) as any;
+			const data = (await client.getBookmarks(
+				limitToInt(ctx.query as any),
+			)) as any;
 			let resp = data.data;
 			for (let statIdx = 0; statIdx < resp.length; statIdx++) {
 				resp[statIdx].id = convertId(resp[statIdx].id, IdType.MastodonId);
-				resp[statIdx].in_reply_to_account_id = resp[statIdx].in_reply_to_account_id ? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId) : null;
-				resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id ? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId) : null;
-				let mentions = resp[statIdx].mentions
+				resp[statIdx].in_reply_to_account_id = resp[statIdx]
+					.in_reply_to_account_id
+					? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId)
+					: null;
+				resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id
+					? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId)
+					: null;
+				let mentions = resp[statIdx].mentions;
 				for (let mtnIdx = 0; mtnIdx < mentions.length; mtnIdx++) {
-					resp[statIdx].mentions[mtnIdx].id = convertId(mentions[mtnIdx].id, IdType.MastodonId);
+					resp[statIdx].mentions[mtnIdx].id = convertId(
+						mentions[mtnIdx].id,
+						IdType.MastodonId,
+					);
 				}
 			}
 			ctx.body = resp;
@@ -393,11 +421,19 @@ export function apiAccountMastodon(router: Router): void {
 			let resp = data.data;
 			for (let statIdx = 0; statIdx < resp.length; statIdx++) {
 				resp[statIdx].id = convertId(resp[statIdx].id, IdType.MastodonId);
-				resp[statIdx].in_reply_to_account_id = resp[statIdx].in_reply_to_account_id ? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId) : null;
-				resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id ? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId) : null;
-				let mentions = resp[statIdx].mentions
+				resp[statIdx].in_reply_to_account_id = resp[statIdx]
+					.in_reply_to_account_id
+					? convertId(resp[statIdx].in_reply_to_account_id, IdType.MastodonId)
+					: null;
+				resp[statIdx].in_reply_to_id = resp[statIdx].in_reply_to_id
+					? convertId(resp[statIdx].in_reply_to_id, IdType.MastodonId)
+					: null;
+				let mentions = resp[statIdx].mentions;
 				for (let mtnIdx = 0; mtnIdx < mentions.length; mtnIdx++) {
-					resp[statIdx].mentions[mtnIdx].id = convertId(mentions[mtnIdx].id, IdType.MastodonId);
+					resp[statIdx].mentions[mtnIdx].id = convertId(
+						mentions[mtnIdx].id,
+						IdType.MastodonId,
+					);
 				}
 			}
 			ctx.body = resp;
@@ -471,7 +507,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.acceptFollowRequest(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.acceptFollowRequest(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let resp = data.data;
 				resp.id = convertId(resp.id, IdType.MastodonId);
 				ctx.body = resp;
@@ -490,7 +528,9 @@ export function apiAccountMastodon(router: Router): void {
 			const accessTokens = ctx.headers.authorization;
 			const client = getClient(BASE_URL, accessTokens);
 			try {
-				const data = await client.rejectFollowRequest(convertId(ctx.params.id, IdType.CalckeyId));
+				const data = await client.rejectFollowRequest(
+					convertId(ctx.params.id, IdType.CalckeyId),
+				);
 				let resp = data.data;
 				resp.id = convertId(resp.id, IdType.MastodonId);
 				ctx.body = resp;

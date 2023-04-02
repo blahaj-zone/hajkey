@@ -6,11 +6,11 @@
 
 	<FormSection>
 		<template #label>{{ i18n.ts.sounds }}</template>
-		<FormLink v-for="type in Object.keys(sounds)" :key="type" style="margin-bottom: 8px;" :callback="async () => { await edit(type); return false; }" to="">
+		<FormButton v-for="type in Object.keys(sounds)" :key="type" style="margin-bottom: 8px;" @click="edit(type)">
 			{{ i18n.t('_sfx.' + type) }}
 			<template #suffix>{{ sounds[type].type || i18n.ts.none }}</template>
 			<template #suffixIcon><i class="ph-caret-down ph-bold ph-lg"></i></template>
-		</FormLink>
+		</FormButton>
 	</FormSection>
 
 	<FormButton danger class="_formBlock" @click="reset()"><i class="ph-arrow-clockwise ph-bold ph-lg"></i> {{ i18n.ts.default }}</FormButton>
@@ -21,7 +21,6 @@
 import { computed, ref } from 'vue';
 import FormRange from '@/components/form/range.vue';
 import FormButton from '@/components/MkButton.vue';
-import FormLink from '@/components/form/link.vue';
 import FormSection from '@/components/form/section.vue';
 import * as os from '@/os';
 import { ColdDeviceStorage } from '@/store';

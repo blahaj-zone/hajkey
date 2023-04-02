@@ -56,7 +56,6 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 	border-radius: 100px;
 	font-size: .8em;
 	text-shadow: 0 2px 2px var(--shadow);
-
 	> .avatar {
 		width: 3.7em;
 		height: 3.7em;
@@ -74,10 +73,11 @@ const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultS
 				width: 0;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				gap: .1em 0;
 			}
 			&:last-child {
 				max-width: 50%;
-				gap: .2em .5em;
+				gap: .3em .5em;
 			}
 			.article > .main & {
 				display: flex;

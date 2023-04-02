@@ -91,6 +91,7 @@ If you have access to a server that supports one of the sources below, I recomme
 
 ### 🏗️ Build dependencies
 
+- 🦀 [Rust toolchain](https://www.rust-lang.org/)
 - 🦬 C/C++ compiler & build tools
   - `build-essential` on Debian/Ubuntu Linux
   - `base-devel` on Arch Linux

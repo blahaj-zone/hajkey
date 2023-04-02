@@ -44,7 +44,7 @@ const writeScope = [
 export function apiAuthMastodon(router: Router): void {
 	router.post("/v1/apps", async (ctx) => {
 		const BASE_URL = `${ctx.request.protocol}://${ctx.request.hostname}`;
-		const client = getClient(BASE_URL, '');
+		const client = getClient(BASE_URL, "");
 		const body: any = ctx.request.body || ctx.request.query;
 		try {
 			let scope = body.scopes;
@@ -68,9 +68,9 @@ export function apiAuthMastodon(router: Router): void {
 				website: body.website,
 				redirect_uri: red,
 				client_id: Buffer.from(appData.url || "").toString("base64"),
-				client_secret: appData.clientSecret
+				client_secret: appData.clientSecret,
 			};
-			//console.log(returns)
+			//console.log(returns);
 			ctx.body = returns;
 		} catch (e: any) {
 			console.error(e);

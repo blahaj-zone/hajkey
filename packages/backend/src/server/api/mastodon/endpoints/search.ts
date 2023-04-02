@@ -44,7 +44,7 @@ export function apiSearchMastodon(router: Router): void {
 			}
 		} catch (e: any) {
 			console.error(e);
-			ctx.status = (401);
+			ctx.status = 401;
 			ctx.body = e.response.data;
 		}
 	});
@@ -52,11 +52,15 @@ export function apiSearchMastodon(router: Router): void {
 		const BASE_URL = `${ctx.request.protocol}://${ctx.request.hostname}`;
 		const accessTokens = ctx.headers.authorization;
 		try {
-			const data = await getHighlight(BASE_URL, ctx.request.hostname, accessTokens);
+			const data = await getHighlight(
+				BASE_URL,
+				ctx.request.hostname,
+				accessTokens,
+			);
 			ctx.body = data;
 		} catch (e: any) {
 			console.error(e);
-			ctx.status = (401);
+			ctx.status = 401;
 			ctx.body = e.response.data;
 		}
 	});
@@ -75,7 +79,7 @@ export function apiSearchMastodon(router: Router): void {
 			ctx.body = data;
 		} catch (e: any) {
 			console.error(e);
-			ctx.status = (401);
+			ctx.status = 401;
 			ctx.body = e.response.data;
 		}
 	});

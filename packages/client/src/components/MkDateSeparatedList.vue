@@ -178,6 +178,13 @@ export default defineComponent({
 			border-radius: 0;
 			box-shadow: none;
 
+			&:first-child {
+				border-radius: var(--radius) var(--radius) 0 0;
+			}
+			&:last-child {
+				border-radius: 0 0 var(--radius) var(--radius);
+			}
+
 			&:not(:last-child) {
 				border-bottom: solid 0.5px var(--divider);
 			}

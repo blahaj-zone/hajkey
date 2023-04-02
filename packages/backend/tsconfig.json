@@ -21,7 +21,7 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
+		"isolatedModules": false,
 		"rootDir": "./src",
 		"baseUrl": "./",
 		"paths": {

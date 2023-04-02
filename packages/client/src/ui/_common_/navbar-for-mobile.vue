@@ -34,6 +34,9 @@
 			<button class="item _button post" data-cy-open-post-form @click="os.post">
 				<i class="icon ph-pencil ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.note }}</span>
 			</button>
+			<button v-tooltip.noDelay.right="i18n.ts.help" class="item _button help" @click="openHelpMenu">
+				<i class="help icon ph-info ph-bold ph-xl ph-fw"></i>
+			</button>
 		</div>
 	</div>
 </div>
@@ -44,6 +47,7 @@ import { computed, defineAsyncComponent, defineComponent, ref, toRef, watch } fr
 import * as os from '@/os';
 import { navbarItemDef } from '@/navbar';
 import { openAccountMenu as openAccountMenu_ } from '@/account';
+import { openHelpMenu_ } from '@/scripts/helpMenu'
 import { defaultStore } from '@/store';
 import { i18n } from '@/i18n';
 
@@ -60,6 +64,10 @@ function openAccountMenu(ev: MouseEvent) {
 	openAccountMenu_({
 		withExtraOperation: true,
 	}, ev);
+}
+
+function openHelpMenu(ev: MouseEvent) {
+	openHelpMenu_(ev);
 }
 
 function more() {
@@ -159,6 +167,20 @@ function more() {
 					position: relative;
 				}
 			}
+
+			> .help {
+					position: relative;
+					display: block;
+					text-align: center;
+					width: 100%;
+					margin-top: 1rem;
+
+					> .icon {
+						display: inline-block;
+						width: 38px;
+						aspect-ratio: 1;
+					}
+				}
 
 			> .instance {
 				position: relative;

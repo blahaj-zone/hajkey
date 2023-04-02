@@ -7,7 +7,7 @@
 		</div>
 		<div class="body">
 			<div class="content">
-				<Mfm :text="text.trim()" :author="$i" :i="$i"/>
+				<Mfm :text="preprocess(text).trim()" :author="$i" :i="$i"/>
 			</div>
 		</div>
 	</div>
@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import { } from 'vue';
+import { preprocess } from '@/scripts/preprocess';
 
 const props = defineProps<{
 	text: string;

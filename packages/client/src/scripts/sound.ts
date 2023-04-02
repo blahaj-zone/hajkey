@@ -30,7 +30,7 @@ export function play(type: string) {
 
 export function playFile(file: string, volume: number) {
 	const masterVolume = ColdDeviceStorage.get("sound_masterVolume");
-	if (masterVolume === 0) return;
+	if (masterVolume === 0 || volume === 0 || file.toLowerCase().includes("none")) return;
 
 	const audio = setVolume(getAudio(file), volume);
 	audio.play();

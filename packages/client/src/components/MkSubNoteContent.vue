@@ -6,7 +6,7 @@
 			<MkA v-if="note.replyId"  :to="`/notes/${note.replyId}`" class="reply-icon" @click.stop>
 				<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 			</MkA>
-			<MkA v-if="conversation && note.renoteId && note.renoteId != parentId" :to="`/notes/${note.renoteId}`" class="reply-icon" @click.stop>
+			<MkA v-if="conversation && note.renoteId && note.renoteId != parentId && !note.replyId" :to="`/notes/${note.renoteId}`" class="reply-icon" @click.stop>
 				<i class="ph-quotes ph-bold ph-lg"></i>
 			</MkA>
 		</template>

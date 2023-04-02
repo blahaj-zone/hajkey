@@ -1,1 +1,1 @@
-declare module 'koa-remove-trailing-slashes';
+declare module "koa-remove-trailing-slashes";

@@ -405,7 +405,6 @@ function readPromo() {
 			width: 0;
 			flex-grow: 1;
 			position: relative;
-			margin-bottom: -10px;
 			line-height: 28px;
 		}
 		> .line {
@@ -475,16 +474,12 @@ function readPromo() {
 				}
 			}
 		}
-
-		& + .article {
-			padding-top: 10px !important;
-		}
-
 	}
 
 	> .article {
-		padding: 28px 32px 16px;
+		padding: 4px 32px 10px;
 		cursor: pointer;
+
 
 		@media (pointer: coarse) {
 			cursor: default;
@@ -685,17 +680,16 @@ function readPromo() {
 		padding-top: 6px;
 		> .note-context {
 			padding-inline: 16px;
-			margin-top: 0;
+			margin-top: 8px;
 			> :not(.line) {
-				margin-top: 5px;
+				margin-top: 0px;
 			}
 			> .line {
 				margin-right: 10px;
 			}
 		}
 		> .article {
-			padding: 16px 16px 9px;
-
+			padding: 4px 16px 8px;
 			> .main > .header-container > .avatar {
 				margin-right: 10px;
 				// top: calc(14px + var(--stickyTop, 0px));

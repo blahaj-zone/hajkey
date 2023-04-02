@@ -43,9 +43,11 @@ const headerActions = $computed(() => [{
 const headerTabs = $computed(() => [{
 	key: 'deliver',
 	title: 'Deliver',
+	icon: 'ph-upload ph-bold ph-lg',
 }, {
 	key: 'inbox',
 	title: 'Inbox',
+	icon: 'ph-download ph-bold ph-lg',
 }]);
 
 definePageMetadata({

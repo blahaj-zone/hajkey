@@ -92,6 +92,7 @@ import { $i, getAccounts, openAccountMenu as openAccountMenu_ } from '@/account'
 import { uploadFile } from '@/scripts/upload';
 import { deepClone } from '@/scripts/clone';
 import XCheatSheet from '@/components/MkCheatSheetDialog.vue';
+import { preprocess } from '@/scripts/preprocess';
 
 const modal = inject('modal');
 
@@ -200,7 +201,7 @@ const submitText = $computed((): string => {
 });
 
 const textLength = $computed((): number => {
-	return length((text + imeText).trim());
+	return length((preprocess(text) + imeText).trim());
 });
 
 const maxTextLength = $computed((): number => {
@@ -557,8 +558,10 @@ function deleteDraft() {
 }
 
 async function post() {
+	const processedText = preprocess(text);
+
 	let postData = {
-		text: text === '' ? undefined : text,
+		text: processedText === '' ? undefined : processedText,
 		fileIds: files.length > 0 ? files.map(f => f.id) : undefined,
 		replyId: props.reply ? props.reply.id : undefined,
 		renoteId: props.renote ? props.renote.id : quoteId ? quoteId : undefined,

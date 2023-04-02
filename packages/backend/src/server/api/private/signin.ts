@@ -12,6 +12,11 @@ import {
 } from "@/models/index.js";
 import type { ILocalUser } from "@/models/entities/user.js";
 import { genId } from "@/misc/gen-id.js";
+import {
+	comparePassword,
+	hashPassword,
+	isOldAlgorithm,
+} from "@/misc/password.js";
 import { verifyLogin, hash } from "../2fa.js";
 import { randomBytes } from "node:crypto";
 import { IsNull } from "typeorm";
@@ -88,7 +93,12 @@ export default async (ctx: Koa.Context) => {
 	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
 	// Compare password
-	const same = await bcrypt.compare(password, profile.password!);
+	const same = await comparePassword(password, profile.password!);
+
+	if (same && isOldAlgorithm(profile.password!)) {
+		profile.password = await hashPassword(password);
+		await UserProfiles.save(profile);
+	}
 
 	async function fail(status?: number, failure?: { id: string }) {
 		// Append signin history

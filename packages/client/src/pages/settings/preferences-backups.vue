@@ -87,6 +87,7 @@ const defaultStoreSaveKeys: (keyof typeof defaultStore['state'])[] = [
 	'showUpdates',
 	'swipeOnDesktop',
 	'showAdminUpdates',
+	'enableCustomKaTeXMacro',
 ];
 const coldDeviceStorageSaveKeys: (keyof typeof ColdDeviceStorage.default)[] = [
 	'lightTheme',

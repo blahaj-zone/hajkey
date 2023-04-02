@@ -151,7 +151,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 
 	// テキストが無いかつ添付ファイルも無かったらエラー
-	if ((ps.text == null || ps.text.trim() === '') && file == null) {
+	if ((ps.text == null || ps.text.trim() === "") && file == null) {
 		throw new ApiError(meta.errors.contentRequired);
 	}
 

@@ -13,7 +13,7 @@
 			>
 				<swiper-slide>
 					<div class="_content yweeujhr dms">
-						<MkButton primary class="start" @click="startUser"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
+						<MkButton primary class="start" v-if="!isMobile" @click="startUser"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
 						<MkPagination v-slot="{items}" :pagination="dmsPagination">
 							<MkChatPreview v-for="message in items" :key="message.id" class="yweeujhr message _block" :message="message"/>
 						</MkPagination>
@@ -21,7 +21,7 @@
 				</swiper-slide>
 				<swiper-slide>
 					<div class="_content yweeujhr groups">
-						<div class="groupsbuttons">
+						<div v-if="!isMobile" class="groupsbuttons">
 							<MkButton primary class="start" :link="true" to="/my/groups"><i class="ph-user-circle-gear ph-bold ph-lg"></i> {{ i18n.ts.manageGroups }}</MkButton>
 							<MkButton primary class="start" @click="startGroup"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.startMessaging }}</MkButton>
 						</div>
@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { markRaw, onMounted, onUnmounted, watch } from 'vue';
+import { ref, markRaw, onMounted, onUnmounted, watch } from 'vue';
 import * as Acct from 'calckey-js/built/acct';
 import { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -63,6 +63,12 @@ let connection = $ref(null);
 const tabs = ['dms', 'groups'];
 let tab = $ref(tabs[0]);
 watch($$(tab), () => (syncSlide(tabs.indexOf(tab))));
+
+const MOBILE_THRESHOLD = 500;
+const isMobile = ref(deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD);
+window.addEventListener('resize', () => {
+	isMobile.value = deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD;
+});
 
 const headerActions = $computed(() => [{
 	asFullButton: true,

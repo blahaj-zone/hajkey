@@ -112,13 +112,13 @@ export async function createNote(
 	const note: IPost = object;
 
 	if (note.id && !note.id.startsWith("https://")) {
-		throw new Error(`unexpected shcema of note.id: ${note.id}`);
+		throw new Error(`unexpected schema of note.id: ${note.id}`);
 	}
 
 	const url = getOneApHrefNullable(note.url);
 
 	if (url && !url.startsWith("https://")) {
-		throw new Error(`unexpected shcema of note url: ${url}`);
+		throw new Error(`unexpected schema of note url: ${url}`);
 	}
 
 	logger.debug(`Note fetched: ${JSON.stringify(note, null, 2)}`);

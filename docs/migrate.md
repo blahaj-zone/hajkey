@@ -24,6 +24,26 @@ NODE_ENV=production pnpm run migrate
 # build using prefered method
 ```
 
+Depending on the version you're migrating from, you may have to open Postgres with `psql -d your_database` and run the following commands:
+
+```sql
+ALTER TABLE "meta" ADD COLUMN "disableLocalTimeline" boolean DEFAULT false;
+ALTER TABLE "meta" ADD COLUMN "disableGlobalTimeline" boolean DEFAULT false;
+ALTER TABLE "meta" ADD COLUMN "localDriveCapacityMb" integer DEFAULT 512;
+ALTER TABLE "meta" ADD COLUMN "remoteDriveCapacityMb" integer DEFAULT 128;
+ALTER TABLE "user" ADD COLUMN "isSilenced" boolean DEFAULT false;
+ALTER TABLE "user" ADD COLUMN "isAdmin" boolean DEFAULT false;
+ALTER TABLE "user" ADD COLUMN "isModerator" boolean DEFAULT false;
+ALTER TABLE "user" ADD COLUMN "remoteDriveCapacityMb" integer DEFAULT 128;
+ALTER TABLE "user" ADD COLUMN "driveCapacityOverrideMb" integer DEFAULT 128;
+ALTER TABLE "instance" ADD COLUMN "caughtAt" date;
+ALTER TABLE "instance" ADD COLUMN "latestRequestSentAt" date;
+ALTER TABLE "instance" ADD COLUMN "latestStatus" character varying(512);
+ALTER TABLE "instance" ADD COLUMN "lastCommunicatedAt" date;
+```
+
+then quit with `\q`, and restart Calckey.
+
 ## Misskey v12.119 and before
 
 ```sh
@@ -56,3 +76,7 @@ git pull --ff
 NODE_ENV=production pnpm run migrate
 # build using prefered method
 ```
+
+## Reverse
+
+You ***cannot*** migrate back to Misskey from Calckey due to re-hashing passwords on signin with argon2. You can migrate from to Calckey to Foundkey, though.

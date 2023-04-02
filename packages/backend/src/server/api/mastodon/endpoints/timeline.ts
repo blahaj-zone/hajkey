@@ -16,7 +16,8 @@ export function limitToInt(q: ParsedUrlQuery) {
 
 export function argsToBools(q: ParsedUrlQuery) {
 	// Values taken from https://docs.joinmastodon.org/client/intro/#boolean
-	const toBoolean = (value: string) => !['0', 'f', 'F', 'false', 'FALSE', 'off', 'OFF'].includes(value);
+	const toBoolean = (value: string) =>
+		!["0", "f", "F", "false", "FALSE", "off", "OFF"].includes(value);
 
 	let object: any = q;
 	if (q.only_media)
@@ -35,25 +36,26 @@ export function toTextWithReaction(status: Entity.Status[], host: string) {
 		if (!t.emoji_reactions) return t;
 		if (t.reblog) t.reblog = toTextWithReaction([t.reblog], host)[0];
 		const reactions = t.emoji_reactions.map((r) => {
-			const emojiNotation = r.url ? `:${r.name.replace('@.', '')}:` : r.name
-			return `${emojiNotation} (${r.count}${r.me ? `* ` : ''})`
+			const emojiNotation = r.url ? `:${r.name.replace("@.", "")}:` : r.name;
+			return `${emojiNotation} (${r.count}${r.me ? `* ` : ""})`;
 		});
 		const reaction = t.emoji_reactions as Entity.Reaction[];
-		const emoji = t.emojis || []
+		const emoji = t.emojis || [];
 		for (const r of reaction) {
-				if (!r.url) continue
-				emoji.push({
-						'shortcode': r.name,
-						'url': r.url,
-						'static_url': r.url,
-						'visible_in_picker': true,
-				},)
+			if (!r.url) continue;
+			emoji.push({
+				shortcode: r.name,
+				url: r.url,
+				static_url: r.url,
+				visible_in_picker: true,
+				category: "",
+			});
 		}
 		const isMe = reaction.findIndex((r) => r.me) > -1;
 		const total = reaction.reduce((sum, reaction) => sum + reaction.count, 0);
 		t.favourited = isMe;
 		t.favourites_count = total;
-		t.emojis = emoji
+		t.emojis = emoji;
 		t.content = `<p>${autoLinker(t.content, host)}</p><p>${reactions.join(
 			", ",
 		)}</p>`;
@@ -125,23 +127,20 @@ export function apiTimelineMastodon(router: Router): void {
 			}
 		},
 	);
-	router.get(
-		"/v1/timelines/home",
-		async (ctx, reply) => {
-			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
-			const accessTokens = ctx.headers.authorization;
-			const client = getClient(BASE_URL, accessTokens);
-			try {
-				const data = await client.getHomeTimeline(limitToInt(ctx.query));
-				ctx.body = toTextWithReaction(data.data, ctx.hostname);
-			} catch (e: any) {
-				console.error(e);
-				console.error(e.response.data);
-				ctx.status = 401;
-				ctx.body = e.response.data;
-			}
-		},
-	);
+	router.get("/v1/timelines/home", async (ctx, reply) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getHomeTimeline(limitToInt(ctx.query));
+			ctx.body = toTextWithReaction(data.data, ctx.hostname);
+		} catch (e: any) {
+			console.error(e);
+			console.error(e.response.data);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
 	router.get<{ Params: { listId: string } }>(
 		"/v1/timelines/list/:listId",
 		async (ctx, reply) => {

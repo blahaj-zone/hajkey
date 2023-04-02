@@ -64,24 +64,91 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 	const users = renotes.map(x => x.user.id);
 	const hasRenotedBefore = users.includes($i.id);
 
-	let buttonActions = [{
-		text: i18n.ts.renote,
-		icon: 'ph-repeat ph-bold ph-lg',
-		danger: false,
-		action: () => {
-			os.api('notes/create', {
-				renoteId: props.note.id,
-				visibility: props.note.visibility,
-			});
-			const el = ev && (ev.currentTarget ?? ev.target) as HTMLElement | null | undefined;
-			if (el) {
-				const rect = el.getBoundingClientRect();
-				const x = rect.left + (el.offsetWidth / 2);
-				const y = rect.top + (el.offsetHeight / 2);
-				os.popup(Ripple, { x, y }, {}, 'end');
-			}
-		},
-	}];
+	let buttonActions = [];
+
+	if (props.note.visibility === 'public') {
+		buttonActions.push({
+			text: i18n.ts.renote,
+			textStyle: 'font-weight: bold',
+			icon: 'ph-repeat ph-bold ph-lg',
+			danger: false,
+			action: () => {
+				os.api('notes/create', {
+					renoteId: props.note.id,
+					visibility: 'public',
+				});
+				const el = ev && (ev.currentTarget ?? ev.target) as HTMLElement | null | undefined;
+				if (el) {
+					const rect = el.getBoundingClientRect();
+					const x = rect.left + (el.offsetWidth / 2);
+					const y = rect.top + (el.offsetHeight / 2);
+					os.popup(Ripple, { x, y }, {}, 'end');
+				}
+			},
+		});
+	}
+
+	if (['public', 'home'].includes(props.note.visibility)) {
+		buttonActions.push({
+			text: i18n.ts.renoteAsUnlisted,
+			icons: ['ph-repeat ph-bold ph-lg', 'ph-house ph-bold ph-lg'],
+			danger: false,
+			action: () => {
+				os.api('notes/create', {
+					renoteId: props.note.id,
+					visibility: 'home',
+				});
+				const el = ev && (ev.currentTarget ?? ev.target) as HTMLElement | null | undefined;
+				if (el) {
+					const rect = el.getBoundingClientRect();
+					const x = rect.left + (el.offsetWidth / 2);
+					const y = rect.top + (el.offsetHeight / 2);
+					os.popup(Ripple, { x, y }, {}, 'end');
+				}
+			},
+		});
+	}
+
+	if (props.note.visibility === 'specified') {
+		buttonActions.push({
+			text: i18n.ts.renoteToRecipients,
+			icons: ['ph-repeat ph-bold ph-lg', 'ph-envelope-simple-open ph-bold ph-lg'],
+			danger: false,
+			action: () => {
+				os.api('notes/create', {
+					renoteId: props.note.id,
+					visibility: 'specified',
+					visibleUserIds: props.note.visibleUserIds,
+				});
+				const el = ev && (ev.currentTarget ?? ev.target) as HTMLElement | null | undefined;
+				if (el) {
+					const rect = el.getBoundingClientRect();
+					const x = rect.left + (el.offsetWidth / 2);
+					const y = rect.top + (el.offsetHeight / 2);
+					os.popup(Ripple, { x, y }, {}, 'end');
+				}
+			},
+		});
+	} else {
+		buttonActions.push({
+			text: i18n.ts.renoteToFollowers,
+			icons: ['ph-repeat ph-bold ph-lg', 'ph-lock-simple-open ph-bold ph-lg'],
+			danger: false,
+			action: () => {
+				os.api('notes/create', {
+					renoteId: props.note.id,
+					visibility: 'followers',
+				});
+				const el = ev && (ev.currentTarget ?? ev.target) as HTMLElement | null | undefined;
+				if (el) {
+					const rect = el.getBoundingClientRect();
+					const x = rect.left + (el.offsetWidth / 2);
+					const y = rect.top + (el.offsetHeight / 2);
+					os.popup(Ripple, { x, y }, {}, 'end');
+				}
+			},
+		});
+	}
 
 	if (!defaultStore.state.seperateRenoteQuote) {
 		buttonActions.push({

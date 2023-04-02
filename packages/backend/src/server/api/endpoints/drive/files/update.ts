@@ -54,7 +54,11 @@ export const paramDef = {
 		folderId: { type: "string", format: "misskey:id", nullable: true },
 		name: { type: "string" },
 		isSensitive: { type: "boolean" },
-		comment: { type: "string", nullable: true, maxLength: DB_MAX_IMAGE_COMMENT_LENGTH },
+		comment: {
+			type: "string",
+			nullable: true,
+			maxLength: DB_MAX_IMAGE_COMMENT_LENGTH,
+		},
 	},
 	required: ["fileId"],
 } as const;

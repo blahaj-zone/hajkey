@@ -47,6 +47,7 @@
 	</div>
 
 	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'index'" ref="postButton" class="postButton button post _button" @click="os.post()"><i class="ph-pencil ph-bold ph-lg"></i></button>
+	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'messaging'" ref="postButton" class="postButton button post _button" @click="messagingStart"><i class="ph-user-plus ph-bold ph-lg"></i></button>
 
 	<transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
 		<div
@@ -81,6 +82,7 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, provide, onMounted, computed, ref } from 'vue';
 import XCommon from './_common_/common.vue';
+import * as Acct from 'calckey-js/built/acct';
 import type { ComputedRef } from 'vue';
 import type { PageMetadata } from '@/scripts/page-metadata';
 import { instanceName } from '@/config';
@@ -173,6 +175,50 @@ if (defaultStore.state.widgets.length === 0) {
 	}]);
 }
 
+function messagingStart(ev) {
+	os.popupMenu([{
+		text: i18n.ts.messagingWithUser,
+		icon: 'ph-user ph-bold ph-lg',
+		action: () => { startUser(); },
+	}, {
+		text: i18n.ts.messagingWithGroup,
+		icon: 'ph-users-three ph-bold ph-lg',
+		action: () => { startGroup(); },
+	}, {
+		text: i18n.ts.manageGroups,
+		icon: 'ph-user-circle-gear ph-bold ph-lg',
+		action: () => { mainRouter.push('/my/groups'); },
+	}], ev.currentTarget ?? ev.target);
+}
+
+
+async function startUser(): void {
+	os.selectUser().then(user => {
+		mainRouter.push(`/my/messaging/${Acct.toString(user)}`);
+	});
+}
+
+async function startGroup(): void {
+	const groups1 = await os.api('users/groups/owned');
+	const groups2 = await os.api('users/groups/joined');
+	if (groups1.length === 0 && groups2.length === 0) {
+		os.alert({
+			type: 'warning',
+			title: i18n.ts.youHaveNoGroups,
+			text: i18n.ts.joinOrCreateGroup,
+		});
+		return;
+	}
+	const { canceled, result: group } = await os.select({
+		title: i18n.ts.group,
+		items: groups1.concat(groups2).map(group => ({
+			value: group, text: group.name,
+		})),
+	});
+	if (canceled) return;
+	mainRouter.push(`/my/messaging/group/${group.id}`);
+}
+
 onMounted(() => {
 	if (!isDesktop.value) {
 		window.addEventListener('resize', () => {
@@ -216,7 +262,7 @@ function top() {
 }
 
 const wallpaper = localStorage.getItem('wallpaper') != null;
-
+console.log(mainRouter.currentRoute.value.name);
 </script>
 
 <style lang="scss" scoped>

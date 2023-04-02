@@ -61,8 +61,8 @@ export default class extends Channel {
 				this.typers.delete(userId);
 		}
 
-		const keys = Array.from(this.typers.keys());
-		const users = await Users.packMany(keys, null, {
+		const userIds = Array.from(this.typers.keys());
+		const users = await Users.packMany(userIds, null, {
 			detail: false,
 		});
 

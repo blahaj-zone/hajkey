@@ -262,7 +262,9 @@ export function getUserMenu(user, router: Router = mainRouter) {
 		menu = menu.concat([
 			null,
 			{
-				icon: user.isMuted ? "ph-eye ph-bold ph-lg" : "ph-eye-slash ph-bold ph-lg",
+				icon: user.isMuted
+					? "ph-eye ph-bold ph-lg"
+					: "ph-eye-slash ph-bold ph-lg",
 				text: user.isMuted ? i18n.ts.unmute : i18n.ts.mute,
 				hidden: user.isBlocking === true,
 				action: toggleMute,

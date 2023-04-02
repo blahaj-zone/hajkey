@@ -11,6 +11,7 @@ import { importFollowing } from "./import-following.js";
 import { importUserLists } from "./import-user-lists.js";
 import { deleteAccount } from "./delete-account.js";
 import { importMuting } from "./import-muting.js";
+import { importPosts } from "./import-posts.js";
 import { importBlocking } from "./import-blocking.js";
 import { importCustomEmojis } from "./import-custom-emojis.js";
 
@@ -26,6 +27,7 @@ const jobs = {
 	importMuting,
 	importBlocking,
 	importUserLists,
+	importPosts,
 	importCustomEmojis,
 	deleteAccount,
 } as Record<

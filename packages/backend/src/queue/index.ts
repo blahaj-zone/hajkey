@@ -314,6 +314,25 @@ export function createImportFollowingJob(
 	);
 }
 
+export function createImportPostsJob(
+	user: ThinUser,
+	fileId: DriveFile["id"],
+	signatureCheck: boolean,
+) {
+	return dbQueue.add(
+		"importPosts",
+		{
+			user: user,
+			fileId: fileId,
+			signatureCheck: signatureCheck,
+		},
+		{
+			removeOnComplete: true,
+			removeOnFail: true,
+		},
+	);
+}
+
 export function createImportMutingJob(user: ThinUser, fileId: DriveFile["id"]) {
 	return dbQueue.add(
 		"importMuting",
@@ -421,14 +440,10 @@ export function createCleanRemoteFilesJob() {
 }
 
 export function createIndexAllNotesJob(data = {}) {
-	return backgroundQueue.add(
-		"indexAllNotes",
-		data,
-		{
-			removeOnComplete: true,
-			removeOnFail: true,
-		},
-	);
+	return backgroundQueue.add("indexAllNotes", data, {
+		removeOnComplete: true,
+		removeOnFail: true,
+	});
 }
 
 export function webhookDeliver(

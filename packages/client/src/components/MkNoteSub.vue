@@ -22,7 +22,7 @@
 					<MkA v-if="note.replyId"  :to="`/notes/${note.replyId}`" class="reply-icon" @click.stop>
 						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 					</MkA>
-					<MkA v-if="conversation && note.renoteId && note.renoteId != parentId" :to="`/notes/${note.renoteId}`" class="reply-icon" @click.stop>
+					<MkA v-if="conversation && note.renoteId && note.renoteId != parentId && !note.replyId" :to="`/notes/${note.renoteId}`" class="reply-icon" @click.stop>
 						<i class="ph-quotes ph-bold ph-lg"></i>
 					</MkA>
 					<Mfm v-if="note.cw != ''" class="text" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
@@ -488,7 +488,7 @@ function noteClick(e) {
 	&.reply-to, &.reply-to-more {
 		padding-bottom: 0;
 		&:first-child {
-			padding-top: 30px;
+			padding-top: 24px;
 		}
 		.line::before {
 			margin-bottom: -16px;

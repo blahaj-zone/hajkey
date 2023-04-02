@@ -1,12 +1,12 @@
 {
 	"name": "calckey",
-	"version": "13.2.0-beta31-kt.15",
+	"version": "13.2.0-beta4-kt.15",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
 		"url": "https://codeberg.org/supakaity/hajkey.git"
 	},
-	"packageManager": "pnpm@7.30.1",
+	"packageManager": "pnpm@8.1.0",
 	"private": true,
 	"scripts": {
 		"rebuild": "pnpm run clean && pnpm -r run build && pnpm run gulp",
@@ -38,6 +38,7 @@
 	"dependencies": {
 		"@bull-board/api": "^4.10.2",
 		"@bull-board/ui": "^4.10.2",
+		"@napi-rs/cli": "^2.15.0",
 		"@tensorflow/tfjs": "^3.21.0",
 		"calckey-js": "^0.0.22",
 		"js-yaml": "4.1.0",

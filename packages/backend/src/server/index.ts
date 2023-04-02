@@ -31,7 +31,7 @@ import webServer from "./web/index.js";
 import { initializeStreamingServer } from "./api/streaming.js";
 import { koaBody } from "koa-body";
 import removeTrailingSlash from "koa-remove-trailing-slashes";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
 
 export const serverLogger = new Logger("server", "gray", false);
 
@@ -162,19 +162,19 @@ mastoRouter.get("/oauth/authorize", async (ctx) => {
 	const { client_id, state, redirect_uri } = ctx.request.query;
 	//console.log(ctx.request.req);
 	let param = "mastodon=true";
-	if (state)
-		param += `&state=${state}`;
-	if (redirect_uri)
-		param += `&redirect_uri=${redirect_uri}`;
-	const client = client_id? client_id : "";
-	ctx.redirect(`${Buffer.from(client.toString(), 'base64').toString()}?${param}`);
+	if (state) param += `&state=${state}`;
+	if (redirect_uri) param += `&redirect_uri=${redirect_uri}`;
+	const client = client_id ? client_id : "";
+	ctx.redirect(
+		`${Buffer.from(client.toString(), "base64").toString()}?${param}`,
+	);
 });
 
 mastoRouter.post("/oauth/token", async (ctx) => {
 	const body: any = ctx.request.body || ctx.request.query;
-	//console.log('token-request', body);
-	//console.log('token-query', ctx.request.query);
-	if (body.grant_type === 'client_credentials') {
+	//console.log("token-request", body);
+	//console.log("token-query", ctx.request.query);
+	if (body.grant_type === "client_credentials") {
 		const ret = {
 			access_token: uuid(),
 			token_type: "Bearer",
@@ -197,8 +197,8 @@ mastoRouter.post("/oauth/token", async (ctx) => {
 		//	return;
 		//}
 		//token = `${m[1]}-${m[2]}-${m[3]}-${m[4]}-${m[5]}`
-		//console.log(body.code, token)
-		token = body.code
+		//console.log(body.code, token);
+		token = body.code;
 	}
 	if (client_id instanceof Array) {
 		client_id = client_id.toString();
@@ -214,10 +214,10 @@ mastoRouter.post("/oauth/token", async (ctx) => {
 		const ret = {
 			access_token: atData.accessToken,
 			token_type: "Bearer",
-			scope: body.scope || 'read write follow push',
+			scope: body.scope || "read write follow push",
 			created_at: Math.floor(new Date().getTime() / 1000),
 		};
-		//console.log('token-response', ret)
+		//console.log("token-response", ret);
 		ctx.body = ret;
 	} catch (err: any) {
 		console.error(err);
