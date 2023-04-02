@@ -130,6 +130,19 @@
 	</FormSection>
 
 	<FormSection>
+		<template #label>{{ i18n.ts.catAvatarLabel }}</template>
+
+		<FormSwitch v-model="catAvatarRounded" class="_formBlock">
+			{{ i18n.ts.catAvatarRounded }}
+			<template #caption>{{ i18n.ts.catAvatarRoundedDescription }}</template>
+		</FormSwitch>
+		<FormSwitch v-model="catAvatarBordered" class="_formBlock">
+			{{ i18n.ts.catAvatarBordered }}
+			<template #caption>{{ i18n.ts.catAvatarBorderedDescription }}</template>
+		</FormSwitch>
+	</FormSection>
+
+	<FormSection>
 		<template #label>{{ i18n.ts._indicators.header }}</template>
 
 		<FormSwitch v-model="indicateNotification" class="_formBlock">
@@ -198,6 +211,9 @@ const indicateFollows = $computed(defaultStore.makeGetterSetter('indicateFollows
 const indicateAnnouncements = $computed(defaultStore.makeGetterSetter('indicateAnnouncements'));
 const indicateAntennas = $computed(defaultStore.makeGetterSetter('indicateAntennas'));
 const indicateChannels = $computed(defaultStore.makeGetterSetter('indicateChannels'));
+
+const catAvatarRounded = $computed(defaultStore.makeGetterSetter('catAvatarRounded'));
+const catAvatarBordered = $computed(defaultStore.makeGetterSetter('catAvatarBordered'));
 
 definePageMetadata({
 	title: i18n.ts.appearance,

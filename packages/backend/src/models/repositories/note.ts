@@ -263,7 +263,7 @@ export const NoteRepository = db.getRepository(Note).extend({
 				: {}),
 		});
 
-		if (packed.user.isCat && packed.text) {
+		if (packed.user.isCat && packed.user.speakAsCat && packed.text) {
 			const tokens = packed.text ? mfm.parse(packed.text) : [];
 			function nyaizeNode(node: mfm.MfmNode) {
 				if (node.type === "quote")

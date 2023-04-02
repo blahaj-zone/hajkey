@@ -1,10 +1,10 @@
 <template>
 <span v-if="disableLink" v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :title="acct(user)" @click="onClick">
-	<img class="inner" :src="url" decoding="async"/>
+	<img class="inner" :src="url" decoding="async" :class="{ catRounded, catBordered }"/>
 	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
 </span>
 <MkA v-else v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :to="userPage(user)" :title="acct(user)" :target="target" @click.stop>
-	<img class="inner" :src="url" decoding="async"/>
+	<img class="inner" :src="url" decoding="async" :class="{ catRounded, catBordered }"/>
 	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
 </MkA>
 </template>
@@ -44,6 +44,8 @@ function onClick(ev: MouseEvent) {
 }
 
 let color = $ref();
+let catRounded = $ref(defaultStore.state.catAvatarRounded);
+let catBordered = $ref(defaultStore.state.catAvatarBordered);
 
 watch(() => props.user.avatarBlurhash, () => {
 	color = extractAvgColorFromBlurhash(props.user.avatarBlurhash);
@@ -136,6 +138,16 @@ watch(() => props.user.avatarBlurhash, () => {
 
 			&:after {
 				animation: earwiggleright 1s infinite;
+			}
+		}
+
+		> img.inner.catRounded {
+			border-radius: 50%;
+			margin-left: -2px;
+			margin-top: 2px;
+
+			&.catBordered {
+				border: 2px solid currentColor;
 			}
 		}
 	}

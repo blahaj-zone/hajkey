@@ -104,6 +104,7 @@ export const paramDef = {
 		noCrawle: { type: "boolean" },
 		isBot: { type: "boolean" },
 		isCat: { type: "boolean" },
+		speakAsCat: { type: "boolean" },
 		showTimelineReplies: { type: "boolean" },
 		injectFeaturedNote: { type: "boolean" },
 		receiveAnnouncementEmail: { type: "boolean" },
@@ -196,6 +197,7 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 		profileUpdates.autoAcceptFollowed = ps.autoAcceptFollowed;
 	if (typeof ps.noCrawle === "boolean") profileUpdates.noCrawle = ps.noCrawle;
 	if (typeof ps.isCat === "boolean") updates.isCat = ps.isCat;
+	if (typeof ps.speakAsCat === "boolean") updates.speakAsCat = ps.speakAsCat;
 	if (typeof ps.injectFeaturedNote === "boolean")
 		profileUpdates.injectFeaturedNote = ps.injectFeaturedNote;
 	if (typeof ps.receiveAnnouncementEmail === "boolean")

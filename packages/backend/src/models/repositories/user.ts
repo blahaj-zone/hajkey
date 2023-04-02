@@ -442,6 +442,7 @@ export const UserRepository = db.getRepository(User).extend({
 			isModerator: user.isModerator || falsy,
 			isBot: user.isBot || falsy,
 			isCat: user.isCat || falsy,
+			speakAsCat: user.speakAsCat || falsy,
 			instance: user.host
 				? userInstanceCache
 						.fetch(

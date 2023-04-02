@@ -392,6 +392,14 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		catAvatarRounded: {
+			where: "device",
+			default: false,
+		},
+		catAvatarBordered: {
+			where: "device",
+			default: false,
+		},
 	}),
 );
 
