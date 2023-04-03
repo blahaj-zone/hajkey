@@ -80,10 +80,10 @@ export default define(meta, paramDef, async (ps, user) => {
 	const take = Math.floor(ps.limit * 1.5);
 	let skip = 0;
 	while (found.length < ps.limit) {
-		const timeline = await query.take(take).skip(skip).getMany();
-		found.push(...await Notes.packMany(timeline, user))
+		const notes = await query.take(take).skip(skip).getMany();
+		found.push(...await Notes.packMany(notes, user))
 		skip += take;
-		if (timeline.length < take) break;
+		if (notes.length < take) break;
 	}
 
 	if (found.length > ps.limit) {
