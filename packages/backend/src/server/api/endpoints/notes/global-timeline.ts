@@ -93,13 +93,26 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 	//#endregion
 
-	const timeline = await query.take(ps.limit).getMany();
-
 	process.nextTick(() => {
 		if (user) {
 			activeUsersChart.read(user);
 		}
 	});
+	
+	// We fetch more than requested because some may be filtered out, and if there's less than
+	// requested, the pagination stops. But if there's more nobody cares.
+	const found = [];
+	const take = Math.floor(ps.limit * 1.5);
+	let skip = 0;
+	while (found.length < ps.limit) {
+		const timeline = await query.take(take).skip(skip).getMany();
+		found.push(...await Notes.packMany(timeline, user))
+		skip += take;
+		if (timeline.length < take) break;
+	}
 
-	return await Notes.packMany(timeline, user);
+	if (found.length > ps.limit) {
+		found.length = ps.limit;
+	}
+
 });
