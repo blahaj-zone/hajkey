@@ -1,4 +1,4 @@
-import { WikiPages } from '@/models/index.js';
+import { WikiPages } from "@/models/index.js";
 import define from "../../define.js";
 
 export const meta = {
@@ -21,17 +21,16 @@ export const meta = {
 
 export const paramDef = {
 	type: "object",
-	properties: {
-	},
+	properties: {},
 	required: [],
 } as const;
 
 export default define(meta, paramDef, async (_ps) => {
 	const pages = await WikiPages.find({
 		order: {
-			createdAt: 'DESC',
+			createdAt: "DESC",
 		},
 	});
 
 	return await WikiPages.packMany(pages);
-})
+});

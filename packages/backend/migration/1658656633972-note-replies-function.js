@@ -1,5 +1,5 @@
 export class noteRepliesFunction1658656633972 {
-	name = 'noteRepliesFunction1658656633972'
+	name = "noteRepliesFunction1658656633972";
 
 	async up(queryRunner) {
 		await queryRunner.query(`

@@ -148,12 +148,10 @@ export default async (
 	if (Users.isLocalUser(user)) {
 		const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 		try {
-			if (profile.autoWatchReacted) {		
-				watch(user.id, note);		
+			if (profile.autoWatchReacted) {
+				watch(user.id, note);
 			}
-		} catch (e) {
-			
-		}
+		} catch (e) {}
 	}
 
 	//#region 配信
@@ -178,6 +176,6 @@ export default async (
 
 		dm.execute();
 	}
-	
+
 	//#endregion
 };

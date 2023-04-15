@@ -556,7 +556,11 @@ export default abstract class Chart<T extends Schema> {
 
 			// bake unique count
 			for (const [k, v] of Object.entries(finalDiffs)) {
-				if (this.schema[k].uniqueIncrement && Array.isArray(v) && v.length > 0) {
+				if (
+					this.schema[k].uniqueIncrement &&
+					Array.isArray(v) &&
+					v.length > 0
+				) {
 					const name = (columnPrefix +
 						k.replaceAll(".", columnDot)) as keyof Columns<T>;
 					const tempColumnName = (uniqueTempColumnPrefix +
@@ -643,13 +647,12 @@ export default abstract class Chart<T extends Schema> {
 			);
 
 			// TODO: この一連の処理が始まった後に新たにbufferに入ったものは消さないようにする
-			this.buffer = this.buffer.filter(
-				(q) => {
-					const keep = q.group != null && q.group !== logHour.group;
-					if (!keep) logger.info(`Removed ${q.group} from buffer for ${this.name}`);
-					return keep;
-				},
-			);
+			this.buffer = this.buffer.filter((q) => {
+				const keep = q.group != null && q.group !== logHour.group;
+				if (!keep)
+					logger.info(`Removed ${q.group} from buffer for ${this.name}`);
+				return keep;
+			});
 		};
 
 		const startCount = this.buffer.length;
@@ -664,7 +667,7 @@ export default abstract class Chart<T extends Schema> {
 
 		const startTime = Date.now();
 		await Promise.all(
-			groups.map((group) => 
+			groups.map((group) =>
 				limit(() =>
 					Promise.all([
 						this.claimCurrentLog(group, "hour"),
@@ -706,8 +709,6 @@ export default abstract class Chart<T extends Schema> {
 			logHour: RawRecord<T>,
 			logDay: RawRecord<T>,
 		): Promise<void> => {
-
-			
 			await Promise.all([
 				this.repositoryForHour
 					.createQueryBuilder()

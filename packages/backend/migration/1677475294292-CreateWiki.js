@@ -1,8 +1,8 @@
 export class CreateWiki1677475294292 {
-    name = 'CreateWiki1677475294292'
+	name = "CreateWiki1677475294292";
 
-    async up(queryRunner) {
-        await queryRunner.query(`
+	async up(queryRunner) {
+		await queryRunner.query(`
 					CREATE TABLE "wiki_page" (
 						"id" character varying(32) NOT NULL,
 						"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -23,11 +23,17 @@ export class CreateWiki1677475294292 {
 					COMMENT ON COLUMN "wiki_page"."revisionId" IS 'The currently live version of the WikiPage.'
 				`);
 
-				await queryRunner.query(`CREATE INDEX "IDX_3dd8b12ca26cd294c9359abd89" ON "wiki_page" ("createdAt") `);
-        await queryRunner.query(`CREATE UNIQUE INDEX "IDX_3c3b622e53ab2a3ce49c28fc74" ON "wiki_page" ("slug") `);
-        await queryRunner.query(`CREATE INDEX "IDX_2210a1bc502cf3af2534efb062" ON "wiki_page" ("ownerId") `);
+		await queryRunner.query(
+			`CREATE INDEX "IDX_3dd8b12ca26cd294c9359abd89" ON "wiki_page" ("createdAt") `,
+		);
+		await queryRunner.query(
+			`CREATE UNIQUE INDEX "IDX_3c3b622e53ab2a3ce49c28fc74" ON "wiki_page" ("slug") `,
+		);
+		await queryRunner.query(
+			`CREATE INDEX "IDX_2210a1bc502cf3af2534efb062" ON "wiki_page" ("ownerId") `,
+		);
 
-				await queryRunner.query(`
+		await queryRunner.query(`
 					CREATE TABLE "wiki_page_revision" ("id" character varying(32) NOT NULL,
 						"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
 						"wikiPageId" character varying(32) NOT NULL,
@@ -42,28 +48,58 @@ export class CreateWiki1677475294292 {
 					COMMENT ON COLUMN "wiki_page_revision"."body" IS 'The body of the WikiPage.'
 				`);
 
-				await queryRunner.query(`CREATE INDEX "IDX_cb3055b88d0232a1ab3a461408" ON "wiki_page_revision" ("createdAt") `);
-        await queryRunner.query(`CREATE INDEX "IDX_db07d5fb1e3772865b7748616d" ON "wiki_page_revision" ("wikiPageId") `);
-        await queryRunner.query(`CREATE INDEX "IDX_cac83c5e3ac2794b5ec68e5177" ON "wiki_page_revision" ("editorId") `);
+		await queryRunner.query(
+			`CREATE INDEX "IDX_cb3055b88d0232a1ab3a461408" ON "wiki_page_revision" ("createdAt") `,
+		);
+		await queryRunner.query(
+			`CREATE INDEX "IDX_db07d5fb1e3772865b7748616d" ON "wiki_page_revision" ("wikiPageId") `,
+		);
+		await queryRunner.query(
+			`CREATE INDEX "IDX_cac83c5e3ac2794b5ec68e5177" ON "wiki_page_revision" ("editorId") `,
+		);
 
-				await queryRunner.query(`ALTER TABLE "wiki_page" ADD CONSTRAINT "FK_2210a1bc502cf3af2534efb0621" FOREIGN KEY ("ownerId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "wiki_page" ADD CONSTRAINT "FK_8d70ec19c7ce97bb4d1bed6f174" FOREIGN KEY ("revisionId") REFERENCES "wiki_page_revision"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "wiki_page_revision" ADD CONSTRAINT "FK_cac83c5e3ac2794b5ec68e5177d" FOREIGN KEY ("editorId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
-    }
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page" ADD CONSTRAINT "FK_2210a1bc502cf3af2534efb0621" FOREIGN KEY ("ownerId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
+		);
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page" ADD CONSTRAINT "FK_8d70ec19c7ce97bb4d1bed6f174" FOREIGN KEY ("revisionId") REFERENCES "wiki_page_revision"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
+		);
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page_revision" ADD CONSTRAINT "FK_cac83c5e3ac2794b5ec68e5177d" FOREIGN KEY ("editorId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
+		);
+	}
 
-    async down(queryRunner) {
-        await queryRunner.query(`ALTER TABLE "wiki_page_revision" DROP CONSTRAINT "FK_cac83c5e3ac2794b5ec68e5177d"`);
-        await queryRunner.query(`ALTER TABLE "wiki_page" DROP CONSTRAINT "FK_8d70ec19c7ce97bb4d1bed6f174"`);
-        await queryRunner.query(`ALTER TABLE "wiki_page" DROP CONSTRAINT "FK_2210a1bc502cf3af2534efb0621"`);
+	async down(queryRunner) {
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page_revision" DROP CONSTRAINT "FK_cac83c5e3ac2794b5ec68e5177d"`,
+		);
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page" DROP CONSTRAINT "FK_8d70ec19c7ce97bb4d1bed6f174"`,
+		);
+		await queryRunner.query(
+			`ALTER TABLE "wiki_page" DROP CONSTRAINT "FK_2210a1bc502cf3af2534efb0621"`,
+		);
 
-				await queryRunner.query(`DROP INDEX "public"."IDX_cac83c5e3ac2794b5ec68e5177"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_db07d5fb1e3772865b7748616d"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_cb3055b88d0232a1ab3a461408"`);
-        await queryRunner.query(`DROP TABLE "wiki_page_revision"`);
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_cac83c5e3ac2794b5ec68e5177"`,
+		);
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_db07d5fb1e3772865b7748616d"`,
+		);
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_cb3055b88d0232a1ab3a461408"`,
+		);
+		await queryRunner.query(`DROP TABLE "wiki_page_revision"`);
 
-				await queryRunner.query(`DROP INDEX "public"."IDX_2210a1bc502cf3af2534efb062"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_3c3b622e53ab2a3ce49c28fc74"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_3dd8b12ca26cd294c9359abd89"`);
-        await queryRunner.query(`DROP TABLE "wiki_page"`);
-    }
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_2210a1bc502cf3af2534efb062"`,
+		);
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_3c3b622e53ab2a3ce49c28fc74"`,
+		);
+		await queryRunner.query(
+			`DROP INDEX "public"."IDX_3dd8b12ca26cd294c9359abd89"`,
+		);
+		await queryRunner.query(`DROP TABLE "wiki_page"`);
+	}
 }

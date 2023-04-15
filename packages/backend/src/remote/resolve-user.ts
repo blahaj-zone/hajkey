@@ -127,13 +127,13 @@ async function resolveSelf(acctLower: string) {
 		);
 	});
 	const selfs = finger.links.filter(
-		(link) => link.rel != null && link.rel.toLowerCase() === 'self',
+		(link) => link.rel != null && link.rel.toLowerCase() === "self",
 	);
 	if (selfs.length < 1) {
 		logger.error(
 			`Failed to WebFinger for ${chalk.yellow(acctLower)}: self link not found`,
 		);
-		throw new Error('self link not found');
+		throw new Error("self link not found");
 	}
-	return selfs[selfs.length-1];
+	return selfs[selfs.length - 1];
 }

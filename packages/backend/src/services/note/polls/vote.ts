@@ -2,7 +2,14 @@ import { publishNoteStream } from "@/services/stream.js";
 import type { CacheableUser } from "@/models/entities/user.js";
 import { User } from "@/models/entities/user.js";
 import type { Note } from "@/models/entities/note.js";
-import { PollVotes, NoteWatchings, Polls, Blockings, UserProfiles, Users } from "@/models/index.js";
+import {
+	PollVotes,
+	NoteWatchings,
+	Polls,
+	Blockings,
+	UserProfiles,
+	Users,
+} from "@/models/index.js";
 import { Not } from "typeorm";
 import { genId } from "@/misc/gen-id.js";
 import { createNotification } from "../../create-notification.js";
@@ -89,11 +96,9 @@ export default async function (
 	if (Users.isLocalUser(user)) {
 		const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 		try {
-			if (profile.autoWatchVoted) {		
-				watch(user.id, note);		
+			if (profile.autoWatchVoted) {
+				watch(user.id, note);
 			}
-		} catch (e) {
-
-		}
+		} catch (e) {}
 	}
 }

@@ -53,7 +53,7 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
 (async () => {
 	console.info(`Calckey v${version}`);
-	const dev = true
+	const dev = true;
 
 	if (_DEV_ || dev) {
 		console.warn("Development mode!!!");

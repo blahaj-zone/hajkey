@@ -82,11 +82,11 @@ export async function checkHitAntenna(
 				getFullApAccount(noteUser.username, noteUser.host).toLowerCase(),
 			)
 		)
-		return false;
+			return false;
 	} else if (antenna.src === "instances") {
 		const instances = antenna.instances
-			.filter(x => x !== "")
-			.map(host => {
+			.filter((x) => x !== "")
+			.map((host) => {
 				return host.toLowerCase();
 			});
 		if (!instances.includes(noteUser.host?.toLowerCase() ?? "")) return false;
@@ -97,8 +97,8 @@ export async function checkHitAntenna(
 	const alwaysFalseMatcher: matchFunction = () => false;
 
 	const makeReMatcher = (re: RegExp): matchFunction => {
-		return (text) => re.test(text)
-	}
+		return (text) => re.test(text);
+	};
 
 	const reWhitespace = /\s+/;
 	const reEscapes = /[/\\\^$*+?.()|[\]{}]/g;
@@ -110,21 +110,21 @@ export async function checkHitAntenna(
 			return ce;
 		}
 
-		const matcher = (():matchFunction => {
-			const n = keyphrase.length
+		const matcher = ((): matchFunction => {
+			const n = keyphrase.length;
 			if (n === 0) {
 				return alwaysFalseMatcher;
 			}
 
-			if (n > 2 && keyphrase[0] === '/') {
-				const lastSlash = keyphrase.lastIndexOf('/');
+			if (n > 2 && keyphrase[0] === "/") {
+				const lastSlash = keyphrase.lastIndexOf("/");
 				const flags = keyphrase.slice(lastSlash + 1);
 				const pattern = keyphrase.slice(1, lastSlash);
 				let re: RegExp;
 				try {
 					re = new RegExp(pattern, flags);
 				} catch (ex) {
-					console.log('failed to compile regex', pattern)
+					console.log("failed to compile regex", pattern);
 					return alwaysFalseMatcher;
 				}
 
@@ -133,21 +133,24 @@ export async function checkHitAntenna(
 
 			let words: string[] = [];
 
-			const splitPhrase = keyphrase.split(reWhitespace)
+			const splitPhrase = keyphrase.split(reWhitespace);
 			for (const keyword of splitPhrase) {
-					words.push(keyword
-							.replace(reEscapes, '\\$&')
-							.replaceAll('\\*', `[\\p{L}\\p{N}'_-]*`)
-							.replaceAll('\\?', `[\\p{L}\\p{N}'_-]`)
-					);
+				words.push(
+					keyword
+						.replace(reEscapes, "\\$&")
+						.replaceAll("\\*", `[\\p{L}\\p{N}'_-]*`)
+						.replaceAll("\\?", `[\\p{L}\\p{N}'_-]`),
+				);
 			}
-			
-			const kpReText: string = `(?<=\\b|[^\\p{L}\\p{N}]|^)${words.join('\\p{Z}+')}(?=\\b|[^\\p{L}\\p{N}]|$)`;
+
+			const kpReText: string = `(?<=\\b|[^\\p{L}\\p{N}]|^)${words.join(
+				"\\p{Z}+",
+			)}(?=\\b|[^\\p{L}\\p{N}]|$)`;
 			let kpRe: RegExp;
 			try {
-				kpRe = new RegExp(kpReText, antenna.caseSensitive ? 'u' : 'iu')
+				kpRe = new RegExp(kpReText, antenna.caseSensitive ? "u" : "iu");
 			} catch (ex) {
-				console.log('failed to compile keyphrase regex', kpReText, ex)
+				console.log("failed to compile keyphrase regex", kpReText, ex);
 				return alwaysFalseMatcher;
 			}
 
@@ -157,11 +160,11 @@ export async function checkHitAntenna(
 		matcherCache.set(keyphrase, matcher);
 
 		return matcher;
-	}
+	};
 
 	const keywordsTest = (keywords: string): boolean =>
-		compileKeyphrase(keywords)(text ?? '');
-	
+		compileKeyphrase(keywords)(text ?? "");
+
 	const keywords = antenna.keywords
 		// Clean up
 		.map((xs) => xs.filter((x) => x !== ""))
@@ -169,7 +172,7 @@ export async function checkHitAntenna(
 
 	if (keywords.length > 0) {
 		if (text == null) return false;
-		const matched = keywords.some(and => and.every(keywordsTest));
+		const matched = keywords.some((and) => and.every(keywordsTest));
 
 		if (!matched) return false;
 	}
@@ -181,7 +184,7 @@ export async function checkHitAntenna(
 
 	if (excludeKeywords.length > 0) {
 		if (text == null) return false;
-		const matched = excludeKeywords.some(and => and.every(keywordsTest));
+		const matched = excludeKeywords.some((and) => and.every(keywordsTest));
 
 		if (matched) return false;
 	}

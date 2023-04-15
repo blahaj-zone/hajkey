@@ -168,15 +168,13 @@ export default define(meta, paramDef, async (ps, user) => {
 		}
 	});
 
-  const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
+	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
 	try {
-		if (profile.autoWatchVoted !== false) {		
-			watch(user.id, note);		
-		}	
-	} catch (e) {
-
-	}
+		if (profile.autoWatchVoted !== false) {
+			watch(user.id, note);
+		}
+	} catch (e) {}
 
 	// リモート投票の場合リプライ送信
 	if (note.userHost != null) {

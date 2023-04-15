@@ -2,9 +2,7 @@ import createReaction from "@/services/note/reaction/create.js";
 import define from "../../../define.js";
 import { getNote } from "../../../common/getters.js";
 import { ApiError } from "../../../error.js";
-import {
-	UserProfiles,
-} from "@/models/index.js";
+import { UserProfiles } from "@/models/index.js";
 import watch from "@/services/note/watch.js";
 
 export const meta = {
@@ -69,10 +67,9 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	try {
 		if (profile.autoWatchReacted) {
-			watch(user.id, note)
+			watch(user.id, note);
 		}
-	} catch (e) {
-	}	
+	} catch (e) {}
 
 	return;
 });

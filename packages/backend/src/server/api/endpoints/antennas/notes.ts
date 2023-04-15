@@ -84,13 +84,13 @@ export default define(meta, paramDef, async (ps, user) => {
 		.andWhere("antennaNote.antennaId = :antennaId", { antennaId: antenna.id });
 
 	const order = query.expressionMap.orderBys;
-	query.orderBy('antennaNote.read', 'ASC')
+	query.orderBy("antennaNote.read", "ASC");
 	for (const k of Object.keys(order)) {
 		const v = order[k];
-		if ('string' === typeof v) {
-			query.addOrderBy(k, v)
+		if ("string" === typeof v) {
+			query.addOrderBy(k, v);
 		} else {
-			query.addOrderBy(k, v.order, v.nulls)
+			query.addOrderBy(k, v.order, v.nulls);
 		}
 	}
 

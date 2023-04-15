@@ -15,14 +15,20 @@ export const navbarItemDef = reactive({
 		title: "notifications",
 		icon: "ph-bell ph-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadNotification && defaultStore.state.indicateNotification),
+		indicated: computed(
+			() =>
+				$i?.hasUnreadNotification && defaultStore.state.indicateNotification,
+		),
 		to: "/my/notifications",
 	},
 	messaging: {
 		title: "messaging",
 		icon: "ph-chats-teardrop ph-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadMessagingMessage && defaultStore.state.indicateMessaging),
+		indicated: computed(
+			() =>
+				$i?.hasUnreadMessagingMessage && defaultStore.state.indicateMessaging,
+		),
 		to: "/my/messaging",
 	},
 	drive: {
@@ -35,7 +41,11 @@ export const navbarItemDef = reactive({
 		title: "followRequests",
 		icon: "ph-hand-waving ph-bold ph-lg",
 		show: computed(() => $i?.isLocked),
-		indicated: computed(() => $i?.hasPendingReceivedFollowRequest && defaultStore.state.indicateFollows),
+		indicated: computed(
+			() =>
+				$i?.hasPendingReceivedFollowRequest &&
+				defaultStore.state.indicateFollows,
+		),
 		to: "/my/follow-requests",
 	},
 	explore: {
@@ -46,7 +56,10 @@ export const navbarItemDef = reactive({
 	announcements: {
 		title: "announcements",
 		icon: "ph-megaphone-simple ph-bold ph-lg",
-		indicated: computed(() => $i?.hasUnreadAnnouncement && defaultStore.state.indicateAnnouncements),
+		indicated: computed(
+			() =>
+				$i?.hasUnreadAnnouncement && defaultStore.state.indicateAnnouncements,
+		),
 		to: "/announcements",
 	},
 	search: {
@@ -72,7 +85,9 @@ export const navbarItemDef = reactive({
 		title: "antennas",
 		icon: "ph-flying-saucer ph-bold ph-lg",
 		show: computed(() => $i != null),
-		indicated: computed(() => $i?.hasUnreadAntenna && defaultStore.state.indicateAntennas),
+		indicated: computed(
+			() => $i?.hasUnreadAntenna && defaultStore.state.indicateAntennas,
+		),
 		to: "/my/antennas",
 	},
 	favorites: {
@@ -99,8 +114,10 @@ export const navbarItemDef = reactive({
 	},
 	channels: {
 		title: "channel",
-        icon: "ph-television ph-bold ph-lg",
-        indicated: computed(() => $i?.hasUnreadChannel && defaultStore.state.indicateChannels),
+		icon: "ph-television ph-bold ph-lg",
+		indicated: computed(
+			() => $i?.hasUnreadChannel && defaultStore.state.indicateChannels,
+		),
 		to: "/channels",
 	},
 	groups: {

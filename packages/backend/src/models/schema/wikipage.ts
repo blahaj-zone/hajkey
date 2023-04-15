@@ -89,5 +89,3 @@ export const packedWikiPageSchema = {
 		},
 	},
 } as const;
-
-

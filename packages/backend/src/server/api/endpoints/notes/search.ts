@@ -60,7 +60,7 @@ export const paramDef = {
 	required: ["query"],
 } as const;
 
-const max = (a:number, b:number): number => a > b ? b : 1;
+const max = (a: number, b: number): number => (a > b ? b : 1);
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {

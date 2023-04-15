@@ -108,8 +108,7 @@ export default class extends Channel {
 
 		// Remove not typing users
 		for (const [userId, date] of this.typers.entries()) {
-			if (now.getTime() - date.getTime() > 5000)
-				this.typers.delete(userId);
+			if (now.getTime() - date.getTime() > 5000) this.typers.delete(userId);
 		}
 
 		const userIds = Array.from(this.typers.keys());

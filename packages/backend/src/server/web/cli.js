@@ -47,10 +47,10 @@ window.onload = async () => {
 			const el = document.createElement("div");
 			const header = document.createElement("header");
 			const name = document.createElement("p");
-			const avatar = document.createElement("img")
+			const avatar = document.createElement("img");
 			name.textContent = `${note.user.name} @${note.user.username}`;
 			avatar.src = note.user.avatarUrl;
-			avatar.style = 'height: 40px'
+			avatar.style = "height: 40px";
 			const text = document.createElement("div");
 			text.textContent = `${note.text}`;
 			el.appendChild(header);
@@ -63,7 +63,7 @@ window.onload = async () => {
 				for (const file of note.files) {
 					const img = document.createElement("img");
 					img.src = file.properties.thumbnailUrl;
-					el.appendChild(img)
+					el.appendChild(img);
 				}
 			}
 			tl.appendChild(el);

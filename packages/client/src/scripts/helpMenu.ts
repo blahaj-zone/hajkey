@@ -67,6 +67,6 @@ export function openHelpMenu_(ev: MouseEvent) {
 				],
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }

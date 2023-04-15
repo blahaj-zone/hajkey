@@ -65,7 +65,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	let skip = 0;
 	while (found.length < ps.limit) {
 		const notes = await query.take(take).skip(skip).getMany();
-		found.push(...await Notes.packMany(notes, user))
+		found.push(...(await Notes.packMany(notes, user)));
 		skip += take;
 		if (notes.length < take) break;
 	}

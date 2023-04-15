@@ -311,22 +311,18 @@ export default define(meta, paramDef, async (ps, user) => {
 	try {
 		if (renote && ps.text) {
 			if (profile.autoWatchQuoted) {
-				watch(user.id, renote)
+				watch(user.id, renote);
 			}
 		} else if (renote) {
 			if (profile.autoWatchBoosted) {
-				watch(user.id, renote)
+				watch(user.id, renote);
 			}
 		} else if (reply) {
 			if (profile.autoWatchReplied) {
-				watch(user.id, reply)
+				watch(user.id, reply);
 			}
 		}
-	} catch (e) {
-		
-	}
-
-	
+	} catch (e) {}
 
 	return {
 		createdNote: await Notes.pack(note, user),

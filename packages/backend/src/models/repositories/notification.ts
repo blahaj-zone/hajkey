@@ -183,4 +183,3 @@ export const NotificationRepository = db.getRepository(Notification).extend({
 		return results.filter((x) => x != null);
 	},
 });
-

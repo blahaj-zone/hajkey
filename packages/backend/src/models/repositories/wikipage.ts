@@ -1,16 +1,14 @@
-
 import { db } from "@/db/postgre.js";
 import type { Packed } from "@/misc/schema.js";
 import type { Promiseable } from "@/prelude/await-all.js";
 import { Users } from "@/models/index.js";
 import { awaitAll } from "@/prelude/await-all.js";
-import { WikiPage } from '@/models/entities/wikipage.js';
+import { WikiPage } from "@/models/entities/wikipage.js";
 
 export const WikiPageRepository = db.getRepository(WikiPage).extend({
-	async pack(
-		src: WikiPage['id'] | WikiPage,
-	): Promise<Packed<"WikiPage">> {
-		const wikiPage = typeof src === 'object' ? src : await this.findOneByOrFail({ id: src });
+	async pack(src: WikiPage["id"] | WikiPage): Promise<Packed<"WikiPage">> {
+		const wikiPage =
+			typeof src === "object" ? src : await this.findOneByOrFail({ id: src });
 
 		const packed = {
 			id: wikiPage.id,
@@ -22,7 +20,9 @@ export const WikiPageRepository = db.getRepository(WikiPage).extend({
 			ownerId: wikiPage.ownerId,
 			owner: wikiPage.ownerId ? await Users.pack(wikiPage.owner!) : null,
 			editorId: wikiPage.revision?.editorId,
-			editor: wikiPage.revision?.editorId ? await Users.pack(wikiPage.revision.editor!) : null,
+			editor: wikiPage.revision?.editorId
+				? await Users.pack(wikiPage.revision.editor!)
+				: null,
 			slug: wikiPage.slug,
 			title: wikiPage.revision?.title,
 			body: wikiPage.revision?.body,
@@ -36,5 +36,4 @@ export const WikiPageRepository = db.getRepository(WikiPage).extend({
 	): Promise<Packed<"WikiPage">[]> {
 		return Promise.all(wikiPages.map((p) => this.pack(p)));
 	},
-
 });

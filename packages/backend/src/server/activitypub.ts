@@ -222,7 +222,7 @@ router.get("/users/:user", async (ctx, next) => {
 		return;
 	}
 
-	const missing = await hasSignature(ctx.req) === 'missing';
+	const missing = (await hasSignature(ctx.req)) === "missing";
 	// Allow 'missing' signature to /users/:user for older clients
 
 	const verify = await checkFetch(ctx.req);
@@ -251,7 +251,7 @@ router.get("/@:user", async (ctx, next) => {
 		return;
 	}
 
-	const missing = await hasSignature(ctx.req) === 'missing';
+	const missing = (await hasSignature(ctx.req)) === "missing";
 	// Allow 'missing' signature to /@:user for older clients
 
 	const verify = await checkFetch(ctx.req);

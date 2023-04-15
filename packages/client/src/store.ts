@@ -10,7 +10,7 @@ export const notePostInterruptors = [];
 
 // TODO: Each one has to add the key of WHERE or default, so it is a redundant, so I will do something
 // (just the type definition seems to be troublesome)
-// Also, in the case of the current definition, there is also the merit that "the key name cannot be 
+// Also, in the case of the current definition, there is also the merit that "the key name cannot be
 // duplicated regardless of what is the WHERE is", so you have to think about how to take over the benefits.
 export const defaultStore = markRaw(
 	new Storage("base", {
@@ -358,7 +358,13 @@ export const defaultStore = markRaw(
 		},
 		defaultTimeline: {
 			where: "device",
-			default: "" as "" | "home" | "local" | "recommended" | "social" | "global",
+			default: "" as
+				| ""
+				| "home"
+				| "local"
+				| "recommended"
+				| "social"
+				| "global",
 		},
 		allowSwipe: {
 			where: "device",
@@ -366,27 +372,27 @@ export const defaultStore = markRaw(
 		},
 		indicateNotification: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		indicateMessaging: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		indicateFollows: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		indicateAnnouncements: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		indicateAntennas: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		indicateChannels: {
 			where: "device",
-			default:true,
+			default: true,
 		},
 		enableCustomKaTeXMacro: {
 			where: "device",

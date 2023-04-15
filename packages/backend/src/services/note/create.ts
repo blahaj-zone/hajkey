@@ -167,8 +167,8 @@ export default async (
 	data: Option,
 	silent = false,
 ) =>
-// rome-ignore lint/suspicious/noAsyncPromiseExecutor: future cleanup
-new  Promise<Note>(async (res, rej) => {
+	// rome-ignore lint/suspicious/noAsyncPromiseExecutor: future cleanup
+	new Promise<Note>(async (res, rej) => {
 		// If you reply outside the channel, match the scope of the target.
 		// TODO (I think it's a process that could be done on the client side, but it's server side for now.)
 		if (
@@ -461,7 +461,7 @@ new  Promise<Note>(async (res, rej) => {
 
 			const profile = Users.isLocalUser(user)
 				? await UserProfiles.findOneByOrFail({ userId: user.id })
-				: {} as UserProfile;
+				: ({} as UserProfile);
 
 			// If has in reply to note
 			if (data.reply) {
@@ -469,12 +469,10 @@ new  Promise<Note>(async (res, rej) => {
 				nmRelatedPromises.push(notifyToWatchersOfReplyee(data.reply, user, nm));
 
 				try {
-					if (profile.autoWatchReplied) {		
-						watch(user.id, data.reply);		
+					if (profile.autoWatchReplied) {
+						watch(user.id, data.reply);
 					}
-				} catch (e) {
-					
-				}
+				} catch (e) {}
 
 				// 通知
 				if (data.reply.userHost === null) {
@@ -524,12 +522,12 @@ new  Promise<Note>(async (res, rej) => {
 					notifyToWatchersOfRenotee(data.renote, user, nm, type),
 				);
 
-			  if (type === "quote") {
+				if (type === "quote") {
 					if (profile.autoWatchQuoted) {
 						watch(user.id, data.renote);
 					}
 				} else {
-					if (profile.autoWatchBoosted){
+					if (profile.autoWatchBoosted) {
 						watch(user.id, data.renote);
 					}
 				}
