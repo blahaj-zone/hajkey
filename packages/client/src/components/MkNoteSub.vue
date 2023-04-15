@@ -156,19 +156,19 @@
 					:note="reply"
 					class="reply single"
 					:conversation="conversation"
-						:depth="depth"
-						:colorizer="colorizer"
-						:parentId="appearNote.replyId"
-					/>
-				</template>
-				<template v-else-if="depth < repliesDepth">
-					<MkNoteSub
-						v-for="reply in replies"
-						:key="reply.id"
-						:note="reply"
-						class="reply"
-						:conversation="conversation"
-						:depth="depth + 1"
+					:depth="depth"
+					:colorizer="colorizer"
+					:parentId="appearNote.replyId"
+				/>
+			</template>
+			<template v-else-if="depth < repliesDepth">
+				<MkNoteSub
+					v-for="reply in replies"
+					:key="reply.id"
+					:note="reply"
+					class="reply"
+					:conversation="conversation"
+					:depth="depth + 1"
 					:colorizer="colorizer.advance()"
 					:parentId="appearNote.replyId"
 				/>
@@ -231,7 +231,7 @@ const props = withDefaults(
 	defineProps<{
 		note: misskey.entities.Note;
 		conversation?: misskey.entities.Note[];
-		parentId?: misskey.entities.Note['id'];
+		parentId?: misskey.entities.Note["id"];
 
 		// how many notes are in between this one and the note being viewed in detail
 		depth?: number;
@@ -245,7 +245,7 @@ const props = withDefaults(
 	}
 );
 
-const colorizer: Colorizer = $ref(props.colorizer ?? new Colorizer())
+const colorizer: Colorizer = props.colorizer ?? new Colorizer();
 
 let note = $ref(deepClone(props.note));
 
