@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import {} from "vue";
+import { ref } from "vue";
 import * as misskey from "calckey-js";
 import * as mfm from "mfm-js";
 import XNoteSimple from "@/components/MkNoteSimple.vue";
