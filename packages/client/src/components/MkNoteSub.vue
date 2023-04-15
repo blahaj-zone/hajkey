@@ -7,7 +7,7 @@
 			children: depth > 1,
 			singleStart: replies.length == 1,
 			firstColumn: depth == 1 && conversation,
-			[`level${(depth + offset) % 8}`]: true,
+			[`level${colorOffset}`]: true,
 		}"
 	>
 		<div v-if="conversation && depth > 1" class="line"></div>
@@ -158,6 +158,7 @@
 					:conversation="conversation"
 					:depth="depth"
 					:offset="offset"
+					:colorizer="colorizer"
 					:parentId="appearNote.replyId"
 				/>
 			</template>
@@ -170,6 +171,7 @@
 					:conversation="conversation"
 					:depth="depth + 1"
 					:offset="offset + index"
+					:colorizer="colorizer.advance()"
 					:parentId="appearNote.replyId"
 				/>
 			</template>
@@ -208,16 +210,32 @@ import { defaultStore } from "@/store";
 
 const router = useRouter();
 
+class Colorizer {
+	public offset: number;
+	constructor() {
+		this.offset = 0;
+	}
+	advance(): Colorizer {
+		this.offset++;
+		return this;
+	}
+	current(): number {
+		return this.offset % 8;
+	}
+}
+
 const props = withDefaults(
 	defineProps<{
 		note: misskey.entities.Note;
 		conversation?: misskey.entities.Note[];
-		parentId?;
+		parentId?: misskey.entities.Note['id'];
 
 		// how many notes are in between this one and the note being viewed in detail
 		depth?: number;
 		offset?: number;
 		child?: number;
+
+		colorizer?: Colorizer;
 	}>(),
 	{
 		depth: 1,
@@ -225,6 +243,9 @@ const props = withDefaults(
 		child: 0,
 	}
 );
+
+const colorizer: Colorizer = $ref(props.colorizer ?? new Colorizer())
+const colorOffset = colorizer.current();
 
 let note = $ref(deepClone(props.note));
 
