@@ -1,89 +1,151 @@
 <template>
-<div class="shaynizk">
-	<div class="form">
-		<MkInput v-model="name" class="_formBlock">
-			<template #label>{{ i18n.ts.name }}</template>
-		</MkInput>
-		<MkSelect v-model="src" class="_formBlock">
-			<template #label>{{ i18n.ts.antennaSource }}</template>
-			<option value="all">{{ i18n.ts._antennaSources.all }}</option>
-			<!--<option value="home">{{ i18n.ts._antennaSources.homeTimeline }}</option>-->
-			<option value="users">{{ i18n.ts._antennaSources.users }}</option>
-			<!--<option value="list">{{ i18n.ts._antennaSources.userList }}</option>-->
-			<!--<option value="group">{{ i18n.ts._antennaSources.userGroup }}</option>-->
-			<option value="instances">{{ i18n.ts._antennaSources.instances }}</option>
-		</MkSelect>
-		<MkSelect v-if="src === 'list'" v-model="userListId" class="_formBlock">
-			<template #label>{{ i18n.ts.userList }}</template>
-			<option v-for="list in userLists" :key="list.id" :value="list.id">{{ list.name }}</option>
-		</MkSelect>
-		<MkSelect v-else-if="src === 'group'" v-model="userGroupId" class="_formBlock">
-			<template #label>{{ i18n.ts.userGroup }}</template>
-			<option v-for="group in userGroups" :key="group.id" :value="group.id">{{ group.name }}</option>
-		</MkSelect>
-		<MkTextarea v-else-if="src === 'users'" v-model="users" class="_formBlock">
-			<template #label>{{ i18n.ts.users }}</template>
-			<template #caption>{{ i18n.ts.antennaUsersDescription }} <button class="_textButton" @click="addUser">{{ i18n.ts.addUser }}</button></template>
-		</MkTextarea>
-		<MkTextarea v-else-if="src === 'instances'" v-model="instances" class="_formBlock">
-			<template #label>{{ i18n.ts.instances }}</template>
-			<template #caption>{{ i18n.ts.antennaInstancesDescription }} <button class="_textButton" @click="addInstance">{{ i18n.ts.addInstance }}</button></template>
-		</MkTextarea>
-		<MkSwitch v-model="withReplies" class="_formBlock">{{ i18n.ts.withReplies }}</MkSwitch>
-		<MkTextarea v-model="keywords" class="_formBlock">
-			<template #label>{{ i18n.ts.antennaKeywords }}</template>
-			<template #caption>
-				{{ i18n.ts.antennaKeywordsDescription }}<br/>
-				{{ i18n.ts.antennaKeywordsComposition }}
-			</template>
-		</MkTextarea>
-		<MkTextarea v-model="excludeKeywords" class="_formBlock">
-			<template #label>{{ i18n.ts.antennaExcludeKeywords }}</template>
-			<template #caption>
-				{{ i18n.ts.antennaKeywordsDescription }}<br/>
-				{{ i18n.ts.antennaKeywordsComposition }}
-			</template>
-		</MkTextarea>
-		<MkSwitch v-model="caseSensitive" class="_formBlock">{{ i18n.ts.caseSensitive }}</MkSwitch>
-		<MkSwitch v-model="withFile" class="_formBlock">{{ i18n.ts.withFileAntenna }}</MkSwitch>
-		<MkSwitch v-model="notify" class="_formBlock">{{ i18n.ts.notifyAntenna }}</MkSwitch>
+	<div class="shaynizk">
+		<div class="form">
+			<MkInput v-model="name" class="_formBlock">
+				<template #label>{{ i18n.ts.name }}</template>
+			</MkInput>
+			<MkSelect v-model="src" class="_formBlock">
+				<template #label>{{ i18n.ts.antennaSource }}</template>
+				<option value="all">{{ i18n.ts._antennaSources.all }}</option>
+				<!--<option value="home">{{ i18n.ts._antennaSources.homeTimeline }}</option>-->
+				<option value="users">
+					{{ i18n.ts._antennaSources.users }}
+				</option>
+				<!--<option value="list">{{ i18n.ts._antennaSources.userList }}</option>-->
+				<!--<option value="group">{{ i18n.ts._antennaSources.userGroup }}</option>-->
+				<option value="instances">
+					{{ i18n.ts._antennaSources.instances }}
+				</option>
+			</MkSelect>
+			<MkSelect
+				v-if="src === 'list'"
+				v-model="userListId"
+				class="_formBlock"
+			>
+				<template #label>{{ i18n.ts.userList }}</template>
+				<option
+					v-for="list in userLists"
+					:key="list.id"
+					:value="list.id"
+				>
+					{{ list.name }}
+				</option>
+			</MkSelect>
+			<MkSelect
+				v-else-if="src === 'group'"
+				v-model="userGroupId"
+				class="_formBlock"
+			>
+				<template #label>{{ i18n.ts.userGroup }}</template>
+				<option
+					v-for="group in userGroups"
+					:key="group.id"
+					:value="group.id"
+				>
+					{{ group.name }}
+				</option>
+			</MkSelect>
+			<MkTextarea
+				v-else-if="src === 'users'"
+				v-model="users"
+				class="_formBlock"
+			>
+				<template #label>{{ i18n.ts.users }}</template>
+				<template #caption
+					>{{ i18n.ts.antennaUsersDescription }}
+					<button class="_textButton" @click="addUser">
+						{{ i18n.ts.addUser }}
+					</button></template
+				>
+			</MkTextarea>
+			<MkTextarea
+				v-else-if="src === 'instances'"
+				v-model="instances"
+				class="_formBlock"
+			>
+				<template #label>{{ i18n.ts.instances }}</template>
+				<template #caption
+					>{{ i18n.ts.antennaInstancesDescription }}
+					<button class="_textButton" @click="addInstance">
+						{{ i18n.ts.addInstance }}
+					</button></template
+				>
+			</MkTextarea>
+			<MkSwitch v-model="withReplies" class="_formBlock">{{
+				i18n.ts.withReplies
+			}}</MkSwitch>
+			<MkTextarea v-model="keywords" class="_formBlock">
+				<template #label>{{ i18n.ts.antennaKeywords }}</template>
+				<template #caption>{{
+					i18n.ts.antennaKeywordsDescription
+				}}</template>
+			</MkTextarea>
+			<MkTextarea v-model="excludeKeywords" class="_formBlock">
+				<template #label>{{ i18n.ts.antennaExcludeKeywords }}</template>
+				<template #caption>{{
+					i18n.ts.antennaKeywordsDescription
+				}}</template>
+			</MkTextarea>
+			<MkSwitch v-model="caseSensitive" class="_formBlock">{{
+				i18n.ts.caseSensitive
+			}}</MkSwitch>
+			<MkSwitch v-model="withFile" class="_formBlock">{{
+				i18n.ts.withFileAntenna
+			}}</MkSwitch>
+			<MkSwitch v-model="notify" class="_formBlock">{{
+				i18n.ts.notifyAntenna
+			}}</MkSwitch>
+		</div>
+		<div class="actions">
+			<MkButton inline primary @click="saveAntenna()"
+				><i class="ph-floppy-disk-back ph-bold ph-lg"></i>
+				{{ i18n.ts.save }}</MkButton
+			>
+			<MkButton
+				v-if="antenna.id != null"
+				inline
+				danger
+				@click="deleteAntenna()"
+				><i class="ph-trash ph-bold ph-lg"></i>
+				{{ i18n.ts.delete }}</MkButton
+			>
+		</div>
 	</div>
-	<div class="actions">
-		<MkButton inline primary @click="saveAntenna()"><i class="ph-floppy-disk-back ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
-		<MkButton v-if="antenna.id != null" inline danger @click="deleteAntenna()"><i class="ph-trash ph-bold ph-lg"></i> {{ i18n.ts.delete }}</MkButton>
-	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
-import * as Acct from 'calckey-js/built/acct';
-import MkButton from '@/components/MkButton.vue';
-import MkInput from '@/components/form/input.vue';
-import MkTextarea from '@/components/form/textarea.vue';
-import MkSelect from '@/components/form/select.vue';
-import MkSwitch from '@/components/form/switch.vue';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
+import { watch } from "vue";
+import * as Acct from "calckey-js/built/acct";
+import MkButton from "@/components/MkButton.vue";
+import MkInput from "@/components/form/input.vue";
+import MkTextarea from "@/components/form/textarea.vue";
+import MkSelect from "@/components/form/select.vue";
+import MkSwitch from "@/components/form/switch.vue";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
-	antenna: any
+	antenna: any;
 }>();
 
 const emit = defineEmits<{
-	(ev: 'created'): void,
-	(ev: 'updated'): void,
-	(ev: 'deleted'): void,
+	(ev: "created"): void;
+	(ev: "updated"): void;
+	(ev: "deleted"): void;
 }>();
 
 let name: string = $ref(props.antenna.name);
 let src: string = $ref(props.antenna.src);
 let userListId: any = $ref(props.antenna.userListId);
 let userGroupId: any = $ref(props.antenna.userGroupId);
-let users: string = $ref(props.antenna.users.join('\n'));
-let instances: string = $ref(props.antenna.instances.join('\n'));
-let keywords: string = $ref(props.antenna.keywords.map(x => x.join('  ')).join('\n'));
-let excludeKeywords: string = $ref(props.antenna.excludeKeywords.map(x => x.join('  ')).join('\n'));
+let users: string = $ref(props.antenna.users.join("\n"));
+let instances: string = $ref(props.antenna.instances.join("\n"));
+let keywords: string = $ref(
+	props.antenna.keywords.map((x) => x.join("  ")).join("\n")
+);
+let excludeKeywords: string = $ref(
+	props.antenna.excludeKeywords.map((x) => x.join("  ")).join("\n")
+);
 let caseSensitive: boolean = $ref(props.antenna.caseSensitive);
 let withReplies: boolean = $ref(props.antenna.withReplies);
 let withFile: boolean = $ref(props.antenna.withFile);
@@ -91,18 +153,21 @@ let notify: boolean = $ref(props.antenna.notify);
 let userLists: any = $ref(null);
 let userGroups: any = $ref(null);
 
-watch(() => src, async () => {
-	if (src === 'list' && userLists === null) {
-		userLists = await os.api('users/lists/list');
-	}
+watch(
+	() => src,
+	async () => {
+		if (src === "list" && userLists === null) {
+			userLists = await os.api("users/lists/list");
+		}
 
-	if (src === 'group' && userGroups === null) {
-		const groups1 = await os.api('users/groups/owned');
-		const groups2 = await os.api('users/groups/joined');
+		if (src === "group" && userGroups === null) {
+			const groups1 = await os.api("users/groups/owned");
+			const groups2 = await os.api("users/groups/joined");
 
-		userGroups = [...groups1, ...groups2];
+			userGroups = [...groups1, ...groups2];
+		}
 	}
-});
+);
 
 const stripPrefix = (s: string, p: string): string =>
 	s.startsWith(p) ? s.slice(p.length) : s;
@@ -111,11 +176,16 @@ const stripPrefices = (s: string, ...p: string[]): string =>
 	p.reduce((acc, pattern) => stripPrefix(acc, pattern), s);
 
 async function saveAntenna() {
-	let userList = users.trim().split('\n').map(x => x.trim())
-	if (src === 'hosts') {
+	let userList = users
+		.trim()
+		.split("\n")
+		.map((x) => x.trim());
+	if (src === "hosts") {
 		userList = userList
-			.map(host => stripPrefices(host.toLowerCase(), 'https://', 'http://', '@'))
-			.filter(x => x !== '');
+			.map((host) =>
+				stripPrefices(host.toLowerCase(), "https://", "http://", "@")
+			)
+			.filter((x) => x !== "");
 	}
 
 	const antennaData = {
@@ -127,39 +197,51 @@ async function saveAntenna() {
 		withFile,
 		notify,
 		caseSensitive,
-		users: userList,
-		instances: instances.trim().split('\n').map(x => x.trim()),
-		keywords: keywords.trim().split('\n').map(x => x.trim().split('  ')),
-		excludeKeywords: excludeKeywords.trim().split('\n').map(x => x.trim().split('  ')),
+		users: users
+			.trim()
+			.split("\n")
+			.map((x) => x.trim()),
+		instances: instances
+			.trim()
+			.split("\n")
+			.map((x) => x.trim()),
+		keywords: keywords
+			.trim()
+			.split("\n")
+			.map((x) => x.trim().split("  ")),
+		excludeKeywords: excludeKeywords
+			.trim()
+			.split("\n")
+			.map((x) => x.trim().split("  ")),
 	};
 
 	if (props.antenna.id == null) {
-		await os.apiWithDialog('antennas/create', antennaData);
-		emit('created');
+		await os.apiWithDialog("antennas/create", antennaData);
+		emit("created");
 	} else {
-		antennaData['antennaId'] = props.antenna.id;
-		await os.apiWithDialog('antennas/update', antennaData);
-		emit('updated');
+		antennaData["antennaId"] = props.antenna.id;
+		await os.apiWithDialog("antennas/update", antennaData);
+		emit("updated");
 	}
 }
 
 async function deleteAntenna() {
 	const { canceled } = await os.confirm({
-		type: 'warning',
-		text: i18n.t('removeAreYouSure', { x: props.antenna.name }),
+		type: "warning",
+		text: i18n.t("removeAreYouSure", { x: props.antenna.name }),
 	});
 	if (canceled) return;
 
-	await os.api('antennas/delete', {
+	await os.api("antennas/delete", {
 		antennaId: props.antenna.id,
 	});
 
 	os.success();
-	emit('deleted');
+	emit("deleted");
 }
 
 function addUser() {
-	os.selectUser().then(user => {
+	os.selectUser().then((user) => {
 		users = users.trim();
 		users += `\n@${Acct.toString(user as any)}`;
 		users = users.trim();
@@ -167,7 +249,8 @@ function addUser() {
 }
 
 function addInstance() {
-	os.selectInstance().then(instance => {
+	os.selectInstance().then((instance) => {
+		instances = instances.trim();
 		instances += `\n${instance.host}`;
 		instances = instances.trim();
 	});

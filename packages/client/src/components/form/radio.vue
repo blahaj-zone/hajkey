@@ -1,25 +1,22 @@
 <template>
-<div
-	v-adaptive-border
-	class="novjtctn"
-	:class="{ disabled, checked }"
-	:aria-checked="checked"
-	:aria-disabled="disabled"
-	@click="toggle"
->
-	<input
-		type="radio"
-		:disabled="disabled"
+	<div
+		v-adaptive-border
+		class="novjtctn"
+		:class="{ disabled, checked }"
+		:aria-checked="checked"
+		:aria-disabled="disabled"
+		@click="toggle"
 	>
-	<span class="button">
-		<span></span>
-	</span>
-	<span class="label"><slot></slot></span>
-</div>
+		<input type="radio" :disabled="disabled" />
+		<span class="button">
+			<span></span>
+		</span>
+		<span class="label"><slot></slot></span>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
+import {} from "vue";
 
 const props = defineProps<{
 	modelValue: any;
@@ -28,14 +25,14 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'update:modelValue', value: any): void;
+	(ev: "update:modelValue", value: any): void;
 }>();
 
 let checked = $computed(() => props.modelValue === props.value);
 
 function toggle(): void {
 	if (props.disabled) return;
-	emit('update:modelValue', props.value);
+	emit("update:modelValue", props.value);
 }
 </script>
 
@@ -60,7 +57,8 @@ function toggle(): void {
 	&.disabled {
 		opacity: 0.6;
 
-		&, * {
+		&,
+		* {
 			cursor: not-allowed !important;
 		}
 	}
@@ -74,7 +72,8 @@ function toggle(): void {
 		border-color: var(--accentedBg) !important;
 		color: var(--accent);
 
-		&, * {
+		&,
+		* {
 			cursor: default !important;
 		}
 
@@ -107,7 +106,7 @@ function toggle(): void {
 		transition: inherit;
 
 		&:after {
-			content: '';
+			content: "";
 			display: block;
 			position: absolute;
 			top: 3px;

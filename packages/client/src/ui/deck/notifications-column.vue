@@ -1,19 +1,27 @@
 <template>
-<XColumn :column="column" :is-stacked="isStacked" :menu="menu" @parent-focus="$event => emit('parent-focus', $event)">
-	<template #header><i class="ph-bell ph-bold ph-lg" style="margin-right: 8px;"></i>{{ column.name }}</template>
+	<XColumn
+		:column="column"
+		:is-stacked="isStacked"
+		:menu="menu"
+		@parent-focus="($event) => emit('parent-focus', $event)"
+	>
+		<template #header
+			><i class="ph-bell ph-bold ph-lg" style="margin-right: 8px"></i
+			>{{ column.name }}</template
+		>
 
-	<XNotifications :include-types="column.includingTypes"/>
-</XColumn>
+		<XNotifications :include-types="column.includingTypes" />
+	</XColumn>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue';
-import XColumn from './column.vue';
-import { updateColumn } from './deck-store';
-import type { Column } from './deck-store';
-import XNotifications from '@/components/MkNotifications.vue';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
+import { defineAsyncComponent } from "vue";
+import XColumn from "./column.vue";
+import { updateColumn } from "./deck-store";
+import type { Column } from "./deck-store";
+import XNotifications from "@/components/MkNotifications.vue";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	column: Column;
@@ -21,25 +29,34 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'parent-focus', direction: 'up' | 'down' | 'left' | 'right'): void;
+	(ev: "parent-focus", direction: "up" | "down" | "left" | "right"): void;
 }>();
 
 function func(): void {
-	os.popup(defineAsyncComponent(() => import('@/components/MkNotificationSettingWindow.vue')), {
-		includingTypes: props.column.includingTypes,
-	}, {
-		done: async (res) => {
-			const { includingTypes } = res;
-			updateColumn(props.column.id, {
-				includingTypes: includingTypes,
-			});
+	os.popup(
+		defineAsyncComponent(
+			() => import("@/components/MkNotificationSettingWindow.vue")
+		),
+		{
+			includingTypes: props.column.includingTypes,
 		},
-	}, 'closed');
+		{
+			done: async (res) => {
+				const { includingTypes } = res;
+				updateColumn(props.column.id, {
+					includingTypes: includingTypes,
+				});
+			},
+		},
+		"closed"
+	);
 }
 
-const menu = [{
-	icon: 'ph-pencil ph-bold ph-lg',
-	text: i18n.ts.notificationSetting,
-	action: func,
-}];
+const menu = [
+	{
+		icon: "ph-pencil ph-bold ph-lg",
+		text: i18n.ts.notificationSetting,
+		action: func,
+	},
+];
 </script>

@@ -4,49 +4,82 @@
 			<template #header>Chart</template>
 			<div :class="$style.chart">
 				<div class="selects">
-					<MkSelect v-model="chartSrc" style="margin: 0; flex: 1;">
+					<MkSelect v-model="chartSrc" style="margin: 0; flex: 1">
 						<optgroup :label="i18n.ts.federation">
-							<option value="federation">{{ i18n.ts._charts.federation }}</option>
-							<option value="ap-request">{{ i18n.ts._charts.apRequest }}</option>
+							<option value="federation">
+								{{ i18n.ts._charts.federation }}
+							</option>
+							<option value="ap-request">
+								{{ i18n.ts._charts.apRequest }}
+							</option>
 						</optgroup>
 						<optgroup :label="i18n.ts.users">
-							<option value="users">{{ i18n.ts._charts.usersIncDec }}</option>
-							<option value="users-total">{{ i18n.ts._charts.usersTotal }}</option>
-							<option value="active-users">{{ i18n.ts._charts.activeUsers }}</option>
+							<option value="users">
+								{{ i18n.ts._charts.usersIncDec }}
+							</option>
+							<option value="users-total">
+								{{ i18n.ts._charts.usersTotal }}
+							</option>
+							<option value="active-users">
+								{{ i18n.ts._charts.activeUsers }}
+							</option>
 						</optgroup>
 						<optgroup :label="i18n.ts.notes">
-							<option value="notes">{{ i18n.ts._charts.notesIncDec }}</option>
-							<option value="local-notes">{{ i18n.ts._charts.localNotesIncDec }}</option>
-							<option value="remote-notes">{{ i18n.ts._charts.remoteNotesIncDec }}</option>
-							<option value="notes-total">{{ i18n.ts._charts.notesTotal }}</option>
+							<option value="notes">
+								{{ i18n.ts._charts.notesIncDec }}
+							</option>
+							<option value="local-notes">
+								{{ i18n.ts._charts.localNotesIncDec }}
+							</option>
+							<option value="remote-notes">
+								{{ i18n.ts._charts.remoteNotesIncDec }}
+							</option>
+							<option value="notes-total">
+								{{ i18n.ts._charts.notesTotal }}
+							</option>
 						</optgroup>
 						<optgroup :label="i18n.ts.drive">
-							<option value="drive-files">{{ i18n.ts._charts.filesIncDec }}</option>
-							<option value="drive">{{ i18n.ts._charts.storageUsageIncDec }}</option>
+							<option value="drive-files">
+								{{ i18n.ts._charts.filesIncDec }}
+							</option>
+							<option value="drive">
+								{{ i18n.ts._charts.storageUsageIncDec }}
+							</option>
 						</optgroup>
 					</MkSelect>
-					<MkSelect v-model="chartSpan" style="margin: 0 0 0 10px;">
+					<MkSelect v-model="chartSpan" style="margin: 0 0 0 10px">
 						<option value="hour">{{ i18n.ts.perHour }}</option>
 						<option value="day">{{ i18n.ts.perDay }}</option>
 					</MkSelect>
 				</div>
 				<div class="chart _panel">
-					<MkChart :src="chartSrc" :span="chartSpan" :limit="chartLimit" :detailed="true"></MkChart>
+					<MkChart
+						:src="chartSrc"
+						:span="chartSpan"
+						:limit="chartLimit"
+						:detailed="true"
+					></MkChart>
 				</div>
 			</div>
 		</MkFolder>
 
 		<MkFolder class="item">
 			<template #header>Active users heatmap</template>
-			<MkSelect v-model="heatmapSrc" style="margin: 0 0 12px 0;">
+			<MkSelect v-model="heatmapSrc" style="margin: 0 0 12px 0">
 				<option value="active-users">Active users</option>
 				<option value="notes">Notes</option>
-				<option value="ap-requests-inbox-received">Fediverse Requests: inboxReceived</option>
-				<option value="ap-requests-deliver-succeeded">Fediverse Requests: deliverSucceeded</option>
-				<option value="ap-requests-deliver-failed">Fediverse Requests: deliverFailed</option>
+				<option value="ap-requests-inbox-received">
+					Fediverse Requests: inboxReceived
+				</option>
+				<option value="ap-requests-deliver-succeeded">
+					Fediverse Requests: deliverSucceeded
+				</option>
+				<option value="ap-requests-deliver-failed">
+					Fediverse Requests: deliverFailed
+				</option>
 			</MkSelect>
 			<div class="_panel" :class="$style.heatmap">
-				<MkHeatmap :src="heatmapSrc"/>
+				<MkHeatmap :src="heatmapSrc" />
 			</div>
 		</MkFolder>
 
@@ -69,45 +102,49 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import { Chart } from 'chart.js';
-import MkSelect from '@/components/form/select.vue';
-import MkChart from '@/components/MkChart.vue';
-import { useChartTooltip } from '@/scripts/use-chart-tooltip';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
-import MkHeatmap from '@/components/MkHeatmap.vue';
-import MkFolder from '@/components/MkFolder.vue';
-import { initChart } from '@/scripts/init-chart';
+import { onMounted } from "vue";
+import { Chart } from "chart.js";
+import MkSelect from "@/components/form/select.vue";
+import MkChart from "@/components/MkChart.vue";
+import { useChartTooltip } from "@/scripts/use-chart-tooltip";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
+import MkHeatmap from "@/components/MkHeatmap.vue";
+import MkFolder from "@/components/MkFolder.vue";
+import { initChart } from "@/scripts/init-chart";
 
 initChart();
 
 const chartLimit = 500;
-let chartSpan = $ref<'hour' | 'day'>('hour');
-let chartSrc = $ref('active-users');
-let heatmapSrc = $ref('active-users');
+let chartSpan = $ref<"hour" | "day">("hour");
+let chartSrc = $ref("active-users");
+let heatmapSrc = $ref("active-users");
 let subDoughnutEl = $shallowRef<HTMLCanvasElement>();
 let pubDoughnutEl = $shallowRef<HTMLCanvasElement>();
 
 const { handler: externalTooltipHandler1 } = useChartTooltip({
-	position: 'middle',
+	position: "middle",
 });
 const { handler: externalTooltipHandler2 } = useChartTooltip({
-	position: 'middle',
+	position: "middle",
 });
 
 function createDoughnut(chartEl, tooltip, data) {
 	const chartInstance = new Chart(chartEl, {
-		type: 'doughnut',
+		type: "doughnut",
 		data: {
-			labels: data.map(x => x.name),
-			datasets: [{
-				backgroundColor: data.map(x => x.color),
-				borderColor: getComputedStyle(document.documentElement).getPropertyValue('--panel'),
-				borderWidth: 2,
-				hoverOffset: 0,
-				data: data.map(x => x.value),
-			}],
+			labels: data.map((x) => x.name),
+			datasets: [
+				{
+					backgroundColor: data.map((x) => x.color),
+					borderColor: getComputedStyle(
+						document.documentElement
+					).getPropertyValue("--panel"),
+					borderWidth: 2,
+					hoverOffset: 0,
+					data: data.map((x) => x.value),
+				},
+			],
 		},
 		options: {
 			maintainAspectRatio: false,
@@ -120,7 +157,12 @@ function createDoughnut(chartEl, tooltip, data) {
 				},
 			},
 			onClick: (ev) => {
-				const hit = chartInstance.getElementsAtEventForMode(ev, 'nearest', { intersect: true }, false)[0];
+				const hit = chartInstance.getElementsAtEventForMode(
+					ev,
+					"nearest",
+					{ intersect: true },
+					false
+				)[0];
 				if (hit && data[hit.index].onClick) {
 					data[hit.index].onClick();
 				}
@@ -131,7 +173,7 @@ function createDoughnut(chartEl, tooltip, data) {
 				},
 				tooltip: {
 					enabled: false,
-					mode: 'index',
+					mode: "index",
 					animation: {
 						duration: 0,
 					},
@@ -145,24 +187,48 @@ function createDoughnut(chartEl, tooltip, data) {
 }
 
 onMounted(() => {
-	os.apiGet('federation/stats', { limit: 30 }).then(fedStats => {
-		createDoughnut(subDoughnutEl, externalTooltipHandler1, fedStats.topSubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followersCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: fedStats.otherFollowersCount }]));
+	os.apiGet("federation/stats", { limit: 30 }).then((fedStats) => {
+		createDoughnut(
+			subDoughnutEl,
+			externalTooltipHandler1,
+			fedStats.topSubInstances
+				.map((x) => ({
+					name: x.host,
+					color: x.themeColor,
+					value: x.followersCount,
+					onClick: () => {
+						os.pageWindow(`/instance-info/${x.host}`);
+					},
+				}))
+				.concat([
+					{
+						name: "(other)",
+						color: "#80808080",
+						value: fedStats.otherFollowersCount,
+					},
+				])
+		);
 
-		createDoughnut(pubDoughnutEl, externalTooltipHandler2, fedStats.topPubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followingCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: fedStats.otherFollowingCount }]));
+		createDoughnut(
+			pubDoughnutEl,
+			externalTooltipHandler2,
+			fedStats.topPubInstances
+				.map((x) => ({
+					name: x.host,
+					color: x.themeColor,
+					value: x.followingCount,
+					onClick: () => {
+						os.pageWindow(`/instance-info/${x.host}`);
+					},
+				}))
+				.concat([
+					{
+						name: "(other)",
+						color: "#80808080",
+						value: fedStats.otherFollowingCount,
+					},
+				])
+		);
 	});
 });
 </script>
@@ -205,7 +271,8 @@ onMounted(() => {
 			display: flex;
 			gap: 16px;
 
-			> .sub, > .pub {
+			> .sub,
+			> .pub {
 				flex: 1;
 				min-width: 0;
 				position: relative;

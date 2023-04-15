@@ -1,34 +1,36 @@
 <template>
-<button
-	v-if="!link" class="bghgjjyj _button"
-	:class="{ inline, primary, gradate, danger, rounded, full }"
-	:type="type"
-	@click="emit('click', $event)"
-	@mousedown="onMousedown"
->
-	<div ref="ripples" class="ripples"></div>
-	<div class="content">
-		<slot></slot>
-	</div>
-</button>
-<MkA
-	v-else class="bghgjjyj _button"
-	:class="{ inline, primary, gradate, danger, rounded, full }"
-	:to="to"
-	@mousedown="onMousedown"
->
-	<div ref="ripples" class="ripples"></div>
-	<div class="content">
-		<slot></slot>
-	</div>
-</MkA>
+	<button
+		v-if="!link"
+		class="bghgjjyj _button"
+		:class="{ inline, primary, gradate, danger, rounded, full }"
+		:type="type"
+		@click="emit('click', $event)"
+		@mousedown="onMousedown"
+	>
+		<div ref="ripples" class="ripples"></div>
+		<div class="content">
+			<slot></slot>
+		</div>
+	</button>
+	<MkA
+		v-else
+		class="bghgjjyj _button"
+		:class="{ inline, primary, gradate, danger, rounded, full }"
+		:to="to"
+		@mousedown="onMousedown"
+	>
+		<div ref="ripples" class="ripples"></div>
+		<div class="content">
+			<slot></slot>
+		</div>
+	</MkA>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted } from 'vue';
+import { nextTick, onMounted } from "vue";
 
 const props = defineProps<{
-	type?: 'button' | 'submit' | 'reset';
+	type?: "button" | "submit" | "reset";
 	primary?: boolean;
 	gradate?: boolean;
 	rounded?: boolean;
@@ -42,7 +44,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'click', payload: MouseEvent): void;
+	(ev: "click", payload: MouseEvent): void;
 }>();
 
 let el = $ref<HTMLElement | null>(null);
@@ -73,23 +75,28 @@ function onMousedown(evt: MouseEvent): void {
 	const target = evt.target! as HTMLElement;
 	const rect = target.getBoundingClientRect();
 
-	const ripple = document.createElement('div');
-	ripple.style.top = (evt.clientY - rect.top - 1).toString() + 'px';
-	ripple.style.left = (evt.clientX - rect.left - 1).toString() + 'px';
+	const ripple = document.createElement("div");
+	ripple.style.top = (evt.clientY - rect.top - 1).toString() + "px";
+	ripple.style.left = (evt.clientX - rect.left - 1).toString() + "px";
 
 	ripples!.appendChild(ripple);
 
 	const circleCenterX = evt.clientX - rect.left;
 	const circleCenterY = evt.clientY - rect.top;
 
-	const scale = calcCircleScale(target.clientWidth, target.clientHeight, circleCenterX, circleCenterY);
+	const scale = calcCircleScale(
+		target.clientWidth,
+		target.clientHeight,
+		circleCenterX,
+		circleCenterY
+	);
 
 	window.setTimeout(() => {
-		ripple.style.transform = 'scale(' + (scale / 2) + ')';
+		ripple.style.transform = "scale(" + scale / 2 + ")";
 	}, 1);
 	window.setTimeout(() => {
-		ripple.style.transition = 'all 1s ease';
-		ripple.style.opacity = '0';
+		ripple.style.transition = "all 1s ease";
+		ripple.style.opacity = "0";
 	}, 1000);
 	window.setTimeout(() => {
 		if (ripples) ripples.removeChild(ripple);
@@ -151,7 +158,11 @@ function onMousedown(evt: MouseEvent): void {
 	&.gradate {
 		font-weight: bold;
 		color: var(--fgOnAccent) !important;
-		background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
+		background: linear-gradient(
+			90deg,
+			var(--buttonGradateA),
+			var(--buttonGradateB)
+		);
 
 		&:not(:disabled):hover {
 			background: linear-gradient(90deg, var(--X8), var(--X8));
@@ -212,7 +223,7 @@ function onMousedown(evt: MouseEvent): void {
 			background: rgba(0, 0, 0, 0.1);
 			opacity: 1;
 			transform: scale(1);
-			transition: all 0.5s cubic-bezier(0,.5,0,1);
+			transition: all 0.5s cubic-bezier(0, 0.5, 0, 1);
 		}
 	}
 

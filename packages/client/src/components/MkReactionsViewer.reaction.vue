@@ -1,25 +1,33 @@
 <template>
-<button
-	v-if="count > 0"
-	ref="buttonRef"
-	v-ripple="canToggle"
-	class="hkzvhatu _button"
-	:class="{ reacted: note.myReaction == reaction, canToggle, newlyAdded: !isInitial }"
-	@click="toggleReaction()"
->
-	<XReactionIcon class="icon" :reaction="reaction" :custom-emojis="note.emojis"/>
-	<span class="count">{{ count }}</span>
-</button>
+	<button
+		v-if="count > 0"
+		ref="buttonRef"
+		v-ripple="canToggle"
+		class="hkzvhatu _button"
+		:class="{
+			reacted: note.myReaction == reaction,
+			canToggle,
+			newlyAdded: !isInitial,
+		}"
+		@click="toggleReaction()"
+	>
+		<XReactionIcon
+			class="icon"
+			:reaction="reaction"
+			:custom-emojis="note.emojis"
+		/>
+		<span class="count">{{ count }}</span>
+	</button>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import * as misskey from 'calckey-js';
-import XDetails from '@/components/MkReactionsViewer.details.vue';
-import XReactionIcon from '@/components/MkReactionIcon.vue';
-import * as os from '@/os';
-import { useTooltip } from '@/scripts/use-tooltip';
-import { $i } from '@/account';
+import { computed, ref } from "vue";
+import * as misskey from "calckey-js";
+import XDetails from "@/components/MkReactionsViewer.details.vue";
+import XReactionIcon from "@/components/MkReactionIcon.vue";
+import * as os from "@/os";
+import { useTooltip } from "@/scripts/use-tooltip";
+import { $i } from "@/account";
 
 const props = defineProps<{
 	reaction: string;
@@ -37,43 +45,52 @@ const toggleReaction = () => {
 
 	const oldReaction = props.note.myReaction;
 	if (oldReaction) {
-		os.api('notes/reactions/delete', {
+		os.api("notes/reactions/delete", {
 			noteId: props.note.id,
 		}).then(() => {
 			if (oldReaction !== props.reaction) {
-				os.api('notes/reactions/create', {
+				os.api("notes/reactions/create", {
 					noteId: props.note.id,
 					reaction: props.reaction,
 				});
 			}
 		});
 	} else {
-		os.api('notes/reactions/create', {
+		os.api("notes/reactions/create", {
 			noteId: props.note.id,
 			reaction: props.reaction,
 		});
 	}
 };
 
-useTooltip(buttonRef, async (showing) => {
-	const reactions = await os.apiGet('notes/reactions', {
-		noteId: props.note.id,
-		type: props.reaction,
-		limit: 11,
-		_cacheKey_: props.count,
-	});
+useTooltip(
+	buttonRef,
+	async (showing) => {
+		const reactions = await os.apiGet("notes/reactions", {
+			noteId: props.note.id,
+			type: props.reaction,
+			limit: 11,
+			_cacheKey_: props.count,
+		});
 
-	const users = reactions.map(x => x.user);
+		const users = reactions.map((x) => x.user);
 
-	os.popup(XDetails, {
-		showing,
-		reaction: props.reaction,
-		emojis: props.note.emojis,
-		users,
-		count: props.count,
-		targetElement: buttonRef.value,
-	}, {}, 'closed');
-}, 100);
+		os.popup(
+			XDetails,
+			{
+				showing,
+				reaction: props.reaction,
+				emojis: props.note.emojis,
+				users,
+				count: props.count,
+				targetElement: buttonRef.value,
+			},
+			{},
+			"closed"
+		);
+	},
+	100
+);
 </script>
 
 <style lang="scss" scoped>
@@ -85,21 +102,21 @@ useTooltip(buttonRef, async (showing) => {
 	border-radius: 4px;
 	pointer-events: all;
 	&.newlyAdded {
-		animation: scaleInSmall .3s cubic-bezier(0,0,0,1.2);
+		animation: scaleInSmall 0.3s cubic-bezier(0, 0, 0, 1.2);
 		:deep(.mk-emoji) {
-			animation: scaleIn .4s cubic-bezier(0.7, 0, 0, 1.5);
+			animation: scaleIn 0.4s cubic-bezier(0.7, 0, 0, 1.5);
 		}
 	}
 	:deep(.mk-emoji) {
-		transition: transform .4s cubic-bezier(0,0,0,6);
+		transition: transform 0.4s cubic-bezier(0, 0, 0, 6);
 	}
 	&.reacted :deep(.mk-emoji) {
-		transition: transform .4s cubic-bezier(0,0,0,1);
+		transition: transform 0.4s cubic-bezier(0, 0, 0, 1);
 	}
 	&:active {
 		:deep(.mk-emoji) {
-			transition: transform .4s cubic-bezier(0,0,0,1);
-			transform: scale(.85);
+			transition: transform 0.4s cubic-bezier(0, 0, 0, 1);
+			transform: scale(0.85);
 		}
 	}
 	&.canToggle {

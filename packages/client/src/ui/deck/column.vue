@@ -1,91 +1,131 @@
 <template>
-<!-- sectionを利用しているのは、deck.vue側でcolumnに対してfirst-of-typeを効かせるため -->
-<section
-	v-hotkey="keymap" class="dnpfarvg _narrow_"
-	:class="{ paged: isMainColumn, naked, active, isStacked, draghover, dragging, dropready }"
-	@dragover.prevent.stop="onDragover"
-	@dragleave="onDragleave"
-	@drop.prevent.stop="onDrop"
->
-	<header
-		:class="{ indicated }"
-		draggable="true"
-		@click="goTop"
-		@dragstart="onDragstart"
-		@dragend="onDragend"
-		@contextmenu.prevent.stop="onContextmenu"
+	<!-- sectionを利用しているのは、deck.vue側でcolumnに対してfirst-of-typeを効かせるため -->
+	<section
+		v-hotkey="keymap"
+		class="dnpfarvg _narrow_"
+		:class="{
+			paged: isMainColumn,
+			naked,
+			active,
+			isStacked,
+			draghover,
+			dragging,
+			dropready,
+		}"
+		@dragover.prevent.stop="onDragover"
+		@dragleave="onDragleave"
+		@drop.prevent.stop="onDrop"
 	>
-		<button v-if="isStacked && !isMainColumn" class="toggleActive _button" @click="toggleActive">
-			<template v-if="active"><i class="ph-caret-up ph-bold ph-lg"></i></template>
-			<template v-else><i class="ph-caret-down ph-bold ph-lg"></i></template>
-		</button>
-		<div class="action">
-			<slot name="action"></slot>
+		<header
+			:class="{ indicated }"
+			draggable="true"
+			@click="goTop"
+			@dragstart="onDragstart"
+			@dragend="onDragend"
+			@contextmenu.prevent.stop="onContextmenu"
+		>
+			<button
+				v-if="isStacked && !isMainColumn"
+				class="toggleActive _button"
+				@click="toggleActive"
+			>
+				<template v-if="active"
+					><i class="ph-caret-up ph-bold ph-lg"></i
+				></template>
+				<template v-else
+					><i class="ph-caret-down ph-bold ph-lg"></i
+				></template>
+			</button>
+			<div class="action">
+				<slot name="action"></slot>
+			</div>
+			<span class="header"><slot name="header"></slot></span>
+			<button
+				v-tooltip="i18n.ts.settings"
+				class="menu _button"
+				@click.stop="showSettingsMenu"
+			>
+				<i class="ph-dots-three-outline-vertical ph-bold ph-lg"></i>
+			</button>
+		</header>
+		<div v-show="active" ref="body">
+			<slot></slot>
 		</div>
-		<span class="header"><slot name="header"></slot></span>
-		<button v-tooltip="i18n.ts.settings" class="menu _button" @click.stop="showSettingsMenu"><i class="ph-dots-three-outline-vertical ph-bold ph-lg"></i></button>
-	</header>
-	<div v-show="active" ref="body">
-		<slot></slot>
-	</div>
-</section>
+	</section>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted, provide, Ref, watch } from 'vue';
-import { updateColumn, swapLeftColumn, swapRightColumn, swapUpColumn, swapDownColumn, stackLeftColumn, popRightColumn, removeColumn, swapColumn, Column , deckStore } from './deck-store';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
-import { MenuItem } from '@/types/menu';
+import { onBeforeUnmount, onMounted, provide, Ref, watch } from "vue";
+import {
+	updateColumn,
+	swapLeftColumn,
+	swapRightColumn,
+	swapUpColumn,
+	swapDownColumn,
+	stackLeftColumn,
+	popRightColumn,
+	removeColumn,
+	swapColumn,
+	Column,
+	deckStore,
+} from "./deck-store";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
+import { MenuItem } from "@/types/menu";
 
-provide('shouldHeaderThin', true);
-provide('shouldOmitHeaderTitle', true);
-provide('shouldSpacerMin', true);
+provide("shouldHeaderThin", true);
+provide("shouldOmitHeaderTitle", true);
+provide("shouldSpacerMin", true);
 
-const props = withDefaults(defineProps<{
-	column: Column;
-	isStacked?: boolean;
-	naked?: boolean;
-	indicated?: boolean;
-	menu?: MenuItem[];
-}>(), {
-	isStacked: false,
-	naked: false,
-	indicated: false,
-});
+const props = withDefaults(
+	defineProps<{
+		column: Column;
+		isStacked?: boolean;
+		naked?: boolean;
+		indicated?: boolean;
+		menu?: MenuItem[];
+	}>(),
+	{
+		isStacked: false,
+		naked: false,
+		indicated: false,
+	}
+);
 
 const emit = defineEmits<{
-	(ev: 'parent-focus', direction: 'up' | 'down' | 'left' | 'right'): void;
-	(ev: 'change-active-state', v: boolean): void;
+	(ev: "parent-focus", direction: "up" | "down" | "left" | "right"): void;
+	(ev: "change-active-state", v: boolean): void;
 }>();
 
 let body = $ref<HTMLDivElement>();
 
 let dragging = $ref(false);
-watch($$(dragging), v => os.deckGlobalEvents.emit(v ? 'column.dragStart' : 'column.dragEnd'));
+watch($$(dragging), (v) =>
+	os.deckGlobalEvents.emit(v ? "column.dragStart" : "column.dragEnd")
+);
 
 let draghover = $ref(false);
 let dropready = $ref(false);
 
-const isMainColumn = $computed(() => props.column.type === 'main');
+const isMainColumn = $computed(() => props.column.type === "main");
 const active = $computed(() => props.column.active !== false);
-watch($$(active), v => emit('change-active-state', v));
+watch($$(active), (v) => emit("change-active-state", v));
 
 const keymap = $computed(() => ({
-	'shift+up': () => emit('parent-focus', 'up'),
-	'shift+down': () => emit('parent-focus', 'down'),
-	'shift+left': () => emit('parent-focus', 'left'),
-	'shift+right': () => emit('parent-focus', 'right'),
+	"shift+up": () => emit("parent-focus", "up"),
+	"shift+down": () => emit("parent-focus", "down"),
+	"shift+left": () => emit("parent-focus", "left"),
+	"shift+right": () => emit("parent-focus", "right"),
 }));
 
 onMounted(() => {
-	os.deckGlobalEvents.on('column.dragStart', onOtherDragStart);
-	os.deckGlobalEvents.on('column.dragEnd', onOtherDragEnd);
+	os.deckGlobalEvents.on("column.dragStart", onOtherDragStart);
+	os.deckGlobalEvents.on("column.dragEnd", onOtherDragEnd);
 });
 
 onBeforeUnmount(() => {
-	os.deckGlobalEvents.off('column.dragStart', onOtherDragStart);
-	os.deckGlobalEvents.off('column.dragEnd', onOtherDragEnd);
+	os.deckGlobalEvents.off("column.dragStart", onOtherDragStart);
+	os.deckGlobalEvents.off("column.dragEnd", onOtherDragEnd);
 });
 
 function onOtherDragStart() {
@@ -104,79 +144,97 @@ function toggleActive() {
 }
 
 function getMenu() {
-	let items = [{
-		icon: 'ph-gear-six ph-bold ph-lg',
-		text: i18n.ts._deck.configureColumn,
-		action: async () => {
-			const { canceled, result } = await os.form(props.column.name, {
-				name: {
-					type: 'string',
-					label: i18n.ts.name,
-					default: props.column.name,
+	let items = [
+		{
+			icon: "ph-gear-six ph-bold ph-lg",
+			text: i18n.ts._deck.configureColumn,
+			action: async () => {
+				const { canceled, result } = await os.form(props.column.name, {
+					name: {
+						type: "string",
+						label: i18n.ts.name,
+						default: props.column.name,
+					},
+					width: {
+						type: "number",
+						label: i18n.ts.width,
+						default: props.column.width,
+					},
+					flexible: {
+						type: "boolean",
+						label: i18n.ts.flexible,
+						default: props.column.flexible,
+					},
+				});
+				if (canceled) return;
+				updateColumn(props.column.id, result);
+			},
+		},
+		{
+			type: "parent",
+			text: i18n.ts.move + "...",
+			icon: "ph-arrows-out-cardinal ph-bold ph-lg",
+			children: [
+				{
+					icon: "ph-caret-left ph-bold ph-lg",
+					text: i18n.ts._deck.swapLeft,
+					action: () => {
+						swapLeftColumn(props.column.id);
+					},
 				},
-				width: {
-					type: 'number',
-					label: i18n.ts.width,
-					default: props.column.width,
+				{
+					icon: "ph-caret-right ph-bold ph-lg",
+					text: i18n.ts._deck.swapRight,
+					action: () => {
+						swapRightColumn(props.column.id);
+					},
 				},
-				flexible: {
-					type: 'boolean',
-					label: i18n.ts.flexible,
-					default: props.column.flexible,
-				},
-			});
-			if (canceled) return;
-			updateColumn(props.column.id, result);
+				props.isStacked
+					? {
+							icon: "ph-caret-up ph-bold ph-lg",
+							text: i18n.ts._deck.swapUp,
+							action: () => {
+								swapUpColumn(props.column.id);
+							},
+					  }
+					: undefined,
+				props.isStacked
+					? {
+							icon: "ph-caret-down ph-bold ph-lg",
+							text: i18n.ts._deck.swapDown,
+							action: () => {
+								swapDownColumn(props.column.id);
+							},
+					  }
+					: undefined,
+			],
 		},
-	}, {
-		type: 'parent',
-		text: i18n.ts.move + '...',
-		icon: 'ph-arrows-out-cardinal ph-bold ph-lg',
-		children: [{
-			icon: 'ph-caret-left ph-bold ph-lg',
-			text: i18n.ts._deck.swapLeft,
+		{
+			icon: "ph-copy ph-bold ph-lg",
+			text: i18n.ts._deck.stackLeft,
 			action: () => {
-				swapLeftColumn(props.column.id);
+				stackLeftColumn(props.column.id);
 			},
-		}, {
-			icon: 'ph-caret-right ph-bold ph-lg',
-			text: i18n.ts._deck.swapRight,
-			action: () => {
-				swapRightColumn(props.column.id);
-			},
-		}, props.isStacked ? {
-			icon: 'ph-caret-up ph-bold ph-lg',
-			text: i18n.ts._deck.swapUp,
-			action: () => {
-				swapUpColumn(props.column.id);
-			},
-		} : undefined, props.isStacked ? {
-			icon: 'ph-caret-down ph-bold ph-lg',
-			text: i18n.ts._deck.swapDown,
-			action: () => {
-				swapDownColumn(props.column.id);
-			},
-		} : undefined],
-	}, {
-		icon: 'ph-copy ph-bold ph-lg',
-		text: i18n.ts._deck.stackLeft,
-		action: () => {
-			stackLeftColumn(props.column.id);
 		},
-	}, props.isStacked ? {
-		icon: 'ph-browser ph-bold ph-lg',
-		text: i18n.ts._deck.popRight,
-		action: () => {
-			popRightColumn(props.column.id);
+		props.isStacked
+			? {
+					icon: "ph-browser ph-bold ph-lg",
+					text: i18n.ts._deck.popRight,
+					action: () => {
+						popRightColumn(props.column.id);
+					},
+			  }
+			: undefined,
+		null,
+		{
+			icon: "ph-trash ph-bold ph-lg",
+			text: i18n.ts.remove,
+			danger: true,
+			action: () => {
+				removeColumn(props.column.id);
+			},
 		},
-	} : undefined, null, {
-		icon: 'ph-trash ph-bold ph-lg',
-		text: i18n.ts.remove,
-		danger: true,
-		action: () => {
-			removeColumn(props.column.id);
-		},
-	}];
+	];
 
 	if (props.menu) {
 		items.unshift(null);
@@ -197,12 +255,12 @@ function onContextmenu(ev: MouseEvent) {
 function goTop() {
 	body.scrollTo({
 		top: 0,
-		behavior: 'smooth',
+		behavior: "smooth",
 	});
 }
 
 function onDragstart(ev) {
-	ev.dataTransfer.effectAllowed = 'move';
+	ev.dataTransfer.effectAllowed = "move";
 	ev.dataTransfer.setData(_DATA_TRANSFER_DECK_COLUMN_, props.column.id);
 
 	// Chromeのバグで、Dragstartハンドラ内ですぐにDOMを変更する(=リアクティブなプロパティを変更する)とDragが終了してしまう
@@ -220,11 +278,12 @@ function onDragover(ev) {
 	// 自分自身がドラッグされている場合
 	if (dragging) {
 		// 自分自身にはドロップさせない
-		ev.dataTransfer.dropEffect = 'none';
+		ev.dataTransfer.dropEffect = "none";
 	} else {
-		const isDeckColumn = ev.dataTransfer.types[0] === _DATA_TRANSFER_DECK_COLUMN_;
+		const isDeckColumn =
+			ev.dataTransfer.types[0] === _DATA_TRANSFER_DECK_COLUMN_;
 
-		ev.dataTransfer.dropEffect = isDeckColumn ? 'move' : 'none';
+		ev.dataTransfer.dropEffect = isDeckColumn ? "move" : "none";
 
 		if (isDeckColumn) draghover = true;
 	}
@@ -236,10 +295,10 @@ function onDragleave() {
 
 function onDrop(ev) {
 	draghover = false;
-	os.deckGlobalEvents.emit('column.dragEnd');
+	os.deckGlobalEvents.emit("column.dragEnd");
 
 	const id = ev.dataTransfer.getData(_DATA_TRANSFER_DECK_COLUMN_);
-	if (id != null && id !== '') {
+	if (id != null && id !== "") {
 		swapColumn(props.column.id, id);
 	}
 }
@@ -249,7 +308,7 @@ function onDrop(ev) {
 .dnpfarvg {
 	header {
 		.ph-lg {
-			vertical-align: -.24em;
+			vertical-align: -0.24em;
 		}
 	}
 }
@@ -340,7 +399,8 @@ function onDrop(ev) {
 		box-shadow: 0 1px 0 0 var(--panelHeaderDivider);
 		cursor: pointer;
 
-		&, * {
+		&,
+		* {
 			user-select: none;
 		}
 
@@ -377,7 +437,8 @@ function onDrop(ev) {
 			}
 		}
 
-		> .toggleActive, > .action {
+		> .toggleActive,
+		> .action {
 			margin-left: -16px;
 		}
 

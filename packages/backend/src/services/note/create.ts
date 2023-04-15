@@ -53,7 +53,7 @@ import { Poll } from "@/models/entities/poll.js";
 import { createNotification } from "../create-notification.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
 import { checkHitAntenna } from "@/misc/check-hit-antenna.js";
-import { checkWordMute } from "@/misc/check-word-mute.js";
+import { getWordMute } from "@/misc/check-word-mute.js";
 import { addNoteToAntenna } from "../add-note-to-antenna.js";
 import { countSameRenotes } from "@/misc/count-same-renotes.js";
 import { deliverToRelays } from "../relay.js";
@@ -345,9 +345,9 @@ export default async (
 			)
 			.then((us) => {
 				for (const u of us) {
-					checkWordMute(note, { id: u.userId }, u.mutedWords).then(
+					getWordMute(note, { id: u.userId }, u.mutedWords).then(
 						(shouldMute) => {
-							if (shouldMute) {
+							if (shouldMute.muted) {
 								MutedNotes.insert({
 									id: genId(),
 									userId: u.userId,

@@ -1,37 +1,66 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="700">
-		<div class="ieepwinx">
-			<MkButton :link="true" to="/my/antennas/create" primary class="add"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.add }}</MkButton>
+	<MkStickyContainer>
+		<template #header
+			><MkPageHeader
+				:actions="headerActions"
+				:tabs="headerTabs"
+				:display-back-button="true"
+		/></template>
+		<MkSpacer :content-max="700">
+			<div class="ieepwinx">
+				<MkButton
+					:link="true"
+					to="/my/antennas/create"
+					primary
+					class="add"
+					><i class="ph-plus ph-bold ph-lg"></i>
+					{{ i18n.ts.add }}</MkButton
+				>
 
-			<div class="">
-				<MkPagination v-slot="{items}" ref="list" :pagination="pagination">
-					<div v-for="antenna in items" :key="antenna.id">
-						<MkA class="uopelskx" :link="true" :to="`/timeline/antenna/${antenna.id}`">
-							<i class="ph-flying-saucer ph-bold ph-lg"></i>
-							<i :class="`${antenna.hasUnreadNote ? 'ph-circle ph-fill' : 'ph-check'} ph-xs notify-icon`"></i>
-						</MkA>
-						<MkA class="ljoevbzj" :to="`/my/antennas/${antenna.id}`">
-							<div class="name">{{ antenna.name }}</div>
-						</MkA>
-					</div>
-				</MkPagination>
+				<div class="">
+					<MkPagination
+						v-slot="{ items }"
+						ref="list"
+						:pagination="pagination"
+					>
+						<div v-for="antenna in items" :key="antenna.id">
+							<MkA
+								class="uopelskx"
+								:link="true"
+								:to="`/timeline/antenna/${antenna.id}`"
+							>
+								<i class="ph-flying-saucer ph-bold ph-lg"></i
+								><i
+									:class="`${
+										antenna.hasUnreadNote
+											? 'ph-circle ph-fill'
+											: 'ph-check'
+									} ph-xs notify-icon`"
+								></i>
+							</MkA>
+							<MkA
+								class="ljoevbzj"
+								:to="`/my/antennas/${antenna.id}`"
+							>
+								<div class="name">{{ antenna.name }}</div>
+							</MkA>
+						</div>
+					</MkPagination>
+				</div>
 			</div>
-		</div>
-	</MkSpacer>
-</MkStickyContainer>
+		</MkSpacer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { onActivated, onDeactivated, ref } from 'vue';
-import MkPagination from '@/components/MkPagination.vue';
-import MkButton from '@/components/MkButton.vue';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
+import { onActivated, onDeactivated, ref } from "vue";
+import MkPagination from "@/components/MkPagination.vue";
+import MkButton from "@/components/MkButton.vue";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
 
 const pagination = {
-	endpoint: 'antennas/list' as const,
+	endpoint: "antennas/list" as const,
 	limit: 250,
 };
 
@@ -39,7 +68,7 @@ const headerActions = $computed(() => []);
 
 const headerTabs = $computed(() => []);
 
-const list = ref<typeof MkPagination|null>(null);
+const list = ref<typeof MkPagination | null>(null);
 
 let isCached: boolean = false;
 let refreshTimer: number | null = null;
@@ -50,7 +79,7 @@ const refresh = () => {
 	}
 
 	isCached = true;
-	refreshTimer = setTimeout(refresh, 15000)
+	refreshTimer = setTimeout(refresh, 15000);
 };
 
 onActivated(() => {
@@ -66,13 +95,12 @@ onDeactivated(() => {
 
 definePageMetadata({
 	title: i18n.ts.manageAntennas,
-	icon: 'ph-flying-saucer ph-bold ph-lg',
+	icon: "ph-flying-saucer ph-bold ph-lg",
 });
 </script>
 
 <style lang="scss" scoped>
 .ieepwinx {
-
 	> .add {
 		margin: 0 auto 16px auto;
 	}
@@ -109,9 +137,9 @@ definePageMetadata({
 	}
 
 	.notify-icon {
-    position: relative;
-    top: -1em;
-    left: -0.5em;
+		position: relative;
+		top: -1em;
+		left: -0.5em;
 
 		&.ph-circle.ph-fill {
 			color: var(--indicator);

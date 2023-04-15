@@ -1,50 +1,93 @@
 <template>
-<div v-size="{ max: [400, 500] }" class="thvuemwp" :class="{ isMe }">
-	<MkAvatar v-if="!isMe" class="avatar" :user="message.user" :show-indicator="true"/>
-	<div class="content">
-		<div class="balloon" :class="{ noText: message.text == null }">
-			<button v-if="isMe" class="delete-button" :title="i18n.ts.delete" @click="del">
-				<img src="/client-assets/remove.png" alt="Delete"/>
-			</button>
-			<div v-if="!message.isDeleted" class="content">
-				<Mfm v-if="message.text" ref="text" class="text" :text="message.text" :i="$i"/>
+	<div v-size="{ max: [400, 500] }" class="thvuemwp" :class="{ isMe }">
+		<MkAvatar
+			v-if="!isMe"
+			class="avatar"
+			:user="message.user"
+			:show-indicator="true"
+		/>
+		<div class="content">
+			<div class="balloon" :class="{ noText: message.text == null }">
+				<button
+					v-if="isMe"
+					class="delete-button"
+					:title="i18n.ts.delete"
+					@click="del"
+				>
+					<img src="/client-assets/remove.png" alt="Delete" />
+				</button>
+				<div v-if="!message.isDeleted" class="content">
+					<Mfm
+						v-if="message.text"
+						ref="text"
+						class="text"
+						:text="message.text"
+						:i="$i"
+					/>
+				</div>
+				<div v-else class="content">
+					<p class="is-deleted">{{ i18n.ts.deleted }}</p>
+				</div>
 			</div>
-			<div v-else class="content">
-				<p class="is-deleted">{{ i18n.ts.deleted }}</p>
+			<div v-if="message.file" class="file" width="400px">
+				<XMediaList
+					v-if="
+						message.file.type.split('/')[0] == 'image' ||
+						message.file.type.split('/')[0] == 'video'
+					"
+					:in-dm="true"
+					width="400px"
+					:media-list="[message.file]"
+					style="border-radius: 5px"
+				/>
+				<a
+					v-else
+					:href="message.file.url"
+					rel="noopener"
+					target="_blank"
+					:title="message.file.name"
+				>
+					<p>{{ message.file.name }}</p>
+				</a>
 			</div>
+			<div></div>
+			<MkUrlPreview
+				v-for="url in urls"
+				:key="url"
+				:url="url"
+				style="margin: 8px 0"
+			/>
+			<footer>
+				<template v-if="isGroup">
+					<span v-if="message.reads.length > 0" class="read"
+						>{{ i18n.ts.messageRead }}
+						{{ message.reads.length }}</span
+					>
+				</template>
+				<template v-else>
+					<span v-if="isMe && message.isRead" class="read">{{
+						i18n.ts.messageRead
+					}}</span>
+				</template>
+				<MkTime :time="message.createdAt" />
+				<template v-if="message.is_edited"
+					><i class="ph-pencil ph-bold ph-lg"></i
+				></template>
+			</footer>
 		</div>
-		<div v-if="message.file" class="file" width="400px">
-			<XMediaList v-if="message.file.type.split('/')[0] == 'image' || message.file.type.split('/')[0] == 'video'" :in-dm="true" width="400px" :media-list="[message.file]" style="border-radius: 5px"/>
-			<a v-else :href="message.file.url" rel="noopener" target="_blank" :title="message.file.name">
-				<p>{{ message.file.name }}</p>
-			</a>
-		</div>
-		<div></div>
-		<MkUrlPreview v-for="url in urls" :key="url" :url="url" style="margin: 8px 0;"/>
-		<footer>
-			<template v-if="isGroup">
-				<span v-if="message.reads.length > 0" class="read">{{ i18n.ts.messageRead }} {{ message.reads.length }}</span>
-			</template>
-			<template v-else>
-				<span v-if="isMe && message.isRead" class="read">{{ i18n.ts.messageRead }}</span>
-			</template>
-			<MkTime :time="message.createdAt"/>
-			<template v-if="message.is_edited"><i class="ph-pencil ph-bold ph-lg"></i></template>
-		</footer>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import * as mfm from 'mfm-js';
-import type * as Misskey from 'calckey-js';
-import XMediaList from '@/components/MkMediaList.vue';
-import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
-import MkUrlPreview from '@/components/MkUrlPreview.vue';
-import * as os from '@/os';
-import { $i } from '@/account';
-import { i18n } from '@/i18n';
+import {} from "vue";
+import * as mfm from "mfm-js";
+import type * as Misskey from "calckey-js";
+import XMediaList from "@/components/MkMediaList.vue";
+import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
+import MkUrlPreview from "@/components/MkUrlPreview.vue";
+import * as os from "@/os";
+import { $i } from "@/account";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	message: Misskey.entities.MessagingMessage;
@@ -52,10 +95,12 @@ const props = defineProps<{
 }>();
 
 const isMe = $computed(() => props.message.userId === $i?.id);
-const urls = $computed(() => props.message.text ? extractUrlFromMfm(mfm.parse(props.message.text)) : []);
+const urls = $computed(() =>
+	props.message.text ? extractUrlFromMfm(mfm.parse(props.message.text)) : []
+);
 
 function del(): void {
-	os.api('messaging/messages/delete', {
+	os.api("messaging/messages/delete", {
 		messageId: props.message.id,
 	});
 }
@@ -274,13 +319,13 @@ function del(): void {
 				}
 
 				> .content {
-
 					> p.is-deleted {
 						color: rgba(#fff, 0.5);
 					}
 
 					> .text {
-						&, ::v-deep(*) {
+						&,
+						::v-deep(*) {
 							color: var(--fgOnAccent) !important;
 						}
 					}

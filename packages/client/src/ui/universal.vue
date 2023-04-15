@@ -1,114 +1,197 @@
 <template>
-<div class="dkgtipfy" :class="{ wallpaper }">
-	<XSidebar v-if="!isMobile" class="sidebar"/>
+	<div class="dkgtipfy" :class="{ wallpaper, isMobile }">
+		<XSidebar v-if="!isMobile" class="sidebar" />
 
-	<MkStickyContainer class="contents">
-		<template #header><XStatusBars :class="$style.statusbars"/></template>
-		<main id="maincontent" style="min-width: 0;" :style="{ background: pageMetadata?.value?.bg }" @contextmenu.stop="onContextmenu">
-			<div :class="$style.content">
-				<RouterView/>
-			</div>
-			<div :class="$style.spacer"></div>
-		</main>
-	</MkStickyContainer>
+		<MkStickyContainer class="contents">
+			<template #header
+				><XStatusBars :class="$style.statusbars"
+			/></template>
+			<main
+				id="maincontent"
+				style="min-width: 0"
+				:style="{ background: pageMetadata?.value?.bg }"
+				@contextmenu.stop="onContextmenu"
+			>
+				<div :class="$style.content">
+					<RouterView />
+				</div>
+				<div :class="$style.spacer"></div>
+			</main>
+		</MkStickyContainer>
 
-	<div v-if="isDesktop" ref="widgetsEl" class="widgets">
-		<XWidgets @mounted="attachSticky"/>
+		<div v-if="isDesktop" ref="widgetsEl" class="widgets">
+			<XWidgets @mounted="attachSticky" />
+		</div>
+
+		<button
+			v-if="!isDesktop && !isMobile"
+			class="widgetButton _button"
+			@click="widgetsShowing = true"
+		>
+			<i class="ph-stack ph-bold ph-lg"></i>
+		</button>
+
+		<div v-if="isMobile" class="buttons">
+			<button
+				class="button nav _button"
+				@click="drawerMenuShowing = true"
+			>
+				<div class="button-wrapper">
+					<i class="ph-list ph-bold ph-lg"></i
+					><span v-if="menuIndicated" class="indicator"
+						><i class="ph-circle ph-fill"></i
+					></span>
+				</div>
+			</button>
+			<button
+				class="button home _button"
+				@click="
+					mainRouter.currentRoute.value.name === 'index'
+						? top()
+						: mainRouter.push('/');
+					updateButtonState();
+				"
+			>
+				<div
+					class="button-wrapper"
+					:class="buttonAnimIndex === 0 ? 'on' : ''"
+				>
+					<i class="ph-house ph-bold ph-lg"></i>
+				</div>
+			</button>
+			<button
+				class="button notifications _button"
+				@click="
+					mainRouter.push('/my/notifications');
+					updateButtonState();
+				"
+			>
+				<div
+					class="button-wrapper"
+					:class="buttonAnimIndex === 1 ? 'on' : ''"
+				>
+					<i class="ph-bell ph-bold ph-lg"></i
+					><span v-if="$i?.hasUnreadNotification" class="indicator"
+						><i class="ph-circle ph-fill"></i
+					></span>
+				</div>
+			</button>
+			<button
+				class="button messaging _button"
+				@click="
+					mainRouter.push('/my/messaging');
+					updateButtonState();
+				"
+			>
+				<div
+					class="button-wrapper"
+					:class="buttonAnimIndex === 2 ? 'on' : ''"
+				>
+					<i class="ph-chats-teardrop ph-bold ph-lg"></i
+					><span
+						v-if="$i?.hasUnreadMessagingMessage"
+						class="indicator"
+						><i class="ph-circle ph-fill"></i
+					></span>
+				</div>
+			</button>
+			<button
+				class="button widget _button"
+				@click="widgetsShowing = true"
+			>
+				<div class="button-wrapper">
+					<i class="ph-stack ph-bold ph-lg"></i>
+				</div>
+			</button>
+		</div>
+
+		<button
+			v-if="isMobile && mainRouter.currentRoute.value.name === 'index'"
+			ref="postButton"
+			class="postButton button post _button"
+			@click="os.post()"
+		>
+			<i class="ph-pencil ph-bold ph-lg"></i>
+		</button>
+		<button
+			v-if="
+				isMobile && mainRouter.currentRoute.value.name === 'messaging'
+			"
+			ref="postButton"
+			class="postButton button post _button"
+			@click="messagingStart"
+		>
+			<i class="ph-user-plus ph-bold ph-lg"></i>
+		</button>
+
+		<transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
+			<div
+				v-if="drawerMenuShowing"
+				class="menuDrawer-back _modalBg"
+				@click="drawerMenuShowing = false"
+				@touchstart.passive="drawerMenuShowing = false"
+			></div>
+		</transition>
+
+		<transition :name="$store.state.animation ? 'menuDrawer' : ''">
+			<XDrawerMenu v-if="drawerMenuShowing" class="menuDrawer" />
+		</transition>
+
+		<transition :name="$store.state.animation ? 'widgetsDrawer-back' : ''">
+			<div
+				v-if="widgetsShowing"
+				class="widgetsDrawer-back _modalBg"
+				@click="widgetsShowing = false"
+				@touchstart.passive="widgetsShowing = false"
+			></div>
+		</transition>
+
+		<transition :name="$store.state.animation ? 'widgetsDrawer' : ''">
+			<XWidgets v-if="widgetsShowing" class="widgetsDrawer" />
+		</transition>
+
+		<XCommon />
 	</div>
-
-	<button v-if="!isDesktop && !isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ph-stack ph-bold ph-lg"></i></button>
-
-	<div v-if="isMobile" class="buttons">
-		<button class="button nav _button" @click="drawerMenuShowing = true">
-			<div class="button-wrapper">
-				<i class="ph-list ph-bold ph-lg"></i><span v-if="menuIndicated" class="indicator"><i class="ph-circle ph-fill"></i></span>
-			</div>
-		</button>
-		<button class="button home _button" @click="mainRouter.currentRoute.value.name === 'index' ? top() : mainRouter.push('/'); updateButtonState();">
-			<div class="button-wrapper" :class="buttonAnimIndex === 0 ? 'on' : ''">
-				<i class="ph-house ph-bold ph-lg"></i>
-			</div>
-		</button>
-		<button class="button notifications _button" @click="mainRouter.push('/my/notifications'); updateButtonState();">
-			<div class="button-wrapper" :class="buttonAnimIndex === 1 ? 'on' : ''">
-				<i class="ph-bell ph-bold ph-lg"></i><span v-if="$i?.hasUnreadNotification" class="indicator"><i class="ph-circle ph-fill"></i></span>
-			</div>
-		</button>
-		<button class="button messaging _button" @click="mainRouter.push('/my/messaging'); updateButtonState();">
-			<div class="button-wrapper" :class="buttonAnimIndex === 2 ? 'on' : ''">
-				<i class="ph-chats-teardrop ph-bold ph-lg"></i><span v-if="$i?.hasUnreadMessagingMessage" class="indicator"><i class="ph-circle ph-fill"></i></span>
-			</div>
-		</button>
-		<button class="button widget _button" @click="widgetsShowing = true">
-			<div class="button-wrapper">
-				<i class="ph-stack ph-bold ph-lg"></i>
-			</div>
-		</button>
-	</div>
-
-	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'index'" ref="postButton" class="postButton button post _button" @click="os.post()"><i class="ph-pencil ph-bold ph-lg"></i></button>
-	<button v-if="isMobile && mainRouter.currentRoute.value.name === 'messaging'" ref="postButton" class="postButton button post _button" @click="messagingStart"><i class="ph-user-plus ph-bold ph-lg"></i></button>
-
-	<transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
-		<div
-			v-if="drawerMenuShowing"
-			class="menuDrawer-back _modalBg"
-			@click="drawerMenuShowing = false"
-			@touchstart.passive="drawerMenuShowing = false"
-		></div>
-	</transition>
-
-	<transition :name="$store.state.animation ? 'menuDrawer' : ''">
-		<XDrawerMenu v-if="drawerMenuShowing" class="menuDrawer"/>
-	</transition>
-
-	<transition :name="$store.state.animation ? 'widgetsDrawer-back' : ''">
-		<div
-			v-if="widgetsShowing"
-			class="widgetsDrawer-back _modalBg"
-			@click="widgetsShowing = false"
-			@touchstart.passive="widgetsShowing = false"
-		></div>
-	</transition>
-
-	<transition :name="$store.state.animation ? 'widgetsDrawer' : ''">
-		<XWidgets v-if="widgetsShowing" class="widgetsDrawer"/>
-	</transition>
-
-	<XCommon/>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, provide, onMounted, computed, ref } from 'vue';
-import XCommon from './_common_/common.vue';
-import * as Acct from 'calckey-js/built/acct';
-import type { ComputedRef } from 'vue';
-import type { PageMetadata } from '@/scripts/page-metadata';
-import { instanceName } from '@/config';
-import { StickySidebar } from '@/scripts/sticky-sidebar';
-import XDrawerMenu from '@/ui/_common_/navbar-for-mobile.vue';
-import * as os from '@/os';
-import { defaultStore } from '@/store';
-import { navbarItemDef } from '@/navbar';
-import { i18n } from '@/i18n';
-import { $i } from '@/account';
-import { mainRouter } from '@/router';
-import { provideMetadataReceiver, setPageMetadata } from '@/scripts/page-metadata';
-import { deviceKind } from '@/scripts/device-kind';
+import { defineAsyncComponent, provide, onMounted, computed, ref } from "vue";
+import XCommon from "./_common_/common.vue";
+import * as Acct from "calckey-js/built/acct";
+import type { ComputedRef } from "vue";
+import type { PageMetadata } from "@/scripts/page-metadata";
+import { instanceName } from "@/config";
+import { StickySidebar } from "@/scripts/sticky-sidebar";
+import XDrawerMenu from "@/ui/_common_/navbar-for-mobile.vue";
+import * as os from "@/os";
+import { defaultStore } from "@/store";
+import { navbarItemDef } from "@/navbar";
+import { i18n } from "@/i18n";
+import { $i } from "@/account";
+import { mainRouter } from "@/router";
+import {
+	provideMetadataReceiver,
+	setPageMetadata,
+} from "@/scripts/page-metadata";
+import { deviceKind } from "@/scripts/device-kind";
 
-const XWidgets = defineAsyncComponent(() => import('./universal.widgets.vue'));
-const XSidebar = defineAsyncComponent(() => import('@/ui/_common_/navbar.vue'));
-const XStatusBars = defineAsyncComponent(() => import('@/ui/_common_/statusbars.vue'));
+const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
+const XSidebar = defineAsyncComponent(() => import("@/ui/_common_/navbar.vue"));
+const XStatusBars = defineAsyncComponent(
+	() => import("@/ui/_common_/statusbars.vue")
+);
 
 const DESKTOP_THRESHOLD = 1100;
 const MOBILE_THRESHOLD = 500;
 
 // デスクトップでウィンドウを狭くしたときモバイルUIが表示されて欲しいことはあるので deviceKind === 'desktop' の判定は行わない
 const isDesktop = ref(window.innerWidth >= DESKTOP_THRESHOLD);
-const isMobile = ref(deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD);
-window.addEventListener('resize', () => {
-	isMobile.value = deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD;
+const isMobile = ref(
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
+);
+window.addEventListener("resize", () => {
+	isMobile.value =
+		deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD;
 });
 
 const buttonAnimIndex = ref(0);
@@ -119,7 +202,7 @@ const widgetsEl = $ref<HTMLElement>();
 const postButton = $ref<HTMLElement>();
 const widgetsShowing = $ref(false);
 
-provide('router', mainRouter);
+provide("router", mainRouter);
 provideMetadataReceiver((info) => {
 	pageMetadata = info;
 	if (pageMetadata.value) {
@@ -129,7 +212,7 @@ provideMetadataReceiver((info) => {
 
 const menuIndicated = computed(() => {
 	for (const def in navbarItemDef) {
-		if (def === 'notifications') continue; // 通知は下にボタンとして表示されてるから
+		if (def === "notifications") continue; // 通知は下にボタンとして表示されてるから
 		if (navbarItemDef[def].indicated) return true;
 	}
 	return false;
@@ -137,15 +220,15 @@ const menuIndicated = computed(() => {
 
 function updateButtonState(): void {
 	let routerState = window.location.pathname;
-	if (routerState === '/') {
+	if (routerState === "/") {
 		buttonAnimIndex.value = 0;
 		return;
 	}
-	if (routerState.includes('/my/notifications')) {
+	if (routerState.includes("/my/notifications")) {
 		buttonAnimIndex.value = 1;
 		return;
 	}
-	if (routerState.includes('/my/messaging')) {
+	if (routerState.includes("/my/messaging")) {
 		buttonAnimIndex.value = 2;
 		return;
 	}
@@ -155,55 +238,77 @@ function updateButtonState(): void {
 
 updateButtonState();
 
-mainRouter.on('change', () => {
+mainRouter.on("change", () => {
 	drawerMenuShowing.value = false;
 	updateButtonState();
 });
 
-document.documentElement.style.overflowY = 'scroll';
+document.documentElement.style.overflowY = "scroll";
 
 if (defaultStore.state.widgets.length === 0) {
-	defaultStore.set('widgets', [{
-		name: 'calendar',
-		id: 'a', place: 'right', data: {},
-	}, {
-		name: 'notifications',
-		id: 'b', place: 'right', data: {},
-	}, {
-		name: 'trends',
-		id: 'c', place: 'right', data: {},
-	}]);
+	defaultStore.set("widgets", [
+		{
+			name: "calendar",
+			id: "a",
+			place: "right",
+			data: {},
+		},
+		{
+			name: "notifications",
+			id: "b",
+			place: "right",
+			data: {},
+		},
+		{
+			name: "trends",
+			id: "c",
+			place: "right",
+			data: {},
+		},
+	]);
 }
 
 function messagingStart(ev) {
-	os.popupMenu([{
-		text: i18n.ts.messagingWithUser,
-		icon: 'ph-user ph-bold ph-lg',
-		action: () => { startUser(); },
-	}, {
-		text: i18n.ts.messagingWithGroup,
-		icon: 'ph-users-three ph-bold ph-lg',
-		action: () => { startGroup(); },
-	}, {
-		text: i18n.ts.manageGroups,
-		icon: 'ph-user-circle-gear ph-bold ph-lg',
-		action: () => { mainRouter.push('/my/groups'); },
-	}], ev.currentTarget ?? ev.target);
+	os.popupMenu(
+		[
+			{
+				text: i18n.ts.messagingWithUser,
+				icon: "ph-user ph-bold ph-lg",
+				action: () => {
+					startUser();
+				},
+			},
+			{
+				text: i18n.ts.messagingWithGroup,
+				icon: "ph-users-three ph-bold ph-lg",
+				action: () => {
+					startGroup();
+				},
+			},
+			{
+				text: i18n.ts.manageGroups,
+				icon: "ph-user-circle-gear ph-bold ph-lg",
+				action: () => {
+					mainRouter.push("/my/groups");
+				},
+			},
+		],
+		ev.currentTarget ?? ev.target
+	);
 }
 
-
 async function startUser(): void {
-	os.selectUser().then(user => {
+	os.selectUser().then((user) => {
 		mainRouter.push(`/my/messaging/${Acct.toString(user)}`);
 	});
 }
 
 async function startGroup(): void {
-	const groups1 = await os.api('users/groups/owned');
-	const groups2 = await os.api('users/groups/joined');
+	const groups1 = await os.api("users/groups/owned");
+	const groups2 = await os.api("users/groups/joined");
 	if (groups1.length === 0 && groups2.length === 0) {
 		os.alert({
-			type: 'warning',
+			type: "warning",
 			title: i18n.ts.youHaveNoGroups,
 			text: i18n.ts.joinOrCreateGroup,
 		});
@@ -211,8 +316,9 @@ async function startGroup(): void {
 	}
 	const { canceled, result: group } = await os.select({
 		title: i18n.ts.group,
-		items: groups1.concat(groups2).map(group => ({
-			value: group, text: group.name,
+		items: groups1.concat(groups2).map((group) => ({
+			value: group,
+			text: group.name,
 		})),
 	});
 	if (canceled) return;
@@ -221,47 +327,68 @@ async function startGroup(): void {
 
 onMounted(() => {
 	if (!isDesktop.value) {
-		window.addEventListener('resize', () => {
-			if (window.innerWidth >= DESKTOP_THRESHOLD) isDesktop.value = true;
-		}, { passive: true });
+		window.addEventListener(
+			"resize",
+			() => {
+				if (window.innerWidth >= DESKTOP_THRESHOLD)
+					isDesktop.value = true;
+			},
+			{ passive: true }
+		);
 	}
 });
 
 const onContextmenu = (ev: MouseEvent) => {
 	const isLink = (el: HTMLElement) => {
-		if (el.tagName === 'A') return true;
+		if (el.tagName === "A") return true;
 		if (el.parentElement) {
 			return isLink(el.parentElement);
 		}
 	};
 	if (isLink(ev.target)) return;
-	if (['INPUT', 'TEXTAREA', 'IMG', 'VIDEO', 'CANVAS'].includes(ev.target.tagName) || ev.target.attributes['contenteditable']) return;
-	if (window.getSelection()?.toString() !== '') return;
+	if (
+		["INPUT", "TEXTAREA", "IMG", "VIDEO", "CANVAS"].includes(
+			ev.target.tagName
+		) ||
+		ev.target.attributes["contenteditable"]
+	)
+		return;
+	if (window.getSelection()?.toString() !== "") return;
 	const path = mainRouter.getCurrentPath();
-	os.contextMenu([{
-		type: 'label',
-		text: path,
-	}, {
-		icon: 'ph-browser ph-bold ph-lg',
-		text: i18n.ts.openInWindow,
-		action: () => {
-			os.pageWindow(path);
-		},
-	}], ev);
+	os.contextMenu(
+		[
+			{
+				type: "label",
+				text: path,
+			},
+			{
+				icon: "ph-browser ph-bold ph-lg",
+				text: i18n.ts.openInWindow,
+				action: () => {
+					os.pageWindow(path);
+				},
+			},
+		],
+		ev
+	);
 };
 
 const attachSticky = (el: any) => {
 	const sticky = new StickySidebar(widgetsEl);
-	window.addEventListener('scroll', () => {
-		sticky.calc(window.scrollY);
-	}, { passive: true });
+	window.addEventListener(
+		"scroll",
+		() => {
+			sticky.calc(window.scrollY);
+		},
+		{ passive: true }
+	);
 };
 
 function top() {
-	window.scroll({ top: 0, behavior: 'smooth' });
+	window.scroll({ top: 0, behavior: "smooth" });
 }
 
-const wallpaper = localStorage.getItem('wallpaper') != null;
+const wallpaper = localStorage.getItem("wallpaper") != null;
 console.log(mainRouter.currentRoute.value.name);
 </script>
 
@@ -270,7 +397,8 @@ console.log(mainRouter.currentRoute.value.name);
 .widgetsDrawer-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .widgetsDrawer-enter-from,
 .widgetsDrawer-leave-active {
@@ -292,7 +420,8 @@ console.log(mainRouter.currentRoute.value.name);
 .menuDrawer-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .menuDrawer-enter-from,
 .menuDrawer-leave-active {
@@ -319,6 +448,10 @@ console.log(mainRouter.currentRoute.value.name);
 	box-sizing: border-box;
 	display: flex;
 
+	--stickyBottom: 1em;
+	&.isMobile {
+		--stickyBottom: 6rem;
+	}
 	&.wallpaper {
 		background: var(--wallpaperOverlay);
 		//backdrop-filter: var(--blur, blur(4px));
@@ -362,8 +495,9 @@ console.log(mainRouter.currentRoute.value.name);
 		background: var(--bg);
 	}
 
-	> .postButton, .widgetButton {
-		bottom: 6rem;
+	> .postButton,
+	.widgetButton {
+		bottom: var(--stickyBottom);
 		right: 1.5rem;
 		height: 4rem;
 		width: 4rem;

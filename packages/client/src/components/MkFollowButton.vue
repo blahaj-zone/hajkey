@@ -1,72 +1,87 @@
 <template>
-<button
-	class="kpoogebi _button"
-	:class="{
-		wait,
-		active: isFollowing || hasPendingFollowRequestFromYou,
-		full,
-		large,
-		blocking: isBlocking
-	}"
-	:disabled="wait"
-	@click="onClick"
->
-	<template v-if="!wait">
-		<template v-if="isBlocking">
-			<span v-if="full">{{ i18n.ts.blocked }}</span><i class="ph-prohibit ph-bold ph-lg"></i>
+	<button
+		class="kpoogebi _button"
+		:class="{
+			wait,
+			active: isFollowing || hasPendingFollowRequestFromYou,
+			full,
+			large,
+			blocking: isBlocking,
+		}"
+		:disabled="wait"
+		@click="onClick"
+	>
+		<template v-if="!wait">
+			<template v-if="isBlocking">
+				<span v-if="full">{{ i18n.ts.blocked }}</span
+				><i class="ph-prohibit ph-bold ph-lg"></i>
+			</template>
+			<template
+				v-else-if="hasPendingFollowRequestFromYou && user.isLocked"
+			>
+				<span v-if="full">{{ i18n.ts.followRequestPending }}</span
+				><i class="ph-hourglass-medium ph-bold ph-lg"></i>
+			</template>
+			<template
+				v-else-if="hasPendingFollowRequestFromYou && !user.isLocked"
+			>
+				<!-- つまりリモートフォローの場合。 -->
+				<span v-if="full">{{ i18n.ts.processing }}</span
+				><i class="ph-circle-notch ph-bold ph-lg fa-pulse"></i>
+			</template>
+			<template v-else-if="isFollowing">
+				<span v-if="full">{{ i18n.ts.unfollow }}</span
+				><i class="ph-minus ph-bold ph-lg"></i>
+			</template>
+			<template v-else-if="!isFollowing && user.isLocked">
+				<span v-if="full">{{ i18n.ts.followRequest }}</span
+				><i class="ph-plus ph-bold ph-lg"></i>
+			</template>
+			<template v-else-if="!isFollowing && !user.isLocked">
+				<span v-if="full">{{ i18n.ts.follow }}</span
+				><i class="ph-plus ph-bold ph-lg"></i>
+			</template>
 		</template>
-		<template v-else-if="hasPendingFollowRequestFromYou && user.isLocked">
-			<span v-if="full">{{ i18n.ts.followRequestPending }}</span><i class="ph-hourglass-medium ph-bold ph-lg"></i>
+		<template v-else>
+			<span v-if="full">{{ i18n.ts.processing }}</span
+			><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
 		</template>
-		<template v-else-if="hasPendingFollowRequestFromYou && !user.isLocked">
-			<!-- つまりリモートフォローの場合。 -->
-			<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch ph-bold ph-lg fa-pulse"></i>
-		</template>
-		<template v-else-if="isFollowing">
-			<span v-if="full">{{ i18n.ts.unfollow }}</span><i class="ph-minus ph-bold ph-lg"></i>
-		</template>
-		<template v-else-if="!isFollowing && user.isLocked">
-			<span v-if="full">{{ i18n.ts.followRequest }}</span><i class="ph-plus ph-bold ph-lg"></i>
-		</template>
-		<template v-else-if="!isFollowing && !user.isLocked">
-			<span v-if="full">{{ i18n.ts.follow }}</span><i class="ph-plus ph-bold ph-lg"></i>
-		</template>
-	</template>
-	<template v-else>
-		<span v-if="full">{{ i18n.ts.processing }}</span><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
-	</template>
-</button>
+	</button>
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted } from 'vue';
-import type * as Misskey from 'calckey-js';
-import * as os from '@/os';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
+import { computed, onBeforeUnmount, onMounted } from "vue";
+import type * as Misskey from "calckey-js";
+import * as os from "@/os";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
 
-const emit = defineEmits(['refresh'])
-const props = withDefaults(defineProps<{
-		user: Misskey.entities.UserDetailed,
-		full?: boolean,
-		large?: boolean,
-	}>(), {
-	full: false,
-	large: false,
-});
+const emit = defineEmits(["refresh"]);
+const props = withDefaults(
+	defineProps<{
+		user: Misskey.entities.UserDetailed;
+		full?: boolean;
+		large?: boolean;
+	}>(),
+	{
+		full: false,
+		large: false,
+	}
+);
 
 const isBlocking = computed(() => props.user.isBlocking);
 
 let isFollowing = $ref(props.user.isFollowing);
-let hasPendingFollowRequestFromYou = $ref(props.user.hasPendingFollowRequestFromYou);
+let hasPendingFollowRequestFromYou = $ref(
+	props.user.hasPendingFollowRequestFromYou
+);
 let wait = $ref(false);
-const connection = stream.useChannel('main');
+const connection = stream.useChannel("main");
 
 if (props.user.isFollowing == null) {
-	os.api('users/show', {
+	os.api("users/show", {
 		userId: props.user.id,
-	})
-		.then(onFollowChange);
+	}).then(onFollowChange);
 }
 
 function onFollowChange(user: Misskey.entities.UserDetailed) {
@@ -82,40 +97,41 @@ async function onClick() {
 	try {
 		if (isBlocking.value) {
 			const { canceled } = await os.confirm({
-				type: 'warning',
-				text: i18n.t('unblockConfirm'),
+				type: "warning",
+				text: i18n.t("unblockConfirm"),
 			});
-			if (canceled) return
+			if (canceled) return;
 
 			await os.api("blocking/delete", {
 				userId: props.user.id,
-			})
+			});
 			if (props.user.isMuted) {
 				await os.api("mute/delete", {
 					userId: props.user.id,
-				})
+				});
 			}
-			emit('refresh')
-		}
-		else if (isFollowing) {
+			emit("refresh");
+		} else if (isFollowing) {
 			const { canceled } = await os.confirm({
-				type: 'warning',
-				text: i18n.t('unfollowConfirm', { name: props.user.name || props.user.username }),
+				type: "warning",
+				text: i18n.t("unfollowConfirm", {
+					name: props.user.name || props.user.username,
+				}),
 			});
 
 			if (canceled) return;
 
-			await os.api('following/delete', {
+			await os.api("following/delete", {
 				userId: props.user.id,
 			});
 		} else {
 			if (hasPendingFollowRequestFromYou) {
-				await os.api('following/requests/cancel', {
+				await os.api("following/requests/cancel", {
 					userId: props.user.id,
 				});
 				hasPendingFollowRequestFromYou = false;
 			} else {
-				await os.api('following/create', {
+				await os.api("following/create", {
 					userId: props.user.id,
 				});
 				hasPendingFollowRequestFromYou = true;
@@ -129,8 +145,8 @@ async function onClick() {
 }
 
 onMounted(() => {
-	connection.on('follow', onFollowChange);
-	connection.on('unfollow', onFollowChange);
+	connection.on("follow", onFollowChange);
+	connection.on("unfollow", onFollowChange);
 });
 
 onBeforeUnmount(() => {
@@ -141,7 +157,9 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .kpoogebi {
 	position: relative;
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	font-weight: bold;
 	color: var(--accent);
 	border: solid 1px var(--accent);

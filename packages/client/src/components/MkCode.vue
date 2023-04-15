@@ -1,9 +1,9 @@
 <template>
-<XCode :code="code" :lang="lang" :inline="inline"/>
+	<XCode :code="code" :lang="lang" :inline="inline" />
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent } from "vue";
 
 defineProps<{
 	code: string;
@@ -11,5 +11,7 @@ defineProps<{
 	inline?: boolean;
 }>();
 
-const XCode = defineAsyncComponent(() => import('@/components/MkCode.core.vue'));
+const XCode = defineAsyncComponent(
+	() => import("@/components/MkCode.core.vue")
+);
 </script>

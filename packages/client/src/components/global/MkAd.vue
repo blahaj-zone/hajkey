@@ -1,24 +1,37 @@
 <template>
-	<div v-if="chosen && chosen.length > 0 && defaultStore.state.showAds" v-for="chosenItem in chosen" class="qiivuoyo">
+	<div
+		v-if="chosen && chosen.length > 0 && defaultStore.state.showAds"
+		v-for="chosenItem in chosen"
+		class="qiivuoyo"
+	>
 		<div v-if="!showMenu" class="main" :class="chosenItem.place">
 			<a :href="chosenItem.url" target="_blank">
-				<img :src="chosenItem.imageUrl">
+				<img :src="chosenItem.imageUrl" />
 			</a>
 		</div>
 	</div>
 	<div v-else-if="chosen && defaultStore.state.showAds" class="qiivuoyo">
 		<div v-if="!showMenu" class="main" :class="chosen.place">
 			<a :href="chosen.url" target="_blank">
-				<img :src="chosen.imageUrl">
-				<button class="_button menu" @click.prevent.stop="toggleMenu"><span class="ph-info ph-bold ph-lg info-circle"></span></button>
+				<img :src="chosen.imageUrl" />
+				<button class="_button menu" @click.prevent.stop="toggleMenu">
+					<span class="ph-info ph-bold ph-lg info-circle"></span>
+				</button>
 			</a>
 		</div>
 		<div v-else class="menu">
 			<div class="body">
 				<div>Ads by {{ host }}</div>
 				<!--<MkButton class="button" primary>{{ i18n.ts._ad.like }}</MkButton>-->
-				<MkButton v-if="chosen.ratio !== 0" class="button" @click="reduceFrequency">{{ i18n.ts._ad.reduceFrequencyOfThisAd }}</MkButton>
-				<button class="_textButton" @click="toggleMenu">{{ i18n.ts._ad.back }}</button>
+				<MkButton
+					v-if="chosen.ratio !== 0"
+					class="button"
+					@click="reduceFrequency"
+					>{{ i18n.ts._ad.reduceFrequencyOfThisAd }}</MkButton
+				>
+				<button class="_textButton" @click="toggleMenu">
+					{{ i18n.ts._ad.back }}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -26,15 +39,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { instance } from '@/instance';
-import { host } from '@/config';
-import MkButton from '@/components/MkButton.vue';
-import { defaultStore } from '@/store';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
+import { ref } from "vue";
+import { instance } from "@/instance";
+import { host } from "@/config";
+import MkButton from "@/components/MkButton.vue";
+import { defaultStore } from "@/store";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
 
-type Ad = (typeof instance)['ads'][number];
+type Ad = (typeof instance)["ads"][number];
 
 const props = defineProps<{
 	prefer: string[];
@@ -51,26 +64,32 @@ const choseAd = (): Ad | null => {
 		return props.specify;
 	}
 
-	const allAds = instance.ads.map(ad => defaultStore.state.mutedAds.includes(ad.id) ? {
-		...ad,
-		ratio: 0,
-	} : ad);
+	const allAds = instance.ads.map((ad) =>
+		defaultStore.state.mutedAds.includes(ad.id)
+			? {
+					...ad,
+					ratio: 0,
+			  }
+			: ad
+	);
 
-	let ads = allAds.filter(ad => props.prefer.includes(ad.place));
+	let ads = allAds.filter((ad) => props.prefer.includes(ad.place));
 
 	if (ads.length === 0) {
-		ads = allAds.filter(ad => ad.place === 'square');
+		ads = allAds.filter((ad) => ad.place === "square");
 	}
 
-	const lowPriorityAds = ads.filter(ad => ad.ratio === 0);
-	const widgetAds = ads.filter(ad => ad.place === 'widget');
-	ads = ads.filter(ad => ad.ratio !== 0);
-	
+	const lowPriorityAds = ads.filter((ad) => ad.ratio === 0);
+	const widgetAds = ads.filter((ad) => ad.place === "widget");
+	ads = ads.filter((ad) => ad.ratio !== 0);
+
 	if (widgetAds.length !== 0) {
-			return widgetAds;
+		return widgetAds;
 	} else if (ads.length === 0) {
-		 if (lowPriorityAds.length !== 0) {
-			return lowPriorityAds[Math.floor(Math.random() * lowPriorityAds.length)];
+		if (lowPriorityAds.length !== 0) {
+			return lowPriorityAds[
+				Math.floor(Math.random() * lowPriorityAds.length)
+			];
 		} else {
 			return null;
 		}
@@ -96,7 +115,7 @@ const chosen = ref(choseAd());
 function reduceFrequency(): void {
 	if (chosen.value == null) return;
 	if (defaultStore.state.mutedAds.includes(chosen.value.id)) return;
-	defaultStore.push('mutedAds', chosen.value.id);
+	defaultStore.push("mutedAds", chosen.value.id);
 	os.success();
 	chosen.value = choseAd();
 	showMenu.value = false;
@@ -106,7 +125,13 @@ function reduceFrequency(): void {
 <style lang="scss" scoped>
 .qiivuoyo {
 	background-size: auto auto;
-	background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, var(--ad) 8px, var(--ad) 14px );
+	background-image: repeating-linear-gradient(
+		45deg,
+		transparent,
+		transparent 8px,
+		var(--ad) 8px,
+		var(--ad) 14px
+	);
 
 	> .main {
 		text-align: center;
@@ -143,7 +168,7 @@ function reduceFrequency(): void {
 		}
 
 		&.widget {
-			> a ,
+			> a,
 			> a > img {
 				max-width: min(300px, 100%);
 				max-height: 300px;
@@ -153,7 +178,7 @@ function reduceFrequency(): void {
 		&.inline {
 			padding: 8px;
 
-			> a ,
+			> a,
 			> a > img {
 				max-width: min(600px, 100%);
 				max-height: 80px;
@@ -163,7 +188,7 @@ function reduceFrequency(): void {
 		&.inline-big {
 			padding: 8px;
 
-			> a ,
+			> a,
 			> a > img {
 				max-width: min(600px, 100%);
 				max-height: 250px;
@@ -171,7 +196,7 @@ function reduceFrequency(): void {
 		}
 
 		&.vertical {
-			> a ,
+			> a,
 			> a > img {
 				max-width: min(100px, 100%);
 			}

@@ -1,17 +1,26 @@
 <template>
-<div v-if="hasDisconnected && $store.state.serverDisconnectedBehavior === 'quiet'" class="nsbbhtug" @click="resetDisconnected">
-	<div>{{ i18n.ts.disconnectedFromServer }}</div>
-	<div class="command">
-		<button class="_textButton" @click="reload">{{ i18n.ts.reload }}</button>
-		<button class="_textButton">{{ i18n.ts.doNothing }}</button>
+	<div
+		v-if="
+			hasDisconnected &&
+			$store.state.serverDisconnectedBehavior === 'quiet'
+		"
+		class="nsbbhtug"
+		@click="resetDisconnected"
+	>
+		<div>{{ i18n.ts.disconnectedFromServer }}</div>
+		<div class="command">
+			<button class="_textButton" @click="reload">
+				{{ i18n.ts.reload }}
+			</button>
+			<button class="_textButton">{{ i18n.ts.doNothing }}</button>
+		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { onUnmounted } from 'vue';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
+import { onUnmounted } from "vue";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
 
 let hasDisconnected = $ref(false);
 
@@ -27,10 +36,10 @@ function reload() {
 	location.reload();
 }
 
-stream.on('_disconnected_', onDisconnected);
+stream.on("_disconnected_", onDisconnected);
 
 onUnmounted(() => {
-	stream.off('_disconnected_', onDisconnected);
+	stream.off("_disconnected_", onDisconnected);
 });
 </script>
 

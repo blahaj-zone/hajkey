@@ -1,52 +1,85 @@
 <template>
-<div v-if="meta" class="rsqzvsbo">
-	<div class="top">
-		<MkFeaturedPhotos class="bg"/>
-		<XTimeline class="tl"/>
-		<div class="shape"></div>
-		<div class="main">
-			<h1>
-				<img v-if="meta.logoImageUrl" class="logo" :src="meta.logoImageUrl"><span v-else class="text">{{ instanceName }}</span>
-			</h1>
-			<div class="about">
-				<div class="desc" v-html="meta.description || i18n.ts.headlineMisskey"></div>
-			</div>
-			<div class="action">
-				<MkButton class="signup" inline gradate @click="signup()">{{ i18n.ts.signup }}</MkButton>
-				<MkButton class="signin" inline @click="signin()">{{ i18n.ts.login }}</MkButton>
-			</div>
-			<div v-if="onlineUsersCount && stats" class="status">
-				<div>
-					<I18n :src="i18n.ts.nUsers" text-tag="span" class="users">
-						<template #n><b>{{ number(stats.originalUsersCount) }}</b></template>
-					</I18n>
-					<I18n :src="i18n.ts.nNotes" text-tag="span" class="notes">
-						<template #n><b>{{ number(stats.originalNotesCount) }}</b></template>
+	<div v-if="meta" class="rsqzvsbo">
+		<div class="top">
+			<MkFeaturedPhotos class="bg" />
+			<XTimeline class="tl" />
+			<div class="shape"></div>
+			<div class="main">
+				<h1>
+					<img
+						v-if="meta.logoImageUrl"
+						class="logo"
+						:src="meta.logoImageUrl"
+					/><span v-else class="text">{{ instanceName }}</span>
+				</h1>
+				<div class="about">
+					<div
+						class="desc"
+						v-html="meta.description || i18n.ts.headlineMisskey"
+					></div>
+				</div>
+				<div class="action">
+					<MkButton class="signup" inline gradate @click="signup()">{{
+						i18n.ts.signup
+					}}</MkButton>
+					<MkButton class="signin" inline @click="signin()">{{
+						i18n.ts.login
+					}}</MkButton>
+				</div>
+				<div v-if="onlineUsersCount && stats" class="status">
+					<div>
+						<I18n
+							:src="i18n.ts.nUsers"
+							text-tag="span"
+							class="users"
+						>
+							<template #n
+								><b>{{
+									number(stats.originalUsersCount)
+								}}</b></template
+							>
+						</I18n>
+						<I18n
+							:src="i18n.ts.nNotes"
+							text-tag="span"
+							class="notes"
+						>
+							<template #n
+								><b>{{
+									number(stats.originalNotesCount)
+								}}</b></template
+							>
+						</I18n>
+					</div>
+					<I18n
+						:src="i18n.ts.onlineUsersCount"
+						text-tag="span"
+						class="online"
+					>
+						<template #n
+							><b>{{ onlineUsersCount }}</b></template
+						>
 					</I18n>
 				</div>
-				<I18n :src="i18n.ts.onlineUsersCount" text-tag="span" class="online">
-					<template #n><b>{{ onlineUsersCount }}</b></template>
-				</I18n>
 			</div>
+			<img src="/client-assets/misskey.svg" class="misskey" />
 		</div>
-		<img src="/client-assets/misskey.svg" class="misskey"/>
 	</div>
-</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { toUnicode } from 'punycode/';
-import XSigninDialog from '@/components/MkSigninDialog.vue';
-import XSignupDialog from '@/components/MkSignupDialog.vue';
-import MkButton from '@/components/MkButton.vue';
-import XNote from '@/components/MkNote.vue';
-import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
-import XTimeline from './welcome.timeline.vue';
-import { host, instanceName } from '@/config';
-import * as os from '@/os';
-import number from '@/filters/number';
-import { i18n } from '@/i18n';
+import { defineComponent } from "vue";
+import { toUnicode } from "punycode/";
+import XSigninDialog from "@/components/MkSigninDialog.vue";
+import XSignupDialog from "@/components/MkSignupDialog.vue";
+import MkButton from "@/components/MkButton.vue";
+import XNote from "@/components/MkNote.vue";
+import MkFeaturedPhotos from "@/components/MkFeaturedPhotos.vue";
+import XTimeline from "./welcome.timeline.vue";
+import { host, instanceName } from "@/config";
+import * as os from "@/os";
+import number from "@/filters/number";
+import { i18n } from "@/i18n";
 
 export default defineComponent({
 	components: {
@@ -69,63 +102,84 @@ export default defineComponent({
 	},
 
 	created() {
-		os.api('meta', { detail: true }).then(meta => {
+		os.api("meta", { detail: true }).then((meta) => {
 			this.meta = meta;
 		});
 
-		os.api('stats').then(stats => {
+		os.api("stats").then((stats) => {
 			this.stats = stats;
 		});
 
-		os.api('get-online-users-count').then(res => {
+		os.api("get-online-users-count").then((res) => {
 			this.onlineUsersCount = res.count;
 		});
 
-		os.api('hashtags/list', {
-			sort: '+mentionedLocalUsers',
-			limit: 8
-		}).then(tags => {
+		os.api("hashtags/list", {
+			sort: "+mentionedLocalUsers",
+			limit: 8,
+		}).then((tags) => {
 			this.tags = tags;
 		});
 	},
 
 	methods: {
 		signin() {
-			os.popup(XSigninDialog, {
-				autoSet: true
-			}, {}, 'closed');
+			os.popup(
+				XSigninDialog,
+				{
+					autoSet: true,
+				},
+				{},
+				"closed"
+			);
 		},
 
 		signup() {
-			os.popup(XSignupDialog, {
-				autoSet: true
-			}, {}, 'closed');
+			os.popup(
+				XSignupDialog,
+				{
+					autoSet: true,
+				},
+				{},
+				"closed"
+			);
 		},
 
 		showMenu(ev) {
-			os.popupMenu([{
-				text: i18n.t('aboutX', { x: instanceName }),
-				icon: 'ph-info ph-bold ph-lg',
-				action: () => {
-					os.pageWindow('/about');
-				}
-			}, {
-				text: i18n.ts.aboutMisskey,
-				icon: 'ph-info ph-bold ph-lg',
-				action: () => {
-					os.pageWindow('/about-calckey');
-				}
-			}, null, {
-				text: i18n.ts.help,
-				icon: 'ph-question ph-bold ph-lg',
-				action: () => {
-					window.open(`https://misskey-hub.net/help.md`, '_blank');
-				}
-			}], ev.currentTarget ?? ev.target);
+			os.popupMenu(
+				[
+					{
+						text: i18n.t("aboutX", { x: instanceName }),
+						icon: "ph-info ph-bold ph-lg",
+						action: () => {
+							os.pageWindow("/about");
+						},
+					},
+					{
+						text: i18n.ts.aboutMisskey,
+						icon: "ph-info ph-bold ph-lg",
+						action: () => {
+							os.pageWindow("/about-calckey");
+						},
+					},
+					null,
+					{
+						text: i18n.ts.help,
+						icon: "ph-question ph-bold ph-lg",
+						action: () => {
+							window.open(
+								`https://misskey-hub.net/help.md`,
+								"_blank"
+							);
+						},
+					},
+				],
+				ev.currentTarget ?? ev.target
+			);
 		},
 
-		number
-	}
+		number,
+	},
 });
 </script>
 
@@ -152,8 +206,20 @@ export default defineComponent({
 			width: 500px;
 			height: calc(100% - 128px);
 			overflow: hidden;
-			-webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
-			mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
+			-webkit-mask-image: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 1) 128px,
+				rgba(0, 0, 0, 1) calc(100% - 128px),
+				rgba(0, 0, 0, 0) 100%
+			);
+			mask-image: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 1) 128px,
+				rgba(0, 0, 0, 1) calc(100% - 128px),
+				rgba(0, 0, 0, 0) 100%
+			);
 		}
 
 		> .shape {

@@ -1,57 +1,138 @@
 <template>
-<div class="kmwsukvl">
-	<div class="body">
-		<div class="top">
-			<div class="banner" :user="$i" :style="{ backgroundImage: `url(${ $i.bannerUrl })` }"></div>
-			<button v-click-anime v-tooltip.noDelay.right="`${i18n.ts.account}: @${$i.username}`" class="item _button account" @click="openAccountMenu">
-				<MkAvatar :user="$i" class="icon"/><!-- <MkAcct class="text" :user="$i"/> -->
-			</button>
-		</div>
-		<div class="middle">
-			<MkA v-click-anime class="item index" active-class="active" to="/" exact>
-				<i class="icon ph-house ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.timeline }}</span>
-			</MkA>
-			<template v-for="item in menu">
-				<div v-if="item === '-'" class="divider"></div>
-				<component :is="navbarItemDef[item].to ? 'MkA' : 'button'" v-else-if="navbarItemDef[item] && (navbarItemDef[item].show !== false)" v-click-anime class="item _button" :class="[item, { active: navbarItemDef[item].active }]" active-class="active" :to="navbarItemDef[item].to" v-on="navbarItemDef[item].action ? { click: navbarItemDef[item].action } : {}">
-					<i class="icon ph-fw ph-lg" :class="navbarItemDef[item].icon"></i><span class="text">{{ i18n.ts[navbarItemDef[item].title] }}</span>
-					<span v-if="navbarItemDef[item].indicated" class="indicator"><i class="icon ph-circle ph-fill"></i></span>
-				</component>
-			</template>
-			<div class="divider"></div>
-			<MkA v-if="$i.isAdmin || $i.isModerator" v-click-anime class="item" active-class="active" to="/admin">
-				<i class="icon ph-door ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.controlPanel }}</span>
-			</MkA>
-			<button v-click-anime class="item _button" @click="more">
-				<i class="icon ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.more }}</span>
-				<span v-if="otherMenuItemIndicated" class="indicator"><i class="icon ph-circle ph-fill"></i></span>
-			</button>
-			<MkA v-click-anime class="item" active-class="active" to="/settings">
-				<i class="icon ph-gear-six ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.settings }}</span>
-			</MkA>
-		</div>
-		<div class="bottom">
-			<button class="item _button post" data-cy-open-post-form @click="os.post">
-				<i class="icon ph-pencil ph-bold ph-lg ph-fw ph-lg"></i><span class="text">{{ i18n.ts.note }}</span>
-			</button>
-			<button v-tooltip.noDelay.right="i18n.ts.help" class="item _button help" @click="openHelpMenu">
-				<i class="help icon ph-info ph-bold ph-xl ph-fw"></i>
-			</button>
+	<div class="kmwsukvl">
+		<div class="body">
+			<div class="top">
+				<div
+					class="banner"
+					:user="$i"
+					:style="{ backgroundImage: `url(${$i.bannerUrl})` }"
+				></div>
+				<button
+					v-click-anime
+					v-tooltip.noDelay.right="
+						`${i18n.ts.account}: @${$i.username}`
+					"
+					class="item _button account"
+					@click="openAccountMenu"
+				>
+					<MkAvatar
+						:user="$i"
+						class="icon"
+					/><!-- <MkAcct class="text" :user="$i"/> -->
+				</button>
+			</div>
+			<div class="middle">
+				<MkA
+					v-click-anime
+					class="item index"
+					active-class="active"
+					to="/"
+					exact
+				>
+					<i class="icon ph-house ph-bold ph-lg ph-fw ph-lg"></i
+					><span class="text">{{ i18n.ts.timeline }}</span>
+				</MkA>
+				<template v-for="item in menu">
+					<div v-if="item === '-'" class="divider"></div>
+					<component
+						:is="navbarItemDef[item].to ? 'MkA' : 'button'"
+						v-else-if="
+							navbarItemDef[item] &&
+							navbarItemDef[item].show !== false
+						"
+						v-click-anime
+						class="item _button"
+						:class="[item, { active: navbarItemDef[item].active }]"
+						active-class="active"
+						:to="navbarItemDef[item].to"
+						v-on="
+							navbarItemDef[item].action
+								? { click: navbarItemDef[item].action }
+								: {}
+						"
+					>
+						<i
+							class="icon ph-fw ph-lg"
+							:class="navbarItemDef[item].icon"
+						></i
+						><span class="text">{{
+							i18n.ts[navbarItemDef[item].title]
+						}}</span>
+						<span
+							v-if="navbarItemDef[item].indicated"
+							class="indicator"
+							><i class="icon ph-circle ph-fill"></i
+						></span>
+					</component>
+				</template>
+				<div class="divider"></div>
+				<MkA
+					v-if="$i.isAdmin || $i.isModerator"
+					v-click-anime
+					class="item"
+					active-class="active"
+					to="/admin"
+				>
+					<i class="icon ph-door ph-bold ph-lg ph-fw ph-lg"></i
+					><span class="text">{{ i18n.ts.controlPanel }}</span>
+				</MkA>
+				<button v-click-anime class="item _button" @click="more">
+					<i
+						class="icon ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"
+					></i
+					><span class="text">{{ i18n.ts.more }}</span>
+					<span v-if="otherMenuItemIndicated" class="indicator"
+						><i class="icon ph-circle ph-fill"></i
+					></span>
+				</button>
+				<MkA
+					v-click-anime
+					class="item"
+					active-class="active"
+					to="/settings"
+				>
+					<i class="icon ph-gear-six ph-bold ph-lg ph-fw ph-lg"></i
+					><span class="text">{{ i18n.ts.settings }}</span>
+				</MkA>
+			</div>
+			<div class="bottom">
+				<button
+					class="item _button post"
+					data-cy-open-post-form
+					@click="os.post"
+				>
+					<i class="icon ph-pencil ph-bold ph-lg ph-fw ph-lg"></i
+					><span class="text">{{ i18n.ts.note }}</span>
+				</button>
+				<button
+					v-tooltip.noDelay.right="i18n.ts.help"
+					class="item _button help"
+					@click="openHelpMenu"
+				>
+					<i class="help icon ph-info ph-bold ph-xl ph-fw"></i>
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, defineAsyncComponent, defineComponent, ref, toRef, watch } from 'vue';
-import * as os from '@/os';
-import { navbarItemDef } from '@/navbar';
-import { openAccountMenu as openAccountMenu_ } from '@/account';
-import { openHelpMenu_ } from '@/scripts/helpMenu'
-import { defaultStore } from '@/store';
-import { i18n } from '@/i18n';
+import {
+	computed,
+	defineAsyncComponent,
+	defineComponent,
+	ref,
+	toRef,
+	watch,
+} from "vue";
+import * as os from "@/os";
+import { navbarItemDef } from "@/navbar";
+import { openAccountMenu as openAccountMenu_ } from "@/account";
+import { openHelpMenu_ } from "@/scripts/helpMenu";
+import { defaultStore } from "@/store";
+import { i18n } from "@/i18n";
 
-const menu = toRef(defaultStore.state, 'menu');
+const menu = toRef(defaultStore.state, "menu");
 const otherMenuItemIndicated = computed(() => {
 	for (const def in navbarItemDef) {
 		if (menu.value.includes(def)) continue;
@@ -61,9 +142,12 @@ const otherMenuItemIndicated = computed(() => {
 });
 
 function openAccountMenu(ev: MouseEvent) {
-	openAccountMenu_({
-		withExtraOperation: true,
-	}, ev);
+	openAccountMenu_(
+		{
+			withExtraOperation: true,
+		},
+		ev
+	);
 }
 
 function openHelpMenu(ev: MouseEvent) {
@@ -71,8 +155,12 @@ function openHelpMenu(ev: MouseEvent) {
 }
 
 function more() {
-	os.popup(defineAsyncComponent(() => import('@/components/MkLaunchPad.vue')), {}, {
-	}, 'closed');
+	os.popup(
+		defineAsyncComponent(() => import("@/components/MkLaunchPad.vue")),
+		{},
+		{},
+		"closed"
+	);
 }
 </script>
 
@@ -99,8 +187,16 @@ function more() {
 				height: 100%;
 				background-size: cover;
 				background-position: center center;
-				-webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0) 15%, rgba(0,0,0,0.75) 100%);
-				mask-image: linear-gradient(0deg, rgba(0,0,0,0) 15%, rgba(0,0,0,0.75) 100%);
+				-webkit-mask-image: linear-gradient(
+					0deg,
+					rgba(0, 0, 0, 0) 15%,
+					rgba(0, 0, 0, 0.75) 100%
+				);
+				mask-image: linear-gradient(
+					0deg,
+					rgba(0, 0, 0, 0) 15%,
+					rgba(0, 0, 0, 0.75) 100%
+				);
 			}
 
 			> .account {
@@ -147,10 +243,15 @@ function more() {
 					right: 0;
 					bottom: 0;
 					border-radius: 999px;
-					background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
+					background: linear-gradient(
+						90deg,
+						var(--buttonGradateA),
+						var(--buttonGradateB)
+					);
 				}
 
-				&:hover, &.active {
+				&:hover,
+				&.active {
 					&:before {
 						background: var(--accentLighten);
 					}
@@ -169,18 +270,19 @@ function more() {
 			}
 
 			> .help {
-					position: relative;
-					display: block;
-					text-align: center;
-					width: 100%;
-					margin-top: 1rem;
+				position: relative;
+				display: block;
+				text-align: center;
+				width: 100%;
+				margin-top: 1rem;
+				color: var(--navFg);
 
-					> .icon {
-						display: inline-block;
-						width: 38px;
-						aspect-ratio: 1;
-					}
+				> .icon {
+					display: inline-block;
+					width: 38px;
+					aspect-ratio: 1;
 				}
+			}
 
 			> .instance {
 				position: relative;
@@ -255,7 +357,8 @@ function more() {
 					color: var(--navActive);
 				}
 
-				&:hover, &.active {
+				&:hover,
+				&.active {
 					&:before {
 						content: "";
 						display: block;

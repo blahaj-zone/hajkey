@@ -1,24 +1,30 @@
 <template>
-<transition :name="$store.state.animation ? 'fade' : ''" mode="out-in">
-	<div v-if="pending">
-		<MkLoading/>
-	</div>
-	<div v-else-if="resolved">
-		<slot :result="result"></slot>
-	</div>
-	<div v-else>
-		<div class="wszdbhzo">
-			<div><i class="ph-warning ph-bold ph-lg"></i> {{ i18n.ts.somethingHappened }}</div>
-			<MkButton inline class="retry" @click="retry"><i class="ph-arrow-clockwise ph-bold ph-lg"></i> {{ i18n.ts.retry }}</MkButton>
+	<transition :name="$store.state.animation ? 'fade' : ''" mode="out-in">
+		<div v-if="pending">
+			<MkLoading />
 		</div>
-	</div>
-</transition>
+		<div v-else-if="resolved">
+			<slot :result="result"></slot>
+		</div>
+		<div v-else>
+			<div class="wszdbhzo">
+				<div>
+					<i class="ph-warning ph-bold ph-lg"></i>
+					{{ i18n.ts.somethingHappened }}
+				</div>
+				<MkButton inline class="retry" @click="retry"
+					><i class="ph-arrow-clockwise ph-bold ph-lg"></i>
+					{{ i18n.ts.retry }}</MkButton
+				>
+			</div>
+		</div>
+	</transition>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
-import MkButton from '@/components/MkButton.vue';
-import { i18n } from '@/i18n';
+import { defineComponent, PropType, ref, watch } from "vue";
+import MkButton from "@/components/MkButton.vue";
+import { i18n } from "@/i18n";
 
 export default defineComponent({
 	components: {
@@ -29,7 +35,7 @@ export default defineComponent({
 		p: {
 			type: Function as PropType<() => Promise<any>>,
 			required: true,
-		}
+		},
 	},
 
 	setup(props, context) {
@@ -57,11 +63,15 @@ export default defineComponent({
 			});
 		};
 
-		watch(() => props.p, () => {
-			process();
-		}, {
-			immediate: true,
-		});
+		watch(
+			() => props.p,
+			() => {
+				process();
+			},
+			{
+				immediate: true,
+			}
+		);
 
 		const retry = () => {
 			process();
@@ -75,7 +85,7 @@ export default defineComponent({
 			retry,
 			i18n,
 		};
-	}
+	},
 });
 </script>
 

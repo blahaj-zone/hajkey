@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import { generateKeyPair } from "node:crypto";
 import generateUserToken from "./generate-native-user-token.js";
 import { User } from "@/models/entities/user.js";
@@ -12,6 +11,7 @@ import { usersChart } from "@/services/chart/index.js";
 import { UsedUsername } from "@/models/entities/used-username.js";
 import { db } from "@/db/postgre.js";
 import config from "@/config/index.js";
+import { hashPassword } from "@/misc/password.js";
 
 export async function signup(opts: {
 	username: User["username"];
@@ -42,8 +42,7 @@ export async function signup(opts: {
 		}
 
 		// Generate hash of password
-		const salt = await bcrypt.genSalt(8);
-		hash = await bcrypt.hash(password, salt);
+		hash = await hashPassword(password);
 	}
 
 	// Generate secret

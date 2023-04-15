@@ -1,13 +1,16 @@
 <template>
-<div class="mk-google">
-	<input v-model="query" type="search" :placeholder="q">
-	<button @click="search"><i class="ph-magnifying-glass ph-bold ph-lg"></i> {{ i18n.ts.searchByGoogle }}</button>
-</div>
+	<div class="mk-google">
+		<input v-model="query" type="search" :placeholder="q" />
+		<button @click="search">
+			<i class="ph-magnifying-glass ph-bold ph-lg"></i>
+			{{ i18n.ts.searchByGoogle }}
+		</button>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { i18n } from '@/i18n';
+import { ref } from "vue";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	q: string;
@@ -16,7 +19,10 @@ const props = defineProps<{
 const query = ref(props.q);
 
 const search = () => {
-	window.open(`https://search.annoyingorange.xyz/search?q=${query.value}`, '_blank');
+	window.open(
+		`https://search.annoyingorange.xyz/search?q=${query.value}`,
+		"_blank"
+	);
 };
 </script>
 

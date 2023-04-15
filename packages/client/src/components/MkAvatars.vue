@@ -1,14 +1,14 @@
 <template>
-<div class="defgtij">
-	<div v-for="user in users" :key="user.id" class="avatar-holder">
-		<MkAvatar :user="user" :show-indicator="true" class="avatar"/>
+	<div class="defgtij">
+		<div v-for="user in users" :key="user.id" class="avatar-holder">
+			<MkAvatar :user="user" :show-indicator="true" class="avatar" />
+		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import * as os from '@/os';
+import { onMounted, ref } from "vue";
+import * as os from "@/os";
 
 const props = defineProps<{
 	userIds: string[];
@@ -17,8 +17,8 @@ const props = defineProps<{
 const users = ref([]);
 
 onMounted(async () => {
-	users.value = await os.api('users/show', {
-		userIds: props.userIds
+	users.value = await os.api("users/show", {
+		userIds: props.userIds,
 	});
 });
 </script>

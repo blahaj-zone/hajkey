@@ -13,7 +13,7 @@
 		"@swc/cli": "^0.1.59",
 		"@swc/core": "^1.3.26",
 		"@swc/core-android-arm64": "1.3.11",
-		"calckey-js": "^0.0.22",
+		"calckey-js": "workspace:*",
 		"idb-keyval": "^6.2.0",
 		"swc-loader": "^0.2.3",
 		"webpack": "^5.75.0",

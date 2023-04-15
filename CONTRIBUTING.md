@@ -48,8 +48,8 @@ Thank you for your PR! Before creating a PR, please check the following:
 - If there is an Issue which will be resolved by this PR, please include a reference to the Issue in the text. Good examples include `Closing: #21` or `Resolves: #21`
 - Check if there are any documents that need to be created or updated due to this change.
 - If you have added a feature or fixed a bug, please add a test case if possible.
-- Please make sure that tests and Lint are passed in advance.
-  - You can run it with `pnpm run test` and `pnpm run lint`. [See more info](#testing)
+- Please make sure that formatting, tests and Lint are passed in advance.
+  - You can run it with `pnpm run format`, `pnpm run test` and `pnpm run lint`. [See more info](#testing)
 - If this PR includes UI changes, please attach a screenshot in the text.
 
 Thanks for your cooperation 🤗

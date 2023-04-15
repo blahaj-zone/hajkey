@@ -1,12 +1,12 @@
 <template>
-<div class="zhyxdalp">
-	<XValue :value="value" :collapsed="false"/>
-</div>
+	<div class="zhyxdalp">
+		<XValue :value="value" :collapsed="false" />
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import XValue from './MkObjectView.value.vue';
+import {} from "vue";
+import XValue from "./MkObjectView.value.vue";
 
 const props = defineProps<{
 	value: Record<string, unknown>;
@@ -15,6 +15,5 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .zhyxdalp {
-
 }
 </style>

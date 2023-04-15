@@ -1,47 +1,97 @@
 <template>
-<transition :name="$store.state.animation ? 'popup' : ''" appear @after-leave="emit('closed')">
-	<div v-if="showing" class="fxxzrfni _popup _shadow" :style="{ zIndex, top: top + 'px', left: left + 'px' }" @mouseover="() => { emit('mouseover'); }" @mouseleave="() => { emit('mouseleave'); }">
-		<div v-if="user != null" class="info">
-			<div class="banner" :style="user.bannerUrl ? `background-image: url(${user.bannerUrl})` : ''">
-				<span v-if="$i && $i.id != user.id && user.isFollowed" class="followed">{{ i18n.ts.followsYou }}</span>
-			</div>
-			<MkAvatar class="avatar" :user="user" :disable-preview="true" :show-indicator="true"/>
-			<div class="title">
-				<MkA class="name" :to="userPage(user)"><MkUserName :user="user" :nowrap="false"/></MkA>
-				<p class="username"><MkAcct :user="user"/></p>
-			</div>
-			<div class="description">
-				<Mfm v-if="user.description" :text="user.description" :author="user" :i="$i" :custom-emojis="user.emojis"/>
-			</div>
-			<div class="status">
-				<div>
-					<p>{{ i18n.ts.notes }}</p><span>{{ user.notesCount }}</span>
+	<transition
+		:name="$store.state.animation ? 'popup' : ''"
+		appear
+		@after-leave="emit('closed')"
+	>
+		<div
+			v-if="showing"
+			class="fxxzrfni _popup _shadow"
+			:style="{ zIndex, top: top + 'px', left: left + 'px' }"
+			@mouseover="
+				() => {
+					emit('mouseover');
+				}
+			"
+			@mouseleave="
+				() => {
+					emit('mouseleave');
+				}
+			"
+		>
+			<div v-if="user != null" class="info">
+				<div
+					class="banner"
+					:style="
+						user.bannerUrl
+							? `background-image: url(${user.bannerUrl})`
+							: ''
+					"
+				>
+					<span
+						v-if="$i && $i.id != user.id && user.isFollowed"
+						class="followed"
+						>{{ i18n.ts.followsYou }}</span
+					>
 				</div>
-				<div>
-					<p>{{ i18n.ts.following }}</p><span>{{ user.followingCount }}</span>
+				<MkAvatar
+					class="avatar"
+					:user="user"
+					:disable-preview="true"
+					:show-indicator="true"
+				/>
+				<div class="title">
+					<MkA class="name" :to="userPage(user)"
+						><MkUserName :user="user" :nowrap="false"
+					/></MkA>
+					<p class="username"><MkAcct :user="user" /></p>
 				</div>
-				<div>
-					<p>{{ i18n.ts.followers }}</p><span>{{ user.followersCount }}</span>
+				<div class="description">
+					<Mfm
+						v-if="user.description"
+						:text="user.description"
+						:author="user"
+						:i="$i"
+						:custom-emojis="user.emojis"
+					/>
 				</div>
+				<div class="status">
+					<div>
+						<p>{{ i18n.ts.notes }}</p>
+						<span>{{ user.notesCount }}</span>
+					</div>
+					<div>
+						<p>{{ i18n.ts.following }}</p>
+						<span>{{ user.followingCount }}</span>
+					</div>
+					<div>
+						<p>{{ i18n.ts.followers }}</p>
+						<span>{{ user.followersCount }}</span>
+					</div>
+				</div>
+				<MkFollowButton
+					v-if="$i && user.id != $i.id"
+					class="koudoku-button"
+					:user="user"
+					mini
+				/>
 			</div>
-			<MkFollowButton v-if="$i && user.id != $i.id" class="koudoku-button" :user="user" mini/>
+			<div v-else>
+				<MkLoading />
+			</div>
 		</div>
-		<div v-else>
-			<MkLoading/>
-		</div>
-	</div>
-</transition>
+	</transition>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import * as Acct from 'calckey-js/built/acct';
-import type * as misskey from 'calckey-js';
-import MkFollowButton from '@/components/MkFollowButton.vue';
-import { userPage } from '@/filters/user';
-import * as os from '@/os';
-import { $i } from '@/account';
-import { i18n } from '@/i18n';
+import { onMounted } from "vue";
+import * as Acct from "calckey-js/built/acct";
+import type * as misskey from "calckey-js";
+import MkFollowButton from "@/components/MkFollowButton.vue";
+import { userPage } from "@/filters/user";
+import * as os from "@/os";
+import { $i } from "@/account";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	showing: boolean;
@@ -50,32 +100,33 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'closed'): void;
-	(ev: 'mouseover'): void;
-	(ev: 'mouseleave'): void;
+	(ev: "closed"): void;
+	(ev: "mouseover"): void;
+	(ev: "mouseleave"): void;
 }>();
 
-const zIndex = os.claimZIndex('middle');
+const zIndex = os.claimZIndex("middle");
 let user = $ref<misskey.entities.UserDetailed | null>(null);
 let top = $ref(0);
 let left = $ref(0);
 
 onMounted(() => {
-	if (typeof props.q === 'object') {
+	if (typeof props.q === "object") {
 		user = props.q;
 	} else {
-		const query = props.q.startsWith('@') ?
-			Acct.parse(props.q.substr(1)) :
-			{ userId: props.q };
+		const query = props.q.startsWith("@")
+			? Acct.parse(props.q.substr(1))
+			: { userId: props.q };
 
-		os.api('users/show', query).then(res => {
+		os.api("users/show", query).then((res) => {
 			if (!props.showing) return;
 			user = res;
 		});
 	}
 
 	const rect = props.source.getBoundingClientRect();
-	const x = ((rect.left + (props.source.offsetWidth / 2)) - (300 / 2)) + window.pageXOffset;
+	const x =
+		rect.left + props.source.offsetWidth / 2 - 300 / 2 + window.pageXOffset;
 	const y = rect.top + props.source.offsetHeight + window.pageYOffset;
 
 	top = y;
@@ -84,10 +135,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.popup-enter-active, .popup-leave-active {
+.popup-enter-active,
+.popup-leave-active {
 	transition: opacity 0.3s, transform 0.3s !important;
 }
-.popup-enter-from, .popup-leave-to {
+.popup-enter-from,
+.popup-leave-to {
 	opacity: 0;
 	transform: scale(0.9);
 }
@@ -105,14 +158,14 @@ onMounted(() => {
 			background-size: cover;
 			background-position: center;
 			> .followed {
-					position: absolute;
-					top: 12px;
-					left: 12px;
-					padding: 4px 8px;
-					color: #fff;
-					background: rgba(0, 0, 0, 0.7);
-					font-size: 0.7em;
-					border-radius: 6px;
+				position: absolute;
+				top: 12px;
+				left: 12px;
+				padding: 4px 8px;
+				color: #fff;
+				background: rgba(0, 0, 0, 0.7);
+				font-size: 0.7em;
+				border-radius: 6px;
 			}
 
 			&::after {
@@ -123,7 +176,7 @@ onMounted(() => {
 				background-size: cover;
 				background-position: center;
 				pointer-events: none;
-				opacity: .1;
+				opacity: 0.1;
 				filter: var(--blur, blur(10px));
 			}
 		}

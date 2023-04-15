@@ -1,52 +1,66 @@
 <template>
-<div class="pumxzjhg">
-	<div class="_table status">
-		<div class="_row">
-			<div class="_cell"><div class="_label">Process</div>{{ number(activeSincePrevTick) }}</div>
-			<div class="_cell"><div class="_label">Active</div>{{ number(active) }}</div>
-			<div class="_cell"><div class="_label">Waiting</div>{{ number(waiting) }}</div>
-			<div class="_cell"><div class="_label">Delayed</div>{{ number(delayed) }}</div>
-		</div>
-	</div>
-	<div class="charts">
-		<div class="chart">
-			<div class="title">Process</div>
-			<XChart ref="chartProcess" type="process"/>
-		</div>
-		<div class="chart">
-			<div class="title">Active</div>
-			<XChart ref="chartActive" type="active"/>
-		</div>
-		<div class="chart">
-			<div class="title">Delayed</div>
-			<XChart ref="chartDelayed" type="delayed"/>
-		</div>
-		<div class="chart">
-			<div class="title">Waiting</div>
-			<XChart ref="chartWaiting" type="waiting"/>
-		</div>
-	</div>
-	<div class="jobs">
-		<div v-if="jobs.length > 0">
-			<div v-for="job in jobs" :key="job[0]">
-				<span>{{ job[0] }}</span>
-				<span style="margin-left: 8px; opacity: 0.7;">({{ number(job[1]) }} jobs)</span>
+	<div class="pumxzjhg">
+		<div class="_table status">
+			<div class="_row">
+				<div class="_cell">
+					<div class="_label">Process</div>
+					{{ number(activeSincePrevTick) }}
+				</div>
+				<div class="_cell">
+					<div class="_label">Active</div>
+					{{ number(active) }}
+				</div>
+				<div class="_cell">
+					<div class="_label">Waiting</div>
+					{{ number(waiting) }}
+				</div>
+				<div class="_cell">
+					<div class="_label">Delayed</div>
+					{{ number(delayed) }}
+				</div>
 			</div>
 		</div>
-		<span v-else style="opacity: 0.5;">{{ i18n.ts.noJobs }}</span>
+		<div class="charts">
+			<div class="chart">
+				<div class="title">Process</div>
+				<XChart ref="chartProcess" type="process" />
+			</div>
+			<div class="chart">
+				<div class="title">Active</div>
+				<XChart ref="chartActive" type="active" />
+			</div>
+			<div class="chart">
+				<div class="title">Delayed</div>
+				<XChart ref="chartDelayed" type="delayed" />
+			</div>
+			<div class="chart">
+				<div class="title">Waiting</div>
+				<XChart ref="chartWaiting" type="waiting" />
+			</div>
+		</div>
+		<div class="jobs">
+			<div v-if="jobs.length > 0">
+				<div v-for="job in jobs" :key="job[0]">
+					<span>{{ job[0] }}</span>
+					<span style="margin-left: 8px; opacity: 0.7"
+						>({{ number(job[1]) }} jobs)</span
+					>
+				</div>
+			</div>
+			<span v-else style="opacity: 0.5">{{ i18n.ts.noJobs }}</span>
+		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { markRaw, onMounted, onUnmounted, ref } from 'vue';
-import XChart from './queue.chart.chart.vue';
-import number from '@/filters/number';
-import * as os from '@/os';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
+import { markRaw, onMounted, onUnmounted, ref } from "vue";
+import XChart from "./queue.chart.chart.vue";
+import number from "@/filters/number";
+import * as os from "@/os";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
 
-const connection = markRaw(stream.useChannel('queueStats'));
+const connection = markRaw(stream.useChannel("queueStats"));
 
 const activeSincePrevTick = ref(0);
 const active = ref(0);
@@ -94,21 +108,28 @@ const onStatsLog = (statsLog) => {
 };
 
 onMounted(() => {
-	os.api(props.domain === 'inbox' ? 'admin/queue/inbox-delayed' : props.domain === 'deliver' ? 'admin/queue/deliver-delayed' : null, {}).then(result => {
+	os.api(
+		props.domain === "inbox"
+			? "admin/queue/inbox-delayed"
+			: props.domain === "deliver"
+			? "admin/queue/deliver-delayed"
+			: null,
+		{}
+	).then((result) => {
 		jobs.value = result;
 	});
 
-	connection.on('stats', onStats);
-	connection.on('statsLog', onStatsLog);
-	connection.send('requestLog', {
+	connection.on("stats", onStats);
+	connection.on("statsLog", onStatsLog);
+	connection.send("requestLog", {
 		id: Math.random().toString().substr(2, 8),
 		length: 200,
 	});
 });
 
 onUnmounted(() => {
-	connection.off('stats', onStats);
-	connection.off('statsLog', onStatsLog);
+	connection.off("stats", onStats);
+	connection.off("statsLog", onStatsLog);
 	connection.dispose();
 });
 </script>
@@ -144,6 +165,5 @@ onUnmounted(() => {
 		background: var(--panel);
 		border-radius: var(--radius);
 	}
-
 }
 </style>

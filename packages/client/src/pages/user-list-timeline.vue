@@ -1,30 +1,37 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<div ref="rootEl" v-size="{ min: [800] }" class="eqqrhokj">
-		<div v-if="queue > 0" class="new"><button class="_buttonPrimary" @click="top()">{{ i18n.ts.newNoteRecived }}</button></div>
-		<div class="tl _block">
-			<XTimeline
-				ref="tlEl" :key="listId"
-				class="tl"
-				src="list"
-				:list="listId"
-				:sound="true"
-				@queue="queueUpdated"
-			/>
+	<MkStickyContainer>
+		<template #header
+			><MkPageHeader :actions="headerActions" :tabs="headerTabs"
+		/></template>
+		<div ref="rootEl" v-size="{ min: [800] }" class="eqqrhokj">
+			<div v-if="queue > 0" class="new">
+				<button class="_buttonPrimary" @click="top()">
+					{{ i18n.ts.newNoteRecived }}
+				</button>
+			</div>
+			<div class="tl _block">
+				<XTimeline
+					ref="tlEl"
+					:key="listId"
+					class="tl"
+					src="list"
+					:list="listId"
+					:sound="true"
+					@queue="queueUpdated"
+				/>
+			</div>
 		</div>
-	</div>
-</MkStickyContainer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch, inject } from 'vue';
-import XTimeline from '@/components/MkTimeline.vue';
-import { scroll } from '@/scripts/scroll';
-import * as os from '@/os';
-import { useRouter } from '@/router';
-import { definePageMetadata } from '@/scripts/page-metadata';
-import { i18n } from '@/i18n';
+import { computed, watch, inject } from "vue";
+import XTimeline from "@/components/MkTimeline.vue";
+import { scroll } from "@/scripts/scroll";
+import * as os from "@/os";
+import { useRouter } from "@/router";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import { i18n } from "@/i18n";
 
 const router = useRouter();
 
@@ -37,11 +44,15 @@ let queue = $ref(0);
 let tlEl = $ref<InstanceType<typeof XTimeline>>();
 let rootEl = $ref<HTMLElement>();
 
-watch(() => props.listId, async () => {
-	list = await os.api('users/lists/show', {
-		listId: props.listId,
-	});
-}, { immediate: true });
+watch(
+	() => props.listId,
+	async () => {
+		list = await os.api("users/lists/show", {
+			listId: props.listId,
+		});
+	},
+	{ immediate: true }
+);
 
 function queueUpdated(q) {
 	queue = q;
@@ -64,22 +75,35 @@ async function timetravel() {
 	tlEl.timetravel(date);
 }
 
-const headerActions = $computed(() => list ? [{
-	icon: 'ph-calendar-blank ph-bold ph-lg',
-	text: i18n.ts.jumpToSpecifiedDate,
-	handler: timetravel,
-}, {
-	icon: 'ph-gear-six ph-bold ph-lg',
-	text: i18n.ts.settings,
-	handler: settings,
-}] : []);
+const headerActions = $computed(() =>
+	list
+		? [
+				{
+					icon: "ph-calendar-blank ph-bold ph-lg",
+					text: i18n.ts.jumpToSpecifiedDate,
+					handler: timetravel,
+				},
+				{
+					icon: "ph-gear-six ph-bold ph-lg",
+					text: i18n.ts.settings,
+					handler: settings,
+				},
+		  ]
+		: []
+);
 
 const headerTabs = $computed(() => []);
 
-definePageMetadata(computed(() => list ? {
-	title: list.name,
-	icon: 'ph-list-bullets ph-bold ph-lg',
-} : null));
+definePageMetadata(
+	computed(() =>
+		list
+			? {
+					title: list.name,
+					icon: "ph-list-bullets ph-bold ph-lg",
+			  }
+			: null
+	)
+);
 </script>
 
 <style lang="scss" scoped>

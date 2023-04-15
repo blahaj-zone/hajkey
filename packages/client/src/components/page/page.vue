@@ -1,26 +1,42 @@
 <template>
-<div v-if="hpml" class="iroscrza" :class="{ center: page.alignCenter, serif: page.font === 'serif' }">
-	<XBlock v-for="child in page.content" :key="child.id" :block="child" :hpml="hpml" :h="2"/>
-</div>
+	<div
+		v-if="hpml"
+		class="iroscrza"
+		:class="{ center: page.alignCenter, serif: page.font === 'serif' }"
+	>
+		<XBlock
+			v-for="child in page.content"
+			:key="child.id"
+			:block="child"
+			:hpml="hpml"
+			:h="2"
+		/>
+	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, nextTick, onUnmounted, PropType } from 'vue';
-import { parse } from '@syuilo/aiscript';
-import XBlock from './page.block.vue';
-import { Hpml } from '@/scripts/hpml/evaluator';
-import { url } from '@/config';
-import { $i } from '@/account';
-import { defaultStore } from '@/store';
+import {
+	defineComponent,
+	onMounted,
+	nextTick,
+	onUnmounted,
+	PropType,
+} from "vue";
+import { parse } from "@syuilo/aiscript";
+import XBlock from "./page.block.vue";
+import { Hpml } from "@/scripts/hpml/evaluator";
+import { url } from "@/config";
+import { $i } from "@/account";
+import { defaultStore } from "@/store";
 
 export default defineComponent({
 	components: {
-		XBlock
+		XBlock,
 	},
 	props: {
 		page: {
 			type: Object as PropType<Record<string, any>>,
-			required: true
+			required: true,
 		},
 	},
 	setup(props, ctx) {
@@ -28,7 +44,7 @@ export default defineComponent({
 			randomSeed: Math.random(),
 			visitor: $i,
 			url: url,
-			enableAiScript: !defaultStore.state.disablePagesScript
+			enableAiScript: !defaultStore.state.disablePagesScript,
 		});
 
 		onMounted(() => {
@@ -45,15 +61,18 @@ export default defineComponent({
 						});*/
 						return;
 					}
-					hpml.aiscript.exec(ast).then(() => {
-						hpml.eval();
-					}).catch(err => {
-						console.error(err);
-						/*os.alert({
+					hpml.aiscript
+						.exec(ast)
+						.then(() => {
+							hpml.eval();
+						})
+						.catch((err) => {
+							console.error(err);
+							/*os.alert({
 							type: 'error',
 							text: err
 						});*/
-					});
+						});
 				} else {
 					hpml.eval();
 				}

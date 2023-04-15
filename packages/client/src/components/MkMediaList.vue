@@ -1,29 +1,58 @@
 <template>
-<div class="hoawjimk">
-	<XBanner v-for="media in mediaList.filter(media => !previewable(media))" :key="media.id" :media="media"/>
-	<div v-if="mediaList.filter(media => previewable(media)).length > 0" class="gird-container" :class="{ dmWidth: inDm }">
-		<div ref="gallery" :data-count="mediaList.filter(media => previewable(media)).length" @click.stop>
-			<template v-for="media in mediaList.filter(media => previewable(media))">
-				<XVideo v-if="media.type.startsWith('video')" :key="media.id" :video="media"/>
-				<XImage v-else-if="media.type.startsWith('image')" :key="media.id" class="image" :data-id="media.id" :image="media" :raw="raw"/>
-			</template>
+	<div class="hoawjimk">
+		<XBanner
+			v-for="media in mediaList.filter((media) => !previewable(media))"
+			:key="media.id"
+			:media="media"
+		/>
+		<div
+			v-if="mediaList.filter((media) => previewable(media)).length > 0"
+			class="gird-container"
+			:class="{ dmWidth: inDm }"
+		>
+			<div
+				ref="gallery"
+				:data-count="
+					mediaList.filter((media) => previewable(media)).length
+				"
+				@click.stop
+			>
+				<template
+					v-for="media in mediaList.filter((media) =>
+						previewable(media)
+					)"
+				>
+					<XVideo
+						v-if="media.type.startsWith('video')"
+						:key="media.id"
+						:video="media"
+					/>
+					<XImage
+						v-else-if="media.type.startsWith('image')"
+						:key="media.id"
+						class="image"
+						:data-id="media.id"
+						:image="media"
+						:raw="raw"
+					/>
+				</template>
+			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import * as misskey from 'calckey-js';
-import PhotoSwipeLightbox from 'photoswipe/lightbox';
-import PhotoSwipe from 'photoswipe';
-import 'photoswipe/style.css';
-import XBanner from '@/components/MkMediaBanner.vue';
-import XImage from '@/components/MkMediaImage.vue';
-import XVideo from '@/components/MkMediaVideo.vue';
-import * as os from '@/os';
-import { FILE_TYPE_BROWSERSAFE } from '@/const';
-import { defaultStore } from '@/store';
+import { onMounted, ref } from "vue";
+import * as misskey from "calckey-js";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import PhotoSwipe from "photoswipe";
+import "photoswipe/style.css";
+import XBanner from "@/components/MkMediaBanner.vue";
+import XImage from "@/components/MkMediaImage.vue";
+import XVideo from "@/components/MkMediaVideo.vue";
+import * as os from "@/os";
+import { FILE_TYPE_BROWSERSAFE } from "@/const";
+import { defaultStore } from "@/store";
 
 const props = defineProps<{
 	mediaList: misskey.entities.DriveFile[];
@@ -32,60 +61,72 @@ const props = defineProps<{
 }>();
 
 const gallery = ref(null);
-const pswpZIndex = os.claimZIndex('middle');
+const pswpZIndex = os.claimZIndex("middle");
 
 onMounted(() => {
 	const lightbox = new PhotoSwipeLightbox({
 		dataSource: props.mediaList
-			.filter(media => {
-				if (media.type === 'image/svg+xml') return true; // svgのwebpublicはpngなのでtrue
-				return media.type.startsWith('image') && FILE_TYPE_BROWSERSAFE.includes(media.type);
+			.filter((media) => {
+				if (media.type === "image/svg+xml") return true; // svgのwebpublicはpngなのでtrue
+				return (
+					media.type.startsWith("image") &&
+					FILE_TYPE_BROWSERSAFE.includes(media.type)
+				);
 			})
-			.map(media => {
+			.map((media) => {
 				const item = {
 					src: media.url,
 					w: media.properties.width,
 					h: media.properties.height,
 					alt: media.comment,
 				};
-				if (media.properties.orientation != null && media.properties.orientation >= 5) {
+				if (
+					media.properties.orientation != null &&
+					media.properties.orientation >= 5
+				) {
 					[item.w, item.h] = [item.h, item.w];
 				}
 				return item;
 			}),
 		gallery: gallery.value,
-		children: '.image',
-		thumbSelector: '.image',
+		children: ".image",
+		thumbSelector: ".image",
 		loop: false,
-		padding: window.innerWidth > 500 ? {
-			top: 32,
-			bottom: 32,
-			left: 32,
-			right: 32,
-		} : {
-			top: 0,
-			bottom: 0,
-			left: 0,
-			right: 0,
-		},
-		imageClickAction: 'close',
-		tapAction: 'toggle-controls',
+		padding:
+			window.innerWidth > 500
+				? {
+						top: 32,
+						bottom: 32,
+						left: 32,
+						right: 32,
+				  }
+				: {
+						top: 0,
+						bottom: 0,
+						left: 0,
+						right: 0,
+				  },
+		imageClickAction: "close",
+		tapAction: "toggle-controls",
 		pswpModule: PhotoSwipe,
 	});
 
-	lightbox.on('itemData', (ev) => {
+	lightbox.on("itemData", (ev) => {
 		const { itemData } = ev;
 
 		// element is children
 		const { element } = itemData;
 
 		const id = element.dataset.id;
-		const file = props.mediaList.find(media => media.id === id);
+		const file = props.mediaList.find((media) => media.id === id);
 
 		itemData.src = file.url;
 		itemData.w = Number(file.properties.width);
 		itemData.h = Number(file.properties.height);
-		if (file.properties.orientation != null && file.properties.orientation >= 5) {
+		if (
+			file.properties.orientation != null &&
+			file.properties.orientation >= 5
+		) {
 			[itemData.w, itemData.h] = [itemData.h, itemData.w];
 		}
 		itemData.msrc = file.thumbnailUrl;
@@ -93,17 +134,17 @@ onMounted(() => {
 		itemData.thumbCropped = true;
 	});
 
-	lightbox.on('uiRegister', () => {
+	lightbox.on("uiRegister", () => {
 		lightbox.pswp.ui.registerElement({
-			name: 'altText',
-			className: 'pwsp__alt-text-container',
-			appendTo: 'wrapper',
+			name: "altText",
+			className: "pwsp__alt-text-container",
+			appendTo: "wrapper",
 			onInit: (el, pwsp) => {
-				let textBox = document.createElement('p');
-				textBox.className = 'pwsp__alt-text';
+				let textBox = document.createElement("p");
+				textBox.className = "pwsp__alt-text";
 				el.appendChild(textBox);
 
-				let preventProp = function(ev: Event): void {
+				let preventProp = function (ev: Event): void {
 					ev.stopPropagation();
 				};
 
@@ -114,7 +155,7 @@ onMounted(() => {
 				el.onpointercancel = preventProp;
 				el.onpointermove = preventProp;
 
-				pwsp.on('change', () => {
+				pwsp.on("change", () => {
 					textBox.textContent = pwsp.currSlide.data.alt?.trim();
 				});
 			},
@@ -125,15 +166,17 @@ onMounted(() => {
 });
 
 const previewable = (file: misskey.entities.DriveFile): boolean => {
-	if (file.type === 'image/svg+xml') return true; // svgのwebpublic/thumbnailはpngなのでtrue
+	if (file.type === "image/svg+xml") return true; // svgのwebpublic/thumbnailはpngなのでtrue
 	// FILE_TYPE_BROWSERSAFEに適合しないものはブラウザで表示するのに不適切
-	return (file.type.startsWith('video') || file.type.startsWith('image')) && FILE_TYPE_BROWSERSAFE.includes(file.type);
+	return (
+		(file.type.startsWith("video") || file.type.startsWith("image")) &&
+		FILE_TYPE_BROWSERSAFE.includes(file.type)
+	);
 };
 </script>
 
 <style lang="scss" scoped>
 .hoawjimk {
-
 	> .dmWidth {
 		min-width: 20rem;
 		max-width: 40rem;
@@ -147,9 +190,9 @@ const previewable = (file: misskey.entities.DriveFile): boolean => {
 		overflow: hidden;
 
 		&:before {
-			content: '';
+			content: "";
 			display: block;
-			padding-top: 56.25% // 16:9;
+			padding-top: 56.25%; // 16:9;
 		}
 
 		> div {
@@ -221,7 +264,7 @@ const previewable = (file: misskey.entities.DriveFile): boolean => {
 <style lang="scss">
 .pswp {
 	// なぜか機能しない
-  //z-index: v-bind(pswpZIndex);
+	//z-index: v-bind(pswpZIndex);
 	z-index: 2000000;
 }
 .pwsp__alt-text-container {
@@ -254,5 +297,4 @@ const previewable = (file: misskey.entities.DriveFile): boolean => {
 .pwsp__alt-text:empty {
 	display: none;
 }
-
 </style>

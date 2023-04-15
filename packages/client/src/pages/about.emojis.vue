@@ -1,44 +1,62 @@
 <template>
-<div class="driuhtrh">
-	<div class="query">
-		<MkInput v-model="q" class="" :placeholder="i18n.ts.search">
-			<template #prefix><i class="ph-magnifying-glass ph-bold ph-lg"></i></template>
-		</MkInput>
+	<div class="driuhtrh">
+		<div class="query">
+			<MkInput v-model="q" class="" :placeholder="i18n.ts.search">
+				<template #prefix
+					><i class="ph-magnifying-glass ph-bold ph-lg"></i
+				></template>
+			</MkInput>
 
-		<!-- たくさんあると邪魔
+			<!-- たくさんあると邪魔
 		<div class="tags">
 			<span class="tag _button" v-for="tag in tags" :class="{ active: selectedTags.has(tag) }" @click="toggleTag(tag)">{{ tag }}</span>
 		</div>
 		-->
+		</div>
+
+		<MkFolder v-if="searchEmojis" class="emojis">
+			<template #header>{{ i18n.ts.searchResult }}</template>
+			<div class="zuvgdzyt">
+				<XEmoji
+					v-for="emoji in searchEmojis"
+					:key="emoji.name"
+					class="emoji"
+					:emoji="emoji"
+				/>
+			</div>
+		</MkFolder>
+
+		<MkFolder
+			v-for="category in customEmojiCategories"
+			:key="category"
+			class="emojis"
+		>
+			<template #header>{{ category || i18n.ts.other }}</template>
+			<div class="zuvgdzyt">
+				<XEmoji
+					v-for="emoji in customEmojis.filter(
+						(e) => e.category === category
+					)"
+					:key="emoji.name"
+					class="emoji"
+					:emoji="emoji"
+				/>
+			</div>
+		</MkFolder>
 	</div>
-
-	<MkFolder v-if="searchEmojis" class="emojis">
-		<template #header>{{ i18n.ts.searchResult }}</template>
-		<div class="zuvgdzyt">
-			<XEmoji v-for="emoji in searchEmojis" :key="emoji.name" class="emoji" :emoji="emoji"/>
-		</div>
-	</MkFolder>
-
-	<MkFolder v-for="category in customEmojiCategories" :key="category" class="emojis">
-		<template #header>{{ category || i18n.ts.other }}</template>
-		<div class="zuvgdzyt">
-			<XEmoji v-for="emoji in customEmojis.filter(e => e.category === category)" :key="emoji.name" class="emoji" :emoji="emoji"/>
-		</div>
-	</MkFolder>
-</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
-import XEmoji from './emojis.emoji.vue';
-import MkButton from '@/components/MkButton.vue';
-import MkInput from '@/components/form/input.vue';
-import MkSelect from '@/components/form/select.vue';
-import MkFolder from '@/components/MkFolder.vue';
-import MkTab from '@/components/MkTab.vue';
-import * as os from '@/os';
-import { emojiCategories, emojiTags } from '@/instance';
-import { i18n } from '@/i18n';
+import { defineComponent, computed } from "vue";
+import XEmoji from "./emojis.emoji.vue";
+import MkButton from "@/components/MkButton.vue";
+import MkInput from "@/components/form/input.vue";
+import MkSelect from "@/components/form/select.vue";
+import MkFolder from "@/components/MkFolder.vue";
+import MkTab from "@/components/MkTab.vue";
+import * as os from "@/os";
+import { emojiCategories, emojiTags } from "@/instance";
+import { i18n } from "@/i18n";
 
 export default defineComponent({
 	components: {
@@ -52,7 +70,7 @@ export default defineComponent({
 
 	data() {
 		return {
-			q: '',
+			q: "",
 			customEmojiCategories: emojiCategories,
 			customEmojis: this.$instance.emojis,
 			tags: emojiTags,
@@ -63,7 +81,9 @@ export default defineComponent({
 	},
 
 	watch: {
-		q() { this.search(); },
+		q() {
+			this.search();
+		},
 		selectedTags: {
 			handler() {
 				this.search();
@@ -74,15 +94,29 @@ export default defineComponent({
 
 	methods: {
 		search() {
-			if ((this.q === '' || this.q == null) && this.selectedTags.size === 0) {
+			if (
+				(this.q === "" || this.q == null) &&
+				this.selectedTags.size === 0
+			) {
 				this.searchEmojis = null;
 				return;
 			}
 
 			if (this.selectedTags.size === 0) {
-				this.searchEmojis = this.customEmojis.filter(emoji => emoji.name.includes(this.q) || emoji.aliases.includes(this.q));
+				this.searchEmojis = this.customEmojis.filter(
+					(emoji) =>
+						emoji.name.includes(this.q) ||
+						emoji.aliases.includes(this.q)
+				);
 			} else {
-				this.searchEmojis = this.customEmojis.filter(emoji => (emoji.name.includes(this.q) || emoji.aliases.includes(this.q)) && [...this.selectedTags].every(t => emoji.aliases.includes(t)));
+				this.searchEmojis = this.customEmojis.filter(
+					(emoji) =>
+						(emoji.name.includes(this.q) ||
+							emoji.aliases.includes(this.q)) &&
+						[...this.selectedTags].every((t) =>
+							emoji.aliases.includes(t)
+						)
+				);
 			}
 		},
 

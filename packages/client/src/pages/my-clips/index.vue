@@ -1,31 +1,51 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="700">
-		<div class="qtcaoidl">
-			<MkButton primary class="add" @click="create"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.add }}</MkButton>
+	<MkStickyContainer>
+		<template #header
+			><MkPageHeader
+				:actions="headerActions"
+				:tabs="headerTabs"
+				:display-back-button="true"
+		/></template>
+		<MkSpacer :content-max="700">
+			<div class="qtcaoidl">
+				<MkButton primary class="add" @click="create"
+					><i class="ph-plus ph-bold ph-lg"></i>
+					{{ i18n.ts.add }}</MkButton
+				>
 
-			<MkPagination v-slot="{items}" ref="pagingComponent" :pagination="pagination" class="list">
-				<MkA v-for="item in items" :key="item.id" :to="`/clips/${item.id}`" class="item _panel _gap">
-					<b>{{ item.name }}</b>
-					<div v-if="item.description" class="description">{{ item.description }}</div>
-				</MkA>
-			</MkPagination>
-		</div>
-	</MkSpacer>
-</MkStickyContainer>
+				<MkPagination
+					v-slot="{ items }"
+					ref="pagingComponent"
+					:pagination="pagination"
+					class="list"
+				>
+					<MkA
+						v-for="item in items"
+						:key="item.id"
+						:to="`/clips/${item.id}`"
+						class="item _panel _gap"
+					>
+						<b>{{ item.name }}</b>
+						<div v-if="item.description" class="description">
+							{{ item.description }}
+						</div>
+					</MkA>
+				</MkPagination>
+			</div>
+		</MkSpacer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import MkPagination from '@/components/MkPagination.vue';
-import MkButton from '@/components/MkButton.vue';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
+import {} from "vue";
+import MkPagination from "@/components/MkPagination.vue";
+import MkButton from "@/components/MkButton.vue";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
 
 const pagination = {
-	endpoint: 'clips/list' as const,
+	endpoint: "clips/list" as const,
 	limit: 10,
 };
 
@@ -34,24 +54,24 @@ const pagingComponent = $ref<InstanceType<typeof MkPagination>>();
 async function create() {
 	const { canceled, result } = await os.form(i18n.ts.createNewClip, {
 		name: {
-			type: 'string',
+			type: "string",
 			label: i18n.ts.name,
 		},
 		description: {
-			type: 'string',
+			type: "string",
 			required: false,
 			multiline: true,
 			label: i18n.ts.description,
 		},
 		isPublic: {
-			type: 'boolean',
+			type: "boolean",
 			label: i18n.ts.public,
 			default: false,
 		},
 	});
 	if (canceled) return;
 
-	os.apiWithDialog('clips/create', result);
+	os.apiWithDialog("clips/create", result);
 
 	pagingComponent.reload();
 }
@@ -70,9 +90,9 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.clip,
-	icon: 'ph-paperclip ph-bold ph-lg',
+	icon: "ph-paperclip ph-bold ph-lg",
 	action: {
-		icon: 'ph-plus ph-bold ph-lg',
+		icon: "ph-plus ph-bold ph-lg",
 		handler: create,
 	},
 });

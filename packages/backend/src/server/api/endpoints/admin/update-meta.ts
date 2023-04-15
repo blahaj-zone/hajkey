@@ -209,7 +209,12 @@ export default define(meta, paramDef, async (ps, me) => {
 	}
 
 	if (Array.isArray(ps.blockedHosts)) {
-		set.blockedHosts = ps.blockedHosts.filter(Boolean);
+		let lastValue = "";
+		set.blockedHosts = ps.blockedHosts.sort().filter((h) => {
+			const lv = lastValue;
+			lastValue = h;
+			return h !== "" && h !== lv;
+		});
 	}
 
 	if (ps.themeColor !== undefined) {

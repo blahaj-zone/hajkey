@@ -1,47 +1,55 @@
 <template>
-<XModalWindow
-	ref="dialogEl"
-	:width="800"
-	:height="500"
-	:scroll="false"
-	:with-ok-button="true"
-	@close="cancel()"
-	@ok="ok()"
-	@closed="$emit('closed')"
->
-	<template #header>{{ i18n.ts.cropImage }}</template>
-	<template #default="{ width, height }">
-		<div class="mk-cropper-dialog" :style="`--vw: ${width}px; --vh: ${height}px;`">
-			<Transition name="fade">
-				<div v-if="loading" class="loading">
-					<MkLoading/>
+	<XModalWindow
+		ref="dialogEl"
+		:width="800"
+		:height="500"
+		:scroll="false"
+		:with-ok-button="true"
+		@close="cancel()"
+		@ok="ok()"
+		@closed="$emit('closed')"
+	>
+		<template #header>{{ i18n.ts.cropImage }}</template>
+		<template #default="{ width, height }">
+			<div
+				class="mk-cropper-dialog"
+				:style="`--vw: ${width}px; --vh: ${height}px;`"
+			>
+				<Transition name="fade">
+					<div v-if="loading" class="loading">
+						<MkLoading />
+					</div>
+				</Transition>
+				<div class="container">
+					<img
+						ref="imgEl"
+						:src="imgUrl"
+						style="display: none"
+						@load="onImageLoad"
+					/>
 				</div>
-			</Transition>
-			<div class="container">
-				<img ref="imgEl" :src="imgUrl" style="display: none;" @load="onImageLoad">
 			</div>
-		</div>
-	</template>
-</XModalWindow>
+		</template>
+	</XModalWindow>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted } from 'vue';
-import * as misskey from 'calckey-js';
-import Cropper from 'cropperjs';
-import tinycolor from 'tinycolor2';
-import XModalWindow from '@/components/MkModalWindow.vue';
-import * as os from '@/os';
-import { $i } from '@/account';
-import { defaultStore } from '@/store';
-import { apiUrl, url } from '@/config';
-import { query } from '@/scripts/url';
-import { i18n } from '@/i18n';
+import { nextTick, onMounted } from "vue";
+import * as misskey from "calckey-js";
+import Cropper from "cropperjs";
+import tinycolor from "tinycolor2";
+import XModalWindow from "@/components/MkModalWindow.vue";
+import * as os from "@/os";
+import { $i } from "@/account";
+import { defaultStore } from "@/store";
+import { apiUrl, url } from "@/config";
+import { query } from "@/scripts/url";
+import { i18n } from "@/i18n";
 
 const emit = defineEmits<{
-	(ev: 'ok', cropped: misskey.entities.DriveFile): void;
-	(ev: 'cancel'): void;
-	(ev: 'closed'): void;
+	(ev: "ok", cropped: misskey.entities.DriveFile): void;
+	(ev: "cancel"): void;
+	(ev: "closed"): void;
 }>();
 
 const props = defineProps<{
@@ -60,24 +68,24 @@ let loading = $ref(true);
 const ok = async () => {
 	const promise = new Promise<misskey.entities.DriveFile>(async (res) => {
 		const croppedCanvas = await cropper?.getCropperSelection()?.$toCanvas();
-		croppedCanvas.toBlob(blob => {
+		croppedCanvas.toBlob((blob) => {
 			const formData = new FormData();
-			formData.append('file', blob);
+			formData.append("file", blob);
 			if (defaultStore.state.uploadFolder) {
-				formData.append('folderId', defaultStore.state.uploadFolder);
+				formData.append("folderId", defaultStore.state.uploadFolder);
 			}
 
-			fetch(apiUrl + '/drive/files/create', {
-				method: 'POST',
+			fetch(apiUrl + "/drive/files/create", {
+				method: "POST",
 				body: formData,
 				headers: {
 					authorization: `Bearer ${$i.token}`,
 				},
 			})
-			.then(response => response.json())
-			.then(f => {
-				res(f);
-			});
+				.then((response) => response.json())
+				.then((f) => {
+					res(f);
+				});
 		});
 	});
 
@@ -85,12 +93,12 @@ const ok = async () => {
 
 	const f = await promise;
 
-	emit('ok', f);
+	emit("ok", f);
 	dialogEl.close();
 };
 
 const cancel = () => {
-	emit('cancel');
+	emit("cancel");
 	dialogEl.close();
 };
 
@@ -98,31 +106,32 @@ const onImageLoad = () => {
 	loading = false;
 
 	if (cropper) {
-		cropper.getCropperImage()!.$center('contain');
+		cropper.getCropperImage()!.$center("contain");
 		cropper.getCropperSelection()!.$center();
 	}
 };
 
 onMounted(() => {
-	cropper = new Cropper(imgEl, {
-	});
+	cropper = new Cropper(imgEl, {});
 
 	const computedStyle = getComputedStyle(document.documentElement);
 
 	const selection = cropper.getCropperSelection()!;
-	selection.themeColor = tinycolor(computedStyle.getPropertyValue('--accent')).toHexString();
+	selection.themeColor = tinycolor(
+		computedStyle.getPropertyValue("--accent")
+	).toHexString();
 	selection.aspectRatio = props.aspectRatio;
 	selection.initialAspectRatio = props.aspectRatio;
 	selection.outlined = true;
 
 	window.setTimeout(() => {
-		cropper.getCropperImage()!.$center('contain');
+		cropper.getCropperImage()!.$center("contain");
 		selection.$center();
 	}, 100);
 
 	// モーダルオープンアニメーションが終わったあとで再度調整
 	window.setTimeout(() => {
-		cropper.getCropperImage()!.$center('contain');
+		cropper.getCropperImage()!.$center("contain");
 		selection.$center();
 	}, 500);
 });

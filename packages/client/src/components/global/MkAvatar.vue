@@ -1,74 +1,139 @@
 <template>
-<span v-if="disableLink" v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :title="acct(user)" @click="onClick">
-	<img class="inner" :src="url" decoding="async" :class="{ catRounded, catBordered }"/>
-	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
-</span>
-<MkA v-else v-user-preview="disablePreview ? undefined : user.id" class="eiwwqkts _noSelect" :class="{ cat: user.isCat, square: $store.state.squareAvatars }" :style="{ color }" :to="userPage(user)" :title="acct(user)" :target="target" @click.stop>
-	<img class="inner" :src="url" decoding="async" :class="{ catRounded, catBordered }"/>
-	<MkUserOnlineIndicator v-if="showIndicator && user.instance == null" class="indicator" :user="user"/>
-</MkA>
+	<span
+		v-if="disableLink"
+		v-user-preview="disablePreview ? undefined : user.id"
+		class="eiwwqkts _noSelect"
+		:class="{ cat: user.isCat, square: $store.state.squareAvatars }"
+		:style="{ color }"
+		:title="acct(user)"
+		@click="onClick"
+	>
+		<img
+			class="inner"
+			:src="url"
+			decoding="async"
+			:class="{ catRounded, catBordered }"
+		/>
+		<MkUserOnlineIndicator
+			v-if="showIndicator && user.instance == null"
+			class="indicator"
+			:user="user"
+		/>
+	</span>
+	<MkA
+		v-else
+		v-user-preview="disablePreview ? undefined : user.id"
+		class="eiwwqkts _noSelect"
+		:class="{ cat: user.isCat, square: $store.state.squareAvatars }"
+		:style="{ color }"
+		:to="userPage(user)"
+		:title="acct(user)"
+		:target="target"
+		@click.stop
+	>
+		<img
+			class="inner"
+			:src="url"
+			decoding="async"
+			:class="{ catRounded, catBordered }"
+		/>
+		<MkUserOnlineIndicator
+			v-if="showIndicator && user.instance == null"
+			class="indicator"
+			:user="user"
+		/>
+	</MkA>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, watch } from 'vue';
-import * as misskey from 'calckey-js';
-import { getStaticImageUrl } from '@/scripts/get-static-image-url';
-import { extractAvgColorFromBlurhash } from '@/scripts/extract-avg-color-from-blurhash';
-import { acct, userPage } from '@/filters/user';
-import MkUserOnlineIndicator from '@/components/MkUserOnlineIndicator.vue';
-import { defaultStore } from '@/store';
+import { onMounted, watch } from "vue";
+import * as misskey from "calckey-js";
+import { getStaticImageUrl } from "@/scripts/get-static-image-url";
+import { extractAvgColorFromBlurhash } from "@/scripts/extract-avg-color-from-blurhash";
+import { acct, userPage } from "@/filters/user";
+import MkUserOnlineIndicator from "@/components/MkUserOnlineIndicator.vue";
+import { defaultStore } from "@/store";
 
-const props = withDefaults(defineProps<{
-	user: misskey.entities.User;
-	target?: string | null;
-	disableLink?: boolean;
-	disablePreview?: boolean;
-	showIndicator?: boolean;
-}>(), {
-	target: null,
-	disableLink: false,
-	disablePreview: false,
-	showIndicator: false,
-});
+const props = withDefaults(
+	defineProps<{
+		user: misskey.entities.User;
+		target?: string | null;
+		disableLink?: boolean;
+		disablePreview?: boolean;
+		showIndicator?: boolean;
+	}>(),
+	{
+		target: null,
+		disableLink: false,
+		disablePreview: false,
+		showIndicator: false,
+	}
+);
 
 const emit = defineEmits<{
-	(ev: 'click', v: MouseEvent): void;
+	(ev: "click", v: MouseEvent): void;
 }>();
 
-const url = $computed(() => defaultStore.state.disableShowingAnimatedImages
-	? getStaticImageUrl(props.user.avatarUrl)
-	: props.user.avatarUrl);
+const url = $computed(() =>
+	defaultStore.state.disableShowingAnimatedImages
+		? getStaticImageUrl(props.user.avatarUrl)
+		: props.user.avatarUrl
+);
 
 function onClick(ev: MouseEvent) {
-	emit('click', ev);
+	emit("click", ev);
 }
 
 let color = $ref();
 let catRounded = $ref(defaultStore.state.catAvatarRounded);
 let catBordered = $ref(defaultStore.state.catAvatarBordered);
 
-watch(() => props.user.avatarBlurhash, () => {
-	color = extractAvgColorFromBlurhash(props.user.avatarBlurhash);
-}, {
-	immediate: true,
-});
+watch(
+	() => props.user.avatarBlurhash,
+	() => {
+		color = extractAvgColorFromBlurhash(props.user.avatarBlurhash);
+	},
+	{
+		immediate: true,
+	}
+);
 </script>
 
 <style lang="scss" scoped>
 @keyframes earwiggleleft {
-	from { transform: rotate(37.6deg) skew(30deg); }
-	25% { transform: rotate(10deg) skew(30deg); }
-	50% { transform: rotate(20deg) skew(30deg); }
-	75% { transform: rotate(0deg) skew(30deg); }
-	to { transform: rotate(37.6deg) skew(30deg); }
+	from {
+		transform: rotate(37.6deg) skew(30deg);
+	}
+	25% {
+		transform: rotate(10deg) skew(30deg);
+	}
+	50% {
+		transform: rotate(20deg) skew(30deg);
+	}
+	75% {
+		transform: rotate(0deg) skew(30deg);
+	}
+	to {
+		transform: rotate(37.6deg) skew(30deg);
+	}
 }
 
 @keyframes earwiggleright {
-	from { transform: rotate(-37.6deg) skew(-30deg); }
-	30% { transform: rotate(-10deg) skew(-30deg); }
-	55% { transform: rotate(-20deg) skew(-30deg); }
-	75% { transform: rotate(0deg) skew(-30deg); }
-	to { transform: rotate(-37.6deg) skew(-30deg); }
+	from {
+		transform: rotate(-37.6deg) skew(-30deg);
+	}
+	30% {
+		transform: rotate(-10deg) skew(-30deg);
+	}
+	55% {
+		transform: rotate(-20deg) skew(-30deg);
+	}
+	75% {
+		transform: rotate(0deg) skew(-30deg);
+	}
+	to {
+		transform: rotate(-37.6deg) skew(-30deg);
+	}
 }
 
 .eiwwqkts {
@@ -111,11 +176,12 @@ watch(() => props.user.avatarBlurhash, () => {
 	}
 
 	&.cat {
-		&:before, &:after {
+		&:before,
+		&:after {
 			background: #ebbcba;
 			border: solid 4px currentColor;
 			box-sizing: border-box;
-			content: '';
+			content: "";
 			display: inline-block;
 			height: 50%;
 			width: 50%;

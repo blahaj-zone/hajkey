@@ -1,54 +1,69 @@
 <template>
-<div>
-	<MkLoading v-if="fetching"/>
-	<div v-show="!fetching" :class="$style.root">
-		<div v-if="topSubInstancesForPie && topPubInstancesForPie" class="pies">
-			<div class="pie deliver _panel">
-				<div class="title">Sub</div>
-				<XPie :data="topSubInstancesForPie" class="chart"/>
-				<div class="subTitle">Top 10</div>
-			</div>
-			<div class="pie inbox _panel">
-				<div class="title">Pub</div>
-				<XPie :data="topPubInstancesForPie" class="chart"/>
-				<div class="subTitle">Top 10</div>
-			</div>
-		</div>
-		<div v-if="!fetching" class="items">
-			<div class="item _panel sub">
-				<div class="icon"><i class="ph-download ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						{{ number(federationSubActive) }}
-						<MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationSubActiveDiff"></MkNumberDiff>
-					</div>
-					<div class="label">Sub</div>
+	<div>
+		<MkLoading v-if="fetching" />
+		<div v-show="!fetching" :class="$style.root">
+			<div
+				v-if="topSubInstancesForPie && topPubInstancesForPie"
+				class="pies"
+			>
+				<div class="pie deliver _panel">
+					<div class="title">Sub</div>
+					<XPie :data="topSubInstancesForPie" class="chart" />
+					<div class="subTitle">Top 10</div>
+				</div>
+				<div class="pie inbox _panel">
+					<div class="title">Pub</div>
+					<XPie :data="topPubInstancesForPie" class="chart" />
+					<div class="subTitle">Top 10</div>
 				</div>
 			</div>
-			<div class="item _panel pub">
-				<div class="icon"><i class="ph-upload ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						{{ number(federationPubActive) }}
-						<MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationPubActiveDiff"></MkNumberDiff>
+			<div v-if="!fetching" class="items">
+				<div class="item _panel sub">
+					<div class="icon">
+						<i class="ph-download ph-bold ph-xl"></i>
 					</div>
-					<div class="label">Pub</div>
+					<div class="body">
+						<div class="value">
+							{{ number(federationSubActive) }}
+							<MkNumberDiff
+								v-tooltip="i18n.ts.dayOverDayChanges"
+								class="diff"
+								:value="federationSubActiveDiff"
+							></MkNumberDiff>
+						</div>
+						<div class="label">Sub</div>
+					</div>
+				</div>
+				<div class="item _panel pub">
+					<div class="icon">
+						<i class="ph-upload ph-bold ph-xl"></i>
+					</div>
+					<div class="body">
+						<div class="value">
+							{{ number(federationPubActive) }}
+							<MkNumberDiff
+								v-tooltip="i18n.ts.dayOverDayChanges"
+								class="diff"
+								:value="federationPubActiveDiff"
+							></MkNumberDiff>
+						</div>
+						<div class="label">Pub</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import XPie from './overview.pie.vue';
-import MkMiniChart from '@/components/MkMiniChart.vue';
-import * as os from '@/os';
-import number from '@/filters/number';
-import MkNumberDiff from '@/components/MkNumberDiff.vue';
-import { i18n } from '@/i18n';
-import { useChartTooltip } from '@/scripts/use-chart-tooltip';
+import { onMounted, onUnmounted, ref } from "vue";
+import XPie from "./overview.pie.vue";
+import MkMiniChart from "@/components/MkMiniChart.vue";
+import * as os from "@/os";
+import number from "@/filters/number";
+import MkNumberDiff from "@/components/MkNumberDiff.vue";
+import { i18n } from "@/i18n";
+import { useChartTooltip } from "@/scripts/use-chart-tooltip";
 
 let topSubInstancesForPie: any = $ref(null);
 let topPubInstancesForPie: any = $ref(null);
@@ -61,29 +76,48 @@ let fetching = $ref(true);
 const { handler: externalTooltipHandler } = useChartTooltip();
 
 onMounted(async () => {
-	const chart = await os.apiGet('charts/federation', { limit: 2, span: 'day' });
+	const chart = await os.apiGet("charts/federation", {
+		limit: 2,
+		span: "day",
+	});
 	federationPubActive = chart.pubActive[0];
 	federationPubActiveDiff = chart.pubActive[0] - chart.pubActive[1];
 	federationSubActive = chart.subActive[0];
 	federationSubActiveDiff = chart.subActive[0] - chart.subActive[1];
 
-	os.apiGet('federation/stats', { limit: 10 }).then(res => {
-		topSubInstancesForPie = res.topSubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followersCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: res.otherFollowersCount }]);
-		topPubInstancesForPie = res.topPubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followingCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: res.otherFollowingCount }]);
+	os.apiGet("federation/stats", { limit: 10 }).then((res) => {
+		topSubInstancesForPie = res.topSubInstances
+			.map((x) => ({
+				name: x.host,
+				color: x.themeColor,
+				value: x.followersCount,
+				onClick: () => {
+					os.pageWindow(`/instance-info/${x.host}`);
+				},
+			}))
+			.concat([
+				{
+					name: "(other)",
+					color: "#80808080",
+					value: res.otherFollowersCount,
+				},
+			]);
+		topPubInstancesForPie = res.topPubInstances
+			.map((x) => ({
+				name: x.host,
+				color: x.themeColor,
+				value: x.followingCount,
+				onClick: () => {
+					os.pageWindow(`/instance-info/${x.host}`);
+				},
+			}))
+			.concat([
+				{
+					name: "(other)",
+					color: "#80808080",
+					value: res.otherFollowingCount,
+				},
+			]);
 	});
 
 	fetching = false;
@@ -92,7 +126,6 @@ onMounted(async () => {
 
 <style lang="scss" module>
 .root {
-
 	&:global {
 		> .pies {
 			display: grid;
@@ -182,4 +215,3 @@ onMounted(async () => {
 	}
 }
 </style>
-

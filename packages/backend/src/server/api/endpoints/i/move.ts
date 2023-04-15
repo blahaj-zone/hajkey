@@ -3,7 +3,6 @@ import { resolveUser } from "@/remote/resolve-user.js";
 import { DAY } from "@/const.js";
 import DeliverManager from "@/remote/activitypub/deliver-manager.js";
 import { renderActivity } from "@/remote/activitypub/renderer/index.js";
-import { genId } from "@/misc/gen-id.js";
 import define from "../../define.js";
 import { ApiError } from "../../error.js";
 import { apiLogger } from "../../logger.js";
@@ -81,7 +80,7 @@ export const paramDef = {
 
 function moveActivity(toUrl: string, fromUrl: string) {
 	const activity = {
-		id: genId(),
+		id: null,
 		actor: fromUrl,
 		type: "Move",
 		object: fromUrl,

@@ -715,9 +715,7 @@ export async function openEmojiPicker(
 			for (const node of Array.from(record.addedNodes).filter(
 				(node) => node instanceof HTMLElement,
 			) as HTMLElement[]) {
-				const textareas = node.querySelectorAll(
-					"textarea, input",
-				) as NodeListOf<NonNullable<typeof activeTextarea>>;
+				const textareas = node.querySelectorAll("textarea, input");
 				for (const textarea of Array.from(textareas).filter(
 					(textarea) => textarea.dataset.preventEmojiInsert == null,
 				)) {

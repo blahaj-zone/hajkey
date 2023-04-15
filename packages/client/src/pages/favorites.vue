@@ -22,7 +22,11 @@
 						:no-gap="false"
 						:ad="false"
 					>
-						<XNote :key="item.id" :note="item.note" :class="$style.note" />
+						<XNote
+							:key="item.id"
+							:note="item.note"
+							:class="$style.note"
+						/>
 					</XList>
 				</template>
 			</MkPagination>

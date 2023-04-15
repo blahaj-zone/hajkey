@@ -1,21 +1,26 @@
 <template>
-<div class="ngbfujlo">
-	<MkTextarea :model-value="text" readonly style="margin: 0;"></MkTextarea>
-	<MkButton class="button" primary :disabled="posting || posted" @click="post()">
-		<i v-if="posted" class="ph-check ph-bold ph-lg"></i>
-		<i v-else class="ph-paper-plane-tilt ph-bold ph-lg"></i>
-	</MkButton>
-</div>
+	<div class="ngbfujlo">
+		<MkTextarea :model-value="text" readonly style="margin: 0"></MkTextarea>
+		<MkButton
+			class="button"
+			primary
+			:disabled="posting || posted"
+			@click="post()"
+		>
+			<i v-if="posted" class="ph-check ph-bold ph-lg"></i>
+			<i v-else class="ph-paper-plane-tilt ph-bold ph-lg"></i>
+		</MkButton>
+	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import MkTextarea from '../form/textarea.vue';
-import MkButton from '../MkButton.vue';
-import { apiUrl } from '@/config';
-import * as os from '@/os';
-import { PostBlock } from '@/scripts/hpml/block';
-import { Hpml } from '@/scripts/hpml/evaluator';
+import { defineComponent, PropType } from "vue";
+import MkTextarea from "../form/textarea.vue";
+import MkButton from "../MkButton.vue";
+import { apiUrl } from "@/config";
+import * as os from "@/os";
+import { PostBlock } from "@/scripts/hpml/block";
+import { Hpml } from "@/scripts/hpml/evaluator";
 
 export default defineComponent({
 	components: {
@@ -25,12 +30,12 @@ export default defineComponent({
 	props: {
 		block: {
 			type: Object as PropType<PostBlock>,
-			required: true
+			required: true,
 		},
 		hpml: {
 			type: Object as PropType<Hpml>,
-			required: true
-		}
+			required: true,
+		},
 	},
 	data() {
 		return {
@@ -40,35 +45,38 @@ export default defineComponent({
 		};
 	},
 	watch: {
-		'hpml.vars': {
+		"hpml.vars": {
 			handler() {
 				this.text = this.hpml.interpolate(this.block.text);
 			},
-			deep: true
-		}
+			deep: true,
+		},
 	},
 	methods: {
 		upload() {
 			const promise = new Promise((ok) => {
 				const canvas = this.hpml.canvases[this.block.canvasId];
-				canvas.toBlob(blob => {
+				canvas.toBlob((blob) => {
 					const formData = new FormData();
-					formData.append('file', blob);
+					formData.append("file", blob);
 					if (this.$store.state.uploadFolder) {
-						formData.append('folderId', this.$store.state.uploadFolder);
+						formData.append(
+							"folderId",
+							this.$store.state.uploadFolder
+						);
 					}
 
-					fetch(apiUrl + '/drive/files/create', {
-						method: 'POST',
+					fetch(apiUrl + "/drive/files/create", {
+						method: "POST",
 						body: formData,
 						headers: {
 							authorization: `Bearer ${this.$i.token}`,
 						},
 					})
-					.then(response => response.json())
-					.then(f => {
-						ok(f);
-					});
+						.then((response) => response.json())
+						.then((f) => {
+							ok(f);
+						});
 				});
 			});
 			os.promiseDialog(promise);
@@ -76,15 +84,17 @@ export default defineComponent({
 		},
 		async post() {
 			this.posting = true;
-			const file = this.block.attachCanvasImage ? await this.upload() : null;
-			os.apiWithDialog('notes/create', {
-				text: this.text === '' ? null : this.text,
+			const file = this.block.attachCanvasImage
+				? await this.upload()
+				: null;
+			os.apiWithDialog("notes/create", {
+				text: this.text === "" ? null : this.text,
 				fileIds: file ? [file.id] : undefined,
 			}).then(() => {
 				this.posted = true;
 			});
-		}
-	}
+		},
+	},
 });
 </script>
 

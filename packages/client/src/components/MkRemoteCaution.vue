@@ -1,9 +1,18 @@
 <template>
-<div class="jmgmzlwq _block">{{ i18n.ts.remoteUserCaution }}<a class="link" :href="href" rel="nofollow noopener" target="_blank">{{ i18n.ts.showOnRemote }}</a></div>
+	<div class="jmgmzlwq _block">
+		{{ i18n.ts.remoteUserCaution
+		}}<a
+			class="link"
+			:href="href"
+			rel="nofollow noopener"
+			target="_blank"
+			>{{ i18n.ts.showOnRemote }}</a
+		>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { i18n } from '@/i18n';
+import { i18n } from "@/i18n";
 
 defineProps<{
 	href: string;

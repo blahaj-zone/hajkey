@@ -1,62 +1,102 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader/></template>
-	<MkSpacer :content-max="800">
-		<MkPagination ref="paginationComponent" :pagination="pagination">
-			<template #empty>
-				<div class="_fullinfo">
-					<img src="/static-assets/badges/info.png" class="_ghost"/>
-					<div>{{ i18n.ts.noFollowRequests }}</div>
-				</div>
-			</template>
-			<template #default="{items}">
-				<div class="mk-follow-requests">
-					<div v-for="req in items" :key="req.id" class="user _panel">
-						<MkAvatar class="avatar" :user="req.follower" :show-indicator="true"/>
-						<div class="body">
-							<div class="name">
-								<MkA v-user-preview="req.follower.id" class="name" :to="userPage(req.follower)"><MkUserName :user="req.follower"/></MkA>
-								<p class="acct">@{{ acct(req.follower) }}</p>
-							</div>
-							<div v-if="req.follower.description" class="description" :title="req.follower.description">
-								<Mfm :text="req.follower.description" :is-note="false" :author="req.follower" :i="$i" :custom-emojis="req.follower.emojis" :plain="true" :nowrap="true"/>
-							</div>
-							<div class="actions">
-								<button class="_button" @click="accept(req.follower)"><i class="ph-check ph-bold ph-lg"></i></button>
-								<button class="_button" @click="reject(req.follower)"><i class="ph-x ph-bold ph-lg"></i></button>
+	<MkStickyContainer>
+		<template #header><MkPageHeader /></template>
+		<MkSpacer :content-max="800">
+			<MkPagination ref="paginationComponent" :pagination="pagination">
+				<template #empty>
+					<div class="_fullinfo">
+						<img
+							src="/static-assets/badges/info.png"
+							class="_ghost"
+						/>
+						<div>{{ i18n.ts.noFollowRequests }}</div>
+					</div>
+				</template>
+				<template #default="{ items }">
+					<div class="mk-follow-requests">
+						<div
+							v-for="req in items"
+							:key="req.id"
+							class="user _panel"
+						>
+							<MkAvatar
+								class="avatar"
+								:user="req.follower"
+								:show-indicator="true"
+							/>
+							<div class="body">
+								<div class="name">
+									<MkA
+										v-user-preview="req.follower.id"
+										class="name"
+										:to="userPage(req.follower)"
+										><MkUserName :user="req.follower"
+									/></MkA>
+									<p class="acct">
+										@{{ acct(req.follower) }}
+									</p>
+								</div>
+								<div
+									v-if="req.follower.description"
+									class="description"
+									:title="req.follower.description"
+								>
+									<Mfm
+										:text="req.follower.description"
+										:is-note="false"
+										:author="req.follower"
+										:i="$i"
+										:custom-emojis="req.follower.emojis"
+										:plain="true"
+										:nowrap="true"
+									/>
+								</div>
+								<div class="actions">
+									<button
+										class="_button"
+										@click="accept(req.follower)"
+									>
+										<i class="ph-check ph-bold ph-lg"></i>
+									</button>
+									<button
+										class="_button"
+										@click="reject(req.follower)"
+									>
+										<i class="ph-x ph-bold ph-lg"></i>
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</template>
-		</MkPagination>
-	</MkSpacer>
-</MkStickyContainer>
+				</template>
+			</MkPagination>
+		</MkSpacer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import MkPagination from '@/components/MkPagination.vue';
-import { userPage, acct } from '@/filters/user';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
+import { ref, computed } from "vue";
+import MkPagination from "@/components/MkPagination.vue";
+import { userPage, acct } from "@/filters/user";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
 
 const paginationComponent = ref<InstanceType<typeof MkPagination>>();
 
 const pagination = {
-	endpoint: 'following/requests/list' as const,
+	endpoint: "following/requests/list" as const,
 	limit: 10,
 };
 
 function accept(user) {
-	os.api('following/requests/accept', { userId: user.id }).then(() => {
+	os.api("following/requests/accept", { userId: user.id }).then(() => {
 		paginationComponent.value.reload();
 	});
 }
 
 function reject(user) {
-	os.api('following/requests/reject', { userId: user.id }).then(() => {
+	os.api("following/requests/reject", { userId: user.id }).then(() => {
 		paginationComponent.value.reload();
 	});
 }
@@ -65,10 +105,12 @@ const headerActions = $computed(() => []);
 
 const headerTabs = $computed(() => []);
 
-definePageMetadata(computed(() => ({
-	title: i18n.ts.followRequests,
-	icon: 'ph-hand-waving ph-bold ph-lg',
-})));
+definePageMetadata(
+	computed(() => ({
+		title: i18n.ts.followRequests,
+		icon: "ph-hand-waving ph-bold ph-lg",
+	}))
+);
 </script>
 
 <style lang="scss" scoped>

@@ -518,6 +518,10 @@ hr {
 	padding: 5px;
 }
 
+.prism-editor__container {
+	height: 100%;
+}
+
 .prism-editor__textarea:focus {
 	outline: none;
 }
@@ -685,6 +689,14 @@ hr {
 	display: inline-flex;
 }
 
+._blur_text {
+	filter: blur(6px);
+	transition: filter 0.3s;
+
+	&:hover {
+		filter: blur(0px);
+	}
+}
 
 @media(prefers-reduced-motion: no-preference) {
 	@keyframes scaleIn {

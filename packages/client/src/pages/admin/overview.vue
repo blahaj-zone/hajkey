@@ -3,77 +3,83 @@
 		<div ref="rootEl" class="edbbcaef">
 			<MkFolder class="item">
 				<template #header>Stats</template>
-				<XStats/>
+				<XStats />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Active users</template>
-				<XActiveUsers/>
+				<XActiveUsers />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Heatmap</template>
-				<XHeatmap/>
+				<XHeatmap />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Moderators</template>
-				<XModerators/>
+				<XModerators />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Federation</template>
-				<XFederation/>
+				<XFederation />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Instances</template>
-				<XInstances/>
+				<XInstances />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Fediverse Requests</template>
-				<XApRequests/>
+				<XApRequests />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>New users</template>
-				<XUsers/>
+				<XUsers />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Deliver queue</template>
-				<XQueue domain="deliver"/>
+				<XQueue domain="deliver" />
 			</MkFolder>
 
 			<MkFolder class="item">
 				<template #header>Inbox queue</template>
-				<XQueue domain="inbox"/>
+				<XQueue domain="inbox" />
 			</MkFolder>
 		</div>
 	</MkSpacer>
 </template>
 
 <script lang="ts" setup>
-import { markRaw, version as vueVersion, onMounted, onBeforeUnmount, nextTick } from 'vue';
-import XFederation from './overview.federation.vue';
-import XInstances from './overview.instances.vue';
-import XQueue from './overview.queue.vue';
-import XApRequests from './overview.ap-requests.vue';
-import XUsers from './overview.users.vue';
-import XActiveUsers from './overview.active-users.vue';
-import XStats from './overview.stats.vue';
-import XModerators from './overview.moderators.vue';
-import XHeatmap from './overview.heatmap.vue';
-import MkTagCloud from '@/components/MkTagCloud.vue';
-import { version, url } from '@/config';
-import * as os from '@/os';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
-import { defaultStore } from '@/store';
-import MkFileListForAdmin from '@/components/MkFileListForAdmin.vue';
-import MkFolder from '@/components/MkFolder.vue';
+import {
+	markRaw,
+	version as vueVersion,
+	onMounted,
+	onBeforeUnmount,
+	nextTick,
+} from "vue";
+import XFederation from "./overview.federation.vue";
+import XInstances from "./overview.instances.vue";
+import XQueue from "./overview.queue.vue";
+import XApRequests from "./overview.ap-requests.vue";
+import XUsers from "./overview.users.vue";
+import XActiveUsers from "./overview.active-users.vue";
+import XStats from "./overview.stats.vue";
+import XModerators from "./overview.moderators.vue";
+import XHeatmap from "./overview.heatmap.vue";
+import MkTagCloud from "@/components/MkTagCloud.vue";
+import { version, url } from "@/config";
+import * as os from "@/os";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import { defaultStore } from "@/store";
+import MkFileListForAdmin from "@/components/MkFileListForAdmin.vue";
+import MkFolder from "@/components/MkFolder.vue";
 
 const rootEl = $shallowRef<HTMLElement>();
 let serverInfo: any = $ref(null);
@@ -85,10 +91,10 @@ let federationSubActive = $ref<number | null>(null);
 let federationSubActiveDiff = $ref<number | null>(null);
 let newUsers = $ref(null);
 let activeInstances = $shallowRef(null);
-const queueStatsConnection = markRaw(stream.useChannel('queueStats'));
+const queueStatsConnection = markRaw(stream.useChannel("queueStats"));
 const now = new Date();
 const filesPagination = {
-	endpoint: 'admin/drive/files' as const,
+	endpoint: "admin/drive/files" as const,
 	limit: 9,
 	noPaging: true,
 };
@@ -108,52 +114,68 @@ onMounted(async () => {
 	magicGrid.listen();
 	*/
 
-	os.apiGet('charts/federation', { limit: 2, span: 'day' }).then(chart => {
+	os.apiGet("charts/federation", { limit: 2, span: "day" }).then((chart) => {
 		federationPubActive = chart.pubActive[0];
 		federationPubActiveDiff = chart.pubActive[0] - chart.pubActive[1];
 		federationSubActive = chart.subActive[0];
 		federationSubActiveDiff = chart.subActive[0] - chart.subActive[1];
 	});
 
-	os.apiGet('federation/stats', { limit: 10 }).then(res => {
-		topSubInstancesForPie = res.topSubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followersCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: res.otherFollowersCount }]);
-		topPubInstancesForPie = res.topPubInstances.map(x => ({
-			name: x.host,
-			color: x.themeColor,
-			value: x.followingCount,
-			onClick: () => {
-				os.pageWindow(`/instance-info/${x.host}`);
-			},
-		})).concat([{ name: '(other)', color: '#80808080', value: res.otherFollowingCount }]);
+	os.apiGet("federation/stats", { limit: 10 }).then((res) => {
+		topSubInstancesForPie = res.topSubInstances
+			.map((x) => ({
+				name: x.host,
+				color: x.themeColor,
+				value: x.followersCount,
+				onClick: () => {
+					os.pageWindow(`/instance-info/${x.host}`);
+				},
+			}))
+			.concat([
+				{
+					name: "(other)",
+					color: "#80808080",
+					value: res.otherFollowersCount,
+				},
+			]);
+		topPubInstancesForPie = res.topPubInstances
+			.map((x) => ({
+				name: x.host,
+				color: x.themeColor,
+				value: x.followingCount,
+				onClick: () => {
+					os.pageWindow(`/instance-info/${x.host}`);
+				},
+			}))
+			.concat([
+				{
+					name: "(other)",
+					color: "#80808080",
+					value: res.otherFollowingCount,
+				},
+			]);
 	});
 
-	os.api('admin/server-info').then(serverInfoResponse => {
+	os.api("admin/server-info").then((serverInfoResponse) => {
 		serverInfo = serverInfoResponse;
 	});
 
-	os.api('admin/show-users', {
+	os.api("admin/show-users", {
 		limit: 5,
-		sort: '+createdAt',
-	}).then(res => {
+		sort: "+createdAt",
+	}).then((res) => {
 		newUsers = res;
 	});
 
-	os.api('federation/instances', {
-		sort: '+latestRequestReceivedAt',
+	os.api("federation/instances", {
+		sort: "+latestRequestReceivedAt",
 		limit: 25,
-	}).then(res => {
+	}).then((res) => {
 		activeInstances = res;
 	});
 
 	nextTick(() => {
-		queueStatsConnection.send('requestLog', {
+		queueStatsConnection.send("requestLog", {
 			id: Math.random().toString().substr(2, 8),
 			length: 100,
 		});
@@ -170,7 +192,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.dashboard,
-	icon: 'ph-gauge ph-bold ph-lg',
+	icon: "ph-gauge ph-bold ph-lg",
 });
 </script>
 

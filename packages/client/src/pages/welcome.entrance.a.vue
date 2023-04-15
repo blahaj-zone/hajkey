@@ -1,68 +1,115 @@
 <template>
-<div v-if="meta" class="rsqzvsbo">
-	<div class="top">
-		<MkFeaturedPhotos class="bg"/>
-		<XTimeline class="tl"/>
-		<div class="shape1"></div>
-		<div class="shape2"></div>
-		<img src="/client-assets/misskey.svg" class="misskey"/>
-		<div class="emojis">
-			<MkEmoji :normal="true" :no-style="true" emoji="⭐"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="❤️"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="😆"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="🤔"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="😮"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="🎉"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="💢"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="😥"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="😇"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="🥴"/>
-			<MkEmoji :normal="true" :no-style="true" emoji="🍮"/>
-		</div>
-		<div class="main">
-			<img :src="$instance.iconUrl || $instance.faviconUrl || '/favicon.ico'" alt="" class="icon"/>
-			<button class="_button _acrylic menu" @click="showMenu"><i class="ph-dots-three-outline ph-bold ph-lg"></i></button>
-			<div class="fg">
-				<h1>
-					<img class="logo" v-if="meta.logoImageUrl" :src="meta.logoImageUrl">
-					<span v-else class="text">{{ instanceName }}</span>
-				</h1>
-				<div class="about">
-					<div class="desc" v-html="meta.description || i18n.ts.headlineMisskey"></div>
-				</div>
-				<div class="action">
-					<MkButton inline rounded gradate data-cy-signup style="margin-right: 12px;" @click="signup()">{{ i18n.ts.signup }}</MkButton>
-					<MkButton inline rounded data-cy-signin @click="signin()">{{ i18n.ts.login }}</MkButton>
-					<MkButton inline rounded style="margin-left: 12px; margin-top: 12px;" onclick="window.location.href='/explore'">Explore</MkButton>
+	<div v-if="meta" class="rsqzvsbo">
+		<div class="top">
+			<MkFeaturedPhotos class="bg" />
+			<XTimeline class="tl" />
+			<div class="shape1"></div>
+			<div class="shape2"></div>
+			<img src="/client-assets/misskey.svg" class="misskey" />
+			<div class="emojis">
+				<MkEmoji :normal="true" :no-style="true" emoji="⭐" />
+				<MkEmoji :normal="true" :no-style="true" emoji="❤️" />
+				<MkEmoji :normal="true" :no-style="true" emoji="😆" />
+				<MkEmoji :normal="true" :no-style="true" emoji="🤔" />
+				<MkEmoji :normal="true" :no-style="true" emoji="😮" />
+				<MkEmoji :normal="true" :no-style="true" emoji="🎉" />
+				<MkEmoji :normal="true" :no-style="true" emoji="💢" />
+				<MkEmoji :normal="true" :no-style="true" emoji="😥" />
+				<MkEmoji :normal="true" :no-style="true" emoji="😇" />
+				<MkEmoji :normal="true" :no-style="true" emoji="🥴" />
+				<MkEmoji :normal="true" :no-style="true" emoji="🍮" />
+			</div>
+			<div class="main">
+				<img
+					:src="
+						$instance.iconUrl ||
+						$instance.faviconUrl ||
+						'/favicon.ico'
+					"
+					alt=""
+					class="icon"
+				/>
+				<button class="_button _acrylic menu" @click="showMenu">
+					<i class="ph-dots-three-outline ph-bold ph-lg"></i>
+				</button>
+				<div class="fg">
+					<h1>
+						<img
+							class="logo"
+							v-if="meta.logoImageUrl"
+							:src="meta.logoImageUrl"
+						/>
+						<span v-else class="text">{{ instanceName }}</span>
+					</h1>
+					<div class="about">
+						<div
+							class="desc"
+							v-html="meta.description || i18n.ts.headlineMisskey"
+						></div>
+					</div>
+					<div class="action">
+						<MkButton
+							inline
+							rounded
+							gradate
+							data-cy-signup
+							style="margin-right: 12px"
+							@click="signup()"
+							>{{ i18n.ts.signup }}</MkButton
+						>
+						<MkButton
+							inline
+							rounded
+							data-cy-signin
+							@click="signin()"
+							>{{ i18n.ts.login }}</MkButton
+						>
+						<MkButton
+							inline
+							rounded
+							style="margin-left: 12px; margin-top: 12px"
+							onclick="window.location.href='/explore'"
+							>Explore</MkButton
+						>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div v-if="instances" class="federation">
-			<MarqueeText :duration="40">
-				<MkA v-for="instance in instances" :key="instance.id" :class="$style.federationInstance" @click="signup()">
-					<img v-if="instance.iconUrl" class="icon" :src="instance.iconUrl" alt=""/>
-					<span class="name _monospace">{{ instance.host }}</span>
-				</MkA>
-			</MarqueeText>
+			<div v-if="instances" class="federation">
+				<MarqueeText :duration="40">
+					<MkA
+						v-for="instance in instances"
+						:key="instance.id"
+						:class="$style.federationInstance"
+						@click="signup()"
+					>
+						<img
+							v-if="instance.iconUrl"
+							class="icon"
+							:src="instance.iconUrl"
+							alt=""
+						/>
+						<span class="name _monospace">{{ instance.host }}</span>
+					</MkA>
+				</MarqueeText>
+			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import { toUnicode } from 'punycode/';
-import XTimeline from './welcome.timeline.vue';
-import MarqueeText from '@/components/MkMarquee.vue';
-import XSigninDialog from '@/components/MkSigninDialog.vue';
-import XSignupDialog from '@/components/MkSignupDialog.vue';
-import MkButton from '@/components/MkButton.vue';
-import XNote from '@/components/MkNote.vue';
-import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
-import { host, instanceName } from '@/config';
-import * as os from '@/os';
-import number from '@/filters/number';
-import { i18n } from '@/i18n';
+import {} from "vue";
+import { toUnicode } from "punycode/";
+import XTimeline from "./welcome.timeline.vue";
+import MarqueeText from "@/components/MkMarquee.vue";
+import XSigninDialog from "@/components/MkSigninDialog.vue";
+import XSignupDialog from "@/components/MkSignupDialog.vue";
+import MkButton from "@/components/MkButton.vue";
+import XNote from "@/components/MkNote.vue";
+import MkFeaturedPhotos from "@/components/MkFeaturedPhotos.vue";
+import { host, instanceName } from "@/config";
+import * as os from "@/os";
+import number from "@/filters/number";
+import { i18n } from "@/i18n";
 
 let meta = $ref();
 let stats = $ref();
@@ -70,58 +117,74 @@ let tags = $ref();
 let onlineUsersCount = $ref();
 let instances = $ref();
 
-os.api('meta', { detail: true }).then(_meta => {
+os.api("meta", { detail: true }).then((_meta) => {
 	meta = _meta;
 });
 
-os.api('stats').then(_stats => {
+os.api("stats").then((_stats) => {
 	stats = _stats;
 });
 
-os.api('get-online-users-count').then(res => {
+os.api("get-online-users-count").then((res) => {
 	onlineUsersCount = res.count;
 });
 
-os.api('hashtags/list', {
-	sort: '+mentionedLocalUsers',
+os.api("hashtags/list", {
+	sort: "+mentionedLocalUsers",
 	limit: 8,
-}).then(_tags => {
+}).then((_tags) => {
 	tags = _tags;
 });
 
-os.api('federation/instances', {
-	sort: '+pubSub',
+os.api("federation/instances", {
+	sort: "+pubSub",
 	limit: 20,
-}).then(_instances => {
+}).then((_instances) => {
 	instances = _instances;
 });
 
 function signin() {
-	os.popup(XSigninDialog, {
-		autoSet: true,
-	}, {}, 'closed');
+	os.popup(
+		XSigninDialog,
+		{
+			autoSet: true,
+		},
+		{},
+		"closed"
+	);
 }
 
 function signup() {
-	os.popup(XSignupDialog, {
-		autoSet: true,
-	}, {}, 'closed');
+	os.popup(
+		XSignupDialog,
+		{
+			autoSet: true,
+		},
+		{},
+		"closed"
+	);
 }
 
 function showMenu(ev) {
-	os.popupMenu([{
-		text: i18n.ts.instanceInfo,
-		icon: 'ph-info ph-bold ph-lg',
-		action: () => {
-			os.pageWindow('/about');
-		},
-	}, {
-		text: i18n.ts.aboutMisskey,
-		icon: 'ph-info ph-bold ph-lg',
-		action: () => {
-			os.pageWindow('/about-calckey');
-		},
-	}], ev.currentTarget ?? ev.target);
+	os.popupMenu(
+		[
+			{
+				text: i18n.ts.instanceInfo,
+				icon: "ph-info ph-bold ph-lg",
+				action: () => {
+					os.pageWindow("/about");
+				},
+			},
+			{
+				text: i18n.ts.aboutMisskey,
+				icon: "ph-info ph-bold ph-lg",
+				action: () => {
+					os.pageWindow("/about-calckey");
+				},
+			},
+		],
+		ev.currentTarget ?? ev.target
+	);
 }
 </script>
 
@@ -151,8 +214,20 @@ function showMenu(ev) {
 			width: 500px;
 			height: calc(100% - 128px);
 			overflow: hidden;
-			-webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
-			mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
+			-webkit-mask-image: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 1) 128px,
+				rgba(0, 0, 0, 1) calc(100% - 128px),
+				rgba(0, 0, 0, 0) 100%
+			);
+			mask-image: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0) 0%,
+				rgba(0, 0, 0, 1) 128px,
+				rgba(0, 0, 0, 1) calc(100% - 128px),
+				rgba(0, 0, 0, 0) 100%
+			);
 
 			@media (max-width: 1200px) {
 				display: none;

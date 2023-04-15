@@ -1,57 +1,66 @@
 <template>
-<component
-	:is="popup.component"
-	v-for="popup in popups"
-	:key="popup.id"
-	v-bind="popup.props"
-	v-on="popup.events"
-/>
+	<component
+		:is="popup.component"
+		v-for="popup in popups"
+		:key="popup.id"
+		v-bind="popup.props"
+		v-on="popup.events"
+	/>
 
-<XUpload v-if="uploads.length > 0"/>
+	<XUpload v-if="uploads.length > 0" />
 
-<XStreamIndicator/>
+	<XStreamIndicator />
 
-<!-- <div v-if="pendingApiRequestsCount > 0" id="wait"></div> -->
+	<!-- <div v-if="pendingApiRequestsCount > 0" id="wait"></div> -->
 
-<div v-if="dev" id="devTicker"><span>DEV BUILD</span></div>
+	<div v-if="dev" id="devTicker"><span>DEV BUILD</span></div>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue';
-import { swInject } from './sw-inject';
-import { popup, popups, pendingApiRequestsCount } from '@/os';
-import { uploads } from '@/scripts/upload';
-import * as sound from '@/scripts/sound';
-import { $i } from '@/account';
-import { stream } from '@/stream';
+import { defineAsyncComponent } from "vue";
+import { swInject } from "./sw-inject";
+import { popup, popups, pendingApiRequestsCount } from "@/os";
+import { uploads } from "@/scripts/upload";
+import * as sound from "@/scripts/sound";
+import { $i } from "@/account";
+import { stream } from "@/stream";
 
-const XStreamIndicator = defineAsyncComponent(() => import('./stream-indicator.vue'));
-const XUpload = defineAsyncComponent(() => import('./upload.vue'));
+const XStreamIndicator = defineAsyncComponent(
+	() => import("./stream-indicator.vue")
+);
+const XUpload = defineAsyncComponent(() => import("./upload.vue"));
 
 const dev = _DEV_;
 
-const onNotification = notification => {
+const onNotification = (notification) => {
 	if ($i.mutingNotificationTypes.includes(notification.type)) return;
 
-	if (document.visibilityState === 'visible') {
-		stream.send('readNotification', {
+	if (document.visibilityState === "visible") {
+		stream.send("readNotification", {
 			id: notification.id,
 		});
 
-		popup(defineAsyncComponent(() => import('@/components/MkNotificationToast.vue')), {
-			notification,
-		}, {}, 'closed');
+		popup(
+			defineAsyncComponent(
+				() => import("@/components/MkNotificationToast.vue")
+			),
+			{
+				notification,
+			},
+			{},
+			"closed"
+		);
 	}
 
-	sound.play('notification');
+	sound.play("notification");
 };
 
 if ($i) {
-	const connection = stream.useChannel('main', null, 'UI');
-	connection.on('notification', onNotification);
+	const connection = stream.useChannel("main", null, "UI");
+	connection.on("notification", onNotification);
 
 	//#region Listen message from SW
-	if ('serviceWorker' in navigator) {
+	if ("serviceWorker" in navigator) {
 		swInject();
 	}
 }
@@ -59,9 +68,15 @@ if ($i) {
 
 <style lang="scss">
 @keyframes dev-ticker-blink {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 @keyframes progress-spinner {

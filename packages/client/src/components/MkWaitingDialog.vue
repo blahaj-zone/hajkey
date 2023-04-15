@@ -1,16 +1,37 @@
 <template>
-<MkModal ref="modal" :prefer-type="'dialog'" :z-priority="'high'" @click="success ? done() : () => {}" @closed="emit('closed')">
-	<div :class="[$style.root, { [$style.iconOnly]: (text == null) || success }]">
-		<i v-if="success" :class="[$style.icon, $style.success]" class="ph-check ph-bold ph-lg"></i>
-		<MkLoading v-else :class="[$style.icon, $style.waiting]" :em="true"/>
-		<div v-if="text && !success" :class="$style.text">{{ text }}<MkEllipsis/></div>
-	</div>
-</MkModal>
+	<MkModal
+		ref="modal"
+		:prefer-type="'dialog'"
+		:z-priority="'high'"
+		@click="success ? done() : () => {}"
+		@closed="emit('closed')"
+	>
+		<div
+			:class="[
+				$style.root,
+				{ [$style.iconOnly]: text == null || success },
+			]"
+		>
+			<i
+				v-if="success"
+				:class="[$style.icon, $style.success]"
+				class="ph-check ph-bold ph-lg"
+			></i>
+			<MkLoading
+				v-else
+				:class="[$style.icon, $style.waiting]"
+				:em="true"
+			/>
+			<div v-if="text && !success" :class="$style.text">
+				{{ text }}<MkEllipsis />
+			</div>
+		</div>
+	</MkModal>
 </template>
 
 <script lang="ts" setup>
-import { watch, shallowRef } from 'vue';
-import MkModal from '@/components/MkModal.vue';
+import { watch, shallowRef } from "vue";
+import MkModal from "@/components/MkModal.vue";
 
 const modal = shallowRef<InstanceType<typeof MkModal>>();
 
@@ -21,18 +42,21 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'done');
-	(ev: 'closed');
+	(ev: "done");
+	(ev: "closed");
 }>();
 
 function done() {
-	emit('done');
+	emit("done");
 	modal.value?.close();
 }
 
-watch(() => props.showing, () => {
-	if (!props.showing) done();
-});
+watch(
+	() => props.showing,
+	() => {
+		if (!props.showing) done();
+	}
+);
 </script>
 
 <style lang="scss" module>

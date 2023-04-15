@@ -1,27 +1,38 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions"/></template>
-	<div class="mk-group-page">
-		<div class="_section members _gap">
-			<div class="_content">
-				<div class="users">
-					<div v-for="user in users" :key="user.id" class="user _panel">
-						<MkAvatar :user="user" class="avatar" :show-indicator="true" />
-						<div class="body">
-							<MkUserName :user="user" class="name" />
-							<MkAcct :user="user" class="acct" />
-						</div>
-						<div class="action">
-							<button class="_button" @click="removeUser(user)">
-								<i class="ph-x ph-bold ph-lg"></i>
-							</button>
+	<MkStickyContainer>
+		<template #header><MkPageHeader :actions="headerActions" /></template>
+		<div class="mk-group-page">
+			<div class="_section members _gap">
+				<div class="_content">
+					<div class="users">
+						<div
+							v-for="user in users"
+							:key="user.id"
+							class="user _panel"
+						>
+							<MkAvatar
+								:user="user"
+								class="avatar"
+								:show-indicator="true"
+							/>
+							<div class="body">
+								<MkUserName :user="user" class="name" />
+								<MkAcct :user="user" class="acct" />
+							</div>
+							<div class="action">
+								<button
+									class="_button"
+									@click="removeUser(user)"
+								>
+									<i class="ph-x ph-bold ph-lg"></i>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</MkStickyContainer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
@@ -124,29 +135,31 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.members,
 		icon: "ph-users-three ph-bold ph-lg",
-	})),
+	}))
 );
 
 const headerActions = $computed(() => [
 	{
-		icon: 'ph-plus ph-bold ph-lg',
+		icon: "ph-plus ph-bold ph-lg",
 		text: i18n.ts.invite,
 		handler: invite,
-	}, {
-		icon: 'ph-cursor-text ph-bold ph-lg',
+	},
+	{
+		icon: "ph-cursor-text ph-bold ph-lg",
 		text: i18n.ts.rename,
 		handler: renameGroup,
-	}, {
-		icon: 'ph-arrows-left-right ph-bold ph-lg',
+	},
+	{
+		icon: "ph-arrows-left-right ph-bold ph-lg",
 		text: i18n.ts.transfer,
 		handler: transfer,
-	}, {
-		icon: 'ph-trash ph-bold ph-lg',
+	},
+	{
+		icon: "ph-trash ph-bold ph-lg",
 		text: i18n.ts.delete,
 		handler: deleteGroup,
 	},
 ]);
-
 </script>
 
 <style lang="scss" scoped>

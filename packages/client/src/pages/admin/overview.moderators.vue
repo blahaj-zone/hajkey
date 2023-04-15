@@ -1,29 +1,37 @@
 <template>
-<div>
-	<Transition :name="$store.state.animation ? '_transition_zoom' : ''" mode="out-in">
-		<MkLoading v-if="fetching"/>
-		<div v-else :class="$style.root" class="_panel">
-			<MkA v-for="user in moderators" :key="user.id" class="user" :to="`/user-info/${user.id}`">
-				<MkAvatar :user="user" class="avatar" indicator/>
-			</MkA>
-		</div>
-	</Transition>
-</div>
+	<div>
+		<Transition
+			:name="$store.state.animation ? '_transition_zoom' : ''"
+			mode="out-in"
+		>
+			<MkLoading v-if="fetching" />
+			<div v-else :class="$style.root" class="_panel">
+				<MkA
+					v-for="user in moderators"
+					:key="user.id"
+					class="user"
+					:to="`/user-info/${user.id}`"
+				>
+					<MkAvatar :user="user" class="avatar" indicator />
+				</MkA>
+			</div>
+		</Transition>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import * as os from '@/os';
-import number from '@/filters/number';
-import { i18n } from '@/i18n';
+import { onMounted, onUnmounted, ref } from "vue";
+import * as os from "@/os";
+import number from "@/filters/number";
+import { i18n } from "@/i18n";
 
 let moderators: any = $ref(null);
 let fetching = $ref(true);
 
 onMounted(async () => {
-	moderators = await os.api('admin/show-users', {
-		sort: '+updatedAt',
-		state: 'adminOrModerator',
+	moderators = await os.api("admin/show-users", {
+		sort: "+updatedAt",
+		state: "adminOrModerator",
 		limit: 30,
 	});
 

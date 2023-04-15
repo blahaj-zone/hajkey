@@ -1,73 +1,163 @@
 <template>
-<MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="1000" :margin-min="16" :margin-max="32">
-		<div class="_root">
-			<transition :name="$store.state.animation ? 'fade' : ''" mode="out-in">
-				<div v-if="post" class="rkxwuolj">
-					<div class="files">
-						<div v-for="file in post.files" :key="file.id" class="file">
-							<img :src="file.url"/>
+	<MkStickyContainer>
+		<template #header
+			><MkPageHeader :actions="headerActions" :tabs="headerTabs"
+		/></template>
+		<MkSpacer :content-max="1000" :margin-min="16" :margin-max="32">
+			<div class="_root">
+				<transition
+					:name="$store.state.animation ? 'fade' : ''"
+					mode="out-in"
+				>
+					<div v-if="post" class="rkxwuolj">
+						<div class="files">
+							<div
+								v-for="file in post.files"
+								:key="file.id"
+								class="file"
+							>
+								<img :src="file.url" />
+							</div>
 						</div>
+						<div class="body _block">
+							<div class="title">{{ post.title }}</div>
+							<div class="description">
+								<Mfm :text="post.description" />
+							</div>
+							<div class="info">
+								<i class="ph-clock ph-bold ph-lg"></i>
+								<MkTime :time="post.createdAt" mode="detail" />
+							</div>
+							<div class="actions">
+								<div class="like">
+									<MkButton
+										v-if="post.isLiked"
+										v-tooltip="i18n.ts._gallery.unlike"
+										class="button"
+										primary
+										@click="unlike()"
+										><i class="ph-heart ph-fill ph-lg"></i
+										><span
+											v-if="post.likedCount > 0"
+											class="count"
+											>{{ post.likedCount }}</span
+										></MkButton
+									>
+									<MkButton
+										v-else
+										v-tooltip="i18n.ts._gallery.like"
+										class="button"
+										@click="like()"
+										><i class="ph-heart ph-bold"></i
+										><span
+											v-if="post.likedCount > 0"
+											class="count"
+											>{{ post.likedCount }}</span
+										></MkButton
+									>
+								</div>
+								<div class="other">
+									<button
+										v-if="$i && $i.id === post.user.id"
+										v-tooltip="i18n.ts.edit"
+										v-click-anime
+										class="_button"
+										@click="edit"
+									>
+										<i
+											class="ph-pencil ph-bold ph-lg ph-fw ph-lg"
+										></i>
+									</button>
+									<button
+										v-tooltip="i18n.ts.shareWithNote"
+										v-click-anime
+										class="_button"
+										@click="shareWithNote"
+									>
+										<i
+											class="ph-repeat ph-bold ph-lg ph-fw ph-lg"
+										></i>
+									</button>
+									<button
+										v-if="shareAvailable()"
+										v-tooltip="i18n.ts.share"
+										v-click-anime
+										class="_button"
+										@click="share"
+									>
+										<i
+											class="ph-share-network ph-bold ph-lg ph-fw ph-lg"
+										></i>
+									</button>
+								</div>
+							</div>
+							<div class="user">
+								<MkAvatar :user="post.user" class="avatar" />
+								<div class="name">
+									<MkUserName
+										:user="post.user"
+										style="display: block"
+									/>
+									<MkAcct :user="post.user" />
+								</div>
+								<MkFollowButton
+									v-if="!$i || $i.id != post.user.id"
+									:user="post.user"
+									:inline="true"
+									:transparent="false"
+									:full="true"
+									large
+									class="koudoku"
+								/>
+							</div>
+						</div>
+						<MkAd :prefer="['horizontal', 'horizontal-big']" />
+						<MkContainer
+							:max-height="300"
+							:foldable="true"
+							class="other"
+						>
+							<template #header
+								><i class="ph-clock ph-bold ph-lg"></i>
+								{{ i18n.ts.recentPosts }}</template
+							>
+							<MkPagination
+								v-slot="{ items }"
+								:pagination="otherPostsPagination"
+							>
+								<div class="sdrarzaf">
+									<MkGalleryPostPreview
+										v-for="post in items"
+										:key="post.id"
+										:post="post"
+										class="post"
+									/>
+								</div>
+							</MkPagination>
+						</MkContainer>
 					</div>
-					<div class="body _block">
-						<div class="title">{{ post.title }}</div>
-						<div class="description"><Mfm :text="post.description"/></div>
-						<div class="info">
-							<i class="ph-clock ph-bold ph-lg"></i> <MkTime :time="post.createdAt" mode="detail"/>
-						</div>
-						<div class="actions">
-							<div class="like">
-								<MkButton v-if="post.isLiked" v-tooltip="i18n.ts._gallery.unlike" class="button" primary @click="unlike()"><i class="ph-heart ph-fill ph-lg"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
-								<MkButton v-else v-tooltip="i18n.ts._gallery.like" class="button" @click="like()"><i class="ph-heart ph-bold"></i><span v-if="post.likedCount > 0" class="count">{{ post.likedCount }}</span></MkButton>
-							</div>
-							<div class="other">
-								<button v-if="$i && $i.id === post.user.id" v-tooltip="i18n.ts.edit" v-click-anime class="_button" @click="edit"><i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i></button>
-								<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-repeat ph-bold ph-lg ph-fw ph-lg"></i></button>
-								<button v-if="shareAvailable()" v-tooltip="i18n.ts.share" v-click-anime class="_button" @click="share"><i class="ph-share-network ph-bold ph-lg ph-fw ph-lg"></i></button>
-							</div>
-						</div>
-						<div class="user">
-							<MkAvatar :user="post.user" class="avatar"/>
-							<div class="name">
-								<MkUserName :user="post.user" style="display: block;"/>
-								<MkAcct :user="post.user"/>
-							</div>
-							<MkFollowButton v-if="!$i || $i.id != post.user.id" :user="post.user" :inline="true" :transparent="false" :full="true" large class="koudoku"/>
-						</div>
-					</div>
-					<MkAd :prefer="['horizontal', 'horizontal-big']"/>
-					<MkContainer :max-height="300" :foldable="true" class="other">
-						<template #header><i class="ph-clock ph-bold ph-lg"></i> {{ i18n.ts.recentPosts }}</template>
-						<MkPagination v-slot="{items}" :pagination="otherPostsPagination">
-							<div class="sdrarzaf">
-								<MkGalleryPostPreview v-for="post in items" :key="post.id" :post="post" class="post"/>
-							</div>
-						</MkPagination>
-					</MkContainer>
-				</div>
-				<MkError v-else-if="error" @retry="fetch()"/>
-				<MkLoading v-else/>
-			</transition>
-		</div>
-	</MkSpacer>
-</MkStickyContainer>
+					<MkError v-else-if="error" @retry="fetch()" />
+					<MkLoading v-else />
+				</transition>
+			</div>
+		</MkSpacer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, inject, watch } from 'vue';
-import MkButton from '@/components/MkButton.vue';
-import * as os from '@/os';
-import MkContainer from '@/components/MkContainer.vue';
-import ImgWithBlurhash from '@/components/MkImgWithBlurhash.vue';
-import MkPagination from '@/components/MkPagination.vue';
-import MkGalleryPostPreview from '@/components/MkGalleryPostPreview.vue';
-import MkFollowButton from '@/components/MkFollowButton.vue';
-import { url } from '@/config';
-import { useRouter } from '@/router';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
-import { shareAvailable } from '@/scripts/share-available';
+import { computed, defineComponent, inject, watch } from "vue";
+import MkButton from "@/components/MkButton.vue";
+import * as os from "@/os";
+import MkContainer from "@/components/MkContainer.vue";
+import ImgWithBlurhash from "@/components/MkImgWithBlurhash.vue";
+import MkPagination from "@/components/MkPagination.vue";
+import MkGalleryPostPreview from "@/components/MkGalleryPostPreview.vue";
+import MkFollowButton from "@/components/MkFollowButton.vue";
+import { url } from "@/config";
+import { useRouter } from "@/router";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import { shareAvailable } from "@/scripts/share-available";
 
 const router = useRouter();
 
@@ -78,7 +168,7 @@ const props = defineProps<{
 let post = $ref(null);
 let error = $ref(null);
 const otherPostsPagination = {
-	endpoint: 'users/gallery/posts' as const,
+	endpoint: "users/gallery/posts" as const,
 	limit: 6,
 	params: computed(() => ({
 		userId: post.user.id,
@@ -87,13 +177,15 @@ const otherPostsPagination = {
 
 function fetchPost() {
 	post = null;
-	os.api('gallery/posts/show', {
+	os.api("gallery/posts/show", {
 		postId: props.postId,
-	}).then(_post => {
-		post = _post;
-	}).catch(_error => {
-		error = _error;
-	});
+	})
+		.then((_post) => {
+			post = _post;
+		})
+		.catch((_error) => {
+			error = _error;
+		});
 }
 
 function share() {
@@ -111,7 +203,7 @@ function shareWithNote() {
 }
 
 function like() {
-	os.apiWithDialog('gallery/posts/like', {
+	os.apiWithDialog("gallery/posts/like", {
 		postId: props.postId,
 	}).then(() => {
 		post.isLiked = true;
@@ -120,7 +212,7 @@ function like() {
 }
 
 async function unlike() {
-	os.api('gallery/posts/unlike', {
+	os.api("gallery/posts/unlike", {
 		postId: props.postId,
 	}).then(() => {
 		post.isLiked = false;
@@ -134,18 +226,26 @@ function edit() {
 
 watch(() => props.postId, fetchPost, { immediate: true });
 
-const headerActions = $computed(() => [{
-	icon: 'ph-pencil ph-bold ph-lg',
-	text: i18n.ts.edit,
-	handler: edit,
-}]);
+const headerActions = $computed(() => [
+	{
+		icon: "ph-pencil ph-bold ph-lg",
+		text: i18n.ts.edit,
+		handler: edit,
+	},
+]);
 
 const headerTabs = $computed(() => []);
 
-definePageMetadata(computed(() => post ? {
-	title: post.title,
-	avatar: post.user,
-} : null));
+definePageMetadata(
+	computed(() =>
+		post
+			? {
+					title: post.title,
+					avatar: post.user,
+			  }
+			: null
+	)
+);
 </script>
 
 <style lang="scss" scoped>
@@ -255,7 +355,6 @@ definePageMetadata(computed(() => post ? {
 	margin: var(--margin);
 
 	> .post {
-
 	}
 }
 </style>

@@ -1,14 +1,28 @@
 <template>
-	<MkModal ref="modal" :prefer-type="'dialog'" @click="modal.close()" @closed="onModalClosed()">
-		<MkPostForm ref="form" style="margin: 0 auto auto auto;" v-bind="props" autofocus freeze-after-posted @posted="onPosted" @cancel="modal.close()" @esc="modal.close()"/>
+	<MkModal
+		ref="modal"
+		:prefer-type="'dialog'"
+		@click="modal.close()"
+		@closed="onModalClosed()"
+	>
+		<MkPostForm
+			ref="form"
+			style="margin: 0 auto auto auto"
+			v-bind="props"
+			autofocus
+			freeze-after-posted
+			@posted="onPosted"
+			@cancel="modal.close()"
+			@esc="modal.close()"
+		/>
 	</MkModal>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import * as misskey from 'calckey-js';
-import MkModal from '@/components/MkModal.vue';
-import MkPostForm from '@/components/MkPostForm.vue';
+import {} from "vue";
+import * as misskey from "calckey-js";
+import MkModal from "@/components/MkModal.vue";
+import MkPostForm from "@/components/MkPostForm.vue";
 
 const props = defineProps<{
 	reply?: misskey.entities.Note;
@@ -28,7 +42,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'closed'): void;
+	(ev: "closed"): void;
 }>();
 
 let modal = $shallowRef<InstanceType<typeof MkModal>>();
@@ -41,6 +55,6 @@ function onPosted() {
 }
 
 function onModalClosed() {
-	emit('closed');
+	emit("closed");
 }
 </script>

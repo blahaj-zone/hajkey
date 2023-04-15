@@ -87,6 +87,9 @@ export default defineConfig(({ command, mode }) => {
 			emptyOutDir: false,
 			sourcemap: process.env.NODE_ENV === "development",
 			reportCompressedSize: false,
+			commonjsOptions: {
+				include: [/calckey-js/, /node_modules/],
+			},
 		},
 		optimizeDeps: {
 			auto: true,

@@ -1,38 +1,53 @@
 <template>
-<div class="civpbkhh">
-	<div ref="scroll" class="scrollbox" v-bind:class="{ scroll: isScrolling }">
-		<div v-for="note in notes" class="note">
-			<div class="content _panel">
-				<div class="body">
-					<MkA v-if="note.replyId" class="reply" :to="`/notes/${note.replyId}`"><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i></MkA>
-					<Mfm v-if="note.text" :text="note.text" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
-					<!-- <MkA v-if="note.renoteId" class="rp" :to="`/notes/${note.renoteId}`">RN: ...</MkA> -->
+	<div class="civpbkhh">
+		<div
+			ref="scroll"
+			class="scrollbox"
+			v-bind:class="{ scroll: isScrolling }"
+		>
+			<div v-for="note in notes" class="note">
+				<div class="content _panel">
+					<div class="body">
+						<MkA
+							v-if="note.replyId"
+							class="reply"
+							:to="`/notes/${note.replyId}`"
+							><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i
+						></MkA>
+						<Mfm
+							v-if="note.text"
+							:text="note.text"
+							:author="note.user"
+							:i="$i"
+							:custom-emojis="note.emojis"
+						/>
+						<!-- <MkA v-if="note.renoteId" class="rp" :to="`/notes/${note.renoteId}`">RN: ...</MkA> -->
+					</div>
+					<div v-if="note.files.length > 0" class="richcontent">
+						<XMediaList :media-list="note.files" />
+					</div>
+					<div v-if="note.poll">
+						<XPoll :note="note" :readOnly="true" />
+					</div>
 				</div>
-				<div v-if="note.files.length > 0" class="richcontent">
-					<XMediaList :media-list="note.files"/>
-				</div>
-				<div v-if="note.poll">
-					<XPoll :note="note" :readOnly="true"/>
-				</div>
+				<XReactionsViewer ref="reactionsViewer" :note="note" />
 			</div>
-			<XReactionsViewer ref="reactionsViewer" :note="note"/>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import XReactionsViewer from '@/components/MkReactionsViewer.vue';
-import XMediaList from '@/components/MkMediaList.vue';
-import XPoll from '@/components/MkPoll.vue';
-import * as os from '@/os';
+import { defineComponent } from "vue";
+import XReactionsViewer from "@/components/MkReactionsViewer.vue";
+import XMediaList from "@/components/MkMediaList.vue";
+import XPoll from "@/components/MkPoll.vue";
+import * as os from "@/os";
 
 export default defineComponent({
 	components: {
 		XReactionsViewer,
 		XMediaList,
-		XPoll
+		XPoll,
 	},
 
 	data() {
@@ -43,7 +58,7 @@ export default defineComponent({
 	},
 
 	created() {
-		os.api('notes/featured').then(notes => {
+		os.api("notes/featured").then((notes) => {
 			this.notes = notes;
 		});
 	},
@@ -52,7 +67,7 @@ export default defineComponent({
 		if (this.$refs.scroll.clientHeight > window.innerHeight) {
 			this.isScrolling = true;
 		}
-	}
+	},
 });
 </script>
 

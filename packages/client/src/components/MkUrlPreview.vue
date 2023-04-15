@@ -1,54 +1,126 @@
 <template>
-<div v-if="playerEnabled" class="player" :style="`padding: ${(player.height || 0) / (player.width || 1) * 100}% 0 0`" @click.stop>
-	<button class="disablePlayer" :title="i18n.ts.disablePlayer" @click="playerEnabled = false"><i class="ph-x ph-bold ph-lg"></i></button>
-	<iframe :src="player.url + (player.url.match(/\?/) ? '&autoplay=1&auto_play=1' : '?autoplay=1&auto_play=1')" :width="player.width || '100%'" :heigth="player.height || 250" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen/>
-</div>
-<div v-else-if="tweetId && tweetExpanded" ref="twitter" class="twitter" @click.stop>
-	<iframe ref="tweet" scrolling="no" frameborder="no" :style="{ position: 'relative', width: '100%', height: `${tweetHeight}px` }" :src="`https://platform.twitter.com/embed/index.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${$store.state.darkMode ? 'dark' : 'light'}&amp;id=${tweetId}`"></iframe>
-</div>
-<div v-else v-size="{ max: [400, 350] }" class="mk-url-preview" @click.stop>
-	<transition :name="$store.state.animation ? 'zoom' : ''" mode="out-in">
-		<component :is="self ? 'MkA' : 'a'" v-if="!fetching" class="link" :class="{ compact }" :[attr]="self ? url.substr(local.length) : url" rel="nofollow noopener" :target="target" :title="url">
-			<div v-if="thumbnail" class="thumbnail" :style="`background-image: url('${thumbnail}')`">
-				<button v-if="!playerEnabled && player.url" class="_button" :title="i18n.ts.enablePlayer" @click.prevent="playerEnabled = true"><i class="ph-play-circle ph-bold ph-lg"></i></button>
-			</div>
-			<article>
-				<header>
-					<h1 :title="title">{{ title }}</h1>
-				</header>
-				<p v-if="description" :title="description">{{ description.length > 85 ? description.slice(0, 85) + '…' : description }}</p>
-				<footer>
-					<img v-if="icon" class="icon" :src="icon"/>
-					<p :title="sitename">{{ sitename }}</p>
-				</footer>
-			</article>
-		</component>
-	</transition>
-	<div v-if="tweetId" class="expandTweet">
-		<a @click="tweetExpanded = true">
-			<i class="ph-twitter-logo ph-bold ph-lg"></i> {{ i18n.ts.expandTweet }}
-		</a>
+	<div
+		v-if="playerEnabled"
+		class="player"
+		:style="`padding: ${
+			((player.height || 0) / (player.width || 1)) * 100
+		}% 0 0`"
+		@click.stop
+	>
+		<button
+			class="disablePlayer"
+			:title="i18n.ts.disablePlayer"
+			@click="playerEnabled = false"
+		>
+			<i class="ph-x ph-bold ph-lg"></i>
+		</button>
+		<iframe
+			:src="
+				player.url +
+				(player.url.match(/\?/)
+					? '&autoplay=1&auto_play=1'
+					: '?autoplay=1&auto_play=1')
+			"
+			:width="player.width || '100%'"
+			:heigth="player.height || 250"
+			frameborder="0"
+			allow="autoplay; encrypted-media"
+			allowfullscreen
+		/>
 	</div>
-</div>
+	<div
+		v-else-if="tweetId && tweetExpanded"
+		ref="twitter"
+		class="twitter"
+		@click.stop
+	>
+		<iframe
+			ref="tweet"
+			scrolling="no"
+			frameborder="no"
+			:style="{
+				position: 'relative',
+				width: '100%',
+				height: `${tweetHeight}px`,
+			}"
+			:src="`https://platform.twitter.com/embed/index.html?embedId=${embedId}&amp;hideCard=false&amp;hideThread=false&amp;lang=en&amp;theme=${
+				$store.state.darkMode ? 'dark' : 'light'
+			}&amp;id=${tweetId}`"
+		></iframe>
+	</div>
+	<div v-else v-size="{ max: [400, 350] }" class="mk-url-preview" @click.stop>
+		<transition :name="$store.state.animation ? 'zoom' : ''" mode="out-in">
+			<component
+				:is="self ? 'MkA' : 'a'"
+				v-if="!fetching"
+				class="link"
+				:class="{ compact }"
+				:[attr]="self ? url.substr(local.length) : url"
+				rel="nofollow noopener"
+				:target="target"
+				:title="url"
+			>
+				<div
+					v-if="thumbnail"
+					class="thumbnail"
+					:style="`background-image: url('${thumbnail}')`"
+				>
+					<button
+						v-if="!playerEnabled && player.url"
+						class="_button"
+						:title="i18n.ts.enablePlayer"
+						@click.prevent="playerEnabled = true"
+					>
+						<i class="ph-play-circle ph-bold ph-lg"></i>
+					</button>
+				</div>
+				<article>
+					<header>
+						<h1 :title="title">{{ title }}</h1>
+					</header>
+					<p v-if="description" :title="description">
+						{{
+							description.length > 85
+								? description.slice(0, 85) + "…"
+								: description
+						}}
+					</p>
+					<footer>
+						<img v-if="icon" class="icon" :src="icon" />
+						<p :title="sitename">{{ sitename }}</p>
+					</footer>
+				</article>
+			</component>
+		</transition>
+		<div v-if="tweetId" class="expandTweet">
+			<a @click="tweetExpanded = true">
+				<i class="ph-twitter-logo ph-bold ph-lg"></i>
+				{{ i18n.ts.expandTweet }}
+			</a>
+		</div>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue';
-import { url as local, lang } from '@/config';
-import { i18n } from '@/i18n';
+import { onMounted, onUnmounted } from "vue";
+import { url as local, lang } from "@/config";
+import { i18n } from "@/i18n";
 
-const props = withDefaults(defineProps<{
-	url: string;
-	detail?: boolean;
-	compact?: boolean;
-}>(), {
-	detail: false,
-	compact: false,
-});
+const props = withDefaults(
+	defineProps<{
+		url: string;
+		detail?: boolean;
+		compact?: boolean;
+	}>(),
+	{
+		detail: false,
+		compact: false,
+	}
+);
 
 const self = props.url.startsWith(local);
-const attr = self ? 'to' : 'href';
-const target = self ? null : '_blank';
+const attr = self ? "to" : "href";
+const target = self ? null : "_blank";
 let fetching = $ref(true);
 let title = $ref<string | null>(null);
 let description = $ref<string | null>(null);
@@ -63,27 +135,36 @@ let player = $ref({
 let playerEnabled = $ref(false);
 let tweetId = $ref<string | null>(null);
 let tweetExpanded = $ref(props.detail);
-const embedId = `embed${Math.random().toString().replace(/\D/,'')}`;
+const embedId = `embed${Math.random().toString().replace(/\D/, "")}`;
 let tweetHeight = $ref(150);
 
 const requestUrl = new URL(props.url);
-if (!['http:', 'https:'].includes(requestUrl.protocol)) throw new Error('invalid url');
+if (!["http:", "https:"].includes(requestUrl.protocol))
+	throw new Error("invalid url");
 
-if (requestUrl.hostname === 'twitter.com' || requestUrl.hostname === 'mobile.twitter.com') {
+if (
+	requestUrl.hostname === "twitter.com" ||
+	requestUrl.hostname === "mobile.twitter.com"
+) {
 	const m = requestUrl.pathname.match(/^\/.+\/status(?:es)?\/(\d+)/);
 	if (m) tweetId = m[1];
 }
 
-if (requestUrl.hostname === 'music.youtube.com' && requestUrl.pathname.match('^/(?:watch|channel)')) {
-	requestUrl.hostname = 'www.youtube.com';
+if (
+	requestUrl.hostname === "music.youtube.com" &&
+	requestUrl.pathname.match("^/(?:watch|channel)")
+) {
+	requestUrl.hostname = "www.youtube.com";
 }
 
-const requestLang = (lang || 'ja-JP').replace('ja-KS', 'ja-JP');
+const requestLang = (lang || "ja-JP").replace("ja-KS", "ja-JP");
 
-requestUrl.hash = '';
+requestUrl.hash = "";
 
-fetch(`/url?url=${encodeURIComponent(requestUrl.href)}&lang=${requestLang}`).then(res => {
-	res.json().then(info => {
+fetch(
+	`/url?url=${encodeURIComponent(requestUrl.href)}&lang=${requestLang}`
+).then((res) => {
+	res.json().then((info) => {
 		if (info.url == null) return;
 		title = info.title;
 		description = info.description;
@@ -96,18 +177,18 @@ fetch(`/url?url=${encodeURIComponent(requestUrl.href)}&lang=${requestLang}`).the
 });
 
 function adjustTweetHeight(message: any) {
-	if (message.origin !== 'https://platform.twitter.com') return;
-	const embed = message.data?.['twttr.embed'];
-	if (embed?.method !== 'twttr.private.resize') return;
+	if (message.origin !== "https://platform.twitter.com") return;
+	const embed = message.data?.["twttr.embed"];
+	if (embed?.method !== "twttr.private.resize") return;
 	if (embed?.id !== embedId) return;
 	const height = embed?.params[0]?.height;
 	if (height) tweetHeight = height;
 }
 
-(window as any).addEventListener('message', adjustTweetHeight);
+(window as any).addEventListener("message", adjustTweetHeight);
 
 onUnmounted(() => {
-	(window as any).removeEventListener('message', adjustTweetHeight);
+	(window as any).removeEventListener("message", adjustTweetHeight);
 });
 </script>
 
@@ -214,8 +295,9 @@ onUnmounted(() => {
 		border: 1px solid var(--divider);
 		border-radius: 8px;
 		overflow: hidden;
-		transition: background .2s;
-		&:hover, &:focus-within {
+		transition: background 0.2s;
+		&:hover,
+		&:focus-within {
 			text-decoration: none;
 			background-color: var(--panelHighlight);
 			> article > header > h1 {
@@ -293,7 +375,9 @@ onUnmounted(() => {
 
 		&.compact {
 			> article {
-				> header h1, p, footer {
+				> header h1,
+				p,
+				footer {
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;

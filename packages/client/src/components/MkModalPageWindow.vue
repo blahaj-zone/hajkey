@@ -1,51 +1,80 @@
 <template>
-<MkModal ref="modal" @click="$emit('click')" @closed="$emit('closed')">
-	<div ref="rootEl" class="hrmcaedk _narrow_" :style="{ width: `${width}px`, height: (height ? `min(${height}px, 100%)` : '100%') }">
-		<div class="header" @contextmenu="onContextmenu">
-			<button v-if="history.length > 0" v-tooltip="i18n.ts.goBack" class="_button" @click="back()"><i class="ph-caret-left ph-bold ph-lg"></i></button>
-			<span v-else style="display: inline-block; width: 20px"></span>
-			<span v-if="pageMetadata?.value" class="title">
-				<i v-if="pageMetadata?.value.icon" class="icon" :class="pageMetadata?.value.icon"></i>
-				<span>{{ pageMetadata?.value.title }}</span>
-			</span>
-			<button class="_button" @click="$refs.modal.close()"><i class="ph-x ph-bold ph-lg"></i></button>
+	<MkModal ref="modal" @click="$emit('click')" @closed="$emit('closed')">
+		<div
+			ref="rootEl"
+			class="hrmcaedk _narrow_"
+			:style="{
+				width: `${width}px`,
+				height: height ? `min(${height}px, 100%)` : '100%',
+			}"
+		>
+			<div class="header" @contextmenu="onContextmenu">
+				<button
+					v-if="history.length > 0"
+					v-tooltip="i18n.ts.goBack"
+					class="_button"
+					@click="back()"
+				>
+					<i class="ph-caret-left ph-bold ph-lg"></i>
+				</button>
+				<span v-else style="display: inline-block; width: 20px"></span>
+				<span v-if="pageMetadata?.value" class="title">
+					<i
+						v-if="pageMetadata?.value.icon"
+						class="icon"
+						:class="pageMetadata?.value.icon"
+					></i>
+					<span>{{ pageMetadata?.value.title }}</span>
+				</span>
+				<button class="_button" @click="$refs.modal.close()">
+					<i class="ph-x ph-bold ph-lg"></i>
+				</button>
+			</div>
+			<div class="body">
+				<MkStickyContainer>
+					<template #header
+						><MkPageHeader
+							v-if="
+								pageMetadata?.value &&
+								!pageMetadata?.value.hideHeader
+							"
+							:info="pageMetadata?.value"
+					/></template>
+					<RouterView :router="router" />
+				</MkStickyContainer>
+			</div>
 		</div>
-		<div class="body">
-			<MkStickyContainer>
-				<template #header><MkPageHeader v-if="pageMetadata?.value && !pageMetadata?.value.hideHeader" :info="pageMetadata?.value"/></template>
-				<RouterView :router="router"/>
-			</MkStickyContainer>
-		</div>
-	</div>
-</MkModal>
+	</MkModal>
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, provide } from 'vue';
-import MkModal from '@/components/MkModal.vue';
-import { popout as _popout } from '@/scripts/popout';
-import copyToClipboard from '@/scripts/copy-to-clipboard';
-import { url } from '@/config';
-import * as os from '@/os';
-import { mainRouter, routes } from '@/router';
-import { i18n } from '@/i18n';
-import { PageMetadata, provideMetadataReceiver, setPageMetadata } from '@/scripts/page-metadata';
-import { Router } from '@/nirax';
+import { ComputedRef, provide } from "vue";
+import MkModal from "@/components/MkModal.vue";
+import { popout as _popout } from "@/scripts/popout";
+import copyToClipboard from "@/scripts/copy-to-clipboard";
+import { url } from "@/config";
+import * as os from "@/os";
+import { mainRouter, routes } from "@/router";
+import { i18n } from "@/i18n";
+import {
+	PageMetadata,
+	provideMetadataReceiver,
+	setPageMetadata,
+} from "@/scripts/page-metadata";
+import { Router } from "@/nirax";
 
 const props = defineProps<{
 	initialPath: string;
 }>();
 
 defineEmits<{
-	(ev: 'closed'): void;
-	(ev: 'click'): void;
+	(ev: "closed"): void;
+	(ev: "click"): void;
 }>();
 
 const router = new Router(routes, props.initialPath);
 
-router.addListener('push', ctx => {
-
-});
+router.addListener("push", (ctx) => {});
 
 let pageMetadata = $ref<null | ComputedRef<PageMetadata>>();
 let rootEl = $ref();
@@ -55,40 +84,47 @@ let width = $ref(860);
 let height = $ref(660);
 const history = [];
 
-provide('router', router);
+provide("router", router);
 provideMetadataReceiver((info) => {
 	pageMetadata = info;
 });
-provide('shouldOmitHeaderTitle', true);
-provide('shouldHeaderThin', true);
+provide("shouldOmitHeaderTitle", true);
+provide("shouldHeaderThin", true);
 
 const pageUrl = $computed(() => url + path);
 const contextmenu = $computed(() => {
-	return [{
-		type: 'label',
-		text: path,
-	}, {
-		icon: 'ph-arrows-out-simple ph-bold ph-lg',
-		text: i18n.ts.showInPage,
-		action: expand,
-	}, {
-		icon: 'ph-arrow-square-out ph-bold ph-lg',
-		text: i18n.ts.popout,
-		action: popout,
-	}, null, {
-		icon: 'ph-arrow-square-out ph-bold ph-lg',
-		text: i18n.ts.openInNewTab,
-		action: () => {
-			window.open(pageUrl, '_blank');
-			modal.close();
+	return [
+		{
+			type: "label",
+			text: path,
 		},
-	}, {
-		icon: 'ph-link-simple ph-bold ph-lg',
-		text: i18n.ts.copyLink,
-		action: () => {
-			copyToClipboard(pageUrl);
+		{
+			icon: "ph-arrows-out-simple ph-bold ph-lg",
+			text: i18n.ts.showInPage,
+			action: expand,
 		},
-	}];
+		{
+			icon: "ph-arrow-square-out ph-bold ph-lg",
+			text: i18n.ts.popout,
+			action: popout,
+		},
+		null,
+		{
+			icon: "ph-arrow-square-out ph-bold ph-lg",
+			text: i18n.ts.openInNewTab,
+			action: () => {
+				window.open(pageUrl, "_blank");
+				modal.close();
+			},
+		},
+		{
+			icon: "ph-link-simple ph-bold ph-lg",
+			text: i18n.ts.copyLink,
+			action: () => {
+				copyToClipboard(pageUrl);
+			},
+		},
+	];
 });
 
 function navigate(path, record = true) {

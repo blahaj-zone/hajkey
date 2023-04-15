@@ -1,30 +1,33 @@
 <template>
-<div class="dwzlatin" :class="{ opened }">
-	<div class="header _button" @click="toggle">
-		<span class="icon"><slot name="icon"></slot></span>
-		<span class="text"><slot name="label"></slot></span>
-		<span class="right">
-			<span class="text"><slot name="suffix"></slot></span>
-			<i v-if="opened" class="ph-caret-up ph-bold ph-lg icon"></i>
-			<i v-else class="ph-caret-down ph-bold ph-lg icon"></i>
-		</span>
-	</div>
-	<KeepAlive>
-		<div v-if="openedAtLeastOnce" v-show="opened" class="body">
-			<MkSpacer :margin-min="14" :margin-max="22">
-				<slot></slot>
-			</MkSpacer>
+	<div class="dwzlatin" :class="{ opened }">
+		<div class="header _button" @click="toggle">
+			<span class="icon"><slot name="icon"></slot></span>
+			<span class="text"><slot name="label"></slot></span>
+			<span class="right">
+				<span class="text"><slot name="suffix"></slot></span>
+				<i v-if="opened" class="ph-caret-up ph-bold ph-lg icon"></i>
+				<i v-else class="ph-caret-down ph-bold ph-lg icon"></i>
+			</span>
 		</div>
-	</KeepAlive>
-</div>
+		<KeepAlive>
+			<div v-if="openedAtLeastOnce" v-show="opened" class="body">
+				<MkSpacer :margin-min="14" :margin-max="22">
+					<slot></slot>
+				</MkSpacer>
+			</div>
+		</KeepAlive>
+	</div>
 </template>
 
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{
-	defaultOpen: boolean;
-}>(), {
-  defaultOpen: false,
-});
+const props = withDefaults(
+	defineProps<{
+		defaultOpen: boolean;
+	}>(),
+	{
+		defaultOpen: false,
+	}
+);
 
 let opened: boolean = $ref(props.defaultOpen);
 let openedAtLeastOnce: boolean = $ref(props.defaultOpen);

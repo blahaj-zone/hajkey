@@ -1,27 +1,27 @@
 <template>
-<MkStickyContainer>
-	<template #header>
-		<MkPageHeader
-			v-model:tab="src"
-			:actions="headerActions"
-			:tabs="headerTabs"
-			:display-my-avatar="true"
-		/>
-	</template>
-	<MkSpacer :content-max="800">
-		<div ref="rootEl" v-hotkey.global="keymap" class="cmuxhskf">
-			<XPostForm
-				v-if="$store.reactiveState.showFixedPostForm.value"
-				class="post-form _block"
-				fixed
+	<MkStickyContainer>
+		<template #header>
+			<MkPageHeader
+				v-model:tab="src"
+				:actions="headerActions"
+				:tabs="headerTabs"
+				:display-my-avatar="true"
 			/>
+		</template>
+		<MkSpacer :content-max="800">
+			<div ref="rootEl" v-hotkey.global="keymap" class="cmuxhskf">
+				<XPostForm
+					v-if="$store.reactiveState.showFixedPostForm.value"
+					class="post-form _block"
+					fixed
+				/>
 
-			<div v-if="queue > 0" class="new">
-				<button class="_buttonPrimary" @click="top()">
-					{{ i18n.ts.newNoteRecived }}
-				</button>
-			</div>
-			<!-- <div v-if="!isMobile" class="tl _block">
+				<div v-if="queue > 0" class="new">
+					<button class="_buttonPrimary" @click="top()">
+						{{ i18n.ts.newNoteRecived }}
+					</button>
+				</div>
+				<!-- <div v-if="!isMobile" class="tl _block">
 				<XTimeline
 					ref="tl"
 					:key="src"
@@ -31,56 +31,61 @@
 					@queue="queueUpdated"
 				/>
 			</div> *v-else on next div* -->
-			<div class="tl _block">
-				<swiper
-					:modules="[Virtual]"
-					:space-between="20"
-					:virtual="true"
-					:allow-touch-move="!(deviceKind === 'desktop' && !defaultStore.state.swipeOnDesktop) && defaultStore.state.allowSwipe"
-					@swiper="setSwiperRef"
-					@slide-change="onSlideChange"
-				>
-					<swiper-slide
-						v-for="index in timelines"
-						:key="index"
-						:virtual-index="index"
+				<div class="tl _block">
+					<swiper
+						:modules="[Virtual]"
+						:space-between="20"
+						:virtual="true"
+						:allow-touch-move="
+							!(
+								deviceKind === 'desktop' &&
+								!defaultStore.state.swipeOnDesktop
+							) && defaultStore.state.allowSwipe
+						"
+						@swiper="setSwiperRef"
+						@slide-change="onSlideChange"
 					>
-						<XTimeline
-							ref="tl"
-							:key="src"
-							class="tl"
-							:src="src"
-							:sound="true"
-							@queue="queueUpdated"
-						/>
-					</swiper-slide>
-				</swiper>
+						<swiper-slide
+							v-for="index in timelines"
+							:key="index"
+							:virtual-index="index"
+						>
+							<XTimeline
+								ref="tl"
+								:key="src"
+								class="tl"
+								:src="src"
+								:sound="true"
+								@queue="queueUpdated"
+							/>
+						</swiper-slide>
+					</swiper>
+				</div>
 			</div>
-		</div>
-	</MkSpacer>
-</MkStickyContainer>
+		</MkSpacer>
+	</MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch, ref, onMounted } from 'vue';
-import { Virtual } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import XTutorial from '@/components/MkTutorialDialog.vue';
-import XTimeline from '@/components/MkTimeline.vue';
-import XPostForm from '@/components/MkPostForm.vue';
-import { scroll } from '@/scripts/scroll';
-import * as os from '@/os';
-import { defaultStore } from '@/store';
-import { i18n } from '@/i18n';
-import { instance } from '@/instance';
-import { $i } from '@/account';
-import { definePageMetadata } from '@/scripts/page-metadata';
-import { deviceKind } from '@/scripts/device-kind';
-import 'swiper/scss';
-import 'swiper/scss/virtual';
+import { computed, watch, ref, onMounted } from "vue";
+import { Virtual } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import XTutorial from "@/components/MkTutorialDialog.vue";
+import XTimeline from "@/components/MkTimeline.vue";
+import XPostForm from "@/components/MkPostForm.vue";
+import { scroll } from "@/scripts/scroll";
+import * as os from "@/os";
+import { defaultStore } from "@/store";
+import { i18n } from "@/i18n";
+import { instance } from "@/instance";
+import { $i } from "@/account";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import { deviceKind } from "@/scripts/device-kind";
+import "swiper/scss";
+import "swiper/scss/virtual";
 
 if (defaultStore.reactiveState.tutorial.value !== -1) {
-	os.popup(XTutorial, {}, {}, 'closed');
+	os.popup(XTutorial, {}, {}, "closed");
 }
 
 const isLocalTimelineAvailable =
@@ -104,38 +109,44 @@ const timelinesAvailability = {
 
 let timelines: string[] = [];
 
-if (isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home') {
-	timelines.push('social');
+if (
+	isLocalTimelineAvailable &&
+	defaultStore.state.showLocalPostsInTimeline === "home"
+) {
+	timelines.push("social");
 } else {
-	timelines.push('home');
+	timelines.push("home");
 }
 
 if (isLocalTimelineAvailable) {
-	timelines.push('local');
+	timelines.push("local");
 }
 
-if (isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home') {
-	timelines.push('home');
+if (
+	isLocalTimelineAvailable &&
+	defaultStore.state.showLocalPostsInTimeline === "home"
+) {
+	timelines.push("home");
 } else if (isLocalTimelineAvailable) {
-	timelines.push('social');
+	timelines.push("social");
 }
 
 if (isRecommendedTimelineAvailable) {
-	timelines.push('recommended');
+	timelines.push("recommended");
 }
 if (isGlobalTimelineAvailable) {
-	timelines.push('global');
+	timelines.push("global");
 }
 
 const MOBILE_THRESHOLD = 500;
 
 // デスクトップでウィンドウを狭くしたときモバイルUIが表示されて欲しいことはあるので deviceKind === 'desktop' の判定は行わない
 const isMobile = ref(
-	deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD,
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
 );
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
 	isMobile.value =
-		(deviceKind === 'smartphone' || window.innerWidth <= MOBILE_THRESHOLD);
+		deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD;
 });
 
 const tlComponent = $ref<InstanceType<typeof XTimeline>>();
@@ -161,43 +172,51 @@ function top(): void {
 }
 
 async function chooseList(ev: MouseEvent): Promise<void> {
-	const lists = await os.api('users/lists/list');
-	const items = [{
-		type: 'link' as const,
-		text: i18n.ts.manageLists,
-		icon: 'ph-faders-horizontal ph-bold ph-lg',
-		to: '/my/lists',
-	}].concat(lists.map((list) => ({
-		type: 'link' as const,
-		text: list.name,
-		icon: '',
-		to: `/timeline/list/${list.id}`,
-	})));
+	const lists = await os.api("users/lists/list");
+	const items = [
+		{
+			type: "link" as const,
+			text: i18n.ts.manageLists,
+			icon: "ph-faders-horizontal ph-bold ph-lg",
+			to: "/my/lists",
+		},
+	].concat(
+		lists.map((list) => ({
+			type: "link" as const,
+			text: list.name,
+			icon: "",
+			to: `/timeline/list/${list.id}`,
+		}))
+	);
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
 async function chooseAntenna(ev: MouseEvent): Promise<void> {
-	const antennas = await os.api('antennas/list');
-	const items = [{
-		type: 'link' as const,
-		indicate: false,
-		text: i18n.ts.manageAntennas,
-		icon: 'ph-faders-horizontal ph-bold ph-lg',
-		to: '/my/antennas',
-	}].concat(antennas.map((antenna) => ({
-		type: 'link' as const,
-		text: antenna.name,
-		icon: '',
-		indicate: antenna.hasUnreadNote,
-		to: `/timeline/antenna/${antenna.id}`,
-	})));
+	const antennas = await os.api("antennas/list");
+	const items = [
+		{
+			type: "link" as const,
+			indicate: false,
+			text: i18n.ts.manageAntennas,
+			icon: "ph-faders-horizontal ph-bold ph-lg",
+			to: "/my/antennas",
+		},
+	].concat(
+		antennas.map((antenna) => ({
+			type: "link" as const,
+			text: antenna.name,
+			icon: "",
+			indicate: antenna.hasUnreadNote,
+			to: `/timeline/antenna/${antenna.id}`,
+		}))
+	);
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
 function saveSrc(
-	newSrc: 'home' | 'local' | 'recommended' | 'social' | 'global',
+	newSrc: "home" | "local" | "recommended" | "social" | "global"
 ): void {
-	defaultStore.set('tl', {
+	defaultStore.set("tl", {
 		...defaultStore.state.tl,
 		src: newSrc,
 	});
@@ -218,14 +237,14 @@ function focus(): void {
 
 const headerActions = $computed(() => [
 	{
-		icon: 'ph-list-bullets ph-bold ph-lg',
+		icon: "ph-list-bullets ph-bold ph-lg",
 		title: i18n.ts.lists,
 		text: i18n.ts.lists,
 		iconOnly: true,
 		handler: chooseList,
 	},
 	{
-		icon: 'ph-flying-saucer ph-bold ph-lg',
+		icon: "ph-flying-saucer ph-bold ph-lg",
 		title: i18n.ts.antennas,
 		text: i18n.ts.antennas,
 		iconOnly: true,
@@ -241,70 +260,73 @@ const headerActions = $computed(() => [
 // Swap home timeline with social's functionality
 
 const headerTabs = $computed(() => [
-	...(isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home'
+	...(isLocalTimelineAvailable &&
+	defaultStore.state.showLocalPostsInTimeline === "home"
 		? [
-			{
-				key: 'social',
-				title: i18n.ts._timelines.home,
-				icon: 'ph-house ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
+				{
+					key: "social",
+					title: i18n.ts._timelines.home,
+					icon: "ph-house ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
 		: [
-			{
-				key: 'home',
-				title: i18n.ts._timelines.home,
-				icon: 'ph-house ph-bold ph-lg',
-				iconOnly: true,
-			}
-		]),
+				{
+					key: "home",
+					title: i18n.ts._timelines.home,
+					icon: "ph-house ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]),
 	...(isLocalTimelineAvailable
 		? [
-			{
-				key: 'local',
-				title: i18n.ts._timelines.local,
-				icon: 'ph-users ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
+				{
+					key: "local",
+					title: i18n.ts._timelines.local,
+					icon: "ph-users ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
 		: []),
-	...(isLocalTimelineAvailable && defaultStore.state.showLocalPostsInTimeline === 'home'
+	...(isLocalTimelineAvailable &&
+	defaultStore.state.showLocalPostsInTimeline === "home"
 		? [
-			{
-				key: 'home',
-				title: i18n.ts._timelines.social,
-				icon: 'ph-handshake ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
-		: isLocalTimelineAvailable ? [
- 			{
-				key: 'social',
-				title: i18n.ts._timelines.social,
-				icon: 'ph-handshake ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
+				{
+					key: "home",
+					title: i18n.ts._timelines.social,
+					icon: "ph-handshake ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
+		: isLocalTimelineAvailable
+		? [
+				{
+					key: "social",
+					title: i18n.ts._timelines.social,
+					icon: "ph-handshake ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
 		: []),
 	...(isRecommendedTimelineAvailable
 		? [
-			{
-				key: 'recommended',
-				title: i18n.ts._timelines.recommended,
-				icon: 'ph-thumbs-up ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
+				{
+					key: "recommended",
+					title: i18n.ts._timelines.recommended,
+					icon: "ph-thumbs-up ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
 		: []),
 	...(isGlobalTimelineAvailable
 		? [
-			{
-				key: 'global',
-				title: i18n.ts._timelines.global,
-				icon: 'ph-planet ph-bold ph-lg',
-				iconOnly: true,
-			},
-		]
+				{
+					key: "global",
+					title: i18n.ts._timelines.global,
+					icon: "ph-planet ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
 		: []),
 ]);
 
@@ -312,20 +334,22 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.timeline,
 		icon:
-			src === 'local'
-				? 'ph-users ph-bold ph-lg'
-				: src === 'social' && defaultStore.state.showLocalPostsInTimeline === 'home'
-					? 'ph-house ph-bold ph-lg'
-					: src === 'social'
-						? 'ph-handshake ph-bold ph-lg'
-						: src === 'recommended'
-							? 'ph-thumbs-up ph-bold ph-lg'
-							: src === 'global'
-								? 'ph-planet ph-bold ph-lg'
-								: src === 'home' && defaultStore.state.showLocalPostsInTimeline === 'home'
-									? 'ph-handshake ph-bold ph-lg'
-									: 'ph-house ph-bold ph-lg',
-	})),
+			src === "local"
+				? "ph-users ph-bold ph-lg"
+				: src === "social" &&
+				  defaultStore.state.showLocalPostsInTimeline === "home"
+				? "ph-house ph-bold ph-lg"
+				: src === "social"
+				? "ph-handshake ph-bold ph-lg"
+				: src === "recommended"
+				? "ph-thumbs-up ph-bold ph-lg"
+				: src === "global"
+				? "ph-planet ph-bold ph-lg"
+				: src === "home" &&
+				  defaultStore.state.showLocalPostsInTimeline === "home"
+				? "ph-handshake ph-bold ph-lg"
+				: "ph-house ph-bold ph-lg",
+	}))
 );
 
 let swiperRef: any = null;
@@ -344,30 +368,32 @@ function syncSlide(index) {
 }
 
 onMounted(() => {
-	console.log('stored state', defaultStore.state.tl);
-	console.log('isRecommendedTimelineAvailable', isRecommendedTimelineAvailable);
-	let loadSrc = defaultStore.state.tl?.src
+	console.log("stored state", defaultStore.state.tl);
+	console.log(
+		"isRecommendedTimelineAvailable",
+		isRecommendedTimelineAvailable
+	);
+	let loadSrc = defaultStore.state.tl?.src;
 	if (!loadSrc && isRecommendedTimelineAvailable) {
-		loadSrc = 'recommended';
+		loadSrc = "recommended";
 	}
 	if (!loadSrc && isLocalTimelineAvailable) {
-		loadSrc = 'social';
+		loadSrc = "social";
 	}
 	if (!loadSrc) {
-		loadSrc = 'home';
+		loadSrc = "home";
 	}
 
-	const defaultTimeline = defaultStore.state.defaultTimeline
+	const defaultTimeline = defaultStore.state.defaultTimeline;
 	if (defaultTimeline && timelinesAvailability[defaultTimeline]) {
 		loadSrc = defaultTimeline;
 	}
 
 	const loadIndex = timelines.indexOf(loadSrc);
 
-	console.log('selected src', loadSrc, loadIndex);
+	console.log("selected src", loadSrc, loadIndex);
 	syncSlide(loadIndex > -1 ? loadIndex : swiperRef.activeIndex);
 });
-
 </script>
 
 <style lang="scss" scoped>

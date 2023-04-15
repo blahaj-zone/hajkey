@@ -1,150 +1,316 @@
 <template>
-<div
-	v-if="!muted"
-	v-show="!isDeleted"
-	ref="el"
-	v-hotkey="keymap"
-	v-size="{ max: [500, 450, 350, 300] }"
-	class="lxwezrsl _block"
-	:tabindex="!isDeleted ? '-1' : null"
-	:class="{ renote: isRenote, colorize, colorgrad, colorbg, colorborder, compact }"
->
-	<MkNoteSub v-for="note in conversation" :key="note.id" class="reply-to-more" :note="note"/>
-	<MkNoteSub v-if="appearNote.reply" :note="appearNote.reply" class="reply-to"/>
-	<div v-if="isRenote" class="renote">
-		<MkAvatar class="avatar" :user="note.user"/>
-		<i class="ph-repeat ph-bold ph-lg"></i>
-		<I18n :src="i18n.ts.renotedBy" tag="span">
-			<template #user>
-				<MkA v-user-preview="note.userId" class="name" :to="userPage(note.user)">
-					<MkUserName :user="note.user"/>
-				</MkA>
-			</template>
-		</I18n>
-		<div class="info">
-			<button ref="renoteTime" class="_button time" @click="showRenoteMenu()">
-				<i v-if="isMyRenote" class="ph-dots-three-outline ph-bold ph-lg dropdownIcon"></i>
-				<MkTime :time="note.createdAt"/>
-			</button>
-			<MkVisibility :note="note"/>
-		</div>
-	</div>
-	<article ref="noteEl" class="article" @contextmenu.stop="onContextmenu" tabindex="-1">
-		<header class="header">
-			<MkAvatar class="avatar" :user="appearNote.user" :show-indicator="true"/>
-			<div class="body">
-				<div class="top">
-					<MkA v-user-preview="appearNote.user.id" class="name" :to="userPage(appearNote.user)">
-						<MkUserName :user="appearNote.user"/>
+	<div
+		v-if="!muted.muted"
+		v-show="!isDeleted"
+		ref="el"
+		v-hotkey="keymap"
+		v-size="{ max: [500, 450, 350, 300] }"
+		class="lxwezrsl _block"
+		:tabindex="!isDeleted ? '-1' : null"
+		:class="{
+			renote: isRenote,
+			colorize,
+			colorgrad,
+			colorbg,
+			colorborder,
+			compact,
+		}"
+	>
+		<MkNoteSub
+			v-for="note in conversation"
+			:key="note.id"
+			class="reply-to-more"
+			:note="note"
+		/>
+		<MkNoteSub
+			v-if="appearNote.reply"
+			:note="appearNote.reply"
+			class="reply-to"
+		/>
+		<div v-if="isRenote" class="renote">
+			<MkAvatar class="avatar" :user="note.user" />
+			<i class="ph-repeat ph-bold ph-lg"></i>
+			<I18n :src="i18n.ts.renotedBy" tag="span">
+				<template #user>
+					<MkA
+						v-user-preview="note.userId"
+						class="name"
+						:to="userPage(note.user)"
+					>
+						<MkUserName :user="note.user" />
 					</MkA>
-					<span v-if="appearNote.user.isBot" class="is-bot">bot</span>
-					<div class="info">
-						<MkVisibility :note="appearNote"/>
-					</div>
-				</div>
-				<div class="username"><MkAcct :user="appearNote.user"/></div>
-				<MkInstanceTicker v-if="showTicker" class="ticker" :instance="appearNote.user.instance"/>
+				</template>
+			</I18n>
+			<div class="info">
+				<button
+					ref="renoteTime"
+					class="_button time"
+					@click="showRenoteMenu()"
+				>
+					<i
+						v-if="isMyRenote"
+						class="ph-dots-three-outline ph-bold ph-lg dropdownIcon"
+					></i>
+					<MkTime :time="note.createdAt" />
+				</button>
+				<MkVisibility :note="note" />
 			</div>
-		</header>
-		<div class="main">
-			<div class="body">
-				<div v-if="appearNote.cw != null" class="cw">
-					<Mfm v-if="appearNote.cw != ''" class="text" :text="appearNote.cw" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
-					<br/>
-					<XCwButton v-model="showContent" :note="appearNote"/>
-				</div>
-				<div v-show="appearNote.cw == null || showContent" class="content">
-					<div class="text">
-						<Mfm v-if="appearNote.text" :text="appearNote.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
-						<div v-if="translating || translation" class="translation">
-							<MkLoading v-if="translating" mini/>
-							<div v-else class="translated">
-								<b>{{ i18n.t('translatedFrom', { x: translation.sourceLang }) }}: </b>
-								<Mfm :text="translation.text" :author="appearNote.user" :i="$i" :custom-emojis="appearNote.emojis"/>
-							</div>
+		</div>
+		<article
+			ref="noteEl"
+			class="article"
+			@contextmenu.stop="onContextmenu"
+			tabindex="-1"
+		>
+			<header class="header">
+				<MkAvatar
+					class="avatar"
+					:user="appearNote.user"
+					:show-indicator="true"
+				/>
+				<div class="body">
+					<div class="top">
+						<MkA
+							v-user-preview="appearNote.user.id"
+							class="name"
+							:to="userPage(appearNote.user)"
+						>
+							<MkUserName :user="appearNote.user" />
+						</MkA>
+						<span v-if="appearNote.user.isBot" class="is-bot"
+							>bot</span
+						>
+						<div class="info">
+							<MkVisibility :note="appearNote" />
 						</div>
 					</div>
-					<div v-if="appearNote.files.length > 0" class="files">
-						<XMediaList :media-list="appearNote.files"/>
+					<div class="username">
+						<MkAcct :user="appearNote.user" />
 					</div>
-					<XPoll v-if="appearNote.poll" ref="pollViewer" :note="appearNote" class="poll"/>
-					<MkUrlPreview v-for="url in urls" :key="url" :url="url" :compact="true" :detail="true" class="url-preview"/>
-					<div v-if="appearNote.renote" class="renote"><XNoteSimple :note="appearNote.renote" @click.stop="router.push(notePage(appearNote.renote))"/></div>
+					<MkInstanceTicker
+						v-if="showTicker"
+						class="ticker"
+						:instance="appearNote.user.instance"
+					/>
 				</div>
-				<MkA v-if="appearNote.channel && !inChannel" class="channel" :to="`/channels/${appearNote.channel.id}`"><i class="ph-television ph-bold ph-lg"></i> {{ appearNote.channel.name }}</MkA>
+			</header>
+			<div class="main">
+				<div class="body">
+					<div v-if="appearNote.cw != null" class="cw">
+						<Mfm
+							v-if="appearNote.cw != ''"
+							class="text"
+							:text="appearNote.cw"
+							:author="appearNote.user"
+							:i="$i"
+							:custom-emojis="appearNote.emojis"
+						/>
+						<br />
+						<XCwButton v-model="showContent" :note="appearNote" />
+					</div>
+					<div
+						v-show="appearNote.cw == null || showContent"
+						class="content"
+					>
+						<div class="text">
+							<Mfm
+								v-if="appearNote.text"
+								:text="appearNote.text"
+								:author="appearNote.user"
+								:i="$i"
+								:custom-emojis="appearNote.emojis"
+							/>
+							<div
+								v-if="translating || translation"
+								class="translation"
+							>
+								<MkLoading v-if="translating" mini />
+								<div v-else class="translated">
+									<b
+										>{{
+											i18n.t("translatedFrom", {
+												x: translation.sourceLang,
+											})
+										}}:
+									</b>
+									<Mfm
+										:text="translation.text"
+										:author="appearNote.user"
+										:i="$i"
+										:custom-emojis="appearNote.emojis"
+									/>
+								</div>
+							</div>
+						</div>
+						<div v-if="appearNote.files.length > 0" class="files">
+							<XMediaList :media-list="appearNote.files" />
+						</div>
+						<XPoll
+							v-if="appearNote.poll"
+							ref="pollViewer"
+							:note="appearNote"
+							class="poll"
+						/>
+						<MkUrlPreview
+							v-for="url in urls"
+							:key="url"
+							:url="url"
+							:compact="true"
+							:detail="true"
+							class="url-preview"
+						/>
+						<div v-if="appearNote.renote" class="renote">
+							<XNoteSimple
+								:note="appearNote.renote"
+								@click.stop="
+									router.push(notePage(appearNote.renote))
+								"
+							/>
+						</div>
+					</div>
+					<MkA
+						v-if="appearNote.channel && !inChannel"
+						class="channel"
+						:to="`/channels/${appearNote.channel.id}`"
+						><i class="ph-television ph-bold ph-lg"></i>
+						{{ appearNote.channel.name }}</MkA
+					>
+				</div>
+				<footer class="footer">
+					<div class="info">
+						<MkA class="created-at" :to="notePage(appearNote)">
+							<MkTime
+								:time="appearNote.createdAt"
+								mode="detail"
+							/>
+						</MkA>
+					</div>
+					<XReactionsViewer
+						ref="reactionsViewer"
+						:note="appearNote"
+					/>
+					<button
+						v-tooltip.noDelay.bottom="i18n.ts.reply"
+						class="button _button"
+						@click="reply()"
+					>
+						<template v-if="appearNote.reply"
+							><i class="ph-arrow-u-up-left ph-bold ph-lg"></i
+						></template>
+						<template v-else
+							><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i
+						></template>
+						<p v-if="appearNote.repliesCount > 0" class="count">
+							{{ appearNote.repliesCount }}
+						</p>
+					</button>
+					<XRenoteButton
+						ref="renoteButton"
+						class="button"
+						:note="appearNote"
+						:count="appearNote.renoteCount"
+					/>
+					<XStarButton
+						v-if="appearNote.myReaction == null"
+						ref="starButton"
+						class="button"
+						:note="appearNote"
+					/>
+					<button
+						v-if="appearNote.myReaction == null"
+						ref="reactButton"
+						v-tooltip.noDelay.bottom="i18n.ts.reaction"
+						class="button _button"
+						@click="react()"
+					>
+						<i class="ph-smiley ph-bold ph-lg"></i>
+					</button>
+					<button
+						v-if="appearNote.myReaction != null"
+						ref="reactButton"
+						class="button _button reacted"
+						@click="undoReact(appearNote)"
+					>
+						<i class="ph-minus ph-bold ph-lg"></i>
+					</button>
+					<XQuoteButton class="button" :note="appearNote" />
+					<button
+						ref="menuButton"
+						v-tooltip.noDelay.bottom="i18n.ts.more"
+						class="button _button"
+						@click="menu()"
+					>
+						<i class="ph-dots-three-outline ph-bold ph-lg"></i>
+					</button>
+				</footer>
 			</div>
-			<footer class="footer">
-				<div class="info">
-					<MkA class="created-at" :to="notePage(appearNote)">
-						<MkTime :time="appearNote.createdAt" mode="detail"/>
-					</MkA>
-				</div>
-				<XReactionsViewer ref="reactionsViewer" :note="appearNote"/>
-				<button v-tooltip.noDelay.bottom="i18n.ts.reply" class="button _button" @click="reply()">
-					<template v-if="appearNote.reply"><i class="ph-arrow-u-up-left ph-bold ph-lg"></i></template>
-					<template v-else><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i></template>
-					<p v-if="appearNote.repliesCount > 0" class="count">{{ appearNote.repliesCount }}</p>
-				</button>
-				<XRenoteButton ref="renoteButton" class="button" :note="appearNote" :count="appearNote.renoteCount"/>
-				<XStarButton v-if="appearNote.myReaction == null" ref="starButton" class="button" :note="appearNote"/>
-				<button v-if="appearNote.myReaction == null" ref="reactButton" v-tooltip.noDelay.bottom="i18n.ts.reaction" class="button _button" @click="react()">
-					<i class="ph-smiley ph-bold ph-lg"></i>
-				</button>
-				<button v-if="appearNote.myReaction != null" ref="reactButton" class="button _button reacted" @click="undoReact(appearNote)">
-					<i class="ph-minus ph-bold ph-lg"></i>
-				</button>
-				<XQuoteButton class="button" :note="appearNote"/>
-				<button ref="menuButton" v-tooltip.noDelay.bottom="i18n.ts.more" class="button _button" @click="menu()">
-					<i class="ph-dots-three-outline ph-bold ph-lg"></i>
-				</button>
-			</footer>
-		</div>
-	</article>
-	<MkNoteSub v-for="(note, index) in directReplies" :key="note.id" :note="note" class="reply" :conversation="replies" :offset="index" :child="index"/>
-</div>
-<div v-else class="_panel muted" @click="muted = false">
-	<I18n :src="i18n.ts.userSaysSomething" tag="small">
-		<template #name>
-			<MkA v-user-preview="appearNote.userId" class="name" :to="userPage(appearNote.user)">
-				<MkUserName :user="appearNote.user"/>
-			</MkA>
-		</template>
-	</I18n>
-</div>
+		</article>
+		<MkNoteSub
+			v-for="note in directReplies"
+			:key="note.id"
+			:note="note"
+			class="reply"
+			:conversation="replies"
+		/>
+	</div>
+	<div v-else class="_panel muted" @click="muted.muted = false">
+		<I18n :src="i18n.ts.userSaysSomethingReason" tag="small">
+			<template #name>
+				<MkA
+					v-user-preview="appearNote.userId"
+					class="name"
+					:to="userPage(appearNote.user)"
+				>
+					<MkUserName :user="appearNote.user" />
+				</MkA>
+			</template>
+			<template #reason>
+				<b class="_blur_text">{{ muted.matched.join(", ") }}</b>
+			</template>
+		</I18n>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted, onUnmounted, onUpdated, reactive, ref } from 'vue';
-import * as mfm from 'mfm-js';
-import type * as misskey from 'calckey-js';
-import MkNoteSub from '@/components/MkNoteSub.vue';
-import XNoteSimple from '@/components/MkNoteSimple.vue';
-import XReactionsViewer from '@/components/MkReactionsViewer.vue';
-import XMediaList from '@/components/MkMediaList.vue';
-import XCwButton from '@/components/MkCwButton.vue';
-import XPoll from '@/components/MkPoll.vue';
-import XStarButton from '@/components/MkStarButton.vue';
-import XRenoteButton from '@/components/MkRenoteButton.vue';
-import XQuoteButton from '@/components/MkQuoteButton.vue';
-import MkUrlPreview from '@/components/MkUrlPreview.vue';
-import MkInstanceTicker from '@/components/MkInstanceTicker.vue';
-import MkVisibility from '@/components/MkVisibility.vue';
-import { pleaseLogin } from '@/scripts/please-login';
-import { checkWordMute } from '@/scripts/check-word-mute';
-import { userPage } from '@/filters/user';
-import { notePage } from '@/filters/note';
-import { useRouter } from '@/router';
-import * as os from '@/os';
-import { defaultStore, noteViewInterruptors } from '@/store';
-import { reactionPicker } from '@/scripts/reaction-picker';
-import { extractUrlFromMfm } from '@/scripts/extract-url-from-mfm';
-import { $i } from '@/account';
-import { i18n } from '@/i18n';
-import { getNoteMenu } from '@/scripts/get-note-menu';
-import { useNoteCapture } from '@/scripts/use-note-capture';
-import { deepClone } from '@/scripts/clone';
-import { stream } from '@/stream';
-import { NoteUpdatedEvent } from 'calckey-js/built/streaming.types';
+import {
+	computed,
+	inject,
+	onMounted,
+	onUnmounted,
+	onUpdated,
+	reactive,
+	ref,
+} from "vue";
+import * as mfm from "mfm-js";
+import type * as misskey from "calckey-js";
+import MkNoteSub from "@/components/MkNoteSub.vue";
+import XNoteSimple from "@/components/MkNoteSimple.vue";
+import XReactionsViewer from "@/components/MkReactionsViewer.vue";
+import XMediaList from "@/components/MkMediaList.vue";
+import XCwButton from "@/components/MkCwButton.vue";
+import XPoll from "@/components/MkPoll.vue";
+import XStarButton from "@/components/MkStarButton.vue";
+import XRenoteButton from "@/components/MkRenoteButton.vue";
+import XQuoteButton from "@/components/MkQuoteButton.vue";
+import MkUrlPreview from "@/components/MkUrlPreview.vue";
+import MkInstanceTicker from "@/components/MkInstanceTicker.vue";
+import MkVisibility from "@/components/MkVisibility.vue";
+import { pleaseLogin } from "@/scripts/please-login";
+import { getWordMute } from "@/scripts/check-word-mute";
+import { userPage } from "@/filters/user";
+import { notePage } from "@/filters/note";
+import { useRouter } from "@/router";
+import * as os from "@/os";
+import { defaultStore, noteViewInterruptors } from "@/store";
+import { reactionPicker } from "@/scripts/reaction-picker";
+import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
+import { $i } from "@/account";
+import { i18n } from "@/i18n";
+import { getNoteMenu } from "@/scripts/get-note-menu";
+import { useNoteCapture } from "@/scripts/use-note-capture";
+import { deepClone } from "@/scripts/clone";
+import { stream } from "@/stream";
+import { NoteUpdatedEvent } from "calckey-js/built/streaming.types";
 
 const router = useRouter();
 
@@ -153,7 +319,7 @@ const props = defineProps<{
 	pinned?: boolean;
 }>();
 
-const inChannel = inject('inChannel', null);
+const inChannel = inject("inChannel", null);
 const colorize = defaultStore.state.replyDividerColorize;
 const colorbg = defaultStore.state.replyDividerColorBg;
 const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
@@ -173,12 +339,11 @@ if (noteViewInterruptors.length > 0) {
 	});
 }
 
-const isRenote = (
+const isRenote =
 	note.renote != null &&
 	note.text == null &&
 	note.fileIds.length === 0 &&
-	note.poll == null
-);
+	note.poll == null;
 
 const el = ref<HTMLElement>();
 const noteEl = $ref();
@@ -187,15 +352,22 @@ const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
-let appearNote = $computed(() => isRenote ? note.renote as misskey.entities.Note : note);
-const isMyRenote = $i && ($i.id === note.userId);
+let appearNote = $computed(() =>
+	isRenote ? (note.renote as misskey.entities.Note) : note
+);
+const isMyRenote = $i && $i.id === note.userId;
 const showContent = ref(defaultStore.state.autoShowCw);
 const isDeleted = ref(false);
-const muted = ref(checkWordMute(appearNote, $i, defaultStore.state.mutedWords));
+const muted = ref(getWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
-const urls = appearNote.text ? extractUrlFromMfm(mfm.parse(appearNote.text)).slice(0, 5) : null;
-const showTicker = (defaultStore.state.instanceTicker === 'always') || (defaultStore.state.instanceTicker === 'remote' && appearNote.user.instance);
+const urls = appearNote.text
+	? extractUrlFromMfm(mfm.parse(appearNote.text)).slice(0, 5)
+	: null;
+const showTicker =
+	defaultStore.state.instanceTicker === "always" ||
+	(defaultStore.state.instanceTicker === "remote" &&
+		appearNote.user.instance);
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
@@ -203,12 +375,12 @@ const repliesDepth = defaultStore.state.repliesDepth;
 let isScrolling;
 
 const keymap = {
-	'r': () => reply(true),
-	'e|a|plus': () => react(true),
-	'q': () => renoteButton.value.renote(true),
-	'esc': blur,
-	'm|o': () => menu(true),
-	's': () => showContent.value !== showContent.value,
+	r: () => reply(true),
+	"e|a|plus": () => react(true),
+	q: () => renoteButton.value.renote(true),
+	esc: blur,
+	"m|o": () => menu(true),
+	s: () => showContent.value !== showContent.value,
 };
 
 useNoteCapture({
@@ -219,74 +391,106 @@ useNoteCapture({
 
 function reply(viaKeyboard = false): void {
 	pleaseLogin();
-	os.post({
-		reply: appearNote,
-		animation: !viaKeyboard,
-	}, () => {
-		focus();
-	});
+	os.post(
+		{
+			reply: appearNote,
+			animation: !viaKeyboard,
+		},
+		() => {
+			focus();
+		}
+	);
 }
 
 function react(viaKeyboard = false): void {
 	pleaseLogin();
 	blur();
-	reactionPicker.show(reactButton.value, reaction => {
-		os.api('notes/reactions/create', {
-			noteId: appearNote.id,
-			reaction: reaction,
-		});
-	}, () => {
-		focus();
-	});
+	reactionPicker.show(
+		reactButton.value,
+		(reaction) => {
+			os.api("notes/reactions/create", {
+				noteId: appearNote.id,
+				reaction: reaction,
+			});
+		},
+		() => {
+			focus();
+		}
+	);
 }
 
 function undoReact(note): void {
 	const oldReaction = note.myReaction;
 	if (!oldReaction) return;
-	os.api('notes/reactions/delete', {
+	os.api("notes/reactions/delete", {
 		noteId: note.id,
 	});
 }
 
 function onContextmenu(ev: MouseEvent): void {
 	const isLink = (el: HTMLElement) => {
-		if (el.tagName === 'A') return true;
+		if (el.tagName === "A") return true;
 		if (el.parentElement) {
 			return isLink(el.parentElement);
 		}
 	};
 	if (isLink(ev.target)) return;
-	if (window.getSelection().toString() !== '') return;
+	if (window.getSelection().toString() !== "") return;
 
 	if (defaultStore.state.useReactionPickerForContextMenu) {
 		ev.preventDefault();
 		react();
 	} else {
-		os.contextMenu(getNoteMenu({ note: note, translating, translation, menuButton, isDeleted }), ev).then(focus);
+		os.contextMenu(
+			getNoteMenu({
+				note: note,
+				translating,
+				translation,
+				menuButton,
+				isDeleted,
+			}),
+			ev
+		).then(focus);
 	}
 }
 
 function menu(viaKeyboard = false): void {
-	os.popupMenu(getNoteMenu({ note: note, translating, translation, menuButton, isDeleted }), menuButton.value, {
-		viaKeyboard,
-	}).then(focus);
+	os.popupMenu(
+		getNoteMenu({
+			note: note,
+			translating,
+			translation,
+			menuButton,
+			isDeleted,
+		}),
+		menuButton.value,
+		{
+			viaKeyboard,
+		}
+	).then(focus);
 }
 
 function showRenoteMenu(viaKeyboard = false): void {
 	if (!isMyRenote) return;
-	os.popupMenu([{
-		text: i18n.ts.unrenote,
-		icon: 'ph-trash ph-bold ph-lg',
-		danger: true,
-		action: () => {
-			os.api('notes/delete', {
-				noteId: note.id,
-			});
-			isDeleted.value = true;
-		},
-	}], renoteTime.value, {
-		viaKeyboard: viaKeyboard,
-	});
+	os.popupMenu(
+		[
+			{
+				text: i18n.ts.unrenote,
+				icon: "ph-trash ph-bold ph-lg",
+				danger: true,
+				action: () => {
+					os.api("notes/delete", {
+						noteId: note.id,
+					});
+					isDeleted.value = true;
+				},
+			},
+		],
+		renoteTime.value,
+		{
+			viaKeyboard: viaKeyboard,
+		}
+	);
 }
 
 function focus() {
@@ -297,20 +501,26 @@ function blur() {
 	noteEl.blur();
 }
 
-os.api('notes/children', {
+os.api("notes/children", {
 	noteId: appearNote.id,
 	limit: 30,
 	depth: repliesDepth + 1,
-}).then(res => {
+}).then((res) => {
 	replies.value = res;
-	directReplies.value = res.filter(note => note.replyId === appearNote.id || note.renoteId === appearNote.id).reverse();
+	directReplies.value = res
+		.filter(
+			(note) =>
+				note.replyId === appearNote.id ||
+				note.renoteId === appearNote.id
+		)
+		.reverse();
 });
 
 if (appearNote.replyId) {
-	os.api('notes/conversation', {
+	os.api("notes/conversation", {
 		noteId: appearNote.replyId,
 		limit: 30,
-	}).then(res => {
+	}).then((res) => {
 		conversation.value = res.reverse();
 		focus();
 	});
@@ -318,24 +528,23 @@ if (appearNote.replyId) {
 
 function onNoteReplied(noteData: NoteUpdatedEvent): void {
 	const { type, id, body } = noteData;
-	if (type === 'replied' && id === appearNote.id) {
+	if (type === "replied" && id === appearNote.id) {
 		const { id: createdId } = body;
 
-		os.api('notes/show', {
+		os.api("notes/show", {
 			noteId: createdId,
-		}).then(note => {
+		}).then((note) => {
 			if (note.replyId === appearNote.id) {
 				replies.value.unshift(note);
 				directReplies.value.unshift(note);
 			}
 		});
 	}
-	
 }
 
 document.addEventListener("wheel", () => {
 	isScrolling = true;
-})
+});
 
 onMounted(() => {
 	stream.on("noteUpdated", onNoteReplied);
@@ -345,18 +554,18 @@ onMounted(() => {
 
 onUpdated(() => {
 	if (!isScrolling) {
-		noteEl.scrollIntoView()
+		noteEl.scrollIntoView();
 	}
-})
+});
 
 onUnmounted(() => {
 	stream.off("noteUpdated", onNoteReplied);
 });
-
 </script>
 
 <style lang="scss" scoped>
 .lxwezrsl {
+	font-size: 1.05em;
 	position: relative;
 	transition: box-shadow 0.1s ease;
 	contain: content;
@@ -456,7 +665,7 @@ onUnmounted(() => {
 		&:last-child {
 			padding-bottom: 24px;
 		}
-		font-size: 1.2em;
+		font-size: 1.1em;
 		overflow: clip;
 		outline: none;
 		scroll-margin-top: calc(var(--stickyTop) + 20vh);
@@ -559,8 +768,9 @@ onUnmounted(() => {
 							padding: 16px;
 							border: solid 1px var(--renote);
 							border-radius: 8px;
-							transition: background .2s;
-							&:hover, &:focus-within {
+							transition: background 0.2s;
+							&:hover,
+							&:focus-within {
 								background-color: var(--panelHighlight);
 							}
 						}
@@ -618,7 +828,10 @@ onUnmounted(() => {
 	}
 
 	// Hover
-	.reply :deep(.main), .reply-to, .reply-to-more, :deep(.more) {
+	.reply :deep(.main),
+	.reply-to,
+	.reply-to-more,
+	:deep(.more) {
 		position: relative;
 		&::before {
 			content: "";
@@ -628,13 +841,14 @@ onUnmounted(() => {
 			background: var(--panelHighlight);
 			border-radius: var(--radius);
 			opacity: 0;
-			transition: opacity .2s;
+			transition: opacity 0.2s;
 			z-index: -1;
 		}
-		&.reply-to, &.reply-to-more {
+		&.reply-to,
+		&.reply-to-more {
 			&::before {
 				inset: 0px 8px;
-	}
+			}
 			&:first-of-type::before {
 				top: 12px;
 			}
@@ -652,10 +866,11 @@ onUnmounted(() => {
 		&.more::before {
 			inset: 0 !important;
 		}
-		&:hover, &:focus-within {
+		&:hover,
+		&:focus-within {
 			&::before {
 				opacity: 1;
-	}
+			}
 		}
 		// @media (pointer: coarse) {
 		// 	&:has(.button:focus-within) {
@@ -668,14 +883,12 @@ onUnmounted(() => {
 		// 	}
 		// }
 	}
-	
 
 	&.max-width_500px {
 		font-size: 0.9em;
 	}
 
 	&.max-width_450px {
-
 		> .reply-to-more:first-child {
 			padding-top: 14px;
 		}
@@ -709,7 +922,6 @@ onUnmounted(() => {
 		font-size: 0.825em;
 
 		> .article {
-
 			> .main {
 				> .footer {
 					> .button {

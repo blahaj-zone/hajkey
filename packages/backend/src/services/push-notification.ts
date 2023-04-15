@@ -63,6 +63,17 @@ export async function pushNotification<T extends keyof pushNotificationsTypes>(
 	});
 
 	for (const subscription of subscriptions) {
+		if (
+			[
+				"readNotifications",
+				"readAllNotifications",
+				"readAllMessagingMessages",
+				"readAllMessagingMessagesOfARoom",
+			].includes(type) &&
+			!subscription.sendReadMessage
+		)
+			continue;
+
 		const pushSubscription = {
 			endpoint: subscription.endpoint,
 			keys: {

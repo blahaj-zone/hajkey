@@ -75,7 +75,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	if (user) generateBlockedUserQuery(query, user);
 
 	// We fetch more than requested because some may be filtered out, and if there's less than
-	// requested, the pagination stops. But if there's more nobody cares.
+	// requested, the pagination stops.
 	const found = [];
 	const take = Math.floor(ps.limit * 1.5);
 	let skip = 0;

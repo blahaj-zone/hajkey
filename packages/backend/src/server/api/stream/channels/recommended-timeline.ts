@@ -1,6 +1,6 @@
 import Channel from "../channel.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
-import { checkWordMute } from "@/misc/check-word-mute.js";
+import { getWordMute } from "@/misc/check-word-mute.js";
 import { isUserRelated } from "@/misc/is-user-related.js";
 import { isInstanceMuted } from "@/misc/is-instance-muted.js";
 import type { Packed } from "@/misc/schema.js";
@@ -73,10 +73,10 @@ export default class extends Channel {
 		// TODO: 将来的には、単にMutedNoteテーブルにレコードがあるかどうかで判定したい(以下の理由により難しそうではある)
 		// 現状では、ワードミュートにおけるMutedNoteレコードの追加処理はストリーミングに流す処理と並列で行われるため、
 		// レコードが追加されるNoteでも追加されるより先にここのストリーミングの処理に到達することが起こる。
-		// そのためレコードが存在するかのチェックでは不十分なので、改めてcheckWordMuteを呼んでいる
+		// そのためレコードが存在するかのチェックでは不十分なので、改めてgetWordMuteを呼んでいる
 		if (
 			this.userProfile &&
-			(await checkWordMute(note, this.user, this.userProfile.mutedWords))
+			(await getWordMute(note, this.user, this.userProfile.mutedWords)).muted
 		)
 			return;
 

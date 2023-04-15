@@ -1,41 +1,57 @@
 <template>
-<MkA :to="`/channels/${channel.id}`" class="eftoefju _panel" tabindex="-1">
-	<div class="banner" :style="bannerStyle">
-		<div class="fade"></div>
-		<div class="name"><i class="ph-television ph-bold ph-lg"></i> {{ channel.name }}</div>
-		<div class="status">
-			<div>
-				<i class="ph-users ph-bold ph-lg ph-fw ph-lg"></i>
-				<I18n :src="i18n.ts._channel.usersCount" tag="span" style="margin-left: 4px;">
-					<template #n>
-						<b>{{ channel.usersCount }}</b>
-					</template>
-				</I18n>
+	<MkA :to="`/channels/${channel.id}`" class="eftoefju _panel" tabindex="-1">
+		<div class="banner" :style="bannerStyle">
+			<div class="fade"></div>
+			<div class="name">
+				<i class="ph-television ph-bold ph-lg"></i> {{ channel.name }}
 			</div>
-			<div>
-				<i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i>
-				<I18n :src="i18n.ts._channel.notesCount" tag="span" style="margin-left: 4px;">
-					<template #n>
-						<b>{{ channel.notesCount }}</b>
-					</template>
-				</I18n>
+			<div class="status">
+				<div>
+					<i class="ph-users ph-bold ph-lg ph-fw ph-lg"></i>
+					<I18n
+						:src="i18n.ts._channel.usersCount"
+						tag="span"
+						style="margin-left: 4px"
+					>
+						<template #n>
+							<b>{{ channel.usersCount }}</b>
+						</template>
+					</I18n>
+				</div>
+				<div>
+					<i class="ph-pencil ph-bold ph-lg ph-fw ph-lg"></i>
+					<I18n
+						:src="i18n.ts._channel.notesCount"
+						tag="span"
+						style="margin-left: 4px"
+					>
+						<template #n>
+							<b>{{ channel.notesCount }}</b>
+						</template>
+					</I18n>
+				</div>
 			</div>
 		</div>
-	</div>
-	<article v-if="channel.description">
-		<p :title="channel.description">{{ channel.description.length > 85 ? channel.description.slice(0, 85) + '…' : channel.description }}</p>
-	</article>
-	<footer>
-		<span v-if="channel.lastNotedAt">
-			{{ i18n.ts.updatedAt }}: <MkTime :time="channel.lastNotedAt"/>
-		</span>
-	</footer>
-</MkA>
+		<article v-if="channel.description">
+			<p :title="channel.description">
+				{{
+					channel.description.length > 85
+						? channel.description.slice(0, 85) + "…"
+						: channel.description
+				}}
+			</p>
+		</article>
+		<footer>
+			<span v-if="channel.lastNotedAt">
+				{{ i18n.ts.updatedAt }}: <MkTime :time="channel.lastNotedAt" />
+			</span>
+		</footer>
+	</MkA>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { i18n } from '@/i18n';
+import { computed } from "vue";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	channel: Record<string, any>;
@@ -45,7 +61,7 @@ const bannerStyle = computed(() => {
 	if (props.channel.bannerUrl) {
 		return { backgroundImage: `url(${props.channel.bannerUrl})` };
 	} else {
-		return { backgroundColor: '#4c5e6d' };
+		return { backgroundColor: "#4c5e6d" };
 	}
 });
 </script>
@@ -155,5 +171,4 @@ const bannerStyle = computed(() => {
 		}
 	}
 }
-
 </style>

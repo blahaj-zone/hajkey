@@ -1,34 +1,41 @@
 <template>
-<div class="ffcbddfc" :class="{ inline }">
-	<a v-if="external" class="main _button" :href="to" target="_blank">
-		<span class="icon"><slot name="icon"></slot></span>
-		<span class="text"><slot></slot></span>
-		<span class="right">
-			<span class="text"><slot name="suffix"></slot></span>
-			<i class="ph-arrow-square-out ph-bold ph-lg icon"></i>
-		</span>
-	</a>
-	<MkA v-else class="main _button" :class="{ active }" :to="to" :behavior="behavior" :callback="callback">
-		<span class="icon"><slot name="icon"></slot></span>
-		<span class="text"><slot></slot></span>
-		<span class="right">
-			<span class="text"><slot name="suffix"></slot></span>
-			<i class="ph-caret-right ph-bold ph-lg icon"></i>
-		</span>
-	</MkA>
-</div>
+	<div class="ffcbddfc" :class="{ inline }">
+		<a v-if="external" class="main _button" :href="to" target="_blank">
+			<span class="icon"><slot name="icon"></slot></span>
+			<span class="text"><slot></slot></span>
+			<span class="right">
+				<span class="text"><slot name="suffix"></slot></span>
+				<i class="ph-arrow-square-out ph-bold ph-lg icon"></i>
+			</span>
+		</a>
+		<MkA
+			v-else
+			class="main _button"
+			:class="{ active }"
+			:to="to"
+			:behavior="behavior"
+			:callback="callback"
+		>
+			<span class="icon"><slot name="icon"></slot></span>
+			<span class="text"><slot></slot></span>
+			<span class="right">
+				<span class="text"><slot name="suffix"></slot></span>
+				<i class="ph-caret-right ph-bold ph-lg icon"></i>
+			</span>
+		</MkA>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
+import {} from "vue";
 
 const props = defineProps<{
 	to: string;
 	active?: boolean;
 	external?: boolean;
-	behavior?: null | 'window' | 'browser' | 'modalWindow';
+	behavior?: null | "window" | "browser" | "modalWindow";
 	inline?: boolean;
-	callback?: ((ev: MouseEvent) => Promise<boolean | string>);
+	callback?: (ev: MouseEvent) => Promise<boolean | string>;
 }>();
 </script>
 

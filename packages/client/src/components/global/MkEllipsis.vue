@@ -24,7 +24,9 @@
 }
 
 @keyframes ellipsis {
-	0%, 80%, 100% {
+	0%,
+	80%,
+	100% {
 		opacity: 1;
 	}
 	40% {

@@ -1,22 +1,22 @@
 <template>
-<div v-size="{ min: [350, 500] }" class="fefdfafb">
-	<MkAvatar class="avatar" :user="$i"/>
-	<div class="main">
-		<div class="header">
-			<MkUserName :user="$i"/>
-		</div>
-		<div class="body">
-			<div class="content">
-				<Mfm :text="preprocess(text).trim()" :author="$i" :i="$i"/>
+	<div v-size="{ min: [350, 500] }" class="fefdfafb">
+		<MkAvatar class="avatar" :user="$i" />
+		<div class="main">
+			<div class="header">
+				<MkUserName :user="$i" />
+			</div>
+			<div class="body">
+				<div class="content">
+					<Mfm :text="preprocess(text).trim()" :author="$i" :i="$i" />
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import { preprocess } from '@/scripts/preprocess';
+import {} from "vue";
+import { preprocess } from "@/scripts/preprocess";
 
 const props = defineProps<{
 	text: string;
@@ -67,7 +67,6 @@ const props = defineProps<{
 		}
 
 		> .body {
-
 			> .cw {
 				cursor: default;
 				display: block;

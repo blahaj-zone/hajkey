@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import { comparePassword } from "@/misc/password.js";
 import define from "../../../define.js";
 import { UserProfiles, UserSecurityKeys, Users } from "@/models/index.js";
 import { publishMainStream } from "@/services/stream.js";
@@ -22,7 +22,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	const profile = await UserProfiles.findOneByOrFail({ userId: user.id });
 
 	// Compare password
-	const same = await bcrypt.compare(ps.password, profile.password!);
+	const same = await comparePassword(ps.password, profile.password!);
 
 	if (!same) {
 		throw new Error("incorrect password");

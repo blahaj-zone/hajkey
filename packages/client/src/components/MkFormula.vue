@@ -1,14 +1,16 @@
 <template>
-<XFormula :formula="formula" :block="block"/>
+	<XFormula :formula="formula" :block="block" />
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from 'vue';
-import * as os from '@/os';
+import { defineComponent, defineAsyncComponent } from "vue";
+import * as os from "@/os";
 
 export default defineComponent({
 	components: {
-		XFormula: defineAsyncComponent(() => import('@/components/MkFormulaCore.vue')),
+		XFormula: defineAsyncComponent(
+			() => import("@/components/MkFormulaCore.vue")
+		),
 	},
 	props: {
 		formula: {

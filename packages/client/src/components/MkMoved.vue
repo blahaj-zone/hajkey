@@ -1,14 +1,17 @@
 <template>
-<div class="msjugskd _block">
-	<i class="ph-airplane-takeoff ph-bold ph-lg" style="margin-right: 8px;"/>
-	{{ i18n.ts.accountMoved }}
-	<MkMention class="link" :username="acct" :host="host"/>
-</div>
+	<div class="msjugskd _block">
+		<i
+			class="ph-airplane-takeoff ph-bold ph-lg"
+			style="margin-right: 8px"
+		/>
+		{{ i18n.ts.accountMoved }}
+		<MkMention class="link" :username="acct" :host="host" />
+	</div>
 </template>
 
 <script lang="ts" setup>
-import MkMention from './MkMention.vue';
-import { i18n } from '@/i18n';
+import MkMention from "./MkMention.vue";
+import { i18n } from "@/i18n";
 
 defineProps<{
 	acct: string;

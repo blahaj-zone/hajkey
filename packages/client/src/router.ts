@@ -461,6 +461,11 @@ export const routes = [
 				component: page(() => import("./pages/admin/users.vue")),
 			},
 			{
+				path: "/hashtags",
+				name: "hashtags",
+				component: page(() => import("./pages/admin/hashtags.vue")),
+			},
+			{
 				path: "/emojis",
 				name: "emojis",
 				component: page(() => import("./pages/admin/emojis.vue")),

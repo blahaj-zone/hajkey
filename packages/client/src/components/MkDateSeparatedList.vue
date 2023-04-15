@@ -1,19 +1,21 @@
 <script lang="ts">
-import { defineComponent, h, PropType, TransitionGroup } from 'vue';
-import MkAd from '@/components/global/MkAd.vue';
-import { i18n } from '@/i18n';
-import { defaultStore } from '@/store';
+import { defineComponent, h, PropType, TransitionGroup } from "vue";
+import MkAd from "@/components/global/MkAd.vue";
+import { i18n } from "@/i18n";
+import { defaultStore } from "@/store";
 
 export default defineComponent({
 	props: {
 		items: {
-			type: Array as PropType<{ id: string; createdAt: string; _shouldInsertAd_: boolean; }[]>,
+			type: Array as PropType<
+				{ id: string; createdAt: string; _shouldInsertAd_: boolean }[]
+			>,
 			required: true,
 		},
 		direction: {
 			type: String,
 			required: false,
-			default: 'down',
+			default: "down",
 		},
 		reversed: {
 			type: Boolean,
@@ -36,7 +38,7 @@ export default defineComponent({
 		function getDateText(time: string) {
 			const date = new Date(time).getDate();
 			const month = new Date(time).getMonth() + 1;
-			return i18n.t('monthAndDay', {
+			return i18n.t("monthAndDay", {
 				month: month.toString(),
 				day: date.toString(),
 			});
@@ -44,64 +46,81 @@ export default defineComponent({
 
 		if (props.items.length === 0) return;
 
-		const renderChildren = () => props.items.map((item, i) => {
-			if (!slots || !slots.default) return;
+		const renderChildren = () =>
+			props.items.map((item, i) => {
+				if (!slots || !slots.default) return;
 
-			const el = slots.default({
-				item: item,
-			})[0];
-			if (el.key == null && item.id) el.key = item.id;
+				const el = slots.default({
+					item: item,
+				})[0];
+				if (el.key == null && item.id) el.key = item.id;
 
-			if (
-				i !== props.items.length - 1 &&
-				new Date(item.createdAt).getDate() !== new Date(props.items[i + 1].createdAt).getDate()
-			) {
-				const separator = h('div', {
-					class: 'separator',
-					key: item.id + ':separator',
-				}, h('p', {
-					class: 'date',
-				}, [
-					h('span', [
-						h('i', {
-							class: 'ph-caret-up ph-bold ph-lg icon',
-						}),
-						getDateText(item.createdAt),
-					]),
-					h('span', [
-						getDateText(props.items[i + 1].createdAt),
-						h('i', {
-							class: 'ph-caret-down ph-bold ph-lg icon',
-						}),
-					]),
-				]));
+				if (
+					i !== props.items.length - 1 &&
+					new Date(item.createdAt).getDate() !==
+						new Date(props.items[i + 1].createdAt).getDate()
+				) {
+					const separator = h(
+						"div",
+						{
+							class: "separator",
+							key: item.id + ":separator",
+						},
+						h(
+							"p",
+							{
+								class: "date",
+							},
+							[
+								h("span", [
+									h("i", {
+										class: "ph-caret-up ph-bold ph-lg icon",
+									}),
+									getDateText(item.createdAt),
+								]),
+								h("span", [
+									getDateText(props.items[i + 1].createdAt),
+									h("i", {
+										class: "ph-caret-down ph-bold ph-lg icon",
+									}),
+								]),
+							]
+						)
+					);
 
-				return [el, separator];
-			} else {
-				if (props.ad && item._shouldInsertAd_) {
-					return [h(MkAd, {
-						class: 'a', // advertiseの意(ブロッカー対策)
-						key: item.id + ':ad',
-						prefer: ['horizontal', 'horizontal-big'],
-					}), el];
+					return [el, separator];
 				} else {
-					return el;
+					if (props.ad && item._shouldInsertAd_) {
+						return [
+							h(MkAd, {
+								class: "a", // advertiseの意(ブロッカー対策)
+								key: item.id + ":ad",
+								prefer: ["horizontal", "horizontal-big"],
+							}),
+							el,
+						];
+					} else {
+						return el;
+					}
 				}
-			}
-		});
+			});
 
-		return () => h(
-			defaultStore.state.animation ? TransitionGroup : 'div',
-			defaultStore.state.animation ? {
-				class: 'sqadhkmv' + (props.noGap ? ' noGap' : ''),
-				name: 'list',
-				tag: 'div',
-				'data-direction': props.direction,
-				'data-reversed': props.reversed ? 'true' : 'false',
-			} : {
-				class: 'sqadhkmv' + (props.noGap ? ' noGap' : ''),
-			},
-			{ default: renderChildren });
+		return () =>
+			h(
+				defaultStore.state.animation ? TransitionGroup : "div",
+				defaultStore.state.animation
+					? {
+							class: "sqadhkmv" + (props.noGap ? " noGap" : ""),
+							name: "list",
+							tag: "div",
+							"data-direction": props.direction,
+							"data-reversed": props.reversed ? "true" : "false",
+					  }
+					: {
+							class: "sqadhkmv" + (props.noGap ? " noGap" : ""),
+					  },
+				{ default: renderChildren }
+			);
 	},
 });
 </script>
@@ -121,7 +140,8 @@ export default defineComponent({
 	}
 
 	> .list-enter-active {
-		transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+		transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+			opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 	}
 
 	&[data-direction="up"] {

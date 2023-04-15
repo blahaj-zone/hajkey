@@ -1,39 +1,58 @@
 <template>
-<MkContainer :show-header="widgetProps.showHeader" class="mkw-aiscript">
-	<template #header><i class="ph-terminal-window ph-bold ph-lg"></i>{{ i18n.ts._widgets.aiscript }}</template>
+	<MkContainer :show-header="widgetProps.showHeader" class="mkw-aiscript">
+		<template #header
+			><i class="ph-terminal-window ph-bold ph-lg"></i
+			>{{ i18n.ts._widgets.aiscript }}</template
+		>
 
-	<div class="uylguesu _monospace">
-		<textarea v-model="widgetProps.script" placeholder="(1 + 1)"></textarea>
-		<button class="_buttonPrimary" @click="run">RUN</button>
-		<div class="logs">
-			<div v-for="log in logs" :key="log.id" class="log" :class="{ print: log.print }">{{ log.text }}</div>
+		<div class="uylguesu _monospace">
+			<textarea
+				v-model="widgetProps.script"
+				placeholder="(1 + 1)"
+			></textarea>
+			<button class="_buttonPrimary" @click="run">RUN</button>
+			<div class="logs">
+				<div
+					v-for="log in logs"
+					:key="log.id"
+					class="log"
+					:class="{ print: log.print }"
+				>
+					{{ log.text }}
+				</div>
+			</div>
 		</div>
-	</div>
-</MkContainer>
+	</MkContainer>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { AiScript, parse, utils } from '@syuilo/aiscript';
-import { useWidgetPropsManager, Widget, WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from './widget';
-import { GetFormResultType } from '@/scripts/form';
-import * as os from '@/os';
-import MkContainer from '@/components/MkContainer.vue';
-import { createAiScriptEnv } from '@/scripts/aiscript/api';
-import { $i } from '@/account';
-import { i18n } from '@/i18n';
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import { AiScript, parse, utils } from "@syuilo/aiscript";
+import {
+	useWidgetPropsManager,
+	Widget,
+	WidgetComponentEmits,
+	WidgetComponentExpose,
+	WidgetComponentProps,
+} from "./widget";
+import { GetFormResultType } from "@/scripts/form";
+import * as os from "@/os";
+import MkContainer from "@/components/MkContainer.vue";
+import { createAiScriptEnv } from "@/scripts/aiscript/api";
+import { $i } from "@/account";
+import { i18n } from "@/i18n";
 
-const name = 'aiscript';
+const name = "aiscript";
 
 const widgetPropsDef = {
 	showHeader: {
-		type: 'boolean' as const,
+		type: "boolean" as const,
 		default: true,
 	},
 	script: {
-		type: 'string' as const,
+		type: "string" as const,
 		multiline: true,
-		default: '(1 + 1)',
+		default: "(1 + 1)",
 		hidden: true,
 	},
 };
@@ -43,62 +62,74 @@ type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
 //const props = defineProps<WidgetComponentProps<WidgetProps>>();
 //const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
-const props = defineProps<{ widget?: Widget<WidgetProps>; }>();
-const emit = defineEmits<{ (ev: 'updateProps', props: WidgetProps); }>();
+const props = defineProps<{ widget?: Widget<WidgetProps> }>();
+const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
-const { widgetProps, configure } = useWidgetPropsManager(name,
+const { widgetProps, configure } = useWidgetPropsManager(
+	name,
 	widgetPropsDef,
 	props,
-	emit,
+	emit
 );
 
-const logs = ref<{
-	id: string;
-	text: string;
-	print: boolean;
-}[]>([]);
+const logs = ref<
+	{
+		id: string;
+		text: string;
+		print: boolean;
+	}[]
+>([]);
 
 const run = async () => {
 	logs.value = [];
-	const aiscript = new AiScript(createAiScriptEnv({
-		storageKey: 'widget',
-		token: $i?.token,
-	}), {
-		in: (q) => {
-			return new Promise(ok => {
-				os.inputText({
-					title: q,
-				}).then(({ canceled, result: a }) => {
-					ok(a);
+	const aiscript = new AiScript(
+		createAiScriptEnv({
+			storageKey: "widget",
+			token: $i?.token,
+		}),
+		{
+			in: (q) => {
+				return new Promise((ok) => {
+					os.inputText({
+						title: q,
+					}).then(({ canceled, result: a }) => {
+						ok(a);
+					});
 				});
-			});
-		},
-		out: (value) => {
-			logs.value.push({
-				id: Math.random().toString(),
-				text: value.type === 'str' ? value.value : utils.valToString(value),
-				print: true,
-			});
-		},
-		log: (type, params) => {
-			switch (type) {
-				case 'end': logs.value.push({
+			},
+			out: (value) => {
+				logs.value.push({
 					id: Math.random().toString(),
-					text: utils.valToString(params.val, true),
-					print: false,
-				}); break;
-				default: break;
-			}
-		},
-	});
+					text:
+						value.type === "str"
+							? value.value
+							: utils.valToString(value),
+					print: true,
+				});
+			},
+			log: (type, params) => {
+				switch (type) {
+					case "end":
+						logs.value.push({
+							id: Math.random().toString(),
+							text: utils.valToString(params.val, true),
+							print: false,
+						});
+						break;
+					default:
+						break;
+				}
+			},
+		}
+	);
 
 	let ast;
 	try {
 		ast = parse(widgetProps.script);
 	} catch (err) {
 		os.alert({
-			type: 'error',
-			text: 'Syntax error :(',
+			type: "error",
+			text: "Syntax error :(",
 		});
 		return;
 	}
@@ -106,7 +137,7 @@ const run = async () => {
 		await aiscript.exec(ast);
 	} catch (err) {
 		os.alert({
-			type: 'error',
+			type: "error",
 			text: err,
 		});
 	}

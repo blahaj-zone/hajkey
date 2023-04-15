@@ -1,17 +1,26 @@
 <template>
-<Mfm :class="$style.root" :text="user.name || user.username" :plain="true" :nowrap="nowrap" :custom-emojis="user.emojis"/>
+	<Mfm
+		:class="$style.root"
+		:text="user.name || user.username"
+		:plain="true"
+		:nowrap="nowrap"
+		:custom-emojis="user.emojis"
+	/>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import * as misskey from 'calckey-js';
+import {} from "vue";
+import * as misskey from "calckey-js";
 
-const props = withDefaults(defineProps<{
-	user: misskey.entities.User;
-	nowrap?: boolean;
-}>(), {
-	nowrap: true,
-});
+const props = withDefaults(
+	defineProps<{
+		user: misskey.entities.User;
+		nowrap?: boolean;
+	}>(),
+	{
+		nowrap: true,
+	}
+);
 </script>
 
 <style lang="scss" module>

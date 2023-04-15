@@ -1,62 +1,171 @@
 <template>
-	<MkModal ref="modal" :prefer-type="'dialog'" :z-priority="'high'" @click="done(true)" @closed="emit('closed')">
+	<MkModal
+		ref="modal"
+		:prefer-type="'dialog'"
+		:z-priority="'high'"
+		@click="done(true)"
+		@closed="emit('closed')"
+	>
 		<div :class="$style.root">
 			<div v-if="icon" :class="$style.icon">
 				<i :class="icon"></i>
 			</div>
-			<div v-else-if="!input && !select" :class="[$style.icon, $style['type_' + type]]">
-				<i v-if="type === 'success'" :class="$style.iconInner" class="ph-check ph-bold ph-lg"></i>
-				<i v-else-if="type === 'error'" :class="$style.iconInner" class="ph-circle-wavy-warning ph-bold ph-lg"></i>
-				<i v-else-if="type === 'warning'" :class="$style.iconInner" class="ph-warning ph-bold ph-lg"></i>
-				<i v-else-if="type === 'info'" :class="$style.iconInner" class="ph-info ph-bold ph-lg"></i>
-				<i v-else-if="type === 'question'" :class="$style.iconInner" class="ph-circle-question ph-bold ph-lg"></i>
-				<MkLoading v-else-if="type === 'waiting'" :class="$style.iconInner" :em="true"/>
+			<div
+				v-else-if="!input && !select"
+				:class="[$style.icon, $style['type_' + type]]"
+			>
+				<i
+					v-if="type === 'success'"
+					:class="$style.iconInner"
+					class="ph-check ph-bold ph-lg"
+				></i>
+				<i
+					v-else-if="type === 'error'"
+					:class="$style.iconInner"
+					class="ph-circle-wavy-warning ph-bold ph-lg"
+				></i>
+				<i
+					v-else-if="type === 'warning'"
+					:class="$style.iconInner"
+					class="ph-warning ph-bold ph-lg"
+				></i>
+				<i
+					v-else-if="type === 'info'"
+					:class="$style.iconInner"
+					class="ph-info ph-bold ph-lg"
+				></i>
+				<i
+					v-else-if="type === 'question'"
+					:class="$style.iconInner"
+					class="ph-circle-question ph-bold ph-lg"
+				></i>
+				<MkLoading
+					v-else-if="type === 'waiting'"
+					:class="$style.iconInner"
+					:em="true"
+				/>
 			</div>
-			<header v-if="title" :class="$style.title"><Mfm :text="title"/></header>
-			<div v-if="text" :class="$style.text"><Mfm :text="text"/></div>
-			<MkInput v-if="input && input.type !== 'paragraph'" v-model="inputValue" autofocus :type="input.type || 'text'" :placeholder="input.placeholder || undefined" @keydown="onInputKeydown">
-				<template v-if="input.type === 'password'" #prefix><i class="ph-password ph-bold ph-lg"></i></template>
+			<header v-if="title" :class="$style.title">
+				<Mfm :text="title" />
+			</header>
+			<header
+				v-if="title == null && input && input.type === 'password'"
+				:class="$style.title"
+			>
+				<Mfm :text="i18n.ts.password" />
+			</header>
+			<div v-if="text" :class="$style.text"><Mfm :text="text" /></div>
+			<MkInput
+				v-if="input && input.type !== 'paragraph'"
+				v-model="inputValue"
+				autofocus
+				:type="input.type || 'text'"
+				:placeholder="input.placeholder || undefined"
+				@keydown="onInputKeydown"
+			>
+				<template v-if="input.type === 'password'" #prefix
+					><i class="ph-password ph-bold ph-lg"></i
+				></template>
 			</MkInput>
-			<MkTextarea v-if="input && input.type === 'paragraph'" v-model="inputValue" autofocus :type="paragraph" :placeholder="input.placeholder || undefined">
+			<MkTextarea
+				v-if="input && input.type === 'paragraph'"
+				v-model="inputValue"
+				autofocus
+				:type="paragraph"
+				:placeholder="input.placeholder || undefined"
+			>
 			</MkTextarea>
 			<MkSelect v-if="select" v-model="selectedValue" autofocus>
 				<template v-if="select.items">
-					<option v-for="item in select.items" :value="item.value">{{ item.text }}</option>
+					<option v-for="item in select.items" :value="item.value">
+						{{ item.text }}
+					</option>
 				</template>
 				<template v-else>
-					<optgroup v-for="groupedItem in select.groupedItems" :label="groupedItem.label">
-						<option v-for="item in groupedItem.items" :value="item.value">{{ item.text }}</option>
+					<optgroup
+						v-for="groupedItem in select.groupedItems"
+						:label="groupedItem.label"
+					>
+						<option
+							v-for="item in groupedItem.items"
+							:value="item.value"
+						>
+							{{ item.text }}
+						</option>
 					</optgroup>
 				</template>
 			</MkSelect>
-			<div v-if="(showOkButton || showCancelButton) && !actions" :class="$style.buttons">
+			<div
+				v-if="(showOkButton || showCancelButton) && !actions"
+				:class="$style.buttons"
+			>
 				<div v-if="!isYesNo">
-					<MkButton v-if="showOkButton" inline primary :autofocus="!input && !select" @click="ok">{{ (showCancelButton || input || select) ? i18n.ts.ok : i18n.ts.gotIt }}</MkButton>
-					<MkButton v-if="showCancelButton || input || select" inline @click="cancel">{{ i18n.ts.cancel }}</MkButton>
+					<MkButton
+						v-if="showOkButton"
+						inline
+						primary
+						:autofocus="!input && !select"
+						@click="ok"
+						>{{
+							showCancelButton || input || select
+								? i18n.ts.ok
+								: i18n.ts.gotIt
+						}}</MkButton
+					>
+					<MkButton
+						v-if="showCancelButton || input || select"
+						inline
+						@click="cancel"
+						>{{ i18n.ts.cancel }}</MkButton
+					>
 				</div>
 				<div v-else>
-					<MkButton v-if="showOkButton" inline primary :autofocus="!input && !select" @click="ok">{{ i18n.ts.yes }}</MkButton>
-					<MkButton v-if="showCancelButton || input || select" inline @click="cancel">{{ i18n.ts.no }}</MkButton>
+					<MkButton
+						v-if="showOkButton"
+						inline
+						primary
+						:autofocus="!input && !select"
+						@click="ok"
+						>{{ i18n.ts.yes }}</MkButton
+					>
+					<MkButton
+						v-if="showCancelButton || input || select"
+						inline
+						@click="cancel"
+						>{{ i18n.ts.no }}</MkButton
+					>
 				</div>
 			</div>
 			<div v-if="actions" :class="$style.buttons">
-				<MkButton v-for="action in actions" :key="action.text" inline :primary="action.primary" @click="() => { action.callback(); modal?.close(); }">{{ action.text }}</MkButton>
+				<MkButton
+					v-for="action in actions"
+					:key="action.text"
+					inline
+					:primary="action.primary"
+					@click="
+						() => {
+							action.callback();
+							modal?.close();
+						}
+					"
+					>{{ action.text }}</MkButton
+				>
 			</div>
 		</div>
 	</MkModal>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
-import MkModal from '@/components/MkModal.vue';
-import MkButton from '@/components/MkButton.vue';
-import MkInput from '@/components/form/input.vue';
-import MkTextarea from '@/components/form/textarea.vue';
-import MkSelect from '@/components/form/select.vue';
-import { i18n } from '@/i18n';
+import { onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import MkModal from "@/components/MkModal.vue";
+import MkButton from "@/components/MkButton.vue";
+import MkInput from "@/components/form/input.vue";
+import MkTextarea from "@/components/form/textarea.vue";
+import MkSelect from "@/components/form/select.vue";
+import { i18n } from "@/i18n";
 
 type Input = {
-	type: HTMLInputElement['type'];
+	type: HTMLInputElement["type"];
 	placeholder?: string | null;
 	default: any | null;
 };
@@ -76,37 +185,46 @@ type Select = {
 	default: string | null;
 };
 
-const props = withDefaults(defineProps<{
-	type?: 'success' | 'error' | 'warning' | 'info' | 'question' | 'waiting';
-	title: string;
-	text?: string;
-	input?: Input;
-	select?: Select;
-	icon?: string;
-	actions?: {
-		text: string;
-		primary?: boolean,
-		callback: (...args: any[]) => void;
-	}[];
-	showOkButton?: boolean;
-	showCancelButton?: boolean;
-	isYesNo?: boolean;
+const props = withDefaults(
+	defineProps<{
+		type?:
+			| "success"
+			| "error"
+			| "warning"
+			| "info"
+			| "question"
+			| "waiting";
+		title: string;
+		text?: string;
+		input?: Input;
+		select?: Select;
+		icon?: string;
+		actions?: {
+			text: string;
+			primary?: boolean;
+			callback: (...args: any[]) => void;
+		}[];
+		showOkButton?: boolean;
+		showCancelButton?: boolean;
+		isYesNo?: boolean;
 
-	cancelableByBgClick?: boolean;
-	okText?: string;
-	cancelText?: string;
-}>(), {
-	type: 'info',
-	showOkButton: true,
-	showCancelButton: false,
-	isYesNo: false,
+		cancelableByBgClick?: boolean;
+		okText?: string;
+		cancelText?: string;
+	}>(),
+	{
+		type: "info",
+		showOkButton: true,
+		showCancelButton: false,
+		isYesNo: false,
 
-	cancelableByBgClick: true,
-});
+		cancelableByBgClick: true,
+	}
+);
 
 const emit = defineEmits<{
-	(ev: 'done', v: { canceled: boolean; result: any }): void;
-	(ev: 'closed'): void;
+	(ev: "done", v: { canceled: boolean; result: any }): void;
+	(ev: "closed"): void;
 }>();
 
 const modal = shallowRef<InstanceType<typeof MkModal>>();
@@ -115,17 +233,18 @@ const inputValue = ref(props.input?.default || null);
 const selectedValue = ref(props.select?.default || null);
 
 function done(canceled: boolean, result?) {
-	emit('done', { canceled, result });
+	emit("done", { canceled, result });
 	modal.value?.close();
 }
 
 async function ok() {
 	if (!props.showOkButton) return;
 
-	const result =
-		props.input ? inputValue.value :
-		props.select ? selectedValue.value :
-		true;
+	const result = props.input
+		? inputValue.value
+		: props.select
+		? selectedValue.value
+		: true;
 	done(false, result);
 }
 
@@ -138,11 +257,11 @@ function onBgClick() {
 }
 */
 function onKeydown(evt: KeyboardEvent) {
-	if (evt.key === 'Escape') cancel();
+	if (evt.key === "Escape") cancel();
 }
 
 function onInputKeydown(evt: KeyboardEvent) {
-	if (evt.key === 'Enter') {
+	if (evt.key === "Enter") {
 		evt.preventDefault();
 		evt.stopPropagation();
 		ok();
@@ -150,11 +269,11 @@ function onInputKeydown(evt: KeyboardEvent) {
 }
 
 onMounted(() => {
-	document.addEventListener('keydown', onKeydown);
+	document.addEventListener("keydown", onKeydown);
 });
 
 onBeforeUnmount(() => {
-	document.removeEventListener('keydown', onKeydown);
+	document.removeEventListener("keydown", onKeydown);
 });
 </script>
 

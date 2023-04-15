@@ -1,45 +1,81 @@
 <template>
-<MkModal ref="modal" @click="done(true)" @closed="$emit('closed')">
-	<div class="container">
-		<div class="fullwidth top-caption">
-			<div class="mk-dialog">
-				<header>
-					<Mfm v-if="title" class="title" :text="title"/>
-					<span class="text-count" :class="{ over: remainingLength < 0 }">{{ remainingLength }}</span>
-					<br/>
-				</header>
-				<textarea id="captioninput" v-model="inputValue" autofocus :placeholder="input.placeholder" @keydown="onInputKeydown"></textarea>
-				<div v-if="(showOkButton || showCaptionButton || showCancelButton)" class="buttons">
-					<MkButton inline primary :disabled="remainingLength < 0" @click="ok">{{ i18n.ts.ok }}</MkButton>
-					<MkButton inline @click="caption">{{ i18n.ts.caption }}</MkButton>
-					<MkButton inline @click="cancel">{{ i18n.ts.cancel }}</MkButton>
+	<MkModal ref="modal" @click="done(true)" @closed="$emit('closed')">
+		<div class="container">
+			<div class="fullwidth top-caption">
+				<div class="mk-dialog">
+					<header>
+						<Mfm v-if="title" class="title" :text="title" />
+						<span
+							class="text-count"
+							:class="{ over: remainingLength < 0 }"
+							>{{ remainingLength }}</span
+						>
+						<br />
+					</header>
+					<textarea
+						id="captioninput"
+						v-model="inputValue"
+						autofocus
+						:placeholder="input.placeholder"
+						@keydown="onInputKeydown"
+					></textarea>
+					<div
+						v-if="
+							showOkButton ||
+							showCaptionButton ||
+							showCancelButton
+						"
+						class="buttons"
+					>
+						<MkButton
+							inline
+							primary
+							:disabled="remainingLength < 0"
+							@click="ok"
+							>{{ i18n.ts.ok }}</MkButton
+						>
+						<MkButton inline @click="caption">{{
+							i18n.ts.caption
+						}}</MkButton>
+						<MkButton inline @click="cancel">{{
+							i18n.ts.cancel
+						}}</MkButton>
+					</div>
 				</div>
 			</div>
+			<div class="hdrwpsaf fullwidth">
+				<header>{{ image.name }}</header>
+				<img
+					id="imgtocaption"
+					:src="image.url"
+					:alt="image.comment"
+					:title="image.comment"
+					@click="$refs.modal.close()"
+				/>
+				<footer>
+					<span>{{ image.type }}</span>
+					<span>{{ bytes(image.size) }}</span>
+					<span v-if="image.properties && image.properties.width"
+						>{{ number(image.properties.width) }}px ×
+						{{ number(image.properties.height) }}px</span
+					>
+				</footer>
+			</div>
 		</div>
-		<div class="hdrwpsaf fullwidth">
-			<header>{{ image.name }}</header>
-			<img id="imgtocaption" :src="image.url" :alt="image.comment" :title="image.comment" @click="$refs.modal.close()"/>
-			<footer>
-				<span>{{ image.type }}</span>
-				<span>{{ bytes(image.size) }}</span>
-				<span v-if="image.properties && image.properties.width">{{ number(image.properties.width) }}px × {{ number(image.properties.height) }}px</span>
-			</footer>
-		</div>
-	</div>
-</MkModal>
+	</MkModal>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import insertTextAtCursor from 'insert-text-at-cursor';
-import { length } from 'stringz';
-import * as os from '@/os';
-import MkModal from '@/components/MkModal.vue';
-import MkButton from '@/components/MkButton.vue';
-import bytes from '@/filters/bytes';
-import number from '@/filters/number';
-import { i18n } from '@/i18n';
-import { instance } from '@/instance';
+import { defineComponent } from "vue";
+import insertTextAtCursor from "insert-text-at-cursor";
+import { length } from "stringz";
+import * as os from "@/os";
+import MkModal from "@/components/MkModal.vue";
+import MkButton from "@/components/MkButton.vue";
+import bytes from "@/filters/bytes";
+import number from "@/filters/number";
+import { i18n } from "@/i18n";
+import { instance } from "@/instance";
 
 export default defineComponent({
 	components: {
@@ -77,7 +113,7 @@ export default defineComponent({
 		},
 	},
 
-	emits: ['done', 'closed'],
+	emits: ["done", "closed"],
 
 	data() {
 		return {
@@ -91,15 +127,15 @@ export default defineComponent({
 			const maxCaptionLength = instance.maxCaptionTextLength ?? 512;
 			if (typeof this.inputValue !== "string") return maxCaptionLength;
 			return maxCaptionLength - length(this.inputValue);
-		}
+		},
 	},
 
 	mounted() {
-		document.addEventListener('keydown', this.onKeydown);
+		document.addEventListener("keydown", this.onKeydown);
 	},
 
 	beforeUnmount() {
-		document.removeEventListener('keydown', this.onKeydown);
+		document.removeEventListener("keydown", this.onKeydown);
 	},
 
 	methods: {
@@ -107,7 +143,7 @@ export default defineComponent({
 		number,
 
 		done(canceled, result?) {
-			this.$emit('done', { canceled, result });
+			this.$emit("done", { canceled, result });
 			this.$refs.modal.close();
 		},
 
@@ -129,13 +165,15 @@ export default defineComponent({
 		},
 
 		onKeydown(evt) {
-			if (evt.which === 27) { // ESC
+			if (evt.which === 27) {
+				// ESC
 				this.cancel();
 			}
 		},
 
 		onInputKeydown(evt) {
-			if (evt.which === 13) { // Enter
+			if (evt.which === 13) {
+				// Enter
 				if (evt.ctrlKey) {
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -145,12 +183,16 @@ export default defineComponent({
 		},
 
 		caption() {
-			const img = document.getElementById('imgtocaption') as HTMLImageElement;
-			const ta = document.getElementById('captioninput') as HTMLTextAreaElement;
-			os.api('drive/files/caption-image', {
+			const img = document.getElementById(
+				"imgtocaption"
+			) as HTMLImageElement;
+			const ta = document.getElementById(
+				"captioninput"
+			) as HTMLTextAreaElement;
+			os.api("drive/files/caption-image", {
 				url: img.src,
-			}).then(text => {
-				insertTextAtCursor(ta, text.slice(0, (512 - ta.value.length)));
+			}).then((text) => {
+				insertTextAtCursor(ta, text.slice(0, 512 - ta.value.length));
 			});
 		},
 	},

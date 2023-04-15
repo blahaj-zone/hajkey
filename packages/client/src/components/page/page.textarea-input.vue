@@ -1,32 +1,35 @@
 <template>
-<div>
-	<MkTextarea :model-value="value" @update:modelValue="updateValue($event)">
-		<template #label>{{ hpml.interpolate(block.text) }}</template>
-	</MkTextarea>
-</div>
+	<div>
+		<MkTextarea
+			:model-value="value"
+			@update:modelValue="updateValue($event)"
+		>
+			<template #label>{{ hpml.interpolate(block.text) }}</template>
+		</MkTextarea>
+	</div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
-import MkTextarea from '../form/textarea.vue';
-import * as os from '@/os';
-import { Hpml } from '@/scripts/hpml/evaluator';
-import { HpmlTextInput } from '@/scripts/hpml';
-import { TextInputVarBlock } from '@/scripts/hpml/block';
+import { computed, defineComponent, PropType } from "vue";
+import MkTextarea from "../form/textarea.vue";
+import * as os from "@/os";
+import { Hpml } from "@/scripts/hpml/evaluator";
+import { HpmlTextInput } from "@/scripts/hpml";
+import { TextInputVarBlock } from "@/scripts/hpml/block";
 
 export default defineComponent({
 	components: {
-		MkTextarea
+		MkTextarea,
 	},
 	props: {
 		block: {
 			type: Object as PropType<TextInputVarBlock>,
-			required: true
+			required: true,
 		},
 		hpml: {
 			type: Object as PropType<Hpml>,
-			required: true
-		}
+			required: true,
+		},
 	},
 	setup(props, ctx) {
 		const value = computed(() => {
@@ -40,8 +43,8 @@ export default defineComponent({
 
 		return {
 			value,
-			updateValue
+			updateValue,
 		};
-	}
+	},
 });
 </script>

@@ -1,42 +1,78 @@
 <template>
-<div ref="el" class="fdidabkc" :style="{ background: bg }" @click="onClick">
-	<template v-if="metadata">
-		<div class="titleContainer" @click="showTabsPopup">
-			<i v-if="metadata.icon" class="icon" :class="metadata.icon"></i>
+	<div ref="el" class="fdidabkc" :style="{ background: bg }" @click="onClick">
+		<template v-if="metadata">
+			<div class="titleContainer" @click="showTabsPopup">
+				<i v-if="metadata.icon" class="icon" :class="metadata.icon"></i>
 
-			<div class="title">
-				<div class="title">{{ metadata.title }}</div>
+				<div class="title">
+					<div class="title">{{ metadata.title }}</div>
+				</div>
 			</div>
-		</div>
-		<div class="tabs">
-			<button v-for="tab in tabs" :ref="(el) => tabRefs[tab.key] = el" v-tooltip.noDelay="tab.title" class="tab _button" :class="{ active: tab.key != null && tab.key === props.tab }" @mousedown="(ev) => onTabMousedown(tab, ev)" @click="(ev) => onTabClick(tab, ev)">
-				<i v-if="tab.icon" class="icon" :class="tab.icon"></i>
-				<span v-if="!tab.iconOnly" class="title">{{ tab.title }}</span>
-			</button>
-			<div ref="tabHighlightEl" class="highlight"></div>
-		</div>
-	</template>
-	<div class="buttons right">
-		<template v-if="actions">
-			<template v-for="action in actions">
-				<MkButton v-if="action.asFullButton" class="fullButton" primary @click.stop="action.handler"><i :class="action.icon" style="margin-right: 6px;"></i>{{ action.text }}</MkButton>
-				<button v-else v-tooltip.noDelay="action.text" class="_button button" :class="{ highlighted: action.highlighted }" @click.stop="action.handler" @touchstart="preventDrag"><i :class="action.icon"></i></button>
-			</template>
+			<div class="tabs">
+				<button
+					v-for="tab in tabs"
+					:ref="(el) => (tabRefs[tab.key] = el)"
+					v-tooltip.noDelay="tab.title"
+					class="tab _button"
+					:class="{
+						active: tab.key != null && tab.key === props.tab,
+					}"
+					@mousedown="(ev) => onTabMousedown(tab, ev)"
+					@click="(ev) => onTabClick(tab, ev)"
+				>
+					<i v-if="tab.icon" class="icon" :class="tab.icon"></i>
+					<span v-if="!tab.iconOnly" class="title">{{
+						tab.title
+					}}</span>
+				</button>
+				<div ref="tabHighlightEl" class="highlight"></div>
+			</div>
 		</template>
+		<div class="buttons right">
+			<template v-if="actions">
+				<template v-for="action in actions">
+					<MkButton
+						v-if="action.asFullButton"
+						class="fullButton"
+						primary
+						@click.stop="action.handler"
+						><i :class="action.icon" style="margin-right: 6px"></i
+						>{{ action.text }}</MkButton
+					>
+					<button
+						v-else
+						v-tooltip.noDelay="action.text"
+						class="_button button"
+						:class="{ highlighted: action.highlighted }"
+						@click.stop="action.handler"
+						@touchstart="preventDrag"
+					>
+						<i :class="action.icon"></i>
+					</button>
+				</template>
+			</template>
+		</div>
 	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, inject, watch, nextTick } from 'vue';
-import tinycolor from 'tinycolor2';
-import { popupMenu } from '@/os';
-import { url } from '@/config';
-import { scrollToTop } from '@/scripts/scroll';
-import MkButton from '@/components/MkButton.vue';
-import { i18n } from '@/i18n';
-import { globalEvents } from '@/events';
-import { injectPageMetadata } from '@/scripts/page-metadata';
+import {
+	computed,
+	onMounted,
+	onUnmounted,
+	ref,
+	inject,
+	watch,
+	nextTick,
+} from "vue";
+import tinycolor from "tinycolor2";
+import { popupMenu } from "@/os";
+import { url } from "@/config";
+import { scrollToTop } from "@/scripts/scroll";
+import MkButton from "@/components/MkButton.vue";
+import { i18n } from "@/i18n";
+import { globalEvents } from "@/events";
+import { injectPageMetadata } from "@/scripts/page-metadata";
 
 type Tab = {
 	key?: string | null;
@@ -59,7 +95,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(ev: 'update:tab', key: string);
+	(ev: "update:tab", key: string);
 }>();
 
 const metadata = injectPageMetadata();
@@ -77,7 +113,7 @@ const showTabsPopup = (ev: MouseEvent) => {
 	if (!hasTabs.value) return;
 	ev.preventDefault();
 	ev.stopPropagation();
-	const menu = props.tabs.map(tab => ({
+	const menu = props.tabs.map((tab) => ({
 		text: tab.title,
 		icon: tab.icon,
 		active: tab.key != null && tab.key === props.tab,
@@ -93,13 +129,13 @@ const preventDrag = (ev: TouchEvent) => {
 };
 
 const onClick = () => {
-	scrollToTop(el.value, { behavior: 'smooth' });
+	scrollToTop(el.value, { behavior: "smooth" });
 };
 
 function onTabMousedown(tab: Tab, ev: MouseEvent): void {
 	// ユーザビリティの観点からmousedown時にはonClickは呼ばない
 	if (tab.key) {
-		emit('update:tab', tab.key);
+		emit("update:tab", tab.key);
 	}
 }
 
@@ -110,40 +146,52 @@ function onTabClick(tab: Tab, ev: MouseEvent): void {
 		tab.onClick(ev);
 	}
 	if (tab.key) {
-		emit('update:tab', tab.key);
+		emit("update:tab", tab.key);
 	}
 }
 
 const calcBg = () => {
-	const rawBg = metadata?.bg || 'var(--bg)';
-	const tinyBg = tinycolor(rawBg.startsWith('var(') ? getComputedStyle(document.documentElement).getPropertyValue(rawBg.slice(4, -1)) : rawBg);
+	const rawBg = metadata?.bg || "var(--bg)";
+	const tinyBg = tinycolor(
+		rawBg.startsWith("var(")
+			? getComputedStyle(document.documentElement).getPropertyValue(
+					rawBg.slice(4, -1)
+			  )
+			: rawBg
+	);
 	tinyBg.setAlpha(0.85);
 	bg.value = tinyBg.toRgbString();
 };
 
 onMounted(() => {
 	calcBg();
-	globalEvents.on('themeChanged', calcBg);
+	globalEvents.on("themeChanged", calcBg);
 
-	watch(() => [props.tab, props.tabs], () => {
-		nextTick(() => {
-			const tabEl = tabRefs[props.tab];
-			if (tabEl && tabHighlightEl) {
-				// offsetWidth や offsetLeft は少数を丸めてしまうため getBoundingClientRect を使う必要がある
-				// https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/offsetWidth#%E5%80%A4
-				const parentRect = tabEl.parentElement.getBoundingClientRect();
-				const rect = tabEl.getBoundingClientRect();
-				tabHighlightEl.style.width = rect.width + 'px';
-				tabHighlightEl.style.left = (rect.left - parentRect.left) + 'px';
-			}
-		});
-	}, {
-		immediate: true,
-	});
+	watch(
+		() => [props.tab, props.tabs],
+		() => {
+			nextTick(() => {
+				const tabEl = tabRefs[props.tab];
+				if (tabEl && tabHighlightEl) {
+					// offsetWidth や offsetLeft は少数を丸めてしまうため getBoundingClientRect を使う必要がある
+					// https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/offsetWidth#%E5%80%A4
+					const parentRect =
+						tabEl.parentElement.getBoundingClientRect();
+					const rect = tabEl.getBoundingClientRect();
+					tabHighlightEl.style.width = rect.width + "px";
+					tabHighlightEl.style.left =
+						rect.left - parentRect.left + "px";
+				}
+			});
+		},
+		{
+			immediate: true,
+		}
+	);
 });
 
 onUnmounted(() => {
-	globalEvents.off('themeChanged', calcBg);
+	globalEvents.off("themeChanged", calcBg);
 });
 </script>
 
@@ -158,7 +206,7 @@ onUnmounted(() => {
 	> .buttons {
 		--margin: 8px;
 		display: flex;
-    align-items: center;
+		align-items: center;
 		height: var(--height);
 		margin: 0 var(--margin);
 

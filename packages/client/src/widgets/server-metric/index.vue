@@ -1,45 +1,80 @@
 <template>
-<MkContainer :show-header="widgetProps.showHeader" :naked="widgetProps.transparent">
-	<template #header><i class="ph-hard-drives ph-bold ph-lg"></i>{{ i18n.ts._widgets.serverMetric }}</template>
-	<template #func><button class="_button" @click="toggleView()"><i class="ph-sort-ascending ph-bold ph-lg"></i></button></template>
+	<MkContainer
+		:show-header="widgetProps.showHeader"
+		:naked="widgetProps.transparent"
+	>
+		<template #header
+			><i class="ph-hard-drives ph-bold ph-lg"></i
+			>{{ i18n.ts._widgets.serverMetric }}</template
+		>
+		<template #func
+			><button class="_button" @click="toggleView()">
+				<i class="ph-sort-ascending ph-bold ph-lg"></i></button
+		></template>
 
-	<div v-if="meta" class="mkw-serverMetric">
-		<XCpuMemory v-if="widgetProps.view === 0" :connection="connection" :meta="meta"/>
-		<XNet v-else-if="widgetProps.view === 1" :connection="connection" :meta="meta"/>
-		<XCpu v-else-if="widgetProps.view === 2" :connection="connection" :meta="meta"/>
-		<XMemory v-else-if="widgetProps.view === 3" :connection="connection" :meta="meta"/>
-		<XDisk v-else-if="widgetProps.view === 4" :connection="connection" :meta="meta"/>
-	</div>
-</MkContainer>
+		<div v-if="meta" class="mkw-serverMetric">
+			<XCpuMemory
+				v-if="widgetProps.view === 0"
+				:connection="connection"
+				:meta="meta"
+			/>
+			<XNet
+				v-else-if="widgetProps.view === 1"
+				:connection="connection"
+				:meta="meta"
+			/>
+			<XCpu
+				v-else-if="widgetProps.view === 2"
+				:connection="connection"
+				:meta="meta"
+			/>
+			<XMemory
+				v-else-if="widgetProps.view === 3"
+				:connection="connection"
+				:meta="meta"
+			/>
+			<XDisk
+				v-else-if="widgetProps.view === 4"
+				:connection="connection"
+				:meta="meta"
+			/>
+		</div>
+	</MkContainer>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import { useWidgetPropsManager, Widget, WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from '../widget';
-import XCpuMemory from './cpu-mem.vue';
-import XNet from './net.vue';
-import XCpu from './cpu.vue';
-import XMemory from './mem.vue';
-import XDisk from './disk.vue';
-import MkContainer from '@/components/MkContainer.vue';
-import { GetFormResultType } from '@/scripts/form';
-import * as os from '@/os';
-import { stream } from '@/stream';
-import { i18n } from '@/i18n';
+import { onMounted, onUnmounted, ref } from "vue";
+import {
+	useWidgetPropsManager,
+	Widget,
+	WidgetComponentEmits,
+	WidgetComponentExpose,
+	WidgetComponentProps,
+} from "../widget";
+import XCpuMemory from "./cpu-mem.vue";
+import XNet from "./net.vue";
+import XCpu from "./cpu.vue";
+import XMemory from "./mem.vue";
+import XDisk from "./disk.vue";
+import MkContainer from "@/components/MkContainer.vue";
+import { GetFormResultType } from "@/scripts/form";
+import * as os from "@/os";
+import { stream } from "@/stream";
+import { i18n } from "@/i18n";
 
-const name = 'serverMetric';
+const name = "serverMetric";
 
 const widgetPropsDef = {
 	showHeader: {
-		type: 'boolean' as const,
+		type: "boolean" as const,
 		default: true,
 	},
 	transparent: {
-		type: 'boolean' as const,
+		type: "boolean" as const,
 		default: false,
 	},
 	view: {
-		type: 'number' as const,
+		type: "number" as const,
 		default: 0,
 		hidden: true,
 	},
@@ -50,18 +85,19 @@ type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
 //const props = defineProps<WidgetComponentProps<WidgetProps>>();
 //const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
-const props = defineProps<{ widget?: Widget<WidgetProps>; }>();
-const emit = defineEmits<{ (ev: 'updateProps', props: WidgetProps); }>();
+const props = defineProps<{ widget?: Widget<WidgetProps> }>();
+const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
-const { widgetProps, configure, save } = useWidgetPropsManager(name,
+const { widgetProps, configure, save } = useWidgetPropsManager(
+	name,
 	widgetPropsDef,
 	props,
-	emit,
+	emit
 );
 
 const meta = ref(null);
 
-os.api('server-info', {}).then(res => {
+os.api("server-info", {}).then((res) => {
 	meta.value = res;
 });
 
@@ -74,7 +110,7 @@ const toggleView = () => {
 	save();
 };
 
-const connection = stream.useChannel('serverStats');
+const connection = stream.useChannel("serverStats");
 onUnmounted(() => {
 	connection.dispose();
 });

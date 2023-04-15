@@ -49,7 +49,7 @@
 		"blurhash": "1.1.5",
 		"bull": "4.10.2",
 		"cacheable-lookup": "7.0.0",
-		"calckey-js": "^0.0.22",
+		"calckey-js": "workspace:*",
 		"cbor": "8.1.0",
 		"chalk": "5.2.0",
 		"chalk-template": "0.4.0",

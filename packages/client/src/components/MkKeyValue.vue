@@ -1,28 +1,39 @@
 <template>
-<div class="alqyeyti" :class="{ oneline }">
-	<div class="key">
-		<slot name="key"></slot>
+	<div class="alqyeyti" :class="{ oneline }">
+		<div class="key">
+			<slot name="key"></slot>
+		</div>
+		<div class="value">
+			<slot name="value"></slot>
+			<button
+				v-if="copy"
+				v-tooltip="i18n.ts.copy"
+				class="_textButton"
+				style="margin-left: 0.5em"
+				@click="copy_"
+			>
+				<i class="ph-clipboard-text ph-bold"></i>
+			</button>
+		</div>
 	</div>
-	<div class="value">
-		<slot name="value"></slot>
-		<button v-if="copy" v-tooltip="i18n.ts.copy" class="_textButton" style="margin-left: 0.5em;" @click="copy_"><i class="ph-clipboard-text ph-bold"></i></button>
-	</div>
-</div>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
-import copyToClipboard from '@/scripts/copy-to-clipboard';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
+import {} from "vue";
+import copyToClipboard from "@/scripts/copy-to-clipboard";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
 
-const props = withDefaults(defineProps<{
-	copy?: string | null;
-	oneline?: boolean;
-}>(), {
-	copy: null,
-	oneline: false,
-});
+const props = withDefaults(
+	defineProps<{
+		copy?: string | null;
+		oneline?: boolean;
+	}>(),
+	{
+		copy: null,
+		oneline: false,
+	}
+);
 
 const copy_ = () => {
 	copyToClipboard(props.copy);

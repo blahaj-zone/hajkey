@@ -1,7 +1,8 @@
 import define from "../../define.js";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 import rndstr from "rndstr";
 import { Users, UserProfiles } from "@/models/index.js";
+import { hashPassword } from "@/misc/password.js";
 
 export const meta = {
 	tags: ["admin"],
@@ -47,7 +48,8 @@ export default define(meta, paramDef, async (ps) => {
 	const passwd = rndstr("a-zA-Z0-9", 8);
 
 	// Generate hash of password
-	const hash = bcrypt.hashSync(passwd);
+	// const hash = bcrypt.hashSync(passwd);
+	const hash = await hashPassword(passwd);
 
 	await UserProfiles.update(
 		{

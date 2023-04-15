@@ -1,32 +1,50 @@
 <template>
-<div v-if="hide" class="qjewsnkg" @click="hide = false">
-	<ImgWithBlurhash class="bg" :hash="image.blurhash" :title="image.comment" :alt="image.comment"/>
-	<div class="text">
-		<div class="wrapper">
-			<b style="display: block;"><i class="ph-warning ph-bold ph-lg"></i> {{ i18n.ts.sensitive }}</b>
-			<span style="display: block;">{{ i18n.ts.clickToShow }}</span>
+	<div v-if="hide" class="qjewsnkg" @click="hide = false">
+		<ImgWithBlurhash
+			class="bg"
+			:hash="image.blurhash"
+			:title="image.comment"
+			:alt="image.comment"
+		/>
+		<div class="text">
+			<div class="wrapper">
+				<b style="display: block"
+					><i class="ph-warning ph-bold ph-lg"></i>
+					{{ i18n.ts.sensitive }}</b
+				>
+				<span style="display: block">{{ i18n.ts.clickToShow }}</span>
+			</div>
 		</div>
 	</div>
-</div>
-<div v-else class="gqnyydlz">
-	<a
-		:href="image.url"
-		:title="image.name"
-	>
-		<ImgWithBlurhash :hash="image.blurhash" :src="url" :alt="image.comment" :type="image.type" :title="image.comment" :cover="false"/>
-		<div v-if="image.type === 'image/gif'" class="gif">GIF</div>
-	</a>
-	<button v-tooltip="i18n.ts.hide" class="_button hide" @click="hide = true"><i class="ph-eye-slash ph-bold ph-lg"></i></button>
-</div>
+	<div v-else class="gqnyydlz">
+		<a :href="image.url" :title="image.name">
+			<ImgWithBlurhash
+				:hash="image.blurhash"
+				:src="url"
+				:alt="image.comment"
+				:type="image.type"
+				:title="image.comment"
+				:cover="false"
+			/>
+			<div v-if="image.type === 'image/gif'" class="gif">GIF</div>
+		</a>
+		<button
+			v-tooltip="i18n.ts.hide"
+			class="_button hide"
+			@click="hide = true"
+		>
+			<i class="ph-eye-slash ph-bold ph-lg"></i>
+		</button>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
-import type * as misskey from 'calckey-js';
-import { getStaticImageUrl } from '@/scripts/get-static-image-url';
-import ImgWithBlurhash from '@/components/MkImgWithBlurhash.vue';
-import { defaultStore } from '@/store';
-import { i18n } from '@/i18n';
+import { watch } from "vue";
+import type * as misskey from "calckey-js";
+import { getStaticImageUrl } from "@/scripts/get-static-image-url";
+import ImgWithBlurhash from "@/components/MkImgWithBlurhash.vue";
+import { defaultStore } from "@/store";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	image: misskey.entities.DriveFile;
@@ -35,19 +53,28 @@ const props = defineProps<{
 
 let hide = $ref(true);
 
-const url = (props.raw || defaultStore.state.loadRawImages)
-	? props.image.url
-	: defaultStore.state.disableShowingAnimatedImages
+const url =
+	props.raw || defaultStore.state.loadRawImages
+		? props.image.url
+		: defaultStore.state.disableShowingAnimatedImages
 		? getStaticImageUrl(props.image.thumbnailUrl)
 		: props.image.thumbnailUrl;
 
 // Plugin:register_note_view_interruptor を使って書き換えられる可能性があるためwatchする
-watch(() => props.image, () => {
-	hide = (defaultStore.state.nsfw === 'force') ? true : props.image.isSensitive && (defaultStore.state.nsfw !== 'ignore');
-}, {
-	deep: true,
-	immediate: true,
-});
+watch(
+	() => props.image,
+	() => {
+		hide =
+			defaultStore.state.nsfw === "force"
+				? true
+				: props.image.isSensitive &&
+				  defaultStore.state.nsfw !== "ignore";
+	},
+	{
+		deep: true,
+		immediate: true,
+	}
+);
 </script>
 
 <style lang="scss" scoped>
@@ -120,7 +147,7 @@ watch(() => props.image, () => {
 			font-size: 14px;
 			font-weight: bold;
 			left: 12px;
-			opacity: .5;
+			opacity: 0.5;
 			padding: 0 6px;
 			text-align: center;
 			top: 12px;

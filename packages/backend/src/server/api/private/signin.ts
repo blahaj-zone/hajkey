@@ -1,5 +1,4 @@
 import type Koa from "koa";
-import bcrypt from "bcryptjs";
 import * as speakeasy from "speakeasy";
 import signin from "../common/signin.js";
 import config from "@/config/index.js";

@@ -117,7 +117,18 @@ export function getUserMenu(user, router: Router = mainRouter) {
 		}
 	}
 
-	async function toggleBlock() {
+	async function toggleRenoteMute(): Promise<void> {
+		os.apiWithDialog(
+			user.isRenoteMuted ? "renote-mute/delete" : "renote-mute/create",
+			{
+				userId: user.id,
+			},
+		).then(() => {
+			user.isRenoteMuted = !user.isRenoteMuted;
+		});
+	}
+
+	async function toggleBlock(): Promise<void> {
 		if (
 			!(await getConfirmed(
 				user.isBlocking ? i18n.ts.unblockConfirm : i18n.ts.blockConfirm,
@@ -256,11 +267,18 @@ export function getUserMenu(user, router: Router = mainRouter) {
 					action: inviteGroup,
 			  }
 			: undefined,
+		null,
+		{
+			icon: user.isRenoteMuted
+				? "ph-eye ph-bold ph-lg"
+				: "ph-eye-slash ph-bold ph-lg",
+			text: user.isRenoteMuted ? i18n.ts.renoteUnmute : i18n.ts.renoteMute,
+			action: toggleRenoteMute,
+		},
 	] as any;
 
 	if ($i && meId !== user.id) {
 		menu = menu.concat([
-			null,
 			{
 				icon: user.isMuted
 					? "ph-eye ph-bold ph-lg"

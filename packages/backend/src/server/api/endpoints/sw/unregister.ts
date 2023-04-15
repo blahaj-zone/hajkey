@@ -4,7 +4,7 @@ import define from "../../define.js";
 export const meta = {
 	tags: ["account"],
 
-	requireCredential: true,
+	requireCredential: false,
 
 	description: "Unregister from receiving push notifications.",
 } as const;
@@ -17,9 +17,9 @@ export const paramDef = {
 	required: ["endpoint"],
 } as const;
 
-export default define(meta, paramDef, async (ps, user) => {
+export default define(meta, paramDef, async (ps, me) => {
 	await SwSubscriptions.delete({
-		userId: user.id,
+		...(me ? { userId: me.id } : {}),
 		endpoint: ps.endpoint,
 	});
 });

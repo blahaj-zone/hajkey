@@ -1,9 +1,15 @@
 <template>
-<MkEmoji :emoji="reaction" :custom-emojis="customEmojis || []" :is-reaction="true" :normal="true" :no-style="noStyle"/>
+	<MkEmoji
+		:emoji="reaction"
+		:custom-emojis="customEmojis || []"
+		:is-reaction="true"
+		:normal="true"
+		:no-style="noStyle"
+	/>
 </template>
 
 <script lang="ts" setup>
-import { } from 'vue';
+import {} from "vue";
 
 const props = defineProps<{
 	reaction: string;

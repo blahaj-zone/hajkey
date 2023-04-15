@@ -1,149 +1,338 @@
 <template>
-<MkSpacer :content-max="narrow ? 800 : 1100">
-	<div ref="rootEl" v-size="{ max: [500] }" class="ftskorzw" :class="{ wide: !narrow }">
-		<div class="main">
-			<!-- TODO -->
-			<!-- <div class="punished" v-if="user.isSuspended"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSuspended }}</div> -->
-			<!-- <div class="punished" v-if="user.isSilenced"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSilenced }}</div> -->
+	<MkSpacer :content-max="narrow ? 800 : 1100">
+		<div
+			ref="rootEl"
+			v-size="{ max: [500] }"
+			class="ftskorzw"
+			:class="{ wide: !narrow }"
+		>
+			<div class="main">
+				<!-- TODO -->
+				<!-- <div class="punished" v-if="user.isSuspended"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSuspended }}</div> -->
+				<!-- <div class="punished" v-if="user.isSilenced"><i class="ph-warning ph-bold ph-lg" style="margin-right: 8px;"></i> {{ i18n.ts.userSilenced }}</div> -->
 
-			<div class="profile">
-				<MkMoved v-if="user.movedToUri" :host="user.movedToUri.host" :acct="user.movedToUri.username"/>
-				<MkRemoteCaution v-if="user.host != null" :href="user.url" class="warn"/>
+				<div class="profile">
+					<MkMoved
+						v-if="user.movedToUri"
+						:host="user.movedToUri.host"
+						:acct="user.movedToUri.username"
+					/>
+					<MkRemoteCaution
+						v-if="user.host != null"
+						:href="user.url"
+						class="warn"
+					/>
 
-				<div :key="user.id" class="_block main">
-					<div class="banner-container" :style="style">
-						<div ref="bannerEl" class="banner" :style="style"></div>
-						<div class="fade"></div>
+					<div :key="user.id" class="_block main">
+						<div class="banner-container" :style="style">
+							<div
+								ref="bannerEl"
+								class="banner"
+								:style="style"
+							></div>
+							<div class="fade"></div>
+							<div class="title">
+								<div class="nameCollumn">
+									<MkUserName
+										class="name"
+										:user="user"
+										:nowrap="true"
+									/>
+									<span
+										v-if="
+											$i &&
+											$i.id != user.id &&
+											user.isFollowed
+										"
+										class="followed"
+										>{{ i18n.ts.followsYou }}</span
+									>
+								</div>
+								<div class="bottom">
+									<span class="username"
+										><MkAcct :user="user" :detail="true"
+									/></span>
+									<span
+										v-if="user.isAdmin"
+										:title="i18n.ts.isAdmin"
+										style="color: var(--badge)"
+										><i
+											class="ph-bookmark-simple ph-fill ph-lg"
+										></i
+									></span>
+									<span
+										v-if="!user.isAdmin && user.isModerator"
+										:title="i18n.ts.isModerator"
+										style="color: var(--badge)"
+										><i
+											class="ph-bookmark-simple ph-bold"
+										></i
+									></span>
+									<span
+										v-if="user.isLocked"
+										:title="i18n.ts.isLocked"
+										><i class="ph-lock ph-bold ph-lg"></i
+									></span>
+									<span
+										v-if="user.isBot"
+										:title="i18n.ts.isBot"
+										><i class="ph-robot ph-bold ph-lg"></i
+									></span>
+								</div>
+							</div>
+						</div>
+						<MkAvatar
+							class="avatar"
+							:user="user"
+							:disable-preview="true"
+							:show-indicator="true"
+						/>
 						<div class="title">
 							<div class="nameCollumn">
-								<MkUserName class="name" :user="user" :nowrap="true"/>
-								<span v-if="$i && $i.id != user.id && user.isFollowed" class="followed">{{ i18n.ts.followsYou }}</span>
+								<MkUserName
+									class="name"
+									:user="user"
+									:nowrap="true"
+								/>
+								<span
+									v-if="
+										$i &&
+										$i.id != user.id &&
+										user.isFollowed
+									"
+									class="followed"
+									>{{ i18n.ts.followsYou }}</span
+								>
 							</div>
 							<div class="bottom">
-								<span class="username"><MkAcct :user="user" :detail="true"/></span>
-								<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple ph-fill ph-lg"></i></span>
-								<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple ph-bold"></i></span>
-								<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock ph-bold ph-lg"></i></span>
-								<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot ph-bold ph-lg"></i></span>
+								<span class="username"
+									><MkAcct :user="user" :detail="true"
+								/></span>
+								<span
+									v-if="user.isAdmin"
+									:title="i18n.ts.isAdmin"
+									style="color: var(--badge)"
+									><i
+										class="ph-bookmark-simple ph-fill ph-lg"
+									></i
+								></span>
+								<span
+									v-if="!user.isAdmin && user.isModerator"
+									:title="i18n.ts.isModerator"
+									style="color: var(--badge)"
+									><i class="ph-bookmark-simple ph-bold"></i
+								></span>
+								<span
+									v-if="user.isLocked"
+									:title="i18n.ts.isLocked"
+									><i class="ph-lock ph-bold ph-lg"></i
+								></span>
+								<span v-if="user.isBot" :title="i18n.ts.isBot"
+									><i class="ph-robot ph-bold ph-lg"></i
+								></span>
 							</div>
 						</div>
-					</div>
-					<MkAvatar class="avatar" :user="user" :disable-preview="true" :show-indicator="true"/>
-					<div class="title">
-						<div class="nameCollumn">
-							<MkUserName class="name" :user="user" :nowrap="true"/>
-							<span v-if="$i && $i.id != user.id && user.isFollowed" class="followed">{{ i18n.ts.followsYou }}</span>
+						<div class="follow-container">
+							<div class="actions">
+								<MkFollowButton
+									v-if="$i != null && $i.id != user.id"
+									:user="user"
+									@refresh="emit('refresh')"
+									:inline="true"
+									:transparent="false"
+									:full="!narrow"
+									class="koudoku"
+								/>
+								<button class="menu _button" @click="menu">
+									<i
+										class="ph-dots-three-outline ph-bold ph-lg"
+									></i>
+								</button>
+								<!-- <MkFollowButton v-else-if="$i == null" :user="user" :remote="true" :inline="true" :transparent="false" :full="true" class="koudoku"/> -->
+							</div>
 						</div>
-						<div class="bottom">
-							<span class="username"><MkAcct :user="user" :detail="true"/></span>
-							<span v-if="user.isAdmin" :title="i18n.ts.isAdmin" style="color: var(--badge);"><i class="ph-bookmark-simple ph-fill ph-lg"></i></span>
-							<span v-if="!user.isAdmin && user.isModerator" :title="i18n.ts.isModerator" style="color: var(--badge);"><i class="ph-bookmark-simple ph-bold"></i></span>
-							<span v-if="user.isLocked" :title="i18n.ts.isLocked"><i class="ph-lock ph-bold ph-lg"></i></span>
-							<span v-if="user.isBot" :title="i18n.ts.isBot"><i class="ph-robot ph-bold ph-lg"></i></span>
+						<div class="description">
+							<Mfm
+								v-if="user.description"
+								:text="user.description"
+								:is-note="false"
+								:author="user"
+								:i="$i"
+								:custom-emojis="user.emojis"
+							/>
+							<p v-else class="empty">
+								{{ i18n.ts.noAccountDescription }}
+							</p>
 						</div>
-					</div>
-					<div class="follow-container">
-						<div class="actions">
-							<MkFollowButton v-if="$i != null && $i.id != user.id" :user="user" @refresh="emit('refresh')" :inline="true" :transparent="false" :full="!narrow" class="koudoku"/>
-							<button class="menu _button" @click="menu"><i class="ph-dots-three-outline ph-bold ph-lg"></i></button>
-							<!-- <MkFollowButton v-else-if="$i == null" :user="user" :remote="true" :inline="true" :transparent="false" :full="true" class="koudoku"/> -->
+						<div class="fields system">
+							<dl v-if="user.location" class="field">
+								<dt class="name">
+									<i
+										class="ph-map-pin ph-bold ph-lg ph-fw ph-lg"
+									></i>
+									{{ i18n.ts.location }}
+								</dt>
+								<dd class="value">
+									{{ user.location }}{{ timeForThem }}
+								</dd>
+							</dl>
+							<dl v-if="user.birthday" class="field">
+								<dt class="name">
+									<i
+										class="ph-cake ph-bold ph-lg ph-fw ph-lg"
+									></i>
+									{{ i18n.ts.birthday }}
+								</dt>
+								<dd class="value">
+									{{
+										user.birthday
+											.replace("-", "/")
+											.replace("-", "/")
+									}}
+									({{ i18n.t("yearsOld", { age }) }})
+								</dd>
+							</dl>
+							<dl class="field">
+								<dt class="name">
+									<i
+										class="ph-calendar-blank ph-bold ph-lg ph-fw ph-lg"
+									></i>
+									{{ i18n.ts.registeredDate }}
+								</dt>
+								<dd class="value">
+									{{
+										new Date(
+											user.createdAt
+										).toLocaleString()
+									}}
+									(<MkTime :time="user.createdAt" />)
+								</dd>
+							</dl>
 						</div>
-					</div>
-					<div class="description">
-						<Mfm v-if="user.description" :text="user.description" :is-note="false" :author="user" :i="$i" :custom-emojis="user.emojis"/>
-						<p v-else class="empty">{{ i18n.ts.noAccountDescription }}</p>
-					</div>
-					<div class="fields system">
-						<dl v-if="user.location" class="field">
-							<dt class="name"><i class="ph-map-pin ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.location }}</dt>
-							<dd class="value">{{ user.location }}{{ timeForThem }}</dd>
-						</dl>
-						<dl v-if="user.birthday" class="field">
-							<dt class="name"><i class="ph-cake ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.birthday }}</dt>
-							<dd class="value">{{ user.birthday.replace('-', '/').replace('-', '/') }} ({{ i18n.t('yearsOld', { age }) }})</dd>
-						</dl>
-						<dl class="field">
-							<dt class="name"><i class="ph-calendar-blank ph-bold ph-lg ph-fw ph-lg"></i> {{ i18n.ts.registeredDate }}</dt>
-							<dd class="value">{{ new Date(user.createdAt).toLocaleString() }} (<MkTime :time="user.createdAt"/>)</dd>
-						</dl>
-					</div>
-					<div v-if="user.fields.length > 0" class="fields">
-						<dl v-for="(field, i) in user.fields" :key="i" class="field">
-							<dt class="name">
-								<Mfm :text="field.name" :plain="true" :custom-emojis="user.emojis" :colored="false"/>
-							</dt>
-							<dd class="value">
-								<Mfm :text="field.value" :author="user" :i="$i" :custom-emojis="user.emojis" :colored="false"/>
-							</dd>
-						</dl>
-					</div>
-					<div class="status">
-						<MkA v-click-anime :to="userPage(user)" :class="{ active: page === 'index' }">
-							<b>{{ number(user.notesCount) }}</b>
-							<span>{{ i18n.ts.notes }}</span>
-						</MkA>
-						<MkA v-click-anime :to="userPage(user, 'following')" :class="{ active: page === 'following' }">
-							<b>{{ number(user.followingCount) }}</b>
-							<span>{{ i18n.ts.following }}</span>
-						</MkA>
-						<MkA v-click-anime :to="userPage(user, 'followers')" :class="{ active: page === 'followers' }">
-							<b>{{ number(user.followersCount) }}</b>
-							<span>{{ i18n.ts.followers }}</span>
-						</MkA>
+						<div v-if="user.fields.length > 0" class="fields">
+							<dl
+								v-for="(field, i) in user.fields"
+								:key="i"
+								class="field"
+							>
+								<dt class="name">
+									<Mfm
+										:text="field.name"
+										:plain="true"
+										:custom-emojis="user.emojis"
+										:colored="false"
+									/>
+								</dt>
+								<dd class="value">
+									<Mfm
+										:text="field.value"
+										:author="user"
+										:i="$i"
+										:custom-emojis="user.emojis"
+										:colored="false"
+									/>
+								</dd>
+							</dl>
+						</div>
+						<div class="status">
+							<MkA
+								v-click-anime
+								:to="userPage(user)"
+								:class="{ active: page === 'index' }"
+							>
+								<b>{{ number(user.notesCount) }}</b>
+								<span>{{ i18n.ts.notes }}</span>
+							</MkA>
+							<MkA
+								v-click-anime
+								:to="userPage(user, 'following')"
+								:class="{ active: page === 'following' }"
+							>
+								<b>{{ number(user.followingCount) }}</b>
+								<span>{{ i18n.ts.following }}</span>
+							</MkA>
+							<MkA
+								v-click-anime
+								:to="userPage(user, 'followers')"
+								:class="{ active: page === 'followers' }"
+							>
+								<b>{{ number(user.followersCount) }}</b>
+								<span>{{ i18n.ts.followers }}</span>
+							</MkA>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="contents">
-				<div v-if="user.pinnedNotes.length > 0" class="_gap">
-					<XNote v-for="note in user.pinnedNotes" :key="note.id" class="note _block" :note="note" :pinned="true"/>
+				<div class="contents">
+					<div v-if="user.pinnedNotes.length > 0" class="_gap">
+						<XNote
+							v-for="note in user.pinnedNotes"
+							:key="note.id"
+							class="note _block"
+							:note="note"
+							:pinned="true"
+						/>
+					</div>
+					<MkInfo
+						v-else-if="$i && $i.id === user.id"
+						style="margin: 12px 0"
+						>{{ i18n.ts.userPagePinTip }}</MkInfo
+					>
+					<template v-if="narrow">
+						<XPhotos :key="user.id" :user="user" />
+						<XActivity
+							:key="user.id"
+							:user="user"
+							style="margin-top: var(--margin)"
+						/>
+					</template>
 				</div>
-				<MkInfo v-else-if="$i && $i.id === user.id" style="margin: 12px 0;">{{ i18n.ts.userPagePinTip }}</MkInfo>
-				<template v-if="narrow">
-					<XPhotos :key="user.id" :user="user"/>
-					<XActivity :key="user.id" :user="user" style="margin-top: var(--margin);"/>
-				</template>
+				<div>
+					<XUserTimeline :user="user" />
+				</div>
 			</div>
-			<div>
-				<XUserTimeline :user="user"/>
+			<div v-if="!narrow" class="sub">
+				<XPhotos :key="user.id" :user="user" />
+				<XActivity
+					:key="user.id"
+					:user="user"
+					style="margin-top: var(--margin)"
+				/>
 			</div>
 		</div>
-		<div v-if="!narrow" class="sub">
-			<XPhotos :key="user.id" :user="user"/>
-			<XActivity :key="user.id" :user="user" style="margin-top: var(--margin);"/>
-		</div>
-	</div>
-</MkSpacer>
+	</MkSpacer>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, onMounted, onUnmounted } from 'vue';
-import calcAge from 's-age';
-import cityTimezones from 'city-timezones';
-import XUserTimeline from './index.timeline.vue';
-import type * as misskey from 'calckey-js';
-import XNote from '@/components/MkNote.vue';
-import MkFollowButton from '@/components/MkFollowButton.vue';
-import MkRemoteCaution from '@/components/MkRemoteCaution.vue';
-import MkInfo from '@/components/MkInfo.vue';
-import MkMoved from '@/components/MkMoved.vue';
-import { getScrollPosition } from '@/scripts/scroll';
-import { getUserMenu } from '@/scripts/get-user-menu';
-import number from '@/filters/number';
-import { userPage } from '@/filters/user';
-import * as os from '@/os';
-import { useRouter } from '@/router';
-import { i18n } from '@/i18n';
-import { $i } from '@/account';
+import { defineAsyncComponent, onMounted, onUnmounted } from "vue";
+import calcAge from "s-age";
+import cityTimezones from "city-timezones";
+import XUserTimeline from "./index.timeline.vue";
+import type * as misskey from "calckey-js";
+import XNote from "@/components/MkNote.vue";
+import MkFollowButton from "@/components/MkFollowButton.vue";
+import MkRemoteCaution from "@/components/MkRemoteCaution.vue";
+import MkInfo from "@/components/MkInfo.vue";
+import MkMoved from "@/components/MkMoved.vue";
+import { getScrollPosition } from "@/scripts/scroll";
+import { getUserMenu } from "@/scripts/get-user-menu";
+import number from "@/filters/number";
+import { userPage } from "@/filters/user";
+import * as os from "@/os";
+import { useRouter } from "@/router";
+import { i18n } from "@/i18n";
+import { $i } from "@/account";
 
-const XPhotos = defineAsyncComponent(() => import('./index.photos.vue'));
-const XActivity = defineAsyncComponent(() => import('./index.activity.vue'));
+const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
+const XActivity = defineAsyncComponent(() => import("./index.activity.vue"));
 
-const emit = defineEmits(['refresh']);
-const props = withDefaults(defineProps<{
-	user: misskey.entities.UserDetailed;
-}>(), {
-});
+const emit = defineEmits(["refresh"]);
+const props = withDefaults(
+	defineProps<{
+		user: misskey.entities.UserDetailed;
+	}>(),
+	{}
+);
 
 const router = useRouter();
 
@@ -155,7 +344,7 @@ let bannerEl = $ref<null | HTMLElement>(null);
 const style = $computed(() => {
 	if (props.user.bannerUrl == null) return {};
 	return {
-		backgroundImage: `url(${ props.user.bannerUrl })`,
+		backgroundImage: `url(${props.user.bannerUrl})`,
 	};
 });
 
@@ -164,15 +353,25 @@ const age = $computed(() => {
 });
 
 const timeForThem = $computed(() => {
-	const tzInfo = cityTimezones.lookupViaCity(props.user.location!.replace(/\s.*/,''));
+	const tzInfo = cityTimezones.lookupViaCity(
+		props.user.location!.replace(/\s.*/, "")
+	);
 	if (tzInfo.length == 0) return "";
 	const tz = tzInfo[0].timezone;
-	const theirTime = new Date().toLocaleString("en-US", { timeZone: tz, hour12: false });
-	return ` (${theirTime.split(",")[1].trim().split(":")[0]}:${theirTime.split(" ")[1].slice(-5,-3)})`;
-})
+	const theirTime = new Date().toLocaleString("en-US", {
+		timeZone: tz,
+		hour12: false,
+	});
+	return ` (${theirTime.split(",")[1].trim().split(":")[0]}:${theirTime
+		.split(" ")[1]
+		.slice(-5, -3)})`;
+});
 
 function menu(ev) {
-	os.popupMenu(getUserMenu(props.user, router), ev.currentTarget ?? ev.target);
+	os.popupMenu(
+		getUserMenu(props.user, router),
+		ev.currentTarget ?? ev.target
+	);
 }
 
 function parallaxLoop() {
@@ -207,16 +406,13 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .ftskorzw {
-
 	> .main {
-
 		> .punished {
 			font-size: 0.8em;
 			padding: 16px;
 		}
 
 		> .profile {
-
 			> .main {
 				position: relative;
 				overflow: hidden;
@@ -244,7 +440,7 @@ onUnmounted(() => {
 							background-size: cover;
 							background-position: center;
 							pointer-events: none;
-							opacity: .1;
+							opacity: 0.1;
 							filter: var(--blur, blur(10px));
 						}
 					}
@@ -255,7 +451,10 @@ onUnmounted(() => {
 						left: 0;
 						width: 100%;
 						height: 78px;
-						background: linear-gradient(transparent, rgba(#000, 0.7));
+						background: linear-gradient(
+							transparent,
+							rgba(#000, 0.7)
+						);
 					}
 
 					> .followed {
@@ -304,24 +503,23 @@ onUnmounted(() => {
 						> .nameCollumn {
 							display: block;
 							> .name {
-							margin: 0;
-							line-height: 32px;
-							font-weight: bold;
-							font-size: 1.8em;
-							text-shadow: 0 0 8px var(--shadow);
-						}
+								margin: 0;
+								line-height: 32px;
+								font-weight: bold;
+								font-size: 1.8em;
+								text-shadow: 0 0 8px var(--shadow);
+							}
 
-						> .followed {
-							position: relative;
-							top: -4px;
-							left: 4px;
-							padding: 4px 8px;
-							color: #fff;
-							background: rgba(0, 0, 0, 0.6);
-							font-size: 0.7em;
-							border-radius: 24px;
-						}
-
+							> .followed {
+								position: relative;
+								top: -4px;
+								left: 4px;
+								padding: 4px 8px;
+								color: #fff;
+								background: rgba(0, 0, 0, 0.6);
+								font-size: 0.7em;
+								border-radius: 24px;
+							}
 						}
 
 						> .bottom {
@@ -353,7 +551,10 @@ onUnmounted(() => {
 						left: 0;
 						width: 100%;
 						height: 78px;
-						background: linear-gradient(transparent, rgba(#000, 0.7));
+						background: linear-gradient(
+							transparent,
+							rgba(#000, 0.7)
+						);
 					}
 
 					> .actions {
@@ -418,8 +619,8 @@ onUnmounted(() => {
 					border-bottom: solid 0.5px var(--divider);
 
 					> .nameCollumn {
-							display: block;
-							> .name {
+						display: block;
+						> .name {
 							margin: 0;
 							align-content: center;
 							line-height: 32px;
@@ -438,19 +639,18 @@ onUnmounted(() => {
 							font-size: 0.7em;
 							border-radius: 24px;
 						}
+					}
 
-						}
-
-						> .followedWindow {
-							position: relative;
-							top: -25px;
-							left: 80px;
-							padding: 4px 8px;
-							color: #fff;
-							background: rgba(0, 0, 0, 0.6);
-							font-size: 0.7em;
-							border-radius: 24px;
-						}
+					> .followedWindow {
+						position: relative;
+						top: -25px;
+						left: 80px;
+						padding: 4px 8px;
+						color: #fff;
+						background: rgba(0, 0, 0, 0.6);
+						font-size: 0.7em;
+						border-radius: 24px;
+					}
 
 					> .bottom {
 						> * {
@@ -600,7 +800,7 @@ onUnmounted(() => {
 				}
 
 				> .description {
-          top: -55px;
+					top: -55px;
 					position: relative;
 				}
 

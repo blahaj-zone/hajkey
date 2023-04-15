@@ -1,34 +1,62 @@
 <template>
-<div class="tivcixzd" :class="{ done: closed || isVoted }">
-	<ul>
-		<li v-for="(choice, i) in note.poll.choices" :key="i" :class="{ voted: choice.voted }" @click.stop="vote(i)">
-			<div class="backdrop" :style="{ 'width': `${showResult ? (choice.votes / total * 100) : 0}%` }"></div>
-			<span>
-				<template v-if="choice.isVoted"><i class="ph-check ph-bold ph-lg"></i></template>
-				<Mfm :text="choice.text" :plain="true" :custom-emojis="note.emojis"/>
-				<span v-if="showResult" class="votes">({{ i18n.t('_poll.votesCount', { n: choice.votes }) }})</span>
-			</span>
-		</li>
-	</ul>
-	<p v-if="!readOnly">
-		<span>{{ i18n.t('_poll.totalVotes', { n: total }) }}</span>
-		<span> · </span>
-		<a v-if="!closed && !isVoted" @click.stop="showResult = !showResult">{{ showResult ? i18n.ts._poll.vote : i18n.ts._poll.showResult }}</a>
-		<span v-if="isVoted">{{ i18n.ts._poll.voted }}</span>
-		<span v-else-if="closed">{{ i18n.ts._poll.closed }}</span>
-		<span v-if="remaining > 0"> · {{ timer }}</span>
-	</p>
-</div>
+	<div class="tivcixzd" :class="{ done: closed || isVoted }">
+		<ul>
+			<li
+				v-for="(choice, i) in note.poll.choices"
+				:key="i"
+				:class="{ voted: choice.voted }"
+				@click.stop="vote(i)"
+			>
+				<div
+					class="backdrop"
+					:style="{
+						width: `${
+							showResult ? (choice.votes / total) * 100 : 0
+						}%`,
+					}"
+				></div>
+				<span>
+					<template v-if="choice.isVoted"
+						><i class="ph-check ph-bold ph-lg"></i
+					></template>
+					<Mfm
+						:text="choice.text"
+						:plain="true"
+						:custom-emojis="note.emojis"
+					/>
+					<span v-if="showResult" class="votes"
+						>({{
+							i18n.t("_poll.votesCount", { n: choice.votes })
+						}})</span
+					>
+				</span>
+			</li>
+		</ul>
+		<p v-if="!readOnly">
+			<span>{{ i18n.t("_poll.totalVotes", { n: total }) }}</span>
+			<span> · </span>
+			<a
+				v-if="!closed && !isVoted"
+				@click.stop="showResult = !showResult"
+				>{{
+					showResult ? i18n.ts._poll.vote : i18n.ts._poll.showResult
+				}}</a
+			>
+			<span v-if="isVoted">{{ i18n.ts._poll.voted }}</span>
+			<span v-else-if="closed">{{ i18n.ts._poll.closed }}</span>
+			<span v-if="remaining > 0"> · {{ timer }}</span>
+		</p>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onUnmounted, ref, toRef } from 'vue';
-import * as misskey from 'calckey-js';
-import { sum } from '@/scripts/array';
-import { pleaseLogin } from '@/scripts/please-login';
-import * as os from '@/os';
-import { i18n } from '@/i18n';
-import { useInterval } from '@/scripts/use-interval';
+import { computed, onUnmounted, ref, toRef } from "vue";
+import * as misskey from "calckey-js";
+import { sum } from "@/scripts/array";
+import { pleaseLogin } from "@/scripts/please-login";
+import * as os from "@/os";
+import { i18n } from "@/i18n";
+import { useInterval } from "@/scripts/use-interval";
 
 const props = defineProps<{
 	note: misskey.entities.Note;
@@ -37,25 +65,42 @@ const props = defineProps<{
 
 const remaining = ref(-1);
 
-const total = computed(() => sum(props.note.poll.choices.map(x => x.votes)));
+const total = computed(() => sum(props.note.poll.choices.map((x) => x.votes)));
 const closed = computed(() => remaining.value === 0);
-const isVoted = computed(() => !props.note.poll.multiple && props.note.poll.choices.some(c => c.isVoted));
-const timer = computed(() => i18n.t(
-	remaining.value >= 86400 ? '_poll.remainingDays' :
-	remaining.value >= 3600 ? '_poll.remainingHours' :
-	remaining.value >= 60 ? '_poll.remainingMinutes' : '_poll.remainingSeconds', {
-		s: Math.floor(remaining.value % 60),
-		m: Math.floor(remaining.value / 60) % 60,
-		h: Math.floor(remaining.value / 3600) % 24,
-		d: Math.floor(remaining.value / 86400),
-	}));
+const isVoted = computed(
+	() =>
+		!props.note.poll.multiple &&
+		props.note.poll.choices.some((c) => c.isVoted)
+);
+const timer = computed(() =>
+	i18n.t(
+		remaining.value >= 86400
+			? "_poll.remainingDays"
+			: remaining.value >= 3600
+			? "_poll.remainingHours"
+			: remaining.value >= 60
+			? "_poll.remainingMinutes"
+			: "_poll.remainingSeconds",
+		{
+			s: Math.floor(remaining.value % 60),
+			m: Math.floor(remaining.value / 60) % 60,
+			h: Math.floor(remaining.value / 3600) % 24,
+			d: Math.floor(remaining.value / 86400),
+		}
+	)
+);
 
 const showResult = ref(props.readOnly || isVoted.value);
 
 // 期限付きアンケート
 if (props.note.poll.expiresAt) {
 	const tick = () => {
-		remaining.value = Math.floor(Math.max(new Date(props.note.poll.expiresAt).getTime() - Date.now(), 0) / 1000);
+		remaining.value = Math.floor(
+			Math.max(
+				new Date(props.note.poll.expiresAt).getTime() - Date.now(),
+				0
+			) / 1000
+		);
 		if (remaining.value === 0) {
 			showResult.value = true;
 		}
@@ -73,12 +118,14 @@ const vote = async (id) => {
 	if (props.readOnly || closed.value || isVoted.value) return;
 
 	const { canceled } = await os.confirm({
-		type: 'question',
-		text: i18n.t('voteConfirm', { choice: props.note.poll.choices[id].text }),
+		type: "question",
+		text: i18n.t("voteConfirm", {
+			choice: props.note.poll.choices[id].text,
+		}),
 	});
 	if (canceled) return;
 
-	await os.api('notes/polls/vote', {
+	await os.api("notes/polls/vote", {
 		noteId: props.note.id,
 		choice: id,
 	});
@@ -111,7 +158,11 @@ const vote = async (id) => {
 				left: 0;
 				height: 100%;
 				background: var(--accent);
-				background: linear-gradient(90deg,var(--buttonGradateA),var(--buttonGradateB));
+				background: linear-gradient(
+					90deg,
+					var(--buttonGradateA),
+					var(--buttonGradateB)
+				);
 				transition: width 1s ease;
 			}
 

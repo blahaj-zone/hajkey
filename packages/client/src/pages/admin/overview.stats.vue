@@ -1,59 +1,90 @@
 <template>
-<div>
-	<Transition :name="$store.state.animation ? '_transition_zoom' : ''" mode="out-in">
-		<MkLoading v-if="fetching"/>
-		<div v-else :class="$style.root">
-			<div class="item _panel users">
-				<div class="icon"><i class="ph-users ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						<MkNumber :value="stats.originalUsersCount" style="margin-right: 0.5em;"/>
-						<MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="usersComparedToThePrevDay"></MkNumberDiff>
+	<div>
+		<Transition
+			:name="$store.state.animation ? '_transition_zoom' : ''"
+			mode="out-in"
+		>
+			<MkLoading v-if="fetching" />
+			<div v-else :class="$style.root">
+				<div class="item _panel users">
+					<div class="icon">
+						<i class="ph-users ph-bold ph-xl"></i>
 					</div>
-					<div class="label">Users</div>
+					<div class="body">
+						<div class="value">
+							<MkNumber
+								:value="stats.originalUsersCount"
+								style="margin-right: 0.5em"
+							/>
+							<MkNumberDiff
+								v-tooltip="i18n.ts.dayOverDayChanges"
+								class="diff"
+								:value="usersComparedToThePrevDay"
+							></MkNumberDiff>
+						</div>
+						<div class="label">Users</div>
+					</div>
+				</div>
+				<div class="item _panel notes">
+					<div class="icon">
+						<i class="ph-pencil ph-bold ph-xl"></i>
+					</div>
+					<div class="body">
+						<div class="value">
+							<MkNumber
+								:value="stats.originalNotesCount"
+								style="margin-right: 0.5em"
+							/>
+							<MkNumberDiff
+								v-tooltip="i18n.ts.dayOverDayChanges"
+								class="diff"
+								:value="notesComparedToThePrevDay"
+							></MkNumberDiff>
+						</div>
+						<div class="label">Posts</div>
+					</div>
+				</div>
+				<div class="item _panel instances">
+					<div class="icon">
+						<i class="ph-planet ph-bold ph-xl"></i>
+					</div>
+					<div class="body">
+						<div class="value">
+							<MkNumber
+								:value="stats.instances"
+								style="margin-right: 0.5em"
+							/>
+						</div>
+						<div class="label">Instances</div>
+					</div>
+				</div>
+				<div class="item _panel online">
+					<div class="icon">
+						<i class="ph-broadcast ph-bold ph-xl"></i>
+					</div>
+					<div class="body">
+						<div class="value">
+							<MkNumber
+								:value="onlineUsersCount"
+								style="margin-right: 0.5em"
+							/>
+						</div>
+						<div class="label">Online</div>
+					</div>
 				</div>
 			</div>
-			<div class="item _panel notes">
-				<div class="icon"><i class="ph-pencil ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						<MkNumber :value="stats.originalNotesCount" style="margin-right: 0.5em;"/>
-						<MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="notesComparedToThePrevDay"></MkNumberDiff>
-					</div>
-					<div class="label">Posts</div>
-				</div>
-			</div>
-			<div class="item _panel instances">
-				<div class="icon"><i class="ph-planet ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						<MkNumber :value="stats.instances" style="margin-right: 0.5em;"/>
-					</div>
-					<div class="label">Instances</div>
-				</div>
-			</div>
-			<div class="item _panel online">
-				<div class="icon"><i class="ph-broadcast ph-bold ph-xl"></i></div>
-				<div class="body">
-					<div class="value">
-						<MkNumber :value="onlineUsersCount" style="margin-right: 0.5em;"/>
-					</div>
-					<div class="label">Online</div>
-				</div>
-			</div>
-		</div>
-	</Transition>
-</div>
+		</Transition>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
-import MkMiniChart from '@/components/MkMiniChart.vue';
-import * as os from '@/os';
-import number from '@/filters/number';
-import MkNumberDiff from '@/components/MkNumberDiff.vue';
-import MkNumber from '@/components/MkNumber.vue';
-import { i18n } from '@/i18n';
+import { onMounted, onUnmounted, ref } from "vue";
+import MkMiniChart from "@/components/MkMiniChart.vue";
+import * as os from "@/os";
+import number from "@/filters/number";
+import MkNumberDiff from "@/components/MkNumberDiff.vue";
+import MkNumber from "@/components/MkNumber.vue";
+import { i18n } from "@/i18n";
 
 let stats: any = $ref(null);
 let usersComparedToThePrevDay = $ref<number>();
@@ -63,18 +94,20 @@ let fetching = $ref(true);
 
 onMounted(async () => {
 	const [_stats, _onlineUsersCount] = await Promise.all([
-		os.api('stats', {}),
-		os.api('get-online-users-count').then(res => res.count),
+		os.api("stats", {}),
+		os.api("get-online-users-count").then((res) => res.count),
 	]);
 	stats = _stats;
 	onlineUsersCount = _onlineUsersCount;
 
-	os.apiGet('charts/users', { limit: 2, span: 'day' }).then(chart => {
-		usersComparedToThePrevDay = stats.originalUsersCount - chart.local.total[1];
+	os.apiGet("charts/users", { limit: 2, span: "day" }).then((chart) => {
+		usersComparedToThePrevDay =
+			stats.originalUsersCount - chart.local.total[1];
 	});
 
-	os.apiGet('charts/notes', { limit: 2, span: 'day' }).then(chart => {
-		notesComparedToThePrevDay = stats.originalNotesCount - chart.local.total[1];
+	os.apiGet("charts/notes", { limit: 2, span: "day" }).then((chart) => {
+		notesComparedToThePrevDay =
+			stats.originalNotesCount - chart.local.total[1];
 	});
 
 	fetching = false;
@@ -128,7 +161,7 @@ onMounted(async () => {
 			&.emojis {
 				> .icon {
 					background: #ea9d3422;
-						color: #f6c177;
+					color: #f6c177;
 				}
 			}
 

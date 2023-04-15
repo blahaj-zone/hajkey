@@ -1,58 +1,66 @@
 <template>
-<div v-if="hide" class="icozogqfvdetwohsdglrbswgrejoxbdj" @click="hide = false">
-	<div>
-		<b><i class="ph-warning ph-bold ph-lg"></i> {{ i18n.ts.sensitive }}</b>
-		<span>{{ i18n.ts.clickToShow }}</span>
-	</div>
-</div>
-<div v-else class="kkjnbbplepmiyuadieoenjgutgcmtsvu">
-	<VuePlyr
-		:options="{
-			controls: [
-				'play-large',
-				'play',
-				'progress',
-				'current-time',
-				'mute',
-				'volume',
-				'pip',
-				'download',
-				'fullscreen'
-			],
-			disableContextMenu: false,
-		}"
+	<div
+		v-if="hide"
+		class="icozogqfvdetwohsdglrbswgrejoxbdj"
+		@click="hide = false"
 	>
-		<video
-			:poster="video.thumbnailUrl"
-			:title="video.comment"
-			:aria-label="video.comment"
-			preload="none"
-			controls
-			@contextmenu.stop
-		>
-			<source
-				:src="video.url"
-				:type="video.type"
+		<div>
+			<b
+				><i class="ph-warning ph-bold ph-lg"></i>
+				{{ i18n.ts.sensitive }}</b
 			>
-		</video>
-	</VuePlyr>
-	<i class="ph-eye-slash ph-bold ph-lg" @click="hide = true"></i>
-</div>
+			<span>{{ i18n.ts.clickToShow }}</span>
+		</div>
+	</div>
+	<div v-else class="kkjnbbplepmiyuadieoenjgutgcmtsvu">
+		<VuePlyr
+			:options="{
+				controls: [
+					'play-large',
+					'play',
+					'progress',
+					'current-time',
+					'mute',
+					'volume',
+					'pip',
+					'download',
+					'fullscreen',
+				],
+				disableContextMenu: false,
+			}"
+		>
+			<video
+				:poster="video.thumbnailUrl"
+				:title="video.comment"
+				:aria-label="video.comment"
+				preload="none"
+				controls
+				@contextmenu.stop
+			>
+				<source :src="video.url" :type="video.type" />
+			</video>
+		</VuePlyr>
+		<i class="ph-eye-slash ph-bold ph-lg" @click="hide = true"></i>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import VuePlyr from 'vue-plyr';
-import type * as misskey from 'calckey-js';
-import { defaultStore } from '@/store';
-import 'vue-plyr/dist/vue-plyr.css';
-import { i18n } from '@/i18n';
+import { ref } from "vue";
+import VuePlyr from "vue-plyr";
+import type * as misskey from "calckey-js";
+import { defaultStore } from "@/store";
+import "vue-plyr/dist/vue-plyr.css";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	video: misskey.entities.DriveFile;
 }>();
 
-const hide = ref((defaultStore.state.nsfw === 'force') ? true : props.video.isSensitive && (defaultStore.state.nsfw !== 'ignore'));
+const hide = ref(
+	defaultStore.state.nsfw === "force"
+		? true
+		: props.video.isSensitive && defaultStore.state.nsfw !== "ignore"
+);
 </script>
 
 <style lang="scss" scoped>
@@ -67,7 +75,7 @@ const hide = ref((defaultStore.state.nsfw === 'force') ? true : props.video.isSe
 		background-color: var(--fg);
 		color: var(--accentLighten);
 		font-size: 14px;
-		opacity: .5;
+		opacity: 0.5;
 		padding: 3px 6px;
 		text-align: center;
 		cursor: pointer;

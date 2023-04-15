@@ -108,7 +108,7 @@ export async function getProfiles(): Promise<string[]> {
 	});
 }
 
-export async function deleteProfile(key: string): Promise<void> {
+export async function deleteProfile(key: string): Promise<any> {
 	return await api("i/registry/remove", {
 		scope: ["client", "deck", "profiles"],
 		key: key,
