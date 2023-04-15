@@ -7,7 +7,7 @@
 			children: depth > 1,
 			singleStart: replies.length == 1,
 			firstColumn: depth == 1 && conversation,
-			[`level${colorOffset}`]: true,
+			[`level${colorizer.color}`]: true,
 		}"
 	>
 		<div v-if="conversation && depth > 1" class="line"></div>
@@ -156,21 +156,19 @@
 					:note="reply"
 					class="reply single"
 					:conversation="conversation"
-					:depth="depth"
-					:offset="offset"
-					:colorizer="colorizer"
-					:parentId="appearNote.replyId"
-				/>
-			</template>
-			<template v-else-if="depth < repliesDepth">
-				<MkNoteSub
-					v-for="reply in replies"
-					:key="reply.id"
-					:note="reply"
-					class="reply"
-					:conversation="conversation"
-					:depth="depth + 1"
-					:offset="offset + index"
+						:depth="depth"
+						:colorizer="colorizer"
+						:parentId="appearNote.replyId"
+					/>
+				</template>
+				<template v-else-if="depth < repliesDepth">
+					<MkNoteSub
+						v-for="reply in replies"
+						:key="reply.id"
+						:note="reply"
+						class="reply"
+						:conversation="conversation"
+						:depth="depth + 1"
 					:colorizer="colorizer.advance()"
 					:parentId="appearNote.replyId"
 				/>
@@ -211,16 +209,21 @@ import { defaultStore } from "@/store";
 const router = useRouter();
 
 class Colorizer {
+	public color: number;
 	public offset: number;
-	constructor() {
+	public parent: Colorizer;
+
+	constructor(parent?: Colorizer) {
 		this.offset = 0;
+		this.parent = parent ?? this;
+		this.color = this.parent.offset % 8;
 	}
+
 	advance(): Colorizer {
-		this.offset++;
-		return this;
-	}
-	current(): number {
-		return this.offset % 8;
+		const next = new Colorizer(this.parent);
+		this.parent.offset++;
+		next.color = this.parent.offset % 8;
+		return next;
 	}
 }
 
@@ -232,20 +235,17 @@ const props = withDefaults(
 
 		// how many notes are in between this one and the note being viewed in detail
 		depth?: number;
-		offset?: number;
 		child?: number;
 
 		colorizer?: Colorizer;
 	}>(),
 	{
 		depth: 1,
-		offset: 0,
 		child: 0,
 	}
 );
 
 const colorizer: Colorizer = $ref(props.colorizer ?? new Colorizer())
-const colorOffset = colorizer.current();
 
 let note = $ref(deepClone(props.note));
 
