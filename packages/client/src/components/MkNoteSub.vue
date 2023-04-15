@@ -157,7 +157,7 @@
 					class="reply single"
 					:conversation="conversation"
 					:depth="depth"
-					:colorizer="colorizer"
+						:colorizer="colorizer.advance()"
 					:parentId="appearNote.replyId"
 				/>
 			</template>
