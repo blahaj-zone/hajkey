@@ -106,13 +106,18 @@ export default define(meta, paramDef, async (ps, user) => {
 function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, sequence: {id: number}) {
 	if (item.children) {
 		const seq = sequence.id++;
-		for (const child of item.children) {
+
+		// copy children to a new array so modifications won't affect the loop
+		const children = [...item.children];
+
+		for (const child of children) {
 			child.seq = seq % 8;
 			child.level = level;
 			if (item.children.length === 1) {
 				child.single = true;
 			}
 
+			// recurse into child
 			relevel(child, item, level + 1, sequence);
 
 			// if single, move child up to parent below item
