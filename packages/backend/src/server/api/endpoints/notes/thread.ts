@@ -76,10 +76,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		if (parent) {
 			if (!parent.children) parent.children = [];
 			parent.children.push(item);
-			console.log('added', item.id, 'to', parent.id);
-			console.log('  ->', parent);
 		} else {
-			console.log('no parent', item);
 			thread = item;
 		}
 	}
@@ -88,12 +85,6 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	console.log('relevel');
 	relevel(thread, null, 0, {id: 0});
-	dump(thread, 0);
-
-	for (const id of ids) {
-		const item = lookup[id];
-		item.parent = undefined;
-	}
 
 	dump(thread, 0);
 
@@ -112,9 +103,7 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 		const seq = sequence.id++;
 
 		// copy children to a new array so modifications won't affect the loop
-		let children = [...item.children];
-
-		for (const child of children) {
+		for (const child of [...item.children]) {
 			child.seq = seq;
 			child.level = level;
 			if (item.children?.length === 1) {
@@ -125,8 +114,7 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 			relevel(child, item, level + 1, sequence);
 		}
 
-		children = [...item.children];
-		for (const child of children) {
+		for (const child of [...item.children]) {
 			// if single, move child up to parent below item
 			if (parent?.children?.length && child.single) {
 				let index = parent.children.indexOf(item)
@@ -141,18 +129,11 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 				if (i !== undefined && i >= 0) {
 					item.children?.splice(i, 1);
 				}
-				else {
-					console.log('child not found in parent', child.id, item.id);
-				}
 
 				// remove children if empty
 				if (item.children?.length === 0) {
 					item.children = undefined;
-					console.log('removed empty children', item.id);
 				}
-
-				console.log('rolled into', index, child.id, 'from', item.id, 'to', parent.id);
-				console.log('  ->', parent);
 			}
 		}
 	}
