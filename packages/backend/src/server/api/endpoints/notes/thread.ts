@@ -64,7 +64,6 @@ export default define(meta, paramDef, async (ps, user) => {
 	for (const id in lookup) {
 		const item = lookup[id];
 		const parent = lookup[item.parent ?? ''];
-		item.parent = undefined
 
 		if (parent) {
 			if (!parent.children) parent.children = [];
@@ -73,6 +72,18 @@ export default define(meta, paramDef, async (ps, user) => {
 			thread = item;
 		}
 	}
+
+	// Roll up the items with only one child
+	for (const id in lookup) {
+		const item = lookup[id];
+		const parent = lookup[item.parent ?? ''];
+		item.parent = undefined
+
+		if (parent && item.children?.length === 1) {
+			parent.children?.push(item.children[0]);
+			item.children = undefined;
+		}
+	}					
 
 	return thread;
 });
