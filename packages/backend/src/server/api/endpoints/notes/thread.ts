@@ -69,6 +69,7 @@ export default define(meta, paramDef, async (ps, user) => {
 			if (!parent.children) parent.children = [];
 			parent.children.push(item);
 			console.log('added', item.id, 'to', parent.id);
+			console.log('  ->', parent);
 		} else {
 			console.log('no parent', item);
 			thread = item;
