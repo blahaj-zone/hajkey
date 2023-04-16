@@ -132,7 +132,17 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 				}
 
 				parent.children.splice(index + 1, 0, child);
-				item.children = undefined
+				// remove child from old parent
+				const i = item.children?.indexOf(child);
+				if (i !== undefined && i >= 0) {
+					item.children?.splice(i, 1);
+				}
+
+				// remove children if empty
+				if (item.children?.length === 0) {
+					item.children = undefined;
+				}
+
 				console.log('rolled into', index, child.id, 'from', item.id, 'to', parent.id);
 				console.log('  ->', parent);
 			}
