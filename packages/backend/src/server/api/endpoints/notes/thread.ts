@@ -83,38 +83,8 @@ export default define(meta, paramDef, async (ps, user) => {
 	dump(thread, 0);
 
 	console.log('relevel');
-	relevel(thread, 0, {id: 0});
+	relevel(thread, null, 0, {id: 0});
 	dump(thread, 0);
-
-	// Roll up the items with only one child
-	for (const id of ids) {
-		const item = lookup[id];
-
-		if (item.children?.length === 1) {
-			const childId = item.children[0].id;
-			const parent = lookup[item.parent ?? ''];
-			const child = lookup[childId ?? ''];
-
-			if (parent && child) {
-				console.log('')
-				console.log('  <-', parent);
-				// insert child into parent after item
-				const index = parent.children?.indexOf(item) ?? -1;
-				if (index >= 0) {
-					parent.children?.splice(index + 1, 0, child);
-					console.log('rolled into', index+1, child.id, 'from', item.id, 'to', parent.id);
-				}
-				else {
-					parent.children?.push(child);
-					console.log('rolled after', child.id, 'from', item.id, 'to', parent.id);
-				}
-				item.children = undefined;
-				console.log('  ->', parent,item,child);
-			} else {
-				console.log('no parent', item.id);
-			}
-		}
-	}
 
 	for (const id of ids) {
 		const item = lookup[id];
@@ -133,13 +103,24 @@ export default define(meta, paramDef, async (ps, user) => {
 	return thread;
 });
 
-function relevel(item: ThreadItem, level: number, sequence: {id: number}) {
+function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, sequence: {id: number}) {
 	if (item.children) {
 		const seq = sequence.id++;
 		for (const child of item.children) {
-			child.sequence = seq;
+			child.seq = seq % 8;
 			child.level = level;
-			relevel(child, level + 1, sequence);
+			if (item.children.length === 1) {
+				child.single = true;
+			}
+
+			relevel(child, item, level + 1, sequence);
+
+			// if single, move child up to parent below item
+			if (parent && child.single) {
+				const index = parent.children?.indexOf(item) ?? parent.children?.length ?? 0;
+				parent.children?.splice(index + 1, 0, child);
+				console.log('rolled into', index+1, child.id, 'from', item.id, 'to', parent.id);
+			}
 		}
 	}
 }
