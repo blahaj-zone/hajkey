@@ -1,5 +1,5 @@
 import define from "../../define.js";
-import { fetchMeta } from "@/misc/fetch-meta";
+import { fetchMeta } from "@/misc/fetch-meta.js";
 import { makePaginationQuery } from "../../common/make-pagination-query";
 import { Brackets } from "typeorm";
 import { Followings, Notes, UserLists } from "@/models/index.js";
