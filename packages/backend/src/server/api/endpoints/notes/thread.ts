@@ -1,3 +1,4 @@
+import { dump } from "js-yaml";
 import define from "../../define.js";
 import { db } from "@/db/postgre.js";
 
@@ -96,5 +97,24 @@ export default define(meta, paramDef, async (ps, user) => {
 		item.parent = undefined;
 	}
 
+	dump(thread, 0);
+
+	for (const id in lookup) {
+		const item = lookup[id];
+		if (!item.found) {
+			console.log('not found', item.id);
+		}
+	}
+
 	return thread;
 });
+
+function dump(item: ThreadItem, depth: number) {
+	console.log(`${'|'.repeat(depth)}-> ${item.id} (${item.score})`);
+	if (item.children) {
+		for (const child of item.children) {
+			dump(child, depth + 1);
+		}
+	}
+	item.found = true;
+}
