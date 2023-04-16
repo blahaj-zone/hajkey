@@ -38,6 +38,7 @@ type ThreadItem = {
 export default define(meta, paramDef, async (ps, user) => {
 	let thread: ThreadItem = {};
 	const lookup: Record<string, ThreadItem> = {};
+	const ids: string[] = [];
 
 	await db
 		.query(`
@@ -56,13 +57,15 @@ export default define(meta, paramDef, async (ps, user) => {
 					score: rec.renotes + rec.replies + reacts,
 				};
 				lookup[rec.id] = item
+				ids.push(rec.id);
 			}
 		})
 		.catch((err) => {
 			console.log(err);
 		});
 
-	for (const id in lookup) {
+	// Thread the items into a tree
+	for (const id of ids) {
 		const item = lookup[id];
 		const parent = lookup[item.parent ?? ''];
 
@@ -80,40 +83,43 @@ export default define(meta, paramDef, async (ps, user) => {
 	relevel(thread, 0, {id: 0});
 
 	// Roll up the items with only one child
-	for (const id in lookup) {
+	for (const id of ids) {
 		const item = lookup[id];
-		const parent = lookup[item.parent ?? ''];
 
 		if (item.children?.length === 1) {
-			const child = item.children[0];
-			if (parent) {
+			const childId = item.children[0].id;
+			const parent = lookup[item.parent ?? ''];
+			const child = lookup[childId ?? ''];
+
+			if (parent && child) {
 				console.log('')
 				console.log('  <-', parent);
 				// insert child into parent after item
 				const index = parent.children?.indexOf(item) ?? -1;
 				if (index >= 0) {
 					parent.children?.splice(index + 1, 0, child);
+					console.log('rolled into', index+1, child.id, 'from', item.id, 'to', parent.id);
 				}
 				else {
 					parent.children?.push(child);
+					console.log('rolled after', child.id, 'from', item.id, 'to', parent.id);
 				}
 				item.children = undefined;
-				console.log('rolled up', child.id, 'from', item.id, 'to', parent.id);
-				console.log('  ->', parent);
+				console.log('  ->', parent,item,child);
 			} else {
 				console.log('no parent', item.id);
 			}
 		}
 	}
 
-	for (const id in lookup) {
+	for (const id of ids) {
 		const item = lookup[id];
 		item.parent = undefined;
 	}
 
 	dump(thread, 0);
 
-	for (const id in lookup) {
+	for (const id of ids) {
 		const item = lookup[id];
 		if (!item.found) {
 			console.log('not found', item.id);
