@@ -1,3 +1,4 @@
+import { leveldb } from "cbor";
 import define from "../../define.js";
 import { db } from "@/db/postgre.js";
 
@@ -76,18 +77,28 @@ export default define(meta, paramDef, async (ps, user) => {
 		}
 	}
 
+	relevel(thread, 0, {id: 0});
+
 	// Roll up the items with only one child
 	for (const id in lookup) {
 		const item = lookup[id];
 		const parent = lookup[item.parent ?? ''];
 
 		if (item.children?.length === 1) {
+			const child = item.children[0];
 			if (parent) {
 				console.log('')
 				console.log('  <-', parent);
-				parent.children?.push(item.children[0]);
+				// insert child into parent after item
+				const index = parent.children?.indexOf(item) ?? -1;
+				if (index >= 0) {
+					parent.children?.splice(index + 1, 0, child);
+				}
+				else {
+					parent.children?.push(child);
+				}
 				item.children = undefined;
-				console.log('rolled up', item.id, 'to', parent.id);
+				console.log('rolled up', child.id, 'from', item.id, 'to', parent.id);
 				console.log('  ->', parent);
 			} else {
 				console.log('no parent', item.id);
@@ -111,6 +122,17 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	return thread;
 });
+
+function relevel(item: ThreadItem, level: number, sequence: {id: number}) {
+	if (item.children) {
+		const seq = sequence.id++;
+		for (const child of item.children) {
+			child.sequence = seq;
+			child.level = level;
+			relevel(child, level + 1, sequence);
+		}
+	}
+}
 
 function dump(item: ThreadItem, depth: number) {
 	console.log(`${'|'.repeat(depth)}-> ${item.id} (${item.score})`);
