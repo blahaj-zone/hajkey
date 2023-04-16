@@ -80,7 +80,11 @@ export default define(meta, paramDef, async (ps, user) => {
 		}
 	}
 
+	dump(thread, 0);
+
+	console.log('relevel');
 	relevel(thread, 0, {id: 0});
+	dump(thread, 0);
 
 	// Roll up the items with only one child
 	for (const id of ids) {
