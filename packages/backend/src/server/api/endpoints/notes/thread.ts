@@ -134,6 +134,7 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 				parent.children.splice(index + 1, 0, child);
 				item.children = undefined
 				console.log('rolled into', index, child.id, 'from', item.id, 'to', parent.id);
+				console.log('  ->', parent);
 			}
 		}
 	}
