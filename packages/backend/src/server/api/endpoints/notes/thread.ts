@@ -112,10 +112,10 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 		const seq = sequence.id++;
 
 		// copy children to a new array so modifications won't affect the loop
-		const children = [...item.children];
+		let children = [...item.children];
 
 		for (const child of children) {
-			child.seq = seq % 8;
+			child.seq = seq;
 			child.level = level;
 			if (item.children?.length === 1) {
 				child.single = true;
@@ -123,7 +123,10 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 
 			// recurse into child
 			relevel(child, item, level + 1, sequence);
+		}
 
+		children = [...item.children];
+		for (const child of children) {
 			// if single, move child up to parent below item
 			if (parent?.children?.length && child.single) {
 				let index = parent.children.indexOf(item)
