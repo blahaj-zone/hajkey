@@ -35,13 +35,15 @@ type ThreadItem = {
 }
 
 export default define(meta, paramDef, async (ps, user) => {
-	const thread: ThreadItem = {};
+	let thread: ThreadItem = {};
 	const lookup: Record<string, ThreadItem> = {};
 
 	await db
-		.query(
-			`SELECT parent, id, type, renotes, replies, reacts FROM thread_notes('${ps.note}')`,
-		)
+		.query(`
+			SELECT
+			  parent, id, type, renotes, replies, reacts
+			FROM thread_notes('${ps.note}')
+		`)
 		.then((recs) => {
 			for (const rec of recs) {
 				const reacts = Object
@@ -52,7 +54,7 @@ export default define(meta, paramDef, async (ps, user) => {
 					parent: rec.parent,
 					score: rec.renotes + rec.replies + reacts,
 				};
-				lookup[rec.id] = rec
+				lookup[rec.id] = item
 			}
 		})
 		.catch((err) => {
@@ -62,18 +64,15 @@ export default define(meta, paramDef, async (ps, user) => {
 	for (const id in lookup) {
 		const item = lookup[id];
 		const parent = lookup[item.parent ?? ''];
+		item.parent = undefined
 
 		if (parent) {
 			if (!parent.children) parent.children = [];
 			parent.children.push(item);
 		} else {
-			if (!thread.children) thread.children = [];
-			thread.children.push(item);
+			thread = item;
 		}
 	}
 
-	if (thread.children) {
-		return thread.children[0];
-	}
-	return {};
+	return thread;
 });
