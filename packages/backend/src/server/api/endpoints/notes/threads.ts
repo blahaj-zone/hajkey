@@ -1,11 +1,11 @@
 import define from "../../define.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
-import { makePaginationQuery } from "../../common/make-pagination-query";
+import { makePaginationQuery } from "../../common/make-pagination-query.js";
 import { Brackets } from "typeorm";
 import { Followings, Notes, UserLists } from "@/models/index.js";
-import { generateVisibilityQuery } from "../../common/generate-visibility-query";
-import { generateMutedUserQuery } from "../../common/generate-muted-user-query";
-import { generateBlockedUserQuery } from "../../common/generate-block-query";
+import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
+import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
+import { generateBlockedUserQuery } from "../../common/generate-block-query.js";
 
 export const meta = {
 	tags: ["notes"],
