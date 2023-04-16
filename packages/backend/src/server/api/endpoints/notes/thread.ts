@@ -82,9 +82,12 @@ export default define(meta, paramDef, async (ps, user) => {
 
 		if (item.children?.length === 1) {
 			if (parent) {
+				console.log('')
+				console.log('  <-', parent);
 				parent.children?.push(item.children[0]);
 				item.children = undefined;
 				console.log('rolled up', item.id, 'to', parent.id);
+				console.log('  ->', parent);
 			} else {
 				console.log('no parent', item.id);
 			}
