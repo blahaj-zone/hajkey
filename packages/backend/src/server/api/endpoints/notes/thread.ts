@@ -84,8 +84,11 @@ export default define(meta, paramDef, async (ps, user) => {
 	dump(thread, 0);
 
 	console.log('relevel');
-	relevel(thread, null, 0, {id: 0});
+	relevel(thread, 0, {id: 0});
+	dump(thread, 0);
 
+	console.log('flatten');
+	flatten(thread, null);
 	dump(thread, 0);
 
 	for (const id of ids) {
@@ -98,7 +101,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	return thread;
 });
 
-function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, sequence: {id: number}) {
+function relevel(item: ThreadItem, level: number, sequence: {id: number}) {
 	if (item.children) {
 		const seq = sequence.id++;
 
@@ -111,10 +114,16 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 			}
 
 			// recurse into child
-			relevel(child, item, level + 1, sequence);
+			relevel(child, level + 1, sequence);
 		}
+	}
+}
 
+function flatten(item: ThreadItem, parent: ThreadItem|null) {
+	if (item.children) {
 		for (const child of [...item.children]) {
+			flatten(child, item);
+
 			// if single, move child up to parent below item
 			if (parent?.children?.length && child.single) {
 				let index = parent.children.indexOf(item)
