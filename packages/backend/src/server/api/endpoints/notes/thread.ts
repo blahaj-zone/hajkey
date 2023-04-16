@@ -68,6 +68,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		if (parent) {
 			if (!parent.children) parent.children = [];
 			parent.children.push(item);
+			console.log('added', item.id, 'to', parent.id);
 		} else {
 			console.log('no parent', item);
 			thread = item;
@@ -78,17 +79,21 @@ export default define(meta, paramDef, async (ps, user) => {
 	for (const id in lookup) {
 		const item = lookup[id];
 		const parent = lookup[item.parent ?? ''];
-		item.parent = undefined
 
 		if (item.children?.length === 1) {
 			if (parent) {
 				parent.children?.push(item.children[0]);
 				item.children = undefined;
-				console.log('rolled up', item, 'to', parent);
+				console.log('rolled up', item.id, 'to', parent.id);
 			} else {
-				console.log('no parent', item);
+				console.log('no parent', item.id);
 			}
 		}
+	}
+
+	for (const id in lookup) {
+		const item = lookup[id];
+		item.parent = undefined;
 	}
 
 	return thread;
