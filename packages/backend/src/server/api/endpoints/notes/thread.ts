@@ -69,6 +69,7 @@ export default define(meta, paramDef, async (ps, user) => {
 			if (!parent.children) parent.children = [];
 			parent.children.push(item);
 		} else {
+			console.log('no parent', item);
 			thread = item;
 		}
 	}
@@ -79,11 +80,16 @@ export default define(meta, paramDef, async (ps, user) => {
 		const parent = lookup[item.parent ?? ''];
 		item.parent = undefined
 
-		if (parent && item.children?.length === 1) {
-			parent.children?.push(item.children[0]);
-			item.children = undefined;
+		if (item.children?.length === 1) {
+			if (parent) {
+				parent.children?.push(item.children[0]);
+				item.children = undefined;
+				console.log('rolled up', item, 'to', parent);
+			} else {
+				console.log('no parent', item);
+			}
 		}
-	}					
+	}
 
 	return thread;
 });
