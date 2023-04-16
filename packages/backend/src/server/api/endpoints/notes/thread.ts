@@ -33,6 +33,10 @@ type ThreadItem = {
 	parent?: string,
 	score?: number,
 	children?: ThreadItem[],
+	level?: number,
+	seq?: number,
+	single?: boolean,
+	found?: boolean,
 }
 
 export default define(meta, paramDef, async (ps, user) => {
@@ -113,7 +117,7 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 		for (const child of children) {
 			child.seq = seq % 8;
 			child.level = level;
-			if (item.children.length === 1) {
+			if (item.children?.length === 1) {
 				child.single = true;
 			}
 
@@ -121,18 +125,13 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 			relevel(child, item, level + 1, sequence);
 
 			// if single, move child up to parent below item
-			if (parent && child.single) {
-				let index = parent.children?.indexOf(item)
+			if (parent?.children?.length && child.single) {
+				let index = parent.children.indexOf(item)
 				if (index === undefined || index < 0) {
-					index = parent.children?.length
-					if (index) {
-						index--;
-					}
+					index = parent.children?.length - 1;
 				}
-				if (index === undefined) {
-					index = -1;
-				}
-				parent.children?.splice(index + 1, 0, child);
+
+				parent.children.splice(index + 1, 0, child);
 				item.children = undefined
 				console.log('rolled into', index, child.id, 'from', item.id, 'to', parent.id);
 			}
@@ -141,7 +140,7 @@ function relevel(item: ThreadItem, parent: ThreadItem|null, level: number, seque
 }
 
 function dump(item: ThreadItem, depth: number) {
-	console.log(`${'|'.repeat(depth)}-> ${item.id} (${item.score})`);
+	console.log(`${'|'.repeat(depth)}-> ${item.id} (${item.score} ${item.single})`);
 	if (item.children) {
 		for (const child of item.children) {
 			dump(child, depth + 1);
