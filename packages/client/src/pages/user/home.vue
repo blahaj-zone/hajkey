@@ -274,7 +274,7 @@
 						/>
 					</div>
 					<MkInfo
-						v-else-if="$i && $i.id === user.id"
+						v-else-if="$i && $i.id === user.id && !user.pinnedNotes.length"
 						style="margin: 12px 0"
 						>{{ i18n.ts.userPagePinTip }}</MkInfo
 					>

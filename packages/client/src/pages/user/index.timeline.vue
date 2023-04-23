@@ -10,7 +10,7 @@
 
 		<div v-if="showPinned" class="_gap">
 			<XNote
-				v-for="note in user.pinnedNotes"
+				v-for="note in pinnedNotes"
 				:key="note.id"
 				class="note _block"
 				:note="note"
@@ -25,6 +25,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import * as misskey from "calckey-js";
+import XNote from "@/components/MkNote.vue";
 import XNotes from "@/components/MkNotes.vue";
 import MkTab from "@/components/MkTab.vue";
 import * as os from "@/os";
@@ -39,7 +40,13 @@ const include = ref<string | null>(null);
 let showPinned = $computed(() =>
 	props.user.pinnedNotes.length > 0 &&
 	$store.state.userPinnedWithPosts &&
-	!include.value
+	(!include.value || include.value === "replies")
+);
+
+let pinnedNotes = $computed(() =>
+	props.user.pinnedNotes.filter(
+		(note) => !include.value || note.replyId != null
+	)
 );
 
 const pagination = {
