@@ -37,15 +37,16 @@ const props = defineProps<{
 
 const include = ref<string | null>(null);
 
-let showPinned = $computed(() =>
-	props.user.pinnedNotes.length > 0 &&
-	$store.state.userPinnedWithPosts &&
-	(!include.value || include.value === "replies")
+let showPinned = $computed(
+	() =>
+		props.user.pinnedNotes.length > 0 &&
+		$store.state.userPinnedWithPosts &&
+		(!include.value || include.value === "replies")
 );
 
 let pinnedNotes = $computed(() =>
 	props.user.pinnedNotes.filter(
-		(note) => !include.value || note.replyId != null
+		(note) => include.value === "replies" || note.replyId === null
 	)
 );
 

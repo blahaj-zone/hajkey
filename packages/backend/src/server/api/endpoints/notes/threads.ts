@@ -139,7 +139,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		.leftJoinAndSelect("user.banner", "banner")
 		.leftJoinAndSelect("note.reply", "reply")
 		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("note.thread", "thread")
+		.leftJoinAndSelect("note.thread", "thread");
 
 	generateVisibilityQuery(query, user);
 	if (user) {

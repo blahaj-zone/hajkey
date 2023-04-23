@@ -59,7 +59,7 @@ export class Note {
 		length: 256, nullable: true,
 	})
 	public threadId: string | null;
-	
+
 	@ManyToOne(type => Note, {})
 	@JoinColumn()
 	public thread: Note | null;
