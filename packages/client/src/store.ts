@@ -392,6 +392,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: true,
 		},
+		userPinnedWithPosts: {
+			where: "device",
+			default: false,
+		},
 		enableCustomKaTeXMacro: {
 			where: "device",
 			default: false,

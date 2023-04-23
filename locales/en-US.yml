@@ -1473,6 +1473,10 @@ _indicators:
   antennasDescription: "Antennas with new post notifications enabled"
   channels: "Channels"
   channelsDescription: "Show for new channel posts"
+_userProfile:
+  header: "User profiles"
+  userPinnedWithPosts: "Show pinned posts with posts"
+  userPinnedWithPostsDescription: "Normally pinned posts are shown at the top of the profile, this changes so that they are displayed above the posts in the posts tab."
 _postForm:
   replyPlaceholder: "Reply to this post..."
   quotePlaceholder: "Quote this post..."

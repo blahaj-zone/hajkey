@@ -7,6 +7,17 @@
 				<option value="files">{{ i18n.ts.withFiles }}</option>
 			</MkTab>
 		</template>
+
+		<div v-if="showPinned" class="_gap">
+			<XNote
+				v-for="note in user.pinnedNotes"
+				:key="note.id"
+				class="note _block"
+				:note="note"
+				:pinned="true"
+			/>
+		</div>
+
 		<XNotes :no-gap="true" :pagination="pagination" />
 	</MkStickyContainer>
 </template>
@@ -24,6 +35,12 @@ const props = defineProps<{
 }>();
 
 const include = ref<string | null>(null);
+
+let showPinned = $computed(() =>
+	props.user.pinnedNotes.length > 0 &&
+	$store.state.userPinnedWithPosts &&
+	!include.value
+);
 
 const pagination = {
 	endpoint: "users/notes" as const,

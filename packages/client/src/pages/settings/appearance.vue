@@ -228,6 +228,17 @@
 				}}</template>
 			</FormSwitch>
 		</FormSection>
+
+		<FormSection>
+			<template #label>{{ i18n.ts._userProfile.header }}</template>
+
+			<FormSwitch v-model="userPinnedWithPosts" class="_formBlock">
+				{{ i18n.ts._userProfile.userPinnedWithPosts }}
+				<template #caption>{{
+					i18n.ts._userProfile.userPinnedWithPostsDescription
+				}}</template>
+			</FormSwitch>
+		</FormSection>
 	</div>
 </template>
 
@@ -309,6 +320,10 @@ const catAvatarRounded = $computed(
 );
 const catAvatarBordered = $computed(
 	defaultStore.makeGetterSetter("catAvatarBordered")
+);
+
+const userPinnedWithPosts = $computed(
+	defaultStore.makeGetterSetter("userPinnedWithPosts")
 );
 
 definePageMetadata({

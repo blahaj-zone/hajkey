@@ -264,7 +264,7 @@
 				</div>
 
 				<div class="contents">
-					<div v-if="user.pinnedNotes.length > 0" class="_gap">
+					<div v-if="showPinned" class="_gap">
 						<XNote
 							v-for="note in user.pinnedNotes"
 							:key="note.id"
@@ -287,6 +287,7 @@
 						/>
 					</template>
 				</div>
+
 				<div>
 					<XUserTimeline :user="user" />
 				</div>
@@ -340,6 +341,13 @@ let parallaxAnimationId = $ref<null | number>(null);
 let narrow = $ref<null | boolean>(null);
 let rootEl = $ref<null | HTMLElement>(null);
 let bannerEl = $ref<null | HTMLElement>(null);
+
+let showPinned = $computed(() => {
+	return (
+		props.user.pinnedNotes.length > 0 &&
+		!$store.state.userPinnedWithPosts
+	);
+});
 
 const style = $computed(() => {
 	if (props.user.bannerUrl == null) return {};
