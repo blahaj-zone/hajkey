@@ -67,7 +67,14 @@ export default define(meta, paramDef, async (ps, user) => {
 			api_key: instance.libreTranslateApiKey ?? "",
 		};
 
-		const res = await fetch(instance.libreTranslateApiUrl, {
+		const url = new URL(instance.libreTranslateApiUrl);
+		if (url.pathname.endsWith("/")) {
+			url.pathname = url.pathname.slice(0, -1);
+		}
+		if (!url.pathname.endsWith("/translate")) {
+			url.pathname += "/translate";
+		}
+		const res = await fetch(url.toString(), {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
