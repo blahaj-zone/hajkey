@@ -145,6 +145,15 @@ export interface NoteStreamTypes {
 	replied: {
 		id: Note["id"];
 	};
+	updated: {
+		id: Note["id"];
+		updatedAt: Note["updatedAt"];
+		text?: Note["text"];
+		cw?: Note["cw"];
+		tags?: Note["tags"];
+		fileIds?: Note["fileIds"];
+		attachedFileTypes?: Note["attachedFileTypes"];
+	};
 }
 type NoteStreamEventTypes = {
 	[key in keyof NoteStreamTypes]: {

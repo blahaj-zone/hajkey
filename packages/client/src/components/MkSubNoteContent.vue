@@ -176,7 +176,7 @@ const exceedsLinesLimit =
 	estimatedLines > defaultStore.state.expandPostMaxLines;
 
 const isLong =
-  !props.detailedView &&
+	!props.detailedView &&
 	appearNote.cw == null &&
 	appearNote.text != null &&
 	(exceedsCharacterLimit || exceedsLinesLimit);

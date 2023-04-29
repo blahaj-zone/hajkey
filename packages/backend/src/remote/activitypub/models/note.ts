@@ -15,7 +15,13 @@ import { apLogger } from "../logger.js";
 import type { DriveFile } from "@/models/entities/drive-file.js";
 import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
 import { extractDbHost, toPuny } from "@/misc/convert-host.js";
-import { Emojis, Polls, MessagingMessages } from "@/models/index.js";
+import {
+	Emojis,
+	Polls,
+	MessagingMessages,
+	Notes,
+	NoteEdits,
+} from "@/models/index.js";
 import type { Note } from "@/models/entities/note.js";
 import type { IObject, IPost } from "../type.js";
 import {
@@ -36,6 +42,9 @@ import { extractApMentions } from "./mention.js";
 import DbResolver from "../db-resolver.js";
 import { StatusError } from "@/misc/fetch.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
+import { string } from "@tensorflow/tfjs";
+import { publishInternalEvent } from "@/services/stream.js";
+import { publishNoteStream } from "@/services/stream.js";
 
 const logger = apLogger;
 
@@ -496,4 +505,91 @@ export async function extractEmojis(
 			);
 		}),
 	);
+}
+
+type TagDetail = {
+	type: string;
+	name: string;
+};
+
+export async function updateNote(value: string | IObject, resolver?: Resolver) {
+	const uri = typeof value === "string" ? value : value.id;
+	if (!uri) throw new Error("Missing note uri");
+
+	// Skip if URI points to this server
+	if (uri.startsWith(`${config.url}/`)) throw new Error("uri points local");
+
+	// Already registered with this server?
+	const note = await Notes.findOneBy({ uri });
+	if (note == null) throw new Error("Note is not registed");
+
+	// Resolve new Note object
+	if (resolver == null) resolver = new Resolver();
+	const post = (await resolver.resolve(value)) as IPost;
+
+	if (post.source?.mediaType !== "text/x.misskeymarkdown") {
+		throw new Error("Note source is not markdown");
+	}
+
+	const text = post.source?.content;
+	const cw = post.sensitive && post.summary;
+	const tagList: Array<TagDetail> = (
+		post.tag ? (Array.isArray(post.tag) ? post.tag : [post.tag]) : []
+	) as Array<TagDetail>;
+	const tags = tagList
+		.filter((t) => t.type === "Hashtag")
+		.map((t) => t.name.substring(1));
+	const fileList = post.attachment
+		? Array.isArray(post.attachment)
+			? post.attachment
+			: [post.attachment]
+		: [];
+	const files = fileList.map((f) => f.id);
+	const fileTypes = fileList.map((f) => f.mediaType);
+
+	const update = {} as Partial<Note>;
+	if (text && text !== note.text) update.text = text;
+	if (cw && cw !== note.cw) update.cw = cw;
+	if (tags && tags !== note.tags) update.tags = tags;
+	if (
+		files.sort().join(",") !== note.fileIds.sort().join(",") ||
+		fileTypes.sort().join(",") !== note.attachedFileTypes.sort().join(",")
+	) {
+		update.fileIds = files;
+		update.attachedFileTypes = fileTypes;
+	}
+
+	// Update Note
+	if (update.cw || update.text || update.tags || update.fileIds) {
+		update.updatedAt = new Date();
+		console.log("update note", uri, update);
+
+		// Save updated note to the database
+		await Notes.update({ uri }, update);
+
+		// Save an edit history for the previous note
+		await NoteEdits.insert({
+			id: genId(),
+			noteId: note.id,
+			updatedAt: update.updatedAt,
+			text: note.text,
+			cw: note.cw,
+			tags: note.tags,
+			fileIds: note.fileIds,
+			attachedFileTypes: note.attachedFileTypes,
+		});
+
+		// Publish update event for the updated note details
+		publishNoteStream(note.id, "updated", {
+			id: note.id,
+			updatedAt: update.updatedAt,
+			text: update.text,
+			cw: update.cw,
+			tags: update.tags,
+			fileIds: update.fileIds,
+			attachedFileTypes: update.attachedFileTypes,
+		});
+	} else {
+		console.log("skip update note", uri);
+	}
 }

@@ -3,6 +3,7 @@ import type { IUpdate } from "../../type.js";
 import { getApType, isActor } from "../../type.js";
 import { apLogger } from "../../logger.js";
 import { updateQuestion } from "../../models/question.js";
+import { updateNote } from "../../models/note.js";
 import Resolver from "../../resolver.js";
 import { updatePerson } from "../../models/person.js";
 
@@ -29,10 +30,23 @@ export default async (
 	if (isActor(object)) {
 		await updatePerson(actor.uri!, resolver, object);
 		return "ok: Person updated";
-	} else if (getApType(object) === "Question") {
-		await updateQuestion(object, resolver).catch((e) => console.log(e));
-		return "ok: Question updated";
-	} else {
-		return `skip: Unknown type: ${getApType(object)}`;
+	}
+
+	const objectType = getApType(object);
+	switch (objectType) {
+		case "Question":
+			await updateQuestion(object, resolver).catch((e) => console.log(e));
+			return "ok: Question updated";
+		case "Note":
+			let failed = false;
+			console.log("Updating note", object);
+			await updateNote(object, resolver).catch((e: Error) => {
+				failed = true;
+				console.log(e);
+			});
+			return failed ? "skip: Note update failed" : "ok: Note updated";
+
+		default:
+			return `skip: Unknown type: ${objectType}`;
 	}
 };
