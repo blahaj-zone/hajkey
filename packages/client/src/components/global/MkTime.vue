@@ -5,6 +5,7 @@
 		<template v-else-if="mode === 'detail'"
 			>{{ absolute }} ({{ relative }})</template
 		>
+		<slot></slot>
 	</time>
 </template>
 
@@ -15,7 +16,7 @@ import { i18n } from "@/i18n";
 const props = withDefaults(
 	defineProps<{
 		time: Date | string;
-		mode?: "relative" | "absolute" | "detail";
+		mode?: "relative" | "absolute" | "detail" | "none";
 	}>(),
 	{
 		mode: "relative",

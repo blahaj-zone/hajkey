@@ -18,9 +18,12 @@
 				<div class="info">
 					<MkA class="created-at" :to="notePage(note)">
 						<MkTime :time="note.createdAt" />
-						<span v-if="note.updatedAt"
+						<MkTime
+							v-if="note.updatedAt"
+							:time="note.updatedAt"
+							mode="none"
 							>(<i class="ph-pencil-line ph-bold"></i
-							>{{ i18n.ts.edited }})</span
+							>{{ i18n.ts.edited }})</MkTime
 						>
 					</MkA>
 					<MkVisibility :note="note" />

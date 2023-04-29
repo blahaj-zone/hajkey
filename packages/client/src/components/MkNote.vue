@@ -117,7 +117,9 @@
 						<MkTime :time="appearNote.createdAt" mode="absolute" />
 						<span v-if="appearNote.updatedAt"
 							>(<i class="ph-pencil-line ph-bold"></i
-							><MkTime :time="appearNote.updatedAt" mode="absolute"
+							><MkTime
+								:time="appearNote.updatedAt"
+								mode="absolute"
 							/>)</span
 						>
 					</MkA>
