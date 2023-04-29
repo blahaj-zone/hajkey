@@ -26,7 +26,7 @@ export class NoteEdit1682753227899 {
 		`);
 		await queryRunner.query(`
 			ALTER TABLE "note"
-			ADD "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL
+			ADD "updatedAt" TIMESTAMP WITH TIME ZONE
 		`);
 		await queryRunner.query(`
 			COMMENT ON COLUMN "note"."updatedAt" IS 'The updated date of the Note.'

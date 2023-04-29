@@ -236,6 +236,7 @@ export class Note {
 	public renoteUserHost: string | null;
 
 	@Column('timestamp with time zone', {
+		nullable: true,
 		comment: 'The updated date of the Note.',
 	})
 	public updatedAt: Date;
