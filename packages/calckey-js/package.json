@@ -9,9 +9,8 @@
 		"tsd": "tsd",
 		"api": "pnpm api-extractor run --local --verbose",
 		"api-prod": "pnpm api-extractor run --verbose",
-		"eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"typecheck": "tsc --noEmit",
-		"lint": "pnpm typecheck && pnpm eslint",
+		"lint": "pnpm typecheck && pnpm rome check \"src/*.ts\"",
 		"jest": "jest --coverage --detectOpenHandles",
 		"test": "pnpm jest && pnpm tsd"
 	},
