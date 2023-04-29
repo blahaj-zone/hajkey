@@ -124,6 +124,8 @@ export const paramDef = {
 		summalyProxy: { type: "string", nullable: true },
 		deeplAuthKey: { type: "string", nullable: true },
 		deeplIsPro: { type: "boolean" },
+		libreTranslateApiUrl: { type: "string", nullable: true },
+		libreTranslateApiKey: { type: "string", nullable: true },
 		enableTwitterIntegration: { type: "boolean" },
 		twitterConsumerKey: { type: "string", nullable: true },
 		twitterConsumerSecret: { type: "string", nullable: true },
@@ -513,6 +515,22 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	if (ps.deeplIsPro !== undefined) {
 		set.deeplIsPro = ps.deeplIsPro;
+	}
+
+	if (ps.libreTranslateApiUrl !== undefined) {
+		if (ps.libreTranslateApiUrl === "") {
+			set.libreTranslateApiUrl = null;
+		} else {
+			set.libreTranslateApiUrl = ps.libreTranslateApiUrl;
+		}
+	}
+
+	if (ps.libreTranslateApiKey !== undefined) {
+		if (ps.libreTranslateApiKey === "") {
+			set.libreTranslateApiKey = null;
+		} else {
+			set.libreTranslateApiKey = ps.libreTranslateApiKey;
+		}
 	}
 
 	if (ps.enableIpLogging !== undefined) {

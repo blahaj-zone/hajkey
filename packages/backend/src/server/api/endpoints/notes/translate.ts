@@ -51,15 +51,47 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	const instance = await fetchMeta();
 
-	if (instance.deeplAuthKey == null) {
+	if (instance.deeplAuthKey == null && instance.libreTranslateApiUrl == null) {
 		return 204; // TODO: 良い感じのエラー返す
 	}
 
 	let targetLang = ps.targetLang;
 	if (targetLang.includes("-")) targetLang = targetLang.split("-")[0];
 
+	if (instance.libreTranslateApiUrl != null) {
+		const jsonBody = {
+			q: note.text,
+			source: "es",
+			target: targetLang,
+			format: "text",
+			api_key: instance.libreTranslateApiKey ?? "",
+		};
+
+		const res = await fetch(instance.libreTranslateApiUrl, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(jsonBody),
+			agent: getAgentByUrl,
+		});
+
+		const json = (await res.json()) as {
+			detectedLanguage: {
+				confidence: number;
+				language: string;
+			};
+			translatedText: string;
+		};
+
+		return {
+			sourceLang: json.detectedLanguage.language,
+			text: json.translatedText,
+		};
+	}
+
 	const params = new URLSearchParams();
-	params.append("auth_key", instance.deeplAuthKey);
+	params.append("auth_key", instance.deeplAuthKey ?? "");
 	params.append("text", note.text);
 	params.append("target_lang", targetLang);
 

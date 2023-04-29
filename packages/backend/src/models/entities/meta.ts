@@ -390,6 +390,18 @@ export class Meta {
 		length: 512,
 		nullable: true,
 	})
+	public libreTranslateApiUrl: string | null;
+
+	@Column('varchar', {
+		length: 128,
+		nullable: true,
+	})
+	public libreTranslateApiKey: string | null;
+
+	@Column('varchar', {
+		length: 512,
+		nullable: true,
+	})
 	public ToSUrl: string | null;
 
 	@Column('varchar', {

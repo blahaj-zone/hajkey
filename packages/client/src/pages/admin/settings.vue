@@ -371,6 +371,34 @@
 								<template #label>Pro account</template>
 							</FormSwitch>
 						</FormSection>
+
+						<FormSection>
+							<template #label>Libre Translate</template>
+
+							<FormInput
+								v-model="libreTranslateApiUrl"
+								class="_formBlock"
+							>
+								<template #prefix
+									><i class="ph-link ph-bold ph-lg"></i
+								></template>
+								<template #label
+									>Libre Translate API URL</template
+								>
+							</FormInput>
+
+							<FormInput
+								v-model="libreTranslateApiKey"
+								class="_formBlock"
+							>
+								<template #prefix
+									><i class="ph-key ph-bold ph-lg"></i
+								></template>
+								<template #label
+									>Libre Translate API Key</template
+								>
+							</FormInput>
+						</FormSection>
 					</div>
 				</FormSuspense>
 			</MkSpacer>
@@ -422,6 +450,8 @@ let swPublicKey: any = $ref(null);
 let swPrivateKey: any = $ref(null);
 let deeplAuthKey: string = $ref("");
 let deeplIsPro: boolean = $ref(false);
+let libreTranslateApiUrl: string = $ref("");
+let libreTranslateApiKey: string = $ref("");
 let defaultReaction: string = $ref("");
 let defaultReactionCustom: string = $ref("");
 
@@ -456,6 +486,8 @@ async function init() {
 	swPrivateKey = meta.swPrivateKey;
 	deeplAuthKey = meta.deeplAuthKey;
 	deeplIsPro = meta.deeplIsPro;
+	libreTranslateApiUrl = meta.libreTranslateApiUrl;
+	libreTranslateApiKey = meta.libreTranslateApiKey;
 	defaultReaction = ["⭐", "👍", "❤️"].includes(meta.defaultReaction)
 		? meta.defaultReaction
 		: "custom";
@@ -498,6 +530,8 @@ function save() {
 		swPrivateKey,
 		deeplAuthKey,
 		deeplIsPro,
+		libreTranslateApiUrl,
+		libreTranslateApiKey,
 		defaultReaction,
 	}).then(() => {
 		fetchInstance();

@@ -30,6 +30,17 @@ export default define(meta, paramDef, async (ps, me) => {
 				set.deeplIsPro = config.deepl.isPro;
 			}
 		}
+		if (
+			config.libreTranslate.managed != null &&
+			config.libreTranslate.managed === true
+		) {
+			if (typeof config.libreTranslate.apiUrl === "string") {
+				set.libreTranslateApiUrl = config.libreTranslate.apiUrl;
+			}
+			if (typeof config.libreTranslate.apiKey === "string") {
+				set.libreTranslateApiKey = config.libreTranslate.apiKey;
+			}
+		}
 		if (config.email.managed != null && config.email.managed === true) {
 			set.enableEmail = true;
 			if (typeof config.email.address === "string") {

@@ -512,7 +512,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		enableGithubIntegration: instance.enableGithubIntegration,
 		enableDiscordIntegration: instance.enableDiscordIntegration,
 		enableServiceWorker: instance.enableServiceWorker,
-		translatorAvailable: instance.deeplAuthKey != null,
+		translatorAvailable:
+			instance.deeplAuthKey != null || instance.libreTranslateApiUrl != null,
 		pinnedPages: instance.pinnedPages,
 		pinnedClipId: instance.pinnedClipId,
 		cacheRemoteFiles: instance.cacheRemoteFiles,
@@ -564,6 +565,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		objectStorageS3ForcePathStyle: instance.objectStorageS3ForcePathStyle,
 		deeplAuthKey: instance.deeplAuthKey,
 		deeplIsPro: instance.deeplIsPro,
+		libreTranslateApiUrl: instance.libreTranslateApiUrl,
+		libreTranslateApiKey: instance.libreTranslateApiKey,
 		enableIpLogging: instance.enableIpLogging,
 		enableActiveEmailValidation: instance.enableActiveEmailValidation,
 	};

@@ -89,6 +89,11 @@ export type Source = {
 		authKey?: string;
 		isPro?: boolean;
 	};
+	libreTranslate: {
+		managed?: boolean;
+		apiUrl?: string;
+		apiKey?: string;
+	};
 	email: {
 		managed?: boolean;
 		address?: string;
