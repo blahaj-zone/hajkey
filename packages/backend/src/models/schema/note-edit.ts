@@ -10,8 +10,8 @@ export const packedNoteEdit = {
 		},
 		updatedAt: {
 			type: "string",
-			optional: false,
-			nullable: false,
+			optional: true,
+			nullable: true,
 			format: "date-time",
 		},
 		note: {
