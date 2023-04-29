@@ -527,10 +527,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	if (resolver == null) resolver = new Resolver();
 	const post = (await resolver.resolve(value)) as IPost;
 
-	if (post.source?.mediaType !== "text/x.misskeymarkdown") {
-		throw new Error("Note source is not markdown");
-	}
-
 	// Text parsing
 	let text: string | null = null;
 	if (
