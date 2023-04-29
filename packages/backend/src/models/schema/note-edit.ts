@@ -1,4 +1,4 @@
-export const packedNoteFavoriteSchema = {
+export const packedNoteEdit = {
 	type: "object",
 	properties: {
 		id: {
