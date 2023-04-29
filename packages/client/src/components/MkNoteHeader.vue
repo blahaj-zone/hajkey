@@ -19,7 +19,7 @@
 					<MkA class="created-at" :to="notePage(note)">
 						<MkTime :time="note.createdAt" />
 						<span v-if="note.updatedAt"
-							>(<i class="ph-pencil-line ph-bold ph-lg"></i
+							>(<i class="ph-pencil-line ph-bold"></i
 							>{{ i18n.ts.edited }})</span
 						>
 					</MkA>
