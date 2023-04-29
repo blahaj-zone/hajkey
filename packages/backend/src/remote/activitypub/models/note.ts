@@ -531,7 +531,19 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		throw new Error("Note source is not markdown");
 	}
 
-	const text = post.source?.content;
+	// Text parsing
+	let text: string | null = null;
+	if (
+		post.source?.mediaType === "text/x.misskeymarkdown" &&
+		typeof post.source?.content === "string"
+	) {
+		text = post.source.content;
+	} else if (typeof post._misskey_content !== "undefined") {
+		text = post._misskey_content;
+	} else if (typeof post.content === "string") {
+		text = htmlToMfm(post.content, post.tag);
+	}
+
 	const cw = post.sensitive && post.summary;
 	const tagList: Array<TagDetail> = (
 		post.tag ? (Array.isArray(post.tag) ? post.tag : [post.tag]) : []
