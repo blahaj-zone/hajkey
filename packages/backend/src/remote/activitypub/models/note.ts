@@ -589,7 +589,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 
 		// Publish update event for the updated note details
 		publishNoteStream(note.id, "updated", {
-			id: note.id,
 			updatedAt: update.updatedAt,
 			text: update.text,
 			cw: update.cw,

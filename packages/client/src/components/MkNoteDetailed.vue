@@ -322,19 +322,64 @@ if (appearNote.replyId) {
 	});
 }
 
-function onNoteReplied(noteData: NoteUpdatedEvent): void {
+async function onNoteUpdated(noteData: NoteUpdatedEvent): void {
 	const { type, id, body } = noteData;
-	if (type === "replied" && id === appearNote.id) {
-		const { id: createdId } = body;
 
-		os.api("notes/show", {
-			noteId: createdId,
-		}).then((note) => {
-			if (note.replyId === appearNote.id) {
-				replies.value.unshift(note);
-				directReplies.value.unshift(note);
+	let found = -1;
+	if (id === appearNote.id) {
+		found = 0;
+	} else {
+		for (let i = 0; i < replies.value.length; i++) {
+			const reply = replies.value[i];
+			if (reply.id === id) {
+				found = i + 1;
+				break;
 			}
-		});
+		}
+	}
+
+	if (found === -1) {
+		return;
+	}
+
+	switch (type) {
+		case "replied":
+			const { id: createdId } = body;
+			const replyNote = await os.api("notes/show", {
+				noteId: createdId,
+			});
+
+			replies.value.splice(found, 0, replyNote);
+			if (found === 0) {
+				directReplies.value.unshift(replyNote);
+			}
+			break;
+
+		case "updated":
+			const { text, cw, tags, fileIds, attachedFileTypes, updatedAt } =
+				body;
+
+			let updatedNote = appearNote;
+			if (found > 0) {
+				updatedNote = replies.value[found - 1];
+			}
+			if (text) updatedNote.text = text;
+			if (cw) updatedNote.cw = cw;
+			if (tags) updatedNote.tags = tags;
+			if (fileIds) {
+				updatedNote.fileIds = fileIds;
+				updatedNote.attachedFileTypes = attachedFileTypes;
+			}
+			updatedNote.updatedAt = updatedAt;
+			break;
+
+		case "deleted":
+			if (found === 0) {
+				isDeleted.value = true;
+			} else {
+				replies.value.splice(found - 1, 1);
+			}
+			break;
 	}
 }
 
@@ -343,7 +388,7 @@ document.addEventListener("wheel", () => {
 });
 
 onMounted(() => {
-	stream.on("noteUpdated", onNoteReplied);
+	stream.on("noteUpdated", onNoteUpdated);
 	isScrolling = false;
 	noteEl.scrollIntoView();
 });
@@ -355,7 +400,7 @@ onUpdated(() => {
 });
 
 onUnmounted(() => {
-	stream.off("noteUpdated", onNoteReplied);
+	stream.off("noteUpdated", onNoteUpdated);
 });
 </script>
 

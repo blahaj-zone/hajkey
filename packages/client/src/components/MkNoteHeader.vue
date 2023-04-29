@@ -18,6 +18,10 @@
 				<div class="info">
 					<MkA class="created-at" :to="notePage(note)">
 						<MkTime :time="note.createdAt" />
+						<span v-if="note.updatedAt"
+							>(<i class="ph-pencil-line ph-bold ph-lg"></i
+							>{{ i18n.ts.edited }})</span
+						>
 					</MkA>
 					<MkVisibility :note="note" />
 				</div>
@@ -40,6 +44,7 @@ import MkInstanceTicker from "@/components/MkInstanceTicker.vue";
 import { notePage } from "@/filters/note";
 import { userPage } from "@/filters/user";
 import { deepClone } from "@/scripts/clone";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	note: misskey.entities.Note;

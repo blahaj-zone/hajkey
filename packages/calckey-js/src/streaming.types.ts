@@ -1,4 +1,4 @@
-import {
+import type {
 	Antenna,
 	CustomEmoji,
 	DriveFile,
@@ -170,6 +170,18 @@ export type NoteUpdatedEvent =
 			type: "replied";
 			body: {
 				id: Note["id"];
+			};
+	  }
+	| {
+			id: Note["id"];
+			type: "updated";
+			body: {
+				updatedAt: string;
+				text?: string;
+				cw?: string;
+				tags?: string[];
+				fileIds?: string[];
+				attachedFileIds?: string[];
 			};
 	  };
 

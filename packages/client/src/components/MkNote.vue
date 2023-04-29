@@ -115,6 +115,10 @@
 				<div v-if="detailedView" class="info">
 					<MkA class="created-at" :to="notePage(appearNote)">
 						<MkTime :time="appearNote.createdAt" mode="absolute" />
+						<span v-if="appearNote.updatedAt"
+							>(<i class="ph-pencil-line ph-bold ph-lg"></i
+							>{{ i18n.ts.edited }})</span
+						>
 					</MkA>
 				</div>
 				<footer ref="el" class="footer" @click.stop>

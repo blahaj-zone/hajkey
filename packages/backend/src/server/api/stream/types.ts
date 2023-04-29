@@ -146,7 +146,6 @@ export interface NoteStreamTypes {
 		id: Note["id"];
 	};
 	updated: {
-		id: Note["id"];
 		updatedAt: Note["updatedAt"];
 		text?: Note["text"];
 		cw?: Note["cw"];
