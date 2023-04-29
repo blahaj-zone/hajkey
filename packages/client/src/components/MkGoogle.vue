@@ -39,7 +39,8 @@ const search = () => {
 		font-size: 16px;
 		border: solid 1px var(--divider);
 		border-radius: 4px 0 0 4px;
-		-webkit-appearance: textfield;
+		-webkit-appearance: none;
+		-webkit-border-radius: 4px 0 0 4px;
 	}
 
 	> button {

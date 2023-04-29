@@ -39,14 +39,14 @@ export async function sendEmail(
 			to: to,
 			subject: subject,
 			text: text,
-			html: `<!doctype html>
+			html: `<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>${subject}</title>
 		<style>
 			html {
-				background: #eee;
+				background: #191724;
 			}
 
 			body {
@@ -67,17 +67,19 @@ export async function sendEmail(
 			main {
 				max-width: 500px;
 				margin: 0 auto;
-				background: #e0def4;
-				color: #6e6a86;
+				background: #1f1d2e;
+				color: #e0def4;
 			}
 				main > header {
 					padding: 32px;
 					background: #31748f;
+					display: flex;
 				}
 					main > header > img {
 						max-width: 128px;
-						max-height: 28px;
+						max-height: 72px;
 						vertical-align: bottom;
+						margin-right: 16px;
 					}
 				main > article {
 					padding: 32px;
@@ -87,7 +89,7 @@ export async function sendEmail(
 					}
 				main > footer {
 					padding: 32px;
-					border-top: solid 1px #eee;
+					border-top: solid 1px #26233a;
 				}
 
 			nav {
@@ -97,14 +99,15 @@ export async function sendEmail(
 				padding: 0 32px;
 			}
 				nav > a {
-					color: #888;
+					color: #6e6a86;
 				}
 		</style>
 	</head>
 	<body>
 		<main>
 			<header>
-				<img src="${meta.logoImageUrl || meta.iconUrl || iconUrl}"/>
+				<img src="${meta.logoImageUrl || meta.iconUrl || iconUrl}" height="100"/>
+				<h1>${meta.name}</h1>
 			</header>
 			<article>
 				<h1>${subject}</h1>

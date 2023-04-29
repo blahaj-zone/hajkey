@@ -1,7 +1,8 @@
----
 _lang_: "Català"
-headlineMisskey: "Una xarxa connectada per notes"
-introMisskey: "Benvingut! Misskey és un servei de microblogging descentralitzat de codi obert.\nCrea \"notes\" per compartir els teus pensaments amb tots els que t'envolten. 📡\nAmb \"reaccions\", també pots expressar ràpidament els teus sentiments sobre les notes de tothom. 👍\nExplorem un món nou! 🚀"
+headlineMisskey: "Una xarxa social de codi obert, descentralitzada i gratuita per\
+  \ sempre \U0001F680"
+introMisskey: "Benvinguts! Calckey es una plataforma social de codi obert,  descentralitzada\
+  \ i gratuita per sempre! \U0001F680"
 monthAndDay: "{day}/{month}"
 search: "Cercar"
 notifications: "Notificacions"
@@ -13,7 +14,7 @@ ok: "OK"
 gotIt: "Ho he entès!"
 cancel: "Cancel·lar"
 enterUsername: "Introdueix el teu nom d'usuari"
-renotedBy: "Resignat per {usuari}"
+renotedBy: "Resignat per {user}"
 noNotes: "Cap nota"
 noNotifications: "Cap notificació"
 instance: "Instàncies"
@@ -44,7 +45,8 @@ copyContent: "Copiar el contingut"
 copyLink: "Copiar l'enllaç"
 delete: "Eliminar"
 deleteAndEdit: "Esborrar i editar"
-deleteAndEditConfirm: "Estàs segur que vols suprimir aquesta nota i editar-la? Perdràs totes les reaccions, notes i respostes."
+deleteAndEditConfirm: "Estàs segur que vols suprimir aquesta nota i editar-la? Perdràs\
+  \ totes les reaccions, notes i respostes."
 addToList: "Afegir a una llista"
 sendMessage: "Enviar un missatge"
 copyUsername: "Copiar nom d'usuari"
@@ -57,15 +59,17 @@ receiveFollowRequest: "Sol·licitud de seguiment rebuda"
 followRequestAccepted: "Sol·licitud de seguiment acceptada"
 mention: "Menció"
 mentions: "Mencions"
-directNotes: "Notes directes"
+directNotes: "Missatges directes"
 importAndExport: "Importar / Exportar"
 import: "Importar"
 export: "Exportar"
 files: "Fitxers"
 download: "Baixar"
-driveFileDeleteConfirm: "Estàs segur que vols suprimir el fitxer \"{name}\"? Les notes associades a aquest fitxer adjunt també se suprimiran."
+driveFileDeleteConfirm: "Estàs segur que vols suprimir el fitxer \"{name}\"? Les notes\
+  \ associades a aquest fitxer adjunt també se suprimiran."
 unfollowConfirm: "Estàs segur que vols deixar de seguir {name}?"
-exportRequested: "Has sol·licitat una exportació. Això pot trigar una estona. S'afegirà a la teva unitat un cop completat."
+exportRequested: "Has sol·licitat una exportació. Això pot trigar una estona. S'afegirà\
+  \ a la teva unitat un cop completat."
 importRequested: "Has sol·licitat una importació. Això pot trigar una estona."
 lists: "Llistes"
 noLists: "No tens cap llista"
@@ -80,9 +84,12 @@ error: "Error"
 somethingHappened: "S'ha produït un error"
 retry: "Torna-ho a intentar"
 pageLoadError: "S'ha produït un error en carregar la pàgina"
-pageLoadErrorDescription: "Això normalment es deu a errors de xarxa o a la memòria cau del navegador. Prova d'esborrar la memòria cau i torna-ho a provar després d'esperar una estona."
+pageLoadErrorDescription: "Això normalment es deu a errors de xarxa o a la memòria\
+  \ cau del navegador. Prova d'esborrar la memòria cau i torna-ho a provar després\
+  \ d'esperar una estona."
 serverIsDead: "Aquest servidor no respon. Espera una estona i torna-ho a provar."
-youShouldUpgradeClient: "Per veure aquesta pàgina, actualitzeu-la per actualitzar el vostre client."
+youShouldUpgradeClient: "Per veure aquesta pàgina, actualitzeu-la per actualitzar\
+  \ el vostre client."
 enterListName: "Introdueix un nom per a la llista"
 privacy: "Privadesa"
 makeFollowManuallyApprove: "Les sol·licituds de seguiment requereixen aprovació"
@@ -107,7 +114,8 @@ sensitive: "NSFW"
 add: "Afegir"
 reaction: "Reaccions"
 reactionSetting: "Reaccions a mostrar al selector de reaccions"
-reactionSettingDescription2: "Arrossega per reordenar, fes clic per suprimir, prem \"+\" per afegir."
+reactionSettingDescription2: "Arrossega per reordenar, fes clic per suprimir, prem\
+  \ \"+\" per afegir."
 rememberNoteVisibility: "Recorda la configuració de visibilitat de les notes"
 attachCancel: "Eliminar el fitxer adjunt"
 markAsSensitive: "Marcar com a NSFW"
@@ -195,3 +203,269 @@ _deck:
     tl: "Línia de temps"
     list: "Llistes"
     mentions: "Mencions"
+blockConfirm: Estás segur que vols bloquejar aquest compte?
+unsuspendConfirm: Estás segur que vols treure la suspensió d'aquesta compte?
+unblockConfirm: Estás segur que vols treure el bloqueig d'aquesta compte?
+suspendConfirm: Estás segur que vols suspendre aquesta compte?
+selectList: Selecciona una llista
+selectAntenna: Selecciona una antena
+selectWidget: Selecciona un giny
+editWidgets: Edita ginys
+editWidgetsExit: Fet
+customEmojis: Emoji personalitzat
+cacheRemoteFilesDescription: Quant aquesta opció es deshabilitada, els fitxers remots
+  es carregant directament de l'instància remota. Deshabilitar això farà que baixi
+  l'ús d'emmagatzematge, però incrementa el tràfic, perquè les previsualitzacions
+  no es generarán.
+flagAsBot: Marca aquest compte com un bot
+flagAsBotDescription: Activa aquesta opció si aquest compte és controlat per un programa.
+  Si s'activa, això actuarà com una bandera per a altres desenvolupadors i prevenir
+  cadenes de interaccions infinites amb altres bots a més d'ajustar els sistemes interns
+  de Calckey per tractar aquest compte com un bot.
+flagAsCat: Ets un gat? 🐱
+flagShowTimelineReplies: Mostrar respostes a la línea de temps
+flagAsCatDescription: Guanyaràs unes orelles de gat i parlares com un gat!
+flagShowTimelineRepliesDescription: Mostrará respostes d'usuaris a notes d'altres
+  usuaris si s'activa.
+general: General
+autoAcceptFollowed: Aprova automàticament les peticions de seguiment d'usuaris que
+  segueixes
+accountMoved: "L'usuari s'ha mogut a un compte nou:"
+addAccount: Afegir compte
+loginFailed: No s'ha pogut iniciar sessió
+showOnRemote: Veure a l'instància remota
+wallpaper: Fons de pantalla
+setWallpaper: Estableix fons de pantalla
+removeWallpaper: Esborra fons de pantalla
+followConfirm: Segur que vols seguir a l'usuari {name}?
+proxyAccount: Compte proxy
+proxyAccountDescription: Un compte proxy es un compte que actua com un seguidor remot
+  per a usuaris sota determinades condicions. Per exemple, quant un usuari afegeix
+  un usuari remot a la llista, l'activitat de l'usuari remot no serà entregada a l'instància
+  si cap usuari local el segueix, així el compte proxy el seguirà.
+host: Amfitrió
+selectUser: Selecciona un usuari
+latestStatus: Últim estat
+storageUsage: Ús del emmagatzematge
+metadata: Metadata
+withNFiles: '{n} fitxer(s)'
+monitor: Seguiment
+software: Programari
+version: Versió
+jobQueue: Cua de Feina
+cpuAndMemory: CPU i Memòria
+network: Xarxa
+disk: Disc
+instanceInfo: Informació de l'instància
+statistics: Estadístiques
+clearCachedFiles: Neteja memòria cau
+clearQueueConfirmText: Qualsevol nota que continuï a la cua sense entrega no será
+  federada. Normalment aquesta operació no es necessària.
+clearCachedFilesConfirm: Segur que vols esborrar els fitxers remots de la memòria
+  cau?
+blockedUsers: Usuaris blocats
+noUsers: No hi han usuaris
+editProfile: Editar perfil
+noteDeleteConfirm: Segur que vols esborrar aquesta nota?
+pinLimitExceeded: No pots fixar més notes
+muteAndBlock: Silenciats i Bloquejats
+mutedUsers: Usuaris silenciats
+done: Fet
+preview: Vista prèvia
+default: Per defecte
+intro: La instalació de Calckey a acabat! Si us plau crea un compte d'usuari.
+processing: Processant...
+noCustomEmojis: No hi ha emoji
+noJobs: No hi han feines
+federating: Federant
+blocked: Bloquejat
+subscribing: Subscrivint
+publishing: Publicant
+notResponding: Sense resposta
+instanceUsers: Usuaris d'aquesta instància
+instanceFollowing: Seguint a l'instància
+instanceFollowers: Seguidors de l'instància
+security: Seguretat
+newPasswordRetype: Torna a entrar la nova contrasenya
+more: Més!
+featured: Destacat
+usernameOrUserId: Nom d'usuari o id d'usuari
+noSuchUser: No s'ha trobat l'usuari
+lookup: Cercar
+attachFile: Afegeix un arxiu
+currentPassword: Contrasenya actual
+newPassword: Nova contrasenya
+announcements: Anuncis
+imageUrl: URL de la imatge
+removed: S'ha esborrat correctament
+removeAreYouSure: Segur que vols esborrar "{x}"?
+deleteAreYouSure: Segur que vols esborrar "{x}"?
+resetAreYouSure: Restablir? Segur?
+fromUrl: Des de URL
+saved: Desat
+messaging: Xat
+upload: Pujar
+keepOriginalUploading: Desa imatge original
+keepOriginalUploadingDescription: Desa la imatge original pujada tal com es. Si es
+  desactiva, es generarà una versió per mostrar en la web al pujar.
+fromDrive: Des de Drive
+uploadFromUrl: Puja des de una adreça URL
+uploadFromUrlDescription: Adreça URL del fitxer que vols pujar
+uploadFromUrlRequested: Pujada demanada
+noMoreHistory: S'ha acabat la historia
+tos: Termes d'us
+start: Començar
+startMessaging: Comença un nou xat
+manageGroups: Gestiona els grups
+nUsersRead: llegit per {n}
+agreeTo: Estic d'acord amb {0}
+activity: Activitat
+home: Inici
+remoteUserCaution: L'informació d'usuaris remots pot estar incompleta.
+themeForDarkMode: En Mode Fosc fes servir el tema
+light: Clar
+registeredDate: Data de registre
+dark: Fosc
+lightThemes: Temes clars
+location: Lloc
+theme: Temes
+themeForLightMode: En Mode Clar fes servir el tema
+drive: Disc
+selectFile: Tria un fitxer
+selectFiles: Tria fitxers
+darkThemes: Temes foscos
+syncDeviceDarkMode: Sincronitza el Mode Fosc amb la configuració del teu dispositiu
+fileName: Nom del fitxer
+createFolder: Crea una carpeta
+renameFolder: Posa un nom nou a aquesta carpeta
+deleteFolder: Esborra aquesta carpeta
+selectFolder: Tria una carpeta
+selectFolders: Tria carpetes
+renameFile: Canvia el nom del fitxer
+folderName: Nom de la carpeta
+inputNewFolderName: Escriu un nou nom per la carpeta
+addFile: Afegeix un fitxer
+emptyDrive: El teu Disc és buit
+emptyFolder: Aquesta carpeta és buida
+unableToDelete: No es pot esborrar
+inputNewFileName: Escriu un nou nom per al fitxer
+inputNewDescription: Escriu una nova descripció
+circularReferenceFolder: La carpeta de destí es una subcarpeta de la carpeta que vols
+  moure.
+hasChildFilesOrFolders: Degut a que aquesta carpeta no es buida, no es pot esborrar.
+whenServerDisconnected: Quant es perd la conexió amb el servidor
+disconnectedFromServer: S'ha perdut la conexió al servidor
+reload: Torna a carregar
+avatar: Avatar
+banner: Banner
+doNothing: Ignora
+reloadConfirm: Vols tornar a carregar la línea temporal?
+watch: Veure
+maintainerName: Administrador
+maintainerEmail: Correu electrònic de l'administrador
+instanceName: Nom de l'instància
+instanceDescription: Descripció de l'instància
+today: Avui
+dayX: '{day}'
+tosUrl: Adreça URL dels terminis d'ús
+thisYear: Any
+thisMonth: Mes
+integration: Integracions
+driveCapacityPerRemoteAccount: Capacitat del Disc per usuari remot
+inMb: En megabytes
+iconUrl: Adreça URL de la icona
+enableRegistration: Activa el registre d'usuaris nous
+invite: Convidar
+driveCapacityPerLocalAccount: Capacitat del Disc per usuari local
+bannerUrl: Adreça URL del banner
+backgroundImageUrl: Adreça URL del fons de pantalla
+basicInfo: Informació bàsica
+pinnedPages: Pàgines fixades
+pinnedUsersDescription: Llista de noms d'usuaris per fixar a la pestanya "Explorar"
+  Un nom per línea.
+pinnedPagesDescription: Introdueix la ruta a les pàgines que vols fixar a la página
+  principal d'aquesta instància, una ruta per línea.
+pinnedUsers: Usuaris fixats
+enableHcaptcha: Activa hCaptcha
+hcaptchaSiteKey: Clau del lloc
+hcaptchaSecretKey: Clau secreta
+recaptcha: reCAPTCHA
+enableGlobalTimeline: Activa la línea de temps global
+disablingTimelinesInfo: Els Administradors i Moderadors sempre tenen accés a totes
+  les líneas temporals, inclòs si hi són desactivades.
+showLess: Tanca
+clearQueue: Neteja cua
+uploadFromUrlMayTakeTime: Pot trigar un temps fins que la pujada es completi.
+noThankYou: No, gràcies
+addInstance: Afegeix una instància
+emoji: Emoji
+emojis: Emoji
+emojiName: Nom del emoji
+emojiUrl: URL del emoji
+addEmoji: Afegir
+settingGuide: Configuració recomenada
+searchWith: 'Buscar: {q}'
+youHaveNoLists: No tens cap llista
+flagSpeakAsCat: Parla com un gat
+selectInstance: Selecciona una instància
+flagSpeakAsCatDescription: Les teves notes es transformaran en miols quant estiguis
+  en mode gat
+recipient: Destinatari(s)
+annotation: Comentaris
+blockedInstances: Instàncies Bloquejades
+blockedInstancesDescription: Llista les adreces de les instàncies que vols bloquejar.
+  Les instàncies de la llista no podrán comunicarse amb aquesta instància.
+hiddenTags: Etiquetes Ocultes
+hiddenTagsDescription: 'Llista de les etiquetes (sense el #) que vulguis amagar de
+  les tendències i el explorador. Les etiquetes amagades es poden descobrir per altres
+  mitjans.'
+noInstances: No hi han instàncies
+defaultValueIs: 'Per defecte: {value}'
+suspended: Suspès
+all: Tot
+changePassword: Canvia la contrasenya
+clearQueueConfirmTitle: Segur que vols netejar la cua?
+retypedNotMatch: Els camps no coincideixen.
+normal: Normal
+monthX: '{month}'
+enableRecaptcha: Activa reCAPTCHA
+recaptchaSiteKey: Clau del lloc
+recaptchaSecretKey: Clau secreta
+avoidMultiCaptchaConfirm: Fent servir diferents sistemes de Captcha pot causar interferències
+  entre ells. Vols desactivar els altres sistemes que es troben activats? Si vols
+  deixar-los activats fes clic a cancelar.
+antennas: Antenes
+enableEmojiReactions: Activa reaccions amb emojis
+blockThisInstance: Bloqueja aquesta instància
+registration: Registre
+showEmojisInReactionNotifications: Mostra els emojis a les notificacions de les reaccions
+renoteMute: Silencia les renotas
+renoteUnmute: Treu el silenci a les renotas
+cacheRemoteFiles: Fitxers remots a la memoria cau
+federation: Federació
+registeredAt: Registrat a
+latestRequestSentAt: Última petició enviada
+latestRequestReceivedAt: Última petició rebuda
+charts: Gràfics
+perHour: Per Hora
+perDay: Per Dia
+stopActivityDelivery: Para d'enviar activitats
+operations: Operacions
+explore: Explorar
+messageRead: Llegir
+images: Imatges
+birthday: Aniversari
+yearsOld: '{age} anys'
+copyUrl: Copiar l'adreça URL
+rename: Renombrar
+unwatch: Deixa de veure
+accept: Acceptar
+reject: Rebutja
+yearX: '{year}'
+pages: Pàgines
+disconnectService: Desconnectar
+connectService: Connectar
+enableLocalTimeline: Activa la línea de temps local
+enableRecommendedTimeline: Activa la línea de temps de recomanats
+pinnedClipId: ID del clip que vols fixar
+hcaptcha: hCaptcha

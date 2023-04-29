@@ -8,13 +8,11 @@ import { readFileSync } from "node:fs";
 import Koa from "koa";
 import Router from "@koa/router";
 import send from "koa-send";
-import favicon from "koa-favicon";
 import views from "koa-views";
 import sharp from "sharp";
 import { createBullBoard } from "@bull-board/api";
 import { BullAdapter } from "@bull-board/api/bullAdapter.js";
 import { KoaAdapter } from "@bull-board/koa";
-
 import { In, IsNull } from "typeorm";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import config from "@/config/index.js";
@@ -98,8 +96,14 @@ app.use(
 	}),
 );
 
-// Serve favicon
-app.use(favicon(`${_dirname}/../../../assets/favicon.ico`));
+// Favicon Router
+app.use(async (ctx, next) => {
+	if (ctx.path != "/favicon.ico") return next();
+	const meta = await fetchMeta();
+	if (meta.iconUrl === "")
+		ctx.body = readFileSync(`${_dirname}/../../../assets/favicon.ico`);
+	else ctx.redirect(meta.iconUrl);
+});
 
 // Common request handler
 app.use(async (ctx, next) => {

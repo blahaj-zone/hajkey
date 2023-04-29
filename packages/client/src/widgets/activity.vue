@@ -9,11 +9,18 @@
 			>{{ i18n.ts._widgets.activity }}</template
 		>
 		<template #func
-			><button class="_button" @click="toggleView()">
+			><button
+				v-if="!widgetProps.newStyle"
+				class="_button"
+				@click="toggleView()"
+			>
 				<i class="ph-sort-ascending ph-bold ph-lg"></i></button
 		></template>
 
-		<div>
+		<div v-if="widgetProps.newStyle">
+			<MkHeatmap src="my-notes" />
+		</div>
+		<div v-else>
 			<MkLoading v-if="fetching" />
 			<template v-else>
 				<XCalendar
@@ -40,6 +47,7 @@ import {
 } from "./widget";
 import XCalendar from "./activity.calendar.vue";
 import XChart from "./activity.chart.vue";
+import MkHeatmap from "@/components/MkHeatmap.vue";
 import { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import MkContainer from "@/components/MkContainer.vue";
@@ -49,6 +57,10 @@ import { i18n } from "@/i18n";
 const name = "activity";
 
 const widgetPropsDef = {
+	newStyle: {
+		type: "boolean" as const,
+		default: true,
+	},
 	showHeader: {
 		type: "boolean" as const,
 		default: true,

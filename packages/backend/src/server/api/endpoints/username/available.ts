@@ -1,5 +1,6 @@
 import { IsNull } from "typeorm";
 import { Users, UsedUsernames } from "@/models/index.js";
+import config from "@/config/index.js";
 import define from "../../define.js";
 
 export const meta = {
@@ -40,7 +41,11 @@ export default define(meta, paramDef, async (ps) => {
 		username: ps.username.toLowerCase(),
 	});
 
+	const reserved = config.reservedUsernames?.includes(
+		ps.username.toLowerCase(),
+	);
+
 	return {
-		available: exist === 0 && exist2 === 0,
+		available: exist === 0 && exist2 === 0 && !reserved,
 	};
 });

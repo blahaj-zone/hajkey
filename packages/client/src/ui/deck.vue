@@ -72,6 +72,14 @@
 						</button>
 						<button
 							v-if="deckStore.state.profile !== 'default'"
+							v-tooltip.noDelay.left="i18n.ts._deck.renameProfile"
+							class="_button button"
+							@click="renameProfile"
+						>
+							<i class="ph-pencil ph-bold ph-lg"></i>
+						</button>
+						<button
+							v-if="deckStore.state.profile !== 'default'"
 							v-tooltip.noDelay.left="i18n.ts._deck.deleteProfile"
 							class="_button button"
 							@click="deleteProfile"
@@ -161,6 +169,7 @@ import {
 	addColumn as addColumnToStore,
 	loadDeck,
 	getProfiles,
+	renameProfile as renameProfile_,
 	deleteProfile as deleteProfile_,
 } from "./deck/deck-store";
 import DeckColumnCore from "@/ui/deck/column-core.vue";
@@ -317,6 +326,23 @@ function changeProfile(ev: MouseEvent) {
 		];
 	});
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
+}
+
+async function renameProfile() {
+	const { canceled, result: newProfileName } = await os.inputText({
+		title: i18n.ts._deck.renameProfile,
+		allowEmpty: false,
+	});
+	if (canceled) return;
+
+	const profiles = await getProfiles();
+	if (profiles.includes(newProfileName)) {
+		os.alert({ type: "error", text: i18n.ts._deck.nameAlreadyExists });
+		return;
+	}
+
+	await renameProfile_(deckStore.state.profile, newProfileName);
+	unisonReload();
 }
 
 async function deleteProfile() {

@@ -1,7 +1,7 @@
----
 _lang_: "繁體中文"
 headlineMisskey: "貼文連繫網路"
-introMisskey: "歡迎！ Misskey是一個開放原始碼且去中心化的社群網路。\n透過「貼文」分享周邊新鮮事，並告訴其他人您的想法！📡\n透過「反應」功能，對大家的貼文表達情感！👍\n一起來探索這個新的世界吧！🚀"
+introMisskey: "歡迎！ Misskey是一個開放原始碼且去中心化的社群網路。\n透過「貼文」分享周邊新鮮事，並告訴其他人您的想法！\U0001F4E1\
+  \n透過「反應」功能，對大家的貼文表達情感！\U0001F44D\n一起來探索這個新的世界吧！\U0001F680"
 monthAndDay: "{month}月 {day}日"
 search: "搜尋"
 notifications: "通知"
@@ -14,7 +14,7 @@ gotIt: "知道了"
 cancel: "取消"
 enterUsername: "輸入使用者名稱"
 renotedBy: "{user} 轉傳了"
-noNotes: "無貼文。"
+noNotes: "無貼文"
 noNotifications: "沒有通知"
 instance: "實例"
 settings: "設定"
@@ -23,19 +23,19 @@ otherSettings: "其他設定"
 openInWindow: "在新視窗開啟"
 profile: "個人檔案"
 timeline: "時間軸"
-noAccountDescription: "此用戶還沒有自我介紹"
+noAccountDescription: "此用戶還沒有自我介紹。"
 login: "登入"
 loggingIn: "登入中"
 logout: "登出"
 signup: "註冊"
-uploading: "上傳中"
+uploading: "上傳中..."
 save: "儲存"
 users: "使用者"
 addUser: "新增使用者"
 favorite: "我的最愛"
 favorites: "我的最愛"
 unfavorite: "從我的最愛中移除"
-favorited: "已添加至我的最愛"
+favorited: "已添加至我的最愛。"
 alreadyFavorited: "我的最愛中已存在。"
 cantFavorite: "無法加入至我的最愛。"
 pin: "置頂"
@@ -107,6 +107,8 @@ clickToShow: "按一下以顯示"
 sensitive: "敏感內容"
 add: "新增"
 reaction: "情感"
+enableEmojiReaction: "啟用表情符號反應"
+showEmojisInReactionNotifications: "在反應通知中顯示表情符號"
 reactionSetting: "在選擇器中顯示反應"
 reactionSettingDescription2: "拖動以重新列序，點擊以刪除，按下 + 添加。"
 rememberNoteVisibility: "記住貼文可見性"
@@ -141,7 +143,7 @@ settingGuide: "推薦設定"
 cacheRemoteFiles: "快取遠端檔案"
 cacheRemoteFilesDescription: "禁用此設定會停止遠端檔案的緩存，從而節省儲存空間，但資料會因直接連線從而產生額外連接數據。"
 flagAsBot: "此使用者是機器人"
-flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Misskey內部系統將本帳戶識別為機器人"
+flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Calckey內部系統將本帳戶識別為機器人"
 flagAsCat: "此使用者是貓"
 flagAsCatDescription: "如果想將本帳戶標示為一隻貓，請開啟此標示"
 flagShowTimelineReplies: "在時間軸上顯示貼文的回覆"
@@ -201,7 +203,7 @@ noUsers: "沒有任何使用者"
 editProfile: "編輯個人檔案"
 noteDeleteConfirm: "確定刪除此貼文嗎？"
 pinLimitExceeded: "不能置頂更多貼文了"
-intro: "Misskey 部署完成！請建立管理員帳戶。"
+intro: "Calckey 部署完成！請建立管理員帳戶。"
 done: "完成"
 processing: "處理中"
 preview: "預覽"
@@ -380,7 +382,7 @@ exploreFediverse: "探索聯邦世界"
 popularTags: "熱門標籤"
 userList: "清單"
 about: "資訊"
-aboutMisskey: "關於 Misskey"
+aboutMisskey: "關於 Calckey"
 administrator: "管理員"
 token: "權杖"
 twoStepAuthentication: "兩階段驗證"
@@ -526,7 +528,7 @@ sort: "排序"
 ascendingOrder: "昇冪"
 descendingOrder: "降冪"
 scratchpad: "暫存記憶體"
-scratchpadDescription: "AiScript控制台為AiScript提供了實驗環境。您可以在此編寫、執行和確認代碼與Misskey互動的结果。"
+scratchpadDescription: "AiScript控制台為AiScript提供了實驗環境。您可以在此編寫、執行和確認代碼與Calckey互動的结果。"
 output: "輸出"
 script: "腳本"
 disablePagesScript: "停用頁面的AiScript腳本"
@@ -642,7 +644,7 @@ instanceTicker: "貼文的實例來源"
 waitingFor: "等待{x}"
 random: "隨機"
 system: "系統"
-switchUi: "切換界面"
+switchUi: "界面"
 desktop: "桌面"
 clip: "摘錄"
 createNew: "新建"
@@ -793,7 +795,7 @@ hashtags: "#tag"
 troubleshooting: "故障排除"
 useBlurEffect: "在 UI 上使用模糊效果"
 learnMore: "更多資訊"
-misskeyUpdated: "Misskey 更新完成！"
+misskeyUpdated: "Calckey 更新完成！"
 whatIsNew: "顯示更新資訊"
 translate: "翻譯"
 translatedFrom: "從 {x} 翻譯"
@@ -895,7 +897,10 @@ shuffle: "隨機"
 account: "帳戶"
 move: "移動 "
 customKaTeXMacro: "自定義 KaTeX 宏"
-customKaTeXMacroDescription: "使用宏來輕鬆的輸入數學表達式吧！宏的用法與 LaTeX 中的命令定義相同。你可以使用 \\newcommand{\\name}{content} 或 \\newcommand{\\name}[number of arguments]{content} 來輸入數學表達式。舉個例子，\\newcommand{\\add}[2]{#1 + #2} 會將 \\add{3}{foo} 展開為 3 + foo。此外，宏名稱外的花括號 {} 可以被替換為圓括號 () 和方括號 []，這會影響用於參數的括號。每行只能夠定義一個宏，無法在中間換行，且無效的行將被忽略。只支持簡單字符串替換功能，不支持高級語法，如條件分支等。"
+customKaTeXMacroDescription: "使用宏來輕鬆的輸入數學表達式吧！宏的用法與 LaTeX 中的命令定義相同。你可以使用 \\newcommand{\\\
+  name}{content} 或 \\newcommand{\\name}[number of arguments]{content} 來輸入數學表達式。舉個例子，\\\
+  newcommand{\\add}[2]{#1 + #2} 會將 \\add{3}{foo} 展開為 3 + foo。此外，宏名稱外的花括號 {} 可以被替換為圓括號\
+  \ () 和方括號 []，這會影響用於參數的括號。每行只能夠定義一個宏，無法在中間換行，且無效的行將被忽略。只支持簡單字符串替換功能，不支持高級語法，如條件分支等。"
 enableCustomKaTeXMacro: "啟用自定義 KaTeX 宏"
 _sensitiveMediaDetection:
   description: "您可以使用機器學習自動檢測敏感媒體並將其用於審核。 伺服器的負荷會稍微增加。"
@@ -972,13 +977,13 @@ _registry:
   domain: "域"
   createKey: "新增機碼"
 _aboutMisskey:
-  about: "Misskey是由syuilo自2014年起開發的開源軟體。"
+  about: "Calckey是由ThatOneCalculator自2022年起開發的Misskey分支。"
   contributors: "主要貢獻者"
   allContributors: "全體貢獻人員"
   source: "原始碼"
-  translation: "翻譯Misskey"
-  donate: "贊助Misskey"
-  morePatrons: "還有許許多多幫助我們的其他人，非常感謝你們。 🥰"
+  translation: "翻譯Calckey"
+  donate: "贊助Calckey"
+  morePatrons: "還有許許多多幫助我們的其他人，非常感謝你們。 \U0001F970"
   patrons: "贊助者"
 _nsfw:
   respect: "隱藏敏感內容"
@@ -987,7 +992,7 @@ _nsfw:
 _mfm:
   cheatSheet: "MFM代碼小抄"
   intro: "MFM是Misskey專用的標記語言，可以在Misskey中的各個位置使用。 您可以這裏看到MFM可用語法列表。"
-  dummy: "Misskey拓展了Fediverse的世界"
+  dummy: "Calckey拓展了Fediverse的世界"
   mention: "提及"
   mentionDescription: "透過 @+用戶名 來標示特定使用者。"
   hashtag: "#tag"
@@ -1392,6 +1397,7 @@ _timelines:
   local: "本地"
   social: "社群"
   global: "公開"
+  recommended: 推薦
 _pages:
   newPage: "建立頁面"
   editPage: "編輯頁面"
@@ -1731,7 +1737,9 @@ _deck:
   popRight: "向右彈出"
   profile: "個人檔案"
   newProfile: "新建個人檔案"
+  renameProfile: "重新命名個人檔案"
   deleteProfile: "刪除個人檔案"
+  nameAlreadyExists: "該個人檔案名已經存在。"
   introduction: "組合欄位來製作屬於自己的介面吧！"
   introduction2: "您可以隨時透過按畫面右方的 + 來添加欄位。"
   widgetsIntroduction: "請從欄位的選單中，選擇「編輯小工具」來添加小工具"
@@ -1744,3 +1752,56 @@ _deck:
     list: "清單"
     mentions: "提及"
     direct: "指定使用者"
+secureMode: 安全模式（授權獲取）
+instanceSecurity: 實例安全性
+privateMode: 私人模式
+allowedInstances: 列入白名單的實例
+secureModeInfo: 當從其他實例請求時，不要在沒有證據的情況下發回。
+_messaging:
+  dms: 私訊
+  groups: 群組
+manageGroups: 管理群組
+replayTutorial: 重新播放教程
+moveFromLabel: '您想遷移的舊帳戶:'
+customMOTDDescription: 每次用戶加載/重新加載頁面時，由換行符號分隔的 MOTD（啟動畫面）的自定信息將隨機顯示。
+privateModeInfo: 啟用後，只有列入白名單的實例才能與您的實例聯合。所有貼文都將對公眾隱藏。
+adminCustomCssWarn: 除非你知道它的作用，否則請不要使用此設定。 輸入不正確的值可能會導致每個人的客戶端無法正常運行。你可在你的的用戶設定中測試，確保你的
+  CSS 正常工作。
+showUpdates: Calckey 更新時顯示彈出視窗
+recommendedInstances: 建議的實例
+caption: 自動字幕
+enterSendsMessage: 在 Messaging 中按 Return 發送消息 (如關閉則是 Ctrl + Return)
+migrationConfirm: "您確定要將你的帳戶遷移到 {account} 嗎？ 一旦這樣做，你將無法復原，而你將無法再次正常使用您的帳戶。\n另外，請確保你已將此當前帳戶設置為您要遷移的帳戶。"
+customSplashIconsDescription: 每次用戶加載/重新加載頁面時，以換行符號分隔的自定啟動畫面圖標的網址將隨機顯示。請確保圖片位於靜態網址上，最好所有圖片解析度調整為
+  192x192。
+accountMoved: '該使用者已移至新帳戶:'
+showAds: 顯示廣告
+noThankYou: 不用了，謝謝
+selectInstance: 選擇實例
+enableRecommendedTimeline: 啟用推薦時間軸
+antennaInstancesDescription: 分行列出一個實例
+moveTo: 遷移此帳戶到新帳戶
+moveToLabel: '請輸入你將會遷移到的帳戶:'
+moveAccount: 遷移帳戶!
+moveAccountDescription: '這個過程是不可逆的。 在遷移前，請確保您已在新帳戶上為此帳戶設置了別名(Alias)。 請輸入帳戶標籤 (格式:
+  @person@instance.com)'
+moveFrom: 由舊帳戶移至此帳戶
+moveFromDescription: '這將為你的舊帳戶設置一個別名(Alias)，以便你可以從該帳戶轉移到當前帳戶。 在你的舊帳戶移動之前請執行此操作。 請輸入帳戶標籤
+  (格式: @person@instance.com)'
+_apps:
+  crossPlatform: 跨平台
+  free: 免費
+  paid: 付費
+enableEmojiReactions: 啟用表情符號反應
+breakFollowConfirm: 您確定要移除該關注者嗎？
+socialTimeline: 社交時間軸
+cannotUploadBecauseExceedsFileSizeLimit: 因檔案太大而無法上傳。
+customMOTD: 自定義MOTD (網頁載入時顯示的信息)
+customSplashIcons: 啟動畫面圖標 (網址)
+splash: 啟動畫面
+updateAvailable: 可能有可用的更新!
+showAdminUpdates: 表明新的 Calckey 版本可用（只限管理員）
+migration: 遷移
+homeTimeline: 主頁時間軸
+swipeOnDesktop: 允許在桌面上進行手機式滑動
+logoImageUrl: 圖標網址

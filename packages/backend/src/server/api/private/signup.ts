@@ -44,6 +44,11 @@ export default async (ctx: Koa.Context) => {
 	const invitationCode = body["invitationCode"];
 	const emailAddress = body["emailAddress"];
 
+	if (config.reservedUsernames?.includes(username.toLowerCase())) {
+		ctx.status = 400;
+		return;
+	}
+
 	if (instance.emailRequiredForSignup) {
 		if (emailAddress == null || typeof emailAddress !== "string") {
 			ctx.status = 400;

@@ -80,14 +80,14 @@
 					<MkA
 						v-for="tag in tagsLocal"
 						:key="'local:' + tag.tag"
-						:to="`/explore/tags/${tag.tag}`"
+						:to="`/tags/${tag.tag}`"
 						class="local"
 						>{{ tag.tag }}</MkA
 					>
 					<MkA
 						v-for="tag in tagsRemote"
 						:key="'remote:' + tag.tag"
-						:to="`/explore/tags/${tag.tag}`"
+						:to="`/tags/${tag.tag}`"
 						>{{ tag.tag }}</MkA
 					>
 				</div>

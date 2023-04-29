@@ -10,7 +10,6 @@ import Router from "@koa/router";
 import mount from "koa-mount";
 import koaLogger from "koa-logger";
 import * as slow from "koa-slow";
-
 import { IsNull } from "typeorm";
 import config from "@/config/index.js";
 import Logger from "@/services/logger.js";
@@ -30,7 +29,6 @@ import proxyServer from "./proxy/index.js";
 import webServer from "./web/index.js";
 import { initializeStreamingServer } from "./api/streaming.js";
 import { koaBody } from "koa-body";
-import removeTrailingSlash from "koa-remove-trailing-slashes";
 import { v4 as uuid } from "uuid";
 
 export const serverLogger = new Logger("server", "gray", false);
@@ -39,7 +37,12 @@ export const serverLogger = new Logger("server", "gray", false);
 const app = new Koa();
 app.proxy = true;
 
-app.use(removeTrailingSlash());
+// Replace trailing slashes
+app.use(async (ctx, next) => {
+	if (ctx.request.path !== "/" && ctx.request.path.endsWith("/"))
+		return ctx.redirect(ctx.request.path.replace(/\/$/, ""));
+	else await next();
+});
 
 if (!["production", "test"].includes(process.env.NODE_ENV || "")) {
 	// Logger

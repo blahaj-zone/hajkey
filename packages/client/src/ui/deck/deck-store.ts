@@ -115,6 +115,20 @@ export async function deleteProfile(key: string): Promise<any> {
 	});
 }
 
+export async function renameProfile(oldKey: string, newKey: string) {
+	if (oldKey === newKey) return;
+
+	await api("i/registry/set", {
+		scope: ["client", "deck", "profiles"],
+		key: newKey,
+		value: { columns: deckStore.state.columns, layout: deckStore.state.layout },
+	});
+	deckStore.set("profile", newKey);
+	saveDeck();
+
+	deleteProfile(oldKey);
+}
+
 export function addColumn(column: Column) {
 	if (column.name === undefined) column.name = null;
 	deckStore.push("columns", column);

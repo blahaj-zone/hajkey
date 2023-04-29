@@ -12,6 +12,24 @@
 		--margin: var(--marginHalf);
 	}
 
+	// https://larsenwork.com/easing-gradients/
+	--gradient: hsl(0, 0%, 0%) 0%,
+		hsla(0, 0%, 0%, 0.987) 8.1%,
+		hsla(0, 0%, 0%, 0.951) 15.5%,
+		hsla(0, 0%, 0%, 0.896) 22.5%,
+		hsla(0, 0%, 0%, 0.825) 29%,
+		hsla(0, 0%, 0%, 0.741) 35.3%,
+		hsla(0, 0%, 0%, 0.648) 41.2%,
+		hsla(0, 0%, 0%, 0.55) 47.1%,
+		hsla(0, 0%, 0%, 0.45) 52.9%,
+		hsla(0, 0%, 0%, 0.352) 58.8%,
+		hsla(0, 0%, 0%, 0.259) 64.7%,
+		hsla(0, 0%, 0%, 0.175) 71%,
+		hsla(0, 0%, 0%, 0.104) 77.5%,
+		hsla(0, 0%, 0%, 0.049) 84.5%,
+		hsla(0, 0%, 0%, 0.013) 91.9%,
+		hsla(0, 0%, 0%, 0) 100%;
+
 	//--ad: rgb(255 169 0 / 10%);
 }
 
@@ -36,32 +54,6 @@ html {
 	text-size-adjust: 100%;
 	tab-size: 2;
 
-	&, * {
-		scrollbar-color: var(--scrollbarHandle) inherit;
-		scrollbar-width: thin;
-
-		&::-webkit-scrollbar {
-			width: 6px;
-			height: 6px;
-		}
-
-		&::-webkit-scrollbar-track {
-			background: inherit;
-		}
-
-		&::-webkit-scrollbar-thumb {
-			background: var(--scrollbarHandle);
-
-			&:hover {
-				background: var(--scrollbarHandleHover);
-			}
-
-			&:active {
-				background: var(--accent);
-			}
-		}
-	}
-
 	&.f-1 {
 		font-size: 15px;
 	}
@@ -76,6 +68,37 @@ html {
 
 	&.useSystemFont {
 		font-family: sans-serif;
+	}
+}
+body::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+
+}
+body::-webkit-scrollbar-thumb {
+	border-radius: 100px;
+	background-clip: content-box;
+	border: 3px solid transparent;
+}
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background: inherit;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--scrollbarHandle);
+	min-height: 80px;
+
+	&:hover {
+		background: var(--scrollbarHandleHover);
+		background-clip: content-box;
+	}
+
+	&:active {
+		background: var(--accent);
+		background-clip: content-box;
 	}
 }
 

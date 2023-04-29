@@ -65,7 +65,9 @@
 				></i>
 				<!-- notification.reaction が null になることはまずないが、ここでoptional chaining使うと一部ブラウザで刺さるので念の為 -->
 				<XReactionIcon
-					v-else-if="notification.type === 'reaction'"
+					v-else-if="
+						showEmojiReactions && notification.type === 'reaction'
+					"
 					ref="reactionRef"
 					:reaction="
 						notification.reaction
@@ -76,6 +78,13 @@
 							: notification.reaction
 					"
 					:custom-emojis="notification.note.emojis"
+					:no-style="true"
+				/>
+				<XReactionIcon
+					v-else-if="
+						!showEmojiReactions && notification.type === 'reaction'
+					"
+					:reaction="defaultReaction"
 					:no-style="true"
 				/>
 			</div>
@@ -272,6 +281,8 @@ import { i18n } from "@/i18n";
 import * as os from "@/os";
 import { stream } from "@/stream";
 import { useTooltip } from "@/scripts/use-tooltip";
+import { defaultStore } from "@/store";
+import { instance } from "@/instance";
 
 const props = withDefaults(
 	defineProps<{
@@ -287,6 +298,13 @@ const props = withDefaults(
 
 const elRef = ref<HTMLElement>(null);
 const reactionRef = ref(null);
+
+const showEmojiReactions =
+	defaultStore.state.enableEmojiReactions ||
+	defaultStore.state.showEmojisInReactionNotifications;
+const defaultReaction = ["⭐", "👍", "❤️"].includes(instance.defaultReaction)
+	? instance.defaultReaction
+	: "⭐";
 
 let readObserver: IntersectionObserver | undefined;
 let connection;

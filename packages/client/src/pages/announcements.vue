@@ -81,6 +81,8 @@ definePageMetadata({
 				display: block;
 				max-height: 300px;
 				max-width: 100%;
+				border-radius: 10px;
+				margin-top: 1rem;
 			}
 		}
 	}

@@ -362,18 +362,41 @@ const age = $computed(() => {
 });
 
 const timeForThem = $computed(() => {
-	const tzInfo = cityTimezones.lookupViaCity(
-		props.user.location!.replace(/\s.*/, "")
-	);
-	if (tzInfo.length == 0) return "";
-	const tz = tzInfo[0].timezone;
-	const theirTime = new Date().toLocaleString("en-US", {
-		timeZone: tz,
-		hour12: false,
-	});
-	return ` (${theirTime.split(",")[1].trim().split(":")[0]}:${theirTime
-		.split(" ")[1]
-		.slice(-5, -3)})`;
+	const maybeCityNames = [
+		props.user.location!,
+		props.user
+			.location!.replace(
+				/[^A-Za-z0-9ÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.\s].*/,
+				""
+			)
+			.trim(),
+		props.user.location!.replace(
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.].*/,
+			""
+		),
+		props.user.location!.replace(
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź].*/,
+			""
+		),
+	];
+
+	for (const city of maybeCityNames) {
+		let tzInfo = cityTimezones.lookupViaCity(city);
+		if (tzInfo.length == 0) continue;
+
+		const tz = tzInfo[0].timezone;
+		if (!tz) continue;
+
+		const theirTime = new Date().toLocaleString("en-US", {
+			timeZone: tz,
+			hour12: false,
+		});
+		return ` (${theirTime.split(",")[1].trim().split(":")[0]}:${theirTime
+			.split(" ")[1]
+			.slice(-5, -3)})`;
+	}
+
+	return "";
 });
 
 function menu(ev) {

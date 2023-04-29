@@ -79,8 +79,8 @@ redis:
 #  host: localhost
 #  port: 9200
 #  ssl: false
-#  user: 
-#  pass: 
+#  user:
+#  pass:
 
 #   ┌─────────────────────┐
 #───┘ Sonic configuration └─────────────────────────────────────
@@ -118,6 +118,19 @@ id: 'aid'
 
 # Maximum lenght of an image caption or file comment (default 1500, max 8192)
 #maxCaptionLength: 1500
+
+# Reserved usernames that only the administrator can register with
+reservedUsernames:
+  - root
+  - admin
+  - system
+  - test
+  - proxy
+  - relay
+  - mod
+  - moderator
+  - info
+  - information
 
 # Whether disable HSTS
 #disableHsts: true
@@ -221,4 +234,4 @@ id: 'aid'
 # !!!!!!!!!!
 
 # Seriously. Do NOT fill out the above settings if you're self-hosting.
-# They're much better off being set from the control panel. 
+# They're much better off being set from the control panel.

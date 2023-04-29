@@ -34,15 +34,15 @@
 		<div class="status">
 			<div>
 				<p>{{ i18n.ts.notes }}</p>
-				<span>{{ user.notesCount }}</span>
+				<MkNumber :value="user.notesCount" />
 			</div>
 			<div>
 				<p>{{ i18n.ts.following }}</p>
-				<span>{{ user.followingCount }}</span>
+				<MkNumber :value="user.followingCount" />
 			</div>
 			<div>
 				<p>{{ i18n.ts.followers }}</p>
-				<span>{{ user.followersCount }}</span>
+				<MkNumber :value="user.followersCount" />
 			</div>
 		</div>
 		<MkFollowButton
@@ -57,6 +57,7 @@
 <script lang="ts" setup>
 import * as misskey from "calckey-js";
 import MkFollowButton from "@/components/MkFollowButton.vue";
+import MkNumber from "@/components/MkNumber.vue";
 import { userPage } from "@/filters/user";
 import { i18n } from "@/i18n";
 

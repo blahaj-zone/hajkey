@@ -27,224 +27,16 @@
 			:note="appearNote.reply"
 			class="reply-to"
 		/>
-		<div v-if="isRenote" class="renote">
-			<MkAvatar class="avatar" :user="note.user" />
-			<i class="ph-repeat ph-bold ph-lg"></i>
-			<I18n :src="i18n.ts.renotedBy" tag="span">
-				<template #user>
-					<MkA
-						v-user-preview="note.userId"
-						class="name"
-						:to="userPage(note.user)"
-					>
-						<MkUserName :user="note.user" />
-					</MkA>
-				</template>
-			</I18n>
-			<div class="info">
-				<button
-					ref="renoteTime"
-					class="_button time"
-					@click="showRenoteMenu()"
-				>
-					<i
-						v-if="isMyRenote"
-						class="ph-dots-three-outline ph-bold ph-lg dropdownIcon"
-					></i>
-					<MkTime :time="note.createdAt" />
-				</button>
-				<MkVisibility :note="note" />
-			</div>
+
+		<div ref="noteEl" class="article" tabindex="-1">
+			<MkNote
+				@contextmenu.stop="onContextmenu"
+				tabindex="-1"
+				:note="appearNote"
+				:detailedView="true"
+			></MkNote>
 		</div>
-		<article
-			ref="noteEl"
-			class="article"
-			@contextmenu.stop="onContextmenu"
-			tabindex="-1"
-		>
-			<header class="header">
-				<MkAvatar
-					class="avatar"
-					:user="appearNote.user"
-					:show-indicator="true"
-				/>
-				<div class="body">
-					<div class="top">
-						<MkA
-							v-user-preview="appearNote.user.id"
-							class="name"
-							:to="userPage(appearNote.user)"
-						>
-							<MkUserName :user="appearNote.user" />
-						</MkA>
-						<span v-if="appearNote.user.isBot" class="is-bot"
-							>bot</span
-						>
-						<div class="info">
-							<MkVisibility :note="appearNote" />
-						</div>
-					</div>
-					<div class="username">
-						<MkAcct :user="appearNote.user" />
-					</div>
-					<MkInstanceTicker
-						v-if="showTicker"
-						class="ticker"
-						:instance="appearNote.user.instance"
-					/>
-				</div>
-			</header>
-			<div class="main">
-				<div class="body">
-					<div v-if="appearNote.cw != null" class="cw">
-						<Mfm
-							v-if="appearNote.cw != ''"
-							class="text"
-							:text="appearNote.cw"
-							:author="appearNote.user"
-							:i="$i"
-							:custom-emojis="appearNote.emojis"
-						/>
-						<br />
-						<XCwButton v-model="showContent" :note="appearNote" />
-					</div>
-					<div
-						v-show="appearNote.cw == null || showContent"
-						class="content"
-					>
-						<div class="text">
-							<Mfm
-								v-if="appearNote.text"
-								:text="appearNote.text"
-								:author="appearNote.user"
-								:i="$i"
-								:custom-emojis="appearNote.emojis"
-							/>
-							<div
-								v-if="translating || translation"
-								class="translation"
-							>
-								<MkLoading v-if="translating" mini />
-								<div v-else class="translated">
-									<b
-										>{{
-											i18n.t("translatedFrom", {
-												x: translation.sourceLang,
-											})
-										}}:
-									</b>
-									<Mfm
-										:text="translation.text"
-										:author="appearNote.user"
-										:i="$i"
-										:custom-emojis="appearNote.emojis"
-									/>
-								</div>
-							</div>
-						</div>
-						<div v-if="appearNote.files.length > 0" class="files">
-							<XMediaList :media-list="appearNote.files" />
-						</div>
-						<XPoll
-							v-if="appearNote.poll"
-							ref="pollViewer"
-							:note="appearNote"
-							class="poll"
-						/>
-						<MkUrlPreview
-							v-for="url in urls"
-							:key="url"
-							:url="url"
-							:compact="true"
-							:detail="true"
-							class="url-preview"
-						/>
-						<div v-if="appearNote.renote" class="renote">
-							<XNoteSimple
-								:note="appearNote.renote"
-								@click.stop="
-									router.push(notePage(appearNote.renote))
-								"
-							/>
-						</div>
-					</div>
-					<MkA
-						v-if="appearNote.channel && !inChannel"
-						class="channel"
-						:to="`/channels/${appearNote.channel.id}`"
-						><i class="ph-television ph-bold ph-lg"></i>
-						{{ appearNote.channel.name }}</MkA
-					>
-				</div>
-				<footer class="footer">
-					<div class="info">
-						<MkA class="created-at" :to="notePage(appearNote)">
-							<MkTime
-								:time="appearNote.createdAt"
-								mode="detail"
-							/>
-						</MkA>
-					</div>
-					<XReactionsViewer
-						ref="reactionsViewer"
-						:note="appearNote"
-					/>
-					<button
-						v-tooltip.noDelay.bottom="i18n.ts.reply"
-						class="button _button"
-						@click="reply()"
-					>
-						<template v-if="appearNote.reply"
-							><i class="ph-arrow-u-up-left ph-bold ph-lg"></i
-						></template>
-						<template v-else
-							><i class="ph-arrow-bend-up-left ph-bold ph-lg"></i
-						></template>
-						<p v-if="appearNote.repliesCount > 0" class="count">
-							{{ appearNote.repliesCount }}
-						</p>
-					</button>
-					<XRenoteButton
-						ref="renoteButton"
-						class="button"
-						:note="appearNote"
-						:count="appearNote.renoteCount"
-					/>
-					<XStarButton
-						v-if="appearNote.myReaction == null"
-						ref="starButton"
-						class="button"
-						:note="appearNote"
-					/>
-					<button
-						v-if="appearNote.myReaction == null"
-						ref="reactButton"
-						v-tooltip.noDelay.bottom="i18n.ts.reaction"
-						class="button _button"
-						@click="react()"
-					>
-						<i class="ph-smiley ph-bold ph-lg"></i>
-					</button>
-					<button
-						v-if="appearNote.myReaction != null"
-						ref="reactButton"
-						class="button _button reacted"
-						@click="undoReact(appearNote)"
-					>
-						<i class="ph-minus ph-bold ph-lg"></i>
-					</button>
-					<XQuoteButton class="button" :note="appearNote" />
-					<button
-						ref="menuButton"
-						v-tooltip.noDelay.bottom="i18n.ts.more"
-						class="button _button"
-						@click="menu()"
-					>
-						<i class="ph-dots-three-outline ph-bold ph-lg"></i>
-					</button>
-				</footer>
-			</div>
-		</article>
+
 		<MkNoteSub
 			v-for="note in directReplies"
 			:key="note.id"
@@ -283,6 +75,7 @@ import {
 } from "vue";
 import * as mfm from "mfm-js";
 import type * as misskey from "calckey-js";
+import MkNote from "@/components/MkNote.vue";
 import MkNoteSub from "@/components/MkNoteSub.vue";
 import XNoteSimple from "@/components/MkNoteSimple.vue";
 import XReactionsViewer from "@/components/MkReactionsViewer.vue";
@@ -290,6 +83,7 @@ import XMediaList from "@/components/MkMediaList.vue";
 import XCwButton from "@/components/MkCwButton.vue";
 import XPoll from "@/components/MkPoll.vue";
 import XStarButton from "@/components/MkStarButton.vue";
+import XStarButtonNoEmoji from "@/components/MkStarButtonNoEmoji.vue";
 import XRenoteButton from "@/components/MkRenoteButton.vue";
 import XQuoteButton from "@/components/MkQuoteButton.vue";
 import MkUrlPreview from "@/components/MkUrlPreview.vue";
@@ -327,6 +121,8 @@ const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
+
+const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
 
 // plugin
 if (noteViewInterruptors.length > 0) {
@@ -660,8 +456,7 @@ onUnmounted(() => {
 	}
 
 	> .article {
-		padding: 32px;
-		padding-bottom: 6px;
+		padding-block: 28px 6px;
 		&:last-child {
 			padding-bottom: 24px;
 		}
@@ -669,151 +464,8 @@ onUnmounted(() => {
 		overflow: clip;
 		outline: none;
 		scroll-margin-top: calc(var(--stickyTop) + 20vh);
-		> .header {
-			display: flex;
-			position: relative;
-			margin-bottom: 16px;
-
-			> .avatar {
-				display: block;
-				flex-shrink: 0;
-				width: var(--avatarSize);
-				height: var(--avatarSize);
-			}
-
-			> .body {
-				width: 0;
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				padding-left: 14px;
-				font-size: 0.95em;
-
-				> .top {
-					display: flex;
-					align-items: center;
-					> .name {
-						font-weight: bold;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-
-					> .is-bot {
-						flex-shrink: 0;
-						align-self: center;
-						margin: 0 0.5em;
-						padding: 4px 6px;
-						font-size: 80%;
-						border: solid 0.5px var(--divider);
-						border-radius: 4px;
-					}
-
-					> .info {
-						float: right;
-					}
-				}
-			}
-		}
-
-		> .main {
-			> .body {
-				> .cw {
-					cursor: default;
-					display: block;
-					margin: 0;
-					padding: 0;
-					overflow-wrap: break-word;
-
-					> .text {
-						margin-right: 8px;
-					}
-				}
-
-				> .content {
-					> .text {
-						overflow-wrap: break-word;
-
-						> .reply {
-							color: var(--accent);
-							margin-right: 0.5em;
-						}
-
-						> .rp {
-							margin-left: 4px;
-							font-style: oblique;
-							color: var(--renote);
-						}
-
-						> .translation {
-							border: solid 0.5px var(--divider);
-							border-radius: var(--radius);
-							padding: 12px;
-							margin-top: 8px;
-						}
-					}
-
-					> .url-preview {
-						margin-top: 8px;
-					}
-
-					> .poll {
-						font-size: 80%;
-					}
-
-					> .renote {
-						padding: 8px 0;
-
-						> * {
-							padding: 16px;
-							border: solid 1px var(--renote);
-							border-radius: 8px;
-							transition: background 0.2s;
-							&:hover,
-							&:focus-within {
-								background-color: var(--panelHighlight);
-							}
-						}
-					}
-				}
-
-				> .channel {
-					opacity: 0.7;
-					font-size: 80%;
-				}
-			}
-
-			> .footer {
-				> .info {
-					margin: 16px 0;
-					opacity: 0.7;
-					font-size: 0.9em;
-				}
-
-				> .button {
-					margin: 0;
-					padding: 8px;
-					opacity: 0.7;
-
-					&:not(:last-child) {
-						margin-right: 16px;
-					}
-
-					&:hover {
-						color: var(--fgHighlighted);
-					}
-
-					> .count {
-						display: inline;
-						margin: 0 0 0 8px;
-						opacity: 0.7;
-					}
-
-					&.reacted {
-						color: var(--accent);
-					}
-				}
-			}
+		:deep(.article) {
+			cursor: unset;
 		}
 	}
 
@@ -897,7 +549,7 @@ onUnmounted(() => {
 		}
 
 		> .article {
-			padding: 16px;
+			padding: 6px 0 0 0;
 			> .header > .body {
 				padding-left: 10px;
 			}

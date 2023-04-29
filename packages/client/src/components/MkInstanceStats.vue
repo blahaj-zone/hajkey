@@ -67,7 +67,7 @@
 			<template #header>Active users heatmap</template>
 			<MkSelect v-model="heatmapSrc" style="margin: 0 0 12px 0">
 				<option value="active-users">Active users</option>
-				<option value="notes">Notes</option>
+				<option value="notes">Posts</option>
 				<option value="ap-requests-inbox-received">
 					Fediverse Requests: inboxReceived
 				</option>

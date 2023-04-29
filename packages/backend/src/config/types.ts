@@ -77,6 +77,8 @@ export type Source = {
 		sha256CertFingerprints?: string[];
 	};
 
+	reservedUsernames?: string[];
+
 	// Managed hosting stuff
 	maxUserSignups?: number;
 	isManagedHosting?: boolean;

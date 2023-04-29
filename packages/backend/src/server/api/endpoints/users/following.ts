@@ -37,6 +37,11 @@ export const meta = {
 			code: "FORBIDDEN",
 			id: "f6cdb0df-c19f-ec5c-7dbb-0ba84a1f92ba",
 		},
+		cannot_find: {
+			message: "Cannot find the following.",
+			code: "CANNOT_FIND",
+			id: "7a55f0d7-8e06-4a7e-9c77-ee7d59b25a82",
+		},
 	},
 } as const;
 
@@ -97,7 +102,7 @@ export default define(meta, paramDef, async (ps, me) => {
 				followerId: me.id,
 			});
 			if (following == null) {
-				throw new ApiError(meta.errors.forbidden);
+				throw new ApiError(meta.errors.cannot_find);
 			}
 		}
 	}

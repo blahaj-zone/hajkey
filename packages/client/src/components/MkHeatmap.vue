@@ -25,6 +25,7 @@ import { useChartTooltip } from "@/scripts/use-chart-tooltip";
 import { chartVLine } from "@/scripts/chart-vline";
 import { alpha } from "@/scripts/color";
 import { initChart } from "@/scripts/init-chart";
+import { $i } from "@/account";
 
 initChart();
 
@@ -41,6 +42,11 @@ let fetching = $ref(true);
 const { handler: externalTooltipHandler } = useChartTooltip({
 	position: "middle",
 });
+
+const addArrays = (arr1: number[], arr2: number[], arr3: number[]) =>
+	arr1.length === arr2.length && arr2.length === arr3.length
+		? arr1.map((val, i) => val + arr2[i] + arr3[i])
+		: null;
 
 async function renderChart() {
 	if (chartInstance) {
@@ -108,6 +114,13 @@ async function renderChart() {
 			span: "day",
 		});
 		values = raw.deliverFailed;
+	} else if (props.src === "my-notes") {
+		const raw = await os.api("charts/user/notes", {
+			limit: chartLimit,
+			span: "day",
+			userId: $i.id,
+		});
+		values = addArrays(raw.diffs.normal, raw.diffs.reply, raw.diffs.renote);
 	}
 
 	fetching = false;

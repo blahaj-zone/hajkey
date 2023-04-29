@@ -6,7 +6,7 @@
 			v-bind:class="{ scroll: isScrolling }"
 		>
 			<div v-for="note in notes" class="note">
-				<div class="content _panel">
+				<div class="content _panel" v-if="note.cw == null">
 					<div class="body">
 						<MkA
 							v-if="note.replyId"

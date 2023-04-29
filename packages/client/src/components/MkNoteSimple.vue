@@ -4,21 +4,7 @@
 		<div class="main">
 			<XNoteHeader class="header" :note="note" :mini="true" />
 			<div class="body">
-				<p v-if="note.cw != null" class="cw">
-					<Mfm
-						v-if="note.cw != ''"
-						class="text"
-						:text="note.cw"
-						:author="note.user"
-						:i="$i"
-						:custom-emojis="note.emojis"
-					/>
-					<br />
-					<XCwButton v-model="showContent" :note="note" />
-				</p>
-				<div v-show="note.cw == null || showContent" class="content">
-					<MkSubNoteContent class="text" :note="note" />
-				</div>
+				<MkSubNoteContent class="text" :note="note" />
 			</div>
 		</div>
 	</div>
@@ -29,7 +15,6 @@ import {} from "vue";
 import * as misskey from "calckey-js";
 import XNoteHeader from "@/components/MkNoteHeader.vue";
 import MkSubNoteContent from "@/components/MkSubNoteContent.vue";
-import XCwButton from "@/components/MkCwButton.vue";
 
 const props = defineProps<{
 	note: misskey.entities.Note;
@@ -78,28 +63,6 @@ const showContent = $ref(false);
 
 		> .header {
 			margin-bottom: 2px;
-		}
-
-		> .body {
-			> .cw {
-				cursor: default;
-				display: block;
-				margin: 0;
-				padding: 0;
-				overflow-wrap: break-word;
-
-				> .text {
-					margin-right: 8px;
-				}
-			}
-
-			> .content {
-				> .text {
-					cursor: default;
-					margin: 0;
-					padding: 0;
-				}
-			}
 		}
 	}
 }

@@ -122,7 +122,7 @@ window.addEventListener("resize", () => {
 });
 
 async function readAllMessagingMessages() {
-	await os.api("i/read-all-messaging-messages");
+	await os.apiWithDialog("i/read-all-messaging-messages");
 }
 
 const headerActions = $computed(() => [

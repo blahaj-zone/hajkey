@@ -38,6 +38,7 @@
 							class="logo"
 							v-if="meta.logoImageUrl"
 							:src="meta.logoImageUrl"
+							alt="logo"
 						/>
 						<span v-else class="text">{{ instanceName }}</span>
 					</h1>

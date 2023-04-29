@@ -161,12 +161,16 @@ const menuDef = $computed(() => [
 						},
 				  ]
 				: []),
-			{
-				type: "button",
-				icon: "ph-list-magnifying-glass ph-bold ph-lg",
-				text: i18n.ts.indexPosts,
-				action: indexPosts,
-			},
+			...($i.isAdmin
+				? [
+						{
+							type: "button",
+							icon: "ph-list-magnifying-glass ph-bold ph-lg",
+							text: i18n.ts.indexPosts,
+							action: indexPosts,
+						},
+				  ]
+				: []),
 		],
 	},
 	{

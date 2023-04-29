@@ -408,6 +408,14 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		enableEmojiReactions: {
+			where: "account",
+			default: true,
+		},
+		showEmojisInReactionNotifications: {
+			where: "account",
+			default: true,
+		},
 	}),
 );
 

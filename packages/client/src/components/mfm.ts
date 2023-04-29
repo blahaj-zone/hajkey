@@ -12,7 +12,6 @@ import MkGoogle from "@/components/MkGoogle.vue";
 import MkSparkle from "@/components/MkSparkle.vue";
 import MkA from "@/components/global/MkA.vue";
 import { host } from "@/config";
-import { MFM_TAGS } from "@/scripts/mfm-tags";
 import { reducedMotion } from "@/scripts/reduced-motion";
 import { defaultStore } from "@/store";
 
@@ -368,11 +367,7 @@ export default defineComponent({
 									MkA,
 									{
 										key: Math.random(),
-										to: this.isNote
-											? `/tags/${encodeURIComponent(token.props.hashtag)}`
-											: `/explore/tags/${encodeURIComponent(
-													token.props.hashtag,
-											  )}`,
+										to: `/tags/${encodeURIComponent(token.props.hashtag)}`,
 										style: "color:var(--hashtag);",
 									},
 									`#${token.props.hashtag}`,
@@ -461,7 +456,7 @@ export default defineComponent({
 						case "search": {
 							// Disable "search" keyword
 							// (see the issue #9816 on Codeberg)
-							if (token.props.content.endsWith("search")) {
+							if (token.props.content.slice(-6).toLowerCase() === "search") {
 								const sentinel = "#";
 								let ast2 = (isPlain ? mfm.parseSimple : mfm.parse)(
 									token.props.content.slice(0, -6) + sentinel,
@@ -473,19 +468,32 @@ export default defineComponent({
 									ast2[ast2.length - 1].props.text = ast2[
 										ast2.length - 1
 									].props.text.slice(0, -1);
+								} else {
+									// I don't think this scope is reachable
+									console.warn(
+										"Something went wrong while parsing MFM. Please send a bug report, if possible.",
+									);
 								}
 
 								let prefix = "\n";
 								if (
 									index === 0 ||
-									["blockCode", "mathBlock", "search", "quote"].includes(
-										ast[index - 1].type,
-									)
+									[
+										"blockCode",
+										"center",
+										"mathBlock",
+										"quote",
+										"search",
+									].includes(ast[index - 1].type)
 								) {
 									prefix = "";
 								}
 
-								return [prefix, ...genEl(ast2), "search\n"];
+								return [
+									prefix,
+									...genEl(ast2),
+									`${token.props.content.slice(-6)}\n`,
+								];
 							}
 
 							return [

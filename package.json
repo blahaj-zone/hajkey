@@ -1,12 +1,12 @@
 {
 	"name": "calckey",
-	"version": "13.2.0-beta6-kt.17",
+	"version": "13.2.0-beta8-hk17",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
 		"url": "https://codeberg.org/supakaity/hajkey.git"
 	},
-	"packageManager": "pnpm@8.2.0",
+	"packageManager": "pnpm@8.3.1",
 	"private": true,
 	"scripts": {
 		"rebuild": "pnpm run clean && pnpm -r run build && pnpm run gulp",

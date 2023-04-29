@@ -1,7 +1,13 @@
 <template>
-	<button class="nrvgflfu _button" @click.stop="toggle">
-		<b>{{ modelValue ? i18n.ts._cw.hide : i18n.ts._cw.show }}</b>
-		<span v-if="!modelValue">{{ label }}</span>
+	<button
+		class="_button"
+		:class="{ showLess: modelValue, fade: !modelValue }"
+		@click.stop="toggle"
+	>
+		<span
+			>{{ modelValue ? i18n.ts._cw.hide : i18n.ts._cw.show }}
+			<span v-if="!modelValue">{{ label }}</span>
+		</span>
 	</button>
 </template>
 
@@ -30,7 +36,8 @@ const label = computed(() => {
 			? [i18n.t("_cw.files", { count: props.note.files.length })]
 			: [],
 		props.note.poll != null ? [i18n.ts.poll] : [],
-	] as string[][]).join(" / ");
+		props.note.renote != null ? [i18n.ts.quoteAttached] : [],
+	] as string[][]).join(", ");
 });
 
 const toggle = () => {
@@ -39,37 +46,25 @@ const toggle = () => {
 </script>
 
 <style lang="scss" scoped>
-.nrvgflfu {
-	position: relative;
-	z-index: 2;
-	display: inline-block;
-	padding: 4px 8px;
-	font-size: 0.8em;
-	color: var(--cwFg);
-	background: var(--cwBg);
-	padding: 6px 10px;
-	width: 90%;
-	border-radius: 10px;
-	border: 1px solid var(--divider);
-	margin-top: 10px;
-	margin-bottom: 10px;
-	transition: background-color 0.25s ease-in-out;
-
-	&:hover {
-		background: var(--cwFg);
-		color: var(--cwBg);
-	}
-
+._button {
+	font-weight: 700;
 	> span {
-		margin-left: 4px;
-
-		&:before {
-			content: "(";
+		background: var(--cwBg) !important;
+		color: var(--cwFg);
+		transition: background 0.2s, color 0.2s;
+		> span {
+			font-weight: 500;
+			&::before {
+				content: "(";
+			}
+			&::after {
+				content: ")";
+			}
 		}
-
-		&:after {
-			content: ")";
-		}
+	}
+	&:hover > span {
+		background: var(--cwFg) !important;
+		color: var(--cwBg) !important;
 	}
 }
 </style>

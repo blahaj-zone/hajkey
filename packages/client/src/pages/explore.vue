@@ -22,10 +22,10 @@
 					@slide-change="onSlideChange"
 				>
 					<swiper-slide>
-						<XFeatured />
+						<XUsers />
 					</swiper-slide>
 					<swiper-slide>
-						<XUsers />
+						<XFeatured />
 					</swiper-slide>
 				</swiper>
 			</MkSpacer>
@@ -39,7 +39,6 @@ import { Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import XFeatured from "./explore.featured.vue";
 import XUsers from "./explore.users.vue";
-import type MkFolder from "@/components/MkFolder.vue";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
 import { i18n } from "@/i18n";
@@ -47,35 +46,22 @@ import { defaultStore } from "@/store";
 import "swiper/scss";
 import "swiper/scss/virtual";
 
-const props = defineProps<{
-	tag?: string;
-}>();
-
-const tabs = ["featured", "users"];
+const tabs = ["users", "featured"];
 let tab = $ref(tabs[0]);
 watch($$(tab), () => syncSlide(tabs.indexOf(tab)));
-
-let tagsEl = $ref<InstanceType<typeof MkFolder>>();
-
-watch(
-	() => props.tag,
-	() => {
-		if (tagsEl) tagsEl.toggleContent(props.tag == null);
-	}
-);
 
 const headerActions = $computed(() => []);
 
 const headerTabs = $computed(() => [
 	{
-		key: "featured",
-		icon: "ph-lightning ph-bold ph-lg",
-		title: i18n.ts.featured,
-	},
-	{
 		key: "users",
 		icon: "ph-users ph-bold ph-lg",
 		title: i18n.ts.users,
+	},
+	{
+		key: "featured",
+		icon: "ph-lightning ph-bold ph-lg",
+		title: i18n.ts.featured,
 	},
 ]);
 
