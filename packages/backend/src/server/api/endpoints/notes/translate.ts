@@ -61,7 +61,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	if (instance.libreTranslateApiUrl != null) {
 		const jsonBody = {
 			q: note.text,
-			source: "es",
+			source: "auto",
 			target: targetLang,
 			format: "text",
 			api_key: instance.libreTranslateApiKey ?? "",
@@ -87,7 +87,7 @@ export default define(meta, paramDef, async (ps, user) => {
 
 		console.log("Response:", res.status, res.statusText);
 		const json = (await res.json()) as {
-			detectedLanguage: {
+			detectedLanguage?: {
 				confidence: number;
 				language: string;
 			};
@@ -97,7 +97,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		console.log("JSON:", json);
 
 		return {
-			sourceLang: json.detectedLanguage.language,
+			sourceLang: json.detectedLanguage?.language,
 			text: json.translatedText,
 		};
 	}
