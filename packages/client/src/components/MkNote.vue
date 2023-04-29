@@ -282,7 +282,6 @@ const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
 const isMyRenote = $i && $i.id === note.userId;
-const showContent = ref(defaultStore.state.autoShowCw);
 const isDeleted = ref(false);
 const muted = ref(getWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -297,7 +296,6 @@ const keymap = {
 	"down|j|tab": focusAfter,
 	esc: blur,
 	"m|o": () => menu(true),
-	s: () => showContent.value !== showContent.value,
 };
 
 useNoteCapture({

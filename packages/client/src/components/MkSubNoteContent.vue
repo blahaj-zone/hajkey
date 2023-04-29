@@ -187,7 +187,7 @@ const urls = props.note.text
 	? extractUrlFromMfm(mfm.parse(props.note.text)).slice(0, 5)
 	: null;
 
-let showContent = $ref(false);
+const showContent = ref(defaultStore.state.autoShowCw);
 </script>
 
 <style lang="scss" scoped>
