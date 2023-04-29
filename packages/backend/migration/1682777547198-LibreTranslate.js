@@ -5,6 +5,9 @@ export class LibreTranslate1682777547198 {
 		await queryRunner.query(`
 				ALTER TABLE "meta"
 				ADD "libreTranslateApiUrl" character varying(512)
+		`);
+		await queryRunner.query(`
+				ALTER TABLE "meta"
 				ADD "libreTranslateApiKey" character varying(128)
 		`);
 	}
