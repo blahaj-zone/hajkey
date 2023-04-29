@@ -11,7 +11,7 @@ export class NoteEdit1682753227899 {
 					"tags" character varying(128) array NOT NULL DEFAULT '{}',
 					"fileIds" character varying(32) array NOT NULL DEFAULT '{}',
 					"attachedFileTypes" character varying(256) array NOT NULL DEFAULT '{}',
-					"updatedAt" TIMESTAMP WITH TIME ZONE,
+					"updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
 					CONSTRAINT "PK_736fc6e0d4e222ecc6f82058e08" PRIMARY KEY ("id")
 			)
 		`);
