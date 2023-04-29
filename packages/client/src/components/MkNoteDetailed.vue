@@ -322,8 +322,10 @@ if (appearNote.replyId) {
 	});
 }
 
-async function onNoteUpdated(noteData: NoteUpdatedEvent): void {
+async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	const { type, id, body } = noteData;
+
+	console.log("onNoteUpdated", noteData);
 
 	let found = -1;
 	if (id === appearNote.id) {
@@ -339,6 +341,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): void {
 	}
 
 	if (found === -1) {
+		console.log("not found")
 		return;
 	}
 
