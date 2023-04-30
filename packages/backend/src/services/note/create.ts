@@ -868,7 +868,7 @@ function incNotesCountOfUser(user: { id: User["id"] }) {
 		.execute();
 }
 
-async function extractMentionedUsers(
+export async function extractMentionedUsers(
 	user: { host: User["host"] },
 	tokens: mfm.MfmNode[],
 ): Promise<User[]> {

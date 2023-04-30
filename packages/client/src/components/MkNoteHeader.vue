@@ -46,7 +46,6 @@ import MkVisibility from "@/components/MkVisibility.vue";
 import MkInstanceTicker from "@/components/MkInstanceTicker.vue";
 import { notePage } from "@/filters/note";
 import { userPage } from "@/filters/user";
-import { deepClone } from "@/scripts/clone";
 import { i18n } from "@/i18n";
 
 const props = defineProps<{
@@ -54,7 +53,7 @@ const props = defineProps<{
 	pinned?: boolean;
 }>();
 
-let note = $ref(deepClone(props.note));
+let note = $ref(props.note);
 
 const showTicker =
 	defaultStore.state.instanceTicker === "always" ||

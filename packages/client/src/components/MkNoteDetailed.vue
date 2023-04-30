@@ -298,9 +298,9 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			if (found > 0) {
 				updatedNote = replies.value[found - 1];
 			}
-			if (text) updatedNote.text = text;
-			if (cw) updatedNote.cw = cw;
-			if (fileIds && fileIds.length > 0) {
+			if (text || text === "") updatedNote.text = text;
+			if (cw || cw === "") updatedNote.cw = cw;
+			if (fileIds) {
 				updatedNote.fileIds = fileIds;
 				const newDriveFiles: Array<DriveFile> = [];
 				for (let i = 0; i < fileIds.length; i++) {

@@ -1,15 +1,16 @@
 import promiseLimit from "promise-limit";
-
+import * as mfm from "mfm-js";
 import config from "@/config/index.js";
 import Resolver from "../resolver.js";
 import post from "@/services/note/create.js";
+import { extractMentionedUsers } from "@/services/note/create.js";
 import { resolvePerson } from "./person.js";
 import { resolveImage } from "./image.js";
 import type { CacheableRemoteUser } from "@/models/entities/user.js";
 import { htmlToMfm } from "../misc/html-to-mfm.js";
 import { extractApHashtags } from "./tag.js";
 import { unique, toArray, toSingle } from "@/prelude/array.js";
-import { extractPollFromQuestion } from "./question.js";
+import { extractPollFromQuestion, updateQuestion } from "./question.js";
 import vote from "@/services/note/polls/vote.js";
 import { apLogger } from "../logger.js";
 import type { DriveFile } from "@/models/entities/drive-file.js";
@@ -22,7 +23,7 @@ import {
 	Notes,
 	NoteEdits,
 } from "@/models/index.js";
-import type { Note } from "@/models/entities/note.js";
+import type { IMentionedRemoteUsers, Note } from "@/models/entities/note.js";
 import type { IObject, IPost } from "../type.js";
 import {
 	getOneApId,
@@ -42,6 +43,10 @@ import DbResolver from "../db-resolver.js";
 import { StatusError } from "@/misc/fetch.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 import { publishNoteStream } from "@/services/stream.js";
+import { extractHashtags } from "@/misc/extract-hashtags.js";
+import { User } from "@/models/entities/user.js";
+import { UserProfiles } from "@/models/index.js";
+import { In } from "typeorm";
 
 const logger = apLogger;
 
@@ -518,7 +523,9 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 
 	// Already registered with this server?
 	const note = await Notes.findOneBy({ uri });
-	if (note == null) throw new Error("Note is not registed");
+	if (note == null) {
+		return await createNote(uri, resolver);
+	}
 
 	// Resolve new Note object
 	if (resolver == null) resolver = new Resolver();
@@ -538,12 +545,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	}
 
 	const cw = post.sensitive && post.summary;
-	const tagList: Array<TagDetail> = (
-		post.tag ? (Array.isArray(post.tag) ? post.tag : [post.tag]) : []
-	) as Array<TagDetail>;
-	const tags = tagList
-		.filter((t) => t.type === "Hashtag")
-		.map((t) => t.name.substring(1));
 
 	// File parsing
 	const fileList = post.attachment
@@ -570,17 +571,105 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	const fileIds = driveFiles.map((file) => file.id);
 	const fileTypes = driveFiles.map((file) => file.type);
 
+	const apEmojis = (
+		await extractEmojis(post.tag || [], actor.host).catch((e) => [])
+	).map((emoji) => emoji.name);
+	const apMentions = await extractApMentions(post.tag);
+	const apHashtags = await extractApHashtags(post.tag);
+
+	const poll = await extractPollFromQuestion(post, resolver).catch(
+		() => undefined,
+	);
+
+	const choices = poll?.choices.map((choice) => mfm.parse(choice)).flat() ?? [];
+
+	const tokens = mfm
+		.parse(text || "")
+		.concat(mfm.parse(cw || ""))
+		.concat(choices);
+
+	const hashTags: string[] = apHashtags || extractHashtags(tokens);
+
+	const mentionUsers =
+		apMentions || (await extractMentionedUsers(actor, tokens));
+
+	const mentionUserIds = mentionUsers.map((user) => user.id);
+	const remoteUsers = mentionUsers.filter((user) => user.host != null);
+	const remoteUserIds = remoteUsers.map((user) => user.id);
+	const remoteProfiles = await UserProfiles.findBy({
+		userId: In(remoteUserIds),
+	});
+	const mentionedRemoteUsers = remoteUsers.map((user) => {
+		const profile = remoteProfiles.find(
+			(profile) => profile.userId === user.id,
+		);
+		return {
+			username: user.username,
+			host: user.host!,
+			uri: user.uri,
+			url: profile ? profile.url : undefined,
+		} as IMentionedRemoteUsers[0];
+	});
+
+	let updating = false;
 	const update = {} as Partial<Note>;
-	if (text && text !== note.text) update.text = text;
-	if (cw && cw !== note.cw) update.cw = cw;
-	if (tags && tags !== note.tags) update.tags = tags;
+	if (text && text !== note.text) {
+		update.text = text;
+		updating = true;
+	}
+	if (cw !== note.cw) {
+		update.cw = cw ? cw : null;
+		updating = true;
+	}
 	if (fileIds.sort().join(",") !== note.fileIds.sort().join(",")) {
 		update.fileIds = fileIds;
 		update.attachedFileTypes = fileTypes;
+		updating = true;
+	}
+
+	if (hashTags.sort().join(",") !== note.tags.sort().join(",")) {
+		update.tags = hashTags;
+		updating = true;
+	}
+
+	if (mentionUserIds.sort().join(",") !== note.mentions.sort().join(",")) {
+		update.mentions = mentionUserIds;
+		update.mentionedRemoteUsers = JSON.stringify(mentionedRemoteUsers);
+		updating = true;
+	}
+
+	if (apEmojis.sort().join(",") !== note.emojis.sort().join(",")) {
+		update.emojis = apEmojis;
+		updating = true;
+	}
+
+	if (poll) {
+		const dbPoll = await Polls.findOneBy({ noteId: note.id });
+		if (dbPoll == null) {
+			await Polls.insert({
+				noteId: note.id,
+				choices: poll?.choices,
+				multiple: poll?.multiple,
+				votes: poll?.votes,
+				expiresAt: poll?.expiresAt,
+				userId: actor.id,
+				userHost: actor.host,
+			});
+		} else {
+			await Polls.update(
+				{ noteId: note.id },
+				{
+					choices: poll?.choices,
+					multiple: poll?.multiple,
+					votes: poll?.votes,
+					expiresAt: poll?.expiresAt,
+				},
+			);
+		}
 	}
 
 	// Update Note
-	if (update.cw || update.text || update.tags || update.fileIds) {
+	if (updating) {
 		update.updatedAt = new Date();
 		console.log("update note", uri, update);
 
