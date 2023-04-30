@@ -34,7 +34,6 @@ import {
 } from "../type.js";
 import type { Emoji } from "@/models/entities/emoji.js";
 import { genId } from "@/misc/gen-id.js";
-import { fetchMeta } from "@/misc/fetch-meta.js";
 import { getApLock } from "@/misc/app-lock.js";
 import { createMessage } from "@/services/messages/create.js";
 import { parseAudience } from "../audience.js";
@@ -42,8 +41,6 @@ import { extractApMentions } from "./mention.js";
 import DbResolver from "../db-resolver.js";
 import { StatusError } from "@/misc/fetch.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
-import { string } from "@tensorflow/tfjs";
-import { publishInternalEvent } from "@/services/stream.js";
 import { publishNoteStream } from "@/services/stream.js";
 
 const logger = apLogger;
@@ -547,23 +544,38 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	const tags = tagList
 		.filter((t) => t.type === "Hashtag")
 		.map((t) => t.name.substring(1));
+
+	// File parsing
 	const fileList = post.attachment
 		? Array.isArray(post.attachment)
 			? post.attachment
 			: [post.attachment]
 		: [];
-	const files = fileList.map((f) => f.id);
-	const fileTypes = fileList.map((f) => f.mediaType);
+	const files = fileList.map((f) => (f.sensitive = post.sensitive));
+
+	// Fetch files
+	const limit = promiseLimit(2);
+	const actor = (await resolvePerson(
+		getOneApId(post.attributedTo),
+		resolver,
+	)) as CacheableRemoteUser;
+
+	const driveFiles = (
+		await Promise.all(
+			fileList.map(
+				(x) => limit(() => resolveImage(actor, x)) as Promise<DriveFile>,
+			),
+		)
+	).filter((file) => file != null);
+	const fileIds = driveFiles.map((file) => file.id);
+	const fileTypes = driveFiles.map((file) => file.type);
 
 	const update = {} as Partial<Note>;
 	if (text && text !== note.text) update.text = text;
 	if (cw && cw !== note.cw) update.cw = cw;
 	if (tags && tags !== note.tags) update.tags = tags;
-	if (
-		files.sort().join(",") !== note.fileIds.sort().join(",") ||
-		fileTypes.sort().join(",") !== note.attachedFileTypes.sort().join(",")
-	) {
-		update.fileIds = files;
+	if (fileIds.sort().join(",") !== note.fileIds.sort().join(",")) {
+		update.fileIds = fileIds;
 		update.attachedFileTypes = fileTypes;
 	}
 
@@ -584,7 +596,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 			cw: note.cw,
 			tags: note.tags,
 			fileIds: note.fileIds,
-			attachedFileTypes: note.attachedFileTypes,
 		});
 
 		// Publish update event for the updated note details
@@ -594,7 +605,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 			cw: update.cw,
 			tags: update.tags,
 			fileIds: update.fileIds,
-			attachedFileTypes: update.attachedFileTypes,
 		});
 	} else {
 		console.log("skip update note", uri);

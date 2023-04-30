@@ -151,7 +151,6 @@ export interface NoteStreamTypes {
 		cw?: Note["cw"];
 		tags?: Note["tags"];
 		fileIds?: Note["fileIds"];
-		attachedFileTypes?: Note["attachedFileTypes"];
 	};
 }
 type NoteStreamEventTypes = {

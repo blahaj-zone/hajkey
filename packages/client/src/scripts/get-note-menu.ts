@@ -104,16 +104,14 @@ export function getNoteMenu(props: {
 				noteId: appearNote.id,
 			},
 			undefined,
-		).catch(
-			(res) => {
-				if (res.id === "72dab508-c64d-498f-8740-a8eec1ba385a") {
-					os.alert({
-						type: "error",
-						text: i18n.ts.pinLimitExceeded,
-					});
-				}
-			},
-		);
+		).catch((res) => {
+			if (res.id === "72dab508-c64d-498f-8740-a8eec1ba385a") {
+				os.alert({
+					type: "error",
+					text: i18n.ts.pinLimitExceeded,
+				});
+			}
+		});
 	}
 
 	async function clip(): Promise<void> {

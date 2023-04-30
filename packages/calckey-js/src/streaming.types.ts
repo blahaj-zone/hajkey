@@ -181,7 +181,6 @@ export type NoteUpdatedEvent =
 				cw?: string;
 				tags?: string[];
 				fileIds?: string[];
-				attachedFileTypes?: string[];
 			};
 	  };
 

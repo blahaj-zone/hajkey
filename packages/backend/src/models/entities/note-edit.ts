@@ -49,11 +49,6 @@ export class NoteEdit {
 	})
 	public fileIds: DriveFile["id"][];
 
-	@Column('varchar', {
-		length: 256, array: true, default: '{}',
-	})
-	public attachedFileTypes: string[];
-
 	@Column('timestamp with time zone', {
 		comment: 'The updated date of the Note.',
 	})

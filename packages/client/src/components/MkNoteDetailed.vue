@@ -292,8 +292,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			break;
 
 		case "updated":
-			const { text, cw, fileIds, attachedFileTypes, updatedAt } =
-				body;
+			const { text, cw, fileIds, updatedAt } = body;
 
 			let updatedNote = appearNote;
 			if (found > 0) {
@@ -307,9 +306,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 				for (let i = 0; i < fileIds.length; i++) {
 					const fileId = fileIds[i];
 					let file = updatedNote.files.find((f) => f.id === fileId);
-					if (file) {
-						file.type = attachedFileTypes?.[i] ?? file.type;
-					} else {
+					if (!file) {
 						file = await os.api("drive/files/show", {
 							fileId: fileId,
 						});

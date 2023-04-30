@@ -53,13 +53,5 @@ export const packedNoteEdit = {
 				format: "id",
 			},
 		},
-		attachedFileTypes: {
-			type: "array",
-			optional: true,
-			nullable: true,
-			items: {
-				type: "string",
-			},
-		},
 	},
 } as const;
