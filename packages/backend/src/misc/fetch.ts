@@ -77,7 +77,6 @@ export async function getResponse(args: {
 
 	if (!res.ok) {
 		const output = await res.text();
-		console.log("failed to fetch:", args, res, output);
 		throw new StatusError(
 			`${res.status} ${res.statusText}`,
 			res.status,

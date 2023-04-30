@@ -611,7 +611,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		);
 		return {
 			username: user.username,
-			host: user.host!,
+			host: user.host ?? null,
 			uri: user.uri,
 			url: profile ? profile.url : undefined,
 		} as IMentionedRemoteUsers[0];
@@ -683,7 +683,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	// Update Note
 	if (updating) {
 		update.updatedAt = new Date();
-		console.log("update note", uri, update);
 
 		// Save updated note to the database
 		await Notes.update({ uri }, update);
@@ -707,7 +706,5 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 			tags: update.tags,
 			fileIds: update.fileIds,
 		});
-	} else {
-		console.log("skip update note", uri);
 	}
 }

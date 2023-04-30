@@ -36,11 +36,12 @@ export default async (
 	switch (objectType) {
 		case "Question":
 		case "Note":
+		case 'Article':
+		case 'Document':
+		case 'Page':
 			let failed = false;
-			console.log("Updating note", object);
 			await updateNote(object, resolver).catch((e: Error) => {
 				failed = true;
-				console.log(e);
 			});
 			return failed ? "skip: Note update failed" : "ok: Note updated";
 

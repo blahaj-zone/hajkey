@@ -75,7 +75,6 @@ export default define(meta, paramDef, async (ps, user) => {
 			url.pathname += "/translate";
 		}
 
-		console.log("Posting to", url.toString(), "with", jsonBody);
 		const res = await fetch(url.toString(), {
 			method: "POST",
 			headers: {
@@ -85,7 +84,6 @@ export default define(meta, paramDef, async (ps, user) => {
 			agent: getAgentByUrl,
 		});
 
-		console.log("Response:", res.status, res.statusText);
 		const json = (await res.json()) as {
 			detectedLanguage?: {
 				confidence: number;
@@ -93,8 +91,6 @@ export default define(meta, paramDef, async (ps, user) => {
 			};
 			translatedText: string;
 		};
-
-		console.log("JSON:", json);
 
 		return {
 			sourceLang: json.detectedLanguage?.language,
