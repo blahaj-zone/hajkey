@@ -658,6 +658,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 				multiple: poll?.multiple,
 				votes: poll?.votes,
 				expiresAt: poll?.expiresAt,
+				noteVisibility: note.visibility,
 				userId: actor.id,
 				userHost: actor.host,
 			});
