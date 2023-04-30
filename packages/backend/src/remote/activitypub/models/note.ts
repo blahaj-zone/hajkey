@@ -6,7 +6,10 @@ import post from "@/services/note/create.js";
 import { extractMentionedUsers } from "@/services/note/create.js";
 import { resolvePerson } from "./person.js";
 import { resolveImage } from "./image.js";
-import type { CacheableRemoteUser } from "@/models/entities/user.js";
+import type {
+	ILocalUser,
+	CacheableRemoteUser,
+} from "@/models/entities/user.js";
 import { htmlToMfm } from "../misc/html-to-mfm.js";
 import { extractApHashtags } from "./tag.js";
 import { unique, toArray, toSingle } from "@/prelude/array.js";
@@ -524,14 +527,31 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	// A new resolver is created if not specified
 	if (resolver == null) resolver = new Resolver();
 
+	// Resolve the updated Note object
+	const post = (await resolver.resolve(value)) as IPost;
+
+	const actor = (await resolvePerson(
+		getOneApId(post.attributedTo),
+		resolver,
+	)) as CacheableRemoteUser;
+
 	// Already registered with this server?
 	const note = await Notes.findOneBy({ uri });
 	if (note == null) {
-		return await resolveNote(uri, resolver);
+		const audience = await parseAudience(actor, post.to, post.cc, resolver);
+		let signedResolver = resolver;
+		if (
+			audience.visibility === "followers" ||
+			audience.visibility === "specified"
+		) {
+			// Find a local user to make the request
+			const localUsers = audience.mentionedUsers.filter((x) => x.host === null);
+			if (localUsers.length > 0) {
+				signedResolver = new Resolver(100, localUsers[0] as ILocalUser);
+			}
+		}
+		return await resolveNote(uri, signedResolver);
 	}
-
-	// Resolve the updated Note object
-	const post = (await resolver.resolve(value)) as IPost;
 
 	// Text parsing
 	let text: string | null = null;
@@ -558,10 +578,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 
 	// Fetch files
 	const limit = promiseLimit(2);
-	const actor = (await resolvePerson(
-		getOneApId(post.attributedTo),
-		resolver,
-	)) as CacheableRemoteUser;
 
 	const driveFiles = (
 		await Promise.all(
