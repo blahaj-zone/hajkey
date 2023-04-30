@@ -164,13 +164,13 @@ import MkTextarea from "@/components/form/textarea.vue";
 import MkSelect from "@/components/form/select.vue";
 import { i18n } from "@/i18n";
 
-type Input = {
+export type Input = {
 	type: HTMLInputElement["type"];
 	placeholder?: string | null;
 	default: any | null;
 };
 
-type Select = {
+export type Select = {
 	items: {
 		value: string;
 		text: string;

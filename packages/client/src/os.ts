@@ -9,6 +9,7 @@ import MkPostFormDialog from "@/components/MkPostFormDialog.vue";
 import MkWaitingDialog from "@/components/MkWaitingDialog.vue";
 import MkToast from "@/components/MkToast.vue";
 import MkDialog from "@/components/MkDialog.vue";
+import type { Select } from "@/components/MkDialog.vue";
 import { MenuItem } from "@/types/menu";
 import { $i } from "@/account";
 
@@ -19,7 +20,7 @@ const apiClient = new Misskey.api.APIClient({
 });
 
 export const api = ((
-	endpoint: string,
+	endpoint: keyof Misskey.Endpoints,
 	data: Record<string, any> = {},
 	token?: string | null | undefined,
 ) => {
@@ -34,7 +35,7 @@ export const api = ((
 		? `Bearer ${authorizationToken}`
 		: undefined;
 
-	const promise = new Promise((resolve, reject) => {
+	const promise = new Promise<any>((resolve, reject) => {
 		fetch(endpoint.indexOf("://") > -1 ? endpoint : `${apiUrl}/${endpoint}`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -48,7 +49,7 @@ export const api = ((
 				if (res.status === 200) {
 					resolve(body);
 				} else if (res.status === 204) {
-					resolve();
+					resolve(undefined);
 				} else {
 					reject(body.error);
 				}
@@ -62,7 +63,7 @@ export const api = ((
 }) as typeof apiClient.request;
 
 export const apiGet = ((
-	endpoint: string,
+	endpoint: keyof Misskey.Endpoints,
 	data: Record<string, any> = {},
 	token?: string | null | undefined,
 ) => {
@@ -79,7 +80,7 @@ export const apiGet = ((
 		? `Bearer ${authorizationToken}`
 		: undefined;
 
-	const promise = new Promise((resolve, reject) => {
+	const promise = new Promise<any>((resolve, reject) => {
 		// Send request
 		fetch(`${apiUrl}/${endpoint}?${query}`, {
 			method: "GET",
@@ -93,7 +94,7 @@ export const apiGet = ((
 				if (res.status === 200) {
 					resolve(body);
 				} else if (res.status === 204) {
-					resolve();
+					resolve(undefined);
 				} else {
 					reject(body.error);
 				}
@@ -107,7 +108,7 @@ export const apiGet = ((
 }) as typeof apiClient.request;
 
 export const apiWithDialog = ((
-	endpoint: string,
+	endpoint: keyof Misskey.Endpoints,
 	data: Record<string, any> = {},
 	token?: string | null | undefined,
 ) => {
@@ -262,14 +263,14 @@ export function alert(props: {
 	type?: "error" | "info" | "success" | "warning" | "waiting" | "question";
 	title?: string | null;
 	text?: string | null;
-}): Promise<void> {
+}): Promise<any> {
 	return new Promise((resolve, reject) => {
 		popup(
 			MkDialog,
 			props,
 			{
 				done: (result) => {
-					resolve();
+					resolve(undefined);
 				},
 			},
 			"closed",
@@ -456,7 +457,7 @@ export function inputDate(props: {
 					resolve(
 						result
 							? { result: new Date(result.result), canceled: false }
-							: { canceled: true },
+							: { result: undefined, canceled: true },
 					);
 				},
 			},
@@ -470,6 +471,8 @@ export function select<C = any>(
 		title?: string | null;
 		text?: string | null;
 		default?: string | null;
+		items?: Select["items"];
+		groupedItems?: Select["groupedItems"];
 	} & (
 		| {
 				items: {
@@ -517,7 +520,7 @@ export function select<C = any>(
 }
 
 export function success() {
-	return new Promise((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		const showing = ref(true);
 		window.setTimeout(() => {
 			showing.value = false;
@@ -529,7 +532,7 @@ export function success() {
 				showing: showing,
 			},
 			{
-				done: () => resolve(),
+				done: () => resolve(undefined),
 			},
 			"closed",
 		);
@@ -537,7 +540,7 @@ export function success() {
 }
 
 export function waiting() {
-	return new Promise((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		const showing = ref(true);
 		popup(
 			defineAsyncComponent(() => import("@/components/MkWaitingDialog.vue")),
@@ -546,7 +549,7 @@ export function waiting() {
 				showing: showing,
 			},
 			{
-				done: () => resolve(),
+				done: () => resolve(undefined),
 			},
 			"closed",
 		);
@@ -695,9 +698,13 @@ type AwaitType<T> = T extends Promise<infer U>
 let openingEmojiPicker: AwaitType<ReturnType<typeof popup>> | null = null;
 let activeTextarea: HTMLTextAreaElement | HTMLInputElement | null = null;
 export async function openEmojiPicker(
-	src?: HTMLElement,
-	opts,
 	initialTextarea: typeof activeTextarea,
+	src?: HTMLElement,
+	opts?: {
+		manualShowing?: boolean | null;
+		showPinned?: boolean;
+		asReactionPicker?: boolean;
+	},
 ) {
 	if (openingEmojiPicker) return;
 
@@ -706,7 +713,7 @@ export async function openEmojiPicker(
 	const textareas = document.querySelectorAll("textarea, input");
 	for (const textarea of Array.from(textareas)) {
 		textarea.addEventListener("focus", () => {
-			activeTextarea = textarea;
+			activeTextarea = textarea as HTMLTextAreaElement | HTMLInputElement;
 		});
 	}
 
@@ -715,7 +722,9 @@ export async function openEmojiPicker(
 			for (const node of Array.from(record.addedNodes).filter(
 				(node) => node instanceof HTMLElement,
 			) as HTMLElement[]) {
-				const textareas = node.querySelectorAll("textarea, input");
+				const textareas = node.querySelectorAll(
+					"textarea, input",
+				) as NodeListOf<HTMLTextAreaElement | HTMLInputElement>;
 				for (const textarea of Array.from(textareas).filter(
 					(textarea) => textarea.dataset.preventEmojiInsert == null,
 				)) {
@@ -749,7 +758,7 @@ export async function openEmojiPicker(
 				insertTextAtCursor(activeTextarea, emoji);
 			},
 			closed: () => {
-				openingEmojiPicker!.dispose();
+				openingEmojiPicker?.dispose();
 				openingEmojiPicker = null;
 				observer.disconnect();
 			},
@@ -766,7 +775,7 @@ export function popupMenu(
 		viaKeyboard?: boolean;
 	},
 ) {
-	return new Promise((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		let dispose;
 		popup(
 			defineAsyncComponent(() => import("@/components/MkPopupMenu.vue")),
@@ -779,7 +788,7 @@ export function popupMenu(
 			},
 			{
 				closed: () => {
-					resolve();
+					resolve(undefined);
 					dispose();
 				},
 			},
@@ -794,7 +803,7 @@ export function contextMenu(
 	ev: MouseEvent,
 ) {
 	ev.preventDefault();
-	return new Promise((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		let dispose;
 		popup(
 			defineAsyncComponent(() => import("@/components/MkContextMenu.vue")),
@@ -804,7 +813,7 @@ export function contextMenu(
 			},
 			{
 				closed: () => {
-					resolve();
+					resolve(undefined);
 					dispose();
 				},
 			},
@@ -815,7 +824,7 @@ export function contextMenu(
 }
 
 export function post(props: Record<string, any> = {}) {
-	return new Promise((resolve, reject) => {
+	return new Promise<any>((resolve, reject) => {
 		// NOTE: MkPostFormDialogをdynamic importするとiOSでテキストエリアに自動フォーカスできない
 		// NOTE: ただ、dynamic importしない場合、MkPostFormDialogインスタンスが使いまわされ、
 		//       Vueが渡されたコンポーネントに内部的に__propsというプロパティを生やす影響で、
@@ -824,7 +833,7 @@ export function post(props: Record<string, any> = {}) {
 		let dispose;
 		popup(MkPostFormDialog, props, {
 			closed: () => {
-				resolve();
+				resolve(undefined);
 				dispose();
 			},
 		}).then((res) => {
