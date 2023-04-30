@@ -35,8 +35,6 @@ export default async (
 	const objectType = getApType(object);
 	switch (objectType) {
 		case "Question":
-			await updateQuestion(object, resolver).catch((e) => console.log(e));
-			return "ok: Question updated";
 		case "Note":
 			let failed = false;
 			console.log("Updating note", object);
