@@ -8,7 +8,6 @@ export class NoteEdit1682753227899 {
 					"noteId" character varying(32) NOT NULL,
 					"text" text,
 					"cw" character varying(512),
-					"tags" character varying(128) array NOT NULL DEFAULT '{}',
 					"fileIds" character varying(32) array NOT NULL DEFAULT '{}',
 					"updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL,
 					CONSTRAINT "PK_736fc6e0d4e222ecc6f82058e08" PRIMARY KEY ("id")

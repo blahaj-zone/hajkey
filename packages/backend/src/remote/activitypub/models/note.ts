@@ -618,6 +618,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	});
 
 	let updating = false;
+	let publishing = false;
 	const update = {} as Partial<Note>;
 	if (text && text !== note.text) {
 		update.text = text;
@@ -667,7 +668,14 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 				userId: actor.id,
 				userHost: actor.host,
 			});
-		} else {
+			publishing = true;
+		} else if (
+			dbPoll.multiple !== poll.multiple ||
+			dbPoll.expiresAt !== poll.expiresAt ||
+			dbPoll.noteVisibility !== note.visibility ||
+			dbPoll.votes.length !== poll.votes?.length ||
+			JSON.stringify(dbPoll.choices) !== JSON.stringify(poll.choices)
+		) {
 			await Polls.update(
 				{ noteId: note.id },
 				{
@@ -675,8 +683,10 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 					multiple: poll?.multiple,
 					votes: poll?.votes,
 					expiresAt: poll?.expiresAt,
+					noteVisibility: note.visibility,
 				},
 			);
+			publishing = true;
 		}
 	}
 
@@ -691,20 +701,19 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		await NoteEdits.insert({
 			id: genId(),
 			noteId: note.id,
-			updatedAt: update.updatedAt,
 			text: note.text,
 			cw: note.cw,
-			tags: note.tags,
 			fileIds: note.fileIds,
+			updatedAt: update.updatedAt,
 		});
 
+		publishing = true;
+	}
+
+	if (publishing) {
 		// Publish update event for the updated note details
 		publishNoteStream(note.id, "updated", {
 			updatedAt: update.updatedAt,
-			text: update.text,
-			cw: update.cw,
-			tags: update.tags,
-			fileIds: update.fileIds,
 		});
 	}
 }

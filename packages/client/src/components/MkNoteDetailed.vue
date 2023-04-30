@@ -289,30 +289,22 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			break;
 
 		case "updated":
-			const { text, cw, fileIds, updatedAt } = body;
-
 			let updatedNote = appearNote;
 			if (found > 0) {
 				updatedNote = replies.value[found - 1];
 			}
-			if (text || text === "") updatedNote.text = text;
-			if (cw || cw === "") updatedNote.cw = cw;
-			if (fileIds) {
-				updatedNote.fileIds = fileIds;
-				const newDriveFiles: Array<DriveFile> = [];
-				for (let i = 0; i < fileIds.length; i++) {
-					const fileId = fileIds[i];
-					let file = updatedNote.files.find((f) => f.id === fileId);
-					if (!file) {
-						file = await os.api("drive/files/show", {
-							fileId: fileId,
-						});
-					}
-					newDriveFiles[i] = file;
-				}
-				updatedNote.files = newDriveFiles;
-			}
-			updatedNote.updatedAt = updatedAt;
+
+			const editedNote = await os.api("notes/show", {
+				noteId: id,
+			});
+
+			const keys = new Set<string>();
+			Object.keys(editedNote)
+				.concat(Object.keys(updatedNote))
+				.forEach((key) => keys.add(key));
+			keys.forEach((key) => {
+				updatedNote[key] = editedNote[key];
+			});
 			break;
 
 		case "deleted":

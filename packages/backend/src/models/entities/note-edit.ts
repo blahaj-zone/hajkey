@@ -38,11 +38,6 @@ export class NoteEdit {
 	})
 	public cw: string | null;
 
-	@Column('varchar', {
-		length: 128, array: true, default: '{}',
-	})
-	public tags: string[];
-
 	@Column({
 		...id(),
 		array: true, default: '{}',

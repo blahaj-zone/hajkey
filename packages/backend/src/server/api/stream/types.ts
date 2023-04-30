@@ -147,10 +147,6 @@ export interface NoteStreamTypes {
 	};
 	updated: {
 		updatedAt: Note["updatedAt"];
-		text?: Note["text"];
-		cw?: Note["cw"];
-		tags?: Note["tags"];
-		fileIds?: Note["fileIds"];
 	};
 }
 type NoteStreamEventTypes = {
