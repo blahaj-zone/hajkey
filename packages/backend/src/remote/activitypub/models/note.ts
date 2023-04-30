@@ -587,7 +587,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		() => undefined,
 	);
 
-	const choices = poll?.choices.map((choice) => mfm.parse(choice)).flat() ?? [];
+	const choices = poll?.choices.flatMap((choice) => mfm.parse(choice)) ?? [];
 
 	const tokens = mfm
 		.parse(text || "")
@@ -673,7 +673,6 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 			dbPoll.multiple !== poll.multiple ||
 			dbPoll.expiresAt !== poll.expiresAt ||
 			dbPoll.noteVisibility !== note.visibility ||
-			dbPoll.votes.length !== poll.votes?.length ||
 			JSON.stringify(dbPoll.choices) !== JSON.stringify(poll.choices)
 		) {
 			await Polls.update(
@@ -687,6 +686,14 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 				},
 			);
 			publishing = true;
+		} else {
+			for (let i = 0; i < poll.choices.length; i++) {
+				if (dbPoll.votes[i] !== poll.votes?.[i]) {
+					await Polls.update({ noteId: note.id }, { votes: poll?.votes });
+					publishing = true;
+					break;
+				}
+			}
 		}
 	}
 

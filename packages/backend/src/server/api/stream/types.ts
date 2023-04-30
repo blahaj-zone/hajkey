@@ -146,7 +146,7 @@ export interface NoteStreamTypes {
 		id: Note["id"];
 	};
 	updated: {
-		updatedAt: Note["updatedAt"];
+		updatedAt?: Note["updatedAt"];
 	};
 }
 type NoteStreamEventTypes = {
