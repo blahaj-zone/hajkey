@@ -105,6 +105,7 @@ import { useNoteCapture } from "@/scripts/use-note-capture";
 import { deepClone } from "@/scripts/clone";
 import { stream } from "@/stream";
 import { NoteUpdatedEvent } from "calckey-js/built/streaming.types";
+import { DriveFile } from "calckey-js/built/entities";
 
 const router = useRouter();
 
@@ -148,7 +149,7 @@ const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
-let appearNote = $computed(() =>
+let appearNote = ref<misskey.entities.Note>(
 	isRenote ? (note.renote as misskey.entities.Note) : note
 );
 const isMyRenote = $i && $i.id === note.userId;
@@ -341,7 +342,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	}
 
 	if (found === -1) {
-		console.log("not found")
+		console.log("not found");
 		return;
 	}
 
@@ -368,10 +369,23 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			}
 			if (text) updatedNote.text = text;
 			if (cw) updatedNote.cw = cw;
-			if (tags) updatedNote.tags = tags;
-			if (fileIds) {
+			if (tags && tags.length > 0) updatedNote.tags = tags;
+			if (fileIds && fileIds.length > 0) {
 				updatedNote.fileIds = fileIds;
-				updatedNote.attachedFileTypes = attachedFileTypes;
+				const newDriveFiles: Array<DriveFile> = [];
+				for (let i = 0; i < fileIds.length; i++) {
+					const fileId = fileIds[i];
+					let file = updatedNote.files.find((f) => f.id === fileId);
+					if (file) {
+						file.type = attachedFileTypes?.[i] ?? file.type;
+					} else {
+						file = await os.api("drive/files/show", {
+							fileId: fileId,
+						});
+					}
+					newDriveFiles[i] = file;
+				}
+				updatedNote.files = newDriveFiles;
 			}
 			updatedNote.updatedAt = updatedAt;
 			break;

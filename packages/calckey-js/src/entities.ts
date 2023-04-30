@@ -163,6 +163,7 @@ export type Note = {
 	}[];
 	uri?: string;
 	url?: string;
+	updatedAt?: DateString;
 	isHidden?: boolean;
 };
 
