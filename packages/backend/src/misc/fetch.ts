@@ -76,6 +76,7 @@ export async function getResponse(args: {
 	});
 
 	if (!res.ok) {
+		console.log("failed to fetch:", args);
 		throw new StatusError(
 			`${res.status} ${res.statusText}`,
 			res.status,
