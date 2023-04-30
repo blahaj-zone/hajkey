@@ -538,19 +538,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	// Already registered with this server?
 	const note = await Notes.findOneBy({ uri });
 	if (note == null) {
-		const audience = await parseAudience(actor, post.to, post.cc, resolver);
-		let signedResolver = resolver;
-		if (
-			audience.visibility === "followers" ||
-			audience.visibility === "specified"
-		) {
-			// Find a local user to make the request
-			const localUsers = audience.mentionedUsers.filter((x) => x.host === null);
-			if (localUsers.length > 0) {
-				signedResolver = new Resolver(100, localUsers[0] as ILocalUser);
-			}
-		}
-		return await resolveNote(uri, signedResolver);
+		return await createNote(post, resolver);
 	}
 
 	// Text parsing
