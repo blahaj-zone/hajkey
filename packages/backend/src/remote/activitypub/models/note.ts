@@ -521,14 +521,16 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	// Skip if URI points to this server
 	if (uri.startsWith(`${config.url}/`)) throw new Error("uri points local");
 
+	// A new resolver is created if not specified
+	if (resolver == null) resolver = new Resolver();
+
 	// Already registered with this server?
 	const note = await Notes.findOneBy({ uri });
 	if (note == null) {
-		return await createNote(uri, resolver);
+		return await resolveNote(uri, resolver);
 	}
 
-	// Resolve new Note object
-	if (resolver == null) resolver = new Resolver();
+	// Resolve the updated Note object
 	const post = (await resolver.resolve(value)) as IPost;
 
 	// Text parsing
