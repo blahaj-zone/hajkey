@@ -4,7 +4,7 @@
 	"scripts": {
 		"watch": "pnpm vite build --watch --mode development",
 		"build": "pnpm vite build",
-		"lint": "pnpm rome check \"src/**/*.{ts,vue}\"",
+		"lint": "pnpm prettier --check src/**/*.vue && pnpm rome check src/**/*.ts",
 		"format": "pnpm prettier --write '**/*.vue'"
 	},
 	"devDependencies": {

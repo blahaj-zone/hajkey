@@ -11,7 +11,7 @@
 		"check:connect": "node ./check_connect.js",
 		"build": "napi build --platform --release --cargo-cwd native-utils ./native-utils/built/ && pnpm swc src -d built -D",
 		"watch": "pnpm swc src -d built -D -w",
-		"lint": "pnpm rome check \"src/**/*.ts\"",
+		"lint": "pnpm rome check src/**/*.ts",
 		"mocha": "cross-env NODE_ENV=test TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true TS_NODE_PROJECT=\"./test/tsconfig.json\" mocha",
 		"test": "pnpm run mocha"
 	},
