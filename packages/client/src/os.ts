@@ -698,13 +698,13 @@ type AwaitType<T> = T extends Promise<infer U>
 let openingEmojiPicker: AwaitType<ReturnType<typeof popup>> | null = null;
 let activeTextarea: HTMLTextAreaElement | HTMLInputElement | null = null;
 export async function openEmojiPicker(
-	initialTextarea: typeof activeTextarea,
 	src?: HTMLElement,
 	opts?: {
 		manualShowing?: boolean | null;
 		showPinned?: boolean;
 		asReactionPicker?: boolean;
 	},
+	initialTextarea: typeof activeTextarea,
 ) {
 	if (openingEmojiPicker) return;
 

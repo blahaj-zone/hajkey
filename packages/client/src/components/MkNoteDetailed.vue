@@ -6,7 +6,7 @@
 		v-hotkey="keymap"
 		v-size="{ max: [500, 450, 350, 300] }"
 		class="lxwezrsl _block"
-		:tabindex="!isDeleted ? '-1' : null"
+		:tabindex="!isDeleted ? '-1' : undefined"
 		:class="{
 			renote: isRenote,
 			colorize,
@@ -64,40 +64,17 @@
 </template>
 
 <script lang="ts" setup>
-import {
-	computed,
-	inject,
-	onMounted,
-	onUnmounted,
-	onUpdated,
-	reactive,
-	ref,
-} from "vue";
-import * as mfm from "mfm-js";
+import { onMounted, onUnmounted, onUpdated, ref, Ref } from "vue";
 import type * as misskey from "calckey-js";
 import MkNote from "@/components/MkNote.vue";
 import MkNoteSub from "@/components/MkNoteSub.vue";
-import XNoteSimple from "@/components/MkNoteSimple.vue";
-import XReactionsViewer from "@/components/MkReactionsViewer.vue";
-import XMediaList from "@/components/MkMediaList.vue";
-import XCwButton from "@/components/MkCwButton.vue";
-import XPoll from "@/components/MkPoll.vue";
-import XStarButton from "@/components/MkStarButton.vue";
-import XStarButtonNoEmoji from "@/components/MkStarButtonNoEmoji.vue";
 import XRenoteButton from "@/components/MkRenoteButton.vue";
-import XQuoteButton from "@/components/MkQuoteButton.vue";
-import MkUrlPreview from "@/components/MkUrlPreview.vue";
-import MkInstanceTicker from "@/components/MkInstanceTicker.vue";
-import MkVisibility from "@/components/MkVisibility.vue";
 import { pleaseLogin } from "@/scripts/please-login";
 import { getWordMute } from "@/scripts/check-word-mute";
 import { userPage } from "@/filters/user";
-import { notePage } from "@/filters/note";
-import { useRouter } from "@/router";
 import * as os from "@/os";
 import { defaultStore, noteViewInterruptors } from "@/store";
 import { reactionPicker } from "@/scripts/reaction-picker";
-import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
 import { $i } from "@/account";
 import { i18n } from "@/i18n";
 import { getNoteMenu } from "@/scripts/get-note-menu";
@@ -107,14 +84,11 @@ import { stream } from "@/stream";
 import { NoteUpdatedEvent } from "calckey-js/built/streaming.types";
 import { DriveFile } from "calckey-js/built/entities";
 
-const router = useRouter();
-
 const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
 }>();
 
-const inChannel = inject("inChannel", null);
 const colorize = defaultStore.state.replyDividerColorize;
 const colorbg = defaultStore.state.replyDividerColorBg;
 const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
@@ -122,8 +96,6 @@ const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
 let note = $ref(deepClone(props.note));
-
-const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
 
 // plugin
 if (noteViewInterruptors.length > 0) {
@@ -145,7 +117,6 @@ const isRenote =
 const el = ref<HTMLElement>();
 const noteEl = $ref();
 const menuButton = ref<HTMLElement>();
-const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
@@ -158,13 +129,6 @@ const isDeleted = ref(false);
 const muted = ref(getWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
-const urls = appearNote.text
-	? extractUrlFromMfm(mfm.parse(appearNote.text)).slice(0, 5)
-	: null;
-const showTicker =
-	defaultStore.state.instanceTicker === "always" ||
-	(defaultStore.state.instanceTicker === "remote" &&
-		appearNote.user.instance);
 const conversation = ref<misskey.entities.Note[]>([]);
 const replies = ref<misskey.entities.Note[]>([]);
 const directReplies = ref<misskey.entities.Note[]>([]);
@@ -174,39 +138,36 @@ let isScrolling;
 const keymap = {
 	r: () => reply(true),
 	"e|a|plus": () => react(true),
-	q: () => renoteButton.value.renote(true),
+	q: () => renoteButton.value?.renote(true),
 	esc: blur,
 	"m|o": () => menu(true),
 	s: () => showContent.value !== showContent.value,
 };
 
 useNoteCapture({
-	rootEl: el,
-	note: $$(appearNote),
+	rootEl: el as Ref<HTMLElement>,
+	note: appearNote,
 	isDeletedRef: isDeleted,
 });
 
 function reply(viaKeyboard = false): void {
 	pleaseLogin();
-	os.post(
-		{
-			reply: appearNote,
-			animation: !viaKeyboard,
-		},
-		() => {
-			focus();
-		}
-	);
+	os.post({
+		reply: appearNote.value,
+		animation: !viaKeyboard,
+	}).then(() => {
+		focus();
+	});
 }
 
 function react(viaKeyboard = false): void {
 	pleaseLogin();
 	blur();
 	reactionPicker.show(
-		reactButton.value,
+		reactButton.value!,
 		(reaction) => {
 			os.api("notes/reactions/create", {
-				noteId: appearNote.id,
+				noteId: appearNote.value.id,
 				reaction: reaction,
 			});
 		},
@@ -216,23 +177,17 @@ function react(viaKeyboard = false): void {
 	);
 }
 
-function undoReact(note): void {
-	const oldReaction = note.myReaction;
-	if (!oldReaction) return;
-	os.api("notes/reactions/delete", {
-		noteId: note.id,
-	});
-}
-
 function onContextmenu(ev: MouseEvent): void {
-	const isLink = (el: HTMLElement) => {
-		if (el.tagName === "A") return true;
-		if (el.parentElement) {
-			return isLink(el.parentElement);
+	const isLink = (el: EventTarget | null) => {
+		if (el instanceof HTMLElement) {
+			if (el.tagName === "A") return true;
+			if (el.parentElement) {
+				return isLink(el.parentElement);
+			}
 		}
 	};
 	if (isLink(ev.target)) return;
-	if (window.getSelection().toString() !== "") return;
+	if (window.getSelection()?.toString() !== "") return;
 
 	if (defaultStore.state.useReactionPickerForContextMenu) {
 		ev.preventDefault();
@@ -307,18 +262,18 @@ os.api("notes/children", {
 	directReplies.value = res
 		.filter(
 			(note) =>
-				note.replyId === appearNote.id ||
-				note.renoteId === appearNote.id
+				note.replyId === appearNote.value.id ||
+				note.renoteId === appearNote.value.id
 		)
 		.reverse();
 });
 
 if (appearNote.replyId) {
 	os.api("notes/conversation", {
-		noteId: appearNote.replyId,
+		noteId: appearNote.value.replyId,
 		limit: 30,
 	}).then((res) => {
-		conversation.value = res.reverse();
+		conversation.value = res?.reverse();
 		focus();
 	});
 }
@@ -329,7 +284,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	console.log("onNoteUpdated", noteData);
 
 	let found = -1;
-	if (id === appearNote.id) {
+	if (id === appearNote.value.id) {
 		found = 0;
 	} else {
 		for (let i = 0; i < replies.value.length; i++) {
@@ -363,13 +318,12 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			const { text, cw, tags, fileIds, attachedFileTypes, updatedAt } =
 				body;
 
-			let updatedNote = appearNote;
+			let updatedNote = appearNote.value;
 			if (found > 0) {
 				updatedNote = replies.value[found - 1];
 			}
 			if (text) updatedNote.text = text;
 			if (cw) updatedNote.cw = cw;
-			if (tags && tags.length > 0) updatedNote.tags = tags;
 			if (fileIds && fileIds.length > 0) {
 				updatedNote.fileIds = fileIds;
 				const newDriveFiles: Array<DriveFile> = [];
@@ -407,12 +361,12 @@ document.addEventListener("wheel", () => {
 onMounted(() => {
 	stream.on("noteUpdated", onNoteUpdated);
 	isScrolling = false;
-	noteEl.scrollIntoView();
+	noteEl?.scrollIntoView();
 });
 
 onUpdated(() => {
 	if (!isScrolling) {
-		noteEl.scrollIntoView();
+		noteEl?.scrollIntoView();
 	}
 });
 

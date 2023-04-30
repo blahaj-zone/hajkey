@@ -1,6 +1,5 @@
 import { defineAsyncComponent, Ref, inject } from "vue";
 import * as misskey from "calckey-js";
-import { pleaseLogin } from "./please-login";
 import { $i } from "@/account";
 import { i18n } from "@/i18n";
 import { instance } from "@/instance";
@@ -12,7 +11,7 @@ import { shareAvailable } from "@/scripts/share-available";
 
 export function getNoteMenu(props: {
 	note: misskey.entities.Note;
-	menuButton: Ref<HTMLElement>;
+	menuButton: Ref<HTMLElement | undefined>;
 	translation: Ref<any>;
 	translating: Ref<boolean>;
 	isDeleted: Ref<boolean>;
@@ -105,7 +104,7 @@ export function getNoteMenu(props: {
 				noteId: appearNote.id,
 			},
 			undefined,
-			null,
+		).catch(
 			(res) => {
 				if (res.id === "72dab508-c64d-498f-8740-a8eec1ba385a") {
 					os.alert({
