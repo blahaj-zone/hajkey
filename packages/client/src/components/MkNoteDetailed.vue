@@ -95,7 +95,7 @@ const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
 const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
-let note = $ref(deepClone(props.note));
+let note = $ref(props.note);
 
 // plugin
 if (noteViewInterruptors.length > 0) {
@@ -120,7 +120,7 @@ const menuButton = ref<HTMLElement>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
-let appearNote = ref<misskey.entities.Note>(
+let appearNote = $computed(() =>
 	isRenote ? (note.renote as misskey.entities.Note) : note
 );
 const isMyRenote = $i && $i.id === note.userId;
@@ -146,14 +146,14 @@ const keymap = {
 
 useNoteCapture({
 	rootEl: el as Ref<HTMLElement>,
-	note: appearNote,
+	note: $$(appearNote),
 	isDeletedRef: isDeleted,
 });
 
 function reply(viaKeyboard = false): void {
 	pleaseLogin();
 	os.post({
-		reply: appearNote.value,
+		reply: appearNote,
 		animation: !viaKeyboard,
 	}).then(() => {
 		focus();
@@ -167,7 +167,7 @@ function react(viaKeyboard = false): void {
 		reactButton.value!,
 		(reaction) => {
 			os.api("notes/reactions/create", {
-				noteId: appearNote.value.id,
+				noteId: appearNote.id,
 				reaction: reaction,
 			});
 		},
@@ -222,35 +222,12 @@ function menu(viaKeyboard = false): void {
 	).then(focus);
 }
 
-function showRenoteMenu(viaKeyboard = false): void {
-	if (!isMyRenote) return;
-	os.popupMenu(
-		[
-			{
-				text: i18n.ts.unrenote,
-				icon: "ph-trash ph-bold ph-lg",
-				danger: true,
-				action: () => {
-					os.api("notes/delete", {
-						noteId: note.id,
-					});
-					isDeleted.value = true;
-				},
-			},
-		],
-		renoteTime.value,
-		{
-			viaKeyboard: viaKeyboard,
-		}
-	);
-}
-
 function focus() {
-	noteEl.focus();
+	noteEl?.focus();
 }
 
 function blur() {
-	noteEl.blur();
+	noteEl?.blur();
 }
 
 os.api("notes/children", {
@@ -262,15 +239,15 @@ os.api("notes/children", {
 	directReplies.value = res
 		.filter(
 			(note) =>
-				note.replyId === appearNote.value.id ||
-				note.renoteId === appearNote.value.id
+				note.replyId === appearNote.id ||
+				note.renoteId === appearNote.id
 		)
 		.reverse();
 });
 
 if (appearNote.replyId) {
 	os.api("notes/conversation", {
-		noteId: appearNote.value.replyId,
+		noteId: appearNote.replyId,
 		limit: 30,
 	}).then((res) => {
 		conversation.value = res?.reverse();
@@ -284,7 +261,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	console.log("onNoteUpdated", noteData);
 
 	let found = -1;
-	if (id === appearNote.value.id) {
+	if (id === appearNote.id) {
 		found = 0;
 	} else {
 		for (let i = 0; i < replies.value.length; i++) {
@@ -315,10 +292,10 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			break;
 
 		case "updated":
-			const { text, cw, tags, fileIds, attachedFileTypes, updatedAt } =
+			const { text, cw, fileIds, attachedFileTypes, updatedAt } =
 				body;
 
-			let updatedNote = appearNote.value;
+			let updatedNote = appearNote;
 			if (found > 0) {
 				updatedNote = replies.value[found - 1];
 			}

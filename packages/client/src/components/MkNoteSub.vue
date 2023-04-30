@@ -185,7 +185,6 @@ import { useRouter } from "@/router";
 import * as os from "@/os";
 import { reactionPicker } from "@/scripts/reaction-picker";
 import { i18n } from "@/i18n";
-import { deepClone } from "@/scripts/clone";
 import { useNoteCapture } from "@/scripts/use-note-capture";
 import { defaultStore } from "@/store";
 
@@ -230,7 +229,7 @@ const props = withDefaults(
 
 const colorizer: Colorizer = props.colorizer ?? new Colorizer();
 
-let note = $ref(deepClone(props.note));
+let note = $ref(props.note);
 
 const isRenote =
 	note.renote != null &&
@@ -249,7 +248,6 @@ let appearNote = $computed(() =>
 const isDeleted = ref(false);
 const translation = ref(null);
 const translating = ref(false);
-let showContent = $ref(defaultStore.state.autoShowCw);
 const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] =
 	props.conversation
@@ -274,6 +272,7 @@ function reply(viaKeyboard = false): void {
 			reply: appearNote,
 			animation: !viaKeyboard,
 		},
+	).then(
 		() => {
 			focus();
 		}
@@ -328,15 +327,15 @@ function menu(viaKeyboard = false): void {
 }
 
 function focus() {
-	el.value.focus();
+	el.value?.focus();
 }
 
 function blur() {
-	el.value.blur();
+	el.value?.blur();
 }
 
 function noteClick(e) {
-	if (document.getSelection().type === "Range") {
+	if (document.getSelection()?.type === "Range") {
 		e.stopPropagation();
 	} else {
 		router.push(notePage(props.note));
