@@ -36,14 +36,6 @@ export const packedNoteEdit = {
 			optional: true,
 			nullable: true,
 		},
-		tags: {
-			type: "array",
-			optional: true,
-			nullable: true,
-			items: {
-				type: "string",
-			},
-		},
 		fileIds: {
 			type: "array",
 			optional: true,
