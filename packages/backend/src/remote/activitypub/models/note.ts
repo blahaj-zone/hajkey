@@ -649,6 +649,11 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		updating = true;
 	}
 
+	if (note.hasPoll !== !!poll) {
+		update.hasPoll = !!poll;
+		updating = true;
+	}
+
 	if (poll) {
 		const dbPoll = await Polls.findOneBy({ noteId: note.id });
 		if (dbPoll == null) {
