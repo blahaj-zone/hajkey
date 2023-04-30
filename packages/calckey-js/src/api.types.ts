@@ -898,6 +898,18 @@ export type Endpoints = {
 	"notes/search": { req: TODO; res: TODO };
 	"notes/show": { req: { noteId: Note["id"] }; res: Note };
 	"notes/state": { req: TODO; res: TODO };
+	"notes/thread-muting/create": {
+		req: {
+			noteId: Note["id"];
+		};
+		res: null;
+	};
+	"notes/thread-muting/delete": {
+		req: {
+			noteId: Note["id"];
+		};
+		res: null;
+	};
 	"notes/timeline": {
 		req: {
 			limit?: number;
