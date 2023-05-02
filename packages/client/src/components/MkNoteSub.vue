@@ -229,7 +229,7 @@ const props = withDefaults(
 
 const colorizer: Colorizer = props.colorizer ?? new Colorizer();
 
-let note = $ref(props.note);
+let note = $ref(deepClone(props.note));
 
 const isRenote =
 	note.renote != null &&
@@ -263,6 +263,7 @@ const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
 useNoteCapture({
 	rootEl: el,
 	note: $$(appearNote),
+	isDeletedRef: isDeleted,
 });
 
 function reply(viaKeyboard = false): void {

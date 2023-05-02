@@ -95,7 +95,7 @@ const colorgrad = defaultStore.state.replyDividerColorGrad && !colorbg;
 const colorborder = defaultStore.state.replyDividerColorBorder;
 const compact = defaultStore.state.replyIndentCompact;
 
-let note = $ref(props.note);
+let note = $ref(deepClone(props.note));
 
 // plugin
 if (noteViewInterruptors.length > 0) {
@@ -286,25 +286,6 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 			if (found === 0) {
 				directReplies.value.unshift(replyNote);
 			}
-			break;
-
-		case "updated":
-			let updatedNote = appearNote;
-			if (found > 0) {
-				updatedNote = replies.value[found - 1];
-			}
-
-			const editedNote = await os.api("notes/show", {
-				noteId: id,
-			});
-
-			const keys = new Set<string>();
-			Object.keys(editedNote)
-				.concat(Object.keys(updatedNote))
-				.forEach((key) => keys.add(key));
-			keys.forEach((key) => {
-				updatedNote[key] = editedNote[key];
-			});
 			break;
 
 		case "deleted":

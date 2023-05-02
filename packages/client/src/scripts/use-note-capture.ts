@@ -2,6 +2,7 @@ import { onUnmounted, Ref } from "vue";
 import * as misskey from "calckey-js";
 import { stream } from "@/stream";
 import { $i } from "@/account";
+import * as os from "@/os";
 
 export function useNoteCapture(props: {
 	rootEl: Ref<HTMLElement>;
@@ -11,7 +12,7 @@ export function useNoteCapture(props: {
 	const note = props.note;
 	const connection = $i ? stream : null;
 
-	function onStreamNoteUpdated(noteData): void {
+	async function onStreamNoteUpdated(noteData): Promise<void> {
 		const { type, id, body } = noteData;
 
 		if (id !== note.value.id) return;
@@ -47,7 +48,7 @@ export function useNoteCapture(props: {
 				note.value.reactions[reaction] = Math.max(0, currentCount - 1);
 
 				if ($i && body.userId === $i.id) {
-					note.value.myReaction = null;
+					note.value.myReaction = undefined;
 				}
 				break;
 			}
@@ -55,23 +56,40 @@ export function useNoteCapture(props: {
 			case "pollVoted": {
 				const choice = body.choice;
 
-				const choices = [...note.value.poll.choices];
-				choices[choice] = {
-					...choices[choice],
-					votes: choices[choice].votes + 1,
-					...($i && body.userId === $i.id
-						? {
-								isVoted: true,
-						  }
-						: {}),
-				};
+				if (note.value.poll) {
+					const choices = [...note.value.poll.choices];
+					choices[choice] = {
+						...choices[choice],
+						votes: choices[choice].votes + 1,
+						...($i && body.userId === $i.id
+							? {
+									isVoted: true,
+								}
+							: {}),
+					};
+					note.value.poll.choices = choices;
+				}
 
-				note.value.poll.choices = choices;
 				break;
 			}
 
 			case "deleted": {
 				props.isDeletedRef.value = true;
+				break;
+			}
+
+			case "updated": {
+				const editedNote = await os.api("notes/show", {
+					noteId: id,
+				});
+	
+				const keys = new Set<string>();
+				Object.keys(editedNote)
+					.concat(Object.keys(note.value))
+					.forEach((key) => keys.add(key));
+				keys.forEach((key) => {
+					note.value[key] = editedNote[key];
+				});
 				break;
 			}
 		}
