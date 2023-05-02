@@ -589,7 +589,9 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 							update.comment = altText;
 						}
 
-						if (file.isSensitive !== post.sensitive) {
+						// Don't unmark previously marked sensitive files,
+						// but if edited post contains sensitive marker, update it.
+						if (post.sensitive && !file.isSensitive) {
 							update.isSensitive = post.sensitive;
 						}
 
