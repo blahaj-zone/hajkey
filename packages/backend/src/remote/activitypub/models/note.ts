@@ -16,7 +16,7 @@ import { unique, toArray, toSingle } from "@/prelude/array.js";
 import { extractPollFromQuestion, updateQuestion } from "./question.js";
 import vote from "@/services/note/polls/vote.js";
 import { apLogger } from "../logger.js";
-import type { DriveFile } from "@/models/entities/drive-file.js";
+import { DriveFile } from "@/models/entities/drive-file.js";
 import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
 import { extractDbHost, toPuny } from "@/misc/convert-host.js";
 import {
@@ -25,6 +25,7 @@ import {
 	MessagingMessages,
 	Notes,
 	NoteEdits,
+	DriveFiles,
 } from "@/models/index.js";
 import type { IMentionedRemoteUsers, Note } from "@/models/entities/note.js";
 import type { IObject, IPost } from "../type.js";
@@ -47,9 +48,10 @@ import { StatusError } from "@/misc/fetch.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 import { publishNoteStream } from "@/services/stream.js";
 import { extractHashtags } from "@/misc/extract-hashtags.js";
-import { User } from "@/models/entities/user.js";
 import { UserProfiles } from "@/models/index.js";
 import { In } from "typeorm";
+import { DB_MAX_IMAGE_COMMENT_LENGTH } from "@/misc/hard-limits.js";
+import { truncate } from "@/misc/truncate.js";
 
 const logger = apLogger;
 
@@ -517,6 +519,10 @@ type TagDetail = {
 	name: string;
 };
 
+function notEmpty(partial: Partial<any>) {
+	return Object.keys(partial).length > 0;
+}
+
 export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	const uri = typeof value === "string" ? value : value.id;
 	if (!uri) throw new Error("Missing note uri");
@@ -540,6 +546,9 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	if (note == null) {
 		return await createNote(post, resolver);
 	}
+
+	// Whether to tell clients the note has been updated and requires refresh.
+	let publishing = false;
 
 	// Text parsing
 	let text: string | null = null;
@@ -570,7 +579,23 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	const driveFiles = (
 		await Promise.all(
 			fileList.map(
-				(x) => limit(() => resolveImage(actor, x)) as Promise<DriveFile>,
+				(x) =>
+					limit(async () => {
+						const file = await resolveImage(actor, x);
+						const update: Partial<DriveFile> = {};
+
+						const altText = truncate(x.name, DB_MAX_IMAGE_COMMENT_LENGTH);
+						if (file.comment !== altText) {
+							update.comment = altText;
+						}
+
+						if (notEmpty(update)) {
+							await DriveFiles.update(file.id, update);
+							publishing = true;
+						}
+
+						return file;
+					}) as Promise<DriveFile>,
 			),
 		)
 	).filter((file) => file != null);
@@ -617,42 +642,33 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 		} as IMentionedRemoteUsers[0];
 	});
 
-	let updating = false;
-	let publishing = false;
 	const update = {} as Partial<Note>;
 	if (text && text !== note.text) {
 		update.text = text;
-		updating = true;
 	}
 	if (cw !== note.cw) {
 		update.cw = cw ? cw : null;
-		updating = true;
 	}
 	if (fileIds.sort().join(",") !== note.fileIds.sort().join(",")) {
 		update.fileIds = fileIds;
 		update.attachedFileTypes = fileTypes;
-		updating = true;
 	}
 
 	if (hashTags.sort().join(",") !== note.tags.sort().join(",")) {
 		update.tags = hashTags;
-		updating = true;
 	}
 
 	if (mentionUserIds.sort().join(",") !== note.mentions.sort().join(",")) {
 		update.mentions = mentionUserIds;
 		update.mentionedRemoteUsers = JSON.stringify(mentionedRemoteUsers);
-		updating = true;
 	}
 
 	if (apEmojis.sort().join(",") !== note.emojis.sort().join(",")) {
 		update.emojis = apEmojis;
-		updating = true;
 	}
 
 	if (note.hasPoll !== !!poll) {
 		update.hasPoll = !!poll;
-		updating = true;
 	}
 
 	if (poll) {
@@ -698,7 +714,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	}
 
 	// Update Note
-	if (updating) {
+	if (notEmpty(update)) {
 		update.updatedAt = new Date();
 
 		// Save updated note to the database
