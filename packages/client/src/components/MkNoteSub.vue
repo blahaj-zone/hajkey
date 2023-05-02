@@ -187,6 +187,7 @@ import { reactionPicker } from "@/scripts/reaction-picker";
 import { i18n } from "@/i18n";
 import { useNoteCapture } from "@/scripts/use-note-capture";
 import { defaultStore } from "@/store";
+import { deepClone } from "@/scripts/clone";
 
 const router = useRouter();
 
