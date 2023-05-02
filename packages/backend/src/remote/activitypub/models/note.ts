@@ -589,6 +589,10 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 							update.comment = altText;
 						}
 
+						if (file.isSensitive !== post.sensitive) {
+							update.isSensitive = post.sensitive;
+						}
+
 						if (notEmpty(update)) {
 							await DriveFiles.update(file.id, update);
 							publishing = true;
