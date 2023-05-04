@@ -2,7 +2,7 @@ import promiseLimit from "promise-limit";
 import * as mfm from "mfm-js";
 import config from "@/config/index.js";
 import Resolver from "../resolver.js";
-import post from "@/services/note/create.js";
+import post, { index } from "@/services/note/create.js";
 import { extractMentionedUsers } from "@/services/note/create.js";
 import { resolvePerson } from "./person.js";
 import { resolveImage } from "./image.js";
@@ -740,6 +740,8 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	}
 
 	if (publishing) {
+		index(note);
+
 		// Publish update event for the updated note details
 		publishNoteStream(note.id, "updated", {
 			updatedAt: update.updatedAt,

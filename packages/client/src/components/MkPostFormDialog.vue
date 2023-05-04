@@ -39,6 +39,7 @@ const props = defineProps<{
 	instant?: boolean;
 	fixed?: boolean;
 	autofocus?: boolean;
+	editId?: misskey.entities.Note["id"];
 }>();
 
 const emit = defineEmits<{

@@ -120,7 +120,9 @@ export default class DeliverManager {
 					// check that they actually have an inbox
 					recipe.to.inbox != null,
 			)
-			.forEach((recipe) => inboxes.add(recipe.to.inbox!));
+			.forEach((recipe) => {
+				if (recipe.to.inbox) inboxes.add(recipe.to.inbox);
+			});
 
 		const instancesToSkip = await skippedInstances(
 			// get (unique) list of hosts

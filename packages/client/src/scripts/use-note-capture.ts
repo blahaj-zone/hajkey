@@ -64,7 +64,7 @@ export function useNoteCapture(props: {
 						...($i && body.userId === $i.id
 							? {
 									isVoted: true,
-								}
+							  }
 							: {}),
 					};
 					note.value.poll.choices = choices;
@@ -82,7 +82,7 @@ export function useNoteCapture(props: {
 				const editedNote = await os.api("notes/show", {
 					noteId: id,
 				});
-	
+
 				const keys = new Set<string>();
 				Object.keys(editedNote)
 					.concat(Object.keys(note.value))

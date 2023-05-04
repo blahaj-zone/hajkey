@@ -60,6 +60,39 @@ export function getNoteMenu(props: {
 		});
 	}
 
+	function edit(): void {
+		os.confirm({
+			type: "info",
+			text: "This feature is experimental, please be careful and report bugs if you find them to @supakaity@blahaj.zone.",
+		}).then(({ canceled }) => {
+			if (canceled) return;
+
+			os.post({
+				initialNote: appearNote,
+				renote: appearNote.renote,
+				reply: appearNote.reply,
+				channel: appearNote.channel,
+				editId: appearNote.id,
+			});
+		});
+	}
+
+	function duplicate(): void {
+		os.confirm({
+			type: "info",
+			text: "This feature is experimental, please be careful and report bugs if you find them to @supakaity@blahaj.zone.",
+		}).then(({ canceled }) => {
+			if (canceled) return;
+
+			os.post({
+				initialNote: appearNote,
+				renote: appearNote.renote,
+				reply: appearNote.reply,
+				channel: appearNote.channel,
+			});
+		});
+	}
+
 	function toggleFavorite(favorite: boolean): void {
 		os.apiWithDialog(
 			favorite ? "notes/favorites/create" : "notes/favorites/delete",
@@ -250,6 +283,9 @@ export function getNoteMenu(props: {
 			noteId: appearNote.id,
 		});
 
+		const isAppearAuthor = appearNote.userId === $i.id;
+		const isModerator = $i.isAdmin || $i.isModerator;
+
 		menu = [
 			...(props.currentClipPage?.value.userId === $i.id
 				? [
@@ -319,7 +355,7 @@ export function getNoteMenu(props: {
 				text: i18n.ts.clip,
 				action: () => clip(),
 			},
-			appearNote.userId !== $i.id
+			!isAppearAuthor
 				? statePromise.then((state) =>
 						state.isWatching
 							? {
@@ -347,7 +383,7 @@ export function getNoteMenu(props: {
 							action: () => toggleThreadMute(true),
 					  },
 			),
-			appearNote.userId === $i.id
+			isAppearAuthor
 				? ($i.pinnedNoteIds || []).includes(appearNote.id)
 					? {
 							icon: "ph-push-pin ph-bold ph-lg",
@@ -370,7 +406,7 @@ export function getNoteMenu(props: {
 			}]
 			: []
 		),*/
-			...(appearNote.userId !== $i.id
+			...(!isAppearAuthor
 				? [
 						null,
 						{
@@ -396,24 +432,41 @@ export function getNoteMenu(props: {
 						},
 				  ]
 				: []),
-			...(appearNote.userId === $i.id || $i.isModerator || $i.isAdmin
-				? [
-						null,
-						appearNote.userId === $i.id
-							? {
-									icon: "ph-eraser ph-bold ph-lg",
-									text: i18n.ts.deleteAndEdit,
-									action: delEdit,
-							  }
-							: undefined,
-						{
-							icon: "ph-trash ph-bold ph-lg",
-							text: i18n.ts.delete,
-							danger: true,
-							action: del,
-						},
-				  ]
-				: []),
+
+			null,
+
+			isAppearAuthor
+				? {
+						icon: "ph-pencil-line ph-bold ph-lg",
+						text: i18n.ts.edit,
+						textStyle: "color: var(--accent)",
+						action: edit,
+				  }
+				: undefined,
+
+			isAppearAuthor
+				? {
+						icon: "ph-eraser ph-bold ph-lg",
+						text: i18n.ts.deleteAndEdit,
+						action: delEdit,
+				  }
+				: undefined,
+
+			isAppearAuthor || isModerator
+				? {
+						icon: "ph-trash ph-bold ph-lg",
+						text: i18n.ts.delete,
+						danger: true,
+						action: del,
+				  }
+				: undefined,
+
+			{
+				icon: "ph-copy ph-bold ph-lg",
+				text: i18n.ts.duplicate,
+				textStyle: "color: var(--accent)",
+				action: duplicate,
+			},
 		].filter((x) => x !== undefined);
 	} else {
 		menu = [

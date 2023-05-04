@@ -43,6 +43,26 @@ type NoParams = Record<string, never>;
 
 type ShowUserReq = { username: string; host?: string } | { userId: User["id"] };
 
+type NoteSubmitReq = {
+	editId?: null | Note["id"];
+	visibility?: "public" | "home" | "followers" | "specified";
+	visibleUserIds?: User["id"][];
+	text?: null | string;
+	cw?: null | string;
+	viaMobile?: boolean;
+	localOnly?: boolean;
+	fileIds?: DriveFile["id"][];
+	replyId?: null | Note["id"];
+	renoteId?: null | Note["id"];
+	channelId?: null | Channel["id"];
+	poll?: null | {
+		choices: string[];
+		multiple?: boolean;
+		expiresAt?: null | number;
+		expiredAfter?: null | number;
+	};
+};
+
 export type Endpoints = {
 	// admin
 	"admin/abuse-user-reports": { req: TODO; res: TODO };
@@ -789,27 +809,14 @@ export type Endpoints = {
 	"notes/clips": { req: TODO; res: TODO };
 	"notes/conversation": { req: TODO; res: TODO };
 	"notes/create": {
-		req: {
-			visibility?: "public" | "home" | "followers" | "specified";
-			visibleUserIds?: User["id"][];
-			text?: null | string;
-			cw?: null | string;
-			viaMobile?: boolean;
-			localOnly?: boolean;
-			fileIds?: DriveFile["id"][];
-			replyId?: null | Note["id"];
-			renoteId?: null | Note["id"];
-			channelId?: null | Channel["id"];
-			poll?: null | {
-				choices: string[];
-				multiple?: boolean;
-				expiresAt?: null | number;
-				expiredAfter?: null | number;
-			};
-		};
+		req: NoteSubmitReq;
 		res: { createdNote: Note };
 	};
 	"notes/delete": { req: { noteId: Note["id"] }; res: null };
+	"notes/edit": {
+		req: NoteSubmitReq;
+		res: { createdNote: Note };
+	};
 	"notes/favorites/create": { req: { noteId: Note["id"] }; res: null };
 	"notes/favorites/delete": { req: { noteId: Note["id"] }; res: null };
 	"notes/featured": { req: TODO; res: Note[] };
