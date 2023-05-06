@@ -123,6 +123,9 @@
 			<FormSwitch v-model="seperateRenoteQuote" class="_formBlock">{{
 				i18n.ts.seperateRenoteQuote
 			}}</FormSwitch>
+			<FormSwitch v-model="highlightCw" class="_formBlock">{{
+				i18n.ts.highlightCw
+			}}</FormSwitch>
 			<FormSwitch v-model="useSystemFont" class="_formBlock">{{
 				i18n.ts.useSystemFont
 			}}</FormSwitch>
@@ -302,6 +305,7 @@ const useReactionPickerForContextMenu = computed(
 const seperateRenoteQuote = computed(
 	defaultStore.makeGetterSetter("seperateRenoteQuote")
 );
+const highlightCw = computed(defaultStore.makeGetterSetter("highlightCw"));
 const squareAvatars = computed(defaultStore.makeGetterSetter("squareAvatars"));
 const showUpdates = computed(defaultStore.makeGetterSetter("showUpdates"));
 const swipeOnDesktop = computed(

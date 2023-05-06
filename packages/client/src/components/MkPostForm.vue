@@ -21,6 +21,7 @@
 				<MkAvatar :user="postAccount ?? $i" class="avatar" />
 			</button>
 			<span v-if="editId">{{ i18n.ts.edit }} {{ editId }}</span>
+			<span v-if="reply">{{ i18n.ts.reply }} {{ reply.id }}</span>
 			<div class="right">
 				<span
 					class="text-count"

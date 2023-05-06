@@ -1,117 +1,128 @@
 <template>
-	<p v-if="note.cw != null" class="cw">
-		<MkA
-			v-if="!detailed && note.replyId"
-			:to="`/notes/${note.replyId}`"
-			class="reply-icon"
-			@click.stop
-		>
-			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
-		</MkA>
-		<MkA
-			v-if="
-				conversation &&
-				note.renoteId &&
-				note.renoteId != parentId &&
-				!note.replyId
-			"
-			:to="`/notes/${note.renoteId}`"
-			class="reply-icon"
-			@click.stop
-		>
-			<i class="ph-quotes ph-bold ph-lg"></i>
-		</MkA>
-		<Mfm
-			v-if="note.cw != ''"
-			class="text"
-			:text="note.cw"
-			:author="note.user"
-			:i="$i"
-			:custom-emojis="note.emojis"
-		/>
-	</p>
-	<div class="wrmlmaau">
-		<div
-			class="content"
-			:class="{ collapsed, isLong, showContent: note.cw && !showContent }"
-		>
-			<div class="body">
-				<span v-if="note.deletedAt" style="opacity: 0.5"
-					>({{ i18n.ts.deleted }})</span
-				>
-				<template v-if="!note.cw">
-					<MkA
-						v-if="!detailed && note.replyId"
-						:to="`/notes/${note.replyId}`"
-						class="reply-icon"
-						@click.stop
+	<div
+		:class="{
+			hasCw: !!cw,
+			cwHighlight,
+		}"
+	>
+		<p v-if="cw" class="cw">
+			<MkA
+				v-if="!detailed && appearNote.replyId"
+				:to="`/notes/${appearNote.replyId}`"
+				class="reply-icon"
+				@click.stop
+			>
+				<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+			</MkA>
+			<MkA
+				v-if="
+					conversation &&
+					appearNote.renoteId &&
+					appearNote.renoteId != parentId &&
+					!appearNote.replyId
+				"
+				:to="`/notes/${appearNote.renoteId}`"
+				class="reply-icon"
+				@click.stop
+			>
+				<i class="ph-quotes ph-bold ph-lg"></i>
+			</MkA>
+			<Mfm
+				v-if="cw"
+				class="text"
+				:text="cw"
+				:author="appearNote.user"
+				:i="$i"
+				:custom-emojis="appearNote.emojis"
+			/>
+		</p>
+		<div class="wrmlmaau">
+			<div
+				class="content"
+				:class="{
+					collapsed,
+					isLong,
+					showContent: cw && !showContent,
+				}"
+			>
+				<div class="body">
+					<span v-if="appearNote.deletedAt" style="opacity: 0.5"
+						>({{ i18n.ts.deleted }})</span
 					>
-						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
-					</MkA>
-					<MkA
-						v-if="
-							conversation &&
-							note.renoteId &&
-							note.renoteId != parentId &&
-							!note.replyId
-						"
-						:to="`/notes/${note.renoteId}`"
-						class="reply-icon"
-						@click.stop
-					>
-						<i class="ph-quotes ph-bold ph-lg"></i>
-					</MkA>
-				</template>
-				<Mfm
-					v-if="note.text"
-					:text="note.text"
-					:author="note.user"
-					:i="$i"
-					:custom-emojis="note.emojis"
-				/>
-				<MkA
-					v-if="!detailed && note.renoteId"
-					class="rp"
-					:to="`/notes/${note.renoteId}`"
-					>{{ i18n.ts.quoteAttached }}: ...</MkA
-				>
-				<div v-if="note.files.length > 0" class="files">
-					<XMediaList :media-list="note.files" />
-				</div>
-				<XPoll v-if="note.poll" :note="note" class="poll" />
-				<template v-if="detailed">
-					<MkUrlPreview
-						v-for="url in urls"
-						:key="url"
-						:url="url"
-						:compact="true"
-						:detail="false"
-						class="url-preview"
+					<template v-if="!cw">
+						<MkA
+							v-if="!detailed && appearNote.replyId"
+							:to="`/notes/${appearNote.replyId}`"
+							class="reply-icon"
+							@click.stop
+						>
+							<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+						</MkA>
+						<MkA
+							v-if="
+								conversation &&
+								appearNote.renoteId &&
+								appearNote.renoteId != parentId &&
+								!appearNote.replyId
+							"
+							:to="`/notes/${appearNote.renoteId}`"
+							class="reply-icon"
+							@click.stop
+						>
+							<i class="ph-quotes ph-bold ph-lg"></i>
+						</MkA>
+					</template>
+					<Mfm
+						v-if="appearNote.text"
+						:text="appearNote.text"
+						:author="appearNote.user"
+						:i="$i"
+						:custom-emojis="appearNote.emojis"
 					/>
-					<div
-						v-if="note.renote"
-						class="renote"
-						@click.stop="emit('push', note.renote)"
+					<MkA
+						v-if="!detailed && appearNote.renoteId"
+						class="rp"
+						:to="`/notes/${appearNote.renoteId}`"
+						>{{ i18n.ts.quoteAttached }}: ...</MkA
 					>
-						<XNoteSimple :note="note.renote" />
+					<div v-if="appearNote.files.length > 0" class="files">
+						<XMediaList :media-list="appearNote.files" />
 					</div>
-				</template>
+					<XPoll v-if="appearNote.poll" :note="appearNote" class="poll" />
+					<template v-if="detailed">
+						<MkUrlPreview
+							v-for="url in urls"
+							:key="url"
+							:url="url"
+							:compact="true"
+							:detail="false"
+							class="url-preview"
+						/>
+						<div
+							v-if="appearNote.renote"
+							class="renote"
+							@click.stop="emit('push', appearNote.renote)"
+						>
+							<XNoteSimple :note="appearNote.renote" />
+						</div>
+					</template>
+				</div>
+				<button
+					v-if="isLong && collapsed"
+					class="fade _button"
+					@click.stop="collapsed = false"
+				>
+					<span>{{ i18n.ts.showMore }}</span>
+				</button>
+				<button
+					v-if="isLong && !collapsed"
+					class="showLess _button"
+					@click.stop="collapsed = true"
+				>
+					<span>{{ i18n.ts.showLess }}</span>
+				</button>
+				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
 			</div>
-			<button
-				v-if="isLong && collapsed"
-				class="fade _button"
-				@click.stop="collapsed = false"
-			>
-				<span>{{ i18n.ts.showMore }}</span>
-			</button>
-			<button
-				v-if="isLong && !collapsed"
-				class="showLess _button"
-				@click.stop="collapsed = true"
-			>
-				<span>{{ i18n.ts.showLess }}</span>
-			</button>
-			<XCwButton v-if="note.cw" v-model="showContent" :note="note" />
 		</div>
 	</div>
 </template>
@@ -153,6 +164,8 @@ const isRenote =
 let appearNote = $computed(() =>
 	isRenote ? (note.renote as misskey.entities.Note) : note
 );
+let cw = $computed(() => appearNote.cw || note.cw);
+const cwHighlight = defaultStore.state.highlightCw;
 
 const MOBILE_THRESHOLD = 500;
 const isMobile = ref(
@@ -177,12 +190,10 @@ const exceedsLinesLimit =
 
 const isLong =
 	!props.detailedView &&
-	appearNote.cw == null &&
+	!cw &&
 	appearNote.text != null &&
 	(exceedsCharacterLimit || exceedsLinesLimit);
-const collapsed = ref(
-	appearNote.cw == null && isLong && !defaultStore.state.expandPostAlways
-);
+const collapsed = ref(!cw && isLong && !defaultStore.state.expandPostAlways);
 const urls = props.note.text
 	? extractUrlFromMfm(mfm.parse(props.note.text)).slice(0, 5)
 	: null;
@@ -210,10 +221,33 @@ const showContent = ref(defaultStore.state.autoShowCw);
 	padding: 0;
 	margin-bottom: 10px;
 	overflow-wrap: break-word;
+
 	> .text {
 		margin-right: 8px;
+		padding-inline-start: 0.25em;
 	}
 }
+
+.cwHighlight.hasCw {
+	outline: 1px dotted var(--cwFg);
+	border-radius: 5px;
+
+	> .wrmlmaau {
+		padding-inline-start: 0.25em;
+	}
+
+	> .cw {
+		background-color: var(--cwFg);
+		color: var(--cwBg);
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+
+		> .reply-icon {
+			color: var(--cwBg);
+		}
+	}
+}
+
 .wrmlmaau {
 	.content {
 		overflow-wrap: break-word;

@@ -1,16 +1,23 @@
 import * as Misskey from "calckey-js";
-import { Ref } from "vue";
+import { ComputedRef, Ref } from "vue";
+
+export type MenuClasses = Array<string> | Ref<Array<string>> | ComputedRef<Array<string>>;
+export type MenuBase = {
+	classes?: MenuClasses;
+	hidden?: boolean | Ref<boolean>;
+	visible?: boolean | Ref<boolean>;
+}
 
 export type MenuAction = (ev: MouseEvent) => void;
 
 export type MenuDivider = null;
 export type MenuNull = undefined;
-export type MenuLabel = {
+export type MenuLabel = MenuBase & {
 	type: "label";
 	text: string;
 	textStyle?: string;
 };
-export type MenuLink = {
+export type MenuLink = MenuBase & {
 	type: "link";
 	to: string;
 	text: string;
@@ -19,7 +26,7 @@ export type MenuLink = {
 	indicate?: boolean;
 	avatar?: Misskey.entities.User;
 };
-export type MenuA = {
+export type MenuA = MenuBase & {
 	type: "a";
 	href: string;
 	target?: string;
@@ -29,22 +36,21 @@ export type MenuA = {
 	icon?: string;
 	indicate?: boolean;
 };
-export type MenuUser = {
+export type MenuUser = MenuBase & {
 	type: "user";
 	user: Misskey.entities.User;
 	active?: boolean;
 	indicate?: boolean;
-	hidden?: boolean;
 	action: MenuAction;
 };
-export type MenuSwitch = {
+export type MenuSwitch = MenuBase & {
 	type: "switch";
 	ref: Ref<boolean>;
 	text: string;
 	textStyle?: string;
 	disabled?: boolean;
 };
-export type MenuButton = {
+export type MenuButton = MenuBase & {
 	type?: "button";
 	text: string;
 	textStyle?: string;
@@ -52,11 +58,10 @@ export type MenuButton = {
 	indicate?: boolean;
 	danger?: boolean;
 	active?: boolean;
-	hidden?: boolean;
 	avatar?: Misskey.entities.User;
 	action: MenuAction;
 };
-export type MenuButtonMultipleIcons = {
+export type MenuButtonMultipleIcons = MenuBase & {
 	type?: "button";
 	text: string;
 	textStyle?: string;
@@ -64,11 +69,17 @@ export type MenuButtonMultipleIcons = {
 	indicate?: boolean;
 	danger?: boolean;
 	active?: boolean;
-	hidden?: boolean;
 	avatar?: Misskey.entities.User;
 	action: MenuAction;
 };
-export type MenuParent = {
+export type MenuInput = MenuBase & {
+	type: "input";
+	ref: Ref<string>;
+	placeholder: string;
+	disabled?: boolean;
+	required?: boolean | Ref<boolean>;
+};
+export type MenuParent = MenuBase & {
 	type: "parent";
 	text: string;
 	textStyle?: string;
@@ -76,7 +87,9 @@ export type MenuParent = {
 	children: OuterMenuItem[];
 };
 
-export type MenuPending = { type: "pending" };
+export type MenuPending = MenuBase & {
+	type: "pending";
+};
 
 type OuterMenuItem =
 	| MenuDivider
@@ -88,6 +101,7 @@ type OuterMenuItem =
 	| MenuSwitch
 	| MenuButton
 	| MenuButtonMultipleIcons
+	| MenuInput
 	| MenuParent;
 type OuterPromiseMenuItem = Promise<
 	| MenuLabel
@@ -97,6 +111,7 @@ type OuterPromiseMenuItem = Promise<
 	| MenuSwitch
 	| MenuButton
 	| MenuButtonMultipleIcons
+	| MenuInput
 	| MenuParent
 >;
 export type MenuItem = OuterMenuItem | OuterPromiseMenuItem;
@@ -110,4 +125,5 @@ export type InnerMenuItem =
 	| MenuSwitch
 	| MenuButton
 	| MenuButtonMultipleIcons
+	| MenuInput
 	| MenuParent;

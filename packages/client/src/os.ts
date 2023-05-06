@@ -1,6 +1,6 @@
 // TODO: なんでもかんでもos.tsに突っ込むのやめたいのでよしなに分割する
 
-import { Component, markRaw, Ref, ref, defineAsyncComponent } from "vue";
+import { Component, markRaw, Ref, ref, defineAsyncComponent, ComputedRef } from "vue";
 import { EventEmitter } from "eventemitter3";
 import insertTextAtCursor from "insert-text-at-cursor";
 import * as Misskey from "calckey-js";
@@ -773,6 +773,7 @@ export function popupMenu(
 		align?: string;
 		width?: number;
 		viaKeyboard?: boolean;
+		classes?: string[] | Ref<Array<string>> | ComputedRef<Array<string>>;
 	},
 ) {
 	return new Promise<any>((resolve, reject) => {
@@ -785,6 +786,7 @@ export function popupMenu(
 				width: options?.width,
 				align: options?.align,
 				viaKeyboard: options?.viaKeyboard,
+				classes: options?.classes,
 			},
 			{
 				closed: () => {
