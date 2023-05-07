@@ -29,8 +29,14 @@
 				<i class="ph-quotes ph-bold ph-lg"></i>
 			</MkA>
 
-			<i v-if="isRenoteCw" class="cw-icon ph-fill ph-cloud-warning ph-lg"></i>
-			<i v-else-if="cw" class="cw-icon ph-fill ph-shield-warning ph-lg"></i>
+			<span v-if="isRenoteCw"
+				><i class="rw-icon ph-fill ph-cloud-warning ph-lg"></i>RW:
+			</span>
+
+			<span v-else-if="cw"
+				><i class="cw-icon ph-fill ph-shield-warning ph-lg"></i>CW:
+			</span>
+
 			<Mfm
 				v-if="cw"
 				class="text"

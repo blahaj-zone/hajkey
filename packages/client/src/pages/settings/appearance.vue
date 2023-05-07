@@ -108,8 +108,8 @@
 			<template #label>{{ i18n.ts.contentWarningsLabel }}</template>
 
 			<FormSwitch v-model="highlightCw" class="_formBlock">
-			{{ i18n.ts.highlightCw }}
-			<template #caption>{{
+				{{ i18n.ts.highlightCw }}
+				<template #caption>{{
 					i18n.ts.highlightCwDescription
 				}}</template>
 			</FormSwitch>
