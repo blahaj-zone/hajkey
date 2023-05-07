@@ -45,7 +45,10 @@ const canRenote = computed(
 		props.note.userId === $i.id
 );
 
-const getCw = () => (addCw.value ? cwInput.value : props.note.cw ?? undefined);
+const getCw = () =>
+	addCw.value && cwInput.value !== ""
+		? cwInput.value
+		: props.note.cw ?? undefined;
 
 useTooltip(buttonRef, async (showing) => {
 	const renotes = await os.api("notes/renotes", {
@@ -197,11 +200,14 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 		});
 	}
 
+	const showQuote = !defaultStore.state.seperateRenoteQuote;
+
 	if (!props.note.cw || props.note.cw === "") {
 		buttonActions.push({
 			type: "switch",
 			ref: addCw,
 			text: "Add content warning",
+			hidden: addCw,
 		});
 
 		buttonActions.push({
@@ -211,11 +217,13 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 			required: true,
 			visible: addCw,
 		});
+
+		if (showQuote || hasRenotedBefore) {
+			buttonActions.push(null);
+		}
 	}
 
-	buttonActions.push(null);
-
-	if (!defaultStore.state.seperateRenoteQuote) {
+	if (showQuote) {
 		buttonActions.push({
 			text: i18n.ts.quote,
 			icon: "ph-quotes ph-bold ph-lg",

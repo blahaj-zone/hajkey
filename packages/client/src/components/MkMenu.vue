@@ -13,7 +13,12 @@
 		>
 			<template v-for="(item, i) in items2">
 				<div v-if="item === null" class="divider"></div>
-				<template v-else-if="item.hidden || item.visible !== undefined && !item.visible" />
+				<template
+					v-else-if="
+						item.hidden ||
+						(item.visible !== undefined && !item.visible)
+					"
+				/>
 				<span
 					v-else-if="item.type === 'label'"
 					class="label item"
@@ -210,8 +215,7 @@
 				<span>{{ i18n.ts.none }}</span>
 			</span>
 		</div>
-		<div v-if="childMenu" class="child"
-		:class="classMap(item.classes)">
+		<div v-if="childMenu" class="child" :class="classMap(item.classes)">
 			<XChild
 				ref="child"
 				:items="childMenu"
@@ -240,7 +244,13 @@ import {
 import { focusPrev, focusNext } from "@/scripts/focus";
 import FormSwitch from "@/components/form/switch.vue";
 import FormInput from "@/components/form/input.vue";
-import { MenuItem, InnerMenuItem, MenuPending, MenuAction, MenuClasses } from "@/types/menu";
+import {
+	MenuItem,
+	InnerMenuItem,
+	MenuPending,
+	MenuAction,
+	MenuClasses,
+} from "@/types/menu";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 
@@ -305,14 +315,13 @@ let childTarget = $ref<HTMLElement | null>();
 function classMap(classes?: MenuClasses) {
 	if (!classes) return {};
 
-	return (
-		Array.isArray(classes)
-		? classes
-		: classes.value
-	).reduce((acc, cls) => {
-		acc[cls] = true;
-		return acc;
-	}, {});
+	return (Array.isArray(classes) ? classes : classes.value).reduce(
+		(acc, cls) => {
+			acc[cls] = true;
+			return acc;
+		},
+		{}
+	);
 }
 
 function closeChild() {

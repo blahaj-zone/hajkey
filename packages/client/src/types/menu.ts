@@ -1,12 +1,15 @@
 import * as Misskey from "calckey-js";
 import { ComputedRef, Ref } from "vue";
 
-export type MenuClasses = Array<string> | Ref<Array<string>> | ComputedRef<Array<string>>;
+export type MenuClasses =
+	| Array<string>
+	| Ref<Array<string>>
+	| ComputedRef<Array<string>>;
 export type MenuBase = {
 	classes?: MenuClasses;
 	hidden?: boolean | Ref<boolean>;
 	visible?: boolean | Ref<boolean>;
-}
+};
 
 export type MenuAction = (ev: MouseEvent) => void;
 

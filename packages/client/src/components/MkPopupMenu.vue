@@ -47,14 +47,13 @@ let modal = $ref<InstanceType<typeof MkModal>>();
 function classMap(classes?: MenuClasses) {
 	if (!classes) return {};
 
-	return (
-		Array.isArray(classes)
-		? classes
-		: classes.value
-	).reduce((acc, cls) => {
-		acc[cls] = true;
-		return acc;
-	}, {});
+	return (Array.isArray(classes) ? classes : classes.value).reduce(
+		(acc, cls) => {
+			acc[cls] = true;
+			return acc;
+		},
+		{}
+	);
 }
 </script>
 

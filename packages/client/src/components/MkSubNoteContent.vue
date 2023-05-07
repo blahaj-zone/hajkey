@@ -88,7 +88,11 @@
 					<div v-if="appearNote.files.length > 0" class="files">
 						<XMediaList :media-list="appearNote.files" />
 					</div>
-					<XPoll v-if="appearNote.poll" :note="appearNote" class="poll" />
+					<XPoll
+						v-if="appearNote.poll"
+						:note="appearNote"
+						class="poll"
+					/>
 					<template v-if="detailed">
 						<MkUrlPreview
 							v-for="url in urls"
