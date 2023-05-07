@@ -148,7 +148,7 @@ export const defaultStore = markRaw(
 		},
 		highlightCw: {
 			where: "device",
-			default: true,
+			default: false,
 		},
 		nsfw: {
 			where: "device",
