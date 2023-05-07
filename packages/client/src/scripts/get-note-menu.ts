@@ -444,13 +444,12 @@ export function getNoteMenu(props: {
 				  }
 				: undefined,
 
-			isAppearAuthor
-				? {
-						icon: "ph-eraser ph-bold ph-lg",
-						text: i18n.ts.deleteAndEdit,
-						action: delEdit,
-				  }
-				: undefined,
+			{
+				icon: "ph-copy ph-bold ph-lg",
+				text: i18n.ts.duplicate,
+				textStyle: "color: var(--accent)",
+				action: duplicate,
+			},
 
 			isAppearAuthor || isModerator
 				? {
@@ -461,12 +460,13 @@ export function getNoteMenu(props: {
 				  }
 				: undefined,
 
-			{
-				icon: "ph-copy ph-bold ph-lg",
-				text: i18n.ts.duplicate,
-				textStyle: "color: var(--accent)",
-				action: duplicate,
-			},
+			isAppearAuthor
+				? {
+						icon: "ph-eraser ph-bold ph-lg",
+						text: i18n.ts.deleteAndEdit,
+						action: delEdit,
+				  }
+				: undefined,
 		].filter((x) => x !== undefined);
 	} else {
 		menu = [
