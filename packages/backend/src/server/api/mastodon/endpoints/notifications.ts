@@ -1,8 +1,10 @@
 import megalodon, { MegalodonInterface } from "@calckey/megalodon";
 import Router from "@koa/router";
 import { koaBody } from "koa-body";
+import { convertId, IdType } from "../../index.js";
 import { getClient } from "../ApiMastodonCompatibleService.js";
-import { toTextWithReaction } from "./timeline.js";
+import { convertTimelinesArgsId, toTextWithReaction } from "./timeline.js";
+import { convertNotification } from "../converters.js";
 function toLimitToInt(q: any) {
 	if (q.limit) if (typeof q.limit === "string") q.limit = parseInt(q.limit, 10);
 	return q;
@@ -15,9 +17,12 @@ export function apiNotificationsMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const data = await client.getNotifications(toLimitToInt(ctx.query));
+			const data = await client.getNotifications(
+				convertTimelinesArgsId(toLimitToInt(ctx.query)),
+			);
 			const notfs = data.data;
 			const ret = notfs.map((n) => {
+				n = convertNotification(n);
 				if (n.type !== "follow" && n.type !== "follow_request") {
 					if (n.type === "reaction") n.type = "favourite";
 					n.status = toTextWithReaction(
@@ -43,8 +48,10 @@ export function apiNotificationsMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const dataRaw = await client.getNotification(ctx.params.id);
-			const data = dataRaw.data;
+			const dataRaw = await client.getNotification(
+				convertId(ctx.params.id, IdType.CalckeyId),
+			);
+			const data = convertNotification(dataRaw.data);
 			if (data.type !== "follow" && data.type !== "follow_request") {
 				if (data.type === "reaction") data.type = "favourite";
 				ctx.body = toTextWithReaction([data as any], ctx.request.hostname)[0];
@@ -79,7 +86,9 @@ export function apiNotificationsMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const data = await client.dismissNotification(ctx.params.id);
+			const data = await client.dismissNotification(
+				convertId(ctx.params.id, IdType.CalckeyId),
+			);
 			ctx.body = data.data;
 		} catch (e: any) {
 			console.error(e);

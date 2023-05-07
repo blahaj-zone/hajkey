@@ -1,0 +1,223 @@
+_lang_: "Suomi"
+username: Käyttäjänimi
+fetchingAsApObject: Hae Fedeversestä
+gotIt: Selvä!
+cancel: Peruuta
+enterUsername: Anna käyttäjänimi
+renotedBy: Buustannut {user}
+noNotes: Ei lähetyksiä
+noNotifications: Ei ilmoituksia
+instance: Instanssi
+settings: Asetukset
+basicSettings: Perusasetukset
+otherSettings: Muut asetukset
+openInWindow: Avaa ikkunaan
+profile: Profiili
+timeline: Aikajana
+noAccountDescription: Käyttäjä ei ole vielä kirjoittanut kuvaustaan vielä.
+login: Kirjaudu sisään
+loggingIn: Kirjautuu sisään
+logout: Kirjaudu ulos
+uploading: Tallentaa ylös...
+save: Tallenna
+favorites: Kirjanmerkit
+unfavorite: Poista kirjanmerkeistä
+favorited: Lisätty kirjanmerkkeihin.
+alreadyFavorited: Lisätty jo kirjanmerkkeihin.
+cantFavorite: Ei voitu lisätä kirjanmerkkeihin.
+pin: Kiinnitä profiiliin
+unpin: Irroita profiilista
+delete: Poista
+forgotPassword: Unohtunut salasana
+search: Etsi
+notifications: Ilmoitukset
+password: Salasana
+ok: OK
+noThankYou: Ei kiitos
+signup: Rekisteröidy
+users: Käyttäjät
+addUser: Lisää käyttäjä
+addInstance: Lisää instanssi
+favorite: Lisää kirjanmerkkeihin
+copyContent: Kopioi sisältö
+deleteAndEdit: Poista ja muokkaa
+copyLink: Kopioi linkki
+makeFollowManuallyApprove: Seuraajapyyntö vaatii hyväksymistä
+follow: Seuraa
+pinned: Kiinnitä profiiliin
+followRequestPending: Seuraajapyyntö odottaa
+you: Sinä
+unrenote: Peruuta buustaus
+reaction: Reaktiot
+reactionSettingDescription2: Vedä uudelleenjärjestelläksesi, napsauta poistaaksesi,
+  paina "+" lisätäksesi.
+attachCancel: Poista liite
+enterFileName: Anna tiedostonimi
+mute: Hiljennä
+unmute: Poista hiljennys
+headlineMisskey: Avoimen lähdekoodin, hajautettu sosiaalisen median alusta, joka on
+  ikuisesti ilmainen! 🚀
+monthAndDay: '{day}/{month}'
+deleteAndEditConfirm: Oletko varma, että haluat poistaa tämän lähetyksen ja muokata
+  sitä? Menetät kaikki reaktiot, buustaukset ja vastaukset lähetyksestäsi.
+addToList: Lisää listaan
+sendMessage: Lähetä viesti
+reply: Vastaa
+loadMore: Lataa enemmän
+showMore: Näytä enemmän
+receiveFollowRequest: Seuraajapyyntö vastaanotettu
+followRequestAccepted: Seuraajapyyntö hyväksytty
+mentions: Maininnat
+importAndExport: Tuo/Vie Tietosisältö
+import: Tuo
+export: Vie
+files: Tiedostot
+download: Lataa
+unfollowConfirm: Oletko varma, ettet halua seurata enää käyttäjää {name}?
+noLists: Sinulla ei ole listoja
+note: Lähetys
+notes: Lähetykset
+following: Seuraa
+createList: Luo lista
+manageLists: Hallitse listoja
+error: Virhe
+somethingHappened: On tapahtunut virhe
+retry: Yritä uudelleen
+pageLoadError: Virhe ladattaessa sivua.
+serverIsDead: Tämä palvelin ei vastaa. Yritä hetken kuluttua uudelleen.
+youShouldUpgradeClient: Nähdäksesi tämän sivun, virkistä päivittääksesi asiakasohjelmasi.
+privacy: Tietosuoja
+defaultNoteVisibility: Oletusnäkyvyys
+followRequest: Seuraajapyyntö
+followRequests: Seuraajapyynnöt
+unfollow: Poista seuraaminen
+enterEmoji: Syötä emoji
+renote: Buustaa
+renoted: Buustattu.
+cantRenote: Tätä lähetystä ei voi buustata.
+cantReRenote: Buustausta ei voi buustata.
+quote: Lainaus
+pinnedNote: Lukittu lähetys
+clickToShow: Napsauta nähdäksesi
+sensitive: Herkkää sisältöä (NSFW)
+add: Lisää
+enableEmojiReactions: Ota käyttöön emoji-reaktiot
+showEmojisInReactionNotifications: Näytä emojit reaktioilmoituksissa
+reactionSetting: Reaktiot näytettäväksi reaktiovalitsimessa
+rememberNoteVisibility: Muista lähetyksen näkyvyysasetukset
+markAsSensitive: Merkitse herkäksi sisällöksi (NSFW)
+unmarkAsSensitive: Poista merkintä herkkää sisältöä (NSFW)
+renoteMute: Hiljennä buustit
+renoteUnmute: Poista buustien hiljennys
+block: Estä
+unblock: Poista esto
+unsuspend: Poista keskeytys
+suspend: Keskeytys
+blockConfirm: Oletko varma, että haluat estää tämän tilin?
+unblockConfirm: Oletko varma, että haluat poistaa tämän tilin eston?
+selectAntenna: Valitse antenni
+selectWidget: Valitse vimpain
+editWidgets: Muokkaa vimpaimia
+editWidgetsExit: Valmis
+emoji: Emoji
+emojis: Emojit
+emojiName: Emojin nimi
+emojiUrl: Emojin URL-linkki
+cacheRemoteFiles: Taltioi etätiedostot välimuistiin
+flagAsBot: Merkitse tili botiksi
+flagAsBotDescription: Ota tämä vaihtoehto käyttöön, jos tätä tiliä ohjaa ohjelma.
+  Jos se on käytössä, se toimii lippuna muille kehittäjille, jotta estetään loputtomat
+  vuorovaikutusketjut muiden bottien kanssa ja säädetään Calckeyn sisäiset järjestelmät
+  käsittelemään tätä tiliä botina.
+flagAsCat: Oletko kissa? 🐱
+flagAsCatDescription: Saat kissan korvat ja puhut kuin kissa!
+flagSpeakAsCat: Puhu kuin kissa
+flagShowTimelineReplies: Näytä vastaukset aikajanalla
+addAccount: Lisää tili
+loginFailed: Kirjautuminen epäonnistui
+showOnRemote: Katsele etäinstanssilla
+general: Yleistä
+accountMoved: 'Käyttäjä on muuttanut uuteen tiliin:'
+wallpaper: Taustakuva
+setWallpaper: Aseta taustakuva
+searchWith: 'Etsi: {q}'
+youHaveNoLists: Sinulla ei ole listoja
+followConfirm: Oletko varma, että haluat seurata käyttäjää {name}?
+host: Isäntä
+selectUser: Valitse käyttäjä
+annotation: Kommentit
+registeredAt: Rekisteröity
+latestRequestReceivedAt: Viimeisin pyyntö vastaanotettu
+latestRequestSentAt: Viimeisin pyyntö lähetetty
+storageUsage: Tallennustilan käyttö
+charts: Kaaviot
+stopActivityDelivery: Lopeta toimintojen lähettäminen
+blockThisInstance: Estä tämä instanssi
+operations: Toiminnot
+metadata: Metatieto
+monitor: Seuranta
+jobQueue: Työjono
+cpuAndMemory: Prosessori ja muisti
+network: Verkko
+disk: Levy
+clearCachedFiles: Tyhjennä välimuisti
+clearCachedFilesConfirm: Oletko varma, että haluat tyhjentää kaikki välimuistiin tallennetut
+  etätiedostot?
+blockedInstances: Estetyt instanssit
+hiddenTags: Piilotetut asiatunnisteet
+mention: Maininta
+copyUsername: Kopioi käyttäjänimi
+searchUser: Etsi käyttäjää
+showLess: Sulje
+youGotNewFollower: seurasi sinua
+directNotes: Yksityisviestit
+driveFileDeleteConfirm: Oletko varma, että haluat poistaa tiedoston " {name}"? Lähetykset,
+  jotka sisältyvät tiedostoon, poistuvat myös.
+importRequested: Olet pyytänyt viemistä. Tämä voi viedä hetken.
+exportRequested: Olet pyytänyt tuomista. Tämä voi viedä hetken. Se lisätään asemaan
+  kun tuonti valmistuu.
+lists: Listat
+followers: Seuraajat
+followsYou: Seuraa sinua
+pageLoadErrorDescription: Tämä yleensä johtuu verkkovirheistä tai selaimen välimuistista.
+  Kokeile tyhjentämällä välimuisti ja yritä sitten hetken kuluttua uudelleen.
+enterListName: Anna listalle nimi
+withNFiles: '{n} tiedosto(t)'
+instanceInfo: Instanssin tiedot
+clearQueue: Tyhjennä jono
+suspendConfirm: Oletko varma, että haluat keskeyttää tämän tilin?
+unsuspendConfirm: Oletko varma, että haluat poistaa tämän tilin keskeytyksen?
+selectList: Valitse lista
+customEmojis: Kustomoitu Emoji
+addEmoji: Lisää
+settingGuide: Suositellut asetukset
+cacheRemoteFilesDescription: Kun tämä asetus ei ole käytössä, etätiedostot on ladattu
+  suoraan etäinstanssilta. Asetuksen poistaminen käytöstä vähentää tallennustilan
+  käyttöä, mutta lisää verkkoliikennettä kun pienoiskuvat eivät muodostu.
+flagSpeakAsCatDescription: Lähetyksesi nyanifioidaan, kun olet kissatilassa
+flagShowTimelineRepliesDescription: Näyttää käyttäjien vastaukset muiden käyttäjien
+  lähetyksiin aikajanalla, jos se on päällä.
+autoAcceptFollowed: Automaattisesti hyväksy seuraamispyynnöt käyttäjiltä, joita seuraat
+perHour: Tunnissa
+removeWallpaper: Poista taustakuva
+recipient: Vastaanottaja(t)
+federation: Federaatio
+software: Ohjelmisto
+proxyAccount: Proxy-tili
+proxyAccountDescription: Välitystili (Proxy-tili) on tili, joka toimii käyttäjien
+  etäseuraajana tietyin edellytyksin. Kun käyttäjä esimerkiksi lisää etäkäyttäjän
+  luetteloon, etäkäyttäjän toimintaa ei toimiteta instanssiin, jos yksikään paikallinen
+  käyttäjä ei seuraa kyseistä käyttäjää, joten välitystili seuraa sen sijaan.
+latestStatus: Viimeisin tila
+selectInstance: Valitse instanssi
+instances: Instanssit
+perDay: Päivässä
+version: Versio
+statistics: Tilastot
+clearQueueConfirmTitle: Oletko varma, että haluat tyhjentää jonon?
+introMisskey: Tervetuloa! Calckey on avoimen lähdekoodin, hajautettu sosiaalisen median
+  alusta, joka on ikuisesti ilmainen! 🚀
+clearQueueConfirmText: Mitkään välittämättömät lähetykset, jotka ovat jonossa, eivät
+  federoidu. Yleensä tätä toimintoa ei tarvita.
+blockedInstancesDescription: Lista instanssien isäntänimistä, jotka haluat estää.
+  Listatut instanssit eivät kykene kommunikoimaan enää tämän instanssin kanssa.

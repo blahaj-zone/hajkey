@@ -1,7 +1,7 @@
 <template>
 	<div class="_panel" :class="$style.root">
 		<MkSelect v-model="src" style="margin: 0 0 12px 0" small>
-			<option value="notes">Notes</option>
+			<option value="notes">Posts</option>
 			<option value="active-users">Active users</option>
 			<option value="ap-requests-inbox-received">
 				Fediverse Requests: inboxReceived

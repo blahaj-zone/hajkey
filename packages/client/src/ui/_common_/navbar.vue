@@ -18,6 +18,7 @@
 					<MkAvatar
 						:user="$i"
 						class="icon"
+						disableLink
 					/><!-- <MkAcct class="text" :user="$i"/> -->
 				</button>
 			</div>
@@ -334,6 +335,7 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
+					&:focus-within,
 					&.active {
 						&:before {
 							background: var(--accentLighten);
@@ -398,8 +400,6 @@ function more(ev: MouseEvent) {
 					padding-left: 30px;
 					line-height: 2.85rem;
 					margin-bottom: 0.5rem;
-					text-overflow: ellipsis;
-					overflow: hidden;
 					white-space: nowrap;
 					width: 100%;
 					text-align: left;
@@ -425,9 +425,12 @@ function more(ev: MouseEvent) {
 					> .text {
 						position: relative;
 						font-size: 0.9em;
+						overflow: hidden;
+						text-overflow: ellipsis;
 					}
 
-					&:hover {
+					&:hover,
+					&:focus-within {
 						text-decoration: none;
 						color: var(--navHoverFg);
 						transition: all 0.4s ease;
@@ -438,6 +441,7 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
+					&:focus-within,
 					&.active {
 						color: var(--accent);
 						transition: all 0.4s ease;
@@ -528,6 +532,7 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
+					&:focus-within,
 					&.active {
 						&:before {
 							background: var(--accentLighten);
@@ -613,6 +618,7 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
+					&:focus-within,
 					&.active {
 						text-decoration: none;
 						color: var(--accent);
@@ -640,6 +646,13 @@ function more(ev: MouseEvent) {
 					}
 				}
 			}
+		}
+	}
+
+	.item {
+		outline: none;
+		&:focus-visible:before {
+			outline: auto;
 		}
 	}
 }

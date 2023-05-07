@@ -6,14 +6,14 @@
 				{{ i18n.ts.addAccount }}</FormButton
 			>
 
-			<div
+			<button
 				v-for="account in accounts"
 				:key="account.id"
 				class="_panel _button lcjjdxlm"
 				@click="menu(account, $event)"
 			>
 				<div class="avatar">
-					<MkAvatar :user="account" class="avatar" />
+					<MkAvatar :user="account" class="avatar" disableLink />
 				</div>
 				<div class="body">
 					<div class="name">
@@ -23,7 +23,7 @@
 						<MkAcct :user="account" />
 					</div>
 				</div>
-			</div>
+			</button>
 		</FormSuspense>
 	</div>
 </template>
@@ -158,6 +158,8 @@ definePageMetadata({
 .lcjjdxlm {
 	display: flex;
 	padding: 16px;
+	width: 100%;
+	text-align: unset;
 
 	> .avatar {
 		display: block;

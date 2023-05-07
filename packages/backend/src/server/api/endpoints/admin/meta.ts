@@ -259,6 +259,16 @@ export const meta = {
 					nullable: false,
 				},
 			},
+			silencedHosts: {
+				type: "array",
+				optional: true,
+				nullable: false,
+				items: {
+					type: "string",
+					optional: false,
+					nullable: false,
+				},
+			},
 			allowedHosts: {
 				type: "array",
 				optional: true,
@@ -524,6 +534,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		customSplashIcons: instance.customSplashIcons,
 		hiddenTags: instance.hiddenTags,
 		blockedHosts: instance.blockedHosts,
+		silencedHosts: instance.silencedHosts,
 		allowedHosts: instance.allowedHosts,
 		privateMode: instance.privateMode,
 		secureMode: instance.secureMode,

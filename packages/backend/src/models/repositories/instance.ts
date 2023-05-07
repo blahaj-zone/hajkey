@@ -1,12 +1,13 @@
 import { db } from "@/db/postgre.js";
 import { Instance } from "@/models/entities/instance.js";
 import type { Packed } from "@/misc/schema.js";
-import { fetchMeta } from "@/misc/fetch-meta.js";
-import { shouldBlockInstance } from "@/misc/should-block-instance.js";
+import {
+	shouldBlockInstance,
+	shouldSilenceInstance,
+} from "@/misc/should-block-instance.js";
 
 export const InstanceRepository = db.getRepository(Instance).extend({
 	async pack(instance: Instance): Promise<Packed<"FederationInstance">> {
-		const meta = await fetchMeta();
 		return {
 			id: instance.id,
 			caughtAt: instance.caughtAt.toISOString(),
@@ -22,6 +23,7 @@ export const InstanceRepository = db.getRepository(Instance).extend({
 			isNotResponding: instance.isNotResponding,
 			isSuspended: instance.isSuspended,
 			isBlocked: await shouldBlockInstance(instance.host),
+			isSilenced: await shouldSilenceInstance(instance.host),
 			softwareName: instance.softwareName,
 			softwareVersion: instance.softwareVersion,
 			openRegistrations: instance.openRegistrations,

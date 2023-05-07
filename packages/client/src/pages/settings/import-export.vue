@@ -21,9 +21,19 @@
 				<template #icon
 					><i class="ph-upload-simple ph-bold ph-lg"></i
 				></template>
-				<FormSwitch v-model="signatureCheck" class="_formBlock">
+				<!-- <FormSwitch v-model="signatureCheck" class="_formBlock">
 					Mastodon import? (not Akkoma!)
-				</FormSwitch>
+				</FormSwitch> -->
+				<FormRadios v-model="importType" class="_formBlock">
+					<option value="calckey">Calckey/Misskey</option>
+					<option value="mastodon">Mastodon</option>
+					<!-- <option :disabled="true" value="akkoma">
+						Pleroma/Akkoma (soon)
+					</option>
+					<option :disabled="true" value="twitter">
+						Twitter (soon)
+					</option> -->
+				</FormRadios>
 				<MkButton
 					primary
 					:class="$style.button"
@@ -177,13 +187,14 @@ import MkButton from "@/components/MkButton.vue";
 import FormSection from "@/components/form/section.vue";
 import FormFolder from "@/components/form/folder.vue";
 import FormSwitch from "@/components/form/switch.vue";
+import FormRadios from "@/components/form/radios.vue";
 import * as os from "@/os";
 import { selectFile } from "@/scripts/select-file";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 
 const excludeMutingUsers = ref(false);
-const signatureCheck = ref(false);
+const importType = ref("calckey");
 const excludeInactiveUsers = ref(false);
 
 const onExportSuccess = () => {
@@ -215,7 +226,7 @@ const importPosts = async (ev) => {
 	const file = await selectFile(ev.currentTarget ?? ev.target);
 	os.api("i/import-posts", {
 		fileId: file.id,
-		signatureCheck: signatureCheck.value,
+		signatureCheck: importType.value === "mastodon" ? true : false,
 	})
 		.then(onImportSuccess)
 		.catch(onError);

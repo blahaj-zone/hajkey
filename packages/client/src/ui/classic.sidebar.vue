@@ -5,7 +5,7 @@
 			class="item _button account"
 			@click="openAccountMenu"
 		>
-			<MkAvatar :user="$i" class="avatar" /><MkAcct
+			<MkAvatar :user="$i" class="avatar" disableLink /><MkAcct
 				class="text"
 				:user="$i"
 			/>
@@ -299,6 +299,7 @@ function openInstanceMenu(ev: MouseEvent) {
 				width: 46px;
 				height: 46px;
 				padding: 0;
+				margin-inline: 0 !important;
 			}
 		}
 
@@ -372,6 +373,7 @@ function openInstanceMenu(ev: MouseEvent) {
 
 		> i {
 			width: 32px;
+			justify-content: center;
 		}
 
 		> i,

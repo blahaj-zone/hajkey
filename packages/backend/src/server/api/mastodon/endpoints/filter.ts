@@ -1,6 +1,8 @@
 import megalodon, { MegalodonInterface } from "@calckey/megalodon";
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
+import { IdType, convertId } from "../../index.js";
+import { convertFilter } from "../converters.js";
 
 export function apiFilterMastodon(router: Router): void {
 	router.get("/v1/filters", async (ctx) => {
@@ -10,7 +12,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.getFilters();
-			ctx.body = data.data;
+			ctx.body = data.data.map((filter) => convertFilter(filter));
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -24,8 +26,10 @@ export function apiFilterMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const data = await client.getFilter(ctx.params.id);
-			ctx.body = data.data;
+			const data = await client.getFilter(
+				convertId(ctx.params.id, IdType.CalckeyId),
+			);
+			ctx.body = convertFilter(data.data);
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -40,7 +44,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.createFilter(body.phrase, body.context, body);
-			ctx.body = data.data;
+			ctx.body = convertFilter(data.data);
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -55,11 +59,11 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.updateFilter(
-				ctx.params.id,
+				convertId(ctx.params.id, IdType.CalckeyId),
 				body.phrase,
 				body.context,
 			);
-			ctx.body = data.data;
+			ctx.body = convertFilter(data.data);
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -73,7 +77,9 @@ export function apiFilterMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const data = await client.deleteFilter(ctx.params.id);
+			const data = await client.deleteFilter(
+				convertId(ctx.params.id, IdType.CalckeyId),
+			);
 			ctx.body = data.data;
 		} catch (e: any) {
 			console.error(e);

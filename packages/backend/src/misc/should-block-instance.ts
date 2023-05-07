@@ -18,3 +18,21 @@ export async function shouldBlockInstance(
 		(blockedHost) => host === blockedHost || host.endsWith(`.${blockedHost}`),
 	);
 }
+
+/**
+ * Returns whether a specific host (punycoded) should be limited.
+ *
+ * @param host punycoded instance host
+ * @param meta a resolved Meta table
+ * @returns whether the given host should be limited
+ */
+export async function shouldSilenceInstance(
+	host: Instance["host"],
+	meta?: Meta,
+): Promise<boolean> {
+	const { silencedHosts } = meta ?? (await fetchMeta());
+	return silencedHosts.some(
+		(silencedHost) =>
+			host === silencedHost || host.endsWith(`.${silencedHost}`),
+	);
+}

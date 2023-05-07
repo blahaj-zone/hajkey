@@ -7,9 +7,11 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import * as os from "@/os";
-import { login } from "@/account";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import { useRouter } from "@/router";
+
+const router = useRouter();
 
 const props = defineProps<{
 	code: string;
@@ -20,10 +22,10 @@ onMounted(async () => {
 		type: "info",
 		text: i18n.t("clickToFinishEmailVerification", { ok: i18n.ts.gotIt }),
 	});
-	const res = await os.apiWithDialog("signup-pending", {
+	await os.api("verify-email", {
 		code: props.code,
 	});
-	login(res.i, "/");
+	router.push("/");
 });
 
 const headerActions = $computed(() => []);
@@ -31,7 +33,7 @@ const headerActions = $computed(() => []);
 const headerTabs = $computed(() => []);
 
 definePageMetadata({
-	title: i18n.ts.signup,
+	title: "Verify email",
 	icon: "ph-user ph-bold ph-lg",
 });
 </script>

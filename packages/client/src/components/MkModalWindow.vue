@@ -3,59 +3,64 @@
 		ref="modal"
 		:prefer-type="'dialog'"
 		@click="onBgClick"
+		@keyup.esc="$emit('close')"
 		@closed="$emit('closed')"
 	>
-		<div
-			ref="rootEl"
-			class="ebkgoccj"
-			:style="{
-				width: `${width}px`,
-				height: scroll
-					? height
-						? `${height}px`
-						: null
-					: height
-					? `min(${height}px, 100%)`
-					: '100%',
-			}"
-			@keydown="onKeydown"
-		>
-			<div ref="headerEl" class="header">
-				<button
-					v-if="withOkButton"
-					class="_button"
-					@click="$emit('close')"
-				>
-					<i class="ph-x ph-bold ph-lg"></i>
-				</button>
-				<span class="title">
-					<slot name="header"></slot>
-				</span>
-				<button
-					v-if="!withOkButton"
-					class="_button"
-					@click="$emit('close')"
-				>
-					<i class="ph-x ph-bold ph-lg"></i>
-				</button>
-				<button
-					v-if="withOkButton"
-					class="_button"
-					:disabled="okButtonDisabled"
-					@click="$emit('ok')"
-				>
-					<i class="ph-check ph-bold ph-lg"></i>
-				</button>
+		<FocusTrap v-model:active="isActive">
+			<div
+				ref="rootEl"
+				class="ebkgoccj"
+				:style="{
+					width: `${width}px`,
+					height: scroll
+						? height
+							? `${height}px`
+							: null
+						: height
+						? `min(${height}px, 100%)`
+						: '100%',
+				}"
+				@keydown="onKeydown"
+				tabindex="-1"
+			>
+				<div ref="headerEl" class="header">
+					<button
+						v-if="withOkButton"
+						class="_button"
+						@click="$emit('close')"
+					>
+						<i class="ph-x ph-bold ph-lg"></i>
+					</button>
+					<span class="title">
+						<slot name="header"></slot>
+					</span>
+					<button
+						v-if="!withOkButton"
+						class="_button"
+						@click="$emit('close')"
+					>
+						<i class="ph-x ph-bold ph-lg"></i>
+					</button>
+					<button
+						v-if="withOkButton"
+						class="_button"
+						:disabled="okButtonDisabled"
+						@click="$emit('ok')"
+					>
+						<i class="ph-check ph-bold ph-lg"></i>
+					</button>
+				</div>
+				<div class="body">
+					<slot :width="bodyWidth" :height="bodyHeight"></slot>
+				</div>
 			</div>
-			<div class="body">
-				<slot :width="bodyWidth" :height="bodyHeight"></slot>
-			</div>
-		</div>
+		</FocusTrap>
 	</MkModal>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from "vue";
+import { FocusTrap } from "focus-trap-vue";
 import MkModal from "./MkModal.vue";
 
 const props = withDefaults(

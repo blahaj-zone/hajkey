@@ -74,7 +74,6 @@ export default define(meta, paramDef, async (ps, user) => {
 		if (!url.pathname.endsWith("/translate")) {
 			url.pathname += "/translate";
 		}
-
 		const res = await fetch(url.toString(), {
 			method: "POST",
 			headers: {

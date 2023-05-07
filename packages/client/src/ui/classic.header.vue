@@ -83,6 +83,7 @@
 					<MkAvatar :user="$i" class="avatar" /><MkAcct
 						class="acct"
 						:user="$i"
+						disableLink
 					/>
 				</button>
 				<div class="post" @click="post">

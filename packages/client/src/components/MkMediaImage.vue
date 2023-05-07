@@ -138,6 +138,10 @@ watch(
 		background-position: center;
 		background-size: contain;
 		background-repeat: no-repeat;
+		box-sizing: border-box;
+		&:focus-visible {
+			border: 2px solid var(--accent);
+		}
 
 		> .gif {
 			background-color: var(--fg);

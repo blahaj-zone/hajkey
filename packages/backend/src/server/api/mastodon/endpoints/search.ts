@@ -3,7 +3,8 @@ import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import axios from "axios";
 import { Converter } from "@calckey/megalodon";
-import { limitToInt } from "./timeline.js";
+import { convertTimelinesArgsId, limitToInt } from "./timeline.js";
+import { convertAccount, convertStatus } from "../converters.js";
 
 export function apiSearchMastodon(router: Router): void {
 	router.get("/v1/search", async (ctx) => {
@@ -12,7 +13,7 @@ export function apiSearchMastodon(router: Router): void {
 		const client = getClient(BASE_URL, accessTokens);
 		const body: any = ctx.request.body;
 		try {
-			const query: any = limitToInt(ctx.query);
+			const query: any = convertTimelinesArgsId(limitToInt(ctx.query));
 			const type = query.type || "";
 			const data = await client.search(query.q, type, query);
 			ctx.body = data.data;
@@ -27,18 +28,20 @@ export function apiSearchMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		const client = getClient(BASE_URL, accessTokens);
 		try {
-			const query: any = limitToInt(ctx.query);
+			const query: any = convertTimelinesArgsId(limitToInt(ctx.query));
 			const type = query.type;
 			if (type) {
 				const data = await client.search(query.q, type, query);
-				ctx.body = data.data;
+				ctx.body = data.data.accounts.map((account) => convertAccount(account));
 			} else {
 				const acct = await client.search(query.q, "accounts", query);
 				const stat = await client.search(query.q, "statuses", query);
 				const tags = await client.search(query.q, "hashtags", query);
 				ctx.body = {
-					accounts: acct.data.accounts,
-					statuses: stat.data.statuses,
+					accounts: acct.data.accounts.map((account) =>
+						convertAccount(account),
+					),
+					statuses: stat.data.statuses.map((status) => convertStatus(status)),
 					hashtags: tags.data.hashtags,
 				};
 			}
@@ -57,7 +60,7 @@ export function apiSearchMastodon(router: Router): void {
 				ctx.request.hostname,
 				accessTokens,
 			);
-			ctx.body = data;
+			ctx.body = data.map((status) => convertStatus(status));
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -69,12 +72,16 @@ export function apiSearchMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		try {
 			const query: any = ctx.query;
-			const data = await getFeaturedUser(
+			let data = await getFeaturedUser(
 				BASE_URL,
 				ctx.request.hostname,
 				accessTokens,
 				query.limit || 20,
 			);
+			data = data.map((suggestion) => {
+				suggestion.account = convertAccount(suggestion.account);
+				return suggestion;
+			});
 			//console.log(data);
 			ctx.body = data;
 		} catch (e: any) {

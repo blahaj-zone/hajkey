@@ -61,6 +61,13 @@ export const paramDef = {
 				type: "string",
 			},
 		},
+		silencedHosts: {
+			type: "array",
+			nullable: true,
+			items: {
+				type: "string",
+			},
+		},
 		allowedHosts: {
 			type: "array",
 			nullable: true,
@@ -213,6 +220,15 @@ export default define(meta, paramDef, async (ps, me) => {
 	if (Array.isArray(ps.blockedHosts)) {
 		let lastValue = "";
 		set.blockedHosts = ps.blockedHosts.sort().filter((h) => {
+			const lv = lastValue;
+			lastValue = h;
+			return h !== "" && h !== lv;
+		});
+	}
+
+	if (Array.isArray(ps.silencedHosts)) {
+		let lastValue = "";
+		set.silencedHosts = ps.silencedHosts.sort().filter((h) => {
 			const lv = lastValue;
 			lastValue = h;
 			return h !== "" && h !== lv;

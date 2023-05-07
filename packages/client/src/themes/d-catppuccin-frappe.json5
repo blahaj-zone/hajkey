@@ -1,7 +1,7 @@
 {
 	id: 'ffcd3328-5c57-4ca3-9dac-4580cbf7742f',
 	base: 'dark',
-	name: 'Catppuccin frappe',
+	name: 'Catppuccin Frappe',
 	props: {
 		X2: ':darken<2<@panel',
 		X3: 'rgba(255, 255, 255, 0.05)',

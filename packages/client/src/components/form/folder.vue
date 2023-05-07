@@ -1,6 +1,6 @@
 <template>
 	<div class="dwzlatin" :class="{ opened }">
-		<div class="header _button" @click="toggle">
+		<button class="header _button" @click="toggle">
 			<span class="icon"><slot name="icon"></slot></span>
 			<span class="text"><slot name="label"></slot></span>
 			<span class="right">
@@ -8,7 +8,7 @@
 				<i v-if="opened" class="ph-caret-up ph-bold ph-lg icon"></i>
 				<i v-else class="ph-caret-down ph-bold ph-lg icon"></i>
 			</span>
-		</div>
+		</button>
 		<KeepAlive>
 			<div v-if="openedAtLeastOnce" v-show="opened" class="body">
 				<MkSpacer :margin-min="14" :margin-max="22">

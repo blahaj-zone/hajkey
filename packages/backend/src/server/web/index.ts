@@ -8,11 +8,13 @@ import { readFileSync } from "node:fs";
 import Koa from "koa";
 import Router from "@koa/router";
 import send from "koa-send";
+import favicon from "koa-favicon";
 import views from "koa-views";
 import sharp from "sharp";
 import { createBullBoard } from "@bull-board/api";
 import { BullAdapter } from "@bull-board/api/bullAdapter.js";
 import { KoaAdapter } from "@bull-board/koa";
+
 import { In, IsNull } from "typeorm";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import config from "@/config/index.js";
@@ -96,14 +98,8 @@ app.use(
 	}),
 );
 
-// Favicon Router
-app.use(async (ctx, next) => {
-	if (ctx.path != "/favicon.ico") return next();
-	const meta = await fetchMeta();
-	if (meta.iconUrl === "")
-		ctx.body = readFileSync(`${_dirname}/../../../assets/favicon.ico`);
-	else ctx.redirect(meta.iconUrl);
-});
+// Serve favicon
+app.use(favicon(`${_dirname}/../../../assets/favicon.ico`));
 
 // Common request handler
 app.use(async (ctx, next) => {
@@ -403,28 +399,33 @@ router.get("/notes/:note", async (ctx, next) => {
 		visibility: In(["public", "home"]),
 	});
 
-	if (note) {
-		const _note = await Notes.pack(note);
-		const profile = await UserProfiles.findOneByOrFail({ userId: note.userId });
-		const meta = await fetchMeta();
-		await ctx.render("note", {
-			note: _note,
-			profile,
-			avatarUrl: await Users.getAvatarUrl(
-				await Users.findOneByOrFail({ id: note.userId }),
-			),
-			// TODO: Let locale changeable by instance setting
-			summary: getNoteSummary(_note),
-			instanceName: meta.name || "Calckey",
-			icon: meta.iconUrl,
-			privateMode: meta.privateMode,
-			themeColor: meta.themeColor,
-		});
+	try {
+		if (note) {
+			const _note = await Notes.pack(note);
 
-		ctx.set("Cache-Control", "public, max-age=15");
+			const profile = await UserProfiles.findOneByOrFail({
+				userId: note.userId,
+			});
+			const meta = await fetchMeta();
+			await ctx.render("note", {
+				note: _note,
+				profile,
+				avatarUrl: await Users.getAvatarUrl(
+					await Users.findOneByOrFail({ id: note.userId }),
+				),
+				// TODO: Let locale changeable by instance setting
+				summary: getNoteSummary(_note),
+				instanceName: meta.name || "Calckey",
+				icon: meta.iconUrl,
+				privateMode: meta.privateMode,
+				themeColor: meta.themeColor,
+			});
 
-		return;
-	}
+			ctx.set("Cache-Control", "public, max-age=15");
+
+			return;
+		}
+	} catch {}
 
 	await next();
 });

@@ -6,11 +6,13 @@ import {
 	NoteThreadMutings,
 	UserProfiles,
 	Users,
+	Followings,
 } from "@/models/index.js";
 import { genId } from "@/misc/gen-id.js";
 import type { User } from "@/models/entities/user.js";
 import type { Notification } from "@/models/entities/notification.js";
 import { sendEmailNotification } from "./send-email-notification.js";
+import { shouldSilenceInstance } from "@/misc/should-block-instance.js";
 
 export async function createNotification(
 	notifieeId: User["id"],
@@ -19,6 +21,26 @@ export async function createNotification(
 ) {
 	if (data.notifierId && notifieeId === data.notifierId) {
 		return null;
+	}
+
+	if (
+		data.notifierId &&
+		["mention", "reply", "renote", "quote", "reaction"].includes(type)
+	) {
+		const notifier = await Users.findOneBy({ id: data.notifierId });
+		// suppress if the notifier does not exist or is silenced.
+		if (!notifier) return null;
+
+		// suppress if the notifier is silenced or in a silenced instance, and not followed by the notifiee.
+		if (
+			(notifier.isSilenced ||
+				(Users.isRemoteUser(notifier) &&
+					(await shouldSilenceInstance(notifier.host)))) &&
+			!(await Followings.exist({
+				where: { followerId: notifieeId, followeeId: data.notifierId },
+			}))
+		)
+			return null;
 	}
 
 	const profile = await UserProfiles.findOneBy({ userId: notifieeId });

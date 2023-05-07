@@ -9,7 +9,6 @@
 						v-if="item.type === 'a'"
 						:href="item.href"
 						:target="item.target"
-						:tabindex="i"
 						class="_button item"
 						:class="{ danger: item.danger, active: item.active }"
 					>
@@ -22,7 +21,6 @@
 					</a>
 					<button
 						v-else-if="item.type === 'button'"
-						:tabindex="i"
 						class="_button item"
 						:class="{ danger: item.danger, active: item.active }"
 						:disabled="item.active"
@@ -38,7 +36,6 @@
 					<MkA
 						v-else
 						:to="item.to"
-						:tabindex="i"
 						class="_button item"
 						:class="{ danger: item.danger, active: item.active }"
 					>
@@ -99,7 +96,8 @@ export default defineComponent({
 				font-size: 0.9em;
 				margin-bottom: 0.3rem;
 
-				&:hover {
+				&:hover,
+				&:focus-visible {
 					text-decoration: none;
 					background: var(--panelHighlight);
 				}

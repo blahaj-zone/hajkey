@@ -986,7 +986,7 @@ _registry:
   createKey: "Новый ключ"
 _aboutMisskey:
   about: "Calckey это форк Misskey, сделанный ThatOneCalculator, разработка которого\
-    \ начал с 2022."
+    \ началась с 2022."
   contributors: "Основные соавторы"
   allContributors: "Все соавторы"
   source: "Исходный код"

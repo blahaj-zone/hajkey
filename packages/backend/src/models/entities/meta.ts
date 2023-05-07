@@ -97,6 +97,11 @@ export class Meta {
 	})
 	public blockedHosts: string[];
 
+	@Column('varchar', {
+		length: 256, array: true, default: '{}',
+	})
+	public silencedHosts: string[];
+
 	@Column('boolean', {
 		default: false,
 	})

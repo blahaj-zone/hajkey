@@ -7,7 +7,7 @@
 	>
 		<div class="beaffaef">
 			<div v-for="u in users" :key="u.id" class="user">
-				<MkAvatar class="avatar" :user="u" />
+				<MkAvatar class="avatar" :user="u" disableLink />
 				<MkUserName class="name" :user="u" :nowrap="true" />
 			</div>
 			<div v-if="users.length < count" class="omitted">

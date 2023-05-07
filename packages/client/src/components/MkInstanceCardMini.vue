@@ -5,6 +5,7 @@
 			{
 				yellow: instance.isNotResponding,
 				red: instance.isBlocked,
+				purple: instance.isSilenced,
 				gray: instance.isSuspended,
 			},
 		]"
@@ -23,13 +24,13 @@
 </template>
 
 <script lang="ts" setup>
-import * as misskey from "calckey-js";
+import * as calckey from "calckey-js";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
 import { getProxiedImageUrlNullable } from "@/scripts/media-proxy";
 
 const props = defineProps<{
-	instance: misskey.entities.Instance;
+	instance: calckey.entities.Instance;
 }>();
 
 let chartValues = $ref<number[] | null>(null);
@@ -122,6 +123,21 @@ function getInstanceIcon(instance): string {
 
 	&:global(.red) {
 		--c: rgb(255 0 0 / 15%);
+		background-image: linear-gradient(
+			45deg,
+			var(--c) 16.67%,
+			transparent 16.67%,
+			transparent 50%,
+			var(--c) 50%,
+			var(--c) 66.67%,
+			transparent 66.67%,
+			transparent 100%
+		);
+		background-size: 16px 16px;
+	}
+
+	&:global(.purple) {
+		--c: rgba(196, 0, 255, 0.15);
 		background-image: linear-gradient(
 			45deg,
 			var(--c) 16.67%,

@@ -10,6 +10,7 @@ import Router from "@koa/router";
 import mount from "koa-mount";
 import koaLogger from "koa-logger";
 import * as slow from "koa-slow";
+
 import { IsNull } from "typeorm";
 import config from "@/config/index.js";
 import Logger from "@/services/logger.js";
@@ -29,6 +30,7 @@ import proxyServer from "./proxy/index.js";
 import webServer from "./web/index.js";
 import { initializeStreamingServer } from "./api/streaming.js";
 import { koaBody } from "koa-body";
+import removeTrailingSlash from "koa-remove-trailing-slashes";
 import { v4 as uuid } from "uuid";
 
 export const serverLogger = new Logger("server", "gray", false);
@@ -37,12 +39,7 @@ export const serverLogger = new Logger("server", "gray", false);
 const app = new Koa();
 app.proxy = true;
 
-// Replace trailing slashes
-app.use(async (ctx, next) => {
-	if (ctx.request.path !== "/" && ctx.request.path.endsWith("/"))
-		return ctx.redirect(ctx.request.path.replace(/\/$/, ""));
-	else await next();
-});
+app.use(removeTrailingSlash());
 
 if (!["production", "test"].includes(process.env.NODE_ENV || "")) {
 	// Logger
@@ -125,40 +122,6 @@ router.get("/identicon/:x", async (ctx) => {
 	await genIdenticon(ctx.params.x, fs.createWriteStream(temp));
 	ctx.set("Content-Type", "image/png");
 	ctx.body = fs.createReadStream(temp).on("close", () => cleanup());
-});
-
-router.get("/verify-email/:code", async (ctx) => {
-	const profile = await UserProfiles.findOneBy({
-		emailVerifyCode: ctx.params.code,
-	});
-
-	if (profile != null) {
-		ctx.body = "Verify succeeded!";
-		ctx.status = 200;
-
-		await UserProfiles.update(
-			{ userId: profile.userId },
-			{
-				emailVerified: true,
-				emailVerifyCode: null,
-			},
-		);
-
-		publishMainStream(
-			profile.userId,
-			"meUpdated",
-			await Users.pack(
-				profile.userId,
-				{ id: profile.userId },
-				{
-					detail: true,
-					includeSecrets: true,
-				},
-			),
-		);
-	} else {
-		ctx.status = 404;
-	}
 });
 
 mastoRouter.get("/oauth/authorize", async (ctx) => {

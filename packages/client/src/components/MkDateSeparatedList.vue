@@ -95,7 +95,7 @@ export default defineComponent({
 							h(MkAd, {
 								class: "a", // advertiseの意(ブロッカー対策)
 								key: item.id + ":ad",
-								prefer: ["horizontal", "horizontal-big"],
+								prefer: ["inline", "inline-big"],
 							}),
 							el,
 						];

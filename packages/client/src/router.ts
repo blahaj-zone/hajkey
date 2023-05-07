@@ -294,6 +294,10 @@ export const routes = [
 		component: page(() => import("./pages/signup-complete.vue")),
 	},
 	{
+		path: "/verify-email/:code",
+		component: page(() => import("./pages/verify-email.vue")),
+	},
+	{
 		path: "/announcements",
 		component: page(() => import("./pages/announcements.vue")),
 	},

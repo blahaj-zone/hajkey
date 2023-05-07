@@ -313,10 +313,8 @@ onUnmounted(() => {
 			font-weight: normal;
 			opacity: 0.7;
 
-			&:hover {
-				opacity: 1;
-			}
-
+			&:hover,
+			&:focus-visible,
 			&.active {
 				opacity: 1;
 			}

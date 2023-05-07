@@ -98,6 +98,14 @@
 									@update:modelValue="toggleBlock"
 									>{{ i18n.ts.blockThisInstance }}</FormSwitch
 								>
+								<FormSwitch
+									v-model="isSilenced"
+									class="_formBlock"
+									@update:modelValue="toggleSilence"
+									>{{
+										i18n.ts.silenceThisInstance
+									}}</FormSwitch
+								>
 							</FormSuspense>
 							<MkButton @click="refreshMetadata"
 								><i
@@ -329,7 +337,7 @@
 import { watch } from "vue";
 import { Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import type * as misskey from "calckey-js";
+import type * as calckey from "calckey-js";
 import MkChart from "@/components/MkChart.vue";
 import MkObjectView from "@/components/MkObjectView.vue";
 import FormLink from "@/components/form/link.vue";
@@ -352,11 +360,13 @@ import "swiper/scss";
 import "swiper/scss/virtual";
 import { getProxiedImageUrlNullable } from "@/scripts/media-proxy";
 
-type AugmentedInstanceMetadata = misskey.entities.DetailedInstanceMetadata & {
+type AugmentedInstanceMetadata = calckey.entities.DetailedInstanceMetadata & {
 	blockedHosts: string[];
+	silencedHosts: string[];
 };
-type AugmentedInstance = misskey.entities.Instance & {
+type AugmentedInstance = calckey.entities.Instance & {
 	isBlocked: boolean;
+	isSilenced: boolean;
 };
 
 const props = defineProps<{
@@ -373,6 +383,7 @@ let meta = $ref<AugmentedInstanceMetadata | null>(null);
 let instance = $ref<AugmentedInstance | null>(null);
 let suspended = $ref(false);
 let isBlocked = $ref(false);
+let isSilenced = $ref(false);
 let faviconUrl = $ref(null);
 
 const usersPagination = {
@@ -386,16 +397,14 @@ const usersPagination = {
 	offsetMode: true,
 };
 
-async function init() {
-	meta = await os.api("admin/meta");
-}
-
 async function fetch() {
+	meta = (await os.api("admin/meta")) as AugmentedInstanceMetadata;
 	instance = (await os.api("federation/show-instance", {
 		host: props.host,
 	})) as AugmentedInstance;
 	suspended = instance.isSuspended;
 	isBlocked = instance.isBlocked;
+	isSilenced = instance.isSilenced;
 	faviconUrl =
 		getProxiedImageUrlNullable(instance.faviconUrl, "preview") ??
 		getProxiedImageUrlNullable(instance.iconUrl, "preview");
@@ -414,6 +423,22 @@ async function toggleBlock() {
 	}
 	await os.api("admin/update-meta", {
 		blockedHosts,
+	});
+}
+
+async function toggleSilence() {
+	if (meta == null) return;
+	if (!instance) {
+		throw new Error(`Instance info not loaded`);
+	}
+	let silencedHosts: string[];
+	if (isSilenced) {
+		silencedHosts = meta.silencedHosts.concat([instance.host]);
+	} else {
+		silencedHosts = meta.silencedHosts.filter((x) => x !== instance!.host);
+	}
+	await os.api("admin/update-meta", {
+		silencedHosts,
 	});
 }
 

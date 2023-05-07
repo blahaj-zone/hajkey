@@ -20,6 +20,7 @@ import handler from "./api-handler.js";
 import signup from "./private/signup.js";
 import signin from "./private/signin.js";
 import signupPending from "./private/signup-pending.js";
+import verifyEmail from "./private/verify-email.js";
 import discord from "./service/discord.js";
 import github from "./service/github.js";
 import twitter from "./service/twitter.js";
@@ -28,6 +29,7 @@ import {
 	convertId,
 	IdConvertType as IdType,
 } from "../../../native-utils/built/index.js";
+import { convertAttachment } from "./mastodon/converters.js";
 
 // re-export native rust id conversion (function and enum)
 export { IdType, convertId };
@@ -92,7 +94,7 @@ mastoFileRouter.post("/v1/media", upload.single("file"), async (ctx) => {
 			return;
 		}
 		const data = await client.uploadMedia(multipartData);
-		ctx.body = data.data;
+		ctx.body = convertAttachment(data.data as Entity.Attachment);
 	} catch (e: any) {
 		console.error(e);
 		ctx.status = 401;
@@ -111,7 +113,7 @@ mastoFileRouter.post("/v2/media", upload.single("file"), async (ctx) => {
 			return;
 		}
 		const data = await client.uploadMedia(multipartData);
-		ctx.body = data.data;
+		ctx.body = convertAttachment(data.data as Entity.Attachment);
 	} catch (e: any) {
 		console.error(e);
 		ctx.status = 401;
@@ -177,6 +179,7 @@ for (const endpoint of [...endpoints, ...compatibility]) {
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/signup-pending", signupPending);
+router.post("/verify-email", verifyEmail);
 
 router.use(discord.routes());
 router.use(github.routes());

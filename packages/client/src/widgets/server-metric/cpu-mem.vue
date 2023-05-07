@@ -3,8 +3,8 @@
 		<svg :viewBox="`0 0 ${viewBoxX} ${viewBoxY}`">
 			<defs>
 				<linearGradient :id="cpuGradientId" x1="0" x2="0" y1="1" y2="0">
-					<stop offset="0%" stop-color="hsl(180, 80%, 70%)"></stop>
-					<stop offset="100%" stop-color="hsl(0, 80%, 70%)"></stop>
+					<stop offset="0%" stop-color="hsl(189, 43%, 73%)"></stop>
+					<stop offset="100%" stop-color="hsl(343, 76%, 68%)"></stop>
 				</linearGradient>
 				<mask
 					:id="cpuMaskId"
@@ -42,8 +42,8 @@
 		<svg :viewBox="`0 0 ${viewBoxX} ${viewBoxY}`">
 			<defs>
 				<linearGradient :id="memGradientId" x1="0" x2="0" y1="1" y2="0">
-					<stop offset="0%" stop-color="hsl(180, 80%, 70%)"></stop>
-					<stop offset="100%" stop-color="hsl(0, 80%, 70%)"></stop>
+					<stop offset="0%" stop-color="hsl(189, 43%, 73%)"></stop>
+					<stop offset="100%" stop-color="hsl(343, 76%, 68%)"></stop>
 				</linearGradient>
 				<mask
 					:id="memMaskId"

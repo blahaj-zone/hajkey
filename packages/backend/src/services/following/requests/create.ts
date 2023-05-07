@@ -6,6 +6,7 @@ import type { User } from "@/models/entities/user.js";
 import { Blockings, FollowRequests, Users } from "@/models/index.js";
 import { genId } from "@/misc/gen-id.js";
 import { createNotification } from "../../create-notification.js";
+import config from "@/config/index.js";
 
 export default async function (
 	follower: {
@@ -79,7 +80,13 @@ export default async function (
 	}
 
 	if (Users.isLocalUser(follower) && Users.isRemoteUser(followee)) {
-		const content = renderActivity(renderFollow(follower, followee));
+		const content = renderActivity(
+			renderFollow(
+				follower,
+				followee,
+				requestId ?? `${config.url}/follows/${followRequest.id}`,
+			),
+		);
 		deliver(follower, content, followee.inbox);
 	}
 }

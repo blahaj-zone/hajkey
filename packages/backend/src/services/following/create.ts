@@ -27,6 +27,7 @@ import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js
 import type { Packed } from "@/misc/schema.js";
 import { getActiveWebhooks } from "@/misc/webhook-cache.js";
 import { webhookDeliver } from "@/queue/index.js";
+import { shouldSilenceInstance } from "@/misc/should-block-instance.js";
 
 const logger = new Logger("following/create");
 
@@ -226,13 +227,19 @@ export default async function (
 	});
 
 	// フォロー対象が鍵アカウントである or
+	// The follower is silenced, or
 	// フォロワーがBotであり、フォロー対象がBotからのフォローに慎重である or
-	// フォロワーがローカルユーザーであり、フォロー対象がリモートユーザーである
+	// フォロワーがローカルユーザーであり、フォロー対象がリモートユーザーである or
+	// The follower is remote, the followee is local, and the follower is in a silenced instance.
 	// 上記のいずれかに当てはまる場合はすぐフォローせずにフォローリクエストを発行しておく
 	if (
 		followee.isLocked ||
+		follower.isSilenced ||
 		(followeeProfile.carefulBot && follower.isBot) ||
-		(Users.isLocalUser(follower) && Users.isRemoteUser(followee))
+		(Users.isLocalUser(follower) && Users.isRemoteUser(followee)) ||
+		(Users.isRemoteUser(follower) &&
+			Users.isLocalUser(followee) &&
+			(await shouldSilenceInstance(follower.host)))
 	) {
 		let autoAccept = false;
 

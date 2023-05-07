@@ -1,5 +1,5 @@
 <template>
-	<div ref="thumbnail" class="zdjebgpv">
+	<button ref="thumbnail" class="zdjebgpv">
 		<ImgWithBlurhash
 			v-if="isThumbnailAvailable"
 			:hash="file.blurhash"
@@ -36,7 +36,7 @@
 			v-if="isThumbnailAvailable && is === 'video'"
 			class="ph-file-video ph-bold ph-lg icon-sub"
 		></i>
-	</div>
+	</button>
 </template>
 
 <script lang="ts" setup>
@@ -88,6 +88,9 @@ const isThumbnailAvailable = computed(() => {
 	background: var(--panel);
 	border-radius: 8px;
 	overflow: clip;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
 
 	> .icon-sub {
 		position: absolute;

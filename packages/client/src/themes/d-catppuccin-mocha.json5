@@ -1,7 +1,7 @@
 {
 	id: 'd413f41f-a489-48be-9e20-3532ffbb4363',
 	base: 'dark',
-	name: 'Catppuccin mocha',
+	name: 'Catppuccin Mocha',
 	props: {
 		X2: ':darken<2<@panel',
 		X3: 'rgba(255, 255, 255, 0.05)',

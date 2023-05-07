@@ -3,16 +3,16 @@
 		<svg :viewBox="`0 0 ${viewBoxX} ${viewBoxY}`">
 			<polygon
 				:points="inPolygonPoints"
-				fill="#94a029"
+				fill="#f6c177"
 				fill-opacity="0.5"
 			/>
 			<polyline
 				:points="inPolylinePoints"
 				fill="none"
-				stroke="#94a029"
+				stroke="#f6c177"
 				stroke-width="1"
 			/>
-			<circle :cx="inHeadX" :cy="inHeadY" r="1.5" fill="#94a029" />
+			<circle :cx="inHeadX" :cy="inHeadY" r="1.5" fill="#f6c177" />
 			<text x="1" y="5">
 				NET rx
 				<tspan>{{ bytes(inRecent) }}</tspan>
@@ -21,16 +21,16 @@
 		<svg :viewBox="`0 0 ${viewBoxX} ${viewBoxY}`">
 			<polygon
 				:points="outPolygonPoints"
-				fill="#ff9156"
+				fill="#31748f"
 				fill-opacity="0.5"
 			/>
 			<polyline
 				:points="outPolylinePoints"
 				fill="none"
-				stroke="#ff9156"
+				stroke="#31748f"
 				stroke-width="1"
 			/>
-			<circle :cx="outHeadX" :cy="outHeadY" r="1.5" fill="#ff9156" />
+			<circle :cx="outHeadX" :cy="outHeadY" r="1.5" fill="#31748f" />
 			<text x="1" y="5">
 				NET tx
 				<tspan>{{ bytes(outRecent) }}</tspan>

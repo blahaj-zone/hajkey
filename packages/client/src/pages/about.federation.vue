@@ -18,6 +18,7 @@
 					<option value="publishing">{{ i18n.ts.publishing }}</option>
 					<option value="suspended">{{ i18n.ts.suspended }}</option>
 					<option value="blocked">{{ i18n.ts.blocked }}</option>
+					<option value="silenced">{{ i18n.ts.silenced }}</option>
 					<option value="notResponding">
 						{{ i18n.ts.notResponding }}
 					</option>
@@ -105,13 +106,11 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
 import MkSelect from "@/components/form/select.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkInstanceCardMini from "@/components/MkInstanceCardMini.vue";
 import FormSplit from "@/components/form/split.vue";
-import * as os from "@/os";
 import { i18n } from "@/i18n";
 
 let host = $ref("");
@@ -134,6 +133,8 @@ const pagination = {
 			? { suspended: true }
 			: state === "blocked"
 			? { blocked: true }
+			: state === "silenced"
+			? { silenced: true }
 			: state === "notResponding"
 			? { notResponding: true }
 			: {}),
@@ -143,6 +144,7 @@ const pagination = {
 function getStatus(instance) {
 	if (instance.isSuspended) return "Suspended";
 	if (instance.isBlocked) return "Blocked";
+	if (instance.isSilenced) return "Silenced";
 	if (instance.isNotResponding) return "Error";
 	return "Alive";
 }

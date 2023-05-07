@@ -1,7 +1,8 @@
 pipeline:
   testCommit:
-    image: node:latest
+    image: node:alpine
     commands:
+      - apk add --no-cache cargo python3 make g++
       - cp .config/ci.yml .config/default.yml
       - corepack enable
       - corepack prepare pnpm@latest --activate

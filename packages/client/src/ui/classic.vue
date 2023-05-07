@@ -227,6 +227,8 @@ onMounted(() => {
 }
 
 .gbhvwtnk {
+	display: flex;
+	justify-content: center;
 	$ui-font-size: 1em;
 	$widgets-hide-threshold: 1200px;
 

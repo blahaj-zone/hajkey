@@ -1,6 +1,6 @@
 {
 	"name": "calckey",
-	"version": "13.2.0-beta8-hk21",
+	"version": "14.0.0-rc-hk21",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
@@ -40,6 +40,8 @@
 		"@bull-board/ui": "^4.10.2",
 		"@napi-rs/cli": "^2.15.0",
 		"@tensorflow/tfjs": "^3.21.0",
+		"focus-trap": "^7.2.0",
+		"focus-trap-vue": "^4.0.1",
 		"js-yaml": "4.1.0",
 		"seedrandom": "^3.0.5"
 	},

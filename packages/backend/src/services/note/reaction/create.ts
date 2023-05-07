@@ -120,7 +120,7 @@ export default async (
 		userId: user.id,
 	});
 
-	// リアクションされたユーザーがローカルユーザーなら通知を作成
+	// Create notification if the reaction target is a local user.
 	if (note.userHost === null) {
 		createNotification(note.userId, "reaction", {
 			notifierId: user.id,
@@ -154,7 +154,7 @@ export default async (
 		} catch (e) {}
 	}
 
-	//#region 配信
+	//#region deliver
 	if (Users.isLocalUser(user) && !note.localOnly) {
 		const content = renderActivity(await renderLike(record, note));
 		const dm = new DeliverManager(user, content);

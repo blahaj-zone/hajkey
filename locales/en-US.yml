@@ -72,8 +72,8 @@ import: "Import"
 export: "Export"
 files: "Files"
 download: "Download"
-driveFileDeleteConfirm: "Are you sure you want to delete the file \"{name}\"? Posts\
-  \ with this file attached will also be deleted."
+driveFileDeleteConfirm: "Are you sure you want to delete the file \"{name}\"? It\
+  \ will be removed from all posts that contain it as an attachment."
 unfollowConfirm: "Are you sure that you want to unfollow {name}?"
 exportRequested: "You've requested an export. This may take a while. It will be added\
   \ to your Drive once completed."
@@ -201,6 +201,7 @@ perHour: "Per Hour"
 perDay: "Per Day"
 stopActivityDelivery: "Stop sending activities"
 blockThisInstance: "Block this instance"
+silenceThisInstance: "Silence this instance"
 operations: "Operations"
 software: "Software"
 version: "Version"
@@ -222,10 +223,13 @@ clearCachedFilesConfirm: "Are you sure that you want to delete all cached remote
 blockedInstances: "Blocked Instances"
 blockedInstancesDescription: "List the hostnames of the instances that you want to\
   \ block. Listed instances will no longer be able to communicate with this instance."
+silencedInstances: "Silenced Instances"
+silencedInstancesDescription: "List the hostnames of the instances that you want to\
+  \ silence. Accounts in the listed instances are treated as \"Silenced\", can only make follow requests, and cannot mention local accounts if not followed. This will not affect the blocked instances."
 hiddenTags: "Hidden Hashtags"
 hiddenTagsDescription: "List the hashtags (without the #) of the hashtags you wish\
   \ to hide from trending and explore. Hidden hashtags are still discoverable via\
-  \ other means."
+  \ other means. Blocked instances are not affected even if listed here."
 muteAndBlock: "Mutes and Blocks"
 mutedUsers: "Muted users"
 blockedUsers: "Blocked users"
@@ -244,6 +248,7 @@ noCustomEmojis: "There are no emoji"
 noJobs: "There are no jobs"
 federating: "Federating"
 blocked: "Blocked"
+silenced: "Silenced"
 suspended: "Suspended"
 all: "All"
 subscribing: "Subscribing"
@@ -839,7 +844,7 @@ active: "Active"
 offline: "Offline"
 notRecommended: "Not recommended"
 botProtection: "Bot Protection"
-instanceBlocking: "Blocked Instances"
+instanceBlocking: "Federation Block/Silence"
 selectAccount: "Select account"
 switchAccount: "Switch account"
 enabled: "Enabled"
@@ -1054,7 +1059,7 @@ moveFromLabel: "Account you're moving from:"
 moveFromDescription: "This will set an alias of your old account so that you can move\
   \ from that account to this current one. Do this BEFORE moving from your older account.\
   \ Please enter the tag of the account formatted like @person@instance.com"
-migrationConfirm: "Are you absolutely sure you want to migrate your acccount to {account}?\
+migrationConfirm: "Are you absolutely sure you want to migrate your account to {account}?\
   \ Once you do this, you won't be able to reverse it, and you won't be able to use\
   \ your account normally again.\nAlso, please ensure that you've set this current\
   \ account as the account you're moving from."
@@ -1259,7 +1264,7 @@ _mfm:
   inlineMath: "Math (Inline)"
   inlineMathDescription: "Display math formulas (KaTeX) in-line"
   blockMath: "Math (Block)"
-  blockMathDescription: "Display multi-line math formulas (KaTeX) in a block"
+  blockMathDescription: "Display math formulas (KaTeX) in a block"
   quote: "Quote"
   quoteDescription: "Displays content as a quote."
   emoji: "Custom Emoji"
@@ -1299,6 +1304,14 @@ _mfm:
   sparkleDescription: "Gives content a sparkling particle effect."
   rotate: "Rotate"
   rotateDescription: "Turns content by a specified angle."
+  position: "Position"
+  positionDescription: "Move content by a specified amount."
+  scale: "Scale"
+  scaleDescription: "Scale content by a specified amount."
+  foreground: "Foreground color"
+  foregroundDescription: "Change the foreground color of text."
+  background: "Background color"
+  backgroundDescription: "Change the background color of text."
   plain: "Plain"
   plainDescription: "Deactivates the effects of all MFM contained within this MFM\
     \ effect."

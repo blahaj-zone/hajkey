@@ -5,6 +5,9 @@
 				:is="currentPageComponent"
 				:key="key"
 				v-bind="Object.fromEntries(currentPageProps)"
+				tabindex="-1"
+				v-focus
+				style="outline: none"
 			/>
 
 			<template #fallback>

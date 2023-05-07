@@ -1,5 +1,5 @@
 <template>
-	<div ref="el" class="sfhdhdhr">
+	<div ref="el" class="sfhdhdhr" tabindex="-1">
 		<MkMenu
 			ref="menu"
 			:items="items"
@@ -23,7 +23,6 @@ import {
 } from "vue";
 import MkMenu from "./MkMenu.vue";
 import { MenuItem } from "@/types/menu";
-import * as os from "@/os";
 
 const props = defineProps<{
 	items: MenuItem[];

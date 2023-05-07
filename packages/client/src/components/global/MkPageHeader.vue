@@ -19,6 +19,7 @@
 				class="avatar"
 				:user="$i"
 				:disable-preview="true"
+				disableLink
 			/>
 		</div>
 		<template v-if="metadata">
@@ -33,6 +34,7 @@
 					:user="metadata.avatar"
 					:disable-preview="true"
 					:show-indicator="true"
+					disableLink
 				/>
 				<i
 					v-else-if="metadata.icon && !narrow"
