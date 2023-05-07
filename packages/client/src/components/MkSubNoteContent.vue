@@ -29,14 +29,14 @@
 				<i class="ph-quotes ph-bold ph-lg"></i>
 			</MkA>
 
-			<span v-if="isRenoteCw" class="note-warning renote-warning"
-				><i class="rw-icon ph-fill ph-cloud-warning ph-lg"></i
-				><span class="moniker">RW:</span>
+			<span v-if="isRenoteCw" class="note-warning boost-warning"
+				><i class="bw-icon ph-fill ph-cloud-warning ph-lg"></i
+				><span class="moniker">{{ i18n.ts.boostWarningShort }}:</span>
 			</span>
 
 			<span v-else-if="cw" class="note-warning content-warning"
 				><i class="cw-icon ph-fill ph-shield-warning ph-lg"></i
-				><span class="moniker">CW:</span>
+				><span class="moniker">{{ i18n.ts.contentWarningShort }}:</span>
 			</span>
 
 			<Mfm
