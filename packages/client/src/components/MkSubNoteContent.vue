@@ -3,6 +3,7 @@
 		:class="{
 			hasCw: !!cw,
 			cwHighlight,
+			isRenoteCw,
 		}"
 	>
 		<p v-if="cw" class="cw">
@@ -28,7 +29,8 @@
 				<i class="ph-quotes ph-bold ph-lg"></i>
 			</MkA>
 
-			<i v-if="cw" class="cw-icon ph-fill ph-shield-warning ph-lg"></i>
+			<i v-if="isRenoteCw" class="cw-icon ph-fill ph-cloud-warning ph-lg"></i>
+			<i v-else-if="cw" class="cw-icon ph-fill ph-shield-warning ph-lg"></i>
 			<Mfm
 				v-if="cw"
 				class="text"
@@ -172,6 +174,7 @@ let appearNote = $computed(() =>
 );
 let cw = $computed(() => appearNote.cw || note.cw);
 const cwHighlight = defaultStore.state.highlightCw;
+const isRenoteCw = $computed(() => isRenote && !appearNote.cw && note.cw);
 
 const MOBILE_THRESHOLD = 500;
 const isMobile = ref(
@@ -253,6 +256,13 @@ const showContent = ref(defaultStore.state.autoShowCw);
 		> .cw-icon {
 			padding-inline-start: 0.25em;
 			color: var(--bg);
+		}
+	}
+
+	&.isRenoteCw {
+		outline-color: var(--accent);
+		> .cw {
+			background-color: var(--accent);
 		}
 	}
 }
