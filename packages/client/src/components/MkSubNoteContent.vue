@@ -27,6 +27,8 @@
 			>
 				<i class="ph-quotes ph-bold ph-lg"></i>
 			</MkA>
+
+			<i v-if="cw" class="cw-icon ph-fill ph-shield-warning ph-lg"></i>
 			<Mfm
 				v-if="cw"
 				class="text"
@@ -229,11 +231,12 @@ const showContent = ref(defaultStore.state.autoShowCw);
 	> .text {
 		margin-right: 8px;
 		padding-inline-start: 0.25em;
+		font-weight: 900;
 	}
 }
 
 .cwHighlight.hasCw {
-	outline: 1px dotted var(--cwFg);
+	outline: 1px dotted var(--fg);
 	border-radius: 5px;
 
 	> .wrmlmaau {
@@ -241,13 +244,15 @@ const showContent = ref(defaultStore.state.autoShowCw);
 	}
 
 	> .cw {
-		background-color: var(--cwFg);
-		color: var(--cwBg);
+		background-color: var(--fg);
+		color: var(--bg);
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
 
-		> .reply-icon {
-			color: var(--cwBg);
+		> .reply-icon,
+		> .cw-icon {
+			padding-inline-start: 0.25em;
+			color: var(--bg);
 		}
 	}
 }

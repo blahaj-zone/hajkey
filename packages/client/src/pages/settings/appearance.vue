@@ -107,6 +107,13 @@
 		<FormSection>
 			<template #label>{{ i18n.ts.contentWarningsLabel }}</template>
 
+			<FormSwitch v-model="highlightCw" class="_formBlock">
+			{{ i18n.ts.highlightCw }}
+			<template #caption>{{
+					i18n.ts.highlightCwDescription
+				}}</template>
+			</FormSwitch>
+
 			<FormSwitch v-model="autoShowCw" class="_formBlock">
 				{{ i18n.ts.autoShowCw }}
 				<template #caption>{{
@@ -274,6 +281,7 @@ const replyCollapseSingles = $computed(
 	defaultStore.makeGetterSetter("replyCollapseSingles")
 );
 
+const highlightCw = $computed(defaultStore.makeGetterSetter("highlightCw"));
 const autoShowCw = $computed(defaultStore.makeGetterSetter("autoShowCw"));
 const nsfw = $computed(defaultStore.makeGetterSetter("nsfw"));
 
