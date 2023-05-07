@@ -31,12 +31,12 @@
 
 			<span v-if="isRenoteCw" class="note-warning renote-warning"
 				><i class="rw-icon ph-fill ph-cloud-warning ph-lg"></i
-				><span class="moniker">RW</span>
+				><span class="moniker">RW:</span>
 			</span>
 
 			<span v-else-if="cw" class="note-warning content-warning"
 				><i class="cw-icon ph-fill ph-shield-warning ph-lg"></i
-				><span class="moniker">CW</span>
+				><span class="moniker">CW:</span>
 			</span>
 
 			<Mfm
@@ -247,10 +247,7 @@ const showContent = ref(defaultStore.state.autoShowCw);
 
 	.note-warning {
 		> .moniker {
-			text-orientation: sideways;
-			writing-mode: vertical-rl;
 			font-weight: 900;
-			font-size: 0.8em;
 		}
 	}
 }
