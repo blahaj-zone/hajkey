@@ -20,7 +20,7 @@ const query = ref(props.q);
 
 const search = () => {
 	window.open(
-		`https://search.annoyingorange.xyz/search?q=${query.value}`,
+		`https://duckduckgo.com/?q=${query.value}`,
 		"_blank"
 	);
 };
