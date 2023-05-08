@@ -97,7 +97,10 @@
 						:to="`/notes/${appearNote.renoteId}`"
 						>{{ i18n.ts.quoteAttached }}: ...</MkA
 					>
-					<div v-if="appearNote.files.length > 0" class="files">
+					<div
+						v-if="appearNote.files.length > 0 && displayMedia"
+						class="files"
+					>
 						<XMediaList :media-list="appearNote.files" />
 					</div>
 					<XPoll
@@ -105,7 +108,7 @@
 						:note="appearNote"
 						class="poll"
 					/>
-					<template v-if="detailed">
+					<template v-if="detailed && displayPreviews">
 						<MkUrlPreview
 							v-for="url in urls"
 							:key="url"
@@ -216,6 +219,13 @@ const urls = props.note.text
 	: null;
 
 const showContent = ref(defaultStore.state.autoShowCw);
+
+const displayPreviews = props.detailedView
+	? true
+	: defaultStore.reactiveState.filterDisplayPreviews;
+const displayMedia = props.detailedView
+	? true
+	: defaultStore.reactiveState.filterDisplayMedia;
 </script>
 
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@
 		:class="{ renote: isRenote }"
 	>
 		<MkNoteSub
-			v-if="appearNote.reply && !detailedView"
+			v-if="appearNote.reply && !detailedView && displayParent"
 			:note="appearNote.reply"
 			class="reply-to"
 		/>
@@ -297,6 +297,9 @@ const muted = ref(getWordMute(appearNote, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
 const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
+const displayParent = props.detailedView
+	? true
+	: defaultStore.reactiveState.filterDisplayParent;
 
 const keymap = {
 	r: () => reply(true),

@@ -35,7 +35,7 @@
 				</MkButton>
 				<MkLoading v-else class="loading" />
 			</div>
-			<slot :items="items"></slot>
+			<slot :items="filteredItems"></slot>
 			<div
 				v-show="!pagination.reversed && more"
 				key="_more_"
@@ -115,6 +115,7 @@ const props = withDefaults(
 		pagination: Paging;
 		disableAutoLoad?: boolean;
 		displayLimit?: number;
+		visibleCheck?: (item: Item | false) => boolean;
 	}>(),
 	{
 		displayLimit: 30,
@@ -138,6 +139,14 @@ const backed = ref(false); // 遡り中か否か
 const isBackTop = ref(false);
 const empty = computed(() => items.value.length === 0);
 const error = ref(false);
+
+const filteredItems = props.visibleCheck ? ref<Item[]>([]) : items;
+
+const runFilter = () => {
+	if (!props.visibleCheck) return;
+	props.visibleCheck(false);
+	filteredItems.value = items.value.filter(props.visibleCheck);
+};
 
 const init = async (): Promise<void> => {
 	queue.value = [];
@@ -182,6 +191,7 @@ const init = async (): Promise<void> => {
 				offset.value = res.length;
 				error.value = false;
 				fetching.value = false;
+				runFilter();
 			},
 			(err) => {
 				error.value = true;
@@ -204,13 +214,17 @@ const refresh = async (): void => {
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
-			limit: items.value.length + 1,
+			limit:
+				(items.value.length < SECOND_FETCH_LIMIT
+					? items.value.length
+					: SECOND_FETCH_LIMIT) + 1,
 			offset: 0,
 		})
 		.then(
 			(res) => {
 				let ids = items.value.reduce((a, b) => {
 					a[b.id] = true;
+					runFilter();
 					return a;
 				}, {} as { [id: string]: boolean });
 
@@ -225,6 +239,7 @@ const refresh = async (): void => {
 				for (const id in ids) {
 					removeItem((i) => i.id === id);
 				}
+				runFilter();
 			},
 			(err) => {
 				error.value = true;
@@ -288,6 +303,7 @@ const fetchMore = async (): Promise<void> => {
 				}
 				offset.value += res.length;
 				moreFetching.value = false;
+				runFilter();
 			},
 			(err) => {
 				moreFetching.value = false;
@@ -341,6 +357,7 @@ const fetchMoreAhead = async (): Promise<void> => {
 				}
 				offset.value += res.length;
 				moreFetching.value = false;
+				runFilter();
 			},
 			(err) => {
 				moreFetching.value = false;
@@ -378,6 +395,7 @@ const prepend = (item: Item): void => {
 		// 初回表示時はunshiftだけでOK
 		if (!rootEl.value) {
 			items.value.unshift(item);
+			runFilter();
 			return;
 		}
 
@@ -409,6 +427,7 @@ const prepend = (item: Item): void => {
 			});
 		}
 	}
+	runFilter();
 };
 
 const append = (item: Item): void => {
@@ -468,6 +487,7 @@ defineExpose({
 	append,
 	removeItem,
 	updateItem,
+	runFilter,
 });
 </script>
 

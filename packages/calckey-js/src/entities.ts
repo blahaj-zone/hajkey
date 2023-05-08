@@ -162,6 +162,7 @@ export type Note = {
 		name: string;
 		url: string;
 	}[];
+	mentions?: Array<User["id"]>;
 	uri?: string;
 	url?: string;
 	updatedAt?: DateString;

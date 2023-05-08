@@ -420,6 +420,58 @@ export const defaultStore = markRaw(
 			where: "account",
 			default: true,
 		},
+		showTimelineFilter: {
+			where: "device",
+			default: true,
+		},
+		filterShowPosts: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowMentions: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowReplies: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowBoosts: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowQuotes: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowPolls: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowCws: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterShowNonCws: {
+			where: "device",
+			default: "show" as "force" | "show" | "hide" | "never",
+		},
+		filterDisplayParent: {
+			where: "device",
+			default: true,
+		},
+		filterDisplayPreviews: {
+			where: "device",
+			default: true,
+		},
+		filterDisplayMedia: {
+			where: "device",
+			default: true,
+		},
+		filterHideDuplicates: {
+			where: "device",
+			default: true,
+		},
 	}),
 );
 

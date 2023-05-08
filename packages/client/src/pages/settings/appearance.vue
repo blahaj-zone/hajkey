@@ -69,6 +69,17 @@
 		</FormSection>
 
 		<FormSection>
+			<template #label>{{ i18n.ts._timelineFilter.header }}</template>
+
+			<FormSwitch v-model="showTimelineFilter" class="_formBlock">
+				{{ i18n.ts._timelineFilter.showTimelineFilter }}
+				<template #caption>{{
+					i18n.ts._timelineFilter.showTimelineFilterDescription
+				}}</template>
+			</FormSwitch>
+		</FormSection>
+
+		<FormSection>
 			<template #label>{{ i18n.ts._defaultTimeline.header }}</template>
 
 			<FormSelect
@@ -293,6 +304,10 @@ const expandPostMaxLines = $computed(
 );
 const expandPostMaxCharacters = $computed(
 	defaultStore.makeGetterSetter("expandPostMaxCharacters")
+);
+
+const showTimelineFilter = $computed(
+	defaultStore.makeGetterSetter("showTimelineFilter")
 );
 
 const defaultTimeline = $computed(
