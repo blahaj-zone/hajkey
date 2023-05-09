@@ -61,35 +61,21 @@ export function getNoteMenu(props: {
 	}
 
 	function edit(): void {
-		os.confirm({
-			type: "info",
-			text: "This feature is experimental, please be careful and report bugs if you find them to @supakaity@blahaj.zone.",
-		}).then(({ canceled }) => {
-			if (canceled) return;
-
-			os.post({
-				initialNote: appearNote,
-				renote: appearNote.renote,
-				reply: appearNote.reply,
-				channel: appearNote.channel,
-				editId: appearNote.id,
-			});
+		os.post({
+			initialNote: appearNote,
+			renote: appearNote.renote,
+			reply: appearNote.reply,
+			channel: appearNote.channel,
+			editId: appearNote.id,
 		});
 	}
 
 	function duplicate(): void {
-		os.confirm({
-			type: "info",
-			text: "This feature is experimental, please be careful and report bugs if you find them to @supakaity@blahaj.zone.",
-		}).then(({ canceled }) => {
-			if (canceled) return;
-
-			os.post({
-				initialNote: appearNote,
-				renote: appearNote.renote,
-				reply: appearNote.reply,
-				channel: appearNote.channel,
-			});
+		os.post({
+			initialNote: appearNote,
+			renote: appearNote.renote,
+			reply: appearNote.reply,
+			channel: appearNote.channel,
 		});
 	}
 

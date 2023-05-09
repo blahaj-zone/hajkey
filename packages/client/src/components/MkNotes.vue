@@ -323,6 +323,13 @@ defineExpose({
 		.novjtctn {
 			padding-top: 0.25rem;
 			padding-bottom: 0.25rem;
+			> .label {
+				margin-left: 0;
+				text-align: center;
+			}
+			> .button {
+				display: none;
+			}
 		}
 	}
 }
