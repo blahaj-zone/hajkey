@@ -5,6 +5,7 @@
 		<FormRadios
 			v-model="showPosts"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showPosts }}</template>
@@ -16,6 +17,7 @@
 		<FormRadios
 			v-model="showReplies"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{
@@ -29,6 +31,7 @@
 		<FormRadios
 			v-model="showBoosts"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showBoosts }}</template>
@@ -40,6 +43,7 @@
 		<FormRadios
 			v-model="showQuotes"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showQuotes }}</template>
@@ -51,6 +55,7 @@
 		<FormRadios
 			v-model="showPolls"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showPolls }}</template>
@@ -62,6 +67,7 @@
 		<FormRadios
 			v-model="showMentions"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{
@@ -75,6 +81,7 @@
 		<FormRadios
 			v-model="showCws"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showCws }}</template>
@@ -86,6 +93,7 @@
 		<FormRadios
 			v-model="showNonCws"
 			class="filter-item"
+			:grouped="true"
 			@update:modelValue="refresh()"
 		>
 			<template #label>{{ i18n.ts._timelineFilter.showNonCws }}</template>
@@ -313,26 +321,12 @@ defineExpose({
 		}
 	}
 }
-</style>
-
-<style lang="scss">
 .filter-block {
 	margin-bottom: 1rem;
 	.filter-item {
 		margin-top: 0.5rem;
 		&:first-child {
 			margin-top: 0;
-		}
-		.novjtctn {
-			padding-top: 0.25rem;
-			padding-bottom: 0.25rem;
-			> .label {
-				margin-left: 0;
-				text-align: center;
-			}
-			> .button {
-				display: none;
-			}
 		}
 	}
 }

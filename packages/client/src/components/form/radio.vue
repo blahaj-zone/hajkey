@@ -2,7 +2,7 @@
 	<div
 		v-adaptive-border
 		class="novjtctn"
-		:class="{ disabled, checked }"
+		:class="{ disabled, checked, grouped }"
 		:aria-checked="checked"
 		:aria-disabled="disabled"
 		@click="toggle"
@@ -22,6 +22,7 @@ const props = defineProps<{
 	modelValue: any;
 	value: any;
 	disabled: boolean;
+	grouped?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -49,6 +50,22 @@ function toggle(): void {
 	border: solid 1px var(--panel);
 	border-radius: 6px;
 	transition: all 0.2s;
+
+	&.grouped {
+		border-radius: 0;
+		border-left: solid 1px var(--panel);
+		border-right: none;
+		padding: 4px 8px;
+		min-width: 20px;
+		text-align: center;
+		&:first-child {
+			border-radius: 6px 0 0 6px;
+		}
+		&:last-child {
+			border-radius: 0 6px 6px 0;
+			border-right: solid 1px var(--panel);
+		}
+	}
 
 	> * {
 		user-select: none;
@@ -121,6 +138,9 @@ function toggle(): void {
 			transform: scale(0);
 			transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 		}
+		.grouped & {
+			display: none;
+		}
 	}
 
 	> .label {
@@ -128,6 +148,10 @@ function toggle(): void {
 		display: block;
 		line-height: 20px;
 		cursor: pointer;
+		.grouped & {
+			margin-left: 0;
+			text-align: center;
+		}
 	}
 }
 </style>

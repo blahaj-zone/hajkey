@@ -10,6 +10,11 @@ export default defineComponent({
 		modelValue: {
 			required: false,
 		},
+		grouped: {
+			type: Boolean,
+			default: false,
+			required: false,
+		},
 	},
 	data() {
 		return {
@@ -33,7 +38,7 @@ export default defineComponent({
 		return h(
 			"div",
 			{
-				class: "novjtcto",
+				class: "novjtcto" + (this.grouped ? " grouped" : ""),
 			},
 			[
 				...(label
@@ -59,6 +64,7 @@ export default defineComponent({
 								key: option.key,
 								value: option.props.value,
 								modelValue: this.value,
+								grouped: this.grouped,
 								"onUpdate:modelValue": (value) =>
 									(this.value = value),
 							},
@@ -99,6 +105,11 @@ export default defineComponent({
 		display: flex;
 		gap: 12px;
 		flex-wrap: wrap;
+	}
+
+	&.grouped > .body {
+		flex-wrap: nowrap;
+		gap: 0;
 	}
 
 	> .caption {
