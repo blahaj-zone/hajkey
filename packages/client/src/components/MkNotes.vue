@@ -1,5 +1,5 @@
 <template>
-	<FormFolder v-if="showTimelineFilter" class="_formBlock filter-block">
+	<FormFolder v-if="showTimelineFilter" class="filter-block">
 		<template #label>{{ i18n.ts.filter }}</template>
 		<template #icon><i class="ph-funnel ph-bold ph-lg"></i></template>
 		<FormRadios
@@ -313,8 +313,11 @@ defineExpose({
 		}
 	}
 }
+</style>
 
+<style lang="scss">
 .filter-block {
+	margin-bottom: 1rem;
 	.filter-item {
 		margin-top: 0.5rem;
 		&:first-child {
