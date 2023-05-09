@@ -3,7 +3,7 @@
 		:is="self ? 'MkA' : 'a'"
 		ref="el"
 		class="ieqqeuvs _link"
-		:[attr]="self ? url.substr(local.length) : url"
+		:[attr]="href"
 		:rel="rel"
 		:target="target"
 		@contextmenu.stop="() => {}"
@@ -70,6 +70,9 @@ const query = safeURIDecode(url.search);
 const hash = safeURIDecode(url.hash);
 const attr = self ? "to" : "href";
 const target = self ? null : "_blank";
+const href = self
+	? url.pathname + url.search + url.hash
+	: url.toString();
 </script>
 
 <style lang="scss" scoped>
