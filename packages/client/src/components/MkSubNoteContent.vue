@@ -92,6 +92,20 @@
 						:i="$i"
 						:custom-emojis="appearNote.emojis"
 					/>
+					<MkButton
+						v-if="hasMfm"
+						@click.stop="toggleMfm"
+						:mini="true"
+					>
+						<template v-if="disableMfm">
+							<i class="ph-play ph-bold"></i>
+							{{ i18n.ts._mfm.play }}
+						</template>
+						<template v-else>
+							<i class="ph-stop ph-bold"></i>
+							{{ i18n.ts._mfm.stop }}
+						</template>
+					</MkButton>
 					<MkA
 						v-if="!detailed && appearNote.renoteId"
 						class="rp"
@@ -146,14 +160,6 @@
 				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
 			</div>
 		</div>
-		<MkButton v-if="hasMfm" @click.stop="toggleMfm" :mini="true">
-			<template v-if="disableMfm">
-				<i class="ph-play ph-bold"></i> {{ i18n.ts._mfm.play }}
-			</template>
-			<template v-else>
-				<i class="ph-stop ph-bold"></i> {{ i18n.ts._mfm.stop }}
-			</template>
-		</MkButton>
 	</div>
 </template>
 
