@@ -344,7 +344,7 @@ function focusFooter(ev) {
 }
 
 .wrmlmaau {
-	.content {
+	> .content {
 		overflow-wrap: break-word;
 		> .body {
 			transition: filter 0.1s;
@@ -469,7 +469,7 @@ function focusFooter(ev) {
 			}
 		}
 
-		&.disableAnim :deep(span) {
+		&.disableAnim > .body > span {
 			animation: none !important;
 		}
 	}
