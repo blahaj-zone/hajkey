@@ -2,6 +2,7 @@ import config from "@/config/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import { MAX_NOTE_TEXT_LENGTH, MAX_CAPTION_TEXT_LENGTH } from "@/const.js";
 import define from "../../define.js";
+import { Exp } from "@tensorflow/tfjs";
 
 export const meta = {
 	tags: ["meta"],
@@ -470,9 +471,19 @@ export const meta = {
 				optional: false,
 				nullable: false,
 			},
+			experimentalFeatures: {
+				type: "object",
+				optional: true,
+				nullable: true,
+				ref: "MetaExperimentalFeatures",
+			},
 		},
 	},
 } as const;
+
+export type MetaExperimentalFeatures = {
+	postEditing: boolean;
+};
 
 export const paramDef = {
 	type: "object",
@@ -580,5 +591,6 @@ export default define(meta, paramDef, async (ps, me) => {
 		libreTranslateApiKey: instance.libreTranslateApiKey,
 		enableIpLogging: instance.enableIpLogging,
 		enableActiveEmailValidation: instance.enableActiveEmailValidation,
+		experimentalFeatures: instance.experimentalFeatures,
 	};
 });

@@ -1,26 +1,30 @@
 <template>
 	<div class="adhpbeos">
-		<div class="label" @click="focus"><slot name="label"></slot></div>
-		<div class="input" :class="{ disabled, focused, tall, pre }">
-			<textarea
-				ref="inputEl"
-				v-model="v"
-				v-adaptive-border
-				:class="{ code, _monospace: code }"
-				:disabled="disabled"
-				:required="required"
-				:readonly="readonly"
-				:placeholder="placeholder"
-				:pattern="pattern"
-				:autocomplete="autocomplete"
-				:spellcheck="spellcheck"
-				@focus="focused = true"
-				@blur="focused = false"
-				@keydown="onKeydown($event)"
-				@input="onInput"
-			></textarea>
-		</div>
-		<div class="caption"><slot name="caption"></slot></div>
+		<label>
+			<span class="label">
+				<slot name="label"></slot>
+			</span>
+			<div class="input" :class="{ disabled, focused, tall, pre }">
+				<textarea
+					ref="inputEl"
+					v-model="v"
+					v-adaptive-border
+					:class="{ code, _monospace: code }"
+					:disabled="disabled"
+					:required="required"
+					:readonly="readonly"
+					:placeholder="placeholder"
+					:pattern="pattern"
+					:autocomplete="autocomplete"
+					:spellcheck="spellcheck"
+					@focus="focused = true"
+					@blur="focused = false"
+					@keydown="onKeydown($event)"
+					@input="onInput"
+				></textarea>
+			</div>
+			<div class="caption"><slot name="caption"></slot></div>
+		</label>
 
 		<MkButton
 			v-if="manualSave && changed"
@@ -192,80 +196,79 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .adhpbeos {
-	> .label {
-		font-size: 0.85em;
-		padding: 0 0 8px 0;
-		user-select: none;
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .caption {
-		font-size: 0.85em;
-		padding: 8px 0 0 0;
-		color: var(--fgTransparentWeak);
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .input {
-		position: relative;
-
-		> textarea {
-			appearance: none;
-			-webkit-appearance: none;
-			display: block;
-			width: 100%;
-			min-width: 100%;
-			max-width: 100%;
-			min-height: 130px;
-			margin: 0;
-			padding: 12px;
-			font: inherit;
-			font-weight: normal;
-			font-size: 1em;
-			color: var(--fg);
-			background: var(--panel);
-			border: solid 1px var(--panel);
-			border-radius: 6px;
-			outline: none;
-			box-shadow: none;
-			box-sizing: border-box;
-			transition: border-color 0.1s ease-out;
-
-			&:hover {
-				border-color: var(--inputBorderHover) !important;
+	> label {
+		> .label {
+			font-size: 0.85em;
+			padding: 0 0 8px 0;
+			user-select: none;
+			&:empty {
+				display: none;
 			}
 		}
+		> .caption {
+			font-size: 0.85em;
+			padding: 8px 0 0 0;
+			color: var(--fgTransparentWeak);
 
-		&.focused {
+			&:empty {
+				display: none;
+			}
+		}
+		> .input {
+			position: relative;
+
 			> textarea {
-				border-color: var(--accent) !important;
+				appearance: none;
+				-webkit-appearance: none;
+				display: block;
+				width: 100%;
+				min-width: 100%;
+				max-width: 100%;
+				min-height: 130px;
+				margin: 0;
+				padding: 12px;
+				font: inherit;
+				font-weight: normal;
+				font-size: 1em;
+				color: var(--fg);
+				background: var(--panel);
+				border: solid 1px var(--panel);
+				border-radius: 6px;
+				outline: none;
+				box-shadow: none;
+				box-sizing: border-box;
+				transition: border-color 0.1s ease-out;
+
+				&:hover {
+					border-color: var(--inputBorderHover) !important;
+				}
 			}
-		}
 
-		&.disabled {
-			opacity: 0.7;
-
-			&,
-			* {
-				cursor: not-allowed !important;
+			&.focused {
+				> textarea {
+					border-color: var(--accent) !important;
+				}
 			}
-		}
 
-		&.tall {
-			> textarea {
-				min-height: 200px;
+			&.disabled {
+				opacity: 0.7;
+
+				&,
+				* {
+					cursor: not-allowed !important;
+				}
 			}
-		}
 
-		&.pre {
-			> textarea {
-				white-space: pre;
+			&.tall {
+				> textarea {
+					min-height: 200px;
+				}
+			}
+
+			&.pre {
+				> textarea {
+					white-space: pre;
+				}
 			}
 		}
 	}

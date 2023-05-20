@@ -143,6 +143,18 @@
 				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
 			</div>
 		</div>
+		<MkButton
+			v-if="hasMfm && defaultStore.state.animatedMfm"
+			@click.stop="toggleMfm"
+			:mini="true"
+		>
+			<template v-if="disableMfm">
+				<i class="ph-play ph-bold"></i> {{ i18n.ts._mfm.play }}
+			</template>
+			<template v-else>
+				<i class="ph-stop ph-bold"></i> {{ i18n.ts._mfm.stop }}
+			</template>
+		</MkButton>
 	</div>
 </template>
 
@@ -150,12 +162,15 @@
 import { ref } from "vue";
 import * as misskey from "calckey-js";
 import * as mfm from "mfm-js";
+import * as os from "@/os";
 import XNoteSimple from "@/components/MkNoteSimple.vue";
 import XMediaList from "@/components/MkMediaList.vue";
 import XPoll from "@/components/MkPoll.vue";
 import MkUrlPreview from "@/components/MkUrlPreview.vue";
 import XCwButton from "@/components/MkCwButton.vue";
+import MkButton from "@/components/MkButton.vue";
 import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
+import { extractMfmWithAnimation } from "@/scripts/extract-mfm";
 import { i18n } from "@/i18n";
 import { deviceKind } from "@/scripts/device-kind";
 import { defaultStore } from "@/store";
@@ -416,6 +431,15 @@ const displayMedia = props.detailedView
 				box-shadow: 0 0 7px 7px var(--bg);
 			}
 		}
+
+		&.disableAnim :deep(span) {
+			animation: none !important;
+		}
+	}
+	> :deep(button) {
+		margin-top: 10px;
+		margin-left: 0;
+		margin-right: 0.4rem;
 	}
 }
 </style>

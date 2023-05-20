@@ -35,6 +35,11 @@ export const meta = {
 			code: "LTL_DISABLED",
 			id: "45a6eb02-7695-4393-b023-dd3be9aaaefd",
 		},
+		queryError: {
+			message: "Please follow more users.",
+			code: "QUERY_ERROR",
+			id: "620763f4-f621-4533-ab33-0577a1a3c343",
+		},
 	},
 } as const;
 
@@ -123,6 +128,7 @@ export default define(meta, paramDef, async (ps, user) => {
 			);
 		}
 	}
+	query.andWhere("note.visibility != 'hidden'");
 	//#endregion
 
 	process.nextTick(() => {
@@ -136,11 +142,15 @@ export default define(meta, paramDef, async (ps, user) => {
 	const found = [];
 	const take = Math.floor(ps.limit * 1.5);
 	let skip = 0;
-	while (found.length < ps.limit) {
-		const notes = await query.take(take).skip(skip).getMany();
-		found.push(...(await Notes.packMany(notes, user)));
-		skip += take;
-		if (notes.length < take) break;
+	try {
+		while (found.length < ps.limit) {
+			const notes = await query.take(take).skip(skip).getMany();
+			found.push(...(await Notes.packMany(notes, user)));
+			skip += take;
+			if (notes.length < take) break;
+		}
+	} catch (error) {
+		throw new ApiError(meta.errors.queryError);
 	}
 
 	if (found.length > ps.limit) {

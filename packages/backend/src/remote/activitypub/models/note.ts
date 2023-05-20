@@ -686,11 +686,10 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 				multiple: poll?.multiple,
 				votes: poll?.votes,
 				expiresAt: poll?.expiresAt,
-				noteVisibility: note.visibility,
+				noteVisibility: note.visibility === "hidden" ? "home" : note.visibility,
 				userId: actor.id,
 				userHost: actor.host,
 			});
-			publishing = true;
 		} else if (
 			dbPoll.multiple !== poll.multiple ||
 			dbPoll.expiresAt !== poll.expiresAt ||
@@ -704,10 +703,10 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 					multiple: poll?.multiple,
 					votes: poll?.votes,
 					expiresAt: poll?.expiresAt,
-					noteVisibility: note.visibility,
+					noteVisibility:
+						note.visibility === "hidden" ? "home" : note.visibility,
 				},
 			);
-			publishing = true;
 		} else {
 			for (let i = 0; i < poll.choices.length; i++) {
 				if (dbPoll.votes[i] !== poll.votes?.[i]) {

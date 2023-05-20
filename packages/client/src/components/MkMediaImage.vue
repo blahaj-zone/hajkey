@@ -1,5 +1,5 @@
 <template>
-	<div v-if="hide" class="qjewsnkg" @click="hide = false">
+	<button v-if="hide" class="qjewsnkg" @click="hide = false">
 		<ImgWithBlurhash
 			class="bg"
 			:hash="image.blurhash"
@@ -15,7 +15,7 @@
 				<span style="display: block">{{ i18n.ts.clickToShow }}</span>
 			</div>
 		</div>
-	</div>
+	</button>
 	<div v-else class="gqnyydlz">
 		<a :href="image.url" :title="image.name">
 			<ImgWithBlurhash
@@ -79,6 +79,7 @@ watch(
 
 <style lang="scss" scoped>
 .qjewsnkg {
+	all: unset;
 	position: relative;
 
 	> .bg {
@@ -102,6 +103,10 @@ watch(
 			font-size: 0.8em;
 			color: #fff;
 		}
+	}
+
+	&:focus-visible {
+		border: 2px solid var(--accent);
 	}
 }
 

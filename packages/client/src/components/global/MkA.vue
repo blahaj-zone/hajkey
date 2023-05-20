@@ -2,9 +2,8 @@
 	<a
 		:href="to"
 		:class="active ? activeClass : null"
-		@click="nav"
 		@contextmenu.prevent.stop="onContextmenu"
-		@click.stop
+		@click.stop="nav"
 	>
 		<slot></slot>
 	</a>
@@ -101,13 +100,8 @@ function popout() {
 }
 
 function nav(ev: MouseEvent) {
-	if (!ev.ctrlKey) {
+	if (!ev.ctrlKey && props.behavior !== "browser") {
 		ev.preventDefault();
-
-		if (props.behavior === "browser") {
-			location.href = props.to;
-			return;
-		}
 
 		if (props.behavior) {
 			if (props.behavior === "window") {

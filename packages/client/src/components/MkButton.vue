@@ -2,7 +2,7 @@
 	<button
 		v-if="!link"
 		class="bghgjjyj _button"
-		:class="{ inline, primary, gradate, danger, rounded, full }"
+		:class="{ inline, primary, gradate, danger, rounded, full, mini }"
 		:type="type"
 		@click="emit('click', $event)"
 		@mousedown="onMousedown"
@@ -15,7 +15,7 @@
 	<MkA
 		v-else
 		class="bghgjjyj _button"
-		:class="{ inline, primary, gradate, danger, rounded, full }"
+		:class="{ inline, primary, gradate, danger, rounded, full, mini }"
 		:to="to"
 		@mousedown="onMousedown"
 	>
@@ -41,6 +41,7 @@ const props = defineProps<{
 	wait?: boolean;
 	danger?: boolean;
 	full?: boolean;
+	mini: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -188,6 +189,12 @@ function onMousedown(evt: MouseEvent): void {
 				background: #b4637a;
 			}
 		}
+	}
+
+	&.mini {
+		padding: 4px 8px;
+		font-size: 0.9em;
+		border-radius: 100px;
 	}
 
 	&:disabled {

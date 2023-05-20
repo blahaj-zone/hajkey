@@ -1,7 +1,9 @@
----
 _lang_: "Čeština"
 headlineMisskey: "Síť propojená poznámkami"
-introMisskey: "Vítejte! Misskey je otevřený a decentralizovaný microblogový servis.\n\"Poznámkami\" můžete sdílet co se zrovna děje se všemi ve Vašem okolí. 📡\nPomocí \"reakcí\" můžete sdílet své názory a pocity na ostatní poznámky. 👍\nPojďte objevovat nový svět! 🚀"
+introMisskey: "Vítejte! Calckey je otevřený a decentralizovaný microblogový servis.\n\
+  \"Poznámkami\" můžete sdílet co se zrovna děje se všemi ve Vašem okolí. \U0001F4E1\
+  \nPomocí \"reakcí\" můžete sdílet své názory a pocity na ostatní poznámky. \U0001F44D\
+  \nPojďte objevovat nový svět! \U0001F680"
 monthAndDay: "{day}. {month}."
 search: "Vyhledávání"
 notifications: "Oznámení"
@@ -44,7 +46,8 @@ copyContent: "Zkopírovat obsah"
 copyLink: "Kopírovat odkaz"
 delete: "Smazat"
 deleteAndEdit: "Smazat a upravit"
-deleteAndEditConfirm: "Jste si jistí že chcete smazat tuto poznámku a editovat ji? Ztratíte tím všechny reakce, sdílení a odpovědi na ni."
+deleteAndEditConfirm: "Jste si jistí že chcete smazat tuto poznámku a editovat ji?\
+  \ Ztratíte tím všechny reakce, sdílení a odpovědi na ni."
 addToList: "Přidat do seznamu"
 sendMessage: "Odeslat zprávu"
 copyUsername: "Kopírovat uživatelské jméno"
@@ -63,9 +66,11 @@ import: "Importovat"
 export: "Exportovat"
 files: "Soubor(ů)"
 download: "Stáhnout"
-driveFileDeleteConfirm: "Opravdu chcete smazat soubor \"{name}\"? Poznámky, ke kterým je tento soubor připojen, budou také smazány."
+driveFileDeleteConfirm: "Opravdu chcete smazat soubor \"{name}\"? Soubor bude odstraněn\
+  \ ze všech příspěvků, které ji obsahují jako přílohu."
 unfollowConfirm: "Jste si jisti že už nechcete sledovat {name}?"
-exportRequested: "Požádali jste o export. To může chvíli trvat. Přidáme ho na váš Disk až bude dokončen."
+exportRequested: "Požádali jste o export. To může chvíli trvat. Přidáme ho na váš\
+  \ Disk až bude dokončen."
 importRequested: "Požádali jste o export. To může chvilku trvat."
 lists: "Seznamy"
 noLists: "Nemáte žádné seznamy"
@@ -81,7 +86,8 @@ somethingHappened: "Jejda. Něco se nepovedlo."
 retry: "Opakovat"
 pageLoadError: "Nepodařilo se načíst stránku"
 serverIsDead: "Server neodpovídá. Počkejte chvíli a zkuste to znovu."
-youShouldUpgradeClient: "Pro zobrazení této stránky obnovte stránku pro aktualizaci klienta."
+youShouldUpgradeClient: "Pro zobrazení této stránky obnovte stránku pro aktualizaci\
+  \ klienta."
 enterListName: "Jméno seznamu"
 privacy: "Soukromí"
 makeFollowManuallyApprove: "Žádosti o sledování vyžadují potvrzení"
@@ -105,7 +111,8 @@ clickToShow: "Klikněte pro zobrazení"
 sensitive: "NSFW"
 add: "Přidat"
 reaction: "Reakce"
-reactionSettingDescription2: "Přetažením změníte pořadí, kliknutím smažete, zmáčkněte \"+\" k přidání"
+reactionSettingDescription2: "Přetažením změníte pořadí, kliknutím smažete, zmáčkněte\
+  \ \"+\" k přidání"
 rememberNoteVisibility: "Zapamatovat nastavení zobrazení poznámky"
 attachCancel: "Odstranit přílohu"
 markAsSensitive: "Označit jako NSFW"
@@ -134,13 +141,18 @@ emojiUrl: "URL obrázku"
 addEmoji: "Přidat emoji"
 settingGuide: "Doporučené nastavení"
 cacheRemoteFiles: "Ukládání vzdálených souborů do mezipaměti"
-cacheRemoteFilesDescription: "Zakázání tohoto nastavení způsobí, že vzdálené soubory budou odkazovány přímo, místo aby byly ukládány do mezipaměti. Tím se ušetří úložiště na serveru, ale zvýší se provoz, protože se negenerují miniatury."
+cacheRemoteFilesDescription: "Zakázání tohoto nastavení způsobí, že vzdálené soubory\
+  \ budou odkazovány přímo, místo aby byly ukládány do mezipaměti. Tím se ušetří úložiště\
+  \ na serveru, ale zvýší se provoz, protože se negenerují miniatury."
 flagAsBot: "Tento účet je bot"
-flagAsBotDescription: "Pokud je tento účet kontrolován programem zaškrtněte tuto možnost. To označí tento účet jako bot pro ostatní vývojáře a zabrání tak nekonečným interakcím s ostatními boty a upraví Misskey systém aby se choval k tomuhle účtu jako bot."
+flagAsBotDescription: "Pokud je tento účet kontrolován programem zaškrtněte tuto možnost.\
+  \ To označí tento účet jako bot pro ostatní vývojáře a zabrání tak nekonečným interakcím\
+  \ s ostatními boty a upraví Calckey systém aby se choval k tomuhle účtu jako bot."
 flagAsCat: "Tenhle účet je kočka"
 flagAsCatDescription: "Vyberte tuto možnost aby tento účet byl označen jako kočka."
 flagShowTimelineReplies: "Zobrazovat odpovědi na časové ose"
-flagShowTimelineRepliesDescription: "Je-li zapnuto, zobrazí odpovědi uživatelů na poznámky jiných uživatelů na vaší časové ose."
+flagShowTimelineRepliesDescription: "Je-li zapnuto, zobrazí odpovědi uživatelů na\
+  \ poznámky jiných uživatelů na vaší časové ose."
 autoAcceptFollowed: "Automaticky akceptovat následování od účtů které sledujete"
 addAccount: "Přidat účet"
 loginFailed: "Přihlášení se nezdařilo."
@@ -153,7 +165,10 @@ searchWith: "Hledat: {q}"
 youHaveNoLists: "Nemáte žádné seznamy"
 followConfirm: "Jste si jisti, že chcete sledovat {name}?"
 proxyAccount: "Proxy účet"
-proxyAccountDescription: "Proxy účet je účet, který za určitých podmínek sleduje uživatele na dálku vaším jménem. Například když uživatel zařadí vzdáleného uživatele do seznamu, pokud nikdo nesleduje uživatele na seznamu, aktivita nebude doručena instanci, takže místo toho bude uživatele sledovat účet proxy."
+proxyAccountDescription: "Proxy účet je účet, který za určitých podmínek sleduje uživatele\
+  \ na dálku vaším jménem. Například když uživatel zařadí vzdáleného uživatele do\
+  \ seznamu, pokud nikdo nesleduje uživatele na seznamu, aktivita nebude doručena\
+  \ instanci, takže místo toho bude uživatele sledovat účet proxy."
 host: "Hostitel"
 selectUser: "Vyberte uživatele"
 recipient: "Pro"
@@ -189,7 +204,7 @@ blockedInstances: "Blokované instance"
 noUsers: "Žádní uživatelé"
 editProfile: "Upravit můj profil"
 pinLimitExceeded: "Nemůžete připnout další poznámky."
-intro: "Instalace Misskey byla dokončena! Prosím vytvořte admina."
+intro: "Instalace Calckey byla dokončena! Prosím vytvořte admina."
 done: "Hotovo"
 processing: "Zpracovávám"
 preview: "Náhled"
@@ -239,7 +254,8 @@ agreeTo: "Souhlasím s {0}"
 tos: "Podmínky užívání"
 start: "Začít"
 home: "Domů"
-remoteUserCaution: "Tyto informace nemusí být aktuální jelikož uživatel je ze vzdálené instance."
+remoteUserCaution: "Tyto informace nemusí být aktuální jelikož uživatel je ze vzdálené\
+  \ instance."
 activity: "Aktivita"
 images: "Obrázky"
 birthday: "Datum narození"
@@ -332,7 +348,7 @@ recentlyUpdatedUsers: "Nedávno aktívni uživatelé"
 popularTags: "Populární tagy"
 userList: "Seznamy"
 about: "Informace"
-aboutMisskey: "O Misskey"
+aboutMisskey: "O Calckey"
 administrator: "Administrátor"
 token: "Token"
 twoStepAuthentication: "Dvoufaktorová autentikace"
@@ -548,7 +564,8 @@ info: "Informace"
 unknown: "Neznámý"
 onlineStatus: "Online status"
 hideOnlineStatus: "Skrýt Váš online status"
-hideOnlineStatusDescription: "Skrytí vašeho online stavu může snížit funkcionalitu některých funkcí, například vyhledávání."
+hideOnlineStatusDescription: "Skrytí vašeho online stavu může snížit funkcionalitu\
+  \ některých funkcí, například vyhledávání."
 online: "Online"
 active: "Aktivní"
 offline: "Offline"
@@ -928,3 +945,66 @@ _deck:
     antenna: "Antény"
     list: "Seznamy"
     mentions: "Zmínění"
+noteDeleteConfirm: Chcete opravdu smazat tento příspěvek?
+defaultValueIs: 'Výchozí: {value}'
+lookup: Hledat
+keepOriginalUploading: Ponechat originální obrázek
+uploadFromUrlRequested: Vyžádáno nahrání souboru
+manageGroups: Spravovat skupiny
+reloadConfirm: Znovu načíst časovou osu?
+driveCapacityPerRemoteAccount: Místo na disku pro vzdálené uživatele
+silenceThisInstance: Ztlumit tuto instance
+silencedInstances: Ztlumené instance
+blockedInstancesDescription: Zadejte seznam domén instancí, jež chcete blokovat. Uvedené
+  instance nebudou moci s touto instancí komunikovat.
+hiddenTags: Skryté hashtagy
+noInstances: Nejsou zde žádné instance
+silenced: Ztlumené
+disablingTimelinesInfo: Administrátoři a moderátoři budou vždy mít přístup ke všem
+  časovým osám, i pokud jsou vypnuté.
+deleted: Vymazáno
+editNote: Upravit poznámku
+edited: Upraveno
+silencedInstancesDescription: Vypište hostnames instancí, které chcete ztlumit. Účty
+  v uvedených instancích jsou považovány za "ztlumené", mohou pouze zadávat požadavky
+  na sledování a nemohou zmiňovat místní účty, pokud nejsou sledovány. Na blokované
+  instance toto nebude mít vliv.
+hiddenTagsDescription: 'Vypište hashtagy (bez #), které chcete skrýt před trendy a
+  prozkoumat. Skryté hashtagy jsou stále zjistitelné jinými způsoby. Blokované případy
+  nejsou ovlivněny, i když jsou zde uvedeny.'
+circularReferenceFolder: Cílová složka je podsložka přesouvané složky.
+whenServerDisconnected: Při ztrátě spojení se serverem
+pinnedUsersDescription: Uveďte uživatelská jména uživatelů připnutých na stránce "Procházet",
+  jedno na řádek.
+pinnedPagesDescription: Zadejte cesty ke stránkám, které chcete připnout na horní
+  stránku této instance, oddělené zlomy řádků.
+pageLoadErrorDescription: Toto je obvykle způsobeno chybami sítě nebo mezipaměti prohlížeče.
+  Zkuste vymazat mezipaměť a po chvíli čekání to zkuste znovu.
+emptyDrive: Váš disk je prázdný
+inputNewDescription: Zadejte nový popisek
+hasChildFilesOrFolders: Složka nemůže být smazána, protože není prázdná.
+noThankYou: Ne, děkuji
+addInstance: Přidat instance
+selectInstance: Vybrat si instance
+blockedUsers: Zablokovaní uživatelé
+muteAndBlock: Ztlumení a blokace
+noJobs: Žádné úlohy
+federating: Federace
+clearQueueConfirmText: Nedoručené příspěvky, které zůstanou ve frontě, nebudou federovány.
+  Obvykle tato operace není potřeba.
+clearCachedFilesConfirm: Chcete opravdu vymazat mezipaměť všech vzdálených souborů?
+accountMoved: 'Uživatel/ka se přesunul/a na nový účet:'
+keepOriginalUploadingDescription: Ponechá originálně nahraný obrázek tak, jak je.
+  Pokud vypnuto, verze pro zobrazení na webu bude vygenerována při nahrání.
+mutedUsers: Ztlumení uživatelé
+enableRecommendedTimeline: Povolit doporučenou časovou osu
+driveCapacityPerLocalAccount: Místo na disku pro místní uživatele
+pinnedPages: Připnuté Stránky
+directNotes: Přímé zprávy
+enableEmojiReactions: Povolit reakce pomocí emoji
+showEmojisInReactionNotifications: Zobrazit emotikony v oznámeních o reakcích
+reactionSetting: Reakce, které se mají zobrazit v seznamu reakcí
+renoteMute: Ztlumit přeposílání
+renoteUnmute: Zrušit ztlumení přeposílání
+flagSpeakAsCat: Mluvit jako kočka
+flagSpeakAsCatDescription: Vaše příspěvky budou v kočičím režimu nyanifikovány.

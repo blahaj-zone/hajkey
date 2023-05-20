@@ -1,27 +1,44 @@
 # 🚚 Migrating from Misskey to Calckey
 
+The following procedure may not work depending on your environment and version of Misskey.
+
+**Make sure you**
+- **stopped all master and worker processes of Misskey.**
+- **have backups of the database before performing any commands.**
+
 ## Misskey v13 and above
+
+Tested with Misskey v13.11.3.
+
+If your Misskey v13 is older, we recommend updating your Misskey to v13.11.3.
 
 ```sh
 wget -O mkv13.patch https://codeberg.org/calckey/calckey/raw/branch/develop/docs/mkv13.patch
-git apply mkv13.patch
+wget -O mkv13_restore.patch https://codeberg.org/calckey/calckey/raw/branch/develop/docs/mkv13_restore.patch
+git apply mkv13.patch mkv13_restore.patch
 
 cd packages/backend
 
-LINE_NUM="$(npx typeorm migration:show -d ormconfig.js | grep -n activeEmailValidation1657346559800 | cut -d ':' -f 1)"
-NUM_MIGRATIONS="$(npx typeorm migration:show -d ormconfig.js | tail -n+"$LINE_NUM" | grep '\[X\]' | nl)"
+LINE_NUM="$(pnpm typeorm migration:show -d ormconfig.js | grep -n activeEmailValidation1657346559800 | cut -d ':' -f 1)"
+NUM_MIGRATIONS="$(pnpm typeorm migration:show -d ormconfig.js | tail -n+"$LINE_NUM" | grep '\[X\]' | wc -l)"
 
-for i in $(seq 1 $NUM_MIGRAIONS); do
-    npx typeorm migration:revert -d ormconfig.js
-done
+for i in $(seq 1 $NUM_MIGRATIONS); do pnpm typeorm migration:revert -d ormconfig.js; done
+
+cd ../../
 
 git remote set-url origin https://codeberg.org/calckey/calckey.git
-git fetch
-git checkout main # or beta or develop
+git fetch origin
+git stash push
+rm -rf fluent-emojis misskey-assets
+git switch main # or beta or develop
 git pull --ff
+wget -O renote_muting.patch https://codeberg.org/calckey/calckey/raw/branch/develop/docs/renote_muting.patch
+git apply renote_muting.patch
 
-NODE_ENV=production pnpm run migrate
-# build using prefered method
+pnpm install
+NODE_ENV=production pnpm run build
+pnpm run migrate
+git stash push
 ```
 
 Depending on the version you're migrating from, you may have to open Postgres with `psql -d your_database` and run the following commands:
@@ -43,6 +60,10 @@ ALTER TABLE "instance" ADD COLUMN "lastCommunicatedAt" date;
 ```
 
 then quit with `\q`, and restart Calckey.
+
+Note: Ignore errors of `column "xxx" of relation "xxx" already exists`.
+
+If no other errors happened, your Calckey is ready to launch!
 
 ## Misskey v12.119 and before
 

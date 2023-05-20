@@ -192,8 +192,6 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 			? defineAsyncComponent(() => import("@/ui/visitor.vue"))
 			: ui === "deck"
 			? defineAsyncComponent(() => import("@/ui/deck.vue"))
-			: ui === "classic"
-			? defineAsyncComponent(() => import("@/ui/classic.vue"))
 			: defineAsyncComponent(() => import("@/ui/universal.vue")),
 	);
 

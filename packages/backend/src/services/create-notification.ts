@@ -80,6 +80,9 @@ export async function createNotification(
 	setTimeout(async () => {
 		const fresh = await Notifications.findOneBy({ id: notification.id });
 		if (fresh == null) return; // 既に削除されているかもしれない
+		// We execute this before, because the server side "read" check doesnt work well with push notifications, the app and service worker will decide themself
+		// when it is best to show push notifications
+		pushNotification(notifieeId, "notification", packed);
 		if (fresh.isRead) return;
 
 		//#region ただしミュートしているユーザーからの通知なら無視
@@ -95,7 +98,6 @@ export async function createNotification(
 		//#endregion
 
 		publishMainStream(notifieeId, "unreadNotification", packed);
-		pushNotification(notifieeId, "notification", packed);
 
 		if (type === "follow")
 			sendEmailNotification.follow(

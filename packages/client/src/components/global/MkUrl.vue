@@ -18,7 +18,7 @@
 			<span class="self">{{ hostname }}</span>
 		</template>
 		<span v-if="pathname != ''" class="pathname">{{
-			self ? pathname.substr(1) : pathname
+			self ? pathname.substring(1) : pathname
 		}}</span>
 		<span class="query">{{ query }}</span>
 		<span class="hash">{{ hash }}</span>
@@ -70,9 +70,7 @@ const query = safeURIDecode(url.search);
 const hash = safeURIDecode(url.hash);
 const attr = self ? "to" : "href";
 const target = self ? null : "_blank";
-const href = self
-	? url.pathname + url.search + url.hash
-	: url.toString();
+const href = self ? url.pathname + url.search + url.hash : url.toString();
 </script>
 
 <style lang="scss" scoped>

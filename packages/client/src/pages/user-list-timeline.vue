@@ -125,7 +125,7 @@ definePageMetadata(
 	}
 
 	> .tl {
-		background: var(--bg);
+		background: none;
 		border-radius: var(--radius);
 		overflow: clip;
 	}

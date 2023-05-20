@@ -1,6 +1,6 @@
 <template>
-	<div class="dwzlatin" :class="{ opened }">
-		<button class="header _button" @click="toggle">
+	<details class="dwzlatin" :open="defaultOpen">
+		<summary class="header _button">
 			<span class="icon"><slot name="icon"></slot></span>
 			<span class="text"><slot name="label"></slot></span>
 			<span class="right">
@@ -8,41 +8,26 @@
 				<i v-if="opened" class="ph-caret-up ph-bold ph-lg icon"></i>
 				<i v-else class="ph-caret-down ph-bold ph-lg icon"></i>
 			</span>
-		</button>
-		<KeepAlive>
-			<div v-if="openedAtLeastOnce" v-show="opened" class="body">
-				<MkSpacer :margin-min="14" :margin-max="22">
-					<slot></slot>
-				</MkSpacer>
-			</div>
-		</KeepAlive>
-	</div>
+		</summary>
+		<div class="body">
+			<MkSpacer :margin-min="14" :margin-max="22">
+				<slot></slot>
+			</MkSpacer>
+		</div>
+	</details>
 </template>
 
 <script lang="ts" setup>
-const props = withDefaults(
-	defineProps<{
-		defaultOpen: boolean;
-	}>(),
-	{
-		defaultOpen: false,
-	}
-);
-
-let opened: boolean = $ref(props.defaultOpen);
-let openedAtLeastOnce: boolean = $ref(props.defaultOpen);
-
-const toggle = (): void => {
-	opened = !opened;
-	if (opened) {
-		openedAtLeastOnce = true;
-	}
-};
+defineProps<{
+	defaultOpen: boolean;
+}>();
 </script>
 
 <style lang="scss" scoped>
 .dwzlatin {
 	display: block;
+	overflow: clip;
+	border-radius: 6px;
 
 	> .header {
 		display: flex;
@@ -51,7 +36,6 @@ const toggle = (): void => {
 		box-sizing: border-box;
 		padding: 12px 14px 12px 14px;
 		background: var(--buttonBg);
-		border-radius: 6px;
 
 		&:hover {
 			text-decoration: none;
@@ -99,12 +83,6 @@ const toggle = (): void => {
 	> .body {
 		background: var(--panel);
 		border-radius: 0 0 6px 6px;
-	}
-
-	&.opened {
-		> .header {
-			border-radius: 6px 6px 0 0;
-		}
 	}
 }
 </style>

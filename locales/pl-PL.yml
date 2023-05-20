@@ -66,8 +66,8 @@ import: "Importuj"
 export: "Eksportuj"
 files: "Pliki"
 download: "Pobierz"
-driveFileDeleteConfirm: "Czy chcesz usunąć plik \"{name}\"? Zniknie również wpis,\
-  \ do której dołączony jest ten plik."
+driveFileDeleteConfirm: "Czy chcesz usunąć plik \"{name}\"? Wszystkie wpisy zawierające\
+  \ ten plik również zostaną usunięte."
 unfollowConfirm: "Czy na pewno chcesz przestać obserwować {name}?"
 exportRequested: "Zażądałeś eksportu. Może to zająć chwilę. Po zakończeniu eksportu\
   \ zostanie on dodany do Twojego dysku."
@@ -787,7 +787,7 @@ active: "Aktywny"
 offline: "Offline"
 notRecommended: "Nie zalecane"
 botProtection: "Zabezpieczenie przed botami"
-instanceBlocking: "Zablokowane instancje"
+instanceBlocking: "Zablokowane/wyciszone instancje"
 selectAccount: "Wybierz konto"
 switchAccount: "Przełącz konto"
 enabled: "Właczono"
@@ -1006,7 +1006,7 @@ _nsfw:
   force: "Ukrywaj wszystkie media"
 _mfm:
   cheatSheet: "Ściąga MFM"
-  intro: "MFM jest językiem składniowym używanym przez m.in. Misskey, forki *key (w\
+  intro: "MFM jest językiem składniowym używanym przez m.in. Calckey, forki *key (w\
     \ tym Calckey), oraz Akkomę, który może być użyty w wielu miejscach. Tu znajdziesz\
     \ listę wszystkich możliwych elementów składni MFM."
   dummy: "Calckey rozszerza świat Fediwersum"
@@ -1075,6 +1075,14 @@ _mfm:
   inlineMath: Matematyka (Inline)
   inlineMathDescription: Pokaż formuły matematyczne (KaTeX) w linii
   blockMathDescription: Pokaż wieloliniowe formuły matematyczne (KaTeX) w bloku
+  background: Kolor tła
+  backgroundDescription: Zmień kolor tła tekstu.
+  foregroundDescription: Zmień kolor pierwszoplanowy tekstu.
+  positionDescription: Przesuń treść o określoną odległość.
+  position: Pozycjonuj
+  foreground: Kolor pierwszoplanowy
+  scaleDescription: Skaluj treść o określoną wielkość.
+  scale: Skaluj
 _instanceTicker:
   none: "Nigdy nie pokazuj"
   remote: "Pokaż dla zdalnych użytkowników"
@@ -1094,6 +1102,8 @@ _channel:
   following: "Śledzeni"
   usersCount: "{n} uczestnicy"
   notesCount: "{n} wpisy"
+  nameAndDescription: Nazwa i opis
+  nameOnly: Tylko nazwa
 _menuDisplay:
   top: "Góra"
   hide: "Ukryj"
@@ -1222,13 +1232,13 @@ _tutorial:
   step2_1: "Najpierw, proszę wypełnij swój profil."
   step2_2: "Podanie kilku informacji o tym, kim jesteś, ułatwi innym stwierdzenie,\
     \ czy chcą zobaczyć Twoje wpisy lub śledzić Cię."
-  step3_1: "Teraz czas na śledzenie niektórych osób!"
+  step3_1: "Pora znaleźć osoby do śledzenia!"
   step3_2: "Twoje domowe i społeczne linie czasu opierają się na tym, kogo śledzisz,\
     \ więc spróbuj śledzić kilka kont, aby zacząć.\nKliknij kółko z plusem w prawym\
     \ górnym rogu profilu, aby go śledzić."
   step4_1: "Pozwól, że zabierzemy Cię tam."
-  step4_2: "Dla twojego pierwszego postu, niektórzy ludzie lubią zrobić {introduction}\
-    \ post lub prosty \"Hello world!\""
+  step4_2: "W pierwszym wpisie możesz się przedstawić lub wysłać powitanie - \"Witaj,\
+    \ świecie!\""
   step5_1: "Osie czasu, wszędzie widzę osie czasu!"
   step5_2: "Twoja instancja ma włączone {timelines} różne osie czasu."
   step5_3: "Główna {icon} oś czasu to miejsce, w którym możesz zobaczyć posty od użytkowników\
@@ -1811,8 +1821,8 @@ privateMode: Tryb prywatny
 allowedInstances: Dopuszczone instancje
 recommended: Polecane
 allowedInstancesDescription: Hosty instancji które mają być dopuszczone do federacji,
-  każda separowana nową linią (dotyczy tylko trybu prywatnego).
-seperateRenoteQuote: Oddziel przyciski podbicia i cytatów
+  każdy separowany nową linią (dotyczy tylko trybu prywatnego).
+seperateRenoteQuote: Oddziel przyciski podbicia i cytowania
 refreshInterval: 'Częstotliwość aktualizacji '
 slow: Wolna
 _messaging:
@@ -1845,10 +1855,10 @@ swipeOnDesktop: Zezwól na przeciąganie w stylu mobilnym na desktopie
 moveFromDescription: To utworzy alias twojego starego konta, w celu umożliwienia migracji
   z tamtego konta na to. Zrób to ZANIM rozpoczniesz przenoszenie się z tamtego konta.
   Proszę wpisz tag konta w formacie @person@instance.com
-migrationConfirm: "Czy jesteś na 200% pewn* tego, że chcesz przenieść swoje konto\
-  \ na {account}? Gdy to zrobisz, odwrócenie tego będzie nie możliwe, i nie będziesz\
-  \ w stanie ponownie używać normalnie z tego konta.\nUpewnij się, że to konto zostało\
-  \ ustawione jako konto z którego się przenosisz."
+migrationConfirm: "Czy jesteś absolutnie pewn* tego, że chcesz przenieść swoje konto\
+  \ na {account}? Tego działania nie można odwrócić. Nieodwracalnie stracisz możliwość\
+  \ normalnego korzystania z konta.\nUpewnij się, że to konto zostało ustawione jako\
+  \ konto z którego się przenosisz."
 noThankYou: Nie, dziękuję
 addInstance: Dodaj instancję
 renoteMute: Wycisz podbicia
@@ -1894,25 +1904,9 @@ indexNotice: Indeksuję. Zapewne zajmie to chwilę, nie restartuj serwera przez 
 customKaTeXMacro: Niestandardowe makra KaTeX
 enableCustomKaTeXMacro: Włącz niestandardowe makra KaTeX
 noteId: ID wpisu
-_apps:
-  apps: Aplikacje
-  crossPlatform: Wieloplatformowe
-  mobile: Mobilne
-  firstParty: Oficjalne
-  firstClass: Pierwszej klasy
-  secondClass: Drugiej klasy
-  thirdClass: Trzeciej klasy
-  free: Darmowe
-  paid: Płatne
-  pwa: Zainstaluj PWA
-  kaiteki: Kaiteki
-  milktea: Milktea
-  missLi: MissLi
-  mona: Mona
-  theDesk: TheDesk
-  lesskey: Lesskey
 hiddenTagsDescription: 'Wypisz tagi (bez #) hashtagów które masz zamiar ukryć z "Na
-  czasie" i "Eksploruj". Na ukryte hashtagi można dalej wejść innymi sposobami.'
+  czasie" i "Eksploruj". Na ukryte hashtagi można dalej wejść innymi sposobami. Ta
+  lista nie ma wpływu na zablokowane instancje.'
 proxyAccountDescription: Konto proxy jest kontem które w określonych sytuacjach zachowuje
   się jak zdalny obserwujący. Na przykład, kiedy użytkownik dodaje zdalnego użytkownika
   do listy, oraz żaden lokalny użytkownik nie obserwuje tego konta, aktywność owego
@@ -1927,7 +1921,7 @@ sendErrorReportsDescription: "Gdy ta opcja jest włączona, szczegółowe inform
   \ Calckey.\nZawrze to informacje takie jak wersja twojego systemu operacyjnego,\
   \ przeglądarki, Twoja aktywność na Calckey itd."
 privateModeInfo: Jeśli włączone, tylko dopuszczone instancje będą mogły federować
-  z Twoją instancją. Wszystkie posty będą ukryte przed publiką.
+  z Twoją instancją. Wszystkie posty będą jedynie widoczne na Twojej instancji.
 oneHour: Godzina
 oneDay: Dzień
 oneWeek: Tydzień
@@ -1999,3 +1993,23 @@ themeColor: Kolor znacznika instancji
 instanceDefaultLightTheme: Domyślny jasny motyw instancji
 enableEmojiReactions: Włącz reakcje emoji
 showEmojisInReactionNotifications: Pokazuj emoji w powiadomieniach reakcyjnych
+apps: Aplikacje
+silenceThisInstance: Wycisz tę instancję
+silencedInstances: Wyciszone instancje
+deleted: Usunięte
+editNote: Edytuj wpis
+edited: Edytowany
+silenced: Wyciszony
+findOtherInstance: Znajdź inny serwer
+userSaysSomethingReasonReply: '{name} odpowiedział na wpis zawierający {reason}'
+userSaysSomethingReasonRenote: '{name} podbił post zawierający {reason}'
+signupsDisabled: Rejestracja na tym serwerze jest obecnie zamknięta, ale zawsze możesz
+  się zapisać na innym! Jeśli masz kod zaproszeniowy na ten serwer, wpisz go poniżej.
+userSaysSomethingReasonQuote: '{name} zacytował wpis zawierający {reason}'
+silencedInstancesDescription: Wymień nazwy domenowe instancji, które chcesz wyciszyć.
+  Profile w wyciszonych instancjach są traktowane jako "Wyciszony", mogą jedynie wysyłać
+  prośby obserwacji, i nie mogą oznaczać w wzmiankach profili lokalnych jeśli nie
+  są obserwowane. To nie będzie miało wpływu na zablokowane instancje.
+cannotUploadBecauseExceedsFileSizeLimit: Ten plik nie mógł być przesłany, ponieważ
+  jego wielkość przekracza dozwolony limit.
+sendModMail: Wyślij Powiadomienie Moderacyjne

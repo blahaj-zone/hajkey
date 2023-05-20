@@ -53,7 +53,7 @@ import { Poll } from "@/models/entities/poll.js";
 import { createNotification } from "../create-notification.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
 import { checkHitAntenna } from "@/misc/check-hit-antenna.js";
-import { getWordMute } from "@/misc/check-word-mute.js";
+import { getWordHardMute } from "@/misc/check-word-mute.js";
 import { addNoteToAntenna } from "../add-note-to-antenna.js";
 import { countSameRenotes } from "@/misc/count-same-renotes.js";
 import { deliverToRelays } from "../relay.js";
@@ -164,12 +164,16 @@ export default async (
 		host: User["host"];
 		isSilenced: User["isSilenced"];
 		createdAt: User["createdAt"];
+		isBot: User["isBot"];
 	},
 	data: Option,
 	silent = false,
 ) =>
 	// rome-ignore lint/suspicious/noAsyncPromiseExecutor: FIXME
 	new Promise<Note>(async (res, rej) => {
+		const dontFederateInitially =
+			data.localOnly || data.visibility === "hidden";
+
 		// If you reply outside the channel, match the scope of the target.
 		// TODO (I think it's a process that could be done on the client side, but it's server side for now.)
 		if (
@@ -196,6 +200,7 @@ export default async (
 		if (data.channel != null) data.visibility = "public";
 		if (data.channel != null) data.visibleUsers = [];
 		if (data.channel != null) data.localOnly = true;
+		if (data.visibility === "hidden") data.visibility = "public";
 
 		// enforce silent clients on server
 		if (
@@ -324,8 +329,8 @@ export default async (
 		res(note);
 
 		// 統計を更新
-		notesChart.update(note, true);
-		perUserNotesChart.update(user, note, true);
+		notesChart.update(note, true, user.isBot);
+		perUserNotesChart.update(user, note, true, user.isBot);
 
 		// Register host
 		if (Users.isRemoteUser(user)) {
@@ -355,9 +360,9 @@ export default async (
 			)
 			.then((us) => {
 				for (const u of us) {
-					getWordMute(note, { id: u.userId }, u.mutedWords).then(
+					getWordHardMute(data, { id: u.userId }, u.mutedWords).then(
 						(shouldMute) => {
-							if (shouldMute.muted) {
+							if (shouldMute) {
 								MutedNotes.insert({
 									id: genId(),
 									userId: u.userId,
@@ -400,6 +405,7 @@ export default async (
 		// この投稿を除く指定したユーザーによる指定したノートのリノートが存在しないとき
 		if (
 			data.renote &&
+			!user.isBot &&
 			(await countSameRenotes(user.id, data.renote.id, note.id)) === 0
 		) {
 			incRenoteCount(data.renote);
@@ -446,7 +452,9 @@ export default async (
 				}
 			}
 
-			publishNotesStream(note);
+			if (!dontFederateInitially) {
+				publishNotesStream(note);
+			}
 			if (note.replyId != null) {
 				// Only provide the reply note id here as the recipient may not be authorized to see the note.
 				publishNoteStream(note.replyId, "replied", {
@@ -565,7 +573,7 @@ export default async (
 			});
 
 			//#region AP deliver
-			if (Users.isLocalUser(user)) {
+			if (Users.isLocalUser(user) && !dontFederateInitially) {
 				(async () => {
 					const noteActivity = await renderNoteOrRenoteActivity(data, note);
 					const dm = new DeliverManager(user, noteActivity);

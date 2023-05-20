@@ -1,5 +1,5 @@
 <template>
-	<div class="mk-media-banner">
+	<div class="mk-media-banner" @click.stop>
 		<div
 			v-if="media.isSensitive && hide"
 			class="sensitive"

@@ -427,7 +427,7 @@ import { instance } from "@/instance";
 
 let preview_mention = $ref("@example");
 let preview_hashtag = $ref("#test");
-let preview_link = $ref(`[${i18n.ts._mfm.dummy}](https://example.com)`);
+let preview_link = $ref(`[${i18n.ts._mfm.dummy}](https://calckey.org)`);
 let preview_emoji = $ref(
 	instance.emojis.length ? `:${instance.emojis[0].name}:` : ":emojiname:"
 );

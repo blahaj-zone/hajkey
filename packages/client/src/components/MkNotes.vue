@@ -307,13 +307,12 @@ defineExpose({
 .giivymft {
 	&.noGap {
 		> .notes {
-			background: var(--panel);
+			background: var(--panel) !important;
 			border-radius: var(--radius);
 		}
 	}
 	&:not(.noGap) {
 		> .notes {
-			background: var(--bg);
 			.qtqtichx {
 				background: var(--panel);
 				border-radius: var(--radius);

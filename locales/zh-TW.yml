@@ -1,7 +1,6 @@
 _lang_: "繁體中文"
 headlineMisskey: "貼文連繫網路"
-introMisskey: "歡迎！ Misskey是一個開放原始碼且去中心化的社群網路。\n透過「貼文」分享周邊新鮮事，並告訴其他人您的想法！\U0001F4E1\
-  \n透過「反應」功能，對大家的貼文表達情感！\U0001F44D\n一起來探索這個新的世界吧！\U0001F680"
+introMisskey: "歡迎！ Calckey是一個免費，開放原碼，去中心化的社群網路🚀"
 monthAndDay: "{month}月 {day}日"
 search: "搜尋"
 notifications: "通知"
@@ -10,13 +9,13 @@ password: "密碼"
 forgotPassword: "忘記密碼"
 fetchingAsApObject: "從聯邦宇宙取得中"
 ok: "OK"
-gotIt: "知道了"
+gotIt: "知道了！"
 cancel: "取消"
 enterUsername: "輸入使用者名稱"
 renotedBy: "{user} 轉傳了"
 noNotes: "無貼文"
 noNotifications: "沒有通知"
-instance: "實例"
+instance: "伺服器"
 settings: "設定"
 basicSettings: "基本設定"
 otherSettings: "其他設定"
@@ -67,7 +66,7 @@ download: "下載"
 driveFileDeleteConfirm: "確定要刪除檔案「{name}」嗎？使用此附件的貼文也會跟著消失。"
 unfollowConfirm: "確定要取消追隨{name}嗎？"
 exportRequested: "已請求匯出。這可能會花一點時間。結束後檔案將會被放到雲端裡。"
-importRequested: "已請求匯入。這可能會花一點時間"
+importRequested: "已請求匯入。這可能會花一點時間。"
 lists: "清單"
 noLists: "你沒有任何清單"
 note: "貼文"
@@ -80,10 +79,10 @@ manageLists: "管理清單"
 error: "錯誤"
 somethingHappened: "發生錯誤"
 retry: "重試"
-pageLoadError: "載入頁面失敗"
-pageLoadErrorDescription: "這通常是因為網路錯誤或是瀏覽器快取殘留的原因。請先清除瀏覽器快取，稍後再重試"
+pageLoadError: "載入頁面失敗。"
+pageLoadErrorDescription: "這通常是因為網路錯誤或是瀏覽器快取殘留的原因。請先清除瀏覽器快取，稍後再重試。"
 serverIsDead: "伺服器沒有回應。請稍等片刻，然後重試。"
-youShouldUpgradeClient: "請重新載入以使用新版本的客戶端顯示此頁面"
+youShouldUpgradeClient: "請重新載入以使用新版本的客戶端顯示此頁面。"
 enterListName: "輸入清單名稱"
 privacy: "隱私"
 makeFollowManuallyApprove: "手動審核追隨請求"
@@ -96,7 +95,7 @@ followRequestPending: "追隨許可批准中"
 enterEmoji: "輸入表情符號"
 renote: "轉發"
 unrenote: "取消轉發"
-renoted: "轉傳成功"
+renoted: "已轉傳。"
 cantRenote: "無法轉發此貼文。"
 cantReRenote: "無法轉傳之前已經轉傳過的內容。"
 quote: "引用"
@@ -143,15 +142,15 @@ settingGuide: "推薦設定"
 cacheRemoteFiles: "快取遠端檔案"
 cacheRemoteFilesDescription: "禁用此設定會停止遠端檔案的緩存，從而節省儲存空間，但資料會因直接連線從而產生額外連接數據。"
 flagAsBot: "此使用者是機器人"
-flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Calckey內部系統將本帳戶識別為機器人"
+flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Calckey內部系統將本帳戶識別為機器人。"
 flagAsCat: "此使用者是貓"
-flagAsCatDescription: "如果想將本帳戶標示為一隻貓，請開啟此標示"
+flagAsCatDescription: "如果想將本帳戶標示為一隻貓，請開啟此標示！"
 flagShowTimelineReplies: "在時間軸上顯示貼文的回覆"
 flagShowTimelineRepliesDescription: "啟用時，時間線除了顯示用戶的貼文以外，還會顯示用戶對其他貼文的回覆。"
 autoAcceptFollowed: "自動追隨中使用者的追隨請求"
 addAccount: "添加帳戶"
 loginFailed: "登入失敗"
-showOnRemote: "轉到所在實例顯示"
+showOnRemote: "轉到所在伺服器顯示"
 general: "一般"
 wallpaper: "桌布"
 setWallpaper: "設定桌布"
@@ -166,7 +165,7 @@ selectUser: "選取使用者"
 recipient: "收件人"
 annotation: "註解"
 federation: "站台聯邦"
-instances: "實例"
+instances: "伺服器"
 registeredAt: "初次觀測"
 latestRequestSentAt: "上次發送的請求"
 latestRequestReceivedAt: "上次收到的請求"
@@ -176,7 +175,7 @@ charts: "圖表"
 perHour: "每小時"
 perDay: "每日"
 stopActivityDelivery: "停止發送活動"
-blockThisInstance: "封鎖此實例"
+blockThisInstance: "封鎖此伺服器"
 operations: "操作"
 software: "軟體"
 version: "版本"
@@ -187,15 +186,15 @@ jobQueue: "佇列"
 cpuAndMemory: "CPU及記憶體用量"
 network: "網路"
 disk: "硬碟"
-instanceInfo: "實例資訊"
+instanceInfo: "伺服器資訊"
 statistics: "統計"
 clearQueue: "清除佇列"
 clearQueueConfirmTitle: "確定要清除佇列嗎？"
 clearQueueConfirmText: "未發佈的貼文將不會發佈。您通常不需要確認。"
 clearCachedFiles: "清除快取資料"
 clearCachedFilesConfirm: "確定要清除所有遠端暫存資料嗎？"
-blockedInstances: "已封鎖的實例"
-blockedInstancesDescription: "請逐行輸入需要封鎖的實例。已封鎖的實例將無法與本實例進行通訊。"
+blockedInstances: "已封鎖的伺服器"
+blockedInstancesDescription: "請逐行輸入需要封鎖的伺服器。已封鎖的伺服器將無法與本伺服器進行通訊。"
 muteAndBlock: "靜音和封鎖"
 mutedUsers: "已靜音用戶"
 blockedUsers: "已封鎖用戶"
@@ -218,9 +217,9 @@ all: "全部"
 subscribing: "訂閱中"
 publishing: "直播中"
 notResponding: "沒有回應"
-instanceFollowing: "追蹤實例"
-instanceFollowers: "追蹤實例"
-instanceUsers: "用戶"
+instanceFollowing: "追蹤伺服器"
+instanceFollowers: "伺服器的追蹤者"
+instanceUsers: "此伺服器的用戶"
 changePassword: "修改密碼"
 security: "安全性"
 retypedNotMatch: "兩次輸入不一致。"
@@ -310,8 +309,8 @@ unwatch: "取消追隨"
 accept: "接受"
 reject: "拒絕"
 normal: "正常"
-instanceName: "實例名稱"
-instanceDescription: "實例說明"
+instanceName: "伺服器名稱"
+instanceDescription: "伺服器說明"
 maintainerName: "管理員名稱"
 maintainerEmail: "管理員郵箱"
 tosUrl: "服務條款URL"
@@ -341,7 +340,7 @@ basicInfo: "基本資訊"
 pinnedUsers: "置頂用戶"
 pinnedUsersDescription: "在「發現」頁面中使用換行標記想要置頂的使用者。"
 pinnedPages: "釘選頁面"
-pinnedPagesDescription: "輸入要固定至實例首頁的頁面路徑，以換行符分隔。"
+pinnedPagesDescription: "輸入要固定至伺服器首頁的頁面路徑，以換行符分隔。"
 pinnedClipId: "置頂的摘錄ID"
 pinnedNotes: "已置頂的貼文"
 hcaptcha: "hCaptcha"
@@ -359,7 +358,7 @@ name: "名稱"
 antennaSource: "接收來源"
 antennaKeywords: "包含關鍵字"
 antennaExcludeKeywords: "排除關鍵字"
-antennaKeywordsDescription: "用空格分隔指定AND、用換行符分隔指定OR"
+antennaKeywordsDescription: "用空格分隔指定AND、用換行符分隔指定OR。"
 notifyAntenna: "通知有新貼文"
 withFileAntenna: "僅帶有附件的貼文"
 enableServiceworker: "開啟 ServiceWorker"
@@ -400,7 +399,7 @@ newPasswordIs: "新密碼為「{password}」"
 reduceUiAnimation: "減少介面的動態視覺"
 share: "分享"
 notFound: "找不到"
-notFoundDescription: "找不到與指定URL回應的頁面"
+notFoundDescription: "找不到與指定URL回應的頁面。"
 uploadFolder: "預設上傳資料夾"
 cacheClear: "清除快取"
 markAsReadAllNotifications: "標記所有通知為已讀"
@@ -435,10 +434,10 @@ onlyOneFileCanBeAttached: "只能加入一個附件"
 signinRequired: "請先登入"
 invitations: "邀請"
 invitationCode: "邀請碼"
-checking: "確認中"
+checking: "確認中..."
 available: "可用的"
 unavailable: "不可用的"
-usernameInvalidFormat: "可使用大小寫英文字母、數字和底線"
+usernameInvalidFormat: "可使用大小寫英文字母、數字和底線。"
 tooShort: "過短"
 tooLong: "過長"
 weakPassword: "密碼強度過弱"
@@ -461,7 +460,7 @@ joinOrCreateGroup: "請加入現有群組，或創建新群組。"
 noHistory: "沒有歷史紀錄"
 signinHistory: "登入歷史"
 disableAnimatedMfm: "禁用MFM動畫"
-doing: "正在進行"
+doing: "正在處理..."
 category: "類別"
 tags: "標籤"
 docSource: "文件來源"
@@ -487,8 +486,8 @@ hideThisNote: "隱藏此貼文"
 showFeaturedNotesInTimeline: "在時間軸上顯示熱門推薦"
 objectStorage: "Object Storage (物件儲存)"
 useObjectStorage: "使用Object Storage"
-objectStorageBaseUrl: "Base URL"
-objectStorageBaseUrlDesc: "引用時的URL。如果您使用的是CDN或反向代理，请指定其URL，例如S3：“https://<bucket>.s3.amazonaws.com”，GCS：“https://storage.googleapis.com/<bucket>”"
+objectStorageBaseUrl: "根URL"
+objectStorageBaseUrlDesc: "引用時的URL。如果你使用的是CDN或反向代理，請指定其網址URL。\n例如S3：“https://<bucket>.s3.amazonaws.com”，GCS：“https://storage.googleapis.com/<bucket>”。"
 objectStorageBucket: "儲存空間（Bucket）"
 objectStorageBucketDesc: "請指定您正在使用的服務的存儲桶名稱。"
 objectStoragePrefix: "前綴"
@@ -536,8 +535,8 @@ updateRemoteUser: "更新遠端使用者資訊"
 deleteAllFiles: "刪除所有檔案"
 deleteAllFilesConfirm: "要删除所有檔案嗎？"
 removeAllFollowing: "解除所有追蹤"
-removeAllFollowingDescription: "解除{host}所有的追蹤。在實例不再存在時執行。"
-userSuspended: "該使用者已被停用"
+removeAllFollowingDescription: "解除{host}所有的追蹤。在伺服器不再存在時執行。"
+userSuspended: "此使用者已被停用。"
 userSilenced: "該用戶已被禁言。"
 yourAccountSuspendedTitle: "帳戶已被凍結"
 yourAccountSuspendedDescription: "由於違反了伺服器的服務條款或其他原因，該帳戶已被凍結。 您可以與管理員連繫以了解更多訊息。 請不要創建一個新的帳戶。"
@@ -548,7 +547,7 @@ relays: "中繼"
 addRelay: "新增中繼"
 inboxUrl: "收件夾URL"
 addedRelays: "已加入的中繼"
-serviceworkerInfo: "您需要啟用推送通知"
+serviceworkerInfo: "您需要啟用推送通知。"
 deletedNote: "已删除的貼文"
 invisibleNote: "隱藏的貼文"
 enableInfiniteScroll: "啟用自動滾動頁面模式"
@@ -594,14 +593,14 @@ smtpHost: "主機"
 smtpPort: "埠"
 smtpUser: "使用者名稱"
 smtpPass: "密碼"
-emptyToDisableSmtpAuth: "留空使用者名稱和密碼以關閉SMTP驗證。"
+emptyToDisableSmtpAuth: "留空使用者名稱及密碼以關閉SMTP驗證"
 smtpSecure: "在 SMTP 連接中使用隱式 SSL/TLS"
-smtpSecureInfo: "使用STARTTLS時關閉。"
+smtpSecureInfo: "如使用STARTTLS，請關閉"
 testEmail: "測試郵件發送"
 wordMute: "被靜音的文字"
 regexpError: "正規表達式錯誤"
 regexpErrorDescription: "{tab} 靜音文字的第 {line} 行的正規表達式有錯誤："
-instanceMute: "實例的靜音"
+instanceMute: "伺服器的靜音"
 userSaysSomething: "{name}說了什麼"
 makeActive: "啟用"
 display: "檢視"
@@ -614,7 +613,7 @@ database: "資料庫"
 channel: "頻道"
 create: "新增"
 notificationSetting: "通知設定"
-notificationSettingDesc: "選擇顯示通知的類型"
+notificationSettingDesc: "選擇顯示通知的類型。"
 useGlobalSetting: "使用全域設定"
 useGlobalSettingDesc: "啟用時，將使用帳戶通知設定。停用時，則可以單獨設定。"
 other: "其他"
@@ -632,15 +631,15 @@ abuseReported: "回報已送出。感謝您的報告。"
 reporter: "檢舉者"
 reporteeOrigin: "檢舉來源"
 reporterOrigin: "檢舉者來源"
-forwardReport: "將報告轉送給遠端實例"
-forwardReportIsAnonymous: "在遠端實例上看不到您的資訊，顯示的報告者是匿名的系统帳戶。"
+forwardReport: "將報告轉送給遠端伺服器"
+forwardReportIsAnonymous: "在遠端伺服器上看不到您的資訊，顯示的報告者是匿名的系統帳戶。"
 send: "發送"
 abuseMarkAsResolved: "處理完畢"
 openInNewTab: "在新分頁中開啟"
 openInSideView: "在側欄中開啟"
 defaultNavigationBehaviour: "默認導航"
-editTheseSettingsMayBreakAccount: "修改這些設定可能會毀損您的帳戶"
-instanceTicker: "貼文的實例來源"
+editTheseSettingsMayBreakAccount: "修改這些設定可能會毀損你的帳戶。"
+instanceTicker: "貼文的伺服器資訊"
 waitingFor: "等待{x}"
 random: "隨機"
 system: "系統"
@@ -690,7 +689,7 @@ experimentalFeatures: "實驗中的功能"
 developer: "開發者"
 makeExplorable: "使自己的帳戶能夠在“探索”頁面中顯示"
 makeExplorableDescription: "如果關閉，帳戶將不會被顯示在\"探索\"頁面中。"
-showGapBetweenNotesInTimeline: "分開顯示時間線上的貼文。"
+showGapBetweenNotesInTimeline: "分開顯示時間軸上的貼文"
 duplicate: "複製"
 left: "左"
 center: "置中"
@@ -704,7 +703,7 @@ onlineUsersCount: "{n}人正在線上"
 nUsers: "{n}用戶"
 nNotes: "{n}貼文"
 sendErrorReports: "傳送錯誤報告"
-sendErrorReportsDescription: "啟用後，問題報告將傳送至開發者以提升軟體品質。問題報告可能包括OS版本，瀏覽器類型，行為歷史記錄等。"
+sendErrorReportsDescription: "啟用後，問題報告將傳送至Calckey開發者以提升軟體品質。\n問題報告可能包括OS版本，瀏覽器類型，行為歷史記錄等。"
 myTheme: "我的佈景主題"
 backgroundColor: "背景"
 accentColor: "重點色彩"
@@ -728,7 +727,7 @@ capacity: "容量"
 inUse: "已使用"
 editCode: "編輯代碼"
 apply: "套用"
-receiveAnnouncementFromInstance: "接收由本實例發出的電郵通知"
+receiveAnnouncementFromInstance: "接收由本伺服器發出的電郵通知"
 emailNotification: "郵件通知"
 publish: "發佈"
 inChannelSearch: "頻道内搜尋"
@@ -756,7 +755,7 @@ active: "最近活躍"
 offline: "離線"
 notRecommended: "不推薦"
 botProtection: "Bot防護"
-instanceBlocking: "已封鎖的實例"
+instanceBlocking: "聯邦管理"
 selectAccount: "選擇帳戶"
 switchAccount: "切換帳戶"
 enabled: "已啟用"
@@ -781,7 +780,7 @@ priority: "優先級"
 high: "高"
 middle: "中"
 low: "低"
-emailNotConfiguredWarning: "沒有設定電子郵件地址"
+emailNotConfiguredWarning: "沒有設定電郵地址。"
 ratio: "%"
 previewNoteText: "預覽文本"
 customCss: "自定義 CSS"
@@ -817,11 +816,11 @@ controlPanel: "控制台"
 manageAccounts: "管理帳戶"
 makeReactionsPublic: "將反應設為公開"
 makeReactionsPublicDescription: "將您做過的反應設為公開可見。"
-classic: "經典"
+classic: "置中"
 muteThread: "將貼文串設為靜音"
 unmuteThread: "將貼文串的靜音解除"
 ffVisibility: "連接的公開範圍"
-ffVisibilityDescription: "您可以設定您的關注/關注者資訊的公開範圍"
+ffVisibilityDescription: "您可以設定您的關注/關注者資訊的公開範圍。"
 continueThread: "查看更多貼文"
 deleteAccountConfirm: "將要刪除帳戶。是否確定？"
 incorrectPassword: "密碼錯誤。"
@@ -840,9 +839,9 @@ themeColor: "主題顏色"
 size: "大小"
 numberOfColumn: "列數"
 searchByGoogle: "搜尋"
-instanceDefaultLightTheme: "實例預設的淺色主題"
-instanceDefaultDarkTheme: "實例預設的深色主題"
-instanceDefaultThemeDescription: "輸入物件形式的主题代碼"
+instanceDefaultLightTheme: "伺服器預設的淺色主題"
+instanceDefaultDarkTheme: "伺服器預設的深色主題"
+instanceDefaultThemeDescription: "輸入物件形式的主題代碼。"
 mutePeriod: "靜音的期限"
 indefinitely: "無期限"
 tenMinutes: "10分鐘"
@@ -890,17 +889,17 @@ cannotUploadBecauseInappropriate: "由於判定可能包含不適當的內容，
 cannotUploadBecauseNoFreeSpace: "由於雲端硬碟沒有可用空間，因此無法上傳。"
 beta: "Beta"
 enableAutoSensitive: "自動NSFW判定"
-enableAutoSensitiveDescription: "如果可用，請利用機器學習在媒體上自動設置 NSFW 旗標。 即使關閉此功能，依實例而定也可能會自動設置。"
+enableAutoSensitiveDescription: "如可用，請利用機器學習在媒體上自動設置 NSFW 旗標。 即使關閉此功能，依伺服器而定也可能會自動設置。"
 activeEmailValidationDescription: "積極地驗證用戶的電子郵件地址，判斷它是否為免洗地址，或者它是否可以通信。 若關閉，則只會檢查字元是否正確。"
 navbar: "導覽列"
 shuffle: "隨機"
 account: "帳戶"
 move: "移動"
 customKaTeXMacro: "自定義 KaTeX 宏"
-customKaTeXMacroDescription: "使用宏來輕鬆的輸入數學表達式吧！宏的用法與 LaTeX 中的命令定義相同。你可以使用 \\newcommand{\\\
-  name}{content} 或 \\newcommand{\\name}[number of arguments]{content} 來輸入數學表達式。舉個例子，\\\
-  newcommand{\\add}[2]{#1 + #2} 會將 \\add{3}{foo} 展開為 3 + foo。此外，宏名稱外的花括號 {} 可以被替換為圓括號\
-  \ () 和方括號 []，這會影響用於參數的括號。每行只能夠定義一個宏，無法在中間換行，且無效的行將被忽略。只支持簡單字符串替換功能，不支持高級語法，如條件分支等。"
+customKaTeXMacroDescription: "使用宏來輕鬆的輸入數學表達式吧！宏的用法與 LaTeX 中的命令定義相同。你可以使用 \\newcommand{\\
+  name}{content} 或 \\newcommand{\\name}[number of arguments]{content} 來輸入數學表達式。舉個例子，\\
+  newcommand{\\add}[2]{#1 + #2} 會將 \\add{3}{foo} 展開為 3 + foo。此外，宏名稱外的花括號 {} 可以被替換為圓括號
+  () 和方括號 []，這會影響用於參數的括號。每行只能夠定義一個宏，無法在中間換行，且無效的行將被忽略。只支持簡單字符串替換功能，不支持高級語法，如條件分支等。"
 enableCustomKaTeXMacro: "啟用自定義 KaTeX 宏"
 _sensitiveMediaDetection:
   description: "您可以使用機器學習自動檢測敏感媒體並將其用於審核。 伺服器的負荷會稍微增加。"
@@ -937,7 +936,7 @@ _ad:
 _forgotPassword:
   enterEmail: "請輸入您的帳戶註冊的電子郵件地址。 密碼重置連結將被發送到該電子郵件地址。"
   ifNoEmail: "如果您還沒有註冊您的電子郵件地址，請聯繫管理員。"
-  contactAdmin: "此實例不支持電子郵件，請聯繫您的管理員重置您的密碼。"
+  contactAdmin: "此伺服器不支援使用電郵，請聯繫您的管理員重置你的密碼。"
 _gallery:
   my: "我的貼文"
   liked: "喜歡的貼文"
@@ -969,7 +968,7 @@ _preferencesBackups:
   createdAt: "建立日期：{date} {time}"
   updatedAt: "更新日期：{date} {time}"
   cannotLoad: "無法讀取"
-  invalidFile: "檔案形式錯誤。"
+  invalidFile: "無效的檔案格式"
 _registry:
   scope: "範圍"
   key: "機碼"
@@ -983,7 +982,7 @@ _aboutMisskey:
   source: "原始碼"
   translation: "翻譯Calckey"
   donate: "贊助Calckey"
-  morePatrons: "還有許許多多幫助我們的其他人，非常感謝你們。 \U0001F970"
+  morePatrons: "還有許許多多幫助我們的其他人，非常感謝你們。 🥰"
   patrons: "贊助者"
 _nsfw:
   respect: "隱藏敏感內容"
@@ -1012,13 +1011,13 @@ _mfm:
   blockCode: "程式碼(區塊)"
   blockCodeDescription: "在區塊中用高亮度顯示，例如複數行的程式碼語法。"
   inlineMath: "數學公式(內嵌)"
-  inlineMathDescription: "顯示內嵌的KaTeX數學公式。"
+  inlineMathDescription: "顯示內嵌的KaTeX數學公式"
   blockMath: "數學公式(方塊)"
-  blockMathDescription: "以區塊顯示KaTeX數學式。"
+  blockMathDescription: "以區塊顯示KaTeX數學式"
   quote: "引用"
   quoteDescription: "可以用來表示引用的内容。"
   emoji: "自訂表情符號"
-  emojiDescription: "您可以通過將自定義表情符號名稱括在冒號中來顯示自定義表情符號。 "
+  emojiDescription: "您可以通過將自定義表情符號名稱括在冒號中來顯示自定義表情符號。"
   search: "搜尋"
   searchDescription: "您可以顯示所輸入的搜索框。"
   flip: "翻轉"
@@ -1046,7 +1045,7 @@ _mfm:
   blur: "模糊"
   blurDescription: "產生模糊效果。将游標放在上面即可將内容顯示出來。"
   font: "字型"
-  fontDescription: "您可以設定顯示內容的字型"
+  fontDescription: "您可以設定顯示內容的字型。"
   rainbow: "彩虹"
   rainbowDescription: "用彩虹色來顯示內容。"
   sparkle: "閃閃發光"
@@ -1055,6 +1054,12 @@ _mfm:
   rotateDescription: "以指定的角度旋轉。"
   plain: "簡潔"
   plainDescription: "停用全部的內部語法。"
+  play: 播放 MFM
+  stop: 暫停MFM
+  warn: MFM 可能包含快速移動或顯眼的動畫
+  position: 位置
+  alwaysPlay: 自動播放所有MFM動畫
+  positionDescription: 按指定數量移動內容。
 _instanceTicker:
   none: "隱藏"
   remote: "向遠端使用者顯示"
@@ -1063,6 +1068,7 @@ _serverDisconnectedBehavior:
   reload: "自動重載"
   dialog: "彈出式警告"
   quiet: "非侵入式警告"
+  nothing: 無
 _channel:
   create: "建立頻道"
   edit: "編輯頻道"
@@ -1073,6 +1079,8 @@ _channel:
   following: "關注中"
   usersCount: "有{n}人參與"
   notesCount: "有{n}個貼文"
+  nameAndDescription: "名稱與說明"
+  nameOnly: "僅名稱"
 _menuDisplay:
   sideFull: "側向"
   sideIcon: "側向（圖示）"
@@ -1088,10 +1096,10 @@ _wordMute:
   hard: "硬性靜音"
   mutedNotes: "已靜音的貼文"
 _instanceMute:
-  instanceMuteDescription: "包括對被靜音實例上的用戶的回覆，被設定的實例上所有貼文及轉發都會被靜音。"
+  instanceMuteDescription: "包括對被靜音伺服器上的用戶的回覆，被設定的伺服器上所有貼文及轉發都會被靜音。"
   instanceMuteDescription2: "設定時以換行進行分隔"
-  title: "被設定的實例，貼文將被隱藏。"
-  heading: "將實例靜音"
+  title: "被設定的伺服器，貼文將被隱藏。"
+  heading: "將會被靜音的伺服器"
 _theme:
   explore: "取得佈景主題"
   install: "安裝佈景主題"
@@ -1109,13 +1117,13 @@ _theme:
   constant: "常數"
   defaultValue: "預設值"
   color: "顏色"
-  refProp: "查看屬性 "
+  refProp: "查看屬性"
   refConst: "查看常數"
   key: "按鍵"
   func: "函数"
   funcKind: "功能類型"
   argument: "參數"
-  basedProp: "要基於的屬性的名稱 "
+  basedProp: "要基於的屬性的名稱"
   alpha: "透明度"
   darken: "暗度"
   lighten: "亮度"
@@ -1131,9 +1139,9 @@ _theme:
     panel: "面板"
     shadow: "陰影"
     header: "標題"
-    navBg: "側邊欄的背景 "
+    navBg: "側邊欄的背景"
     navFg: "側邊欄的文字"
-    navHoverFg: "側邊欄文字（懸停） "
+    navHoverFg: "側邊欄文字（懸停）"
     navActive: "側邊欄文本 (活動)"
     navIndicator: "側邊欄指示符"
     link: "鏈接"
@@ -1191,27 +1199,27 @@ _time:
   day: "日"
 _tutorial:
   title: "如何使用Calckey"
-  step1_1: "欢迎！"
-  step1_2: "让我们把你安排好。你很快就会启动并运行！"
-  step2_1: "首先，请完成您的个人资料。"
-  step2_2: "通过提供一些关于你自己的信息，其他人会更容易了解他们是否想看到你的帖子或关注你。"
-  step3_1: "现在是时候跟随一些人了！"
-  step3_2: "你的主页和社交馈送是基于你所关注的人，所以试着先关注几个账户。{n点击个人资料右上角的加号圈就可以关注它。"
-  step4_1: "让我们出去找你。"
-  step4_2: "对于他们的第一条信息，有些人喜欢做{introduction}或一个简单的 \"hello world!\""
-  step5_1: "时间限制，到处是时间限制！"
-  step5_2: "您的实例已启用各种时间线的{timelines}。"
-  step5_3: "主{icon}时间线是你可以看到你的订阅者的帖子的时间线。"
-  step5_4: "本地{icon}时间线是你可以看到实例中所有其他用户的信息的时间线。"
-  step5_5: "推荐的{icon}时间线 - 是时间轴，你可以看到管理员推荐的实例的信息"
-  step5_6: "社交{icon}时间线显示来自你的订阅者朋友的信息。"
-  step5_7: "全球{icon}时间线是你可以看到来自所有其他连接的实例的消息。"
-  step6_1: "那么，这里是什么地方？"
-  step6_2: "好吧，你不只是加入卡尔基。你已经加入了Fediverse的一个门户，这是一个由成千上万台服务器组成的互联网络，被称为 \"实例\""
-  step6_3: "每个服务器的工作方式不同，并不是所有的服务器都运行Calckey。但这个人确实如此! 这有点复杂，但你很快就会明白的。"
-  step6_4: "现在去学习并享受乐趣！"
+  step1_1: "歡迎！"
+  step1_2: "讓我們把你安排好。你很快就會啟動並運行！"
+  step2_1: "首先，請完成你的個人資料。"
+  step2_2: "通過提供一些關於你自己的資料，其他人會更容易了解他們是否想看到你的帖子或關注你。"
+  step3_1: "現在是時候追隨一些人了！"
+  step3_2: "你的主頁和社交時間軸是基於你所追蹤的人，所以試著先追蹤幾個賬戶。\n點擊個人資料右上角的加號圈就可以關注它。"
+  step4_1: "讓我們出去找你。"
+  step4_2: "對於他們的第一條信息，有些人喜歡做 {introduction} 或一個簡單的 \"hello world!\""
+  step5_1: "時間軸，到處都是時間軸！"
+  step5_2: "您的伺服器已啟用了{timelines}個時間軸。"
+  step5_3: "主 {icon} 時間軸是顯示你追蹤的帳號的帖子。"
+  step5_4: "本地 {icon} 時間軸是你可以看到伺服器中所有其他用戶的信息的時間軸。"
+  step5_5: "社交 {icon} 時間軸是顯示你的主時間軸 + 本地時間軸。"
+  step5_6: "推薦 {icon} 時間軸是顯示你的伺服器管理員推薦的帖文。"
+  step5_7: "全球 {icon} 時間軸是顯示來自所有其他連接的伺服器的帖文。"
+  step6_1: "那麼，這裡是什麼地方？"
+  step6_2: "你不只是加入Calckey。你已經加入了Fediverse的一個門戶，這是一個由成千上萬台服務器組成的互聯網絡。"
+  step6_3: "每個服務器也有不同，而並不是所有的服務器都運行Calckey。但這個服務器確實是運行Calckey的! 你可能會覺得有點複雜，但你很快就會明白的。"
+  step6_4: "現在開始探索吧！"
 _2fa:
-  alreadyRegistered: "此設備已經被註冊過了"
+  alreadyRegistered: "你已註冊過一個雙重認證的裝置。"
   registerDevice: "註冊裝置"
   registerKey: "註冊鍵"
   step1: "首先，在您的設備上安裝二步驗證程式，例如{a}或{b}。"
@@ -1288,13 +1296,13 @@ _widgets:
   digitalClock: "電子時鐘"
   unixClock: "UNIX時間"
   federation: "聯邦宇宙"
-  instanceCloud: "實例雲"
+  instanceCloud: "伺服器雲端"
   postForm: "發佈窗口"
   slideshow: "幻燈片"
   button: "按鈕"
   onlineUsers: "線上的用戶"
   jobQueue: "佇列"
-  serverMetric: "服務器指標 "
+  serverMetric: "伺服器指標"
   aiscript: "AiScript控制台"
   aichan: "小藍"
 _cw:
@@ -1303,14 +1311,14 @@ _cw:
   chars: "{count}字元"
   files: "{count} 個檔案"
 _poll:
-  noOnlyOneChoice: "至少需要兩個選項。"
+  noOnlyOneChoice: "至少需要兩個選項"
   choiceN: "選擇{n}"
   noMore: "沒辦法再添加選項了"
   canMultipleVote: "可以多次投票"
   expiration: "期限"
   infinite: "無期限"
   at: "結束時間"
-  after: "進度指定 "
+  after: "在指定時間後結束..."
   deadlineDate: "截止日期"
   deadlineTime: "小時"
   duration: "時長"
@@ -1326,8 +1334,8 @@ _poll:
   remainingSeconds: "{s}秒後截止"
 _visibility:
   public: "公開"
-  publicDescription: "發布給所有用戶 "
-  home: "首頁"
+  publicDescription: "發布給所有用戶"
+  home: "不在主頁顯示"
   homeDescription: "僅發送至首頁的時間軸"
   followers: "追隨者"
   followersDescription: "僅發送至關注者"
@@ -1338,7 +1346,7 @@ _visibility:
 _postForm:
   replyPlaceholder: "回覆此貼文..."
   quotePlaceholder: "引用此貼文..."
-  channelPlaceholder: "發佈到頻道"
+  channelPlaceholder: "發佈到頻道..."
   _placeholders:
     a: "今天過得如何?"
     b: "有什麼新鮮事嗎?"
@@ -1350,7 +1358,7 @@ _profile:
   name: "名稱"
   username: "使用者名稱"
   description: "關於我"
-  youCanIncludeHashtags: "你也可以在「關於我」中加上 #tag"
+  youCanIncludeHashtags: "你也可以在「關於我」中加上 #tag。"
   metadata: "進階資訊"
   metadataEdit: "編輯進階資訊"
   metadataDescription: "可以在個人資料中以表格形式顯示其他資訊。"
@@ -1358,6 +1366,7 @@ _profile:
   metadataContent: "内容"
   changeAvatar: "更換大頭貼"
   changeBanner: "變更橫幅圖像"
+  locationDescription: 如果你先輸入你所在的城市，則會向其他用戶顯示你的當地時間。
 _exportOrImport:
   allNotes: "所有貼文"
   followingList: "追隨中"
@@ -1386,7 +1395,7 @@ _instanceCharts:
   usersTotal: "總計使用者"
   notes: "貼文増減"
   notesTotal: "累計貼文"
-  ff: "追隨/追隨者的増減"
+  ff: "追隨/追隨者的増減 "
   ffTotal: "追隨/追隨者累計"
   cacheSize: "增加或減少快取用量"
   cacheSizeTotal: "快取大小總計"
@@ -1450,7 +1459,7 @@ _pages:
     post: "發佈窗口"
     _post:
       text: "内容"
-      attachCanvasImage: "附加相簿圖像 "
+      attachCanvasImage: "附加相簿圖像"
       canvasId: "畫布ID"
     textInput: "插入字串"
     _textInput:
@@ -1475,7 +1484,7 @@ _pages:
     note: "嵌式貼文"
     _note:
       id: "貼文ID"
-      idDescription: "您也可以粘貼筆記 URL 並進行設置。 "
+      idDescription: "您也可以粘貼筆記 URL 並進行設置。"
       detailed: "顯示詳細內容"
     switch: "開關"
     _switch:
@@ -1492,14 +1501,14 @@ _pages:
       colored: "彩色"
       action: "按下按鈕後發生的行為"
       _action:
-        dialog: "顯示對話框 "
+        dialog: "顯示對話框"
         _dialog:
           content: "内容"
         resetRandom: "重設亂數"
         pushEvent: "發送事件"
         _pushEvent:
           event: "事件名稱"
-          message: "按下時顯示的消息 "
+          message: "按下時顯示的消息"
           variable: "要發送的變數"
           no-variable: "沒有"
         callAiScript: "調用AiScript"
@@ -1518,7 +1527,7 @@ _pages:
       operation: "計算"
       comparison: "對比"
       random: "隨機"
-      value: "數值 "
+      value: "數值"
       fn: "函数"
       text: "文本操作"
       convert: "轉換"
@@ -1528,7 +1537,7 @@ _pages:
       multiLineText: "字串(多行)"
       textList: "字串串列"
       _textList:
-        info: "請分開每個換行符 "
+        info: "請分開每個換行符"
       strLen: "字串長度"
       _strLen:
         arg1: "字串"
@@ -1607,7 +1616,7 @@ _pages:
       _if:
         arg1: "如果"
         arg2: "如果"
-        arg3: "除此以外 "
+        arg3: "除此以外"
       not: "否"
       _not:
         arg1: "否"
@@ -1618,7 +1627,7 @@ _pages:
       _rannum:
         arg1: "下限"
         arg2: "上限"
-      randomPick: "從列表中隨機選擇 "
+      randomPick: "從列表中隨機選擇"
       _randomPick:
         arg1: "清單"
       dailyRandom: "隨機(使用者每日變化 )"
@@ -1628,7 +1637,7 @@ _pages:
       _dailyRannum:
         arg1: "下限"
         arg2: "上限"
-      dailyRandomPick: "從列表中隨機選擇（使用者每日變化 ） "
+      dailyRandomPick: "從列表中隨機選擇（使用者每日變化 ）"
       _dailyRandomPick:
         arg1: "清單"
       seedRandom: "隨機抽選種子碼"
@@ -1671,7 +1680,7 @@ _pages:
         slots: "欄位"
         slots-info: "用換行符分隔每個欄位"
         arg1: "輸出"
-      for: "重複 "
+      for: "重複"
       _for:
         arg1: "重複次數"
         arg2: "處理"
@@ -1692,7 +1701,7 @@ _relayStatus:
   accepted: "已通過核准"
   rejected: "已拒絕"
 _notification:
-  fileUploaded: "上傳檔案成功。"
+  fileUploaded: "上傳檔案成功"
   youGotMention: "{name}提及到您"
   youGotReply: "{name}回覆了您"
   youGotQuote: "{name}引用了您"
@@ -1707,7 +1716,7 @@ _notification:
   pollEnded: "問卷調查已產生結果"
   emptyPushNotificationMessage: "推送通知已更新"
   _types:
-    all: "全部 "
+    all: "全部"
     follow: "追隨中"
     mention: "提及"
     reply: "回覆"
@@ -1735,14 +1744,14 @@ _deck:
   swapDown: "往下移動"
   stackLeft: "向左折疊"
   popRight: "向右彈出"
-  profile: "個人檔案"
-  newProfile: "新建個人檔案"
-  renameProfile: "重新命名個人檔案"
-  deleteProfile: "刪除個人檔案"
-  nameAlreadyExists: "該個人檔案名已經存在。"
+  profile: "工作區"
+  newProfile: "新增工作區"
+  renameProfile: "重新命名工作區"
+  deleteProfile: "刪除工作區"
+  nameAlreadyExists: "該工作區名稱已經存在。"
   introduction: "組合欄位來製作屬於自己的介面吧！"
   introduction2: "您可以隨時透過按畫面右方的 + 來添加欄位。"
-  widgetsIntroduction: "請從欄位的選單中，選擇「編輯小工具」來添加小工具"
+  widgetsIntroduction: "請從欄位的選單中，選擇「編輯小工具」來添加小工具。"
   _columns:
     main: "主列"
     widgets: "小工具"
@@ -1753,10 +1762,10 @@ _deck:
     mentions: "提及"
     direct: "指定使用者"
 secureMode: 安全模式（授權獲取）
-instanceSecurity: 實例安全性
+instanceSecurity: 伺服器安全性
 privateMode: 私人模式
-allowedInstances: 列入白名單的實例
-secureModeInfo: 當從其他實例請求時，不要在沒有證據的情況下發回。
+allowedInstances: 列入白名單的伺服器
+secureModeInfo: 當從其他伺服器請求時，不要在沒有證據的情況下發回。
 _messaging:
   dms: 私訊
   groups: 群組
@@ -1764,11 +1773,11 @@ manageGroups: 管理群組
 replayTutorial: 重新播放教程
 moveFromLabel: '您想遷移的舊帳戶:'
 customMOTDDescription: 每次用戶加載/重新加載頁面時，由換行符號分隔的 MOTD（啟動畫面）的自定信息將隨機顯示。
-privateModeInfo: 啟用後，只有列入白名單的實例才能與您的實例聯合。所有貼文都將對公眾隱藏。
+privateModeInfo: 啟用後，只有列入白名單的伺服器才能與你的伺服器聯合。所有貼文都將對公眾隱藏。
 adminCustomCssWarn: 除非你知道它的作用，否則請不要使用此設定。 輸入不正確的值可能會導致每個人的客戶端無法正常運行。你可在你的的用戶設定中測試，確保你的
   CSS 正常工作。
 showUpdates: Calckey 更新時顯示彈出視窗
-recommendedInstances: 建議的實例
+recommendedInstances: 建議的伺服器
 caption: 自動字幕
 enterSendsMessage: 在 Messaging 中按 Return 發送消息 (如關閉則是 Ctrl + Return)
 migrationConfirm: "您確定要將你的帳戶遷移到 {account} 嗎？ 一旦這樣做，你將無法復原，而你將無法再次正常使用您的帳戶。\n另外，請確保你已將此當前帳戶設置為您要遷移的帳戶。"
@@ -1777,21 +1786,17 @@ customSplashIconsDescription: 每次用戶加載/重新加載頁面時，以換�
 accountMoved: '該使用者已移至新帳戶:'
 showAds: 顯示廣告
 noThankYou: 不用了，謝謝
-selectInstance: 選擇實例
+selectInstance: 選擇伺服器
 enableRecommendedTimeline: 啟用推薦時間軸
-antennaInstancesDescription: 分行列出一個實例
+antennaInstancesDescription: 分行列出一個伺服器
 moveTo: 遷移此帳戶到新帳戶
 moveToLabel: '請輸入你將會遷移到的帳戶:'
 moveAccount: 遷移帳戶!
 moveAccountDescription: '這個過程是不可逆的。 在遷移前，請確保您已在新帳戶上為此帳戶設置了別名(Alias)。 請輸入帳戶標籤 (格式:
-  @person@instance.com)'
+  @person@server.com)'
 moveFrom: 由舊帳戶移至此帳戶
 moveFromDescription: '這將為你的舊帳戶設置一個別名(Alias)，以便你可以從該帳戶轉移到當前帳戶。 在你的舊帳戶移動之前請執行此操作。 請輸入帳戶標籤
-  (格式: @person@instance.com)'
-_apps:
-  crossPlatform: 跨平台
-  free: 免費
-  paid: 付費
+  (格式: @person@server.com)'
 enableEmojiReactions: 啟用表情符號反應
 breakFollowConfirm: 您確定要移除該關注者嗎？
 socialTimeline: 社交時間軸
@@ -1805,6 +1810,34 @@ migration: 遷移
 homeTimeline: 主頁時間軸
 swipeOnDesktop: 允許在桌面上進行手機式滑動
 logoImageUrl: 圖標網址
-addInstance: 增加一個實例
-noInstances: 沒有實例
+addInstance: 增加一個伺服器
+noInstances: 沒有伺服器
 flagSpeakAsCat: 像貓一樣地說話
+silenceThisInstance: 靜音此伺服器
+silencedInstances: 已靜音的伺服器
+silenced: 已靜音
+_experiments:
+  enablePostEditing: 啟用帖子編輯
+  title: 試驗功能
+findOtherInstance: 找找另一個伺服器
+noGraze: 瀏覽器擴展 "Graze for Mastodon" 會與Calckey發生衝突，請停用該擴展。
+userSaysSomethingReasonRenote: '{name} 轉傳了包含 {reason} 的帖子'
+pushNotificationNotSupported: 你的瀏覽器或伺服器不支援推送通知
+accessibility: 輔助功能
+userSaysSomethingReasonReply: '{name} 回復了包含 {reason} 的帖子'
+hiddenTags: 隱藏主題標籤
+indexPosts: 索引帖子
+indexNotice: 現在開始索引。 這可能需要一段時間，請不要在一個小時內重啟你的伺服器。
+deleted: 已刪除
+editNote: 編輯筆記
+edited: 已修改
+userSaysSomethingReason: '{name} 說了 {reason}'
+allowedInstancesDescription: 要加入聯邦白名單的服務器，每台伺服器用新行分隔（僅適用於私有模式）。
+defaultReaction: 默認的表情符號反應
+license: 授權
+apps: 應用
+pushNotification: 推送通知
+subscribePushNotification: 啟用推送通知
+unsubscribePushNotification: 禁用推送通知
+pushNotificationAlreadySubscribed: 推送通知已經啟用
+recommendedInstancesDescription: 以每行分隔的推薦服務器出現在推薦的時間軸中。 不要添加 `https://`，只添加域名。

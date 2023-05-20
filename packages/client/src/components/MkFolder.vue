@@ -144,6 +144,20 @@ export default defineComponent({
 		padding: var(--x-padding);
 		-webkit-backdrop-filter: var(--blur, blur(8px));
 		backdrop-filter: var(--blur, blur(20px));
+		margin-inline: -12px;
+		padding-inline: 12px;
+		mask: linear-gradient(
+			to right,
+			transparent,
+			black 12px calc(100% - 12px),
+			transparent
+		);
+		-webkit-mask: linear-gradient(
+			to right,
+			transparent,
+			black 12px calc(100% - 12px),
+			transparent
+		);
 
 		> .title {
 			margin: 0;

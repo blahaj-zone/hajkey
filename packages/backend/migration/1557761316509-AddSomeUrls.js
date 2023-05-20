@@ -4,10 +4,10 @@ export class AddSomeUrls1557761316509 {
 			`ALTER TABLE "meta" ADD "ToSUrl" character varying(512)`,
 		);
 		await queryRunner.query(
-			`ALTER TABLE "meta" ADD "repositoryUrl" character varying(512) NOT NULL DEFAULT 'https://github.com/misskey-dev/misskey'`,
+			`ALTER TABLE "meta" ADD "repositoryUrl" character varying(512) NOT NULL DEFAULT 'https://codeberg.org/calckey/calckey'`,
 		);
 		await queryRunner.query(
-			`ALTER TABLE "meta" ADD "feedbackUrl" character varying(512) DEFAULT 'https://github.com/misskey-dev/misskey/issues/new'`,
+			`ALTER TABLE "meta" ADD "feedbackUrl" character varying(512) DEFAULT 'https://codeberg.org/calckey/calckey/issues'`,
 		);
 	}
 	async down(queryRunner) {

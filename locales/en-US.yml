@@ -18,7 +18,7 @@ enterUsername: "Enter username"
 renotedBy: "Boosted by {user}"
 noNotes: "No posts"
 noNotifications: "No notifications"
-instance: "Instance"
+instance: "Server"
 settings: "Settings"
 basicSettings: "Basic Settings"
 otherSettings: "Other Settings"
@@ -35,7 +35,7 @@ save: "Save"
 users: "Users"
 hosts: "Hosts"
 addUser: "Add a user"
-addInstance: "Add an instance"
+addInstance: "Add a server"
 favorite: "Add to bookmarks"
 favorites: "Bookmarks"
 unfavorite: "Remove from bookmarks"
@@ -58,8 +58,11 @@ sendMessage: "Send a message"
 copyUsername: "Copy username"
 searchUser: "Search for a user"
 reply: "Reply"
+jumpToReply: "Jump to Reply"
 loadMore: "Load more"
 showMore: "Show more"
+newer: "newer"
+older: "older"
 showLess: "Close"
 youGotNewFollower: "followed you"
 receiveFollowRequest: "Follow request received"
@@ -72,8 +75,8 @@ import: "Import"
 export: "Export"
 files: "Files"
 download: "Download"
-driveFileDeleteConfirm: "Are you sure you want to delete the file \"{name}\"? It\
-  \ will be removed from all posts that contain it as an attachment."
+driveFileDeleteConfirm: "Are you sure you want to delete the file \"{name}\"? It will\
+  \ be removed from all posts that contain it as an attachment."
 unfollowConfirm: "Are you sure that you want to unfollow {name}?"
 exportRequested: "You've requested an export. This may take a while. It will be added\
   \ to your Drive once completed."
@@ -155,7 +158,7 @@ addEmoji: "Add"
 settingGuide: "Recommended settings"
 cacheRemoteFiles: "Cache remote files"
 cacheRemoteFilesDescription: "When this setting is disabled, remote files are loaded\
-  \ directly from the remote instance. Disabling this will decrease storage usage,\
+  \ directly from the remote server. Disabling this will decrease storage usage,\
   \ but increase traffic, as thumbnails will not be generated."
 flagAsBot: "Mark this account as a bot"
 flagAsBotDescription: "Enable this option if this account is controlled by a program.\
@@ -172,7 +175,7 @@ flagShowTimelineRepliesDescription: "Shows replies of users to posts of other us
 autoAcceptFollowed: "Automatically approve follow requests from users you're following"
 addAccount: "Add account"
 loginFailed: "Failed to sign in"
-showOnRemote: "View on remote instance"
+showOnRemote: "View on remote server"
 general: "General"
 accountMoved: "User has moved to a new account:"
 wallpaper: "Wallpaper"
@@ -184,15 +187,15 @@ followConfirm: "Are you sure that you want to follow {name}?"
 proxyAccount: "Proxy Account"
 proxyAccountDescription: "A proxy account is an account that acts as a remote follower\
   \ for users under certain conditions. For example, when a user adds a remote user\
-  \ to the list, the remote user's activity will not be delivered to the instance\
+  \ to the list, the remote user's activity will not be delivered to the server\
   \ if no local user is following that user, so the proxy account will follow instead."
 host: "Host"
 selectUser: "Select a user"
-selectInstance: "Select an instance"
+selectInstance: "Select an server"
 recipient: "Recipient(s)"
 annotation: "Comments"
 federation: "Federation"
-instances: "Instances"
+instances: "Servers"
 registeredAt: "Registered at"
 latestRequestSentAt: "Last request sent"
 latestRequestReceivedAt: "Last request received"
@@ -202,8 +205,8 @@ charts: "Charts"
 perHour: "Per Hour"
 perDay: "Per Day"
 stopActivityDelivery: "Stop sending activities"
-blockThisInstance: "Block this instance"
-silenceThisInstance: "Silence this instance"
+blockThisInstance: "Block this server"
+silenceThisInstance: "Silence this server"
 operations: "Operations"
 software: "Software"
 version: "Version"
@@ -214,7 +217,7 @@ jobQueue: "Job Queue"
 cpuAndMemory: "CPU and Memory"
 network: "Network"
 disk: "Disk"
-instanceInfo: "Instance Information"
+instanceInfo: "Server Information"
 statistics: "Statistics"
 clearQueue: "Clear queue"
 clearQueueConfirmTitle: "Are you sure that you want to clear the queue?"
@@ -222,27 +225,29 @@ clearQueueConfirmText: "Any undelivered posts remaining in the queue will not be
   \ Usually this operation is not needed."
 clearCachedFiles: "Clear cache"
 clearCachedFilesConfirm: "Are you sure that you want to delete all cached remote files?"
-blockedInstances: "Blocked Instances"
-blockedInstancesDescription: "List the hostnames of the instances that you want to\
-  \ block. Listed instances will no longer be able to communicate with this instance."
-silencedInstances: "Silenced Instances"
-silencedInstancesDescription: "List the hostnames of the instances that you want to\
-  \ silence. Accounts in the listed instances are treated as \"Silenced\", can only make follow requests, and cannot mention local accounts if not followed. This will not affect the blocked instances."
+blockedInstances: "Blocked Servers"
+blockedInstancesDescription: "List the hostnames of the servers that you want to\
+  \ block. Listed servers will no longer be able to communicate with this servers."
+silencedInstances: "Silenced Servers"
+silencedInstancesDescription: "List the hostnames of the servers that you want to\
+  \ silence. Accounts in the listed servers are treated as \"Silenced\", can only\
+  \ make follow requests, and cannot mention local accounts if not followed. This\
+  \ will not affect the blocked servers."
 hiddenTags: "Hidden Hashtags"
 hiddenTagsDescription: "List the hashtags (without the #) of the hashtags you wish\
   \ to hide from trending and explore. Hidden hashtags are still discoverable via\
-  \ other means. Blocked instances are not affected even if listed here."
+  \ other means."
 muteAndBlock: "Mutes and Blocks"
 mutedUsers: "Muted users"
 blockedUsers: "Blocked users"
 noUsers: "There are no users"
-noInstances: "There are no instances"
+noInstances: "There are no servers"
 editProfile: "Edit profile"
 noteDeleteConfirm: "Are you sure you want to delete this post?"
 pinLimitExceeded: "You cannot pin any more posts"
 intro: "Installation of Calckey has been finished! Please create an admin user."
 done: "Done"
-processing: "Processing..."
+processing: "Processing"
 preview: "Preview"
 default: "Default"
 defaultValueIs: "Default: {value}"
@@ -256,9 +261,9 @@ all: "All"
 subscribing: "Subscribing"
 publishing: "Publishing"
 notResponding: "Not responding"
-instanceFollowing: "Following on instance"
-instanceFollowers: "Followers of instance"
-instanceUsers: "Users of this instance"
+instanceFollowing: "Following on server"
+instanceFollowers: "Followers of server"
+instanceUsers: "Users of this server"
 changePassword: "Change password"
 security: "Security"
 retypedNotMatch: "The inputs do not match."
@@ -351,8 +356,8 @@ unwatch: "Stop watching"
 accept: "Accept"
 reject: "Reject"
 normal: "Normal"
-instanceName: "Instance name"
-instanceDescription: "Instance description"
+instanceName: "Server name"
+instanceDescription: "Server description"
 maintainerName: "Maintainer"
 maintainerEmail: "Maintainer email"
 tosUrl: "Terms of Service URL"
@@ -386,7 +391,7 @@ pinnedUsersDescription: "List usernames separated by line breaks to be pinned in
   \ \"Explore\" tab."
 pinnedPages: "Pinned Pages"
 pinnedPagesDescription: "Enter the paths of the Pages you want to pin to the top page\
-  \ of this instance, separated by line breaks."
+  \ of this server, separated by line breaks."
 pinnedClipId: "ID of the clip to pin"
 pinnedNotes: "Pinned posts"
 hcaptcha: "hCaptcha"
@@ -417,7 +422,7 @@ notifyAntenna: "Notify about new posts"
 withFileAntenna: "Only posts with files"
 enableServiceworker: "Enable Push-Notifications for your Browser"
 antennaUsersDescription: "List one username per line"
-antennaInstancesDescription: "List one instance host per line"
+antennaInstancesDescription: "List one server host per line"
 caseSensitive: "Case sensitive"
 withReplies: "Include replies"
 connectedTo: "Following account(s) are connected"
@@ -532,6 +537,7 @@ total: "Total"
 weekOverWeekChanges: "Changes to last week"
 dayOverDayChanges: "Changes to yesterday"
 appearance: "Appearance"
+accessibility: "Accessibility"
 clientSettings: "Client Settings"
 accountSettings: "Account Settings"
 promotion: "Promoted"
@@ -601,7 +607,7 @@ deleteAllFiles: "Delete all files"
 deleteAllFilesConfirm: "Are you sure that you want to delete all files?"
 removeAllFollowing: "Unfollow all followed users"
 removeAllFollowingDescription: "Executing this unfollows all accounts from {host}.\
-  \ Please run this if the instance e.g. no longer exists."
+  \ Please run this if the server e.g. no longer exists."
 userSuspended: "This user has been suspended."
 userSilenced: "This user is being silenced."
 yourAccountSuspendedTitle: "This account is suspended"
@@ -671,9 +677,12 @@ wordMute: "Word mute"
 regexpError: "Regular Expression error"
 regexpErrorDescription: "An error occurred in the regular expression on line {line}\
   \ of your {tab} word mutes:"
-instanceMute: "Instance Mutes"
+instanceMute: "Server Mutes"
 userSaysSomething: "{name} said something"
 userSaysSomethingReason: "{name} said {reason}"
+userSaysSomethingReasonReply: "{name} replied to a post containing {reason}"
+userSaysSomethingReasonRenote: "{name} boosted a post containing {reason}"
+userSaysSomethingReasonQuote: "{name} quoted a post containing {reason}"
 makeActive: "Activate"
 display: "Display"
 copy: "Copy"
@@ -707,16 +716,16 @@ abuseReported: "Your report has been sent. Thank you very much."
 reporter: "Reporter"
 reporteeOrigin: "Reportee Origin"
 reporterOrigin: "Reporter Origin"
-forwardReport: "Forward report to remote instance"
+forwardReport: "Forward report to remote server"
 forwardReportIsAnonymous: "Instead of your account, an anonymous system account will\
-  \ be displayed as reporter at the remote instance."
+  \ be displayed as reporter at the remote server."
 send: "Send"
 abuseMarkAsResolved: "Mark report as resolved"
 openInNewTab: "Open in new tab"
 openInSideView: "Open in side view"
 defaultNavigationBehaviour: "Default navigation behavior"
 editTheseSettingsMayBreakAccount: "Editing these settings may damage your account."
-instanceTicker: "Instance information of posts"
+instanceTicker: "Server information of posts"
 waitingFor: "Waiting for {x}"
 random: "Random"
 system: "System"
@@ -814,7 +823,7 @@ capacity: "Capacity"
 inUse: "Used"
 editCode: "Edit code"
 apply: "Apply"
-receiveAnnouncementFromInstance: "Receive notifications from this instance"
+receiveAnnouncementFromInstance: "Receive notifications from this server"
 emailNotification: "Email notifications"
 publish: "Publish"
 inChannelSearch: "Search in channel"
@@ -846,7 +855,7 @@ active: "Active"
 offline: "Offline"
 notRecommended: "Not recommended"
 botProtection: "Bot Protection"
-instanceBlocking: "Federation Block/Silence"
+instanceBlocking: "Federation Management"
 selectAccount: "Select account"
 switchAccount: "Switch account"
 enabled: "Enabled"
@@ -874,13 +883,13 @@ low: "Low"
 emailNotConfiguredWarning: "Email address not set."
 ratio: "Ratio"
 secureMode: "Secure Mode (Authorized Fetch)"
-instanceSecurity: "Instance Security"
-secureModeInfo: "When requesting from other instances, do not send back without proof."
+instanceSecurity: "Server Security"
+secureModeInfo: "When requesting from other servers, do not send back without proof."
 privateMode: "Private Mode"
-privateModeInfo: "When enabled, only whitelisted instances can federate with your\
-  \ instances. All posts will be hidden from the public."
-allowedInstances: "Whitelisted Instances"
-allowedInstancesDescription: "Hosts of instances to be whitelisted for federation,\
+privateModeInfo: "When enabled, only whitelisted servers can federate with your\
+  \ server. All posts will be hidden from the public."
+allowedInstances: "Whitelisted Servers"
+allowedInstancesDescription: "Hosts of servers to be whitelisted for federation,\
   \ each separated by a new line (only applies in private mode)."
 previewNoteText: "Show preview"
 customCss: "Custom CSS"
@@ -925,7 +934,7 @@ manageAccounts: "Manage Accounts"
 makeReactionsPublic: "Set reaction history to public"
 makeReactionsPublicDescription: "This will make the list of all your past reactions\
   \ publicly visible."
-classic: "Classic"
+classic: "Centered"
 muteThread: "Mute thread"
 unmuteThread: "Unmute thread"
 ffVisibility: "Follows/Followers Visibility"
@@ -945,15 +954,12 @@ overridedDeviceKind: "Device type"
 smartphone: "Smartphone"
 tablet: "Tablet"
 auto: "Auto"
-showLocalPosts: "Show local posts in:"
-homeTimeline: "Home Timeline"
-socialTimeline: "Social Timeline"
-themeColor: "Instance Ticker Color"
+themeColor: "Server Ticker Color"
 size: "Size"
 numberOfColumn: "Number of columns"
 searchByGoogle: "Search"
-instanceDefaultLightTheme: "Instance-wide default light theme"
-instanceDefaultDarkTheme: "Instance-wide default dark theme"
+instanceDefaultLightTheme: "Server-wide default light theme"
+instanceDefaultDarkTheme: "Server-wide default dark theme"
 instanceDefaultThemeDescription: "Enter the theme code in object format."
 mutePeriod: "Mute duration"
 indefinitely: "Permanently"
@@ -1008,7 +1014,7 @@ beta: "Beta"
 enableAutoSensitive: "Automatic NSFW-Marking"
 enableAutoSensitiveDescription: "Allows automatic detection and marking of NSFW media\
   \ through Machine Learning where possible. Even if this option is disabled, it may\
-  \ be enabled instance-wide."
+  \ be enabled server-wide."
 activeEmailValidationDescription: "Enables stricter validation of email addresses,\
   \ which includes checking for disposable addresses and by whether it can actually\
   \ be communicated with. When unchecked, only the format of the email is validated."
@@ -1020,7 +1026,7 @@ pushNotification: "Push notifications"
 subscribePushNotification: "Enable push notifications"
 unsubscribePushNotification: "Disable push notifications"
 pushNotificationAlreadySubscribed: "Push notifications are already enabled"
-pushNotificationNotSupported: "Your browser or instance does not support push notifications"
+pushNotificationNotSupported: "Your browser or server does not support push notifications"
 sendPushNotificationReadMessage: "Delete push notifications once the relevant notifications\
   \ or messages have been read"
 sendPushNotificationReadMessageCaption: "A notification containing the text \"{emptyPushNotificationMessage}\"\
@@ -1039,8 +1045,8 @@ customSplashIconsDescription: "URLs for custom splash screen icons separated by 
   \ breaks to be shown randomly every time a user loads/reloads the page. Please make\
   \ sure the images are on a static URL, preferably all resized to 192x192."
 showUpdates: "Show a popup when Calckey updates"
-recommendedInstances: "Recommended instances"
-recommendedInstancesDescription: "Recommended instances separated by line breaks to\
+recommendedInstances: "Recommended servers"
+recommendedInstancesDescription: "Recommended servers separated by line breaks to\
   \ appear in the recommended timeline. Do NOT add `https://`, ONLY the domain."
 caption: "Auto Caption"
 splash: "Splash Screen"
@@ -1055,12 +1061,12 @@ moveToLabel: "Account you're moving to:"
 moveAccount: "Move account!"
 moveAccountDescription: "This process is irreversible. Make sure you've set up an\
   \ alias for this account on your new account before moving. Please enter the tag\
-  \ of the account formatted like @person@instance.com"
+  \ of the account formatted like @person@server.com"
 moveFrom: "Move to this account from an older account"
 moveFromLabel: "Account you're moving from:"
 moveFromDescription: "This will set an alias of your old account so that you can move\
   \ from that account to this current one. Do this BEFORE moving from your older account.\
-  \ Please enter the tag of the account formatted like @person@instance.com"
+  \ Please enter the tag of the account formatted like @person@server.com"
 migrationConfirm: "Are you absolutely sure you want to migrate your account to {account}?\
   \ Once you do this, you won't be able to reverse it, and you won't be able to use\
   \ your account normally again.\nAlso, please ensure that you've set this current\
@@ -1133,6 +1139,16 @@ customKaTeXMacroDescription: "Set up macros to write mathematical expressions ea
   \ supported; advanced syntax, such as conditional branching, cannot be used here."
 enableCustomKaTeXMacro: "Enable custom KaTeX macros"
 noteId: "Post ID"
+signupsDisabled: "Signups on this server are currently disabled, but you can always\
+  \ sign up at another server! If you have an invitation code for this server, please\
+  \ enter it below."
+findOtherInstance: "Find another server"
+apps: "Apps"
+sendModMail: "Send Moderation Notice"
+preventAiLearning: "Prevent AI bot scraping"
+preventAiLearningDescription: "Request third-party AI language models not to study\
+  \ content you upload, such as posts and images."
+noGraze: "Please disable the \"Graze for Mastodon\" browser extension, as it interferes with Calckey."
 
 _sensitiveMediaDetection:
   description: "Reduces the effort of server moderation through automatically recognizing\
@@ -1180,9 +1196,9 @@ _forgotPassword:
   enterEmail: "Enter the email address you used to register. A link with which you\
     \ can reset your password will then be sent to it."
   ifNoEmail: "If you did not use an email during registration, please contact the\
-    \ instance administrator instead."
-  contactAdmin: "This instance does not support using email addresses, please contact\
-    \ the instance administrator to reset your password instead."
+    \ server administrator instead."
+  contactAdmin: "This server does not support using email addresses, please contact\
+    \ the server administrator to reset your password instead."
 _gallery:
   my: "My Gallery"
   liked: "Liked Posts"
@@ -1240,6 +1256,10 @@ _nsfw:
   ignore: "Don't hide NSFW media"
   force: "Hide all media"
 _mfm:
+  play: "Play MFM"
+  stop: "Stop MFM"
+  warn: "MFM may contain rapidly moving or flashy animations"
+  alwaysPlay: "Always autoplay all animated MFM"
   cheatSheet: "MFM Cheatsheet"
   intro: "MFM is a markup language used on Misskey, Calckey, Akkoma, and more that\
     \ can be used in many places. Here you can view a list of all available MFM syntax."
@@ -1336,6 +1356,8 @@ _channel:
   following: "Followed"
   usersCount: "{n} Participants"
   notesCount: "{n} Posts"
+  nameAndDescription: "Name and description"
+  nameOnly: "Name only"
 _messaging:
   dms: "Private"
   groups: "Groups"
@@ -1357,11 +1379,11 @@ _wordMute:
   hard: "Hard"
   mutedNotes: "Muted posts"
 _instanceMute:
-  instanceMuteDescription: "This will mute any posts/boosts from the listed instances,\
-    \ including those of users replying to a user from a muted instance."
+  instanceMuteDescription: "This will mute any posts/boosts from the listed servers,\
+    \ including those of users replying to a user from a muted server."
   instanceMuteDescription2: "Separate with newlines"
-  title: "Hides posts from listed instances."
-  heading: "List of instances to be muted"
+  title: "Hides posts from listed servers."
+  heading: "List of servers to be muted"
 _theme:
   explore: "Explore Themes"
   install: "Install a theme"
@@ -1466,30 +1488,26 @@ _tutorial:
   step2_1: "First, please fill out your profile."
   step2_2: "Providing some information about who you are will make it easier for others\
     \ to tell if they want to see your posts or follow you."
-  step3_1: "Now time to follow some people!"
+  step3_1: "Now it's time to follow some people!"
   step3_2: "Your home and social timelines are based off of who you follow, so try\
     \ following a couple accounts to get started.\nClick the plus circle on the top\
     \ right of a profile to follow them."
   step4_1: "Let's get you out there."
-  step4_2: "For your first post, some people like to made a {introduction} post or\
+  step4_2: "For your first post, some people like to make an {introduction} post or\
     \ a simple \"Hello world!\""
   step5_1: "Timelines, timelines everywhere!"
-  step5_2: "Your instance has {timelines} different timelines enabled."
+  step5_2: "Your server has {timelines} different timelines enabled."
   step5_3: "The Home {icon} timeline is where you can see posts from the accounts\
-    \ you follow and from everyone else on this instance. If you prefer your Home\
-    \ timeline to only display posts from accounts you follow, you can easily change\
-    \ this in Settings!"
-  step5_4: "The Local {icon} timeline is where you can see posts from everyone else\
-    \ on this instance."
-  step5_5: "The Social {icon} timeline is where you can see posts only from the accounts\
     \ you follow."
-  step5_6: "The Recommended {icon} timeline is where you can see posts from instances\
+  step5_4: "The Local {icon} timeline is where you can see posts from everyone else on this server."
+  step5_5: "The Social {icon} timeline is a combination of the Home and Local timelines."
+  step5_6: "The Recommended {icon} timeline is where you can see posts from server\
     \ the admins recommend."
   step5_7: "The Global {icon} timeline is where you can see posts from every other\
-    \ connected instance."
+    \ connected server."
   step6_1: "So, what is this place?"
   step6_2: "Well, you didn't just join Calckey. You joined a portal to the Fediverse,\
-    \ an interconnected network of thousands of servers, called \"instances\"."
+    \ an interconnected network of thousands of servers."
   step6_3: "Each server works in different ways, and not all servers run Calckey.\
     \ This one does though! It's a bit complicated, but you'll get the hang of it\
     \ in no time."
@@ -1554,7 +1572,7 @@ _antennaSources:
   users: "Posts from specific users"
   userList: "Posts from a specified list of users"
   userGroup: "Posts from users in a specified group"
-  instances: "Posts from all users on an instance"
+  instances: "Posts from all users on an server"
 _weekday:
   sunday: "Sunday"
   monday: "Monday"
@@ -1577,7 +1595,7 @@ _widgets:
   digitalClock: "Digital clock"
   unixClock: "UNIX clock"
   federation: "Federation"
-  instanceCloud: "Instance cloud"
+  instanceCloud: "Server cloud"
   postForm: "Posting form"
   slideshow: "Slideshow"
   button: "Button"
@@ -2120,3 +2138,8 @@ _timelineFilter:
   show: "Yes"
   hide: "No"
   never: "Never"
+_experiments:
+  title: "Experiments"
+  enablePostEditing: "Enable post editing"
+  postEditingCaption: "Shows the option for users to edit their existing posts via\
+    \ the post options menu"

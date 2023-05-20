@@ -102,35 +102,22 @@ export default defineComponent({
 							switch (token.props.name) {
 								case "tada": {
 									const speed = validTime(token.props.args.speed) || "1s";
-									style = `font-size: 150%;${
-										defaultStore.state.animatedMfm
-											? `animation: tada ${speed} linear infinite both;`
-											: ""
-									}`;
+									style = `font-size: 150%; animation: tada ${speed} linear infinite both;`;
 									break;
 								}
 								case "jelly": {
 									const speed = validTime(token.props.args.speed) || "1s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-rubberBand ${speed} linear infinite both;`
-											: "";
+									style = `animation: mfm-rubberBand ${speed} linear infinite both;`;
 									break;
 								}
 								case "twitch": {
 									const speed = validTime(token.props.args.speed) || "0.5s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-twitch ${speed} ease infinite;`
-											: "";
+									style = `animation: mfm-twitch ${speed} ease infinite;`;
 									break;
 								}
 								case "shake": {
 									const speed = validTime(token.props.args.speed) || "0.5s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-shake ${speed} ease infinite;`
-											: "";
+									style = `animation: mfm-shake ${speed} ease infinite;`;
 									break;
 								}
 								case "spin": {
@@ -145,38 +132,26 @@ export default defineComponent({
 										? "mfm-spinY"
 										: "mfm-spin";
 									const speed = validTime(token.props.args.speed) || "1.5s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction};`
-											: "";
+									style = `animation: ${anime} ${speed} linear infinite; animation-direction: ${direction};`;
 									break;
 								}
 								case "jump": {
 									const speed = validTime(token.props.args.speed) || "0.75s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-jump ${speed} linear infinite;`
-											: "";
+									style = `animation: mfm-jump ${speed} linear infinite;`;
 									break;
 								}
 								case "bounce": {
 									const speed = validTime(token.props.args.speed) || "0.75s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;`
-											: "";
+									style = `animation: mfm-bounce ${speed} linear infinite; transform-origin: center bottom;`;
 									break;
 								}
 								case "rainbow": {
 									const speed = validTime(token.props.args.speed) || "1s";
-									style =
-										defaultStore.state.animatedMfm && !reducedMotion()
-											? `animation: mfm-rainbow ${speed} linear infinite;`
-											: "";
+									style = `animation: mfm-rainbow ${speed} linear infinite;`;
 									break;
 								}
 								case "sparkle": {
-									if (!(defaultStore.state.animatedMfm || reducedMotion())) {
+									if (reducedMotion()) {
 										return genEl(token.children);
 									}
 									return h(MkSparkle, {}, genEl(token.children));

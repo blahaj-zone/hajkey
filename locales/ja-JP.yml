@@ -52,7 +52,7 @@ sendMessage: "メッセージを送信"
 copyUsername: "ユーザー名をコピー"
 searchUser: "ユーザーを検索"
 reply: "返信"
-loadMore: "もっと見る"
+loadMore: "もっと読み込む"
 showMore: "もっと見る"
 showLess: "閉じる"
 youGotNewFollower: "フォローされました"
@@ -66,7 +66,7 @@ import: "インポート"
 export: "エクスポート"
 files: "ファイル"
 download: "ダウンロード"
-driveFileDeleteConfirm: "ファイル「{name}」を削除しますか？このファイルを添付した投稿も消えます。"
+driveFileDeleteConfirm: "ファイル「{name}」を削除しますか？これにより、このファイルが添付されている投稿も削除されます。"
 unfollowConfirm: "{name}さんのフォローを解除しますか？"
 exportRequested: "エクスポートをリクエストしました。これには時間がかかる場合があります。エクスポートが終わると、「ドライブ」に追加されます。"
 importRequested: "インポートをリクエストしました。これには時間がかかる場合があります。"
@@ -619,6 +619,9 @@ regexpErrorDescription: "{tab}ワードミュートの{line}行目の正規表�
 instanceMute: "インスタンスミュート"
 userSaysSomething: "{name}が何かを言いました"
 userSaysSomethingReason: "{name}が{reason}と言いました"
+userSaysSomethingReasonReply: "{name}が{reason}を含む投稿に返信しました"
+userSaysSomethingReasonRenote: "{name}が{reason}を含む投稿をブーストしました"
+userSaysSomethingReasonQuote: "{name}が{reason}を含む投稿を引用しました"
 makeActive: "アクティブにする"
 display: "表示"
 copy: "コピー"
@@ -812,7 +815,7 @@ customCssWarn: "この設定は必ず知識のある方が行ってください�
 global: "グローバル"
 recommended: "推奨"
 squareAvatars: "アイコンを四角形で表示"
-seperateRenoteQuote: "ブーストと引用ボタンを分ける"
+seperateRenoteQuote: "ブーストと引用のボタンを分ける"
 sent: "送信"
 received: "受信"
 searchResult: "検索結果"
@@ -942,7 +945,7 @@ customSplashIconsDescription: "ユーザがページをロード/リロードす
   \ URL。画像は静的なURLで、できればすべて192x192にリサイズしてください。"
 showUpdates: "Calckeyの更新時にポップアップを表示する"
 recommendedInstances: "おすすめインスタンス"
-recommendedInstancesDescription: "おすすめタイムラインに表示される、改行で区切られたインスタンス。`https://`を追加しないでください。ドメインのみを追加してください。"
+recommendedInstancesDescription: "おすすめタイムラインに表示するインスタンスを改行区切りで入力してください。`https://`は書かず、ドメインのみを入力してください。"
 caption: "自動キャプション"
 splash: "スプラッシュスクリーン"
 updateAvailable: "アップデートがありますよ！"
@@ -959,7 +962,7 @@ moveFrom: "別のアカウントからこのアカウントに引っ越す"
 moveFromLabel: "引っ越し元のアカウント："
 moveFromDescription: "別のアカウントからこのアカウントにフォロワーを引き継いで引っ越したい場合、ここでエイリアスを作成しておく必要があります。必ず引っ越しを実行する前に作成してください！引っ越し元のアカウントをこのように入力してください：@person@instance.com"
 migrationConfirm: "本当にこのアカウントを {account} に引っ越しますか？一度引っ越しを行うと取り消せず、二度とこのアカウントを元の状態で使用できなくなります。\n\
-  また、引っ越し先のアカウントでエイリアスを作成したことを確認してください。"
+  この操作を行う前に引っ越し先のアカウントでエイリアスを作成する必要があります。エイリアスが作成されているか、必ず確認してください。"
 defaultReaction: "リモートとローカルの投稿に対するデフォルトの絵文字リアクション"
 license: "ライセンス"
 indexPosts: "投稿をインデックス"
@@ -970,6 +973,9 @@ customKaTeXMacroDescription: "数式入力を楽にするためのマクロを�
   name}{content} または \\newcommand{\\add}[2]{#1 + #2} のように記述します。後者の例では \\add{3}{foo}\
   \ が 3 + foo に展開されます。また、マクロの名前を囲む波括弧を丸括弧 () および角括弧 [] に変更した場合、マクロの引数に使用する括弧が変更されます。マクロの定義は一行に一つのみで、途中で改行はできません。マクロの定義が無効な行は無視されます。文字列を単純に置換する機能のみに対応していて、条件分岐などの高度な構文は使用できません。"
 enableCustomKaTeXMacro: "カスタムKaTeXマクロを有効にする"
+preventAiLearning: "AIによる学習を防止"
+preventAiLearningDescription: "投稿したノート、添付した画像などのコンテンツを学習の対象にしないようAIに要求します。これはnoaiフラグをHTMLレスポンスに含めることによって実現されます。"
+noGraze: "ブラウザの拡張機能「Graze for Mastodon」は、Calckeyの動作を妨げるため、無効にしてください。"
 
 _sensitiveMediaDetection:
   description: "機械学習を使って自動でセンシティブなメディアを検出し、モデレーションに役立てられます。サーバーの負荷が少し増えます。"
@@ -1125,6 +1131,17 @@ _mfm:
   plain: "プレーン"
   plainDescription: "内側の構文を全て無効にします。"
   position: 位置
+  stop: MFMアニメーションを停止
+  alwaysPlay: MFMアニメーションを自動再生する
+  play: MFMアニメーションを再生
+  warn: MFMアニメーションは激しい動きを含む可能性があります。
+  positionDescription: 位置を指定した値だけずらします。
+  foreground: 文字色
+  backgroundDescription: 背景の色を変更します。
+  background: 背景色
+  scale: 拡大・縮小
+  scaleDescription: 大きさを指定した値に拡大・縮小します。
+  foregroundDescription: 文字の色を変更します。
 _instanceTicker:
   none: "表示しない"
   remote: "リモートユーザーに表示"
@@ -1144,6 +1161,8 @@ _channel:
   following: "フォロー中"
   usersCount: "{n}人が参加中"
   notesCount: "{n}投稿があります"
+  nameAndDescription: "名前と説明"
+  nameOnly: "名前のみ"
 _messaging:
   dms: "プライベート"
   groups: "グループ"
@@ -1832,23 +1851,18 @@ _deck:
     list: "リスト"
     mentions: "あなた宛て"
     direct: "ダイレクト"
-_apps:
-  apps: "アプリ"
-  crossPlatform: "クロスプラットフォーム"
-  mobile: "モバイル"
-  firstParty: "ファーストパーティ"
-  firstClass: "対応度◎"
-  secondClass: "対応度○"
-  thirdClass: "対応度△"
-  free: "無料"
-  paid: "有料"
-  pwa: "PWAをインストール"
-  kaiteki: "Kaiteki"
-  milktea: "Milktea"
-  missLi: "MissLi"
-  mona: "Mona"
-  theDesk: "TheDesk"
-  lesskey: "Lesskey"
 noteId: 投稿のID
 hiddenTagsDescription: 'トレンドと「みつける」から除外したいハッシュタグを（先頭の # を除いて）改行区切りで入力してください。この設定はトレンドと「みつける」以外には影響しません。'
 hiddenTags: 非表示にするハッシュタグ
+apps: "アプリ"
+_experiments:
+  enablePostEditing: 投稿の編集機能を有効にする
+  title: 試験的な機能
+  postEditingCaption: 投稿のメニューに既存の投稿を編集するボタンを表示します。
+sendModMail: モデレーションノートを送る
+deleted: 削除済み
+editNote: 投稿を編集
+edited: 編集済み
+signupsDisabled: 
+  現在、このサーバーでは新規登録が一般開放されていません。招待コードをお持ちの場合には、以下の欄に入力してください。招待コードをお持ちでない場合にも、新規登録を開放している他のサーバーには入れますよ！
+findOtherInstance: 他のサーバーを探す

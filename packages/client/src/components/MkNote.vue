@@ -5,7 +5,7 @@
 		ref="el"
 		v-hotkey="keymap"
 		v-size="{ max: [500, 450, 350, 300] }"
-		class="tkcbzcuz"
+		class="tkcbzcuz note-container"
 		:tabindex="!isDeleted ? '-1' : null"
 		:class="{ renote: isRenote }"
 	>
@@ -104,6 +104,11 @@
 							/>
 						</div>
 					</div>
+				</div>
+				<div v-if="detailedView" class="info">
+					<MkA class="created-at" :to="notePage(appearNote)">
+						<MkTime :time="appearNote.createdAt" mode="absolute" />
+					</MkA>
 					<MkA
 						v-if="appearNote.channel && !inChannel"
 						class="channel"
@@ -137,7 +142,9 @@
 						@click="reply()"
 					>
 						<i class="ph-arrow-u-up-left ph-bold ph-lg"></i>
-						<template v-if="appearNote.repliesCount > 0">
+						<template
+							v-if="appearNote.repliesCount > 0 && !detailedView"
+						>
 							<p class="count">{{ appearNote.repliesCount }}</p>
 						</template>
 					</button>
@@ -147,6 +154,7 @@
 						:note="appearNote"
 						:count="appearNote.renoteCount"
 						:renoteCw="note.cw"
+						:detailedView="detailedView"
 					/>
 					<XStarButtonNoEmoji
 						v-if="!enableEmojiReactions"
@@ -205,22 +213,22 @@
 			</div>
 		</article>
 	</div>
-	<div v-else class="muted" @click="muted.muted = false">
-		<I18n :src="i18n.ts.userSaysSomethingReason" tag="small">
+	<button v-else class="muted _button" @click="muted.muted = false">
+		<I18n :src="softMuteReasonI18nSrc(muted.what)" tag="small">
 			<template #name>
 				<MkA
-					v-user-preview="appearNote.userId"
+					v-user-preview="note.userId"
 					class="name"
-					:to="userPage(appearNote.user)"
+					:to="userPage(note.user)"
 				>
-					<MkUserName :user="appearNote.user" />
+					<MkUserName :user="note.user" />
 				</MkA>
 			</template>
 			<template #reason>
 				<b class="_blur_text">{{ muted.matched.join(", ") }}</b>
 			</template>
 		</I18n>
-	</div>
+	</button>
 </template>
 
 <script lang="ts" setup>
@@ -238,7 +246,7 @@ import XQuoteButton from "@/components/MkQuoteButton.vue";
 import MkVisibility from "@/components/MkVisibility.vue";
 import { pleaseLogin } from "@/scripts/please-login";
 import { focusPrev, focusNext } from "@/scripts/focus";
-import { getWordMute } from "@/scripts/check-word-mute";
+import { getWordSoftMute } from "@/scripts/check-word-mute";
 import { useRouter } from "@/router";
 import { userPage } from "@/filters/user";
 import * as os from "@/os";
@@ -262,6 +270,16 @@ const props = defineProps<{
 const inChannel = inject("inChannel", null);
 
 let note = $ref(deepClone(props.note));
+
+const softMuteReasonI18nSrc = (what?: string) => {
+	if (what === "note") return i18n.ts.userSaysSomethingReason;
+	if (what === "reply") return i18n.ts.userSaysSomethingReasonReply;
+	if (what === "renote") return i18n.ts.userSaysSomethingReasonRenote;
+	if (what === "quote") return i18n.ts.userSaysSomethingReasonQuote;
+
+	// I don't think here is reachable, but just in case
+	return i18n.ts.userSaysSomething;
+};
 
 // plugin
 if (noteViewInterruptors.length > 0) {
@@ -293,7 +311,7 @@ const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
 const isMyRenote = $i && $i.id === note.userId;
 const isDeleted = ref(false);
-const muted = ref(getWordMute(appearNote, $i, defaultStore.state.mutedWords));
+const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
 const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
@@ -444,6 +462,10 @@ function focusAfter() {
 	focusNext(el.value);
 }
 
+function scrollIntoView() {
+	el.value.scrollIntoView();
+}
+
 function noteClick(e) {
 	if (document.getSelection().type === "Range" || props.detailedView) {
 		e.stopPropagation();
@@ -458,6 +480,12 @@ function readPromo() {
 	});
 	isDeleted.value = true;
 }
+
+defineExpose({
+	focus,
+	blur,
+	scrollIntoView,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -514,7 +542,7 @@ function readPromo() {
 				display: block;
 				margin-bottom: -10px;
 				margin-top: 16px;
-				border-left: 2px solid var(--divider);
+				border-left: 2px solid var(--X13);
 				margin-left: calc((var(--avatarSize) / 2) - 1px);
 			}
 		}
@@ -631,14 +659,11 @@ function readPromo() {
 
 			> .body {
 				margin-top: 0.7em;
-
-				> .content {
-					> .translation {
-						border: solid 0.5px var(--divider);
-						border-radius: var(--radius);
-						padding: 12px;
-						margin-top: 8px;
-					}
+				> .translation {
+					border: solid 0.5px var(--divider);
+					border-radius: var(--radius);
+					padding: 12px;
+					margin-top: 8px;
 				}
 				> .renote {
 					padding-top: 8px;
@@ -653,14 +678,13 @@ function readPromo() {
 						}
 					}
 				}
-
-				> .channel {
-					opacity: 0.7;
-					font-size: 80%;
-				}
 			}
 			> .info {
-				margin-block: 16px;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 0.7em;
+				margin-top: 16px;
 				opacity: 0.7;
 				font-size: 0.9em;
 			}
@@ -744,5 +768,10 @@ function readPromo() {
 	padding: 8px;
 	text-align: center;
 	opacity: 0.7;
+	width: 100%;
+
+	._blur_text {
+		pointer-events: auto;
+	}
 }
 </style>

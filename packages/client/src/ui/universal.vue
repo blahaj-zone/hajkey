@@ -1,5 +1,8 @@
 <template>
-	<div class="dkgtipfy" :class="{ wallpaper, isMobile }">
+	<div
+		class="dkgtipfy"
+		:class="{ wallpaper, isMobile, centered: ui === 'classic' }"
+	>
 		<XSidebar v-if="!isMobile" class="sidebar" />
 
 		<MkStickyContainer class="contents">
@@ -160,7 +163,7 @@ import XCommon from "./_common_/common.vue";
 import * as Acct from "calckey-js/built/acct";
 import type { ComputedRef } from "vue";
 import type { PageMetadata } from "@/scripts/page-metadata";
-import { instanceName } from "@/config";
+import { instanceName, ui } from "@/config";
 import { StickySidebar } from "@/scripts/sticky-sidebar";
 import XDrawerMenu from "@/ui/_common_/navbar-for-mobile.vue";
 import * as os from "@/os";
@@ -454,7 +457,85 @@ console.log(mainRouter.currentRoute.value.name);
 	}
 	&.wallpaper {
 		background: var(--wallpaperOverlay);
-		//backdrop-filter: var(--blur, blur(4px));
+	}
+
+	&.centered {
+		justify-content: center;
+		&:not(.isMobile) {
+			--navBg: transparent;
+		}
+
+		> :deep(.sidebar:not(.iconOnly)) {
+			margin-left: -200px;
+			padding-left: 200px;
+			box-sizing: content-box;
+			.banner {
+				pointer-events: none;
+				top: -20% !important;
+				mask: radial-gradient(
+					farthest-side at top,
+					hsl(0, 0%, 0%) 0%,
+					hsla(0, 0%, 0%, 0.987) 0.3%,
+					hsla(0, 0%, 0%, 0.951) 1.4%,
+					hsla(0, 0%, 0%, 0.896) 3.2%,
+					hsla(0, 0%, 0%, 0.825) 5.8%,
+					hsla(0, 0%, 0%, 0.741) 9.3%,
+					hsla(0, 0%, 0%, 0.648) 13.6%,
+					hsla(0, 0%, 0%, 0.55) 18.9%,
+					hsla(0, 0%, 0%, 0.45) 25.1%,
+					hsla(0, 0%, 0%, 0.352) 32.4%,
+					hsla(0, 0%, 0%, 0.259) 40.7%,
+					hsla(0, 0%, 0%, 0.175) 50.2%,
+					hsla(0, 0%, 0%, 0.104) 60.8%,
+					hsla(0, 0%, 0%, 0.049) 72.6%,
+					hsla(0, 0%, 0%, 0.013) 85.7%,
+					hsla(0, 0%, 0%, 0) 100%
+				) !important;
+				-webkit-mask: radial-gradient(
+					farthest-side at top,
+					hsl(0, 0%, 0%) 0%,
+					hsla(0, 0%, 0%, 0.987) 0.3%,
+					hsla(0, 0%, 0%, 0.951) 1.4%,
+					hsla(0, 0%, 0%, 0.896) 3.2%,
+					hsla(0, 0%, 0%, 0.825) 5.8%,
+					hsla(0, 0%, 0%, 0.741) 9.3%,
+					hsla(0, 0%, 0%, 0.648) 13.6%,
+					hsla(0, 0%, 0%, 0.55) 18.9%,
+					hsla(0, 0%, 0%, 0.45) 25.1%,
+					hsla(0, 0%, 0%, 0.352) 32.4%,
+					hsla(0, 0%, 0%, 0.259) 40.7%,
+					hsla(0, 0%, 0%, 0.175) 50.2%,
+					hsla(0, 0%, 0%, 0.104) 60.8%,
+					hsla(0, 0%, 0%, 0.049) 72.6%,
+					hsla(0, 0%, 0%, 0.013) 85.7%,
+					hsla(0, 0%, 0%, 0) 100%
+				) !important;
+				width: 125% !important;
+				left: -12.5% !important;
+				height: 145% !important;
+			}
+		}
+
+		> .contents {
+			min-width: 0;
+			width: 750px;
+			background: var(--panel);
+			border-radius: 0;
+			overflow: clip;
+			--margin: 12px;
+			background: var(--bg);
+		}
+
+		&.wallpaper {
+			.contents {
+				background: var(--acrylicBg) !important;
+				backdrop-filter: blur(12px);
+			}
+			:deep(.tl),
+			:deep(.notes) {
+				background: none;
+			}
+		}
 	}
 
 	> .sidebar {
@@ -464,13 +545,11 @@ console.log(mainRouter.currentRoute.value.name);
 	> .contents {
 		width: 100%;
 		min-width: 0;
-		background: var(--bg);
 	}
 
 	> .widgets {
 		padding: 0 var(--margin);
 		border-left: solid 0.5px var(--divider);
-		background: var(--bg);
 
 		@media (max-width: $widgets-hide-threshold) {
 			display: none;

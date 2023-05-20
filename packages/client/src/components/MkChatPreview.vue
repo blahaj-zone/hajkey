@@ -1,7 +1,6 @@
 <template>
 	<MkA
 		class="rivslvers"
-		tabindex="-1"
 		:class="{
 			isMe: isMe(message),
 			isRead: message.groupId
@@ -27,6 +26,7 @@
 						: message.user
 				"
 				:show-indicator="true"
+				disableLink
 			/>
 			<header v-if="message.groupId">
 				<span class="name">{{ message.group.name }}</span>

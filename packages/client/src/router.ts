@@ -63,6 +63,10 @@ export const routes = [
 		component: page(() => import("./pages/instance-info.vue")),
 	},
 	{
+		path: "/public/local",
+		component: page(() => import("./pages/no-graze.vue")),
+	},
+	{
 		name: "settings",
 		path: "/settings",
 		component: page(() => import("./pages/settings/index.vue")),
@@ -206,11 +210,6 @@ export const routes = [
 				component: page(() => import("./pages/settings/api.vue")),
 			},
 			{
-				path: "/apps",
-				name: "api",
-				component: page(() => import("./pages/settings/apps.vue")),
-			},
-			{
 				path: "/webhook/edit/:webhookId",
 				name: "webhook",
 				component: page(() => import("./pages/settings/webhook.edit.vue")),
@@ -309,10 +308,6 @@ export const routes = [
 	{
 		path: "/about-calckey",
 		component: page(() => import("./pages/about-calckey.vue")),
-	},
-	{
-		path: "/apps",
-		component: page(() => import("./pages/apps.vue")),
 	},
 	{
 		path: "/theme-editor",
@@ -558,6 +553,11 @@ export const routes = [
 				path: "/other-settings",
 				name: "other-settings",
 				component: page(() => import("./pages/admin/custom-css.vue")),
+			},
+			{
+				path: "/experiments",
+				name: "experiments",
+				component: page(() => import("./pages/admin/experiments.vue")),
 			},
 			{
 				path: "/",

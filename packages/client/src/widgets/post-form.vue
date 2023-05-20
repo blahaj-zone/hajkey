@@ -1,5 +1,10 @@
 <template>
-	<XPostForm class="_panel mkw-postForm" :fixed="true" :autofocus="false" />
+	<XPostForm
+		class="_panel mkw-postForm"
+		:fixed="true"
+		:autofocus="false"
+		:show-mfm-cheat-sheet="true"
+	/>
 </template>
 
 <script lang="ts" setup>

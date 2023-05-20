@@ -177,10 +177,6 @@ export type NoteUpdatedEvent =
 			type: "updated";
 			body: {
 				updatedAt: string;
-				text?: string;
-				cw?: string;
-				tags?: string[];
-				fileIds?: string[];
 			};
 	  };
 

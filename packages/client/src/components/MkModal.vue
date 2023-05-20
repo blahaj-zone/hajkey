@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, watch, provide } from "vue";
+import { nextTick, onMounted, watch, provide, onUnmounted } from "vue";
 import * as os from "@/os";
 import { isTouchUsing } from "@/scripts/touch";
 import { defaultStore } from "@/store";
@@ -176,7 +176,11 @@ let transitionDuration = $computed(() =>
 let contentClicking = false;
 
 const focusedElement = document.activeElement;
-function close(opts: { useSendAnimation?: boolean } = {}) {
+function close(ev, opts: { useSendAnimation?: boolean } = {}) {
+	// removeEventListener("popstate", close);
+	// if (props.preferType == "dialog") {
+	// 	history.forward();
+	// }
 	if (opts.useSendAnimation) {
 		useSendAnime = true;
 	}
@@ -354,6 +358,10 @@ const onOpened = () => {
 		},
 		{ passive: true }
 	);
+	// if (props.preferType == "dialog") {
+	// 	history.pushState(null, "", location.href);
+	// }
+	// addEventListener("popstate", close);
 };
 
 onMounted(() => {
@@ -378,6 +386,12 @@ onMounted(() => {
 			align();
 		}).observe(content!);
 	});
+});
+onUnmounted(() => {
+	// removeEventListener("popstate", close);
+	// if (props.preferType == "dialog") {
+	// 	history.back();
+	// }
 });
 
 defineExpose({

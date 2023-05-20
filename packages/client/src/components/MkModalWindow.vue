@@ -51,7 +51,7 @@
 					</button>
 				</div>
 				<div class="body">
-					<slot :width="bodyWidth" :height="bodyHeight"></slot>
+					<slot></slot>
 				</div>
 			</div>
 		</FocusTrap>
@@ -59,7 +59,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from "vue";
 import { FocusTrap } from "focus-trap-vue";
 import MkModal from "./MkModal.vue";
 
@@ -90,8 +89,6 @@ const emit = defineEmits<{
 let modal = $shallowRef<InstanceType<typeof MkModal>>();
 let rootEl = $shallowRef<HTMLElement>();
 let headerEl = $shallowRef<HTMLElement>();
-let bodyWidth = $ref(0);
-let bodyHeight = $ref(0);
 
 const close = () => {
 	modal.close();
@@ -100,30 +97,6 @@ const close = () => {
 const onBgClick = () => {
 	emit("click");
 };
-
-const onKeydown = (evt) => {
-	if (evt.which === 27) {
-		// Esc
-		evt.preventDefault();
-		evt.stopPropagation();
-		close();
-	}
-};
-
-const ro = new ResizeObserver((entries, observer) => {
-	bodyWidth = rootEl.offsetWidth;
-	bodyHeight = rootEl.offsetHeight - headerEl.offsetHeight;
-});
-
-onMounted(() => {
-	bodyWidth = rootEl.offsetWidth;
-	bodyHeight = rootEl.offsetHeight - headerEl.offsetHeight;
-	ro.observe(rootEl);
-});
-
-onUnmounted(() => {
-	ro.disconnect();
-});
 
 defineExpose({
 	close,

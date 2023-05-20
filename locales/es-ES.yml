@@ -14,7 +14,7 @@ ok: "OK"
 gotIt: "¡Lo tengo!"
 cancel: "Cancelar"
 enterUsername: "Introduce el nombre de usuario"
-renotedBy: "Reposteado por {user}"
+renotedBy: "Impulsado por {user}"
 noNotes: "No hay publicaciones"
 noNotifications: "No hay notificaciones"
 instance: "Instancia"
@@ -46,7 +46,7 @@ copyLink: "Copiar enlace"
 delete: "Borrar"
 deleteAndEdit: "Borrar y editar"
 deleteAndEditConfirm: "¿Estás seguro de que quieres borrar esta publicación y editarla?\
-  \ Perderás todas las reacciones, impulsados y respuestas."
+  \ Perderás todas las reacciones, impulsos y respuestas."
 addToList: "Agregar a lista"
 sendMessage: "Enviar un mensaje"
 copyUsername: "Copiar nombre de usuario"
@@ -222,7 +222,7 @@ noteDeleteConfirm: "¿Desea borrar esta publicación?"
 pinLimitExceeded: "Ya no se pueden fijar más publicaciones"
 intro: "¡La instalación de Calckey ha terminado! Crea el usuario administrador."
 done: "Terminado"
-processing: "Procesando..."
+processing: "Procesando"
 preview: "Vista previa"
 default: "Predeterminado"
 defaultValueIs: "Predeterminado"
@@ -342,7 +342,7 @@ dayX: "Día {day}"
 monthX: "Mes {month}"
 yearX: "Año {year}"
 pages: "Páginas"
-integration: "Integración"
+integration: "Integraciones"
 connectService: "Conectar"
 disconnectService: "Desconectar"
 enableLocalTimeline: "Habilitar linea de tiempo local"
@@ -366,7 +366,7 @@ pinnedPages: "Páginas fijadas"
 pinnedPagesDescription: "Describa las rutas de las páginas que desea fijar a la página\
   \ principal de la instancia, separadas por lineas nuevas"
 pinnedClipId: "Id del clip fijado"
-pinnedNotes: "Nota fijada"
+pinnedNotes: "Publicación fijada"
 hcaptcha: "hCaptcha"
 enableHcaptcha: "Habilitar hCaptcha"
 hcaptchaSiteKey: "Clave del sitio"
@@ -386,14 +386,14 @@ antennaKeywords: "Palabras clave para recibir"
 antennaExcludeKeywords: "Palabras clave para excluir"
 antennaKeywordsDescription: "Separar con espacios es una declaración AND, separar\
   \ con una linea nueva es una declaración OR"
-notifyAntenna: "Notificar nueva nota"
-withFileAntenna: "Sólo notas con archivos adjuntados"
+notifyAntenna: "Notificar nueva publicación"
+withFileAntenna: "Sólo publicaciones con archivos adjuntados"
 enableServiceworker: "Activar ServiceWorker"
 antennaUsersDescription: "Elegir nombres de usuarios separados por una linea nueva"
 caseSensitive: "Distinguir mayúsculas de minúsculas"
 withReplies: "Incluir respuestas"
 connectedTo: "Estas cuentas están conectadas"
-notesAndReplies: "Notas y respuestas"
+notesAndReplies: "Publicaciones y respuestas"
 withFiles: "Adjuntos"
 silence: "Silenciar"
 silenceConfirm: "¿Desea silenciar al usuario?"
@@ -430,7 +430,7 @@ notFoundDescription: "No se encontró la página correspondiente a la URL elegid
 uploadFolder: "Carpeta de subidas por defecto"
 cacheClear: "Borrar caché"
 markAsReadAllNotifications: "Marcar todas las notificaciones como leídas"
-markAsReadAllUnreadNotes: "Marcar todas las notas como leídas"
+markAsReadAllUnreadNotes: "Marcar todas las publicaciones como leídas"
 markAsReadAllTalkMessages: "Marcar todos los chats como leídos"
 help: "Ayuda"
 inputMessageHere: "Escribe el mensaje aquí"
@@ -451,7 +451,7 @@ text: "Texto"
 enable: "Activar"
 next: "Siguiente"
 retype: "Intentar de nuevo"
-noteOf: "Notas de {user}"
+noteOf: "Publicaciones de {user}"
 inviteToGroup: "Invitar al grupo"
 quoteAttached: "Cita añadida"
 quoteQuestion: "¿Quiere añadir una cita?"
@@ -511,8 +511,8 @@ accountSettings: "Ajustes de cuenta"
 promotion: "Promovido"
 promote: "Promover"
 numberOfDays: "Cantidad de dias"
-hideThisNote: "Ocultar esta nota"
-showFeaturedNotesInTimeline: "Mostrar notas destacadas en la línea de tiempo"
+hideThisNote: "Ocultar esta publicación"
+showFeaturedNotesInTimeline: "Mostrar publicaciones destacadas en la línea de tiempo"
 objectStorage: "Almacenamiento de objetos"
 useObjectStorage: "Usar almacenamiento de objetos"
 objectStorageBaseUrl: "Base URL"
@@ -542,7 +542,7 @@ objectStorageSetPublicRead: "Seleccionar \"public-read\" al subir "
 serverLogs: "Registros del servidor"
 deleteAll: "Eliminar todos"
 showFixedPostForm: "Mostrar el formulario de las entradas encima de la línea de tiempo"
-newNoteRecived: "Tienes una nota nuevo"
+newNoteRecived: "Tienes unas publicaciones nuevas"
 sounds: "Sonidos"
 listen: "Escuchar"
 none: "Ninguna"
@@ -575,7 +575,7 @@ deleteAllFiles: "Borrar todos los archivos"
 deleteAllFilesConfirm: "¿Desea borrar todos los archivos?"
 removeAllFollowing: "Retener todos los siguientes"
 removeAllFollowingDescription: "Cancelar todos los siguientes del servidor {host}.\
-  \ Ejecutar en caso de que esta instancia haya dejado de existir"
+  \ Ejecutar en caso de que esta instancia haya dejado de existir."
 userSuspended: "Este usuario ha sido suspendido."
 userSilenced: "Este usuario ha sido silenciado."
 yourAccountSuspendedTitle: "Esta cuenta ha sido suspendida"
@@ -590,8 +590,8 @@ addRelay: "Agregar relé"
 inboxUrl: "Inbox URL"
 addedRelays: "Relés añadidos"
 serviceworkerInfo: "Se necesita activar para usar las notificaciones push"
-deletedNote: "Nota eliminada"
-invisibleNote: "Nota oculta"
+deletedNote: "Publicación eliminada"
+invisibleNote: "Publicación oculta"
 enableInfiniteScroll: "Activar scroll infinito"
 visibility: "Visibilidad"
 poll: "Encuesta"
@@ -1154,6 +1154,7 @@ _mfm:
   plain: "Plano"
   plainDescription: "Desactiva los efectos de todo el contenido MFM con este efecto\
     \ MFM."
+  position: Posición
 _instanceTicker:
   none: "No mostrar"
   remote: "Mostrar a usuarios remotos"
@@ -1173,6 +1174,8 @@ _channel:
   following: "Siguiendo"
   usersCount: "{n} participantes"
   notesCount: "{n} notas"
+  nameOnly: Nombre solamente
+  nameAndDescription: Nombre y descripción
 _menuDisplay:
   sideFull: "Horizontal"
   sideIcon: "Horizontal (ícono)"
@@ -1900,18 +1903,6 @@ moveFrom: Mueve a esta cuenta de una cuenta antigua
 moveFromLabel: 'La cuenta que estás moviendo de:'
 moveAccountDescription: ''
 license: Licencia
-_apps:
-  apps: Aplicaciones
-  crossPlatform: Plataforma Cruzada
-  mobile: Teléfono móvil
-  secondClass: Segunda clase
-  lesskey: ''
-  firstClass: Primera clase
-  thirdClass: Tercera clase
-  theDesk: ''
-  pwa: Instalar PWA
-  free: Gratis
-  paid: Pagado
 noThankYou: No gracias
 userSaysSomethingReason: '{name} dijo {reason}'
 hiddenTags: Etiquetas Ocultas
@@ -1928,3 +1919,12 @@ _messaging:
   groups: Grupos
   dms: Privado
 pushNotification: Notificaciones
+apps: Aplicaciones
+migration: Migración
+silenced: Silenciado
+deleted: Eliminado
+edited: Editado
+editNote: Editar nota
+silenceThisInstance: Silenciar esta instancia
+findOtherInstance: Buscar otro servidor
+userSaysSomethingReasonRenote: '{name} impulsó una publicación que contiene {reason]'

@@ -49,6 +49,7 @@ export default class extends Channel {
 	}
 
 	private async onNote(note: Packed<"Note">) {
+		if (note.visibility === "hidden") return;
 		if (!this.listUsers.includes(note.userId)) return;
 
 		// 流れてきたNoteがミュートしているユーザーが関わるものだったら無視する

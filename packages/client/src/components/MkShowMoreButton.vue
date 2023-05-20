@@ -1,17 +1,22 @@
 <template>
-	<button v-if="modelValue" class="fade _button" @click.stop="toggle">
-		<span>{{ i18n.ts.showMore }}</span>
-	</button>
-	<button v-if="!modelValue" class="showLess _button" @click.stop="toggle">
-		<span>{{ i18n.ts.showLess }}</span>
+	<button
+		ref="el"
+		class="_button"
+		:class="{ fade: modelValue, showLess: !modelValue }"
+		@click.stop="toggle"
+	>
+		<span>{{ modelValue ? i18n.ts.showMore : i18n.ts.showLess }}</span>
 	</button>
 </template>
 <script lang="ts" setup>
 import { i18n } from "@/i18n";
+import { ref } from "vue";
 
 const props = defineProps<{
 	modelValue: boolean;
 }>();
+
+const el = ref<HTMLElement>();
 
 const emit = defineEmits<{
 	(ev: "update:modelValue", v: boolean): void;
@@ -20,6 +25,14 @@ const emit = defineEmits<{
 const toggle = () => {
 	emit("update:modelValue", !props.modelValue);
 };
+
+function focus() {
+	el.value.focus();
+}
+
+defineExpose({
+	focus,
+});
 </script>
 <style lang="scss" scoped>
 .fade {
@@ -28,6 +41,7 @@ const toggle = () => {
 	bottom: 0;
 	left: 0;
 	width: 100%;
+	z-index: 2;
 	> span {
 		display: inline-block;
 		background: var(--panel);

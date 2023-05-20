@@ -284,6 +284,13 @@ export function getNoteMenu(props: {
 						null,
 				  ]
 				: []),
+			instance.features.postEditing && isAppearAuthor
+				? {
+						icon: "ph-pencil-line ph-bold ph-lg",
+						text: i18n.ts.edit,
+						action: edit,
+				  }
+				: undefined,
 			{
 				icon: "ph-smiley ph-bold ph-lg",
 				text: i18n.ts.reaction,
@@ -421,19 +428,9 @@ export function getNoteMenu(props: {
 
 			null,
 
-			isAppearAuthor
-				? {
-						icon: "ph-pencil-line ph-bold ph-lg",
-						text: i18n.ts.edit,
-						textStyle: "color: var(--accent)",
-						action: edit,
-				  }
-				: undefined,
-
 			{
 				icon: "ph-copy ph-bold ph-lg",
 				text: i18n.ts.duplicate,
-				textStyle: "color: var(--accent)",
 				action: duplicate,
 			},
 

@@ -1,35 +1,41 @@
 <template>
 	<div class="matxzzsk">
-		<div class="label" @click="focus"><slot name="label"></slot></div>
-		<div class="input" :class="{ inline, disabled, focused }">
-			<div ref="prefixEl" class="prefix"><slot name="prefix"></slot></div>
-			<input
-				ref="inputEl"
-				v-model="v"
-				v-adaptive-border
-				:type="type"
-				:disabled="disabled"
-				:required="required"
-				:readonly="readonly"
-				:placeholder="placeholder"
-				:pattern="pattern"
-				:autocomplete="autocomplete"
-				:spellcheck="spellcheck"
-				:step="step"
-				:min="min"
-				:max="max"
-				:list="id"
-				@focus="focused = true"
-				@blur="focused = false"
-				@keydown="onKeydown($event)"
-				@input="onInput"
-			/>
-			<datalist v-if="datalist" :id="id">
-				<option v-for="data in datalist" :value="data" />
-			</datalist>
-			<div ref="suffixEl" class="suffix"><slot name="suffix"></slot></div>
-		</div>
-		<div class="caption"><slot name="caption"></slot></div>
+		<label>
+			<div class="label"><slot name="label"></slot></div>
+			<div class="input" :class="{ inline, disabled, focused }">
+				<div ref="prefixEl" class="prefix">
+					<slot name="prefix"></slot>
+				</div>
+				<input
+					ref="inputEl"
+					v-model="v"
+					v-adaptive-border
+					:type="type"
+					:disabled="disabled"
+					:required="required"
+					:readonly="readonly"
+					:placeholder="placeholder"
+					:pattern="pattern"
+					:autocomplete="autocomplete"
+					:spellcheck="spellcheck"
+					:step="step"
+					:min="min"
+					:max="max"
+					:list="id"
+					@focus="focused = true"
+					@blur="focused = false"
+					@keydown="onKeydown($event)"
+					@input="onInput"
+				/>
+				<datalist v-if="datalist" :id="id">
+					<option v-for="data in datalist" :value="data" />
+				</datalist>
+				<div ref="suffixEl" class="suffix">
+					<slot name="suffix"></slot>
+				</div>
+			</div>
+			<div class="caption"><slot name="caption"></slot></div>
+		</label>
 
 		<MkButton
 			v-if="manualSave && changed"
@@ -180,108 +186,110 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .matxzzsk {
-	> .label {
-		font-size: 0.85em;
-		padding: 0 0 8px 0;
-		user-select: none;
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .caption {
-		font-size: 0.85em;
-		padding: 8px 0 0 0;
-		color: var(--fgTransparentWeak);
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .input {
-		position: relative;
-
-		> input {
-			appearance: none;
-			-webkit-appearance: none;
-			display: block;
-			height: v-bind("height + 'px'");
-			width: 100%;
-			margin: 0;
-			padding: 0 12px;
-			font: inherit;
-			font-weight: normal;
-			font-size: 1em;
-			color: var(--fg);
-			background: var(--panel);
-			border: solid 1px var(--panel);
-			border-radius: 6px;
-			outline: none;
-			box-shadow: none;
-			box-sizing: border-box;
-			transition: border-color 0.1s ease-out;
-
-			&:hover {
-				border-color: var(--inputBorderHover) !important;
-			}
-		}
-
-		> .prefix,
-		> .suffix {
-			display: flex;
-			align-items: center;
-			position: absolute;
-			z-index: 1;
-			top: 0;
-			padding: 0 12px;
-			font-size: 1em;
-			height: v-bind("height + 'px'");
-			pointer-events: none;
+	> label {
+		> .label {
+			font-size: 0.85em;
+			padding: 0 0 8px 0;
+			user-select: none;
 
 			&:empty {
 				display: none;
 			}
+		}
 
-			> * {
-				display: inline-block;
-				min-width: 16px;
-				max-width: 150px;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
+		> .caption {
+			font-size: 0.85em;
+			padding: 8px 0 0 0;
+			color: var(--fgTransparentWeak);
+
+			&:empty {
+				display: none;
 			}
 		}
 
-		> .prefix {
-			left: 0;
-			padding-right: 6px;
-		}
+		> .input {
+			position: relative;
 
-		> .suffix {
-			right: 0;
-			padding-left: 6px;
-		}
-
-		&.inline {
-			display: inline-block;
-			margin: 0;
-		}
-
-		&.focused {
 			> input {
-				border-color: var(--accent) !important;
-				//box-shadow: 0 0 0 4px var(--focus);
+				appearance: none;
+				-webkit-appearance: none;
+				display: block;
+				height: v-bind("height + 'px'");
+				width: 100%;
+				margin: 0;
+				padding: 0 12px;
+				font: inherit;
+				font-weight: normal;
+				font-size: 1em;
+				color: var(--fg);
+				background: var(--panel);
+				border: solid 1px var(--panel);
+				border-radius: 6px;
+				outline: none;
+				box-shadow: none;
+				box-sizing: border-box;
+				transition: border-color 0.1s ease-out;
+
+				&:hover {
+					border-color: var(--inputBorderHover) !important;
+				}
 			}
-		}
 
-		&.disabled {
-			opacity: 0.7;
+			> .prefix,
+			> .suffix {
+				display: flex;
+				align-items: center;
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				padding: 0 12px;
+				font-size: 1em;
+				height: v-bind("height + 'px'");
+				pointer-events: none;
 
-			&,
-			* {
-				cursor: not-allowed !important;
+				&:empty {
+					display: none;
+				}
+
+				> * {
+					display: inline-block;
+					min-width: 16px;
+					max-width: 150px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+			}
+
+			> .prefix {
+				left: 0;
+				padding-right: 6px;
+			}
+
+			> .suffix {
+				right: 0;
+				padding-left: 6px;
+			}
+
+			&.inline {
+				display: inline-block;
+				margin: 0;
+			}
+
+			&.focused {
+				> input {
+					border-color: var(--accent) !important;
+					//box-shadow: 0 0 0 4px var(--focus);
+				}
+			}
+
+			&.disabled {
+				opacity: 0.7;
+
+				&,
+				* {
+					cursor: not-allowed !important;
+				}
 			}
 		}
 	}

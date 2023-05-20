@@ -707,6 +707,7 @@ export type Endpoints = {
 			carefulBot?: boolean;
 			autoAcceptFollowed?: boolean;
 			noCrawle?: boolean;
+			preventAiLearning?: boolean;
 			isBot?: boolean;
 			isCat?: boolean;
 			injectFeaturedNote?: boolean;

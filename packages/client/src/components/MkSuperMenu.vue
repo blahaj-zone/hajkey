@@ -1,6 +1,6 @@
 <template>
-	<div class="rrevdjwu" :class="{ grid }">
-		<div v-for="group in def" class="group">
+	<nav class="rrevdjwu" :class="{ grid }">
+		<section v-for="group in def" class="group">
 			<div v-if="group.title" class="title">{{ group.title }}</div>
 
 			<div class="items">
@@ -48,8 +48,8 @@
 					</MkA>
 				</template>
 			</div>
-		</div>
-	</div>
+		</section>
+	</nav>
 </template>
 
 <script lang="ts">
@@ -81,7 +81,7 @@ export default defineComponent({
 
 		> .title {
 			opacity: 0.7;
-			margin: 0 0 8px 0;
+			margin: 0 12px 8px;
 			font-size: 0.9em;
 		}
 

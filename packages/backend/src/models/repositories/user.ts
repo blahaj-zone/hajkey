@@ -553,6 +553,7 @@ export const UserRepository = db.getRepository(User).extend({
 						carefulBot: profile!.carefulBot,
 						autoAcceptFollowed: profile!.autoAcceptFollowed,
 						noCrawle: profile!.noCrawle,
+						preventAiLearning: profile!.preventAiLearning,
 						isExplorable: user.isExplorable,
 						isDeleted: user.isDeleted,
 						hideOnlineStatus: user.hideOnlineStatus,

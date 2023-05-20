@@ -30,7 +30,11 @@ export default class NotesChart extends Chart<typeof schema> {
 		return {};
 	}
 
-	public async update(note: Note, isAdditional: boolean): Promise<void> {
+	public async update(
+		note: Note,
+		isAdditional: boolean,
+		byBot = false,
+	): Promise<void> {
 		const prefix = note.userHost === null ? "local" : "remote";
 
 		await this.commit({
@@ -44,7 +48,7 @@ export default class NotesChart extends Chart<typeof schema> {
 						: -1
 					: 0,
 			[`${prefix}.diffs.renote`]:
-				note.renoteId != null ? (isAdditional ? 1 : -1) : 0,
+				note.renoteId != null && !byBot ? (isAdditional ? 1 : -1) : 0,
 			[`${prefix}.diffs.reply`]:
 				note.replyId != null ? (isAdditional ? 1 : -1) : 0,
 			[`${prefix}.diffs.withFile`]:

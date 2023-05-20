@@ -377,9 +377,12 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	mentionedUsers = await extractMentionedUsers(user, combinedTokens);
 
-	tags = tags
+	tags = [...new Set(tags)]
+		.sort()
 		.filter((tag) => Array.from(tag || "").length <= 128)
 		.splice(0, 32);
+
+	emojis = [...new Set(emojis)].sort();
 
 	if (
 		reply &&
@@ -463,19 +466,30 @@ export default define(meta, paramDef, async (ps, user) => {
 			if (poll.noteVisibility !== ps.visibility) {
 				pollUpdate.noteVisibility = ps.visibility;
 			}
+			// We can't do an unordered equal check because the order of choices
+			// is important and if it changes, we need to reset the votes.
 			if (JSON.stringify(poll.choices) !== JSON.stringify(pp.choices)) {
 				pollUpdate.choices = pp.choices;
 				pollUpdate.votes = new Array(pp.choices.length).fill(0);
 			}
-			if (Object.keys(pollUpdate).length > 0) {
+			if (notEmpty(pollUpdate)) {
 				await Polls.update(note.id, pollUpdate);
 			}
 			publishing = true;
 		}
 	}
 
-	const mentionUserIds = mentionedUsers.map((user) => user.id);
-	const remoteUsers = mentionedUsers.filter((user) => user.host != null);
+	const mentionedUserLookup: Record<string, User> = {};
+	mentionedUsers.forEach((u) => {
+		mentionedUserLookup[u.id] = u;
+	});
+
+	const mentionedUserIds = [...new Set(mentionedUsers.map((u) => u.id))].sort();
+
+	const remoteUsers = mentionedUserIds
+		.map((id) => mentionedUserLookup[id])
+		.filter((u) => u.host != null);
+
 	const remoteUserIds = remoteUsers.map((user) => user.id);
 	const remoteProfiles = await UserProfiles.findBy({
 		userId: In(remoteUserIds),
@@ -508,8 +522,8 @@ export default define(meta, paramDef, async (ps, user) => {
 	if (ps.visibleUserIds !== note.visibleUserIds) {
 		update.visibleUserIds = ps.visibleUserIds;
 	}
-	if (!unorderedEqual(mentionUserIds, note.mentions)) {
-		update.mentions = mentionUserIds;
+	if (!unorderedEqual(mentionedUserIds, note.mentions)) {
+		update.mentions = mentionedUserIds;
 		update.mentionedRemoteUsers = JSON.stringify(mentionedRemoteUsers);
 	}
 	if (ps.channelId !== note.channelId) {
@@ -546,7 +560,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		}
 	}
 
-	if (Object.keys(update).length > 0) {
+	if (notEmpty(update)) {
 		update.updatedAt = new Date();
 		await Notes.update(note.id, update);
 
@@ -624,4 +638,8 @@ export default define(meta, paramDef, async (ps, user) => {
 
 function unorderedEqual<T>(a: T[], b: T[]) {
 	return a.length === b.length && a.every((v) => b.includes(v));
+}
+
+function notEmpty(partial: Partial<any>) {
+	return Object.keys(partial).length > 0;
 }

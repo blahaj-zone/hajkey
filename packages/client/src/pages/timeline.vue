@@ -121,18 +121,11 @@ if (
 if (isLocalTimelineAvailable) {
 	timelines.push("local");
 }
-
-if (
-	isLocalTimelineAvailable &&
-	defaultStore.state.showLocalPostsInTimeline === "home"
-) {
-	timelines.push("home");
-} else if (isLocalTimelineAvailable) {
-	timelines.push("social");
-}
-
 if (isRecommendedTimelineAvailable) {
 	timelines.push("recommended");
+}
+if (isLocalTimelineAvailable) {
+	timelines.push("social");
 }
 if (isGlobalTimelineAvailable) {
 	timelines.push("global");
@@ -257,27 +250,13 @@ const headerActions = $computed(() => [
 }*/,
 ]);
 
-// Swap home timeline with social's functionality
-
 const headerTabs = $computed(() => [
-	...(isLocalTimelineAvailable &&
-	defaultStore.state.showLocalPostsInTimeline === "home"
-		? [
-				{
-					key: "social",
-					title: i18n.ts._timelines.home,
-					icon: "ph-house ph-bold ph-lg",
-					iconOnly: true,
-				},
-		  ]
-		: [
-				{
-					key: "home",
-					title: i18n.ts._timelines.home,
-					icon: "ph-house ph-bold ph-lg",
-					iconOnly: true,
-				},
-		  ]),
+	{
+		key: "home",
+		title: i18n.ts._timelines.home,
+		icon: "ph-house ph-bold ph-lg",
+		iconOnly: true,
+	},
 	...(isLocalTimelineAvailable
 		? [
 				{
@@ -288,32 +267,22 @@ const headerTabs = $computed(() => [
 				},
 		  ]
 		: []),
-	...(isLocalTimelineAvailable &&
-	defaultStore.state.showLocalPostsInTimeline === "home"
-		? [
-				{
-					key: "home",
-					title: i18n.ts._timelines.social,
-					icon: "ph-handshake ph-bold ph-lg",
-					iconOnly: true,
-				},
-		  ]
-		: isLocalTimelineAvailable
-		? [
-				{
-					key: "social",
-					title: i18n.ts._timelines.social,
-					icon: "ph-handshake ph-bold ph-lg",
-					iconOnly: true,
-				},
-		  ]
-		: []),
 	...(isRecommendedTimelineAvailable
 		? [
 				{
 					key: "recommended",
 					title: i18n.ts._timelines.recommended,
 					icon: "ph-thumbs-up ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
+		: []),
+	...(isLocalTimelineAvailable
+		? [
+				{
+					key: "social",
+					title: i18n.ts._timelines.social,
+					icon: "ph-handshake ph-bold ph-lg",
 					iconOnly: true,
 				},
 		  ]
@@ -336,18 +305,12 @@ definePageMetadata(
 		icon:
 			src === "local"
 				? "ph-users ph-bold ph-lg"
-				: src === "social" &&
-				  defaultStore.state.showLocalPostsInTimeline === "home"
-				? "ph-house ph-bold ph-lg"
 				: src === "social"
 				? "ph-handshake ph-bold ph-lg"
 				: src === "recommended"
 				? "ph-thumbs-up ph-bold ph-lg"
 				: src === "global"
 				? "ph-planet ph-bold ph-lg"
-				: src === "home" &&
-				  defaultStore.state.showLocalPostsInTimeline === "home"
-				? "ph-handshake ph-bold ph-lg"
 				: "ph-house ph-bold ph-lg",
 	}))
 );
@@ -421,7 +384,7 @@ onMounted(() => {
 	}
 
 	> .tl {
-		background: var(--bg);
+		background: none;
 		border-radius: var(--radius);
 		overflow: clip;
 	}

@@ -1,309 +1,309 @@
 _lang_: "Deutsch"
-headlineMisskey: "Ein durch Posts verbundenes Netzwerk"
-introMisskey: "Willkommen! Calckey ist eine dezentralisierte Open-Source Microblogging-Platform.\n\
-  Verfasse „Posts“ um mitzuteilen, was gerade passiert oder um Ereignisse mit anderen\
-  \ zu teilen. \U0001F4E1\nMit „Reaktionen“ kannst du außerdem schnell deine Gefühle\
-  \ über Posts anderer Benutzer zum Ausdruck bringen. \U0001F44D\nEine neue Welt wartet\
-  \ auf dich! \U0001F680"
+headlineMisskey: "Eine dezentralisierte Open-Source Social Media Plattform, die für\
+  \ immer gratis bleibt! \U0001F680"
+introMisskey: "Willkommen! Calckey ist eine dezentralisierte Open-Source Social Media\
+  \ Plattform, die für immer gratis bleibt!\U0001F680"
 monthAndDay: "{day}.{month}."
 search: "Suchen"
 notifications: "Benachrichtigungen"
-username: "Benutzername"
+username: "Nutzername"
 password: "Passwort"
 forgotPassword: "Passwort vergessen"
 fetchingAsApObject: "Wird aus dem Fediverse angefragt"
 ok: "OK"
 gotIt: "Verstanden!"
 cancel: "Abbrechen"
-enterUsername: "Benutzername eingeben"
-renotedBy: "Renote von {user}"
-noNotes: "Keine Notizen gefunden"
-noNotifications: "Keine Benachrichtigungen gefunden"
-instance: "Instanz"
+enterUsername: "Nutzername eingeben"
+renotedBy: "Geteilt von {user}"
+noNotes: "Keine Beiträge"
+noNotifications: "Keine Benachrichtigungen"
+instance: "Server"
 settings: "Einstellungen"
-basicSettings: "Allgemeine Einstellungen"
+basicSettings: "Grundeinstellungen"
 otherSettings: "Weitere Einstellungen"
 openInWindow: "In einem Fenster öffnen"
 profile: "Profil"
-timeline: "Chronik"
-noAccountDescription: "Dieser Nutzer hat seine Profilbeschreibung noch nicht ausgefüllt"
+timeline: "Timelines"
+noAccountDescription: "Dieser Nutzer hat seine Profilbeschreibung noch nicht ausgefüllt."
 login: "Anmelden"
-loggingIn: "Du wirst angemeldet …"
+loggingIn: "Du wirst angemeldet"
 logout: "Abmelden"
 signup: "Registrieren"
 uploading: "Wird hochgeladen …"
 save: "Speichern"
-users: "Benutzer"
-addUser: "Benutzer hinzufügen"
-favorite: "Zu Favoriten hinzufügen"
-favorites: "Favoriten"
-unfavorite: "Aus Favoriten entfernen"
-favorited: "Zu Favoriten hinzugefügt."
-alreadyFavorited: "Bereits zu den Favoriten hinzugefügt."
-cantFavorite: "Hinzufügen zu Favoriten fehlgeschlagen."
+users: "Nutzer"
+addUser: "Nutzer hinzufügen"
+favorite: "Zu den Lesezeichen hinzufügen"
+favorites: "Lesezeichen"
+unfavorite: "Aus den Lesezeichen entfernen"
+favorited: "Zu den Lesezeichen hinzugefügt."
+alreadyFavorited: "Bereits zu den Lesezeichen hinzugefügt."
+cantFavorite: "Hinzufügen zu den Lesezeichen fehlgeschlagen."
 pin: "An dein Profil anheften"
 unpin: "Von deinem Profil lösen"
 copyContent: "Inhalt kopieren"
 copyLink: "Link kopieren"
 delete: "Löschen"
 deleteAndEdit: "Löschen und Bearbeiten"
-deleteAndEditConfirm: "Möchtest du diese Notiz wirklich löschen und bearbeiten? Alle\
-  \ Reaktionen, Renotes und Antworten dieser Notiz werden verloren gehen."
+deleteAndEditConfirm: "Möchtest du diesen Beitrag wirklich löschen und bearbeiten?\
+  \ Alle Rückmeldungen, Renotes und Antworten dieses Beitrages werden verloren gehen."
 addToList: "Zu Liste hinzufügen"
-sendMessage: "Nachricht senden"
-copyUsername: "Benutzernamen kopieren"
-searchUser: "Nach einem Benutzer suchen"
+sendMessage: "Eine Mitteilung senden"
+copyUsername: "Nutzernamen kopieren"
+searchUser: "Nach einem Nutzer suchen"
 reply: "Antworten"
 loadMore: "Mehr laden"
 showMore: "Mehr anzeigen"
 showLess: "Schließen"
-youGotNewFollower: "ist dir gefolgt"
+youGotNewFollower: "folgt dir"
 receiveFollowRequest: "Follow-Anfrage erhalten"
 followRequestAccepted: "Follow-Anfrage akzeptiert"
 mention: "Erwähnung"
 mentions: "Erwähnungen"
-directNotes: "Direktnachrichten"
-importAndExport: "Import und Export"
+directNotes: "Direktmitteilungen"
+importAndExport: "Daten Im- und Export"
 import: "Import"
 export: "Export"
 files: "Dateien"
 download: "Herunterladen"
-driveFileDeleteConfirm: "Möchtest du die Datei „{name}“ wirklich löschen? Notizen\
-  \ mit dieser Datei werden ebenso verschwinden."
-unfollowConfirm: "Möchtest du {name} nicht mehr folgen?"
+driveFileDeleteConfirm: "Möchtest du die Datei „{name}“ wirklich löschen? Es wird\
+  \ aus allen Beiträgen entfernt, die die Datei als Anhang enthalten."
+unfollowConfirm: "Bist du dir sicher, daß du {name} nicht mehr folgen möchtest?"
 exportRequested: "Du hast einen Export angefragt. Dies kann etwas Zeit in Anspruch\
-  \ nehmen. Sobald der Export abgeschlossen ist, wird er deiner Drive hinzugefügt."
+  \ nehmen. Sobald der Export abgeschlossen ist, wird er deinem Laufwerk hinzugefügt."
 importRequested: "Du hast einen Import angefragt. Dies kann etwas Zeit in Anspruch\
   \ nehmen."
 lists: "Listen"
-noLists: "Keine Listen gefunden"
-note: "Notiz"
-notes: "Notizen"
-following: "Folgt"
-followers: "Gefolgt von"
+noLists: "Du hast keine Listen angelegt"
+note: "Beitrag"
+notes: "Beiträge"
+following: "Folge ich"
+followers: "Folgen mir"
 followsYou: "Folgt dir"
 createList: "Liste erstellen"
 manageLists: "Listen verwalten"
 error: "Fehler"
 somethingHappened: "Ein Fehler ist aufgetreten"
 retry: "Wiederholen"
-pageLoadError: "Die Seite konnte nicht geladen werden."
-pageLoadErrorDescription: "Dieser Fehler wird meist durch Netzwerkfehler oder den\
-  \ Browser-Cache verursacht. Bitte leere den Cache oder versuche es nach einiger\
-  \ Zeit erneut."
-serverIsDead: "Dieser Server antwortet nicht. Bitte warte einen Moment und versuche\
-  \ es dann erneut."
+pageLoadError: "Beim Laden der Seite ist ein Fehler aufgetreten."
+pageLoadErrorDescription: "Dies wird in der Regel durch Netzwerkfehler oder den Cache\
+  \ des Browsers verursacht. Versuchen Sie, den Cache zu leeren, und versuchen Sie\
+  \ es dann erneut, nachdem Sie eine Weile gewartet haben."
+serverIsDead: "Der Server antwortet nicht. Bitte warte einen Moment und versuche es\
+  \ dann erneut."
 youShouldUpgradeClient: "Bitte aktualisiere diese Seite, um eine neuere Version deines\
   \ Clients zu verwenden."
-enterListName: "Listennamen eingeben"
+enterListName: "Gib einen Namen für die Liste ein"
 privacy: "Privatsphäre"
-makeFollowManuallyApprove: "Follow-Anfragen benötigen Bestätigung"
-defaultNoteVisibility: "Standardsichtbarkeit"
-follow: "Folgen"
+makeFollowManuallyApprove: "Folgeanfragen bedürfen der Genehmigung"
+defaultNoteVisibility: "Standard-Sichtbarkeit"
+follow: "Folge ich"
 followRequest: "Follow anfragen"
 followRequests: "Follow-Anfragen"
 unfollow: "Nicht mehr folgen"
-followRequestPending: "Follow-Anfrage ausstehend"
-enterEmoji: "Gib ein Emoji ein"
-renote: "Renote"
-unrenote: "Renote zurücknehmen"
-renoted: "Renote getätigt."
-cantRenote: "Renote dieses Beitrags nicht möglich."
-cantReRenote: "Renote einer Renote nicht möglich."
+followRequestPending: "Follow-up-Anfrage ausstehend"
+enterEmoji: "Ein Emoji eingeben"
+renote: "Boost"
+unrenote: "Boost zurücknehmen"
+renoted: "Geboostet."
+cantRenote: "Dieser Beitrag kann nicht geboostet werden."
+cantReRenote: "Ein Boost kann nicht geboostet werden."
 quote: "Zitieren"
-pinnedNote: "Angeheftete Notiz"
-pinned: "Angeheftet"
+pinnedNote: "Angepinnter Beitrag"
+pinned: "An das Profil anheften"
 you: "Du"
 clickToShow: "Zum Anzeigen anklicken"
 sensitive: "NSFW"
 add: "Hinzufügen"
 reaction: "Reaktionen"
-reactionSetting: "In der Reaktionsauswahl anzuzeigende Reaktionen"
-reactionSettingDescription2: "Ziehe um Anzuordnen, klicke um zu löschen, drücke „+“\
-  \ um hinzuzufügen"
-rememberNoteVisibility: "Notizsichtbarkeit merken"
+reactionSetting: "Reaktionen, die in der Reaktionsauswahl angezeigt werden sollen"
+reactionSettingDescription2: "Ziehen Sie, um neu zu ordnen,\nklicken Sie, um zu löschen,\n\
+  drücken Sie \"+\", um hinzuzufügen."
+rememberNoteVisibility: "Einstellungen für die Sichtbarkeit von Beiträgen speichern"
 attachCancel: "Anhang entfernen"
-markAsSensitive: "Als NSFW markieren"
-accountMoved: "Benutzer hat zu einem anderen Account gewechselt."
-unmarkAsSensitive: "Als nicht NSFW markieren"
-enterFileName: "Dateinamen eingeben"
+markAsSensitive: "Als NSFW kennzeichnen"
+accountMoved: "Der Nutzer ist zu einem neuen Konto umgezogen:"
+unmarkAsSensitive: "NSFW Kennzeichnung aufheben"
+enterFileName: "Dateiname eingeben"
 mute: "Stummschalten"
 unmute: "Stummschaltung aufheben"
 block: "Blockieren"
 unblock: "Blockierung aufheben"
-suspend: "Sperren"
-unsuspend: "Sperrung aufheben"
-blockConfirm: "Möchtest du diesen Benutzer wirklich blockieren?"
-unblockConfirm: "Möchtest du diese Blockierung wirklich aufheben?"
-suspendConfirm: "Möchtest du diesen Benutzer wirklich sperren?"
-unsuspendConfirm: "Möchtest du diesen Benutzer wirklich entsperren?"
-selectList: "Liste auswählen"
-selectAntenna: "Antenne auswählen"
-selectWidget: "Widget auswählen"
+suspend: "Suspendieren"
+unsuspend: "Suspendierung aufheben"
+blockConfirm: "Sind Sie sicher, dass Sie dieses Konto sperren wollen?"
+unblockConfirm: "Sind Sie sicher, dass Sie die Sperrung dieses Kontos aufheben wollen?"
+suspendConfirm: "Sind Sie sicher, dass Sie dieses Konto sperren wollen?"
+unsuspendConfirm: "Sind Sie sicher, dass Sie dieses Konto entsperren wollen?"
+selectList: "Wählen Sie eine Liste aus"
+selectAntenna: "News-Picker auswählen"
+selectWidget: "Ein Widget auswählen"
 editWidgets: "Widgets bearbeiten"
-editWidgetsExit: "Fertig"
-customEmojis: "Benutzerdefinierte Emojis"
+editWidgetsExit: "Erledigt"
+customEmojis: "Benutzerdefinierte Emoji"
 emoji: "Emoji"
-emojis: "Emojis"
+emojis: "Emoji"
 emojiName: "Emoji-Name"
 emojiUrl: "Emoji-URL"
 addEmoji: "Emoji hinzufügen"
-settingGuide: "Empfohlene Einstellung"
-cacheRemoteFiles: "Dateien von fremden Instanzen im Cache speichern"
+settingGuide: "Empfohlene Einstellungen"
+cacheRemoteFiles: "Cache für entfernte Dateien"
 cacheRemoteFilesDescription: "Ist diese Einstellung deaktiviert, so werden Dateien\
-  \ fremder Instanzen direkt von dort geladen. Hierdurch wird Speicherplatz auf diesem\
-  \ Server gespart, aber durch fehlende Generierung von Vorschaubildern mehr Bandbreite\
-  \ verwendet."
-flagAsBot: "Als Bot markieren"
-flagAsBotDescription: "Aktiviere diese Option, falls dieses Benutzerkonto durch ein\
+  \ von anderen Servern direkt von dort geladen. Hierdurch wird Speicherplatz auf\
+  \ diesem Server eingespart, aber durch die fehlende Generierung von Vorschaubildern\
+  \ mehr Bandbreite benötigt."
+flagAsBot: "Dieses Nutzerkonto als Bot kennzeichnen"
+flagAsBotDescription: "Aktiviere diese Option, falls dieses Nutzerkonto durch ein\
   \ Programm gesteuert wird. Falls aktiviert, agiert es als Flag für andere Entwickler\
-  \ zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Misskeys\
-  \ interne Systeme dieses Benutzerkonto als Bot behandeln."
-flagAsCat: "Als Katze markieren"
-flagAsCatDescription: "Aktiviere diese Option, um dieses Benutzerkonto als Katze zu\
-  \ markieren."
-flagShowTimelineReplies: "Antworten in der Chronik anzeigen"
-flagShowTimelineRepliesDescription: "Ist diese Option aktiviert, so werden Antworten\
-  \ von Benutzern auf die Notizen anderer Benutzer in der Chronik angezeigt."
-autoAcceptFollowed: "Follow-Anfragen von Benutzern, denen du folgst, automatisch akzeptieren"
-addAccount: "Benutzerkonto hinzufügen"
+  \ zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Calckeys\
+  \ interne Systeme dieses Nutzerkonto als Bot behandeln."
+flagAsCat: "Bist du eine Katze? \U0001F63A"
+flagAsCatDescription: "Du bekommst Katzenohren und sprichst wie eine Katze!"
+flagShowTimelineReplies: "Antworten in der Timeline anzeigen"
+flagShowTimelineRepliesDescription: "Zeigt Antworten von Nutzern auf Beiträge anderer\
+  \ Nutzer in der Timeline an, wenn diese Funktion aktiviert ist."
+autoAcceptFollowed: "Automatisches Genehmigen von Folgeanfragen von Benutzern, denen\
+  \ Sie folgen"
+addAccount: "Nutzerkonto hinzufügen"
 loginFailed: "Anmeldung fehlgeschlagen"
-showOnRemote: "Auf Ursprungsinstanz ansehen"
+showOnRemote: "Ansicht auf dem Herkunftsserver"
 general: "Allgemein"
-wallpaper: "Hintergrund"
-setWallpaper: "Hintergrund festlegen"
-removeWallpaper: "Hintergrund entfernen"
+wallpaper: "Hintergrundbild"
+setWallpaper: "Hintergrundbild festlegen"
+removeWallpaper: "Hintergrundbild entfernen"
 searchWith: "Suchen: {q}"
-youHaveNoLists: "Du hast keine Listen"
-followConfirm: "Möchtest du {name} wirklich folgen?"
+youHaveNoLists: "Sie haben keine Listen"
+followConfirm: "Sind Sie sicher, dass Sie {name} folgen möchten?"
 proxyAccount: "Proxy-Konto"
-proxyAccountDescription: "Ein Proxy-Benutzerkonto ist ein Benutzerkonto, das sich\
-  \ für Nutzer unter bestimmten Konditionen wie ein Follower aus einer fremden Instanz\
-  \ verhält. Zum Beispiel wird die Aktivität eines Nutzers aus einer fremden Instanz\
-  \ nicht an diese Instanz übermittelt, falls es keinen Benutzer dieser Instanz gibt,\
-  \ der diesem Nutzer aus fremder Instanz folgt. In diesem Fall folgt stattdessen\
-  \ das Proxy-Benutzerkonto."
-host: "Hostname"
-selectUser: "Benutzer auswählen"
+proxyAccountDescription: "Ein Proxy-Konto ist ein Nutzerkonto, das sich für Nutzer\
+  \ unter bestimmten Konditionen wie ein Follower von einem anderen Server verhält.\
+  \ Zum Beispiel wird die Aktivität eines Nutzers von einem anderen Server nicht an\
+  \ diesen Server übermittelt, falls es keinen Nutzer von diesem Server gibt, der\
+  \ diesem Nutzer von einem anderen Server folgt. In diesem Fall folgt stattdessen\
+  \ das Proxy-Nutzerkonto."
+host: "Host"
+selectUser: "Wählen Sie einen Nutzer"
 recipient: "Empfänger"
-annotation: "Anmerkung"
+annotation: "Anmerkungen"
 federation: "Föderation"
-instances: "Instanzen"
-registeredAt: "Registriert am"
+instances: "Server"
+registeredAt: "Registriert unter"
 latestRequestSentAt: "Letzte Anfrage gesendet"
-latestRequestReceivedAt: "Letzte Anfrage erhalten"
-latestStatus: "Neuster Status"
-storageUsage: "Verbrauchter Speicherplatz"
+latestRequestReceivedAt: "Letzte erhaltene Anfrage"
+latestStatus: "Aktueller Stand"
+storageUsage: "Nutzung des Speichers"
 charts: "Diagramme"
 perHour: "Pro Stunde"
 perDay: "Pro Tag"
-stopActivityDelivery: "Senden von Aktivitäten einstellen"
-blockThisInstance: "Diese Instanz blockieren"
-operations: "Aktionen"
+stopActivityDelivery: "Sendeaktivitäten einstellen"
+blockThisInstance: "Diesen Server blockieren"
+operations: "Tätigkeiten"
 software: "Software"
 version: "Version"
 metadata: "Metadaten"
 withNFiles: "{n} Datei(en)"
-monitor: "Beobachten"
-jobQueue: "Job-Warteschlange"
-cpuAndMemory: "CPU und Arbeitsspeicher"
+monitor: "Überwachung"
+jobQueue: "Auftragswarteschlange"
+cpuAndMemory: "CPU und Speicher"
 network: "Netzwerk"
 disk: "Festplatte"
-instanceInfo: "Instanzinformationen"
+instanceInfo: "Serverinformationen"
 statistics: "Statistiken"
-clearQueue: "Warteschlange leeren"
-clearQueueConfirmTitle: "Möchtest du die Warteschlange wirklich leeren?"
-clearQueueConfirmText: "Hierdurch werden jegliche noch nicht gesendete Notizen nicht\
-  \ förderiert. Normalerweise wird dies nicht benötigt."
+clearQueue: "Warteschlange löschen"
+clearQueueConfirmTitle: "Sind Sie sicher, dass Sie die Warteschlange löschen wollen?"
+clearQueueConfirmText: "Nicht zugestellte Beiträge, die in der Warteschlange verbleiben,\
+  \ werden nicht föderiert. Normalerweise ist dieser Vorgang nicht erforderlich."
 clearCachedFiles: "Cache leeren"
-clearCachedFilesConfirm: "Sollen alle im Cache gespeicherten Dateien von anderen Instanzen\
-  \ wirklich gelöscht werden?"
-blockedInstances: "Blockierte Instanzen"
-blockedInstancesDescription: "Gib die Hostnamen der Instanzen, welche blockiert werden\
-  \ sollen, durch Zeilenumbrüche getrennt an. Blockierte Instanzen können mit dieser\
-  \ instanz nicht mehr kommunizieren."
+clearCachedFilesConfirm: "Sind Sie sicher, dass Sie alle im Cache zwischengespeicherten\
+  \ Dateien löschen wollen?"
+blockedInstances: "Blockierte Server"
+blockedInstancesDescription: "Geben Sie die Hostnamen der Server, getrennt durch einen\
+  \ Zeilenumbruch, an, die Sie blockieren möchten. Aufgelistete (blockierte) Server\
+  \ können nicht mehr mit diesem Server kommunizieren."
 muteAndBlock: "Stummschaltungen und Blockierungen"
-mutedUsers: "Stummgeschaltete Benutzer"
-blockedUsers: "Blockierte Benutzer"
-noUsers: "Keine Benutzer gefunden"
+mutedUsers: "Stummgeschaltete Nutzer"
+blockedUsers: "Blockierte Nutzer"
+noUsers: "Es sind keine Nutzer vorhanden"
 editProfile: "Profil bearbeiten"
-noteDeleteConfirm: "Möchtest du diese Notiz wirklich löschen?"
-pinLimitExceeded: "Du kannst nicht noch mehr Notizen anheften."
-intro: "Misskey ist installiert! Lass uns nun ein Administratorkonto einrichten."
-done: "Fertig"
-processing: "In Bearbeitung …"
+noteDeleteConfirm: "Sind Sie sicher, dass Sie diesen Beitrag löschen wollen?"
+pinLimitExceeded: "Sie können keine weiteren Beiträge anpinnen"
+intro: "Die Installation von Calckey ist abgeschlossen! Bitte erstellen Sie einen\
+  \ Admin-Benutzer."
+done: "Erledigt"
+processing: "In Bearbeitung"
 preview: "Vorschau"
 default: "Standard"
-defaultValueIs: "Standardwert: {value}"
-noCustomEmojis: "Keine benutzerdefinierten Emojis gefunden"
+defaultValueIs: "Der Standardwert ist: {value}"
+noCustomEmojis: "Es gibt keine benutzerdefinierten Emoji"
 noJobs: "Keine Jobs vorhanden"
 federating: "Wird föderiert"
 blocked: "Blockiert"
-suspended: "Gesperrt"
+suspended: "suspendiert"
 all: "Alles"
-subscribing: "Wird abonniert"
-publishing: "Wird veröffentlicht"
+subscribing: "Registrieren"
+publishing: "Veröffentlichen"
 notResponding: "Antwortet nicht"
-instanceFollowing: "Gefolgt auf der Instanz"
-instanceFollowers: "Follower der Instanz"
-instanceUsers: "Benutzer der Instanz"
+instanceFollowing: "Auf dem Server folgen"
+instanceFollowers: "Follower des Servers"
+instanceUsers: "Nutzer dieses Servers"
 changePassword: "Passwort ändern"
 security: "Sicherheit"
 retypedNotMatch: "Die Eingaben stimmen nicht überein."
 currentPassword: "Aktuelles Passwort"
 newPassword: "Neues Passwort"
 newPasswordRetype: "Neues Passwort bestätigen"
-attachFile: "Datei anhängen"
+attachFile: "Dateien anhängen"
 more: "Mehr!"
-featured: "Beliebt"
-usernameOrUserId: "Benutzername oder Benutzer-ID"
-noSuchUser: "Benutzer nicht gefunden"
-lookup: "Anfragen"
-announcements: "Ankündigungen"
+featured: "Ausgewählt"
+usernameOrUserId: "Nutzername oder Nutzer-ID"
+noSuchUser: "Nutzer nicht gefunden"
+lookup: "Suche nach"
+announcements: "Bekanntmachungen"
 imageUrl: "Bild-URL"
 remove: "Löschen"
 removed: "Erfolgreich gelöscht"
-removeAreYouSure: "Möchtest du „{x}“ wirklich entfernen?"
-deleteAreYouSure: "Möchtest du „{x}“ wirklich löschen?"
+removeAreYouSure: "Sind Sie sicher, dass Sie \"{x}\" entfernen wollen?"
+deleteAreYouSure: "Sind Sie sicher, dass Sie \"{x}\" löschen wollen?"
 resetAreYouSure: "Wirklich zurücksetzen?"
-saved: "Erfolgreich gespeichert"
+saved: "Gespeichert"
 messaging: "Chat"
 upload: "Hochladen"
-keepOriginalUploading: "Originalbild speichern"
-keepOriginalUploadingDescription: "Speichert das Originalbild so, wie es ist. Ist\
-  \ dies deaktiviert, wird eine Version zum Anzeigen im Internet generiert."
-fromDrive: "Aus Drive"
+keepOriginalUploading: "Originalbild behalten"
+keepOriginalUploadingDescription: "Speichert das ursprünglich hochgeladene Bild so,\
+  \ wie es ist. Wenn diese Option deaktiviert ist, wird beim Hochladen eine Version\
+  \ für die Anzeige im Web erstellt."
+fromDrive: "Vom Laufwerk"
 fromUrl: "Von einer URL"
 uploadFromUrl: "Von einer URL hochladen"
-uploadFromUrlDescription: "URL der hochzuladenden Datei"
+uploadFromUrlDescription: "URL der Datei, die Sie hochladen wollen"
 uploadFromUrlRequested: "Upload angefordert"
-uploadFromUrlMayTakeTime: "Es kann eine Weile dauern, bis das Hochladen abgeschlossen\
+uploadFromUrlMayTakeTime: "Es kann einige Zeit dauern, bis das Hochladen abgeschlossen\
   \ ist."
 explore: "Erkunden"
 messageRead: "Gelesen"
-noMoreHistory: "Kein weiterer Verlauf vorhanden"
-startMessaging: "Neuen Chat erstellen"
-nUsersRead: "Von {n} Benutzern gelesen"
+noMoreHistory: "Es gibt keine weitere Historie"
+startMessaging: "Einen neuen Chat beginnen"
+nUsersRead: "Gelesen von {n}"
 agreeTo: "Ich stimme {0} zu"
 tos: "Nutzungsbedingungen"
-start: "Anfangen"
-home: "Startseite"
-remoteUserCaution: "Informationen von fremden Instanzen sind möglicherweise unvollständig."
+start: "Beginnen Sie"
+home: "Home"
+remoteUserCaution: "Informationen von Remote-Nutzern können unvollständig sein."
 activity: "Aktivität"
 images: "Bilder"
 birthday: "Geburtstag"
 yearsOld: "{age} Jahre alt"
-registeredDate: "Registrationsdatum"
+registeredDate: "Registriert am"
 location: "Ort"
-theme: "Farbschema"
-themeForLightMode: "Helles Farbschema"
-themeForDarkMode: "Dunkles Farbschema"
+theme: "Farbverwaltung"
+themeForLightMode: "Farbkombination zur Verwendung im hellen Modus"
+themeForDarkMode: "Farbkombination zur Verwendung im dunklen Modus"
 light: "Hell"
 dark: "Dunkel"
-lightThemes: "Helle Farbschemata"
-darkThemes: "Dunkle Farbschemata"
+lightThemes: "Helle Farbkombinationen"
+darkThemes: "Dunkle Farbkombinationen"
 syncDeviceDarkMode: "Einstellung deines Geräts übernehmen"
-drive: "Drive"
+drive: "Cloud-Drive"
 fileName: "Dateiname"
 selectFile: "Datei auswählen"
 selectFiles: "Dateien auswählen"
@@ -315,7 +315,7 @@ createFolder: "Ordner erstellen"
 renameFolder: "Ordner umbenennen"
 deleteFolder: "Ordner löschen"
 addFile: "Datei hinzufügen"
-emptyDrive: "Deine Drive ist leer"
+emptyDrive: "Deine Cloud-Drive ist leer"
 emptyFolder: "Dieser Ordner ist leer"
 unableToDelete: "Nicht löschbar"
 inputNewFileName: "Gib einen neuen Dateinamen ein"
@@ -340,8 +340,8 @@ unwatch: "Nicht mehr beobachten"
 accept: "Akzeptieren"
 reject: "Ablehnen"
 normal: "Normal"
-instanceName: "Name der Instanz"
-instanceDescription: "Beschreibung der Instanz"
+instanceName: "Name des Servers"
+instanceDescription: "Beschreibung des Servers"
 maintainerName: "Betreiber"
 maintainerEmail: "Betreiber-Email"
 tosUrl: "URL der Nutzungsbedingungen"
@@ -351,32 +351,32 @@ today: "Heute"
 dayX: "{day}"
 monthX: "{month}"
 yearX: "{year}"
-pages: "Seiten"
+pages: "Nutzer-Seiten"
 integration: "Integration"
 connectService: "Verbinden"
 disconnectService: "Trennen"
-enableLocalTimeline: "Lokale Chronik aktivieren"
-enableGlobalTimeline: "Globale Chronik aktivieren"
+enableLocalTimeline: "Local-Timeline aktivieren"
+enableGlobalTimeline: "Global-Timeline aktivieren"
 disablingTimelinesInfo: "Administratoren und Moderatoren haben immer Zugriff auf alle\
-  \ Chroniken, auch wenn diese deaktiviert sind."
+  \ Timelines, auch wenn diese deaktiviert sind."
 registration: "Registrieren"
-enableRegistration: "Registration neuer Benutzer erlauben"
+enableRegistration: "Registration neuer Nutzer erlauben"
 invite: "Einladen"
-driveCapacityPerLocalAccount: "Drive-Kapazität pro lokalem Benutzerkonto"
-driveCapacityPerRemoteAccount: "Drive-Kapazität pro Benutzer fremder Instanzen"
+driveCapacityPerLocalAccount: "Cloud-Drive-Kapazität pro lokalem Nutzerkonto"
+driveCapacityPerRemoteAccount: "Laufwerkskapazität pro Remote-Nutzer"
 inMb: "In Megabytes"
 iconUrl: "Icon-URL (favicon etc)"
 bannerUrl: "Banner-URL"
 backgroundImageUrl: "Hintergrundbild-URL"
 basicInfo: "Grundlegende Informationen"
-pinnedUsers: "Angeheftete Benutzer"
-pinnedUsersDescription: "Gib durch Leerzeichen getrennte Benutzer an, die an die \"\
+pinnedUsers: "Angeheftete Nutzer"
+pinnedUsersDescription: "Gib durch Leerzeichen getrennte Nutzer an, die an die \"\
   Erkunden\"-Seite angeheftet werden sollen."
-pinnedPages: "Angeheftete Seiten"
-pinnedPagesDescription: "Gib durch Leerzeilen getrennte Pfäde zu Seiten an, die an\
-  \ die Startseite dieser Instanz angeheftet werden sollen.\n"
+pinnedPages: "Angeheftete Nutzer-Seiten"
+pinnedPagesDescription: "Geben Sie die Pfade der Nutzer-Seiten, getrennt durch Zeilenumbrüche,\
+  \ ein, die Sie an die oberste Startseite dieses Servers anheften möchten."
 pinnedClipId: "ID des anzuheftenden Clips"
-pinnedNotes: "Angeheftete Notizen"
+pinnedNotes: "Angeheftete Beiträge"
 hcaptcha: "hCaptcha"
 enableHcaptcha: "hCaptcha aktivieren"
 hcaptchaSiteKey: "Site key"
@@ -388,45 +388,45 @@ recaptchaSecretKey: "Secret key"
 avoidMultiCaptchaConfirm: "Das Verwenden von mehreren Captcha-Systemen kann zu Störungen\
   \ führen. Sollen die anderen Systeme deaktiviert werden? Durch Abbrechen können\
   \ mehrere Systeme aktiviert bleiben."
-antennas: "Antennen"
-manageAntennas: "Antennen verwalten"
+antennas: "News-Picker"
+manageAntennas: "News-Picker verwalten"
 name: "Name"
-antennaSource: "Antennenquelle"
+antennaSource: "Quellen der News-Picker"
 antennaKeywords: "Zu beobachtende Schlüsselwörter"
 antennaExcludeKeywords: "Zu ignorierende Schlüsselwörter"
 antennaKeywordsDescription: "Zum Nutzen einer \"UND\"-Verknüpfung Einträge mit Leerzeichen\
   \ trennen, zum Nutzen einer \"ODER\"-Verknüpfung Einträge mit einem Zeilenumbruch\
-  \ trennen"
-notifyAntenna: "Über neue Notizen benachrichtigen"
-withFileAntenna: "Nur Notizen mit Dateien"
+  \ trennen."
+notifyAntenna: "Über neue Beiträge benachrichtigen"
+withFileAntenna: "Nur Beiträge mit Dateien"
 enableServiceworker: "Push-Benachrichtigungen im Browser aktivieren"
-antennaUsersDescription: "Benutzernamen getrennt durch Zeilenumbrüche angeben"
+antennaUsersDescription: "Nutzernamen getrennt durch Zeilenumbrüche angeben"
 caseSensitive: "Groß-/Kleinschreibung unterscheiden"
 withReplies: "Antworten beinhalten"
-connectedTo: "Mit folgenden Benutzerkonten verknüpft"
-notesAndReplies: "Notizen und Antworten"
-withFiles: "Notizen mit Dateien"
-silence: "Instanzweit stummschalten"
-silenceConfirm: "Möchtest du diesen Benutzer wirklich instanzweit stummschalten?"
-unsilence: "Instanzweite Stummschaltung aufheben"
-unsilenceConfirm: "Möchtest du die instanzweite Stummschaltung dieses Benutzers wirklich\
-  \ aufheben?"
-popularUsers: "Beliebte Benutzer"
-recentlyUpdatedUsers: "Vor kurzem aktive Benutzer"
-recentlyRegisteredUsers: "Vor kurzem registrierte Benutzer"
-recentlyDiscoveredUsers: "Vor kurzem gefundene Benutzer"
-exploreUsersCount: "Es gibt {count} Benutzer"
+connectedTo: "Mit folgenden Nutzerkonten verknüpft"
+notesAndReplies: "Beiträge und Antworten"
+withFiles: "Beiträge mit Dateien"
+silence: "stummschalten"
+silenceConfirm: "Sind Sie sicher, dass Sie diesen Benutzer Stummschalten möchten?"
+unsilence: "Stummschaltung aufheben"
+unsilenceConfirm: "Sind Sie sicher, dass Sie die Stummschaltung dieses Benutzers rückgängig\
+  \ machen wollen?"
+popularUsers: "Beliebte Nutzer"
+recentlyUpdatedUsers: "Vor kurzem aktive Nutzer"
+recentlyRegisteredUsers: "Vor kurzem registrierte Nutzer"
+recentlyDiscoveredUsers: "Vor kurzem gefundene Nutzer"
+exploreUsersCount: "Es gibt {count} Nutzer"
 exploreFediverse: "Das Fediverse erkunden"
 popularTags: "Beliebte Schlagwörter"
 userList: "Liste"
 about: "Über"
-aboutMisskey: "Über Misskey"
+aboutMisskey: "Über Calckey"
 administrator: "Administrator"
 token: "Token"
 twoStepAuthentication: "Zwei-Faktor-Authentifizierung"
 moderator: "Moderator"
 moderation: "Moderation"
-nUsersMentioned: "Von {n} Benutzern erwähnt"
+nUsersMentioned: "Von {n} Nutzern erwähnt"
 securityKey: "Sicherheitsschlüssel"
 securityKeyName: "Schlüsselname"
 registerSecurityKey: "Sicherheitsschlüssel registrieren"
@@ -442,10 +442,10 @@ notFoundDescription: "Es konnte keine Seite unter dieser URL gefunden werden."
 uploadFolder: "Standardordner für Uploads"
 cacheClear: "Cache leeren"
 markAsReadAllNotifications: "Alle Benachrichtigungen als gelesen markieren"
-markAsReadAllUnreadNotes: "Alle Notizen als gelesen markieren"
+markAsReadAllUnreadNotes: "Alle Beiträge als gelesen markieren"
 markAsReadAllTalkMessages: "Alle Chats als gelesen markieren"
 help: "Hilfe"
-inputMessageHere: "Hier Nachricht eingeben"
+inputMessageHere: "Hier Beitrag eingeben"
 close: "Schließen"
 group: "Gruppe"
 groups: "Gruppen"
@@ -463,13 +463,13 @@ text: "Text"
 enable: "Aktivieren"
 next: "Weiter"
 retype: "Erneut eingeben"
-noteOf: "Notiz von {user}"
+noteOf: "Beitrag von {user}"
 inviteToGroup: "Zu Gruppe einladen"
 quoteAttached: "Zitat"
 quoteQuestion: "Als Zitat anhängen?"
-noMessagesYet: "Noch keine Nachrichten vorhanden"
+noMessagesYet: "Noch keine Beiträge vorhanden"
 newMessageExists: "Du hast eine neue Nachricht"
-onlyOneFileCanBeAttached: "Es kann pro Nachricht nur eine Datei angehängt werden"
+onlyOneFileCanBeAttached: "Es kann pro Beitrag nur eine Datei angehängt werden"
 signinRequired: "Bitte registriere oder melde dich an, um fortzufahren"
 invitations: "Einladungen"
 invitationCode: "Einladungscode"
@@ -477,7 +477,7 @@ checking: "Wird überprüft …"
 available: "Verfügbar"
 unavailable: "Unverfügbar"
 usernameInvalidFormat: "Du kannst Klein- und Großbuchstaben, Zahlen sowie Unterstriche\
-  \ verwenden"
+  \ verwenden."
 tooShort: "Zu kurz"
 tooLong: "Zu lang"
 weakPassword: "Schwaches Passwort"
@@ -486,7 +486,7 @@ strongPassword: "Starkes Passwort"
 passwordMatched: "Stimmt überein"
 passwordNotMatched: "Stimmt nicht überein"
 signinWith: "Mit {x} anmelden"
-signinFailed: "Anmeldung fehlgeschlagen. Überprüfe Benutzername und Passswort."
+signinFailed: "Anmeldung fehlgeschlagen. Überprüfe Nutzername und Passswort."
 tapSecurityKey: "Tippe deinen Sicherheitsschlüssel an"
 or: "Oder"
 language: "Sprache"
@@ -504,8 +504,8 @@ doing: "In Bearbeitung …"
 category: "Kategorie"
 tags: "Schlagwörter"
 docSource: "Quellcode dieses Dokuments"
-createAccount: "Benutzerkonto erstellen"
-existingAccount: "Bestehendes Benutzerkonto"
+createAccount: "Nutzerkonto erstellen"
+existingAccount: "Bestehendes Nutzerkonto"
 regenerate: "Regenerieren"
 fontSize: "Schriftgröße"
 noFollowRequests: "Keine ausstehenden Follow-Anfragen vorhanden"
@@ -518,24 +518,24 @@ weekOverWeekChanges: "Veränderung zu letzter Woche"
 dayOverDayChanges: "Veränderung zu Gestern"
 appearance: "Aussehen"
 clientSettings: "Client-Einstellungen"
-accountSettings: "Benutzerkonto-Einstellungen"
-promotion: "Werbung"
-promote: "Werbung schalten"
+accountSettings: "Nutzerkonto-Einstellungen"
+promotion: "geworben"
+promote: "Werben"
 numberOfDays: "Anzahl der Tage"
-hideThisNote: "Diese Notiz verstecken"
-showFeaturedNotesInTimeline: "Beliebte Notizen in der Chronik anzeigen"
-objectStorage: "Object Storage"
+hideThisNote: "Diesen Beitrag verstecken"
+showFeaturedNotesInTimeline: "Beliebte Beiträge in der Timeline anzeigen"
+objectStorage: "Objektspeicher"
 useObjectStorage: "Object Storage verwenden"
 objectStorageBaseUrl: "Basis-URL"
 objectStorageBaseUrlDesc: "Die als Referenz verwendete URL. Verwendest du einen CDN\
-  \ oder Proxy, gib dessen URL an. Für S3 verwende 'https://<bucket>.s3.amazonaws.com'.\
+  \ oder Proxy, gib dessen URL an. \nFür S3 verwende 'https://<bucket>.s3.amazonaws.com'.\
   \ Für GCS o.ä. verwende 'https://storage.googleapis.com/<bucket>'."
-objectStorageBucket: "Bucket"
+objectStorageBucket: "Eimer"
 objectStorageBucketDesc: "Bitte gib den Namen des Buckets an, der bei deinem Anbieter\
   \ verwendet wird."
 objectStoragePrefix: "Prefix"
 objectStoragePrefixDesc: "Dateien werden in Ordnern unter diesem Prefix gespeichert."
-objectStorageEndpoint: "Endpoint"
+objectStorageEndpoint: "Limit"
 objectStorageEndpointDesc: "Im Falle von S3 leerlassen, für andere Anbieter den relevanten\
   \ Endpoint im Format „<host>“ oder „<host>:<port>“ angeben."
 objectStorageRegion: "Region"
@@ -551,8 +551,8 @@ objectStorageUseProxyDesc: "Deaktiviere dies, falls du keinen Proxy für den Obj
 objectStorageSetPublicRead: "Bei Upload auf \"public-read\" stellen"
 serverLogs: "Serverprotokolle"
 deleteAll: "Alle löschen"
-showFixedPostForm: "Bereich zum Schreiben neuer Notizen am Anfang der Chronik anzeigen"
-newNoteRecived: "Es gibt neue Notizen"
+showFixedPostForm: "Bereich zum Schreiben neuer Beiträge am Anfang der Timeline anzeigen"
+newNoteRecived: "Es gibt neue Beiträge"
 sounds: "Töne"
 listen: "Anhören"
 none: "Nichts"
@@ -576,24 +576,23 @@ ascendingOrder: "Aufsteigende Reihenfolge"
 descendingOrder: "Absteigende Reihenfolge"
 scratchpad: "Testumgebung"
 scratchpadDescription: "Die Testumgebung bietet einen Bereich für AiScript-Experimente.\
-  \ Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Misskey\
+  \ Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Calckey\
   \ überprüfen."
 output: "Ausgabe"
 script: "Skript"
 disablePagesScript: "AiScript auf Seiten deaktivieren"
-updateRemoteUser: "Benutzerinformationen aktualisieren"
+updateRemoteUser: "Nutzerinformationen aktualisieren"
 deleteAllFiles: "Alle Dateien löschen"
 deleteAllFilesConfirm: "Möchtest du wirklich alle Dateien löschen?"
-removeAllFollowing: "Allen gefolgten Benutzern entfolgen"
-removeAllFollowingDescription: "Dies entfolgt allen Benutzerkonten von {host}. Bitte\
-  \ führe dies durch, falls diese Instanz z.B. nicht mehr existiert."
-userSuspended: "Dieser Benutzer wurde gesperrt."
-userSilenced: "Dieser Benutzer wurde instanzweit stummgeschaltet."
-yourAccountSuspendedTitle: "Dieses Benutzerkonto ist gesperrt"
-yourAccountSuspendedDescription: "Dieses Benutzerkonto wurde gesperrt, da es gegen\
-  \ die Nutzungsbedingungen dieses Servers verstoßen hat. Trete mit dem Betreiber\
-  \ in Kontakt, falls du weitere Details erfahren möchtest. Bitte erstelle kein neues\
-  \ Benutzerkonto."
+removeAllFollowing: "Allen gefolgten Nutzern entfolgen"
+removeAllFollowingDescription: "Wenn Sie dies ausführen, werden alle Konten von {host}\
+  \ entfolgt. Bitte führen Sie dies aus, wenn der Server z.B. nicht mehr existiert."
+userSuspended: "Dieser Nutzer wurde gesperrt."
+userSilenced: "Dieser Nutzer wurde instanzweit stummgeschaltet."
+yourAccountSuspendedTitle: "Dieses Nutzerkonto ist gesperrt"
+yourAccountSuspendedDescription: "Dieses Nutzerkonto wurde gesperrt, da es gegen die\
+  \ Nutzungsbedingungen dieses Servers verstoßen hat. Trete mit dem Betreiber in Kontakt,\
+  \ falls du weitere Details erfahren möchtest. Bitte erstelle kein neues Nutzerkonto."
 menu: "Menü"
 divider: "Trenner"
 addItem: "Element hinzufügen"
@@ -602,8 +601,8 @@ addRelay: "Relay hinzufügen"
 inboxUrl: "inbox-URL"
 addedRelays: "Hinzugefügte Relays"
 serviceworkerInfo: "Muss für Push-Benachrichtigungen aktiviert sein."
-deletedNote: "Gelöschte Notiz"
-invisibleNote: "Private Notiz"
+deletedNote: "Gelöschter Beitrag"
+invisibleNote: "Privater Beitrag"
 enableInfiniteScroll: "Automatisch mehr laden"
 visibility: "Sichtbarkeit"
 poll: "Umfrage"
@@ -611,7 +610,7 @@ useCw: "Inhaltswarnung verwenden"
 enablePlayer: "Video-Player öffnen"
 disablePlayer: "Video-Player schließen"
 expandTweet: "Tweet ausklappen"
-themeEditor: "Farbschema-Editor"
+themeEditor: "Farbkombinations-Editor"
 description: "Beschreibung"
 describeFile: "Beschreibung hinzufügen"
 enterFileDescription: "Beschreibung eingeben"
@@ -633,7 +632,7 @@ generateAccessToken: "Zugriffstoken generieren"
 permission: "Berechtigungen"
 enableAll: "Alle aktivieren"
 disableAll: "Alle deaktivieren"
-tokenRequested: "Zugriff zum Benutzerkonto gewähren"
+tokenRequested: "Zugriff zum Nutzerkonto gewähren"
 pluginTokenRequestedDescription: "Dieses Plugin wird die hier konfigurierten Berechtigungen\
   \ verwenden können."
 notificationType: "Art der Benachrichtigung"
@@ -647,18 +646,18 @@ emailAddress: "Email-Adresse"
 smtpConfig: "SMTP-Server Konfiguration"
 smtpHost: "Host"
 smtpPort: "Port"
-smtpUser: "Benutzername"
+smtpUser: "Nutzername"
 smtpPass: "Passwort"
-emptyToDisableSmtpAuth: "Benutzername und Passwort leer lassen, um SMTP-Verifizierung\
+emptyToDisableSmtpAuth: "Nutzername und Passwort leer lassen, um SMTP-Verifizierung\
   \ zu deaktivieren"
 smtpSecure: "Für SMTP-Verbindungen implizit SSL/TLS verwenden"
-smtpSecureInfo: "Schalte dies aus, falls du STARTTLS verwendest."
+smtpSecureInfo: "Schalte dies aus, falls du STARTTLS verwendest"
 testEmail: "Emailversand testen"
-wordMute: "Wortstummschaltung"
+wordMute: "Wortfilter"
 regexpError: "Fehler in einem regulären Ausdruck"
-regexpErrorDescription: "Im regulären Ausdruck deiner {tab}en Wortstummschaltungen\
-  \ ist ein Fehler aufgetreten:"
-instanceMute: "Instanzstummschaltungen"
+regexpErrorDescription: "Im regulären Ausdruck deines {tab}en Wortfilters ist ein\
+  \ Fehler aufgetreten:"
+instanceMute: "Server-Stummschaltungen"
 userSaysSomething: "{name} hat etwas gesagt"
 makeActive: "Aktivieren"
 display: "Anzeigeart"
@@ -668,13 +667,13 @@ overview: "Übersicht"
 logs: "Logs"
 delayed: "Verzögert"
 database: "Datenbank"
-channel: "Kanäle"
+channel: "Channels"
 create: "Erstellen"
 notificationSetting: "Benachrichtigungseinstellungen"
 notificationSettingDesc: "Wähle die Art der anzuzeigenden Benachrichtigungen."
 useGlobalSetting: "Globale Einstellung verwenden"
 useGlobalSettingDesc: "Ist diese Option aktiviert, werden die Benachrichtigungseinstellungen\
-  \ deines Benutzerkontos verwendet. Durch ausschalten dieser Option können individuelle\
+  \ deines Nutzerkontos verwendet. Durch ausschalten dieser Option können individuelle\
   \ Einstellungen vorgenommen werden."
 other: "Anderes"
 regenerateLoginToken: "Anmeldetoken regenerieren"
@@ -689,45 +688,46 @@ abuseReports: "Meldungen"
 reportAbuse: "Melden"
 reportAbuseOf: "{name} melden"
 fillAbuseReportDescription: "Bitte gib zusätzliche Informationen zu dieser Meldung\
-  \ an. Falls es sich um eine spezielle Notiz handelt, bitte gib dessen URL an."
+  \ an. Falls es sich um einen ungewöhnlichen Beitrag handelt, gib bitte dessen URL\
+  \ an."
 abuseReported: "Deine Meldung wurde versendet. Vielen Dank."
 reporter: "Melder"
 reporteeOrigin: "Herkunft des Gemeldeten"
 reporterOrigin: "Herkunft des Meldenden"
-forwardReport: "Meldung an fremde Instanz weiterleiten"
-forwardReportIsAnonymous: "Anstatt deines Benutzerkontos wird bei der fremden Instanz\
-  \ ein anonymes Systemkonto als Melder angezeigt."
+forwardReport: "Einen Bericht auch an den beteiligten anderen Server weiterleiten"
+forwardReportIsAnonymous: "Anstelle Ihres Nutzerkontos wird ein anonymes Systemkonto\
+  \ als Berichterstatter auf dem beteiligten anderen Server angezeigt."
 send: "Senden"
 abuseMarkAsResolved: "Meldung als gelöst markieren"
 openInNewTab: "In neuem Tab öffnen"
 openInSideView: "In Seitenansicht öffnen"
 defaultNavigationBehaviour: "Standardnavigationsverhalten"
 editTheseSettingsMayBreakAccount: "Bei Bearbeitung dieser Einstellungen besteht die\
-  \ Gefahr, dein Benutzerkonto zu beschädigen."
-instanceTicker: "Instanz-Informationen von Notizen"
-waitingFor: "Warte auf {x} …"
+  \ Gefahr, dein Nutzerkonto zu beschädigen."
+instanceTicker: "Serveranzeige zu Beiträgen"
+waitingFor: "Warte auf {x}"
 random: "Zufällig"
 system: "System"
 switchUi: "Layout"
 desktop: "Desktop"
 clip: "Clip erstellen"
 createNew: "Neu erstellen"
-optional: "Optional"
+optional: "optional"
 createNewClip: "Neuen Clip erstellen"
 unclip: "Aus Clip entfernen"
-confirmToUnclipAlreadyClippedNote: "Diese Notiz ist bereits im \"{name}\" Clip enthalten.\
-  \ Möchtest du sie aus diesem Clip entfernen?"
+confirmToUnclipAlreadyClippedNote: "Dieser Beitrag ist bereits im \"{name}\" Clip\
+  \ enthalten. Möchtest du ihn aus diesem Clip entfernen?"
 public: "Öffentlich"
 i18nInfo: "Calckey wird durch freiwillige Helfer in viele verschiedene Sprachen übersetzt.\
   \ Auf {link} kannst du mithelfen."
 manageAccessTokens: "Zugriffstokens verwalten"
-accountInfo: "Benutzerkonto-Informationen"
-notesCount: "Anzahl der Notizen"
+accountInfo: "Nutzerkonto-Informationen"
+notesCount: "Anzahl der Beiträge"
 repliesCount: "Anzahl gesendeter Antworten"
 renotesCount: "Anzahl getätigter Renotes"
 repliedCount: "Anzahl erhaltener Antworten"
 renotedCount: "Anzahl erhaltener Renotes"
-followingCount: "Anzahl gefolgter Benutzer"
+followingCount: "Anzahl gefolgter Nutzer"
 followersCount: "Anzahl an Followern"
 sentReactionsCount: "Anzahl gesendeter Reaktionen"
 receivedReactionsCount: "Anzahl erhaltener Reaktionen"
@@ -735,10 +735,10 @@ pollVotesCount: "Anzahl gesendeter Antworten auf Umfragen"
 pollVotedCount: "Anzahl erhaltener Antworten auf Umfragen"
 yes: "Ja"
 no: "Nein"
-driveFilesCount: "Anzahl der Dateien in Drive"
-driveUsage: "Drive-Auslastung"
+driveFilesCount: "Anzahl der Dateien in Cloud-Drive"
+driveUsage: "Cloud-Drive-Auslastung"
 noCrawle: "Crawler-Indexierung ablehnen"
-noCrawleDescription: "Suchmaschinen bitten, die eigene Profilseite, Notizen, Seiten\
+noCrawleDescription: "Suchmaschinen bitten, die eigene Profilseite, Beiträge, Nutzer-Seiten\
   \ usw. nicht zu indexieren."
 lockedAccountInfo: "Auch wenn du Follow-Anfragen auf manuelle Bestätigung setzt, wird\
   \ jeder deiner Posts öffentlich sichtbar sein, sofern du ihre Sichtbarkeit nicht\
@@ -750,18 +750,18 @@ verificationEmailSent: "Eine Bestätigungsmail wurde an deine Email-Adresse vers
   \ Besuche den dort enthaltenen Link, um die Verifizierung abzuschließen."
 notSet: "Nicht konfiguriert"
 emailVerified: "Email-Adresse bestätigt"
-noteFavoritesCount: "Anzahl an als Favorit markierter Notizen"
-pageLikesCount: "Anzahl an als \"Gefällt mir\" markierter Seiten"
-pageLikedCount: "Anzahl erhaltener \"Gefällt mir\" auf Seiten"
+noteFavoritesCount: "Anzahl der favorisierten Beiträge"
+pageLikesCount: "Anzahl an als \"Gefällt mir\" markierter Nutzer-Seiten"
+pageLikedCount: "Anzahl erhaltener \"Gefällt mir\" auf Nutzer-Seiten"
 contact: "Kontakt"
 useSystemFont: "Standardschriftart des Systems verwenden"
 clips: "Clips"
 experimentalFeatures: "Experimentelle Funktionalitäten"
 developer: "Entwickler"
-makeExplorable: "Benutzerkonto in „Erkunden“ sichtbar machen"
-makeExplorableDescription: "Wenn diese Option deaktiviert ist, ist dein Benutzerkonto\
+makeExplorable: "Nutzerkonto in „Erkunden“ sichtbar machen"
+makeExplorableDescription: "Wenn diese Option deaktiviert ist, ist dein Nutzerkonto\
   \ nicht im „Erkunden“-Bereich sichtbar."
-showGapBetweenNotesInTimeline: "Abstände zwischen Notizen auf der Chronik anzeigen"
+showGapBetweenNotesInTimeline: "Abstände zwischen Beiträgen in der Timeline anzeigen"
 duplicate: "Duplizieren"
 left: "Links"
 center: "Mittig"
@@ -773,16 +773,16 @@ needReloadToApply: "Diese Einstellung tritt nach einer Aktualisierung der Seite 
   \ Kraft."
 showTitlebar: "Titelleiste anzeigen"
 clearCache: "Cache leeren"
-onlineUsersCount: "{n} Benutzer sind online"
-nUsers: "{n} Benutzer"
-nNotes: "{n} Notizen"
+onlineUsersCount: "{n} Nutzer sind online"
+nUsers: "{n} Nutzer"
+nNotes: "{n} Beiträge"
 sendErrorReports: "Fehlerberichte senden"
 sendErrorReportsDescription: "Ist diese Option aktiviert, so werden beim Auftreten\
   \ von Fehlern detaillierte Fehlerinformationen an Calckey weitergegeben, was zur\
   \ Verbesserung der Qualität von Calckey beiträgt.\nEnthalten in diesen Informationen\
   \ sind u.a. die Version deines Betriebssystems, welchen Browser du verwendest und\
   \ ein Verlauf deiner Aktivitäten innerhalb Calckey."
-myTheme: "Mein Farbschema"
+myTheme: "Meine Farbkombination"
 backgroundColor: "Hintergrundfarbe"
 accentColor: "Akzentfarbe"
 textColor: "Textfarbe"
@@ -795,7 +795,7 @@ saveConfirm: "Änderungen speichern?"
 deleteConfirm: "Wirklich löschen?"
 invalidValue: "Dieser Wert ist ungültig."
 registry: "Registry"
-closeAccount: "Benutzerkonto schließen"
+closeAccount: "Nutzerkonto schließen"
 currentVersion: "Momentane Version"
 latestVersion: "Neuste Version"
 youAreRunningUpToDateClient: "Du verwendest die neuste Version deines Clients."
@@ -805,14 +805,14 @@ capacity: "Kapazität"
 inUse: "Verwendet"
 editCode: "Code bearbeiten"
 apply: "Anwenden"
-receiveAnnouncementFromInstance: "Benachrichtigungen von dieser Instanz empfangen"
+receiveAnnouncementFromInstance: "Benachrichtigungen von diesem Server empfangen"
 emailNotification: "Email-Benachrichtigungen"
 publish: "Veröffentlichen"
 inChannelSearch: "In Kanal suchen"
 useReactionPickerForContextMenu: "Reaktionsauswahl durch Rechtsklick öffnen"
-typingUsers: "{users} ist/sind am schreiben …"
+typingUsers: "{users} ist/sind am schreiben"
 jumpToSpecifiedDate: "Zu bestimmtem Datum springen"
-showingPastTimeline: "Es wird eine alte Chronik angezeigt"
+showingPastTimeline: "Es wird eine alte Timeline angezeigt"
 clear: "Zurückkehren"
 markAllAsRead: "Alle als gelesen markieren"
 goBack: "Zurück"
@@ -820,12 +820,12 @@ unlikeConfirm: "\"Gefällt mir\" wirklich entfernen?"
 fullView: "Vollansicht"
 quitFullView: "Vollansicht verlassen"
 addDescription: "Beschreibung hinzufügen"
-userPagePinTip: "Um Notizen hier erscheinen zu lassen, drücke \"An dein Profil anheften\"\
-  \ im Menü individueller Notizen."
-notSpecifiedMentionWarning: "Diese Notiz enthält Erwähnungen von Nutzern, die nicht\
+userPagePinTip: "Um Beiträge hier erscheinen zu lassen, drücke \"An dein Profil anheften\"\
+  \ im Menü individueller Beiträge."
+notSpecifiedMentionWarning: "Dieser Beitrag enthält Erwähnungen von Nutzern, die nicht\
   \ als Empfänger ausgewählt sind"
 info: "Über"
-userInfo: "Benutzerinformation"
+userInfo: "Nutzerinformation"
 unknown: "Unbekannt"
 onlineStatus: "Onlinestatus"
 hideOnlineStatus: "Onlinestatus verbergen"
@@ -836,25 +836,25 @@ active: "Aktiv"
 offline: "Offline"
 notRecommended: "Nicht empfohlen"
 botProtection: "Schutz vor Bots"
-instanceBlocking: "Blockierte Instanzen"
-selectAccount: "Benutzerkonto auswählen"
+instanceBlocking: "Föderierte Blockieren/Stummschalten"
+selectAccount: "Nutzerkonto auswählen"
 switchAccount: "Konto wechseln"
 enabled: "Aktiviert"
 disabled: "Deaktiviert"
 quickAction: "Schnellaktionen"
-user: "Benutzer"
+user: "Nutzer"
 administration: "Verwaltung"
-accounts: "Benutzerkonten"
+accounts: "Nutzerkonten"
 switch: "Wechseln"
 noMaintainerInformationWarning: "Betreiberinformationen sind nicht konfiguriert."
 noBotProtectionWarning: "Schutz vor Bots ist nicht konfiguriert."
 configure: "Konfigurieren"
-postToGallery: "Neuen Galeriebeitrag erstellen"
-gallery: "Galerie"
+postToGallery: "Erstelle einen neuen Beitrag zur Bilder-Galerie"
+gallery: "Bilder-Galerie"
 recentPosts: "Neue Beiträge"
 popularPosts: "Beliebte Beiträge"
-shareWithNote: "Mit Notiz teilen"
-ads: "Werbung"
+shareWithNote: "Mit Beitrag teilen"
+ads: "Werbeanzeigen"
 expiration: "Frist"
 memo: "Merkzettel"
 priority: "Priorität"
@@ -876,17 +876,17 @@ hashtags: "Hashtags"
 troubleshooting: "Problembehandlung"
 useBlurEffect: "Weichzeichnungseffekt in der Benutzeroberfläche verwenden"
 learnMore: "Mehr erfahren"
-misskeyUpdated: "Misskey wurde aktualisiert!"
+misskeyUpdated: "Calckey wurde aktualisiert!"
 whatIsNew: "Änderungen anzeigen"
 translate: "Übersetzen"
 translatedFrom: "Aus {x} übersetzt"
-accountDeletionInProgress: "Die Löschung deines Benutzerkontos ist momentan in Bearbeitung."
-usernameInfo: "Ein Name, durch den dein Benutzerkonto auf diesem Server identifiziert\
+accountDeletionInProgress: "Die Löschung deines Nutzerkontos ist momentan in Bearbeitung"
+usernameInfo: "Ein Name, durch den dein Nutzerkonto auf diesem Server identifiziert\
   \ werden kann. Du kannst das Alphabet (a~z, A~Z), Ziffern (0~9) oder Unterstriche\
-  \ (_) verwenden. Benutzernamen können später nicht geändert werden."
+  \ (_) verwenden. Nutzernamen können später nicht geändert werden."
 aiChanMode: "Ai-Modus"
 keepCw: "Inhaltswarnungen beibehalten"
-pubSub: "Pub/Sub Benutzerkonten"
+pubSub: "Pub/Sub Nutzerkonten"
 lastCommunication: "Letzte Kommunikation"
 resolved: "Gelöst"
 unresolved: "Ungelöst"
@@ -897,7 +897,7 @@ emailRequiredForSignup: "Angabe einer Email-Adresse als benötigt markieren"
 unread: "Ungelesen"
 filter: "Filter"
 controlPanel: "Systemsteuerung"
-manageAccounts: "Benutzerkonten verwalten"
+manageAccounts: "Nutzerkonten verwalten"
 makeReactionsPublic: "Reaktionsverlauf veröffentlichen"
 makeReactionsPublicDescription: "Jeder wird die Liste deiner gesendeten Reaktionen\
   \ einsehen können."
@@ -907,8 +907,8 @@ unmuteThread: "Threadstummschaltung aufheben"
 ffVisibility: "Sichtbarkeit von Gefolgten/Followern"
 ffVisibilityDescription: "Konfiguriere wer sehen kann, wem du folgst sowie wer dir\
   \ folgt."
-continueThread: "Weiteren Threadverlauf anzeigen"
-deleteAccountConfirm: "Dein Benutzerkonto wird unwiderruflich gelöscht. Trotzdem fortfahren?"
+continueThread: "Beitrag fortsetzen"
+deleteAccountConfirm: "Dein Nutzerkonto wird unwiderruflich gelöscht. Trotzdem fortfahren?"
 incorrectPassword: "Falsches Passwort."
 voteConfirm: "Wirklich für „{choice}“ abstimmen?"
 hide: "Inhalt verbergen"
@@ -923,51 +923,51 @@ overridedDeviceKind: "Gerätetyp"
 smartphone: "Smartphone"
 tablet: "Tablet"
 auto: "Automatisch"
-themeColor: "Farbe der Instanz-Information"
+themeColor: "Farbe der Laufschrift (Ticker)"
 size: "Größe"
 numberOfColumn: "Spaltenanzahl"
 searchByGoogle: "Suchen"
-instanceDefaultLightTheme: "Instanzweites Standardfarbschema (Hell)"
-instanceDefaultDarkTheme: "Instanzweites Standardfarbschema (Dunkel)"
+instanceDefaultLightTheme: "Standard-Farbkombination auf diesem Server: \"Hell\""
+instanceDefaultDarkTheme: "Standard-Farbkombination auf diesem Server: \"Dunkel\""
 instanceDefaultThemeDescription: "Gib den Farbschemencode im Objektformat ein."
-mutePeriod: "Stummschaltungsdauer"
+mutePeriod: "Dauer der Stummschaltung"
 indefinitely: "Dauerhaft"
 tenMinutes: "10 Minuten"
 oneHour: "Eine Stunde"
 oneDay: "Einen Tag"
 oneWeek: "Eine Woche"
 reflectMayTakeTime: "Es kann etwas dauern, bis sich dies widerspiegelt."
-failedToFetchAccountInformation: "Benutzerkontoinformationen konnten nicht abgefragt\
+failedToFetchAccountInformation: "Nutzerkontoinformationen konnten nicht abgefragt\
   \ werden"
-rateLimitExceeded: "Versuchsanzahl überschritten"
+rateLimitExceeded: "Anzahl der Versuche überschritten"
 cropImage: "Bild zuschneiden"
 cropImageAsk: "Möchtest du das Bild zuschneiden?"
 file: "Datei"
-recentNHours: "Letzten {n} Stunden"
-recentNDays: "Letzten {n} Tage"
+recentNHours: "Die letzten {n} Stunden"
+recentNDays: "Die letzten {n} Tage"
 noEmailServerWarning: "Es ist kein Email-Server konfiguriert."
 thereIsUnresolvedAbuseReportWarning: "Es liegen ungelöste Meldungen vor."
 recommended: "Empfehlung"
-check: "Check"
-driveCapOverrideLabel: "Die Drive-Kapazität dieses Nutzers verändern"
+check: "Kontrolle"
+driveCapOverrideLabel: "Die Cloud-Drive-Kapazität dieses Nutzers verändern"
 driveCapOverrideCaption: "Gib einen Wert von 0 oder weniger ein, um die Kapazität\
   \ auf den Standard zurückzusetzen."
 requireAdminForView: "Melde dich mit einem Administratorkonto an, um dies einzusehen."
-isSystemAccount: "Ein Benutzerkonto, dass durch das System erstellt und automatisch\
+isSystemAccount: "Ein Nutzerkonto, dass durch das System erstellt und automatisch\
   \ kontrolliert wird."
 typeToConfirm: "Bitte gib zur Bestätigung {x} ein"
-deleteAccount: "Benutzerkonto löschen"
+deleteAccount: "Nutzerkonto löschen"
 document: "Dokumentation"
 numberOfPageCache: "Seitencachegröße"
 numberOfPageCacheDescription: "Das Erhöhen dieses Caches führt zu einer angenehmerern\
-  \ Benutzererfahrung, erhöht aber Serverlast und Arbeitsspeicherauslastung."
+  \ Nutzererfahrung, erhöht aber Serverlast und Arbeitsspeicherauslastung."
 logoutConfirm: "Wirklich abmelden?"
 lastActiveDate: "Zuletzt verwendet am"
 statusbar: "Statusleiste"
 pleaseSelect: "Wähle eine Option"
 reverse: "Umkehren"
 colored: "Farbig"
-refreshInterval: "Aktualisierungsrate"
+refreshInterval: "Aktualisierungsrate "
 label: "Beschriftung"
 type: "Art"
 speed: "Geschwindigkeit"
@@ -975,24 +975,23 @@ slow: "Langsam"
 fast: "Schnell"
 sensitiveMediaDetection: "Erkennung von NSFW-Medien"
 localOnly: "Nur Lokal"
-remoteOnly: "Nur für fremde Instanzen"
+remoteOnly: "Nur für andere/fremde Server"
 failedToUpload: "Hochladen fehlgeschlagen"
 cannotUploadBecauseInappropriate: "Diese Datei kann nicht hochgeladen werden, da Anteile\
   \ der Datei als möglicherweise NSFW festgestellt wurden."
 cannotUploadBecauseNoFreeSpace: "Die Datei konnte nicht hochgeladen werden, da dein\
-  \ Drive-Speicherplatz aufgebraucht ist."
+  \ Cloud-Drive-Speicherplatz aufgebraucht ist."
 beta: "Beta"
 enableAutoSensitive: "NSFW-Automarkierung"
-enableAutoSensitiveDescription: "Setzt soweit möglich durch Verwendung von Machine\
-  \ Learning automatisch NSFW-Markierungen für Medien, die NSFW-Anteile beinhalten.\
-  \ Auch wenn du diese Option deaktiviert hast, ist sie möglicherweise auf Instanzebene\
-  \ aktiviert."
+enableAutoSensitiveDescription: "Erlaubt, wo möglich, die automatische Erkennung und\
+  \ Kennzeichnung von NSFW-Medien durch maschinelles Lernen. Auch wenn diese Option\
+  \ deaktiviert ist, kann sie über den Server aktiviert sein."
 activeEmailValidationDescription: "Aktivert strengere Überprüfung von E-Mail-Adressen,\
   \ d.h. Testen auf Wegwerfadressen und darauf, ob mit der Adresse tatsächlich kommuniziert\
   \ werden kann. Ist dies deaktiviert, so wird nur das Format der E-Mail überprüft."
 navbar: "Navigationsleiste"
 shuffle: "Mischen"
-account: "Benutzerkonto"
+account: "Nutzerkonto"
 move: "Verschieben"
 _sensitiveMediaDetection:
   description: "Ermöglicht eine Erleichterung der Servermoderation durch die automatische\
@@ -1023,30 +1022,31 @@ _signup:
   emailAddressInfo: "Bitte gib deine Email-Adresse ein. Sie wird nicht öffentlich\
     \ einsehbar sein."
   emailSent: "An deine Email-Adresse ({email}) wurde soeben eine Bestätigungsmail\
-    \ geschickt. Bitte klicke auf den enthaltenen Link, um die Erstellung deines Benutzerkontos\
+    \ geschickt. Bitte klicke auf den enthaltenen Link, um die Erstellung deines Nutzerkontos\
     \ abzuschließen."
 _accountDelete:
-  accountDelete: "Benutzerkonto löschen"
-  mayTakeTime: "Da die Löschung eines Benutzerkontos ein aufwendiger Prozess ist,\
-    \ kann dessen Dauer davon abhängen, wie viel Inhalt von diesem erstellt wurde\
-    \ oder wie viele Dateien von diesem hochgeladen wurden."
+  accountDelete: "Nutzerkonto löschen"
+  mayTakeTime: "Da die Löschung eines Nutzerkontos ein aufwendiger Prozess ist, kann\
+    \ dessen Dauer davon abhängen, wie viel Inhalt von diesem erstellt wurde oder\
+    \ wie viele Dateien von diesem hochgeladen wurden."
   sendEmail: "Sobald die Löschung abgeschlossen ist, wird an die mit ihm verknüpfte\
     \ Email-Adresse eine Benachrichtigung versendet."
-  requestAccountDelete: "Löschung deines Benutzerkontos anfordern"
+  requestAccountDelete: "Löschung deines Nutzerkontos anfordern"
   started: "Die Löschung wurde eingeleitet."
   inProgress: "Löschung in Bearbeitung"
 _ad:
   back: "Zurück"
-  reduceFrequencyOfThisAd: "Diese Werbung weniger anzeigen"
+  reduceFrequencyOfThisAd: "Diese Werbeanzeige weniger anzeigen"
 _forgotPassword:
   enterEmail: "Gib die Email-Adresse ein, mit der du dich registriert hast. An diese\
     \ wird ein Link gesendet, mit dem du dein Passwort zurücksetzen kannst."
   ifNoEmail: "Solltest du bei der Registrierung keine Email-Adresse angegeben haben,\
     \ wende dich bitte an den Administrator."
-  contactAdmin: "Diese Instanz unterstützt die Verwendung von Email-Adressen nicht.\
-    \ Wende dich an den Administrator, um dein Passwort zurückzusetzen."
+  contactAdmin: "Dieser Server unterstützt die Verwendung von Email-Adressen nicht.\
+    \ Kontaktiere bitte den Server-Administrator, um dein Passwort zurücksetzen zu\
+    \ lassen."
 _gallery:
-  my: "Meine Galerie"
+  my: "Meine Bilder-Galerie"
   liked: "Mit \"Gefällt mir\" markierte Beiträge"
   like: "Gefällt mir"
   unlike: "\"Gefällt mir\" entfernen"
@@ -1079,7 +1079,7 @@ _preferencesBackups:
   createdAt: "Erstellt am: {date} {time}"
   updatedAt: "Aktualisiert am: {date} {time}"
   cannotLoad: "Laden fehlgeschlagen"
-  invalidFile: "Ungültiges Dateiformat."
+  invalidFile: "Ungültiges Dateiformat"
 _registry:
   scope: "Scope"
   key: "Schlüssel"
@@ -1087,13 +1087,13 @@ _registry:
   domain: "Domain"
   createKey: "Schlüssel erstellen"
 _aboutMisskey:
-  about: "Misskey ist Open-Source-Software, welche von syuilo seit 2014 entwickelt\
+  about: "Calckey ist ein Fork von Misskey, der seit 2022 von ThatOneCalculator entwickelt\
     \ wird."
   contributors: "Hauptmitwirkende"
   allContributors: "Alle Mitwirkenden"
   source: "Quellcode"
-  translation: "Misskey übersetzen"
-  donate: "An Misskey spenden"
+  translation: "Calckey übersetzen"
+  donate: "An Calckey spenden"
   morePatrons: "Wir schätzen ebenso die Unterstützung vieler anderer hier nicht gelisteter\
     \ Personen sehr. Danke! \U0001F970"
   patrons: "UnterstützerInnen"
@@ -1103,12 +1103,12 @@ _nsfw:
   force: "Alle Medien verbergen"
 _mfm:
   cheatSheet: "MFM Spickzettel"
-  intro: "MFM ist eine Misskey-exklusive Markup-Sprache, die in Misskey an vielen\
-    \ Stellen verwendet werden kann. Hier kannst du eine Liste von verfügbarer MFM-Syntax\
-    \ einsehen."
-  dummy: "Misskey erweitert die Welt des Fediverse"
+  intro: "MFM ist eine Markup-Sprache, die in Misskey, Calckey, Akkoma und anderen\
+    \ Programmen verwendet wird und an vielen Stellen eingesetzt werden kann. Hier\
+    \ können Sie eine Liste aller verfügbaren MFM-Syntaxe einsehen."
+  dummy: "Calckey erweitert die Welt des Fediverse"
   mention: "Erwähnung"
-  mentionDescription: "Mit At-Zeichen und Benutzername kann ein individueller Nutzer\
+  mentionDescription: "Mit At-Zeichen und Nutzername kann ein individueller Nutzer\
     \ angegeben werden."
   hashtag: "Hashtag"
   hashtagDescription: "Mit einer Raute und Text kann ein Hashtag angegeben werden."
@@ -1128,9 +1128,9 @@ _mfm:
   blockCodeDescription: "Syntax-Hervorhebung für mehrzeiligen (Programm-)Code als\
     \ Block anzeigen."
   inlineMath: "Mathe (Eingebettet)"
-  inlineMathDescription: "Mathematische Formeln (KaTeX) eingebettet anzeigen."
+  inlineMathDescription: "Mathematische Formeln (KaTeX) eingebettet anzeigen"
   blockMath: "Mathe (Block)"
-  blockMathDescription: "Mehrzeilige mathematische Formeln (KaTeX) als Block einbetten."
+  blockMathDescription: "Mathematische Formeln (KaTeX) als Block einbetten"
   quote: "Zitationen"
   quoteDescription: "Inhalt als Zitat anzeigen."
   emoji: "Benutzerdefinierte Emojis"
@@ -1143,7 +1143,7 @@ _mfm:
   jelly: "Animation (Dehnen)"
   jellyDescription: "Verleiht Inhalt eine sich dehnende Animation."
   tada: "Animation (Tada)"
-  tadaDescription: "Verleiht Inhalt eine Animation mit \"Tada!\"-Gefühl"
+  tadaDescription: "Verleiht Inhalt eine Animation mit \"Tada!\"-Gefühl."
   jump: "Animation (Sprung)"
   jumpDescription: "Verleiht Inhalt eine springende Animation."
   bounce: "Animation (Federn)"
@@ -1174,14 +1174,23 @@ _mfm:
   plain: "Schlicht"
   plainDescription: "Deaktiviert jegliche MFM-Syntax, die sich innerhalb dieses MFM-Effekts\
     \ befindet."
+  foreground: Vordergrundfarbe
+  background: Hintergrundfarbe
+  positionDescription: Inhalt um einen bestimmten Betrag verschieben.
+  position: Position
+  scale: Maßstab
+  scaleDescription: Skaliere den Inhalt um einen bestimmten Betrag.
+  foregroundDescription: Ändern der Vordergrundfarbe von Text.
+  backgroundDescription: Ändern der Hintergrundfarbe von Text
 _instanceTicker:
   none: "Nie anzeigen"
-  remote: "Für Benutzer fremder Instanzen anzeigen"
+  remote: "Für Nutzer eines anderen Servers anzeigen"
   always: "Immer anzeigen"
 _serverDisconnectedBehavior:
   reload: "Automatisch aktualisieren"
   dialog: "Warnungsfenster zeigen"
   quiet: "Unaufdringlich warnen"
+  nothing: Nichts ändern
 _channel:
   create: "Kanal erstellen"
   edit: "Kanal bearbeiten"
@@ -1191,7 +1200,9 @@ _channel:
   owned: "In Besitz"
   following: "Gefolgt"
   usersCount: "{n} Teilnehmer"
-  notesCount: "{n} Notizen"
+  notesCount: "{n} Beiträge"
+  nameAndDescription: Name und Beschreibung
+  nameOnly: Nur den Namen
 _menuDisplay:
   sideFull: "Seitlich"
   sideIcon: "Seitlich (Icons)"
@@ -1204,33 +1215,33 @@ _wordMute:
     \ trennen."
   muteWordsDescription2: "Umgib Schlüsselworter mit Schrägstrichen, um Reguläre Ausdrücke\
     \ zu verwenden."
-  softDescription: "Notizen, die die angegebenen Konditionen erfüllen, in der Chronik\
+  softDescription: "Beiträge, die die angegebenen Konditionen erfüllen, in der Timeline\
     \ ausblenden."
-  hardDescription: "Verhindern, dass Notizen, die die angegebenen Konditionen erfüllen,\
-    \ der Chronik hinzugefügt werden. Zudem werden diese Notizen auch nicht der Chronik\
-    \ hinzugefügt, falls die Konditionen geändert werden."
+  hardDescription: "Verhindern, dass Beiträge, die die angegebenen Konditionen erfüllen,\
+    \ der Timeline hinzugefügt werden. Zudem werden diese Beiträge auch nicht der\
+    \ Timeline hinzugefügt, falls die Konditionen geändert werden."
   soft: "Leicht"
   hard: "Schwer"
-  mutedNotes: "Stummgeschaltete Notizen"
+  mutedNotes: "Stummgeschaltete Beiträge"
 _instanceMute:
-  instanceMuteDescription: "Schaltet alle Notizen/Renotes stumm, die von den gelisteten\
-    \ Instanzen stammen, inklusive Antworten von Benutzern an einen Benutzer einer\
-    \ stummgeschalteten Instanz."
-  instanceMuteDescription2: "Instanzen getrennt durch Zeilenumbrüchen angeben"
-  title: "Blendet Notizen von stummgeschalteten Instanzen aus."
-  heading: "Liste der stummzuschaltenden Instanzen"
+  instanceMuteDescription: "Schaltet alle Beiträge/boosts stumm, die von den gelisteten\
+    \ Servern stammen, inklusive Antworten von Nutzern an einen Nutzer eines stummgeschalteten\
+    \ Servers."
+  instanceMuteDescription2: "Mit Zeilenumbrüchen trennen"
+  title: "Blendet Beiträge von aufgelisteten Servern aus."
+  heading: "Liste der stummzuschaltenden Server"
 _theme:
-  explore: "Farbschemata erforschen"
-  install: "Farbschemata installieren"
-  manage: "Farbschemaverwaltung"
+  explore: "Farbkombinationen finden"
+  install: "Eine Farbkombination installieren"
+  manage: "Farbkombinationen verwalten"
   code: "Farbschemencode"
   description: "Beschreibung"
   installed: "{name} wurde installiert"
-  installedThemes: "Installierte Farbschemata"
-  builtinThemes: "Eingebaute Farbschemata"
-  alreadyInstalled: "Dieses Farbschema ist bereits installiert"
-  invalid: "Der Code dieses Farbschemas ist ungültig"
-  make: "Farbschema erstellen"
+  installedThemes: "Installierte Farbkombinationen"
+  builtinThemes: "Vorinstallierte Farbkombinationen"
+  alreadyInstalled: "Diese Farbkombination ist bereits installiert"
+  invalid: "Diese Farbkombination ist nicht möglich"
+  make: "Erstelle eine Farbkombination"
   base: "Vorlage"
   addConstant: "Konstante hinzufügen"
   constant: "Konstante"
@@ -1286,7 +1297,7 @@ _theme:
     buttonHoverBg: "Hintergrund von Schaltflächen (Mouseover)"
     inputBorder: "Rahmen von Eingabefeldern"
     listItemHoverBg: "Hintergrund von Listeneinträgen (Mouseover)"
-    driveFolderBg: "Hintergrund von Drive-Ordnern"
+    driveFolderBg: "Hintergrund von Cloud-Drive-Ordnern"
     wallpaperOverlay: "Hintergrundbild-Overlay"
     badge: "Wappen"
     messageBg: "Hintergrund von Chats"
@@ -1294,23 +1305,23 @@ _theme:
     accentLighten: "Akzent (Erhellt)"
     fgHighlighted: "Hervorgehobener Text"
 _sfx:
-  note: "Notizen"
-  noteMy: "Meine Notizen"
+  note: "Beiträge"
+  noteMy: "Meine Beiträge"
   notification: "Benachrichtigungen"
   chat: "Chat"
   chatBg: "Chat (Hintergrund)"
-  antenna: "Antennen"
+  antenna: "News-Picker"
   channel: "Kanalbenachrichtigung"
 _ago:
   future: "Zukunft"
   justNow: "Gerade eben"
-  secondsAgo: "vor {n} Sekunde(n)"
-  minutesAgo: "vor {n} Minute(n)"
-  hoursAgo: "vor {n} Stunde(n)"
-  daysAgo: "vor {n} Tag(en)"
-  weeksAgo: "vor {n} Woche(n)"
-  monthsAgo: "vor {n} Monat(en)"
-  yearsAgo: "vor {n} Jahr(en)"
+  secondsAgo: "vor {n} s"
+  minutesAgo: "vor {n} min"
+  hoursAgo: "vor {n} h"
+  daysAgo: "vor {n} T"
+  weeksAgo: "vor {n} W"
+  monthsAgo: "vor {n} M"
+  yearsAgo: "vor {n} J"
 _time:
   second: "Sekunde(n)"
   minute: "Minute(n)"
@@ -1322,33 +1333,37 @@ _tutorial:
   step1_2: "Wir werden Sie einrichten. Sie werden im Handumdrehen einsatzbereit sein!"
   step2_1: "Bitte füllen Sie zuerst Ihr Profil aus."
   step2_2: "Wenn du ein paar Angaben zu deiner Person machst, können andere leichter\
-    \ erkennen, ob sie deine Notizen sehen oder dir folgen wollen."
-  step3_1: "Jetzt ist es Zeit, einigen Leuten zu folgen!"
+    \ erkennen, ob sie deine Beiträge sehen oder dir folgen wollen."
+  step3_1: "Jetzt ist es an der Zeit, einigen Leuten zu folgen!"
   step3_2: "Deine Home- und Social-Timeline basiert darauf, wem du folgst, also folge\
-    \ für den Anfang ein paar Accounts."
+    \ für den Anfang ein paar Nutzerkonten.\nKlicke das Plus Symbol oben links in\
+    \ einem Profil um ihm zu folgen."
   step4_1: "Wir bringen dich nach draußen."
-  step4_2: "Für deinen ersten Beitrag machen manche Leute gerne einen {introduction}\
-    \ Beitrag oder ein einfaches \"Hallo Welt!\""
+  step4_2: "Für Ihren ersten Beitrag machen einige Leute gerne einen {introduction}-Beitrag\
+    \ oder ein einfaches \"Hallo Welt!\""
   step5_1: "Timelines, Timelines überall!"
-  step5_2: "Deine Instanz hat {Zeitleisten} verschiedene Zeitleisten aktiviert."
-  step5_3: "Die Zeitleiste Home {icon} ist die Zeitleiste, in der du die Beiträge\
-    \ deiner Follower sehen kannst."
-  step5_4: "In der lokalen {Icon} Zeitleiste kannst du die Beiträge aller anderen\
-    \ Mitglieder dieser Instanz sehen."
-  step5_5: "In der Zeitleiste Empfohlen {icon} kannst du Beiträge von Instanzen sehen,\
-    \ die von den Administratoren empfohlen werden."
-  step5_6: "In der sozialen {icon} Zeitleiste kannst du Beiträge von Freunden deiner\
-    \ Follower sehen."
-  step5_7: "In der globalen {icon} Zeitleiste kannst du Beiträge von allen anderen\
-    \ verbundenen Instanzen sehen."
+  step5_2: "Dein Server hat {timelines} verschiedene Timelines aktiviert."
+  step5_3: "Die {icon} Home-Timeline ist die Timeline, in der du die Beiträge der\
+    \ Nutzerkonten sehen kannst, denen du folgst und von jedem anderen auf diesem\
+    \ Server. Solltest du bevorzugen, dass deine Home-Timeline nur Beiträge von den\
+    \ Nutzerkonten enthält, denen du folgst, kannst du das ganz einfach in den Einstellungen\
+    \ ändern!"
+  step5_4: "In der {Icon} Local-Timeline kannst du die Beiträge aller anderen Mitglieder\
+    \ dieses Servers sehen."
+  step5_5: "Die {icon} Social-Timeline zeigt dir ausschließlich Beiträge von Nutzerkonten\
+    \ denen Du folgst."
+  step5_6: "In der {icon} Empfehlungen-Timeline kannst du Beiträge von Servern sehen,\
+    \ die dir von den Server-Administratoren empfohlen/vorgeschlagen werden."
+  step5_7: "In der {icon} Global-Timeline können Sie Beiträge von jedem anderen verbundenen\
+    \ Server im fediverse sehen."
   step6_1: "Also, was ist das hier?"
-  step6_2: "Nun, du bist nicht nur Calckey beigetreten. Du bist einem Portal zum Fediversum\
-    \ beigetreten, einem zusammenhängenden Netzwerk von Tausenden von Servern, genannt\
-    \ \"Instanzen\"."
-  step6_3: "Jeder Server funktioniert auf unterschiedliche Weise, und nicht auf allen\
-    \ Servern läuft Calckey. Dieser hier aber schon! Es ist ein bisschen kompliziert,\
-    \ aber du wirst den Dreh schnell raus haben."
-  step6_4: "Jetzt geh, erkunde und hab Spaß!"
+  step6_2: "Schön, mit Deiner Anmeldung zu Calckey bist Du gleichzeitig einem Portal\
+    \ zum Fediverse beigetreten, einem Netzwerk mit Tausenden von verbundenen Servern\
+    \ (häufig noch als \"Instanzen\" bezeichnet)."
+  step6_3: "Jeder der Server funktioniert auf unterschiedliche Weise, und nicht alle\
+    \ Server führen Calckey aus. Dieser jedoch schon! Es ist zu Beginn vielleicht\
+    \ ein wenig kompliziert, aber Sie werden in kürzester Zeit den Dreh raus haben."
+  step6_4: "Jetzt bist Du startbereit, entdecke die Möglichkeiten und hab Spaß dabei!"
 _2fa:
   alreadyRegistered: "Du hast bereits ein Gerät für Zwei-Faktor-Authentifizierung\
     \ registriert."
@@ -1365,55 +1380,57 @@ _2fa:
     \ deinem Gerät auch Anmeldung mit Hilfe eines FIDO2-kompatiblen Hardware-Sicherheitsschlüssels\
     \ einrichten."
 _permissions:
-  "read:account": "Deine Benutzerkontoinformationen lesen"
-  "write:account": "Deine Benutzerkontoinformationen bearbeiten"
-  "read:blocks": "Die Liste deiner blockierten Benutzer lesen"
-  "write:blocks": "Die Liste deiner blockierten Benutzer bearbeiten"
-  "read:drive": "Deine Drive-Dateien und Ordner lesen"
-  "write:drive": "Deine Drive-Dateien und Ordner bearbeiten oder löschen"
-  "read:favorites": "Deine Favoriten-Liste lesen"
-  "write:favorites": "Deine Favoriten-Liste bearbeiten"
-  "read:following": "Die Liste der Benutzer, denen du folgst, lesen"
-  "write:following": "Anderen Benutzern folgen oder entfolgen"
+  "read:account": "Deine Nutzerkontoinformationen lesen"
+  "write:account": "Deine Nutzerkontoinformationen bearbeiten"
+  "read:blocks": "Die Liste deiner blockierten Nutzer lesen"
+  "write:blocks": "Die Liste deiner blockierten Nutzer bearbeiten"
+  "read:drive": "Deine Cloud-Drive-Dateien und Ordner lesen"
+  "write:drive": "Deine Cloud-Drive-Dateien und Ordner bearbeiten oder löschen"
+  "read:favorites": "Deine Lesezeichen-Liste lesen"
+  "write:favorites": "Deine Lesezeichen-Liste bearbeiten"
+  "read:following": "Die Liste der Nutzer, denen du folgst, lesen"
+  "write:following": "Anderen Nutzern folgen oder entfolgen"
   "read:messaging": "Chats lesen"
   "write:messaging": "Chats bedienen"
   "read:mutes": "Stummschaltungen lesen"
   "write:mutes": "Stummschaltungen bearbeiten"
-  "write:notes": "Notizen schreiben oder löschen"
+  "write:notes": "Beiträge schreiben oder löschen"
   "read:notifications": "Benachrichtigungen lesen"
   "write:notifications": "Benachrichtigungen bedienen"
   "read:reactions": "Reaktionen lesen"
   "write:reactions": "Reaktionen bedienen"
   "write:votes": "Umfragen bedienen"
-  "read:pages": "Deine Seiten lesen"
-  "write:pages": "Deine Seiten bearbeiten oder löschen"
-  "read:page-likes": "Liste der Seiten, die mir gefallen, lesen"
-  "write:page-likes": "Liste der Seiten, die mir gefallen, bearbeiten"
-  "read:user-groups": "Benutzergruppen lesen"
-  "write:user-groups": "Benutzergruppen bearbeiten oder löschen"
-  "read:channels": "Kanäle lesen"
-  "write:channels": "Kanäle bedienen"
-  "read:gallery": "Beiträge deiner Galerie lesen"
-  "write:gallery": "Deine Galerie bearbeiten"
-  "read:gallery-likes": "Liste deiner mit \"Gefällt mir\" markierten Galerie-Beiträge\
+  "read:pages": "Deine Nutzer-Seiten lesen"
+  "write:pages": "Deine Nutzer-Seiten bearbeiten oder löschen"
+  "read:page-likes": "Liste der Nutzer-Seiten, die mir gefallen, lesen"
+  "write:page-likes": "Liste der Nutzer-Seiten, die mir gefallen, bearbeiten"
+  "read:user-groups": "Nutzergruppen lesen"
+  "write:user-groups": "Nutzergruppen bearbeiten oder löschen"
+  "read:channels": "Channels lesen"
+  "write:channels": "Channels bedienen"
+  "read:gallery": "Beiträge deiner Bilder-Galerie lesen"
+  "write:gallery": "Deine Bilder-Galerie bearbeiten"
+  "read:gallery-likes": "Liste deiner mit \"Gefällt mir\" markierten Bilder-Galerie-Beiträge\
     \ lesen"
-  "write:gallery-likes": "Liste deiner mit \"Gefällt mir\" markierten Galerie-Beiträge\
+  "write:gallery-likes": "Liste deiner mit \"Gefällt mir\" markierten Bilder-Galerie-Beiträge\
     \ bearbeiten"
 _auth:
-  shareAccess: "Möchtest du „{name}“ authorisieren, auf dieses Benutzerkonto zugreifen\
+  shareAccess: "Möchtest du „{name}“ authorisieren, auf dieses Nutzerkonto zugreifen\
     \ zu können?"
   shareAccessAsk: "Bist du dir sicher, dass du diese Anwendung authorisieren möchtest,\
-    \ auf dein Benutzerkonto zugreifen zu können?"
+    \ auf dein Nutzerkonto zugreifen zu können?"
   permissionAsk: "Diese Anwendung fordert folgende Berechtigungen"
   pleaseGoBack: "Bitte kehre zur Anwendung zurück"
   callback: "Es wird zur Anwendung zurückgekehrt"
   denied: "Zugriff verweigert"
+  copyAsk: Bitte fügen Sie den folgenden Autorisierungscode in die Anwendung ein
 _antennaSources:
-  all: "Alle Notizen"
-  homeTimeline: "Notizen von Benutzern, denen gefolgt wird"
-  users: "Notizen von einem oder mehreren angegebenen Benutzern"
-  userList: "Notizen von allen Benutzern einer Liste"
-  userGroup: "Notizen von allen Benutzern einer Gruppe"
+  all: "Alle Beiträge"
+  homeTimeline: "Beiträge von Nutzern, denen gefolgt wird"
+  users: "Beiträge von einem oder mehreren angegebenen Nutzern"
+  userList: "Beiträge von allen Nutzern einer Liste"
+  userGroup: "Beiträge von allen Nutzern einer Gruppe"
+  instances: Beiträge von allen Nutzern auf einem Server
 _weekday:
   sunday: "Sonntag"
   monday: "Montag"
@@ -1425,26 +1442,29 @@ _weekday:
 _widgets:
   memo: "Merkzettel"
   notifications: "Benachrichtigungen"
-  timeline: "Chronik"
+  timeline: "Timeline"
   calendar: "Kalender"
   trends: "Trends"
   clock: "Uhr"
   rss: "RSS-Reader"
-  rssTicker: "RSS-Ticker"
+  rssTicker: "RSS-Laufschrift (Ticker)"
   activity: "Aktivität"
   photos: "Fotos"
   digitalClock: "Digitaluhr"
   unixClock: "UNIX-Uhr"
   federation: "Föderation"
-  instanceCloud: "Instanzwolke"
-  postForm: "Notizfenster"
+  instanceCloud: "Server-Cloud"
+  postForm: "Beitragsfeld"
   slideshow: "Diashow"
   button: "Knopf"
-  onlineUsers: "Benutzer Online"
+  onlineUsers: "Nutzer Online"
   jobQueue: "Job-Warteschlange"
   serverMetric: "Servermetriken"
   aiscript: "AiScript-Konsole"
   aichan: "Ai"
+  _userList:
+    chooseList: Wählen Sie eine Liste aus
+  userList: Nutzerliste
 _cw:
   hide: "Inhalt verbergen"
   show: "Inhalt anzeigen"
@@ -1474,19 +1494,19 @@ _poll:
   remainingSeconds: "{s} Sekunde(n) verbleibend"
 _visibility:
   public: "Öffentlich"
-  publicDescription: "Deine Notiz wird global für alle Benutzer sichtbar sein"
-  home: "Startseite"
-  homeDescription: "Notiz nur in die Startseiten-Chronik schicken"
+  publicDescription: "Dein Beitrag wird global für alle Nutzer sichtbar sein"
+  home: "nicht aufgelistet"
+  homeDescription: "Beitrag nur auf der Home-Timeline anzeigen"
   followers: "Follower"
   followersDescription: "Nur für Follower sichtbar"
   specified: "Direkt"
-  specifiedDescription: "Nur für bestimmte Benutzer sichtbar"
+  specifiedDescription: "Nur für bestimmte Nutzer sichtbar"
   localOnly: "Nur Lokal"
-  localOnlyDescription: "Unsichtbar für Benutzer anderer Instanzen"
+  localOnlyDescription: "Unsichtbar für Nutzer anderer Server"
 _postForm:
-  replyPlaceholder: "Dieser Notiz antworten …"
-  quotePlaceholder: "Diese Notiz zitieren …"
-  channelPlaceholder: "In einen Kanal senden"
+  replyPlaceholder: "Diesem Beitrag antworten …"
+  quotePlaceholder: "Diesen Beitrag zitieren …"
+  channelPlaceholder: "In einen Kanal senden..."
   _placeholders:
     a: "Was machst du momentan?"
     b: "Was ist um dich herum los?"
@@ -1507,45 +1527,48 @@ _profile:
   metadataContent: "Inhalt"
   changeAvatar: "Profilbild ändern"
   changeBanner: "Banner ändern"
+  locationDescription: Wenn Sie Ihren Ort zuerst eingeben, wird für andere Benutzer
+    die Ortszeit angezeigt.
 _exportOrImport:
-  allNotes: "Alle Notizen"
-  followingList: "Gefolgte Benutzer"
+  allNotes: "Alle Beiträge"
+  followingList: "Gefolgte Nutzer"
   muteList: "Stummschaltungen"
   blockingList: "Blockierungen"
   userLists: "Listen"
-  excludeMutingUsers: "Stummgeschaltete Benutzer aussortieren"
-  excludeInactiveUsers: "Inaktive Benutzer aussortieren"
+  excludeMutingUsers: "Stummgeschaltete Nutzer aussortieren"
+  excludeInactiveUsers: "Inaktive Nutzer aussortieren"
 _charts:
   federation: "Föderation"
   apRequest: "Anfragen"
-  usersIncDec: "Unterschied in der Anzahl von Benutzern"
-  usersTotal: "Anzahl aller Benutzer"
-  activeUsers: "Aktive Benutzer"
-  notesIncDec: "Unterschied in der Anzahl an Notizen"
-  localNotesIncDec: "Unterschied in der Anzahl an lokalen Notizen"
-  remoteNotesIncDec: "Unterschied in der Anzahl an Notizen von fremden Instanzen"
-  notesTotal: "Anzahl aller Notizen"
+  usersIncDec: "Unterschied in der Anzahl von Nutzern"
+  usersTotal: "Anzahl aller Nutzer"
+  activeUsers: "Aktive Nutzer"
+  notesIncDec: "Unterschied bei der Anzahl an Beiträgen"
+  localNotesIncDec: "Unterschied bei der Anzahl an lokalen Beiträgen"
+  remoteNotesIncDec: "Differenz zur Anzahl von Beiträgen von anderen Servern."
+  notesTotal: "Anzahl aller Beiträge"
   filesIncDec: "Unterschied in der Anzahl an Dateien"
   filesTotal: "Anzahl aller Dateien"
   storageUsageIncDec: "Unterschied in der Höhe der Speichernutzung"
   storageUsageTotal: "Gesamte Speichernutzung"
 _instanceCharts:
   requests: "Anfragen"
-  users: "Unterschied in der Anzahl an Benutzern"
-  usersTotal: "Gesamtanzahl an Benutzern"
-  notes: "Unterschied in der Anzahl an Notizen"
-  notesTotal: "Gesamtanzahl an Notizen"
-  ff: "Unterschied in der Anzahl an gefolgten Benutzern und Followern"
-  ffTotal: "Gesamtanzahl an gefolgten Benutzern und Followern"
+  users: "Unterschied in der Anzahl an Nutzern"
+  usersTotal: "Gesamtanzahl an Nutzern"
+  notes: "Unterschied in der Anzahl an Beiträgen"
+  notesTotal: "Gesamtanzahl der Beiträge"
+  ff: "Unterschied in der Anzahl an gefolgten Nutzern und Followern "
+  ffTotal: "Gesamtanzahl an gefolgten Nutzern und Followern"
   cacheSize: "Unterschied in der Größe des Caches"
   cacheSizeTotal: "Gesamtgröße des Caches"
   files: "Unterschied in der Anzahl an Dateien"
   filesTotal: "Gesamtanzahl an Dateien"
 _timelines:
-  home: "Startseite"
-  local: "Lokal"
-  social: "Sozial"
-  global: "Global"
+  home: "Home-TL"
+  local: "Local-TL"
+  social: "Social-TL"
+  global: "Global-TL"
+  recommended: Empfehlungen
 _pages:
   newPage: "Seite erstellen"
   editPage: "Seite bearbeiten"
@@ -1562,21 +1585,21 @@ _pages:
   viewPage: "Seite anschauen"
   like: "Gefällt mir"
   unlike: "\"Gefällt mir\" entfernen"
-  my: "Meine Seiten"
-  liked: "Seiten, die mir gefallen"
+  my: "Meine Nutzer-Seiten"
+  liked: "Nutzer-Seiten, die mir gefallen"
   featured: "Beliebt"
   inspector: "Inspektor"
   contents: "Inhalte"
   content: "Seitenblock"
   variables: "Variablen"
   title: "Titel"
-  url: "Seiten-URL"
+  url: "Nutzer-Seiten-URL"
   summary: "Zusammenfassung"
   alignCenter: "Zentrieren"
-  hideTitleWhenPinned: "Seitentitel wenn angeheftet ausblenden"
+  hideTitleWhenPinned: "Nutzer-Seitentitel wenn angeheftet ausblenden"
   font: "Schriftart"
   fontSerif: "Serif"
-  fontSansSerif: "Sans Serif"
+  fontSansSerif: "sans-serif"
   eyeCatchingImageSet: "Vorschaubild festlegen"
   eyeCatchingImageRemove: "Vorschaubild entfernen"
   chooseBlock: "Block hinzufügen"
@@ -1596,7 +1619,7 @@ _pages:
     if: "Falls"
     _if:
       variable: "Variable"
-    post: "Notizfenster"
+    post: "Beitragsfeld"
     _post:
       text: "Inhalt"
       attachCanvasImage: "Leinwandbild anfügen"
@@ -1621,10 +1644,10 @@ _pages:
       id: "Leinwand-ID"
       width: "Breite"
       height: "Höhe"
-    note: "Eingebettete Notiz"
+    note: "Eingebetteter Beitrag"
     _note:
-      id: "Notiz-ID"
-      idDescription: "Du kannst alternativ auch die Notiz-URL angeben."
+      id: "Beitrags-ID"
+      idDescription: "Du kannst alternativ auch die Beitrags-URL angeben."
       detailed: "Detailierte Ansicht"
     switch: "Fallunterscheidung"
     _switch:
@@ -1648,7 +1671,7 @@ _pages:
         pushEvent: "Ein Event senden"
         _pushEvent:
           event: "Eventname"
-          message: "Nachricht, die bei Auslösung des Events angezeigt werden soll"
+          message: "Meldung, die bei Aktivierung angezeigt werden soll"
           variable: "Variable, die gesendet werden soll"
           no-variable: "Keine"
         callAiScript: "AiScript ausführen"
@@ -1846,12 +1869,12 @@ _notification:
   youGotMention: "{name} hat dich erwähnt"
   youGotReply: "{name} hat dir geantwortet"
   youGotQuote: "{name} hat dich zitiert"
-  youRenoted: "Renote deiner Notiz von {name}"
+  youRenoted: "Renote deines Beitrages von {name}"
   youGotPoll: "{name} hat in deiner Umfrage abgestimmt"
   youGotMessagingMessageFromUser: "{name} hat dir eine Chatnachricht gesendet"
   youGotMessagingMessageFromGroup: "In die Gruppe {name} wurde eine Chatnachricht\
     \ gesendet"
-  youWereFollowed: "ist dir gefolgt"
+  youWereFollowed: "folgt dir nun"
   youReceivedFollowRequest: "Du hast eine Follow-Anfrage erhalten"
   yourFollowRequestAccepted: "Deine Follow-Anfrage wurde akzeptiert"
   youWereInvitedToGroup: "{userName} hat dich in eine Gruppe eingeladen"
@@ -1886,9 +1909,9 @@ _deck:
   swapDown: "Mit unterer Spalte tauschen"
   stackLeft: "Auf linke Spalte stapeln"
   popRight: "Nach rechts vom Stapel nehmen"
-  profile: "Profil"
-  newProfile: "Neues Profil"
-  deleteProfile: "Profil löschen"
+  profile: "Arbeitsbereich"
+  newProfile: "Neuer Arbeitsbereich"
+  deleteProfile: "Arbeitsbereich löschen"
   introduction: "Erstelle eine auf dich zugeschneiderte Benutzeroberfläche durch das\
     \ Aneinanderreihen von Spalten!"
   introduction2: "Klicke auf das + rechts um wann immer du möchtest neue Spalten hinzuzufügen."
@@ -1898,14 +1921,16 @@ _deck:
     main: "Hauptspalte"
     widgets: "Widgets"
     notifications: "Benachrichtigungen"
-    tl: "Chronik"
-    antenna: "Antennen"
+    tl: "Timeline"
+    antenna: "News-Picker"
     list: "Listen"
     mentions: "Erwähnungen"
     direct: "Direktnachrichten"
+  renameProfile: Arbeitsbereich umbenennen
+  nameAlreadyExists: Der Name für den Arbeitsbereich ist bereits vorhanden.
 enableRecommendedTimeline: Empfohlenen Zeitplan aktivieren
 secureMode: Sicherer Modus (Autorisierter Abruf)
-instanceSecurity: Instanzsicherheit
+instanceSecurity: Serversicherheit
 manageGroups: Gruppen verwalten
 noThankYou: Nein, danke
 privateMode: Privater Modus
@@ -1914,16 +1939,118 @@ flagSpeakAsCat: Wie eine Katze sprechen
 showEmojisInReactionNotifications: Emojis in Reaktionsbenachrichtigungen anzeigen
 userSaysSomethingReason: '{name} sagte {reason}'
 hiddenTagsDescription: 'Liste die Hashtags (ohne #) welche du von Trending und Explore
-  verstecken möchtest. Versteckte Hashtags sind durch andere Wege weiterhin auffindbar.'
-addInstance: Instanz hinzufügen
-flagSpeakAsCatDescription: Deine Posts werden im Katzenmodus "nya-ifiziert"
+  verstecken möchtest. Versteckte Hashtags sind durch andere Wege weiterhin auffindbar.
+  Blockierte Server sind nicht betroffen, auch wenn sie hier aufgeführt sind.'
+addInstance: Server hinzufügen
+flagSpeakAsCatDescription: Deine Beiträge werden im Katzenmodus nyanisiert
 hiddenTags: Versteckte Hashtags
-antennaInstancesDescription: Nenne einen Instanzen-Host pro Zeile
-secureModeInfo: Bei Anfragen an andere Instanzen nicht ohne Nachweis zurücksenden.
+antennaInstancesDescription: Nenne einen Servernamen pro Zeile
+secureModeInfo: Bei Anfragen an andere Server nicht ohne Nachweis zurücksenden.
 renoteMute: Boosts stummschalten
-renoteUnmute: Boosts aktivieren
-noInstances: Es gibt keine Instanzen
-privateModeInfo: Wenn diese Option aktiviert ist, können nur Instanzen auf der Whitelist
-  mit Deinen Instanzen föderieren. Alle Beiträge werden für die Öffentlichkeit verborgen.
-allowedInstances: Instanzen auf der Whitelist
-selectInstance: Wähle eine Instanz
+renoteUnmute: Stummschaltung von Boosts aufheben
+noInstances: Es gibt keine Server
+privateModeInfo: Wenn diese Option aktiviert ist, können nur als vertrauenswürdig
+  eingestufte Server mit deinem Server föderieren. Alle Beiträge werden für die Öffentlichkeit
+  verborgen.
+allowedInstances: Vertrauenswürdige Server
+selectInstance: Wähle einen Server
+silencedInstancesDescription: Liste die Hostnamen der Server auf, die du stummschalten
+  möchtest. Nutzerkonten in den aufgelisteten Servern werden als "Stumm" behandelt,
+  können nur Follow-Anfragen stellen und können keine lokalen Nutzerkonten erwähnen,
+  wenn sie nicht gefolgt werden. Dies wirkt sich nicht auf die blockierten Server
+  aus.
+editNote: Beitrag bearbeiten
+edited: Bearbeitet
+silenceThisInstance: Diesen Server stummschalten
+silencedInstances: Stummgeschaltete Server
+silenced: Stummgeschaltet
+deleted: Gelöscht
+breakFollowConfirm: Sind sie sicher, dass sie eine(n) Follower entfernen möchten?
+unsubscribePushNotification: Push-Benachrichtigungen deaktivieren
+pushNotificationAlreadySubscribed: Push-Benachrichtigungen sind bereits aktiviert
+pushNotificationNotSupported: Dein Browser oder der Server unterstützt keine Push-Benachrichtigungen
+pushNotification: Push-Benachrichtigungen
+subscribePushNotification: Push-Benachrichtigungen aktivieren
+showLocalPosts: 'Zeige lokale Beiträge in:'
+homeTimeline: Home-Timeline
+cannotUploadBecauseExceedsFileSizeLimit: Die Datei konnte nicht hochgeladen werden,
+  da sie die maximal zulässige Größe überschreitet.
+moveFromLabel: 'Nutzerkonto von dem Sie umziehen:'
+moveAccount: Nutzerkonto umziehen!
+defaultReaction: Standard-Emoji-Reaktion für ausgehende und eingehende Beiträge
+moveTo: Umzug des Nutzerkontos zu einem neuen Nutzerkonto
+moveToLabel: 'Nutzerkonto zu dem sie umziehen:'
+moveAccountDescription: 'Dieser Vorgang kann nicht rückgängig gemacht werden! Stellen
+  sie vor dem Umzug dieses Nutzerkontos sicher, dass Sie einen Namen für Ihr neues
+  Nutzerkonto eingerichtet haben. Bitte geben sie die Bezeichnung des neuen Nutzerkontos
+  wie folgt ein: @name@instance.xyz'
+findOtherInstance: Einen anderen Server finden
+sendPushNotificationReadMessage: Löschung der Push-Benachrichtigungen sobald die entsprechenden
+  Benachrichtigungen oder Beiträge gelesen wurden.
+signupsDisabled: Derzeit sind keine Anmeldungen auf diesem Server möglich! Anmeldungen
+  auf anderen Servern sind jedoch möglich! Wenn Sie einen Einladungscode für diesen
+  Server haben, geben Sie ihn bitte unten ein.
+swipeOnDesktop: Am Desktop PC das Wischen wie bei mobilen Geräten zulassen
+enterSendsMessage: Drücken sie zum Senden des Beitrages die Eingabetaste (Strg-Taste
+  ausgeschaltet)
+showUpdates: Zeigt ein Popup-Fenster an, wenn Calckey aktualisiert wird.
+socialTimeline: Social-Timeline
+moveFrom: Bisheriges Nutzerkonto zu diesem Nutzerkonto umziehen
+_messaging:
+  groups: Gruppen
+  dms: Persönlich
+recommendedInstances: Empfohlene Server
+logoImageUrl: URL des Logo-Bildes
+userSaysSomethingReasonReply: '{name} hat auf einen Beitrag geantwortet der {reason}
+  beinhaltet'
+userSaysSomethingReasonRenote: '{name} hat einen Beitrag geteilt der {reason} beinhaltet'
+userSaysSomethingReasonQuote: '{name} hat einen Beitrag zitiert der {reason} beinhaltet'
+seperateRenoteQuote: Getrennte Boost- und Zitat-Schaltflächen
+showAds: Anzeigen anzeigen
+splash: Begrüßungsbildschirm
+customSplashIconsDescription: URLs für benutzerdefinierte Splash-Screen-Symbole, die
+  durch Zeilenumbrüche getrennt sind und nach dem Zufallsprinzip jedes Mal angezeigt
+  werden, wenn ein Benutzer die Seite lädt/neu lädt. Bitte stelle sicher, dass die
+  Bilder unter einer statischen URL stehen, vorzugsweise alle in der Größe 192x192.
+sendPushNotificationReadMessageCaption: Eine Benachrichtigung mit dem Text "{emptyPushNotificationMessage}"
+  wird für kurze Zeit angezeigt. Dies kann ggf. den Akkuverbrauch Ihres Geräts erhöhen.
+customSplashIcons: Benutzerdefinierte Begrüßungsbildschirmsymbole (URLs)
+adminCustomCssWarn: Diese Einstellung sollte nur verwendet werden, wenn Sie wissen,
+  was sie tut. Die Eingabe falscher Werte kann dazu führen, dass ALLE Clients nicht
+  mehr normal funktionieren. Bitte stellen Sie sicher, dass Ihr CSS ordnungsgemäß
+  funktioniert, indem Sie es in Ihren Benutzereinstellungen testen.
+customMOTD: Benutzerdefinierte Meldung des Tages (Begrüßungsbildschirmmeldungen)
+allowedInstancesDescription: Hosts von Instanzen, die für den Verbund auf die Whitelist
+  gesetzt werden sollen, jeweils durch eine neue Zeile getrennt (gilt nur im privaten
+  Modus).
+migration: Migration
+updateAvailable: Es könnte eine Aktualisierung verfügbar sein!
+showAdminUpdates: Anzeigen, dass eine neue Calckey-Version verfügbar ist (nur Administrator)
+customMOTDDescription: Benutzerdefinierte Meldungen für die Meldung des Tages (Begrüßungsbildschirm),
+  die durch Zeilenumbrüche getrennt sind und nach dem Zufallsprinzip jedes Mal angezeigt
+  werden, wenn ein Benutzer die Seite (neu) lädt.
+recommendedInstancesDescription: Empfohlene Instanzen, die durch Zeilenumbrüche getrennt
+  sind, werden in der empfohlenen Zeitachse angezeigt. Fügen Sie NICHT "https://"
+  hinzu, sondern NUR die Domain.
+sendModMail: Moderationshinweis senden
+moveFromDescription: 'Dadurch wird ein Alias Ihres alten Nutzerkontos festgelegt,
+  sodass Sie von ihrem bisherigen Konto zu diesem Nutzerkonto wechseln können. Tun
+  Sie dies, BEVOR Sie von Ihrem bisherigen Nutzerkonto hierhin wechseln. Bitte geben
+  Sie den Namen des Nutzerkontos wie folgt ein: person@server.xyz'
+preventAiLearning: KI gestütztes bot-scraping unterdrücken
+preventAiLearningDescription: Fordern Sie KI-Sprachmodelle von Drittanbietern auf,
+  die von Ihnen hochgeladenen Inhalte, wie z. B. Beiträge und Bilder, nicht zu untersuchen.
+license: Genehmigung
+indexPosts: Gelistete Beiträge
+migrationConfirm: "Sind Sie absolut sicher, dass Sie Ihr Nutzerkonto zu diesem {account}\
+  \ umziehen möchten? Sobald Sie dies bestätigt haben, kann dies nicht mehr rückgängig\
+  \ gemacht werden und Ihr Nutzerkonto kann nicht mehr von ihnen genutzt werden.\n\
+  Stellen Sie außerdem sicher, dass Sie dieses Nutzerkonto als das Konto festgelegt\
+  \ haben, von dem Sie umziehen."
+noteId: Beitrags-ID
+customKaTeXMacro: Individuelle KaTeX Makros
+enableCustomKaTeXMacro: Individuelle KaTeX-Makros aktivieren
+replayTutorial: Wiederhole die Benutzeranleitung
+apps: Apps
+caption: Automatische Untertitelung
+pwa: PWA installieren

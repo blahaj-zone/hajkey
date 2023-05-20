@@ -89,7 +89,7 @@ function getMenu() {
 		},
 		{
 			text: i18n.ts.describeFile,
-			icon: "ph-cursor-text ph-bold ph-lg",
+			icon: "ph-subtitles ph-bold ph-lg",
 			action: describe,
 		},
 		null,

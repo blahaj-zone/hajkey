@@ -1,9 +1,14 @@
 <template>
 	<span v-if="note.visibility !== 'public'" :class="$style.visibility">
-		<i v-if="note.visibility === 'home'" class="ph-house ph-bold ph-lg"></i>
+		<i
+			v-if="note.visibility === 'home'"
+			class="ph-house ph-bold ph-lg"
+			v-tooltip="i18n.ts._visibility.home"
+		></i>
 		<i
 			v-else-if="note.visibility === 'followers'"
 			class="ph-lock-simple-open ph-bold ph-lg"
+			v-tooltip="i18n.ts._visibility.followers"
 		></i>
 		<i
 			v-else-if="note.visibility === 'specified'"
@@ -12,7 +17,10 @@
 		></i>
 	</span>
 	<span v-if="note.localOnly" :class="$style.localOnly"
-		><i class="ph-hand-fist ph-bold ph-lg"></i
+		><i
+			class="ph-hand-fist ph-bold ph-lg"
+			v-tooltip="i18n.ts._visibility.localOnly"
+		></i
 	></span>
 </template>
 
@@ -21,6 +29,7 @@ import { ref } from "vue";
 import XDetails from "@/components/MkUsersTooltip.vue";
 import * as os from "@/os";
 import { useTooltip } from "@/scripts/use-tooltip";
+import { i18n } from "@/i18n";
 
 const props = defineProps<{
 	note: {

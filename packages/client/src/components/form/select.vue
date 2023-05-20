@@ -1,33 +1,38 @@
 <template>
 	<div class="vblkjoeq">
-		<div class="label" @click="focus"><slot name="label"></slot></div>
-		<div
-			ref="container"
-			class="input"
-			:class="{ inline, disabled, focused }"
-			@click.prevent="onClick"
-		>
-			<div ref="prefixEl" class="prefix"><slot name="prefix"></slot></div>
-			<select
-				ref="inputEl"
-				v-model="v"
-				v-adaptive-border
-				class="select"
-				:disabled="disabled"
-				:required="required"
-				:readonly="readonly"
-				:placeholder="placeholder"
-				@focus="focused = true"
-				@blur="focused = false"
-				@input="onInput"
+		<label>
+			<div class="label"><slot name="label"></slot></div>
+			<div
+				ref="container"
+				class="input"
+				:class="{ inline, disabled, focused }"
+				@click.prevent="onClick"
+				tabindex="-1"
 			>
-				<slot></slot>
-			</select>
-			<div ref="suffixEl" class="suffix">
-				<i class="ph-caret-down ph-bold ph-lg"></i>
+				<div ref="prefixEl" class="prefix">
+					<slot name="prefix"></slot>
+				</div>
+				<select
+					ref="inputEl"
+					v-model="v"
+					v-adaptive-border
+					class="select"
+					:disabled="disabled"
+					:required="required"
+					:readonly="readonly"
+					:placeholder="placeholder"
+					@focus="focused = true"
+					@blur="focused = false"
+					@input="onInput"
+				>
+					<slot></slot>
+				</select>
+				<div ref="suffixEl" class="suffix">
+					<i class="ph-caret-down ph-bold ph-lg"></i>
+				</div>
 			</div>
-		</div>
-		<div class="caption"><slot name="caption"></slot></div>
+			<div class="caption"><slot name="caption"></slot></div>
+		</label>
 
 		<MkButton v-if="manualSave && changed" primary @click="updated"
 			><i class="ph-floppy-disk-back ph-bold ph-lg"></i>
@@ -191,115 +196,117 @@ const onClick = (ev: MouseEvent) => {
 
 <style lang="scss" scoped>
 .vblkjoeq {
-	> .label {
-		font-size: 0.85em;
-		padding: 0 0 8px 0;
-		user-select: none;
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .caption {
-		font-size: 0.85em;
-		padding: 8px 0 0 0;
-		color: var(--fgTransparentWeak);
-
-		&:empty {
-			display: none;
-		}
-	}
-
-	> .input {
-		position: relative;
-		cursor: pointer;
-		margin-left: 0.2rem;
-		margin-right: 0.2rem;
-
-		&:hover {
-			> .select {
-				border-color: var(--inputBorderHover) !important;
-			}
-		}
-
-		> .select {
-			appearance: none;
-			-webkit-appearance: none;
-			display: block;
-			height: v-bind("height + 'px'");
-			width: 100%;
-			margin: 0;
-			padding: 0 12px;
-			font: inherit;
-			font-weight: normal;
-			font-size: 1em;
-			color: var(--fg);
-			background: var(--panel);
-			border: solid 1px var(--panel);
-			border-radius: 6px;
-			outline: none;
-			box-shadow: none;
-			box-sizing: border-box;
-			cursor: pointer;
-			transition: border-color 0.1s ease-out;
-			pointer-events: none;
+	> label {
+		> .label {
+			font-size: 0.85em;
+			padding: 0 0 8px 0;
 			user-select: none;
-		}
-
-		> .prefix,
-		> .suffix {
-			display: flex;
-			align-items: center;
-			position: absolute;
-			z-index: 1;
-			top: 0;
-			padding: 0 12px;
-			font-size: 1em;
-			height: v-bind("height + 'px'");
-			pointer-events: none;
 
 			&:empty {
 				display: none;
 			}
+		}
 
-			> * {
+		> .caption {
+			font-size: 0.85em;
+			padding: 8px 0 0 0;
+			color: var(--fgTransparentWeak);
+
+			&:empty {
+				display: none;
+			}
+		}
+
+		> .input {
+			position: relative;
+			cursor: pointer;
+			margin-left: 0.2rem;
+			margin-right: 0.2rem;
+
+			&:hover {
+				> .select {
+					border-color: var(--inputBorderHover) !important;
+				}
+			}
+
+			> .select {
+				appearance: none;
+				-webkit-appearance: none;
+				display: block;
+				height: v-bind("height + 'px'");
+				width: 100%;
+				margin: 0;
+				padding: 0 12px;
+				font: inherit;
+				font-weight: normal;
+				font-size: 1em;
+				color: var(--fg);
+				background: var(--panel);
+				border: solid 1px var(--panel);
+				border-radius: 6px;
+				outline: none;
+				box-shadow: none;
+				box-sizing: border-box;
+				cursor: pointer;
+				transition: border-color 0.1s ease-out;
+				pointer-events: none;
+				user-select: none;
+			}
+
+			> .prefix,
+			> .suffix {
+				display: flex;
+				align-items: center;
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				padding: 0 12px;
+				font-size: 1em;
+				height: v-bind("height + 'px'");
+				pointer-events: none;
+
+				&:empty {
+					display: none;
+				}
+
+				> * {
+					display: inline-block;
+					min-width: 16px;
+					max-width: 150px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+			}
+
+			> .prefix {
+				left: 0;
+				padding-right: 6px;
+			}
+
+			> .suffix {
+				right: 0;
+				padding-left: 6px;
+			}
+
+			&.inline {
 				display: inline-block;
-				min-width: 16px;
-				max-width: 150px;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
+				margin: 0;
 			}
-		}
 
-		> .prefix {
-			left: 0;
-			padding-right: 6px;
-		}
-
-		> .suffix {
-			right: 0;
-			padding-left: 6px;
-		}
-
-		&.inline {
-			display: inline-block;
-			margin: 0;
-		}
-
-		&.focused {
-			> select {
-				border-color: var(--accent) !important;
+			&.focused {
+				> select {
+					border-color: var(--accent) !important;
+				}
 			}
-		}
 
-		&.disabled {
-			opacity: 0.7;
+			&.disabled {
+				opacity: 0.7;
 
-			&,
-			* {
-				cursor: not-allowed !important;
+				&,
+				* {
+					cursor: not-allowed !important;
+				}
 			}
 		}
 	}

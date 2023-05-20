@@ -1,10 +1,10 @@
 <template>
-	<div class="vrtktovh _formBlock">
-		<div class="label"><slot name="label"></slot></div>
+	<section class="vrtktovh _formBlock">
+		<h3 class="label"><slot name="label"></slot></h3>
 		<div class="main _formRoot">
 			<slot></slot>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script lang="ts" setup></script>
@@ -29,6 +29,7 @@
 	> .label {
 		font-weight: bold;
 		margin: 1.5em 0 16px 0;
+		font-size: 1em;
 
 		&:empty {
 			display: none;

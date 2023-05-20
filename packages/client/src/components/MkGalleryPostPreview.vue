@@ -1,5 +1,5 @@
 <template>
-	<MkA :to="`/gallery/${post.id}`" class="ttasepnz _panel" tabindex="-1">
+	<MkA :to="`/gallery/${post.id}`" class="ttasepnz _panel">
 		<div class="thumbnail">
 			<ImgWithBlurhash
 				class="img"
@@ -34,7 +34,8 @@ const props = defineProps<{
 	position: relative;
 	height: 200px;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		text-decoration: none;
 		color: var(--accent);
 

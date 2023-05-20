@@ -18,9 +18,7 @@
 					>
 					<small
 						>Powered by
-						<a
-							href="https://codeberg.org/calckey/calckey"
-							target="_blank"
+						<a href="https://calckey.org/" target="_blank"
 							>Calckey</a
 						></small
 					>

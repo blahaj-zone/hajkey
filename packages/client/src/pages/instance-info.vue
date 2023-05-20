@@ -81,7 +81,7 @@
 							}}</template>
 						</MkKeyValue>
 
-						<FormSection v-if="iAmModerator">
+						<FormSection v-if="iAmAdmin">
 							<template #label>Moderation</template>
 							<FormSuspense :p="init">
 								<FormSwitch
@@ -349,7 +349,7 @@ import MkSelect from "@/components/form/select.vue";
 import FormSwitch from "@/components/form/switch.vue";
 import * as os from "@/os";
 import number from "@/filters/number";
-import { iAmModerator } from "@/account";
+import { iAmAdmin } from "@/account";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
 import { defaultStore } from "@/store";
@@ -374,7 +374,7 @@ const props = defineProps<{
 }>();
 
 let tabs = ["overview"];
-if (iAmModerator) tabs.push("chart", "users", "raw");
+if (iAmAdmin) tabs.push("chart", "users", "raw");
 let tab = $ref(tabs[0]);
 watch($$(tab), () => syncSlide(tabs.indexOf(tab)));
 
@@ -387,7 +387,7 @@ let isSilenced = $ref(false);
 let faviconUrl = $ref(null);
 
 const usersPagination = {
-	endpoint: iAmModerator ? "admin/show-users" : ("users" as const),
+	endpoint: iAmAdmin ? "admin/show-users" : ("users" as const),
 	limit: 10,
 	params: {
 		sort: "+updatedAt",
@@ -398,7 +398,8 @@ const usersPagination = {
 };
 
 async function fetch() {
-	meta = (await os.api("admin/meta")) as AugmentedInstanceMetadata;
+	if (iAmAdmin)
+		meta = (await os.api("admin/meta")) as AugmentedInstanceMetadata;
 	instance = (await os.api("federation/show-instance", {
 		host: props.host,
 	})) as AugmentedInstance;
@@ -478,7 +479,7 @@ let theTabs = [
 	},
 ];
 
-if (iAmModerator) {
+if (iAmAdmin) {
 	theTabs.push(
 		{
 			key: "chart",

@@ -9,6 +9,7 @@
 <script lang="ts" setup>
 import { inject, onMounted, onUnmounted, ref } from "vue";
 import { deviceKind } from "@/scripts/device-kind";
+import { ui } from "@/config";
 
 const props = withDefaults(
 	defineProps<{
@@ -32,6 +33,10 @@ const shouldSpacerMin = inject("shouldSpacerMin", false);
 const adjust = (rect: { width: number; height: number }) => {
 	if (shouldSpacerMin || deviceKind === "smartphone") {
 		margin = props.marginMin;
+		return;
+	}
+	if (ui === "classic") {
+		margin = 12;
 		return;
 	}
 

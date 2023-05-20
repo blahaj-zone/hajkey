@@ -28,7 +28,7 @@ export const meta = {
 			},
 			userId: {
 				type: "string",
-				optional: false,
+				optional: true,
 				nullable: false,
 			},
 			endpoint: {

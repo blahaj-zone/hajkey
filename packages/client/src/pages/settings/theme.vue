@@ -135,6 +135,12 @@
 				>
 			</div>
 		</FormSection>
+		<FormSection>
+			<FormLink to="/settings/custom-css" class="_formBlock"
+				><template #icon><i class="ph-code ph-bold ph-lg"></i></template
+				>{{ i18n.ts.customCss }}</FormLink
+			>
+		</FormSection>
 
 		<FormButton
 			v-if="wallpaper == null"
@@ -296,13 +302,16 @@ definePageMetadata({
 		> .toggleWrapper {
 			display: inline-block;
 			text-align: left;
-			overflow: clip;
 			padding: 0 100px;
 			vertical-align: bottom;
 
 			input {
 				position: absolute;
 				left: -99em;
+			}
+
+			&:focus-within > .toggle {
+				outline: auto;
 			}
 		}
 
@@ -506,7 +515,6 @@ definePageMetadata({
 			}
 		}
 	}
-
 	> .sync {
 		padding: 14px 16px;
 		border-top: solid 0.5px var(--divider);

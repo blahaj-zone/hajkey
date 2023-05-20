@@ -104,6 +104,7 @@ export type MeDetailed = UserDetailed & {
 	mutedWords: string[][];
 	mutingNotificationTypes: string[];
 	noCrawle: boolean;
+	preventAiLearning: boolean;
 	receiveAnnouncementEmail: boolean;
 	usePasswordLessLogin: boolean;
 	[other: string]: any;

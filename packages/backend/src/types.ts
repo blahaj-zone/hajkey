@@ -18,6 +18,7 @@ export const noteVisibilities = [
 	"home",
 	"followers",
 	"specified",
+	"hidden",
 ] as const;
 
 export const mutedNoteReasons = ["word", "manual", "spam", "other"] as const;

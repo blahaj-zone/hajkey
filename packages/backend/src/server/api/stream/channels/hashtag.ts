@@ -24,6 +24,7 @@ export default class extends Channel {
 	}
 
 	private async onNote(note: Packed<"Note">) {
+		if (note.visibility === "hidden") return;
 		const noteTags = note.tags
 			? note.tags.map((t: string) => t.toLowerCase())
 			: [];

@@ -56,6 +56,7 @@ async function setList() {
 	});
 	if (canceled) return;
 	updateColumn(props.column.id, {
+		name: list.name,
 		listId: list.id,
 	});
 }

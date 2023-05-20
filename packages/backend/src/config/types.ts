@@ -52,6 +52,8 @@ export type Source = {
 
 	clusterLimit?: number;
 
+	onlyQueueProcessor?: boolean;
+
 	id: string;
 
 	outgoingAddressFamily?: "ipv4" | "ipv6" | "dual";

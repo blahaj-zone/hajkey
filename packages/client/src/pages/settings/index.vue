@@ -26,14 +26,14 @@
 							></MkSuperMenu>
 						</div>
 					</div>
-					<div
+					<section
 						v-if="!(narrow && currentPage?.route.name == null)"
 						class="main"
 					>
 						<div class="bkzroven">
 							<RouterView />
 						</div>
-					</div>
+					</section>
 				</div>
 			</div>
 		</MkSpacer>

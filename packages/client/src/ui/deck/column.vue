@@ -323,6 +323,8 @@ function onDrop(ev) {
 	overflow: hidden;
 	contain: strict;
 
+	background: var(--bg);
+
 	&.draghover {
 		&:after {
 			content: "";

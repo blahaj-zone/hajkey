@@ -93,7 +93,7 @@ export async function masterMain() {
 		true,
 	);
 
-	if (!envOption.noDaemons) {
+	if (!envOption.noDaemons && !config.onlyQueueProcessor) {
 		import("../daemons/server-stats.js").then((x) => x.default());
 		import("../daemons/queue-stats.js").then((x) => x.default());
 		import("../daemons/janitor.js").then((x) => x.default());

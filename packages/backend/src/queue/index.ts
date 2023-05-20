@@ -333,6 +333,44 @@ export function createImportPostsJob(
 	);
 }
 
+export function createImportMastoPostJob(
+	user: ThinUser,
+	post: any,
+	signatureCheck: boolean,
+) {
+	return dbQueue.add(
+		"importMastoPost",
+		{
+			user: user,
+			post: post,
+			signatureCheck: signatureCheck,
+		},
+		{
+			removeOnComplete: true,
+			removeOnFail: true,
+		},
+	);
+}
+
+export function createImportCkPostJob(
+	user: ThinUser,
+	post: any,
+	signatureCheck: boolean,
+) {
+	return dbQueue.add(
+		"importCkPost",
+		{
+			user: user,
+			post: post,
+			signatureCheck: signatureCheck,
+		},
+		{
+			removeOnComplete: true,
+			removeOnFail: true,
+		},
+	);
+}
+
 export function createImportMutingJob(user: ThinUser, fileId: DriveFile["id"]) {
 	return dbQueue.add(
 		"importMuting",

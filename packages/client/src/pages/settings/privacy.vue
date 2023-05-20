@@ -60,6 +60,13 @@
 			{{ i18n.ts.noCrawle }}
 			<template #caption>{{ i18n.ts.noCrawleDescription }}</template>
 		</FormSwitch>
+		<FormSwitch v-model="preventAiLearning" @update:model-value="save()">
+			{{ i18n.ts.preventAiLearning
+			}}<span class="_beta">{{ i18n.ts.beta }}</span>
+			<template #caption>{{
+				i18n.ts.preventAiLearningDescription
+			}}</template>
+		</FormSwitch>
 		<FormSwitch
 			v-model="isExplorable"
 			class="_formBlock"
@@ -145,6 +152,7 @@ let isExplorable = $ref($i.isExplorable);
 let hideOnlineStatus = $ref($i.hideOnlineStatus);
 let publicReactions = $ref($i.publicReactions);
 let ffVisibility = $ref($i.ffVisibility);
+let preventAiLearning = $ref($i.preventAiLearning);
 
 let defaultNoteVisibility = $computed(
 	defaultStore.makeGetterSetter("defaultNoteVisibility")
@@ -165,6 +173,7 @@ function save() {
 		isExplorable: !!isExplorable,
 		hideOnlineStatus: !!hideOnlineStatus,
 		publicReactions: !!publicReactions,
+		preventAiLearning: !!preventAiLearning,
 		ffVisibility: ffVisibility,
 	});
 }

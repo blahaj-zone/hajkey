@@ -19,7 +19,6 @@
   - MFM button
   - Personal notes for all accounts
   - Fully revamp non-logged-in screen
-  - Classic mode make instance icon bring up new context menu
   - Lookup/details for post/file/instance
   - [Rat mode?](https://stop.voring.me/notes/933fx97bmd)
 
@@ -118,6 +117,13 @@
 - Sonic search
 - Popular color schemes, including Nord, Gruvbox, and Catppuccin
 - Non-nyaify cat mode
+- Post imports from other Calckey/Misskey/Mastodon/Pleroma/Akkoma instances
+- Improve Classic mode
+- Proper Helm/Kubernetes config
+- Multiple boost visibilities
+- Improve system emails
+- Mod mail
+- Focus trapping and button labels
 
 ## Implemented (remote)
 

@@ -1070,6 +1070,8 @@ _channel:
   following: "正在关注"
   usersCount: "有{n}人参与"
   notesCount: "有{n}个帖子"
+  nameAndDescription: "名称与描述"
+  nameOnly: "仅名称"
 _menuDisplay:
   sideFull: "横向"
   sideIcon: "横向(图标)"

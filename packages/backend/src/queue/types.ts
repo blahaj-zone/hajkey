@@ -23,7 +23,8 @@ export type DbJobData =
 	| DbUserJobData
 	| DbUserImportPostsJobData
 	| DbUserImportJobData
-	| DbUserDeleteJobData;
+	| DbUserDeleteJobData
+	| DbUserImportMastoPostJobData;
 
 export type DbUserJobData = {
 	user: ThinUser;
@@ -44,6 +45,12 @@ export type DbUserImportJobData = {
 export type DbUserImportPostsJobData = {
 	user: ThinUser;
 	fileId: DriveFile["id"];
+	signatureCheck: boolean;
+};
+
+export type DbUserImportMastoPostJobData = {
+	user: ThinUser;
+	post: any;
 	signatureCheck: boolean;
 };
 

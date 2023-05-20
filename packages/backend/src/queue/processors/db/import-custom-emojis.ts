@@ -1,6 +1,6 @@
 import type Bull from "bull";
 import * as fs from "node:fs";
-import unzipper from "unzipper";
+import AdmZip from "adm-zip";
 
 import { queueLogger } from "../../logger.js";
 import { createTempDir } from "@/misc/create-temp.js";
@@ -47,8 +47,9 @@ export async function importCustomEmojis(
 
 	const outputPath = `${path}/emojis`;
 	const unzipStream = fs.createReadStream(destPath);
-	const extractor = unzipper.Extract({ path: outputPath });
-	extractor.on("close", async () => {
+	const zip = new AdmZip(destPath);
+	zip.extractAllToAsync(outputPath, true, false, async (error) => {
+		if (error) throw error;
 		const metaRaw = fs.readFileSync(`${outputPath}/meta.json`, "utf-8");
 		const meta = JSON.parse(metaRaw);
 
@@ -86,6 +87,5 @@ export async function importCustomEmojis(
 		logger.succ("Imported");
 		done();
 	});
-	unzipStream.pipe(extractor);
 	logger.succ(`Unzipping to ${outputPath}`);
 }

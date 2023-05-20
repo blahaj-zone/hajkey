@@ -115,6 +115,7 @@ export class Note {
 	/**
 	 * public ... 公開
 	 * home ... ホームタイムライン(ユーザーページのタイムライン含む)のみに流す
+	 * hidden ... only visible on profile (doesnt federate, like local only, but can be fetched via AP like home) <- for now only used for post imports
 	 * followers ... フォロワーのみ
 	 * specified ... visibleUserIds で指定したユーザーのみ
 	 */

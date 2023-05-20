@@ -1,12 +1,13 @@
 <div align="center">
-<a href="https://i.calckey.cloud/">
+<a href="https://calckey.org/">
 	<img src="./title_float.svg" alt="Calckey logo" style="border-radius:50%" width="400"/>
 </a>
 
-**🌎 **[Calckey](https://i.calckey.cloud/)** is an open source, decentralized social media platform that's free forever! 🚀**
+**🌎 **[Calckey](https://calckey.org/)** is an open source, decentralized social media platform that's free forever! 🚀**
 
 [![no github badge](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page/)
 [![status badge](https://ci.codeberg.org/api/badges/calckey/calckey/status.svg)](https://ci.codeberg.org/calckey/calckey)
+[![opencollective badge](https://opencollective.com/calckey/tiers/badge.svg)](https://opencollective.com/Calckey)
 [![liberapay badge](https://img.shields.io/liberapay/receives/ThatOneCalculator?logo=liberapay)](https://liberapay.com/ThatOneCalculator)
 [![translate-badge](https://hosted.weblate.org/widgets/calckey/-/svg-badge.svg)](https://hosted.weblate.org/engage/calckey/)
 [![docker badge](https://img.shields.io/docker/pulls/thatonecalculator/calckey?logo=docker)](https://hub.docker.com/r/thatonecalculator/calckey)
@@ -46,6 +47,7 @@
 
 # 🥂 Links
 
+- 💸 OpenCollective: <https://opencollective.com/Calckey>
 - 💸 Liberapay: <https://liberapay.com/ThatOneCalculator>
   - Donate publicly to get your name on the Patron list!
 - 🚢 Flagship instance: <https://calckey.social>
@@ -67,9 +69,10 @@ If you have access to a server that supports one of the sources below, I recomme
 
 [![Install on Ubuntu](https://pool.jortage.com/voringme/misskey/3b62a443-1b44-45cf-8f9e-f1c588f803ed.png)](https://codeberg.org/calckey/ubuntu-bash-install)　　[![Install on the Arch User Repository](https://pool.jortage.com/voringme/misskey/ba2a5c07-f078-43f1-8483-2e01acca9c40.png)](https://aur.archlinux.org/packages/calckey)　　[![Install Calckey with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=calckey)
 
-### 🐋 Docker
+## 🛳️ Containerization
 
-[How to run Calckey with Docker](./docs/docker.md).
+- [🐳 How to run Calckey with Docker](https://codeberg.org/calckey/calckey/src/branch/develop/docs/docker.md)
+- [🛞 How to run Calckey with Kubernetes/Helm](https://codeberg.org/calckey/calckey/src/branch/develop/docs/kubernetes.md)
 
 ## 🧑‍💻 Dependencies
 
@@ -77,17 +80,17 @@ If you have access to a server that supports one of the sources below, I recomme
   - Install with [nvm](https://github.com/nvm-sh/nvm)
 - 🐘 At least [PostgreSQL](https://www.postgresql.org/) v12
 - 🍱 At least [Redis](https://redis.io/) v6 (v7 recommend)
+- Web Proxy (one of the following)
+  - 🍀 Nginx (recommended)
+  - 🪶 Apache
+  - 🦦 Caddy
 
 ### 😗 Optional dependencies
 
 - [FFmpeg](https://ffmpeg.org/) for video transcoding
-- Full text search (choost one of the following)
-  - 🦔 [Sonic](https://crates.io/crates/sonic-server) (highly recommended!)
+- Full text search (one of the following)
+  - 🦔 [Sonic](https://crates.io/crates/sonic-server) (recommended)
   - [ElasticSearch](https://www.elastic.co/elasticsearch/)
-- Management (choose one of the following)
-  - 🛰️ [pm2](https://pm2.io/)
-  - 🐳 [Docker](https://docker.com)
-  - Service manager (systemd, openrc, etc)
 
 ### 🏗️ Build dependencies
 
@@ -115,6 +118,17 @@ corepack prepare pnpm@latest --activate
 # To build without TensorFlow, append --no-optional
 pnpm i # --no-optional
 ```
+
+### pm2
+
+To install pm2 run:
+
+```
+npm i -g pm2
+pm2 install pm2-logrotate
+```
+
+[`pm2-logrotate`](https://github.com/keymetrics/pm2-logrotate/blob/master/README.md) ensures that log files don't infinitely gather size, as Calckey produces a lot of logs.
 
 ## 🐘 Create database
 
@@ -152,16 +166,33 @@ In Calckey's directory, fill out the `sonic` section of `.config/default.yml` wi
 
 ## 🚚 Migrating from Misskey to Calckey
 
-For migrating from Misskey v13, Misskey v12, and Foundkey, read [this document](./docs/migrate.md).
+For migrating from Misskey v13, Misskey v12, and Foundkey, read [this document](https://codeberg.org/calckey/calckey/src/branch/develop/docs/migrate.md).
 
-## 🍀 NGINX
+## 🌐 Web proxy
+
+### 🍀 Nginx (recommended)
 
 - Run `sudo cp ./calckey.nginx.conf /etc/nginx/sites-available/ && cd /etc/nginx/sites-available/`
 - Edit `calckey.nginx.conf` to reflect your instance properly
-- Run `sudo cp ./calckey.nginx.conf ../sites-enabled/`
+- Run `sudo ln -s ./calckey.nginx.conf ../sites-enabled/calckey.nginx.conf`
 - Run `sudo nginx -t` to validate that the config is valid, then restart the NGINX service.
 
-</details>
+### 🪶 Apache
+
+- Run `sudo cp ./calckey.apache.conf /etc/apache2/sites-available/ && cd /etc/apache2/sites-available/`
+- Edit `calckey.apache.conf` to reflect your instance properly
+- Run `sudo a2ensite calckey.apache` to enable the site
+- Run `sudo service apache2 restart` to reload apache2 configuration
+
+### 🦦 Caddy
+
+- Add the following block to your `Caddyfile`, replacing `example.tld` with your own domain:
+```caddy
+example.tld {
+    reverse_proxy http://127.0.0.1:3000
+}
+```
+- Reload your caddy configuration
 
 ## 🚀 Build and launch!
 
@@ -180,7 +211,7 @@ pm2 start "NODE_ENV=production pnpm run start" --name Calckey
 
 - When editing the config file, please don't fill out the settings at the bottom. They're designed *only* for managed hosting, not self hosting. Those settings are much better off being set in Calckey's control panel.
 - Port 3000 (used in the default config) might be already used on your server for something else. To find an open port for Calckey, run `for p in {3000..4000}; do ss -tlnH | tr -s ' ' | cut -d" " -sf4 | grep -q "${p}$" || echo "${p}"; done | head -n 1`. Replace 3000 with the minimum port and 4000 with the maximum port if you need it.
-- I'd recommend you use a S3 Bucket/CDN for Object Storage, especially if you use Docker. 
+- I'd recommend you use a S3 Bucket/CDN for Object Storage, especially if you use Docker.
 - I'd ***strongly*** recommend against using CloudFlare, but if you do, make sure to turn code minification off.
 - For push notifications, run `npx web-push generate-vapid-keys`, then put the public and private keys into Control Panel > General > ServiceWorker.
 - For translations, make a [DeepL](https://deepl.com) account and generate an API key, then put it into Control Panel > General > DeepL Translation.

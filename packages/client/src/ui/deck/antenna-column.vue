@@ -6,7 +6,7 @@
 		@parent-focus="($event) => emit('parent-focus', $event)"
 	>
 		<template #header>
-			<i class="ph-television ph-bold ph-lg"></i
+			<i class="ph-flying-saucer ph-bold ph-lg"></i
 			><span style="margin-left: 8px">{{ column.name }}</span>
 		</template>
 
@@ -58,6 +58,7 @@ async function setAntenna() {
 	});
 	if (canceled) return;
 	updateColumn(props.column.id, {
+		name: antenna.name,
 		antennaId: antenna.id,
 	});
 }

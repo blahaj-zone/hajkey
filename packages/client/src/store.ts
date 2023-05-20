@@ -134,10 +134,6 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: null as null | "smartphone" | "tablet" | "desktop",
 		},
-		showLocalPostsInTimeline: {
-			where: "device",
-			default: "home" as "home" | "social",
-		},
 		serverDisconnectedBehavior: {
 			where: "device",
 			default: "nothing" as "nothing" | "quiet" | "reload" | "dialog",
@@ -161,6 +157,10 @@ export const defaultStore = markRaw(
 		animatedMfm: {
 			where: "device",
 			default: true,
+		},
+		animatedMfmWarnShown: {
+			where: "device",
+			default: false,
 		},
 		loadRawImages: {
 			where: "device",

@@ -53,6 +53,7 @@ import * as ep___admin_resetPassword from "./endpoints/admin/reset-password.js";
 import * as ep___admin_resolveAbuseUserReport from "./endpoints/admin/resolve-abuse-user-report.js";
 import * as ep___admin_search_indexAll from "./endpoints/admin/search/index-all.js";
 import * as ep___admin_sendEmail from "./endpoints/admin/send-email.js";
+import * as ep___admin_sendModMail from "./endpoints/admin/send-mod-mail.js";
 import * as ep___admin_serverInfo from "./endpoints/admin/server-info.js";
 import * as ep___admin_showModerationLogs from "./endpoints/admin/show-moderation-logs.js";
 import * as ep___admin_showUser from "./endpoints/admin/show-user.js";
@@ -89,6 +90,7 @@ import * as ep___channels_featured from "./endpoints/channels/featured.js";
 import * as ep___channels_follow from "./endpoints/channels/follow.js";
 import * as ep___channels_followed from "./endpoints/channels/followed.js";
 import * as ep___channels_owned from "./endpoints/channels/owned.js";
+import * as ep___channels_search from "./endpoints/channels/search.js";
 import * as ep___channels_show from "./endpoints/channels/show.js";
 import * as ep___channels_timeline from "./endpoints/channels/timeline.js";
 import * as ep___channels_unfollow from "./endpoints/channels/unfollow.js";
@@ -408,6 +410,7 @@ const eps = [
 	["admin/resolve-abuse-user-report", ep___admin_resolveAbuseUserReport],
 	["admin/search/index-all", ep___admin_search_indexAll],
 	["admin/send-email", ep___admin_sendEmail],
+	["admin/send-mod-mail", ep___admin_sendModMail],
 	["admin/server-info", ep___admin_serverInfo],
 	["admin/show-moderation-logs", ep___admin_showModerationLogs],
 	["admin/show-user", ep___admin_showUser],
@@ -444,6 +447,7 @@ const eps = [
 	["channels/follow", ep___channels_follow],
 	["channels/followed", ep___channels_followed],
 	["channels/owned", ep___channels_owned],
+	["channels/search", ep___channels_search],
 	["channels/show", ep___channels_show],
 	["channels/timeline", ep___channels_timeline],
 	["channels/unfollow", ep___channels_unfollow],

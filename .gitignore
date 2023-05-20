@@ -22,7 +22,9 @@ coverage
 # config
 /.config/*
 !/.config/example.yml
+!/.config/devenv.yml
 !/.config/docker_example.env
+!/.config/helm_values_example.yml
 
 #docker dev config
 /dev/docker-compose.yml
@@ -58,3 +60,7 @@ packages/backend/eng.traineddata
 # old yarn
 .yarn
 yarn*
+
+# Nix Development shell items
+.devenv
+.direnv

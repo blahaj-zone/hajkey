@@ -205,17 +205,24 @@
 						<FormButton
 							v-if="user.host == null && iAmModerator"
 							inline
-							style="margin-right: 8px"
 							@click="resetPassword"
 							><i class="ph-key ph-bold ph-lg"></i>
 							{{ i18n.ts.resetPassword }}</FormButton
+						>
+						<FormButton
+							v-if="user.host == null && iAmModerator"
+							inline
+							@click="sendModMail"
+							><i class="ph-warning-diamond ph-bold ph-lg"></i>
+							{{ i18n.ts.sendModMail }}</FormButton
 						>
 						<FormButton
 							v-if="$i.isAdmin"
 							inline
 							danger
 							@click="deleteAccount"
-							>{{ i18n.ts.deleteAccount }}</FormButton
+							><i class="ph-user-minus ph-bold ph-lg"></i>
+							{{ i18n.ts.deleteAccount }}</FormButton
 						>
 					</div>
 					<FormTextarea
@@ -484,6 +491,17 @@ async function toggleModerator(v) {
 		userId: user.id,
 	});
 	await refreshUser();
+}
+
+async function sendModMail() {
+	const { canceled, result } = await os.inputParagraph({
+		title: "Moderation Notice",
+	});
+	if (canceled) return;
+	await os.apiWithDialog("admin/send-mod-mail", {
+		userId: user.id,
+		comment: result,
+	});
 }
 
 async function deleteAllFiles() {

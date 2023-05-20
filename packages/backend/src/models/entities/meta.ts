@@ -516,4 +516,9 @@ export class Meta {
 		default: true,
 	})
 	public enableActiveEmailValidation: boolean;
+
+	@Column('jsonb', {
+		default: {},
+	})
+	public experimentalFeatures: Record<string, unknown>;
 }

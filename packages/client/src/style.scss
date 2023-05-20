@@ -40,7 +40,6 @@
 
 html {
 	touch-action: manipulation;
-	background-color: var(--bg);
 	background-attachment: fixed;
 	background-size: cover;
 	background-position: center;
@@ -53,6 +52,7 @@ html {
 	line-height: 1.6;
 	text-size-adjust: 100%;
 	tab-size: 2;
+	scroll-padding: 60px;
 
 	&.f-1 {
 		font-size: 15px;
@@ -434,6 +434,9 @@ hr {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	grid-gap: 12px;
+	> button {
+		width: 100% !important;
+	}
 }
 
 ._formLinks {
@@ -654,6 +657,7 @@ hr {
   font-size: 1.3333em;
   line-height: 0.75em;
   vertical-align: -0.0667em;
+	justify-content: center;
 }
 
 .ph-xl {

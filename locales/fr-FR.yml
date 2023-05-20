@@ -1,6 +1,6 @@
 _lang_: "Français"
 headlineMisskey: "Réseau relié par des notes"
-introMisskey: "Bienvenue ! Misskey est un service de microblogage décentralisé, libre\
+introMisskey: "Bienvenue ! Calckey est un service de microblogage décentralisé, libre\
   \ et ouvert.\nÉcrivez des « notes » et partagez ce qui se passe à l’instant présent,\
   \ autour de vous avec les autres \U0001F4E1\nLa fonction « réactions », vous permet\
   \ également d’ajouter une réaction rapide aux notes des autres utilisateur·rice·s\
@@ -70,7 +70,7 @@ export: "Exporter"
 files: "Fichiers"
 download: "Télécharger"
 driveFileDeleteConfirm: "Êtes-vous sûr·e de vouloir supprimer le fichier \"{name}\"\
-  \ ? Les notes liées à ce fichier seront aussi supprimées."
+  \ ? Il sera retiré de toutes ses notes liées."
 unfollowConfirm: "Désirez-vous vous désabonner de {name} ?"
 exportRequested: "Vous avez demandé une exportation. L’opération pourrait prendre\
   \ un peu de temps. Une terminée, le fichier résultant sera ajouté au Drive."
@@ -87,7 +87,7 @@ manageLists: "Gérer les listes"
 error: "Erreur"
 somethingHappened: "Une erreur est survenue"
 retry: "Réessayer"
-pageLoadError: "Le chargement de la page a échoué"
+pageLoadError: "Le chargement de la page a échoué."
 pageLoadErrorDescription: "Cela est généralement causé par le cache du navigateur\
   \ ou par un problème réseau. Veuillez vider votre cache ou attendre un peu et réessayer."
 serverIsDead: "Le serveur ne répond pas. Patientez quelques instants puis essayez\
@@ -106,7 +106,7 @@ followRequestPending: "Demande d'abonnement en attente de confirmation"
 enterEmoji: "Insérer un émoji"
 renote: "Renoter"
 unrenote: "Annuler la Renote"
-renoted: "Renoté !"
+renoted: "Renoté."
 cantRenote: "Ce message ne peut pas être renoté."
 cantReRenote: "Impossible de renoter une Renote."
 quote: "Citer"
@@ -158,7 +158,7 @@ flagAsBot: "Ce compte est un robot"
 flagAsBotDescription: "Si ce compte est géré de manière automatisée, choisissez cette\
   \ option. Si elle est activée, elle agira comme un marqueur pour les autres développeurs\
   \ afin d'éviter des chaînes d'interaction sans fin avec d'autres robots et d'ajuster\
-  \ les systèmes internes de Misskey pour traiter ce compte comme un robot."
+  \ les systèmes internes de Calckey pour traiter ce compte comme un robot."
 flagAsCat: "Ce compte est un chat"
 flagAsCatDescription: "Activer l'option \" Je suis un chat \" pour ce compte."
 flagShowTimelineReplies: "Afficher les réponses dans le fil"
@@ -226,7 +226,7 @@ noUsers: "Il n’y a pas d’utilisateur·rice·s"
 editProfile: "Modifier votre profil"
 noteDeleteConfirm: "Êtes-vous sûr·e de vouloir supprimer cette note ?"
 pinLimitExceeded: "Vous ne pouvez plus épingler d’autres notes."
-intro: "L’installation de Misskey est terminée ! Veuillez créer un compte administrateur."
+intro: "L’installation de Calckey est terminée ! Veuillez créer un compte administrateur."
 done: "Terminé"
 processing: "Traitement en cours"
 preview: "Aperçu"
@@ -414,7 +414,7 @@ exploreFediverse: "Explorer le Fediverse"
 popularTags: "Mots-clés populaires"
 userList: "Listes"
 about: "Informations"
-aboutMisskey: "À propos de Misskey"
+aboutMisskey: "À propos de Calckey"
 administrator: "Administrateur"
 token: "Jeton"
 twoStepAuthentication: "Authentification à deux facteurs"
@@ -573,7 +573,7 @@ descendingOrder: "Descendant"
 scratchpad: "ScratchPad"
 scratchpadDescription: "ScratchPad fournit un environnement expérimental pour AiScript.\
   \ Vous pouvez vérifier la rédaction de votre code, sa bonne exécution et le résultat\
-  \ de son interaction avec Misskey."
+  \ de son interaction avec Calckey."
 output: "Sortie"
 script: "Script"
 disablePagesScript: "Désactiver AiScript sur les Pages"
@@ -767,7 +767,7 @@ nUsers: "{n} utilisateur·rice·s"
 nNotes: "{n} Notes"
 sendErrorReports: "Envoyer les rapports d’erreur"
 sendErrorReportsDescription: "Si vous activez l'envoi des rapports d'erreur, vous\
-  \ contribuerez à améliorer la qualité de Misskey grâce au partage d'informations\
+  \ contribuerez à améliorer la qualité de Calckey grâce au partage d'informations\
   \ détaillées sur les erreurs lorsqu'un problème survient.\nCela inclut des informations\
   \ telles que la version de votre système d'exploitation, le type de navigateur que\
   \ vous utilisez, votre historique d'activité, etc."
@@ -825,7 +825,7 @@ active: "Actif·ve"
 offline: "Hors ligne"
 notRecommended: "Déconseillé"
 botProtection: "Protection contre les bots"
-instanceBlocking: "Instances bloquées"
+instanceBlocking: "Instances bloquées/mise en sourdine"
 selectAccount: "Sélectionner un compte"
 switchAccount: "Changer de compte"
 enabled: "Activé"
@@ -866,7 +866,7 @@ hashtags: "Hashtags"
 troubleshooting: "Résolution de problèmes"
 useBlurEffect: "Utiliser des effets de flou dans l'interface"
 learnMore: "Plus d'informations"
-misskeyUpdated: "Misskey a été mis à jour !"
+misskeyUpdated: "Calckey a été mis à jour !"
 whatIsNew: "Voir les derniers changements"
 translate: "Traduire"
 translatedFrom: "Traduit depuis {x}"
@@ -999,8 +999,8 @@ _aboutMisskey:
   contributors: "Principaux contributeurs"
   allContributors: "Tous les contributeurs"
   source: "Code source"
-  translation: "Traduire Misskey"
-  donate: "Soutenir Misskey"
+  translation: "Traduire Calckey"
+  donate: "Soutenir Calckey"
   morePatrons: "Nous apprécions vraiment le soutien de nombreuses autres personnes\
     \ non mentionnées ici. Merci à toutes et à tous ! \U0001F970"
   patrons: "Contributeurs"
@@ -1010,9 +1010,9 @@ _nsfw:
   force: "Cacher tous les médias"
 _mfm:
   cheatSheet: "Antisèche MFM"
-  intro: "MFM est un langage Markdown spécifique utilisable ici et là dans Misskey.\
+  intro: "MFM est un langage Markdown spécifique utilisable ici et là dans Calckey.\
     \ Vous pouvez vérifier ici les structures utilisables avec MFM."
-  dummy: "La Fédiverse s'agrandit avec Misskey"
+  dummy: "La Fédiverse s'agrandit avec Calckey"
   mention: "Mentionner"
   mentionDescription: "Vous pouvez afficher un utilisateur spécifique en indiquant\
     \ une arobase suivie d'un nom d'utilisateur"
@@ -1080,6 +1080,7 @@ _mfm:
   plainDescription: Désactiver les effets de tous les MFM contenus dans cet effet
     MFM.
   rotateDescription: Pivoter le contenu d'un angle spécifique.
+  position: Position
 _instanceTicker:
   none: "Cacher "
   remote: "Montrer pour les utilisateur·ice·s distant·e·s"
@@ -1099,6 +1100,7 @@ _channel:
   following: "Abonné·e"
   usersCount: "{n} Participant·e·s"
   notesCount: "{n} Notes"
+  nameAndDescription: Nom et description
 _menuDisplay:
   sideFull: "Latéral"
   sideIcon: "Latéral (icônes)"
@@ -1243,10 +1245,10 @@ _tutorial:
     \ de vos followers."
   step5_4: "La timeline locale {icon} est l'endroit où vous pouvez voir les messages\
     \ de tout le monde sur cette instance."
-  step5_5: "La timeline {icon} recommandée est l'endroit où vous pouvez voir les messages\
-    \ des instances que les administrateurs recommandent."
-  step5_6: "La timeline {icon} sociale est l'endroit où vous pouvez voir les publications\
-    \ des amis de vos followers."
+  step5_5: "La chronologie {icon} sociale est l'endroit où vous pouvez voir uniquement\
+    \ les publications des comptes que vous suivez."
+  step5_6: "La chronologie {icon} recommandée est l'endroit où vous pouvez voir les\
+    \ publications des instances recommandées par les administrateurs."
   step5_7: "La timeline globale {icon} est l'endroit où vous pouvez voir les messages\
     \ de toutes les autres instances connectées."
   step6_1: "Alors quel est cet endroit ?"
@@ -1349,6 +1351,10 @@ _widgets:
   serverMetric: "Statistiques du serveur"
   aiscript: "Console AiScript"
   aichan: "Ai"
+  userList: Liste d'utilisateurs
+  _userList:
+    chooseList: Sélectionner une liste
+  unixClock: Horloge UNIX
 _cw:
   hide: "Masquer"
   show: "Afficher plus …"
@@ -1411,6 +1417,8 @@ _profile:
   metadataContent: "Contenu"
   changeAvatar: "Changer l'image de profil"
   changeBanner: "Changer de bannière"
+  locationDescription: Si vous entrez votre ville en premier, votre heure locale sera
+    affiché aux autres utilisateurs.
 _exportOrImport:
   allNotes: "Toutes les notes"
   followingList: "Abonnements"
@@ -1450,6 +1458,7 @@ _timelines:
   local: "Local"
   social: "Social"
   global: "Global"
+  recommended: Recommandée
 _pages:
   newPage: "Créer une page"
   editPage: "Modifier une page"
@@ -1775,6 +1784,7 @@ _notification:
     followRequestAccepted: "Demande d'abonnement acceptée"
     groupInvited: "Invitation à un groupe"
     app: "Notifications provenant des apps"
+    pollEnded: Fin du sondage
   _actions:
     followBack: "Suivre"
     reply: "Répondre"
@@ -1799,6 +1809,10 @@ _deck:
     list: "Listes"
     mentions: "Mentions"
     direct: "Direct"
+  introduction: Créer l'interface parfaite pour vous en arrangeant les colonnes librement
+    !
+  introduction2: Cliquer sur le + sur la droite de l'écran pour ajouter de nouvelles
+    colonnes à tout moment.
 keepOriginalUploadingDescription: Enregistrer l'image originale telle quelle. Si désactivé,
   une version à afficher sur le web sera générée au chargement.
 manageGroups: Gérer les groupes
@@ -1873,11 +1887,11 @@ adminCustomCssWarn: Ce paramètre ne devrait être utilisé que si vous savez ce
   de fonctionner. Assurez-vous que votre CSS fonctionne correctement en l'essayant
   dans vos paramètres utilisateur.
 swipeOnDesktop: Permettre le style de glissement de fenêtre de mobile sur PC
-moveFromLabel: 'Compte depuis lequel vous migrez :'
+moveFromLabel: 'Compte depuis lequel vous migrez :'
 migrationConfirm: "Êtes-vous absolument certain⋅e que vous voulez migrer votre compte\
   \ vers {account} ? Une fois fait, vous ne pourrez pas revenir en arrière, et vous\
   \ ne pourrez plus utiliser le compte actuel normalement à nouveau.\nAussi, assurez-vous\
-  \ d'avoir configuré le compte courant comme le compte depuis lequel vous migrez."
+  \ d'avoir configuré le compte actuel comme le compte depuis lequel vous migrez."
 _preferencesBackups:
   updatedAt: 'Mis à jour le : {date} {time}'
   cannotLoad: Le chargement a échoué
@@ -1891,7 +1905,7 @@ _preferencesBackups:
   noBackups: Aucune sauvegarde n'existe. Vous pouvez sauvegarder les paramètres de
     votre client sur ce serveur en utilisant "Créer une nouvelle sauvegarde".
   createdAt: 'Crée le : {date} {time}'
-  renameConfirm: Renommer la sauvegarde "{old}" à "{new}" ?
+  renameConfirm: Renommer la sauvegarde "{old}" en "{new}" ?
   list: Sauvegardes créées
   saveNew: Faire une nouvelle sauvegarde
   loadFile: Charger depuis le fichier
@@ -1931,7 +1945,8 @@ flagSpeakAsCatDescription: Vos messages seront nyanifiés en mode chat
 hiddenTags: Hashtags cachés
 hiddenTagsDescription: "Lister les hashtags (sans le #) que vous souhaitez cacher\
   \ de tendances et explorer. Les hashtags cachés sont toujours découvrables par d'autres\
-  \ moyens."
+  \ moyens. Les instances bloqués ne sont pas ne sont pas affectés, même si ils sont\
+  \ présent dans cette liste."
 antennaInstancesDescription: Lister un hôte d'instance par ligne
 userSaysSomethingReason: '{name} a dit {reason}'
 breakFollowConfirm: Êtes vous sur de vouloir retirer l'abonné ?
@@ -1955,9 +1970,9 @@ customSplashIconsDescription: URLs pour les icônes personnalisées de l'écran 
   (re)chargement de page. Assurez-vous que les images sont sur des URL statiques,
   de préférence toutes de taille 192x192.
 updateAvailable: Une mise à jour est peut-être disponible !
-accountMoved: "L'utilisateur a migré vers un nouveau compte:"
+accountMoved: "L'utilisateur a migré vers un nouveau compte :"
 enableEmojiReactions: Activer les réactions par émojis
-showEmojisInReactionNotifications: Montrer les émojis dans les notifications de réaction
+showEmojisInReactionNotifications: Montrer les émojis dans les notifications de réactions
 renoteUnmute: Notifier les renotes
 selectInstance: Choisir une instance
 noInstances: Il n'y a aucune instance
@@ -2000,3 +2015,25 @@ customKaTeXMacroDescription: "Définissez des macros pour écrire des expression
   \ Seulement de simples fonctions de substitution de chaines sont supportées; la\
   \ syntaxe avancée, telle que la ramification conditionnelle, ne peut pas être utilisée\
   \ ici."
+enableRecommendedTimeline: Activer la chronologie recommandée
+silenceThisInstance: Ne plus montrer cet instance
+silencedInstances: Instances silencieuses
+silenced: Silencieux
+deleted: Effacé
+editNote: Modifier note
+edited: Modifié
+flagShowTimelineRepliesDescription: Si activé, affiche dans le fil les réponses des
+  personnes aux publications des autres.
+_experiments:
+  alpha: Alpha
+  beta: Beta
+  enablePostEditing: Autoriser l'édition de note
+  title: Expérimentations
+findOtherInstance: Trouver un autre serveur
+userSaysSomethingReasonQuote: '{name} a cité une note contenant {reason}'
+signupsDisabled: Les inscriptions sur ce serveur sont actuellement désactivés, mais
+  vous pouvez toujours vous inscrire sur un autre serveur ! Si vous avez un code d'invitation
+  pour ce serveur, entrez-le ci-dessous s'il vous plait.
+apps: Applications
+userSaysSomethingReasonReply: '{noms} a répondu à une note contenant {raison}'
+defaultValueIs: 'défaut : {valeur}'

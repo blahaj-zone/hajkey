@@ -22,9 +22,12 @@
 							v-if="note.updatedAt"
 							:time="note.updatedAt"
 							mode="none"
-							>(<i class="ph-pencil-line ph-bold"></i
-							>{{ i18n.ts.edited }})</MkTime
 						>
+							<i
+								v-tooltip.noDelay="i18n.ts.edited"
+								class="ph-pencil-line ph-bold"
+							></i>
+						</MkTime>
 					</MkA>
 					<MkVisibility :note="note" />
 				</div>

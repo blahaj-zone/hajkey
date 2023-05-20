@@ -20,6 +20,12 @@ export default {
 		self.hideTimer = null;
 		self.checkTimer = null;
 
+		if (!binding.modifiers.noLabel) {
+			if (!document.body.contains(el)) return;
+			if (self.text == null) return;
+			el.setAttribute("aria-label", self.text);
+		}
+
 		self.close = () => {
 			if (self._close) {
 				window.clearInterval(self.checkTimer);

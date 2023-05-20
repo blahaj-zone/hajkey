@@ -1,5 +1,5 @@
 <template>
-	<div class="mk-google">
+	<div class="mk-google" @click.stop>
 		<input v-model="query" type="search" :placeholder="q" />
 		<button @click="search">
 			<i class="ph-magnifying-glass ph-bold ph-lg"></i>

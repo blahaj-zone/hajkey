@@ -1,8 +1,9 @@
 <template>
-	<div
+	<section
 		v-size="{ max: [310, 500] }"
 		class="gafaadew"
 		:class="{ modal, _popup: modal }"
+		:aria-label="i18n.ts._pages.blocks.post"
 		@dragover.stop="onDragover"
 		@dragenter="onDragenter"
 		@dragleave="onDragleave"
@@ -84,7 +85,7 @@
 			<div v-if="quoteId" class="with-quote">
 				<i class="ph-quotes ph-bold ph-lg"></i>
 				{{ i18n.ts.quoteAttached
-				}}<button @click="quoteId = null">
+				}}<button class="_button" @click="quoteId = null">
 					<i class="ph-x ph-bold ph-lg"></i>
 				</button>
 			</div>
@@ -205,6 +206,7 @@
 					<i class="ph-plug ph-bold ph-lg"></i>
 				</button>
 				<button
+					v-if="showMfmCheatsheet"
 					v-tooltip="i18n.ts._mfm.cheatSheet"
 					class="_button right"
 					@click="openCheatSheet"
@@ -220,7 +222,7 @@
 				/>
 			</datalist>
 		</div>
-	</div>
+	</section>
 </template>
 
 <script lang="ts" setup>
@@ -276,11 +278,13 @@ const props = withDefaults(
 		instant?: boolean;
 		fixed?: boolean;
 		autofocus?: boolean;
+		showMfmCheatSheet?: boolean;
 		editId?: misskey.entities.Note["id"];
 	}>(),
 	{
 		initialVisibleUsers: () => [],
 		autofocus: true,
+		showMfmCheatSheet: true,
 	}
 );
 
@@ -1172,11 +1176,16 @@ onMounted(() => {
 		}
 
 		> .with-quote {
-			margin: 0 0 8px 0;
+			display: flex;
+			align-items: center;
+			gap: 0.4em;
+			margin-inline: 24px;
+			margin-bottom: 12px;
 			color: var(--accent);
 
 			> button {
-				padding: 4px 8px;
+				display: flex;
+				padding: 0;
 				color: var(--accentAlpha04);
 
 				&:hover {

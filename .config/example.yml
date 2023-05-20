@@ -120,18 +120,22 @@ id: 'aid'
 #maxCaptionLength: 1500
 
 # Reserved usernames that only the administrator can register with
-reservedUsernames:
-  - root
-  - admin
-  - administrator
-  - me
-  - system
+reservedUsernames: [
+  'root',
+  'admin',
+  'administrator',
+  'me',
+  'system'
+]
 
 # Whether disable HSTS
 #disableHsts: true
 
 # Number of worker processes
 #clusterLimit: 1
+
+# Worker only mode
+#onlyQueueProcessor: 1
 
 # Job concurrency per worker
 # deliverJobConcurrency: 128

@@ -1,8 +1,8 @@
 # Contribution guide
 We're glad you're interested in contributing Calckey! In this document you will find the information you need to contribute to the project.
 
-## Localization (l10n)
-Calckey uses [Weblate](hhttps://hosted.weblate.org/engage/calckey/) for localization management.
+## Translation (i18n)
+Calckey uses [Weblate](hhttps://hosted.weblate.org/engage/calckey/) for translation and internationalization management.
 
 If your language is not listed in Weblate, please open an issue.
 

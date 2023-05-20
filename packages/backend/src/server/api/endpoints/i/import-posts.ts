@@ -8,8 +8,8 @@ export const meta = {
 	secure: true,
 	requireCredential: true,
 	limit: {
-		duration: DAY,
-		max: 1,
+		duration: DAY * 30,
+		max: 2,
 	},
 	errors: {
 		noSuchFile: {

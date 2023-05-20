@@ -145,13 +145,6 @@
 				i18n.ts.flagSpeakAsCatDescription
 			}}</template></FormSwitch
 		>
-		<FormSwitch v-model="profile.showTimelineReplies" class="_formBlock"
-			>{{ i18n.ts.flagShowTimelineReplies
-			}}<template #caption
-				>{{ i18n.ts.flagShowTimelineRepliesDescription }}
-				{{ i18n.ts.reflectMayTakeTime }}</template
-			></FormSwitch
-		>
 		<FormSwitch v-model="profile.isBot" class="_formBlock"
 			>{{ i18n.ts.flagAsBot
 			}}<template #caption>{{
@@ -190,7 +183,6 @@ const profile = reactive({
 	isBot: $i?.isBot,
 	isCat: $i?.isCat,
 	speakAsCat: $i?.speakAsCat,
-	showTimelineReplies: $i?.showTimelineReplies,
 });
 
 const props = withDefaults(
@@ -245,7 +237,6 @@ function save() {
 		isBot: !!profile.isBot,
 		isCat: !!profile.isCat,
 		speakAsCat: !!profile.speakAsCat,
-		showTimelineReplies: !!profile.showTimelineReplies,
 	});
 }
 

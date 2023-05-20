@@ -1,7 +1,7 @@
 {
 	id: 'e2c940b5-6e9a-4c03-b738-261c720c426d',
 	base: 'light',
-	name: 'U0 Light',
+	name: 'Mi U0 Light',
 	props: {
 		X2: ':darken<2<@panel',
 		X3: 'rgba(255, 255, 255, 0.05)',
