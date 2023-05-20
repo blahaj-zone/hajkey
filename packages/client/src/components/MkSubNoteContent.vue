@@ -55,6 +55,7 @@
 					collapsed,
 					isLong,
 					showContent: cw && !showContent,
+					disableAnim: disableMfm,
 				}"
 			>
 				<div class="body">
@@ -145,11 +146,7 @@
 				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
 			</div>
 		</div>
-		<MkButton
-			v-if="hasMfm && defaultStore.state.animatedMfm"
-			@click.stop="toggleMfm"
-			:mini="true"
-		>
+		<MkButton v-if="hasMfm" @click.stop="toggleMfm" :mini="true">
 			<template v-if="disableMfm">
 				<i class="ph-play ph-bold"></i> {{ i18n.ts._mfm.play }}
 			</template>
