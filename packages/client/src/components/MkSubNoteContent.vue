@@ -469,7 +469,7 @@ function focusFooter(ev) {
 			}
 		}
 
-		&.disableAnim > .body > span {
+		&.disableAnim > .body > span :deep(span) {
 			animation: none !important;
 		}
 	}
