@@ -130,6 +130,7 @@
 					v-if="isLong && collapsed"
 					class="fade _button"
 					@click.stop="collapsed = false"
+					v-on:keydown="focusFooter"
 				>
 					<span>{{ i18n.ts.showMore }}</span>
 				</button>
@@ -137,6 +138,7 @@
 					v-if="isLong && !collapsed"
 					class="showLess _button"
 					@click.stop="collapsed = true"
+					v-on:keydown="focusFooter"
 				>
 					<span>{{ i18n.ts.showLess }}</span>
 				</button>
@@ -241,6 +243,38 @@ const displayPreviews = props.detailedView
 const displayMedia = props.detailedView
 	? true
 	: defaultStore.reactiveState.filterDisplayMedia;
+
+const mfms = props.note.text
+	? extractMfmWithAnimation(mfm.parse(props.note.text))
+	: null;
+
+const hasMfm = $ref(mfms && mfms.length > 0);
+
+let disableMfm = $ref(hasMfm && defaultStore.state.animatedMfm);
+
+async function toggleMfm() {
+	if (disableMfm) {
+		if (!defaultStore.state.animatedMfmWarnShown) {
+			const { canceled } = await os.confirm({
+				type: "warning",
+				text: i18n.ts._mfm.warn,
+			});
+			if (canceled) return;
+
+			defaultStore.set("animatedMfmWarnShown", true);
+		}
+
+		disableMfm = false;
+	} else {
+		disableMfm = true;
+	}
+}
+
+function focusFooter(ev) {
+	if (ev.key == "Tab" && !ev.getModifierState("Shift")) {
+		emit("focusfooter", null);
+	}
+}
 </script>
 
 <style lang="scss" scoped>
