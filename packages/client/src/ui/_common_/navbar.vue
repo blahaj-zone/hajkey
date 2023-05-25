@@ -159,7 +159,10 @@ const menu = computed(() => defaultStore.state.menu);
 const otherMenuItemIndicated = computed(() => {
 	for (const def in navbarItemDef) {
 		if (menu.value.includes(def)) continue;
-		if (navbarItemDef[def].indicated) return true;
+		if (navbarItemDef[def].indicated) {
+			console.log("included indication", navbarItemDef[def]);
+			return true;
+		}
 	}
 	return false;
 });

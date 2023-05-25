@@ -120,18 +120,6 @@
 						{{ appearNote.channel.name }}</MkA
 					>
 				</div>
-				<div v-if="detailedView" class="info">
-					<MkA class="created-at" :to="notePage(appearNote)">
-						<MkTime :time="appearNote.createdAt" mode="absolute" />
-						<span v-if="appearNote.updatedAt"
-							>(<i class="ph-pencil-line ph-bold"></i
-							><MkTime
-								:time="appearNote.updatedAt"
-								mode="absolute"
-							/>)</span
-						>
-					</MkA>
-				</div>
 				<footer ref="footerEl" class="footer" @click.stop tabindex="-1">
 					<XReactionsViewer
 						v-if="enableEmojiReactions"
@@ -234,7 +222,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, onMounted, ref } from "vue";
+import { inject, onMounted, ref, computed } from "vue";
 import type { Ref } from "vue";
 import type * as misskey from "calckey-js";
 import MkNoteSub from "@/components/MkNoteSub.vue";
