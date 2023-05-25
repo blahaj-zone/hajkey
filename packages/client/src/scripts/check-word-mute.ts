@@ -10,9 +10,11 @@ function checkWordMute(
 	note: NoteLike,
 	mutedWords: Array<string | string[]>,
 ): Muted {
-	const text = `${note.cw ?? ""} ${note.text ?? ""} ${note.files
-		.map((f) => f.comment ?? "")
-		.join(" ")}`.trim();
+	let text = `${note.cw ?? ""} ${note.text ?? ""}`;
+	if (note.files != null)
+		text += ` ${note.files.map((f) => f.comment ?? "").join(" ")}`;
+	text = text.trim();
+
 	if (text === "") return NotMuted;
 
 	let result = { muted: false, matched: [] };

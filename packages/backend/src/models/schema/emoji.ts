@@ -45,5 +45,15 @@ export const packedEmojiSchema = {
 			optional: false,
 			nullable: true,
 		},
+		width: {
+			type: "number",
+			optional: false,
+			nullable: true,
+		},
+		height: {
+			type: "number",
+			optional: false,
+			nullable: true,
+		},
 	},
 } as const;

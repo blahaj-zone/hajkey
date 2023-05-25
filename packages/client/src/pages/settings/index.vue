@@ -236,7 +236,7 @@ const menuDef = computed(() => [
 				active: currentPage?.route.name === "api",
 			},
 			{
-				icon: "ph-lightning ph-bold ph-lg",
+				icon: "ph-webhooks-logo ph-bold ph-lg",
 				text: "Webhook",
 				to: "/settings/webhook",
 				active: currentPage?.route.name === "webhook",

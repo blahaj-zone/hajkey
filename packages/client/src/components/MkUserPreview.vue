@@ -361,7 +361,7 @@ onMounted(() => {
 				> span {
 					font-size: 1em;
 					color: var(--accent);
-					:global(span) {
+					:deep(span) {
 						white-space: nowrap;
 					}
 				}

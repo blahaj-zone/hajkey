@@ -5,7 +5,6 @@
 		class="akbvjaqn"
 		:class="{ isMe }"
 		:to="url"
-		:style="{ background: bgCss }"
 		@click.stop
 	>
 		<img class="icon" :src="`/avatar/@${username}@${host}`" alt="" />
@@ -37,7 +36,6 @@
 <script lang="ts" setup>
 import { toUnicode } from "punycode";
 import {} from "vue";
-import tinycolor from "tinycolor2";
 import { host as localHost } from "@/config";
 import { $i } from "@/account";
 
@@ -57,18 +55,11 @@ const isMe =
 	$i &&
 	`@${props.username}@${toUnicode(props.host)}` ===
 		`@${$i.username}@${toUnicode(localHost)}`.toLowerCase();
-
-const bg = tinycolor(
-	getComputedStyle(document.documentElement).getPropertyValue(
-		isMe ? "--mentionMe" : "--mention"
-	)
-);
-bg.setAlpha(0.1);
-const bgCss = bg.toRgbString();
 </script>
 
 <style lang="scss" scoped>
 .akbvjaqn {
+	position: relative;
 	display: inline-block;
 	padding: 2px 8px 2px 2px;
 	margin-block: 2px;
@@ -78,8 +69,18 @@ const bgCss = bg.toRgbString();
 	text-overflow: ellipsis;
 	color: var(--mention);
 
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: var(--mention);
+		opacity: 0.1;
+		z-index: -1;
+	}
+
 	&.isMe {
-		color: var(--mentionMe);
+		--mention: var(--mentionMe);
 	}
 
 	> .icon {

@@ -3,8 +3,7 @@
 		v-if="canRenote"
 		ref="buttonRef"
 		v-tooltip.noDelay.bottom="i18n.ts.renote"
-		class="eddddedb _button canRenote"
-		:class="{ addCw }"
+		class="button _button canRenote"
 		@click="renote(false, $event)"
 	>
 		<i class="ph-repeat ph-bold ph-lg"></i>
@@ -79,11 +78,11 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 
 	const renotes = await os.api("notes/renotes", {
 		noteId: props.note.id,
-		limit: 11,
+		userId: $i.id,
+		limit: 1,
 	});
 
-	const users = renotes.map((x) => x.user.id);
-	const hasRenotedBefore = users.includes($i.id);
+	const hasRenotedBefore = renotes.length > 0;
 
 	let buttonActions: Array<MenuItem> = [];
 
@@ -287,25 +286,12 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 </script>
 
 <style lang="scss" scoped>
-.eddddedb {
-	display: inline-block;
-	height: 32px;
-	margin: 2px;
-	padding: 0 6px;
-	border-radius: 4px;
-
+.button {
 	&:not(.canRenote) {
 		cursor: default;
 	}
-
 	&.renoted {
 		background: var(--accent);
-	}
-
-	> .count {
-		display: inline;
-		margin-left: 8px;
-		opacity: 0.7;
 	}
 }
 </style>

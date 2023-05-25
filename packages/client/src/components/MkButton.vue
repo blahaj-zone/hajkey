@@ -111,11 +111,12 @@ function onMousedown(evt: MouseEvent): void {
 	z-index: 1; // 他コンポーネントのbox-shadowに隠されないようにするため
 	display: block;
 	min-width: 100px;
+	min-height: 35px;
 	width: max-content;
 	padding: 8px 16px;
 	text-align: center;
 	font-weight: normal;
-	font-size: 1em;
+	font-size: max(12px, 1em);
 	box-shadow: none;
 	text-decoration: none;
 	background: var(--buttonBg);
@@ -193,7 +194,7 @@ function onMousedown(evt: MouseEvent): void {
 
 	&.mini {
 		padding: 4px 8px;
-		font-size: 0.9em;
+		font-size: max(12px, 0.9em);
 		border-radius: 100px;
 	}
 

@@ -105,17 +105,6 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 	});
 	//#endregion
 
-	// If mobile, insert the viewport meta tag
-	if (["smartphone", "tablet"].includes(deviceKind)) {
-		const viewport = document.getElementsByName("viewport").item(0);
-		viewport.setAttribute(
-			"content",
-			`${viewport.getAttribute(
-				"content",
-			)}, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover`,
-		);
-	}
-
 	//#region Set lang attr
 	const html = document.documentElement;
 	html.setAttribute("lang", lang);
@@ -315,12 +304,11 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 	if (ColdDeviceStorage.get("syncDeviceDarkMode")) {
 		defaultStore.set("darkMode", isDeviceDarkmode());
 	}
-
-	window.matchMedia("(prefers-color-scheme: dark)").addListener((mql) => {
+	window.matchMedia("(prefers-color-scheme: dark)").onchange = (mql) => {
 		if (ColdDeviceStorage.get("syncDeviceDarkMode")) {
 			defaultStore.set("darkMode", mql.matches);
 		}
-	});
+	};
 	//#endregion
 
 	fetchInstanceMetaPromise.then(() => {

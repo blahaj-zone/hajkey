@@ -226,6 +226,8 @@ _mfm:
   play: Posar en marxa MFM
   warn: MFM pot contenir animacions cridaneres o que es mouen ràpidament
   alwaysPlay: Reprodueix automàticament tots els MFM animats
+  fade: Esvair
+  fadeDescription: Esvaeix el contingut cap a dintre i cap en fora.
 _theme:
   keys:
     mention: "Menció"
@@ -334,7 +336,7 @@ _widgets:
   calendar: Calendari
   activity: Activitat
   photos: Fotos
-  rssTicker: Ticker RSS
+  rssTicker: Teletip RSS
   onlineUsers: Usuaris en línia
   memo: Notes adhesives
   digitalClock: Rellotge digital
@@ -712,6 +714,9 @@ _notification:
   pollEnded: Es resultat de la enquesta ja està disponible
   emptyPushNotificationMessage: Les notificacions push s'han actualitzat
   youWereInvitedToGroup: "{userName} t'ha convidat a un grup"
+  reacted: Ha reaccionat a la teva publicació
+  renoted: Ha impulsat la teva publicació
+  voted: Ha votat a la teva enquesta
 _deck:
   _columns:
     notifications: "Notificacions"
@@ -1290,7 +1295,7 @@ loadRawImages: Carregar les imatges originals en comptes de mostrar les miniatur
 noteFavoritesCount: Nombre de notes afegides a favorits
 useSystemFont: Fes servir la font per defecte del sistema
 contact: Contacte
-clips: Clips
+clips: Retalls
 experimentalFeatures: Característiques experimentals
 developer: Desenvolupador
 makeExplorableDescription: Si desactives aquesta funció el teu compte no sortirà a
@@ -1496,7 +1501,7 @@ gallery: Galeria
 popularPosts: Pàgines populars
 shareWithNote: Comparteix amb una publicació
 expiration: Data límit
-memo: Memo
+memo: Recordatori
 priority: Prioritat
 high: Alta
 middle: Mitjana
@@ -1537,7 +1542,7 @@ incorrectPassword: Contrasenya incorrecta.
 clickToFinishEmailVerification: Feu clic a [{ok}] per completar la verificació del
   correu electrònic.
 overridedDeviceKind: Tipus de dispositiu
-smartphone: Smartphone
+smartphone: Telèfon intel·ligent
 tablet: Tauleta
 auto: Automàtic
 recentNHours: Últimes {n} hores
@@ -1625,7 +1630,7 @@ customKaTeXMacroDescription: "Configura macros per escriure expressions matemàt
 objectStorageRegion: Regió
 objectStoragePrefix: Prefix
 objectStoragePrefixDesc: Els fitxers es guardaran dins de carpetes amb aquest prefix.
-objectStorageEndpoint: Endpoint
+objectStorageEndpoint: Extrem
 newNoteRecived: Hi han notes noves
 sounds: Sons
 listen: Escoltar
@@ -1704,7 +1709,9 @@ oneWeek: Una setmana
 reflectMayTakeTime: Pot trigar una mica a reflectir-se.
 thereIsUnresolvedAbuseReportWarning: Hi ha informes sense resoldre.
 driveCapOverrideLabel: Canvieu la capacitat del disc per a aquest usuari
-isSystemAccount: Un compte creat i operat automàticament pel sistema.
+isSystemAccount: Aquest compte és creat i operat automàticament pel sistema. Si us
+  plau, no modereu, editeu, suprimiu o modifiqueu aquest compte de cap forma, o podria
+  trencar el vostre servidor.
 typeToConfirm: Introduïu {x} per confirmar
 deleteAccount: Suprimeix el compte
 document: Documentació
@@ -1746,7 +1753,7 @@ reverse: Revés
 objectStorageBucket: Cubell
 objectStorageBucketDesc: Si us plau específica el nom del cubell que faràs servir
   al teu proveïdor.
-clip: Clip
+clip: Retall
 createNew: Crear una nova
 optional: Opcional
 jumpToSpecifiedDate: Vés a una data concreta
@@ -1765,7 +1772,7 @@ welcomeBackWithName: Benvingut de nou, {name}
 showLocalPosts: 'Mostra les notes locals a:'
 homeTimeline: Línea de temps Inicial
 socialTimeline: Línea de temps Social
-themeColor: Color del Ticker del servidor
+themeColor: Color del Teletip del servidor
 size: Mida
 numberOfColumn: Nombre de columnes
 numberOfPageCache: Nombre de pàgines emmagatzemades a la memòria cau
@@ -2051,3 +2058,10 @@ _experiments:
 noGraze: Si us plau, desactiva l'extensió del navegador "Graze for Mastodon", ja que
   interfereix amb Calckey.
 accessibility: Accessibilitat
+jumpToReply: Vés a la resposta
+newer: Més nou
+older: Més antic
+silencedWarning: S'està mostrant aquesta pàgina per què aquest usuari és d'un servidor
+  que l'administrador a silenciat, així que pot ser spam.
+jumpToPrevious: Vés a l'anterior
+cw: Avís de contingut

@@ -1,7 +1,7 @@
 <template>
 	<button
 		v-tooltip.noDelay.bottom="i18n.ts._gallery.like"
-		class="_button"
+		class="button _button"
 		:class="$style.root"
 		ref="buttonRef"
 		@click="toggleStar($event)"
@@ -110,24 +110,11 @@ useTooltip(buttonRef, async (showing) => {
 </script>
 
 <style lang="scss" module>
-.root {
-	display: inline-block;
-	height: 32px;
-	margin: 2px;
-	padding: 0 6px;
-}
-
 .yellow {
 	color: var(--warn);
 }
 
 .red {
 	color: var(--error);
-}
-
-.count {
-	display: inline;
-	margin: 0 0 0 8px;
-	opacity: 0.7;
 }
 </style>

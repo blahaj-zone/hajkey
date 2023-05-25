@@ -354,6 +354,18 @@
 					</div>
 				</div>
 				<div class="section _block">
+					<div class="title">{{ i18n.ts._mfm.fade }}</div>
+					<div class="content">
+						<p>{{ i18n.ts._mfm.fadeDescription }}</p>
+						<div class="preview">
+							<Mfm :text="preview_fade" />
+							<MkTextarea v-model="preview_fade"
+								><span>MFM</span></MkTextarea
+							>
+						</div>
+					</div>
+				</div>
+				<div class="section _block">
 					<div class="title">{{ i18n.ts._mfm.position }}</div>
 					<div class="content">
 						<p>{{ i18n.ts._mfm.positionDescription }}</p>
@@ -479,6 +491,7 @@ let preview_bg = $ref("$[bg.color=ff0000 Background color]");
 let preview_plain = $ref(
 	"<plain>**bold** @mention #hashtag `code` $[x2 🍮]</plain>"
 );
+let preview_fade = $ref("$[fade 🍮] $[fade.out 🍮] $[fade.speed=5s 🍮]");
 
 definePageMetadata({
 	title: i18n.ts._mfm.cheatSheet,

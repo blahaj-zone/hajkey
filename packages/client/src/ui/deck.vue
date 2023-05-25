@@ -111,6 +111,7 @@
 
 		<div v-if="isMobile" class="buttons">
 			<button
+				:aria-label="i18n.t('menu')"
 				class="button nav _button"
 				@click="drawerMenuShowing = true"
 			>
@@ -119,10 +120,15 @@
 					><i class="ph-circle ph-fill"></i
 				></span>
 			</button>
-			<button class="button home _button" @click="mainRouter.push('/')">
+			<button
+				:aria-label="i18n.t('home')"
+				class="button home _button"
+				@click="mainRouter.push('/')"
+			>
 				<i class="ph-house ph-bold ph-lg"></i>
 			</button>
 			<button
+				:aria-label="i18n.t('notifications')"
 				class="button notifications _button"
 				@click="mainRouter.push('/my/notifications')"
 			>
@@ -131,7 +137,11 @@
 					><i class="ph-circle ph-fill"></i
 				></span>
 			</button>
-			<button class="button post _button" @click="os.post()">
+			<button
+				:aria-label="i18n.t('note')"
+				class="button post _button"
+				@click="os.post()"
+			>
 				<i class="ph-pencil ph-bold ph-lg"></i>
 			</button>
 		</div>

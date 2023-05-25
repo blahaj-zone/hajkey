@@ -40,33 +40,32 @@
 			detailedView
 		></MkNote>
 
-		<MkTab v-model="tab" :style="'chips'" @update:modelValue="loadTab">
+		<MkTab v-model="tab" :style="'underline'" @update:modelValue="loadTab">
 			<option value="replies">
-				<i class="ph-arrow-u-up-left ph-bold ph-lg"></i>
-				<template v-if="appearNote.repliesCount > 0">
-					<span class="count">{{ appearNote.repliesCount }}</span>
-				</template>
+				<!-- <i class="ph-arrow-u-up-left ph-bold ph-lg"></i> -->
+				<span v-if="appearNote.repliesCount > 0" class="count">{{
+					appearNote.repliesCount
+				}}</span>
 				{{ i18n.ts._notification._types.reply }}
 			</option>
-			<option value="renotes">
-				<i class="ph-repeat ph-bold ph-lg"></i>
-				<template v-if="appearNote.renoteCount > 0">
-					<span class="count">{{ appearNote.renoteCount }}</span>
-				</template>
+			<option value="renotes" v-if="appearNote.renoteCount > 0">
+				<!-- <i class="ph-repeat ph-bold ph-lg"></i> -->
+				<span class="count">{{ appearNote.renoteCount }}</span>
 				{{ i18n.ts._notification._types.renote }}
 			</option>
-			<option value="quotes">
-				<i class="ph-quotes ph-bold ph-lg"></i>
-				<template v-if="directQuotes?.length > 0">
-					<span class="count">{{ directQuotes.length }}</span>
-				</template>
+			<option value="reactions" v-if="reactionsCount > 0">
+				<!-- <i class="ph-smiley ph-bold ph-lg"></i> -->
+				<span class="count">{{ reactionsCount }}</span>
+				{{ i18n.ts.reaction }}
+			</option>
+			<option value="quotes" v-if="directQuotes?.length > 0">
+				<!-- <i class="ph-quotes ph-bold ph-lg"></i> -->
+				<span class="count">{{ directQuotes.length }}</span>
 				{{ i18n.ts._notification._types.quote }}
 			</option>
-			<option value="clips">
-				<i class="ph-paperclip ph-bold ph-lg"></i>
-				<template v-if="clips?.length > 0">
-					<span class="count">{{ clips.length }}</span>
-				</template>
+			<option value="clips" v-if="clips?.length > 0">
+				<!-- <i class="ph-paperclip ph-bold ph-lg"></i> -->
+				<span class="count">{{ clips.length }}</span>
 				{{ i18n.ts.clips }}
 			</option>
 		</MkTab>
@@ -90,7 +89,7 @@
 			:key="note.id"
 			:note="note"
 			class="reply"
-			:conversation="directQuotes"
+			:conversation="replies"
 			:detailedView="true"
 		/>
 		<MkLoading v-else-if="tab === 'quotes' && directQuotes.length > 0" />
@@ -135,6 +134,11 @@
 			</MkA>
 		</div>
 		<MkLoading v-else-if="tab === 'clips' && clips?.length > 0" />
+
+		<MkReactedUsers
+			v-if="tab === 'reactions' && reactionsCount > 0"
+			:note-id="appearNote.id"
+		></MkReactedUsers>
 	</div>
 	<div v-else class="_panel muted" @click="muted.muted = false">
 		<I18n :src="softMuteReasonI18nSrc(muted.what)" tag="small">
@@ -172,6 +176,7 @@ import XStarButton from "@/components/MkStarButton.vue";
 import XRenoteButton from "@/components/MkRenoteButton.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkUserCardMini from "@/components/MkUserCardMini.vue";
+import MkReactedUsers from "@/components/MkReactedUsers.vue";
 import { pleaseLogin } from "@/scripts/please-login";
 import { getWordSoftMute } from "@/scripts/check-word-mute";
 import { userPage } from "@/filters/user";
@@ -253,6 +258,11 @@ const repliesDepth = defaultStore.state.repliesDepth;
 const clips = ref();
 const renotes = ref();
 let isScrolling = false;
+
+const reactionsCount = Object.values(props.note.reactions).reduce(
+	(x, y) => x + y,
+	0
+);
 
 const keymap = {
 	r: () => reply(true),
@@ -355,6 +365,12 @@ os.api("notes/children", {
 	limit: 30,
 	depth: repliesDepth + 1,
 }).then((res) => {
+	res = res.reduce((acc, note) => {
+		if (note.userId == appearNote.userId) {
+			return [...acc, note];
+		}
+		return [note, ...acc];
+	}, []);
 	replies.value = res;
 	directReplies.value = res
 		.filter((note) => note.replyId === appearNote.id)
@@ -500,22 +516,34 @@ onUnmounted(() => {
 		overflow: clip;
 		outline: none;
 		scroll-margin-top: calc(var(--stickyTop) + 20vh);
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--divider);
+			margin-bottom: 4px;
+		}
 		.article {
 			cursor: unset;
 			padding-bottom: 0;
 		}
-		&:first-of-type {
+		&:first-child {
 			padding-top: 28px;
 		}
 	}
 
 	> :deep(.chips) {
-		padding: 6px 32px 12px;
+		padding-block: 6px 12px;
+		padding-left: 32px;
+		&:last-child {
+			margin-bottom: 12px;
+		}
 	}
-	> :deep(.user-card-mini) {
+	> :deep(.user-card-mini),
+	> :deep(.reacted-users > *) {
 		padding-inline: 32px;
 		border-top: 1px solid var(--divider);
 		border-radius: 0;
+	}
+	> :deep(.reacted-users > div) {
+		padding-block: 12px;
 	}
 
 	> .reply {
@@ -529,7 +557,7 @@ onUnmounted(() => {
 	}
 
 	// Hover
-	.reply :deep(.main),
+	:deep(.reply > .main),
 	.reply-to,
 	:deep(.more) {
 		position: relative;
@@ -573,6 +601,7 @@ onUnmounted(() => {
 		}
 		&:hover,
 		&:focus-within {
+			--panel: var(--panelHighlight);
 			&::before {
 				opacity: 1;
 			}
@@ -597,24 +626,24 @@ onUnmounted(() => {
 		}
 	}
 
-	&.max-width_500px {
-		font-size: 0.9em;
-	}
 	&.max-width_450px {
 		> .reply-to:first-child {
 			padding-top: 14px;
 		}
 
 		> :deep(.note-container) {
-			padding: 6px 0 0 0;
+			padding: 12px 0 0 0;
 			> .header > .body {
 				padding-left: 10px;
 			}
 		}
 		> .clips,
-		> .chips,
-		> :deep(.user-card-mini) {
+		> :deep(.user-card-mini),
+		> :deep(.reacted-users > *) {
 			padding-inline: 16px !important;
+		}
+		> :deep(.underline) {
+			padding-left: 16px !important;
 		}
 	}
 

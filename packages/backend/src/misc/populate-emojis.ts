@@ -16,6 +16,8 @@ const cache = new Cache<Emoji | null>(1000 * 60 * 60 * 12);
 type PopulatedEmoji = {
 	name: string;
 	url: string;
+	width: number | null;
+	height: number | null;
 };
 
 function normalizeHost(
@@ -68,7 +70,13 @@ export async function populateEmoji(
 			host: host ?? IsNull(),
 		})) || null;
 
-	const emoji = await cache.fetch(`${name} ${host}`, queryOrNull);
+	const cacheKey = `${name} ${host}`;
+	let emoji = await cache.fetch(cacheKey, queryOrNull);
+
+	if (emoji && !(emoji.width && emoji.height)) {
+		emoji = await queryOrNull();
+		cache.set(cacheKey, emoji);
+	}
 
 	if (emoji == null) return null;
 
@@ -83,6 +91,8 @@ export async function populateEmoji(
 	return {
 		name: emojiName,
 		url,
+		width: emoji.width,
+		height: emoji.height,
 	};
 }
 

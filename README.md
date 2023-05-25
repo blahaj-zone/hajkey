@@ -82,8 +82,8 @@ If you have access to a server that supports one of the sources below, I recomme
 - 🍱 At least [Redis](https://redis.io/) v6 (v7 recommend)
 - Web Proxy (one of the following)
   - 🍀 Nginx (recommended)
-  - 🪶 Apache
   - 🦦 Caddy
+  - 🪶 Apache
 
 ### 😗 Optional dependencies
 
@@ -107,7 +107,8 @@ git clone --depth 1 https://codeberg.org/calckey/calckey.git
 cd calckey/
 ```
 
-By default, you're on the development branch. Run `git checkout beta` or `git checkout main` to switch to the Beta/Main branches.
+> **Note**
+> By default, you're on the develop branch. Run `git checkout main` or `git checkout beta` to switch to the Main/Beta branches.
 
 ## 📩 Install dependencies
 
@@ -128,11 +129,18 @@ npm i -g pm2
 pm2 install pm2-logrotate
 ```
 
-[`pm2-logrotate`](https://github.com/keymetrics/pm2-logrotate/blob/master/README.md) ensures that log files don't infinitely gather size, as Calckey produces a lot of logs.
+> **Note**
+> [`pm2-logrotate`](https://github.com/keymetrics/pm2-logrotate/blob/master/README.md) ensures that log files don't infinitely gather size, as Calckey produces a lot of logs.
 
 ## 🐘 Create database
 
-Assuming you set up PostgreSQL correctly, all you have to run is:
+In PostgreSQL (`psql`), run the following command:
+
+```sql
+CREATE DATABASE calckey WITH encoding = 'UTF8';
+```
+
+or run the following from the command line:
 
 ```sh
 psql postgres -c "create database calckey with encoding = 'UTF8';"
@@ -144,7 +152,8 @@ In Calckey's directory, fill out the `db` section of `.config/default.yml` with 
 
 Follow sonic's [installation guide](https://github.com/valeriansaliou/sonic#installation)
 
-If you use IPv4: in Sonic's directory, edit the `config.cfg` file to change `inet` to `"0.0.0.0:1491"`.
+> **Note**
+> If you use IPv4: in Sonic's directory, edit the `config.cfg` file to change `inet` to `"0.0.0.0:1491"`.
 
 In Calckey's directory, fill out the `sonic` section of `.config/default.yml` with the correct information.
 
@@ -177,13 +186,6 @@ For migrating from Misskey v13, Misskey v12, and Foundkey, read [this document](
 - Run `sudo ln -s ./calckey.nginx.conf ../sites-enabled/calckey.nginx.conf`
 - Run `sudo nginx -t` to validate that the config is valid, then restart the NGINX service.
 
-### 🪶 Apache
-
-- Run `sudo cp ./calckey.apache.conf /etc/apache2/sites-available/ && cd /etc/apache2/sites-available/`
-- Edit `calckey.apache.conf` to reflect your instance properly
-- Run `sudo a2ensite calckey.apache` to enable the site
-- Run `sudo service apache2 restart` to reload apache2 configuration
-
 ### 🦦 Caddy
 
 - Add the following block to your `Caddyfile`, replacing `example.tld` with your own domain:
@@ -194,6 +196,15 @@ example.tld {
 ```
 - Reload your caddy configuration
 
+### 🪶 Apache
+
+> **Warning**
+> Apache has some known problems with Calckey. Only use it if you have to.
+
+- Run `sudo cp ./calckey.apache.conf /etc/apache2/sites-available/ && cd /etc/apache2/sites-available/`
+- Edit `calckey.apache.conf` to reflect your instance properly
+- Run `sudo a2ensite calckey.apache` to enable the site
+- Run `sudo service apache2 restart` to reload apache2 configuration
 ## 🚀 Build and launch!
 
 ### 🐢 NodeJS + pm2

@@ -9,6 +9,7 @@ import { makePaginationQuery } from "../../common/make-pagination-query.js";
 import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
 import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
 import { generateBlockedUserQuery } from "../../common/generate-block-query.js";
+import { sqlLikeEscape } from "@/misc/sql-like-escape.js";
 
 export const meta = {
 	tags: ["notes"],
@@ -79,8 +80,8 @@ export default define(meta, paramDef, async (ps, me) => {
 			});
 		}
 
-		query.andWhere("note.text ILIKE :q", { q: `%${ps.query}%` });
 		query
+			.andWhere("note.text ILIKE :q", { q: `%${sqlLikeEscape(ps.query)}%` })
 			.innerJoinAndSelect("note.user", "user")
 			.leftJoinAndSelect("user.avatar", "avatar")
 			.leftJoinAndSelect("user.banner", "banner")
@@ -210,7 +211,7 @@ export default define(meta, paramDef, async (ps, me) => {
 					: []
 				: [];
 
-		const result = await es.search({
+		const result = await es?.search({
 			index: config.elasticsearch.index || "misskey_note",
 			body: {
 				size: ps.limit,
@@ -238,7 +239,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			},
 		});
 
-		const hits = result.body.hits.hits.map((hit: any) => hit._id);
+		const hits = result?.body.hits.hits.map((hit: any) => hit._id) || [];
 
 		if (hits.length === 0) return [];
 

@@ -23,13 +23,13 @@
 				>Followed</FormSwitch
 			>
 			<FormSwitch v-model="event_note" class="_formBlock"
-				>Note</FormSwitch
+				>Posts</FormSwitch
 			>
 			<FormSwitch v-model="event_reply" class="_formBlock"
-				>Reply</FormSwitch
+				>Replies</FormSwitch
 			>
 			<FormSwitch v-model="event_renote" class="_formBlock"
-				>Renote</FormSwitch
+				>Boosts</FormSwitch
 			>
 			<FormSwitch v-model="event_reaction" class="_formBlock"
 				>Reaction</FormSwitch
@@ -97,6 +97,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: "Create new webhook",
-	icon: "ph-lightning ph-bold ph-lg",
+	icon: "ph-webhooks-logo ph-bold ph-lg",
 });
 </script>

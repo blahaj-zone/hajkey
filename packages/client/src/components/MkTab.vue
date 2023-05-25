@@ -16,7 +16,11 @@ export default defineComponent({
 		return h(
 			"div",
 			{
-				class: ["pxhvhrfw", { chips: this.style === "chips" }],
+				class: [
+					"pxhvhrfw",
+					{ chips: this.style === "chips" },
+					{ underline: this.style === "underline" },
+				],
 				role: "tablist",
 			},
 			options.map((option) =>
@@ -83,12 +87,27 @@ export default defineComponent({
 		> .icon {
 			margin-right: 6px;
 		}
+
+		&:empty {
+			display: none !important;
+		}
 	}
 
-	&.chips {
+	&.chips,
+	&.underline {
 		padding: 12px 32px;
 		font-size: 0.85em;
 		overflow-x: auto;
+		mask: linear-gradient(to right, black calc(100% - 90px), transparent);
+		-webkit-mask: linear-gradient(
+			to right,
+			black calc(100% - 90px),
+			transparent
+		);
+		padding-right: 90px !important;
+		&::-webkit-scrollbar {
+			display: none;
+		}
 		> button {
 			display: flex;
 			gap: 6px;
@@ -101,6 +120,26 @@ export default defineComponent({
 			background: var(--buttonBg);
 			> i {
 				margin-top: -0.1em;
+			}
+			> .count {
+				margin-right: -0.2em;
+			}
+		}
+	}
+
+	&.underline {
+		padding-block: 0 !important;
+		margin-bottom: -1px;
+		border-radius: 0;
+		button {
+			background: none !important;
+			border-radius: 0 !important;
+			padding-block: 10px !important;
+			border-bottom: 2px solid transparent;
+			&[aria-selected="true"] {
+				background: none !important;
+				font-weight: 700;
+				border-bottom-color: var(--accent);
 			}
 		}
 	}

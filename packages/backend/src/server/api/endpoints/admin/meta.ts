@@ -475,15 +475,15 @@ export const meta = {
 				type: "object",
 				optional: true,
 				nullable: true,
-				ref: "MetaExperimentalFeatures",
+				properties: {
+					postEditing: {
+						type: "boolean",
+					},
+				},
 			},
 		},
 	},
 } as const;
-
-export type MetaExperimentalFeatures = {
-	postEditing: boolean;
-};
 
 export const paramDef = {
 	type: "object",

@@ -46,6 +46,7 @@ export class Emoji {
 	public uri: string | null;
 
 	// publicUrlの方のtypeが入る
+	// (mime)
 	@Column('varchar', {
 		length: 64, nullable: true,
 	})
@@ -60,4 +61,14 @@ export class Emoji {
 		length: 1024, nullable: true,
 	})
 	public license: string | null;
+
+	@Column('integer', {
+		nullable: true, comment: 'Image width',
+	})
+	public width: number | null;
+
+	@Column('integer', {
+		nullable: true, comment: "Image height",
+	})
+	public height: number | null;
 }

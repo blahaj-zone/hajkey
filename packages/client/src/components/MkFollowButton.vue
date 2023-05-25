@@ -1,6 +1,7 @@
 <template>
 	<button
-		class="kpoogebi _button"
+		v-if="$i != null && $i.id != user.id"
+		class="kpoogebi _button follow-button"
 		:class="{
 			wait,
 			active: isFollowing || hasPendingFollowRequestFromYou,
@@ -10,40 +11,43 @@
 		}"
 		:disabled="wait"
 		@click="onClick"
+		:aria-label="`${state} ${user.name || user.username}`"
 	>
 		<template v-if="!wait">
 			<template v-if="isBlocking">
-				<span v-if="full">{{ i18n.ts.blocked }}</span
+				<span v-if="full">{{ (state = i18n.ts.blocked) }}</span
 				><i class="ph-prohibit ph-bold ph-lg"></i>
 			</template>
 			<template
 				v-else-if="hasPendingFollowRequestFromYou && user.isLocked"
 			>
-				<span v-if="full">{{ i18n.ts.followRequestPending }}</span
+				<span v-if="full">{{
+					(state = i18n.ts.followRequestPending)
+				}}</span
 				><i class="ph-hourglass-medium ph-bold ph-lg"></i>
 			</template>
 			<template
 				v-else-if="hasPendingFollowRequestFromYou && !user.isLocked"
 			>
 				<!-- つまりリモートフォローの場合。 -->
-				<span v-if="full">{{ i18n.ts.processing }}</span
+				<span v-if="full">{{ (state = i18n.ts.processing) }}</span
 				><i class="ph-circle-notch ph-bold ph-lg fa-pulse"></i>
 			</template>
 			<template v-else-if="isFollowing">
-				<span v-if="full">{{ i18n.ts.unfollow }}</span
+				<span v-if="full">{{ (state = i18n.ts.unfollow) }}</span
 				><i class="ph-minus ph-bold ph-lg"></i>
 			</template>
 			<template v-else-if="!isFollowing && user.isLocked">
-				<span v-if="full">{{ i18n.ts.followRequest }}</span
+				<span v-if="full">{{ (state = i18n.ts.followRequest) }}</span
 				><i class="ph-plus ph-bold ph-lg"></i>
 			</template>
 			<template v-else-if="!isFollowing && !user.isLocked">
-				<span v-if="full">{{ i18n.ts.follow }}</span
+				<span v-if="full">{{ (state = i18n.ts.follow) }}</span
 				><i class="ph-plus ph-bold ph-lg"></i>
 			</template>
 		</template>
 		<template v-else>
-			<span v-if="full">{{ i18n.ts.processing }}</span
+			<span v-if="full">{{ (state = i18n.ts.processing) }}</span
 			><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
 		</template>
 	</button>
@@ -55,6 +59,7 @@ import type * as Misskey from "calckey-js";
 import * as os from "@/os";
 import { stream } from "@/stream";
 import { i18n } from "@/i18n";
+import { $i } from "@/account";
 
 const emit = defineEmits(["refresh"]);
 const props = withDefaults(
@@ -70,6 +75,8 @@ const props = withDefaults(
 );
 
 const isBlocking = computed(() => props.user.isBlocking);
+
+let state = $ref(i18n.ts.processing);
 
 let isFollowing = $ref(props.user.isFollowing);
 let hasPendingFollowRequestFromYou = $ref(
@@ -155,7 +162,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-.kpoogebi {
+.follow-button {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -164,13 +171,15 @@ onBeforeUnmount(() => {
 	color: var(--accent);
 	border: solid 1px var(--accent);
 	padding: 0;
-	height: 31px;
 	font-size: 16px;
-	border-radius: 32px;
+	width: 2em;
+	height: 2em;
+	border-radius: 100px;
 	background: var(--bg);
 
 	&.full {
-		padding: 0 8px 0 12px;
+		padding: 0.2em 0.7em;
+		width: auto;
 		font-size: 14px;
 	}
 
@@ -207,7 +216,7 @@ onBeforeUnmount(() => {
 	}
 
 	&.active {
-		color: #fff;
+		color: var(--fgOnAccent);
 		background: var(--accent);
 
 		&:hover {

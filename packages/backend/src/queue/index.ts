@@ -348,6 +348,8 @@ export function createImportMastoPostJob(
 		{
 			removeOnComplete: true,
 			removeOnFail: true,
+			attempts: config.inboxJobMaxAttempts || 8,
+			timeout: 60 * 1000, // 1min
 		},
 	);
 }
@@ -565,6 +567,12 @@ export default function () {
 			repeat: { cron: "*/5 * * * *" },
 			removeOnComplete: true,
 		},
+	);
+
+	systemQueue.add(
+		"setLocalEmojiSizes",
+		{},
+		{ removeOnComplete: true, removeOnFail: true },
 	);
 
 	processSystemQueue(systemQueue);

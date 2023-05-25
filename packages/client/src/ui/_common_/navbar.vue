@@ -402,7 +402,6 @@ function more(ev: MouseEvent) {
 						position: relative;
 						width: 32px;
 						margin-right: 8px;
-						transform: translateY(0.15em);
 					}
 
 					> .indicator {
@@ -524,7 +523,6 @@ function more(ev: MouseEvent) {
 					> .icon {
 						position: relative;
 						color: var(--fgOnAccent);
-						transform: translate(0.15em, 0em);
 					}
 
 					> .text {

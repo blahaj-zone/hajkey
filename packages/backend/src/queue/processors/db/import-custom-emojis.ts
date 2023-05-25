@@ -10,6 +10,7 @@ import type { DbUserImportJobData } from "@/queue/types.js";
 import { addFile } from "@/services/drive/add-file.js";
 import { genId } from "@/misc/gen-id.js";
 import { db } from "@/db/postgre.js";
+import probeImageSize from "probe-image-size";
 
 const logger = queueLogger.createSubLogger("import-custom-emojis");
 
@@ -66,7 +67,10 @@ export async function importCustomEmojis(
 				name: record.fileName,
 				force: true,
 			});
-			const emoji = await Emojis.insert({
+			const file = fs.createReadStream(emojiPath);
+			const size = await probeImageSize(file);
+			file.destroy();
+			await Emojis.insert({
 				id: genId(),
 				updatedAt: new Date(),
 				name: emojiInfo.name,
@@ -77,6 +81,8 @@ export async function importCustomEmojis(
 				publicUrl: driveFile.webpublicUrl ?? driveFile.url,
 				type: driveFile.webpublicType ?? driveFile.type,
 				license: emojiInfo.license,
+				width: size.width || null,
+				height: size.height || null,
 			}).then((x) => Emojis.findOneByOrFail(x.identifiers[0]));
 		}
 

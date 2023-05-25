@@ -1077,6 +1077,8 @@ _mfm:
   sparkle: "Paillettes"
   sparkleDescription: "Ajoute un effet scintillant au contenu."
   rotate: "Pivoter"
+  fade: "Apparaître/Disparaître"
+  fadeDescription: "Fait apparaître et disparaître le contenu."
   plainDescription: Désactiver les effets de tous les MFM contenus dans cet effet
     MFM.
   rotateDescription: Pivoter le contenu d'un angle spécifique.

@@ -9,6 +9,7 @@ const animatedMfm = [
 	"jump",
 	"bounce",
 	"rainbow",
+	"fade",
 ];
 
 export function extractMfmWithAnimation(nodes: mfm.MfmNode[]): string[] {

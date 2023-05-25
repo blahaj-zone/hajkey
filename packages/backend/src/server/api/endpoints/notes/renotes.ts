@@ -38,6 +38,7 @@ export const paramDef = {
 	type: "object",
 	properties: {
 		noteId: { type: "string", format: "misskey:id" },
+		userId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
 		sinceId: { type: "string", format: "misskey:id" },
 		untilId: { type: "string", format: "misskey:id" },
@@ -52,13 +53,19 @@ export default define(meta, paramDef, async (ps, user) => {
 		throw err;
 	});
 
-	const query = makePaginationQuery(
+	let query = makePaginationQuery(
 		Notes.createQueryBuilder("note"),
 		ps.sinceId,
 		ps.untilId,
 	)
 		.andWhere("note.renoteId = :renoteId", { renoteId: note.id })
-		.innerJoinAndSelect("note.user", "user")
+		.innerJoinAndSelect("note.user", "user");
+
+	if (ps.userId) {
+		query.andWhere("user.id = :userId", { userId: ps.userId });
+	}
+
+	query
 		.leftJoinAndSelect("user.avatar", "avatar")
 		.leftJoinAndSelect("user.banner", "banner")
 		.leftJoinAndSelect("note.reply", "reply")

@@ -135,7 +135,6 @@
 						<div class="follow-container">
 							<div class="actions">
 								<MkFollowButton
-									v-if="$i != null && $i.id != user.id"
 									:user="user"
 									@refresh="emit('refresh')"
 									:inline="true"

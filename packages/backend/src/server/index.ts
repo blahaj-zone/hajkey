@@ -7,6 +7,7 @@ import * as fs from "node:fs";
 import * as http from "node:http";
 import Koa from "koa";
 import Router from "@koa/router";
+import cors from "@koa/cors";
 import mount from "koa-mount";
 import koaLogger from "koa-logger";
 import * as slow from "koa-slow";
@@ -40,6 +41,12 @@ const app = new Koa();
 app.proxy = true;
 
 app.use(removeTrailingSlash());
+
+app.use(
+	cors({
+		origin: "*",
+	}),
+);
 
 if (!["production", "test"].includes(process.env.NODE_ENV || "")) {
 	// Logger

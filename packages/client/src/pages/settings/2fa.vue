@@ -10,7 +10,7 @@
 			<MkButton @click="unregister">{{ i18n.ts.unregister }}</MkButton>
 		</template>
 
-		<template v-if="supportsCredentials">
+		<template v-if="supportsCredentials && $i.twoFactorEnabled">
 			<hr class="totp-method-sep" />
 
 			<h2 class="heading">{{ i18n.ts.securityKey }}</h2>

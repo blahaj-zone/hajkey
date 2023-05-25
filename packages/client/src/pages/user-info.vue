@@ -41,6 +41,7 @@
 					<MkInfo
 						v-if="user.username.includes('.')"
 						class="_formBlock"
+						warn
 						>{{ i18n.ts.isSystemAccount }}</MkInfo
 					>
 

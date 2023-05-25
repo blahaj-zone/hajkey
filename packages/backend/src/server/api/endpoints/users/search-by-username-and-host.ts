@@ -3,6 +3,7 @@ import { Followings, Users } from "@/models/index.js";
 import { USER_ACTIVE_THRESHOLD } from "@/const.js";
 import type { User } from "@/models/entities/user.js";
 import define from "../../define.js";
+import { sqlLikeEscape } from "@/misc/sql-like-escape.js";
 
 export const meta = {
 	tags: ["users"],
@@ -44,11 +45,13 @@ export default define(meta, paramDef, async (ps, me) => {
 	if (ps.host) {
 		const q = Users.createQueryBuilder("user")
 			.where("user.isSuspended = FALSE")
-			.andWhere("user.host LIKE :host", { host: `${ps.host.toLowerCase()}%` });
+			.andWhere("user.host LIKE :host", {
+				host: `${sqlLikeEscape(ps.host.toLowerCase())}%`,
+			});
 
 		if (ps.username) {
 			q.andWhere("user.usernameLower LIKE :username", {
-				username: `${ps.username.toLowerCase()}%`,
+				username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
 			});
 		}
 
@@ -71,7 +74,7 @@ export default define(meta, paramDef, async (ps, me) => {
 				.andWhere("user.id != :meId", { meId: me.id })
 				.andWhere("user.isSuspended = FALSE")
 				.andWhere("user.usernameLower LIKE :username", {
-					username: `${ps.username.toLowerCase()}%`,
+					username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
 				})
 				.andWhere(
 					new Brackets((qb) => {
@@ -95,7 +98,7 @@ export default define(meta, paramDef, async (ps, me) => {
 					.andWhere("user.id != :meId", { meId: me.id })
 					.andWhere("user.isSuspended = FALSE")
 					.andWhere("user.usernameLower LIKE :username", {
-						username: `${ps.username.toLowerCase()}%`,
+						username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
 					})
 					.andWhere("user.updatedAt IS NOT NULL");
 
@@ -112,7 +115,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			users = await Users.createQueryBuilder("user")
 				.where("user.isSuspended = FALSE")
 				.andWhere("user.usernameLower LIKE :username", {
-					username: `${ps.username.toLowerCase()}%`,
+					username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
 				})
 				.andWhere("user.updatedAt IS NOT NULL")
 				.orderBy("user.updatedAt", "DESC")

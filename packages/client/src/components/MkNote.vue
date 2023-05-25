@@ -1,10 +1,11 @@
 <template>
 	<div
+		:aria-label="accessibleLabel"
 		v-if="!muted.muted"
 		v-show="!isDeleted"
 		ref="el"
 		v-hotkey="keymap"
-		v-size="{ max: [500, 450, 350, 300] }"
+		v-size="{ max: [500, 450, 350] }"
 		class="tkcbzcuz note-container"
 		:tabindex="!isDeleted ? '-1' : null"
 		:class="{ renote: isRenote }"
@@ -85,6 +86,7 @@
 						:parentId="appearNote.parentId"
 						@push="(e) => router.push(notePage(e))"
 						@focusfooter="footerEl.focus()"
+						@expanded="(e) => setPostExpanded(e)"
 					></MkSubNoteContent>
 					<div v-if="translating || translation" class="translation">
 						<MkLoading v-if="translating" mini />
@@ -244,6 +246,8 @@ import XStarButton from "@/components/MkStarButton.vue";
 import XStarButtonNoEmoji from "@/components/MkStarButtonNoEmoji.vue";
 import XQuoteButton from "@/components/MkQuoteButton.vue";
 import MkVisibility from "@/components/MkVisibility.vue";
+import copyToClipboard from "@/scripts/copy-to-clipboard";
+import { url } from "@/config";
 import { pleaseLogin } from "@/scripts/please-login";
 import { focusPrev, focusNext } from "@/scripts/focus";
 import { getWordSoftMute } from "@/scripts/check-word-mute";
@@ -393,16 +397,54 @@ function onContextmenu(ev: MouseEvent): void {
 		react();
 	} else {
 		os.contextMenu(
-			getNoteMenu({
-				note: note,
-				translating,
-				translation,
-				menuButton,
-				isDeleted,
-				currentClipPage,
-			}),
+			[
+				{
+					type: "label",
+					text: notePage(appearNote),
+				},
+				{
+					icon: "ph-browser ph-bold ph-lg",
+					text: i18n.ts.openInWindow,
+					action: () => {
+						os.pageWindow(notePage(appearNote));
+					},
+				},
+				notePage(appearNote) != location.pathname
+					? {
+							icon: "ph-arrows-out-simple ph-bold ph-lg",
+							text: i18n.ts.showInPage,
+							action: () => {
+								router.push(notePage(appearNote), "forcePage");
+							},
+					  }
+					: undefined,
+				null,
+				{
+					type: "a",
+					icon: "ph-arrow-square-out ph-bold ph-lg",
+					text: i18n.ts.openInNewTab,
+					href: notePage(appearNote),
+					target: "_blank",
+				},
+				{
+					icon: "ph-link-simple ph-bold ph-lg",
+					text: i18n.ts.copyLink,
+					action: () => {
+						copyToClipboard(`${url}${notePage(appearNote)}`);
+					},
+				},
+				note.user.host != null
+					? {
+							type: "a",
+							icon: "ph-arrow-square-up-right ph-bold ph-lg",
+							text: i18n.ts.showOnRemote,
+							href: note.url ?? note.uri ?? "",
+							target: "_blank",
+					  }
+					: undefined,
+			],
 			ev
-		).then(focus);
+		);
 	}
 }
 
@@ -481,6 +523,39 @@ function readPromo() {
 	isDeleted.value = true;
 }
 
+let postIsExpanded = ref(false);
+
+function setPostExpanded(val: boolean) {
+	postIsExpanded.value = val;
+}
+
+const accessibleLabel = computed(() => {
+	let label = `${props.note.user.username}; `;
+	if (props.note.renote) {
+		label += `${i18n.t("renoted")} ${props.note.renote.user.username}; `;
+		if (props.note.renote.cw) {
+			label += `${i18n.t("cw")}: ${props.note.renote.cw}; `;
+			if (postIsExpanded.value) {
+				label += `${props.note.renote.text}; `;
+			}
+		} else {
+			label += `${props.note.renote.text}; `;
+		}
+	} else {
+		if (props.note.cw) {
+			label += `${i18n.t("cw")}: ${props.note.cw}; `;
+			if (postIsExpanded.value) {
+				label += `${props.note.text}; `;
+			}
+		} else {
+			label += `${props.note.text}; `;
+		}
+	}
+	const date = new Date(props.note.createdAt);
+	label += `${date.toLocaleTimeString()}`;
+	return label;
+});
+
 defineExpose({
 	focus,
 	blur,
@@ -549,6 +624,8 @@ defineExpose({
 	}
 
 	.note-context {
+		position: relative;
+		z-index: 2;
 		padding: 0 32px 0 32px;
 		display: flex;
 		&:first-child {
@@ -561,11 +638,14 @@ defineExpose({
 			line-height: 28px;
 		}
 		> .line {
+			position: relative;
+			z-index: 2;
 			width: var(--avatarSize);
 			display: flex;
 			margin-right: 14px;
 			margin-top: 0;
 			flex-grow: 0;
+			pointer-events: none;
 		}
 
 		> div > i {
@@ -629,8 +709,15 @@ defineExpose({
 	}
 
 	> .article {
+		overflow: clip;
 		padding: 4px 32px 10px;
 		cursor: pointer;
+
+		&:first-child,
+		&:nth-child(2) {
+			margin-top: -100px;
+			padding-top: 104px;
+		}
 
 		@media (pointer: coarse) {
 			cursor: default;
@@ -695,7 +782,8 @@ defineExpose({
 				flex-wrap: wrap;
 				pointer-events: none; // Allow clicking anything w/out pointer-events: all; to open post
 				margin-top: 0.4em;
-				> .button {
+				> :deep(.button) {
+					position: relative;
 					margin: 0;
 					padding: 8px;
 					opacity: 0.7;
@@ -704,9 +792,27 @@ defineExpose({
 					width: max-content;
 					min-width: max-content;
 					pointer-events: all;
+					height: auto;
 					transition: opacity 0.2s;
+					&::before {
+						content: "";
+						position: absolute;
+						inset: 0;
+						bottom: 2px;
+						background: var(--panel);
+						z-index: -1;
+						transition: background 0.2s;
+					}
 					&:first-of-type {
 						margin-left: -0.5em;
+						&::before {
+							border-radius: 100px 0 0 100px;
+						}
+					}
+					&:last-of-type {
+						&::before {
+							border-radius: 0 100px 100px 0;
+						}
 					}
 					&:hover {
 						color: var(--fgHighlighted);
@@ -752,6 +858,10 @@ defineExpose({
 		}
 		> .article {
 			padding: 4px 16px 8px;
+			&:first-child,
+			&:nth-child(2) {
+				padding-top: 104px;
+			}
 			> .main > .header-container > .avatar {
 				margin-right: 10px;
 				// top: calc(14px + var(--stickyTop, 0px));

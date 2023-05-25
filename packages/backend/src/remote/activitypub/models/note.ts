@@ -52,6 +52,7 @@ import { UserProfiles } from "@/models/index.js";
 import { In } from "typeorm";
 import { DB_MAX_IMAGE_COMMENT_LENGTH } from "@/misc/hard-limits.js";
 import { truncate } from "@/misc/truncate.js";
+import { type Size, getEmojiSize } from "@/misc/emoji-meta.js";
 
 const logger = apLogger;
 
@@ -472,8 +473,15 @@ export async function extractEmojis(
 					(tag.updated != null &&
 						exists.updatedAt != null &&
 						new Date(tag.updated) > exists.updatedAt) ||
-					tag.icon!.url !== exists.originalUrl
+					tag.icon!.url !== exists.originalUrl ||
+					!(exists.width && exists.height)
 				) {
+					let size: Size = { width: 0, height: 0 };
+					try {
+						size = await getEmojiSize(tag.icon!.url);
+					} catch {
+						/* skip if any error happens */
+					}
 					await Emojis.update(
 						{
 							host,
@@ -484,6 +492,8 @@ export async function extractEmojis(
 							originalUrl: tag.icon!.url,
 							publicUrl: tag.icon!.url,
 							updatedAt: new Date(),
+							width: size.width || null,
+							height: size.height || null,
 						},
 					);
 
@@ -498,6 +508,12 @@ export async function extractEmojis(
 
 			logger.info(`register emoji host=${host}, name=${name}`);
 
+			let size: Size = { width: 0, height: 0 };
+			try {
+				size = await getEmojiSize(tag.icon!.url);
+			} catch {
+				/* skip if any error happens */
+			}
 			return await Emojis.insert({
 				id: genId(),
 				host,
@@ -507,6 +523,8 @@ export async function extractEmojis(
 				publicUrl: tag.icon!.url,
 				updatedAt: new Date(),
 				aliases: [],
+				width: size.width || null,
+				height: size.height || null,
 			} as Partial<Emoji>).then((x) =>
 				Emojis.findOneByOrFail(x.identifiers[0]),
 			);

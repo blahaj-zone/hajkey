@@ -299,6 +299,15 @@ const props = withDefaults(
 		filter: hue-rotate(360deg) contrast(150%) saturate(150%);
 	}
 }
+
+@keyframes mfm-fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 </style>
 
 <style lang="scss" scoped>

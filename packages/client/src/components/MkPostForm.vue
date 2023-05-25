@@ -205,8 +205,8 @@
 				>
 					<i class="ph-plug ph-bold ph-lg"></i>
 				</button>
+				<!--	v-if="showMfmCheatsheet" -->
 				<button
-					v-if="showMfmCheatsheet"
 					v-tooltip="i18n.ts._mfm.cheatSheet"
 					class="_button right"
 					@click="openCheatSheet"

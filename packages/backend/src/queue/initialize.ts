@@ -19,6 +19,8 @@ export function initialize<T>(name: string, limitPerSec = -1) {
 				  }
 				: undefined,
 		settings: {
+			stalledInterval: 60,
+			maxStalledCount: 2,
 			backoffStrategies: {
 				apBackoff,
 			},

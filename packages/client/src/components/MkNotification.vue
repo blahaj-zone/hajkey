@@ -1,8 +1,8 @@
 <template>
 	<div
 		ref="elRef"
-		v-size="{ max: [500, 600] }"
-		class="qglefbjs"
+		v-size="{ max: [500, 450] }"
+		class="qglefbjs notification"
 		:class="notification.type"
 	>
 		<div class="head">
@@ -114,6 +114,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note)"
 			>
+				<span>{{ i18n.ts._notification.reacted }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note)"
@@ -129,6 +130,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note.renote)"
 			>
+				<span>{{ i18n.ts._notification.renoted }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note.renote)"
@@ -183,6 +185,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note)"
 			>
+				<span>{{ i18n.ts._notification.voted }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note)"
@@ -210,7 +213,7 @@
 			<span
 				v-if="notification.type === 'follow'"
 				class="text"
-				style="opacity: 0.6"
+				style="opacity: 0.7"
 				>{{ i18n.ts.youGotNewFollower }}
 				<div v-if="full">
 					<MkFollowButton
@@ -221,13 +224,13 @@
 			<span
 				v-if="notification.type === 'followRequestAccepted'"
 				class="text"
-				style="opacity: 0.6"
+				style="opacity: 0.7"
 				>{{ i18n.ts.followRequestAccepted }}</span
 			>
 			<span
 				v-if="notification.type === 'receiveFollowRequest'"
 				class="text"
-				style="opacity: 0.6"
+				style="opacity: 0.7"
 				>{{ i18n.ts.receiveFollowRequest }}
 				<div v-if="full && !followRequestDone">
 					<button class="_textButton" @click="acceptFollowRequest()">
@@ -242,7 +245,7 @@
 			<span
 				v-if="notification.type === 'groupInvited'"
 				class="text"
-				style="opacity: 0.6"
+				style="opacity: 0.7"
 				>{{ i18n.ts.groupInvited }}:
 				<b>{{ notification.invitation.group.name }}</b>
 				<div v-if="full && !groupInviteDone">
@@ -389,14 +392,12 @@ useTooltip(reactionRef, (showing) => {
 	display: flex;
 	contain: content;
 
-	&.max-width_600px {
-		padding: 16px;
+	&.max-width_500px {
+		padding-block: 16px;
 		font-size: 0.9em;
 	}
-
-	&.max-width_500px {
-		padding: 12px;
-		font-size: 0.85em;
+	&.max-width_450px {
+		padding: 12px 16px;
 	}
 
 	> .head {
@@ -509,8 +510,18 @@ useTooltip(reactionRef, (showing) => {
 
 		> .text {
 			white-space: nowrap;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
 			overflow: hidden;
 			text-overflow: ellipsis;
+
+			> span:first-child {
+				opacity: 0.7;
+				&::after {
+					content: ": ";
+				}
+			}
 
 			> i {
 				vertical-align: super;

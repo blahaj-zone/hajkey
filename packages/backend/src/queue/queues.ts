@@ -20,7 +20,7 @@ export const inboxQueue = initializeQueue<InboxJobData>(
 	"inbox",
 	config.inboxJobPerSec || 16,
 );
-export const dbQueue = initializeQueue<DbJobData>("db");
+export const dbQueue = initializeQueue<DbJobData>("db", 256);
 export const objectStorageQueue =
 	initializeQueue<ObjectStorageJobData>("objectStorage");
 export const webhookDeliverQueue = initializeQueue<WebhookDeliverJobData>(

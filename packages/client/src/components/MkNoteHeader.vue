@@ -25,7 +25,8 @@
 						>
 							<i
 								v-tooltip.noDelay="i18n.ts.edited"
-								class="ph-pencil-line ph-bold"
+								class="ph-pencil ph-bold"
+								style="margin-left: 0.4rem"
 							></i>
 						</MkTime>
 					</MkA>

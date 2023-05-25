@@ -4,6 +4,7 @@ import { resyncCharts } from "./resync-charts.js";
 import { cleanCharts } from "./clean-charts.js";
 import { checkExpiredMutings } from "./check-expired-mutings.js";
 import { clean } from "./clean.js";
+import { setLocalEmojiSizes } from "./local-emoji-size.js";
 
 const jobs = {
 	tickCharts,
@@ -11,6 +12,7 @@ const jobs = {
 	cleanCharts,
 	checkExpiredMutings,
 	clean,
+	setLocalEmojiSizes,
 } as Record<
 	string,
 	| Bull.ProcessCallbackFunction<Record<string, unknown>>

@@ -19,4 +19,5 @@ export const MFM_TAGS = [
 	"rainbow",
 	"sparkle",
 	"rotate",
+	"fade",
 ];

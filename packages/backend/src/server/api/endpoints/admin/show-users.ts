@@ -1,5 +1,6 @@
 import { Users } from "@/models/index.js";
 import define from "../../define.js";
+import { sqlLikeEscape } from "@/misc/sql-like-escape.js";
 
 export const meta = {
 	tags: ["admin"],
@@ -106,7 +107,7 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	if (ps.username) {
 		query.andWhere("user.usernameLower like :username", {
-			username: `${ps.username.toLowerCase()}%`,
+			username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
 		});
 	}
 

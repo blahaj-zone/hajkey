@@ -103,7 +103,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 html._themeChanging_ {
-	&, * {
+	&, *, ::before, ::after {
 		transition: background 1s ease, border 1s ease !important;
 	}
 }

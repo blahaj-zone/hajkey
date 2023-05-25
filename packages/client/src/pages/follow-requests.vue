@@ -7,12 +7,16 @@
 					<div class="_fullinfo">
 						<img
 							src="/static-assets/badges/info.png"
+							aria-label="none"
 							class="_ghost"
 						/>
 						<div>{{ i18n.ts.noFollowRequests }}</div>
 					</div>
 				</template>
 				<template #default="{ items }">
+					<MkInfo v-if="$i?.isLocked === false" warn class="info"
+						>{{ i18n.ts.silencedWarning }}
+					</MkInfo>
 					<div class="mk-follow-requests">
 						<div
 							v-for="req in items"
@@ -82,6 +86,7 @@ import { userPage, acct } from "@/filters/user";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import { $i } from "@/account";
 
 const paginationComponent = ref<InstanceType<typeof MkPagination>>();
 

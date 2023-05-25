@@ -5,7 +5,7 @@ import type { User } from "@/models/entities/user.js";
 type NoteLike = {
 	userId: Note["userId"];
 	text: Note["text"];
-	files: Note["files"];
+	files?: Note["files"];
 	cw?: Note["cw"];
 };
 
@@ -19,9 +19,11 @@ function checkWordMute(
 ): boolean {
 	if (note == null) return false;
 
-	const text = `${note.cw ?? ""} ${note.text ?? ""} ${note.files
-		.map((f) => f.comment ?? "")
-		.join(" ")}`.trim();
+	let text = `${note.cw ?? ""} ${note.text ?? ""}`;
+	if (note.files != null)
+		text += ` ${note.files.map((f) => f.comment ?? "").join(" ")}`;
+	text = text.trim();
+
 	if (text === "") return false;
 
 	for (const mutePattern of mutedWords) {

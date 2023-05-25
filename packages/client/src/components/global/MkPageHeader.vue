@@ -3,31 +3,32 @@
 		v-if="show"
 		ref="el"
 		class="fdidabkb"
-		:class="{ slim: narrow, thin: thin_ }"
+		:class="{ thin: thin_, tabs: tabs?.length > 0 }"
 		:style="{ background: bg }"
 		@click="onClick"
 	>
-		<button
-			v-if="props.displayBackButton"
-			class="_button button icon backButton"
-			@click.stop="goBack()"
-			@touchstart="preventDrag"
-			v-tooltip.noDelay="i18n.ts.goBack"
-		>
-			<i class="ph-caret-left ph-bold ph-lg"></i>
-		</button>
-		<div v-if="narrow" class="buttons left" @click="openAccountMenu">
-			<MkAvatar
-				v-if="props.displayMyAvatar && $i"
-				class="avatar"
-				:user="$i"
-				:disable-preview="true"
-				disableLink
-			/>
-		</div>
-		<template v-if="metadata">
+		<div class="left">
+			<div class="buttons">
+				<button
+					v-if="props.displayBackButton"
+					class="_button button icon backButton"
+					@click.stop="goBack()"
+					@touchstart="preventDrag"
+					v-tooltip.noDelay="i18n.ts.goBack"
+				>
+					<i class="ph-caret-left ph-bold ph-lg"></i>
+				</button>
+				<MkAvatar
+					v-if="narrow && props.displayMyAvatar && $i"
+					class="avatar button"
+					:user="$i"
+					:disable-preview="true"
+					disableLink
+					@click.stop="openAccountMenu"
+				/>
+			</div>
 			<div
-				v-if="!hideTitle"
+				v-if="!hideTitle && metadata"
 				class="titleContainer"
 				@click="showTabsPopup"
 			>
@@ -66,7 +67,14 @@
 					</div>
 				</div>
 			</div>
-			<nav ref="tabsEl" v-if="hasTabs" class="tabs">
+		</div>
+		<template v-if="metadata">
+			<nav
+				ref="tabsEl"
+				v-if="hasTabs"
+				class="tabs"
+				:class="{ collapse: hasTabs && tabs.length > 3 }"
+			>
 				<button
 					v-for="tab in tabs"
 					:ref="(el) => (tabRefs[tab.key] = el)"
@@ -85,6 +93,20 @@
 			</nav>
 		</template>
 		<div class="buttons right">
+			<template v-if="metadata.avatar">
+				<MkFollowButton
+					v-if="narrow"
+					:user="metadata.avatar"
+					:full="false"
+					class="fullButton"
+				></MkFollowButton>
+				<MkFollowButton
+					v-else
+					:user="metadata.avatar"
+					:full="true"
+					class="fullButton"
+				></MkFollowButton>
+			</template>
 			<template v-for="action in actions">
 				<button
 					v-tooltip.noDelay="action.text"
@@ -112,7 +134,7 @@ import {
 	nextTick,
 	reactive,
 } from "vue";
-import tinycolor from "tinycolor2";
+import MkFollowButton from "@/components/MkFollowButton.vue";
 import { popupMenu } from "@/os";
 import { scrollToTop } from "@/scripts/scroll";
 import { globalEvents } from "@/events";
@@ -223,25 +245,9 @@ function goBack(): void {
 	window.history.back();
 }
 
-const calcBg = () => {
-	const rawBg = metadata?.bg || "var(--bg)";
-	const tinyBg = tinycolor(
-		rawBg.startsWith("var(")
-			? getComputedStyle(document.documentElement).getPropertyValue(
-					rawBg.slice(4, -1)
-			  )
-			: rawBg
-	);
-	tinyBg.setAlpha(0.85);
-	bg.value = tinyBg.toRgbString();
-};
-
 let ro: ResizeObserver | null;
 
 onMounted(() => {
-	calcBg();
-	globalEvents.on("themeChanged", calcBg);
-
 	watch(
 		() => [props.tab, props.tabs],
 		() => {
@@ -251,17 +257,15 @@ onMounted(() => {
 					// offsetWidth や offsetLeft は少数を丸めてしまうため getBoundingClientRect を使う必要がある
 					// https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/offsetWidth#%E5%80%A4
 					const tabSizeX = tabEl.scrollWidth + 20; // + the tab's padding
-					tabEl.style = `--width: ${tabSizeX}px`;
+					if (props.tabs.length > 3) {
+						tabEl.style = `--width: ${tabSizeX}px`;
+					}
 					setTimeout(() => {
-						const parentRect = tabsEl.getBoundingClientRect();
-						const rect = tabEl.getBoundingClientRect();
-						const left =
-							rect.left - parentRect.left + tabsEl?.scrollLeft;
 						tabHighlightEl.style.width = tabSizeX + "px";
-						tabHighlightEl.style.transform = `translateX(${left}px)`;
+						tabHighlightEl.style.transform = `translateX(${tabEl.offsetLeft}px)`;
 						window.requestAnimationFrame(() => {
 							tabsEl?.scrollTo({
-								left: left - 60,
+								left: tabEl.offsetLeft - 60,
 								behavior: "smooth",
 							});
 						});
@@ -286,7 +290,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	globalEvents.off("themeChanged", calcBg);
 	if (ro) ro.disconnect();
 });
 </script>
@@ -295,94 +298,99 @@ onUnmounted(() => {
 .fdidabkb {
 	--height: 55px;
 	display: flex;
+	justify-content: space-between;
 	width: 100%;
-	-webkit-backdrop-filter: var(--blur, blur(15px));
-	backdrop-filter: var(--blur, blur(15px));
-	border-bottom: solid 0.5px var(--divider);
 	height: var(--height);
+	padding-inline: 24px;
+	box-sizing: border-box;
+	overflow: hidden;
+	@media (max-width: 500px) {
+		padding-inline: 16px;
+		&.tabs > .buttons > :deep(.follow-button > span) {
+			display: none;
+		}
+	}
+	@media (max-width: 700px) {
+		> .left {
+			min-width: unset !important;
+			max-width: 40%;
+		}
+		> .left,
+		> .right {
+			flex: unset !important;
+		}
+		&:not(.tabs) {
+			> .left {
+				width: 0 !important;
+				flex-grow: 1 !important;
+				max-width: unset !important;
+			}
+		}
+		&.tabs {
+			> .left {
+				flex-shrink: 0 !important;
+			}
+
+			.buttons ~ .titleContainer > .title {
+				display: none;
+			}
+		}
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-bottom: solid 0.5px var(--divider);
+		-webkit-backdrop-filter: var(--blur, blur(15px));
+		backdrop-filter: var(--blur, blur(15px));
+		z-index: -1;
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--bg);
+		opacity: 0.85;
+		z-index: -2;
+	}
 
 	&.thin {
 		--height: 45px;
 
-		> .buttons {
+		.buttons {
 			> .button {
 				font-size: 0.9em;
 			}
 		}
 	}
 
-	&.slim {
-		> .titleContainer {
-			flex: 1;
-			margin: 0 auto;
-
-			> *:first-child {
-				margin-left: auto;
+	> .left {
+		display: flex;
+		> .buttons {
+			&:not(:empty) {
+				margin-left: calc(0px - var(--margin));
 			}
-
-			> *:last-child {
-				margin-right: auto;
-			}
-		}
-		> .tabs {
-			padding-inline: 12px;
-			mask: linear-gradient(
-				to right,
-				transparent,
-				black 10px 80%,
-				transparent
-			);
-			-webkit-mask: linear-gradient(
-				to right,
-				transparent,
-				black 10px 80%,
-				transparent
-			);
-			margin-left: -10px;
-			padding-left: 22px;
-			scrollbar-width: none;
-			&::before {
-				content: unset;
-			}
-			&::-webkit-scrollbar {
-				display: none;
-			}
-			&::after {
-				// Force right padding
-				content: "";
-				display: inline-block;
-				min-width: 20%;
+			> .avatar {
+				width: 32px;
+				height: 32px;
+				margin-left: var(--margin);
 			}
 		}
 	}
 
-	> .buttons {
+	.buttons {
 		--margin: 8px;
 		display: flex;
 		align-items: center;
 		height: var(--height);
-		margin: 0 var(--margin);
-
-		&.left {
-			margin-right: auto;
-
-			> .avatar {
-				$size: 32px;
-				display: inline-block;
-				width: $size;
-				height: $size;
-				vertical-align: bottom;
-				margin: 0 8px;
-				pointer-events: none;
-			}
-		}
-
 		&.right {
-			margin-left: auto;
-		}
-
-		&:empty {
-			display: none;
+			justify-content: flex-end;
+			// margin-right: calc(0px - var(--margin));
+			// margin-left: var(--margin);
+			> .button:last-child {
+				margin-right: calc(0px - var(--margin));
+			}
 		}
 
 		> .button/*, @at-root .backButton*/ {
@@ -412,85 +420,121 @@ onUnmounted(() => {
 		}
 	}
 
-	> .backButton {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-left: 1rem;
-	}
-
-	> .titleContainer {
-		display: flex;
-		align-items: center;
-		max-width: 400px;
-		overflow: auto;
-		white-space: nowrap;
-		text-align: left;
-		font-weight: bold;
-		flex-shrink: 0;
-		margin-left: 24px;
-		margin-right: 1rem;
-
-		> .avatar {
-			$size: 32px;
-			display: inline-block;
-			width: $size;
-			height: $size;
-			vertical-align: bottom;
-			margin: 0 8px;
-			pointer-events: none;
+	> .left {
+		> .backButton {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
-
-		> .icon {
-			margin-right: 8px;
-			width: 16px;
-			text-align: center;
-			transform: translate(0em);
-		}
-
-		> .title {
-			min-width: 0;
-			overflow: hidden;
-			text-overflow: ellipsis;
+		> .titleContainer {
+			display: flex;
+			align-items: center;
+			max-width: 400px;
+			overflow: auto;
 			white-space: nowrap;
-			line-height: 1.1;
+			text-align: left;
+			font-weight: bold;
+			flex-shrink: 0;
+			> .avatar {
+				$size: 32px;
+				display: inline-block;
+				width: $size;
+				height: $size;
+				vertical-align: bottom;
+				margin: 0 8px;
+				pointer-events: none;
+			}
 
-			> .subtitle {
-				opacity: 0.6;
-				font-size: 0.8em;
-				font-weight: normal;
-				white-space: nowrap;
+			> .icon {
+				margin-right: 8px;
+				width: 16px;
+				text-align: center;
+			}
+
+			> .title {
+				min-width: 0;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				white-space: nowrap;
+				line-height: 1.1;
 
-				&.activeTab {
-					text-align: center;
+				> .subtitle {
+					opacity: 0.6;
+					font-size: 0.8em;
+					font-weight: normal;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
 
-					> .chevron {
-						display: inline-block;
-						margin-left: 6px;
+					&.activeTab {
+						text-align: center;
+
+						> .chevron {
+							display: inline-block;
+							margin-left: 6px;
+						}
 					}
 				}
 			}
 		}
 	}
 
+	> .left,
+	> .right {
+		flex-basis: 100%;
+		flex-shrink: 9999;
+		overflow: hidden;
+	}
+	> .left {
+		min-width: 20%;
+		margin-left: -10px;
+		padding-left: 10px;
+	}
+	> .right {
+		// margin-left: auto;
+		min-width: max-content;
+		margin-right: -10px;
+		padding-right: 10px;
+	}
+
 	> .tabs {
 		position: relative;
-		width: 100%;
 		font-size: 1em;
 		overflow-x: auto;
 		white-space: nowrap;
-		contain: strict;
+		contain: content;
+		display: flex;
+		padding-inline: 20px;
+		margin-inline: -20px;
+		mask: linear-gradient(
+			to right,
+			transparent,
+			black 20px calc(100% - 20px),
+			transparent
+		);
+		-webkit-mask: linear-gradient(
+			to right,
+			transparent,
+			black 20px calc(100% - 20px),
+			transparent
+		);
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
 
-		&::before {
-			content: "";
-			display: inline-block;
-			height: 40%;
-			border-left: 1px solid var(--divider);
-			margin-right: 1em;
-			margin-left: 10px;
-			vertical-align: -1px;
+		&.collapse {
+			--width: 38px;
+			> .tab {
+				width: 38px;
+				min-width: 38px !important;
+				&:not(.active) > .title {
+					opacity: 0;
+				}
+			}
+		}
+		&:not(.collapse) > .tab {
+			--width: max-content !important;
 		}
 
 		> .tab {
@@ -499,12 +543,12 @@ onUnmounted(() => {
 			position: relative;
 			border-inline: 10px solid transparent;
 			height: 100%;
+			min-width: max-content;
 			font-weight: normal;
 			opacity: 0.7;
-			width: 38px;
-			--width: 38px;
 			overflow: hidden;
-			transition: color 0.2s, opacity 0.2s, width 0.2s;
+			transition: color 0.2s, opacity 0.2s, width 0.2s, min-width 0.2s;
+			--width: 38px;
 
 			&:hover {
 				opacity: 1;
@@ -515,9 +559,7 @@ onUnmounted(() => {
 				color: var(--accent);
 				font-weight: 600;
 				width: var(--width);
-			}
-			&:not(.active) > .title {
-				opacity: 0;
+				min-width: var(--width) !important;
 			}
 
 			> .icon + .title {
@@ -527,7 +569,6 @@ onUnmounted(() => {
 				transition: opacity 0.2s;
 			}
 		}
-
 		> .highlight {
 			position: absolute;
 			bottom: 0;

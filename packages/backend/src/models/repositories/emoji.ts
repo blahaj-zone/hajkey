@@ -16,6 +16,8 @@ export const EmojiRepository = db.getRepository(Emoji).extend({
 			// || emoji.originalUrl してるのは後方互換性のため
 			url: emoji.publicUrl || emoji.originalUrl,
 			license: emoji.license,
+			width: emoji.width,
+			height: emoji.height,
 		};
 	},
 

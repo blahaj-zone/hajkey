@@ -26,6 +26,14 @@ export function openHelpMenu_(ev: MouseEvent) {
 			},
 			{
 				type: "button",
+				text: i18n.ts.tos,
+				icon: "ph-scroll ph-bold ph-lg",
+				action: () => {
+					window.open(instance.tosUrl, "_blank");
+				},
+			},
+			{
+				type: "button",
 				text: i18n.ts.apps,
 				icon: "ph-device-mobile ph-bold ph-lg",
 				action: () => {

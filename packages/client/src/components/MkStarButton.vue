@@ -1,7 +1,7 @@
 <template>
 	<button
 		v-tooltip.noDelay.bottom="i18n.ts._gallery.like"
-		class="skdfgljsdkf _button"
+		class="button _button"
 		@click="star($event)"
 	>
 		<svg
@@ -70,12 +70,3 @@ function star(ev?: MouseEvent): void {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.skdfgljsdkf {
-	display: inline-block;
-	height: 32px;
-	margin: 2px;
-	padding: 0 6px;
-}
-</style>

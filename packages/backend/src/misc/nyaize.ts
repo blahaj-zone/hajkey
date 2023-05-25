@@ -9,6 +9,9 @@ export function nyaize(text: string): string {
 			.replace(/(?<=n)a/gi, (x) => (x === "A" ? "YA" : "ya"))
 			.replace(/(?<=morn)ing/gi, (x) => (x === "ING" ? "YAN" : "yan"))
 			.replace(/(?<=every)one/gi, (x) => (x === "ONE" ? "NYAN" : "nyan"))
+			.replace(/non(?=[bcdfghjklmnpqrstvwxyz])/gi, (x) =>
+				x === "NON" ? "NYAN" : "nyan",
+			)
 			// ko-KR
 			.replace(/[나-낳]/g, (match) =>
 				String.fromCharCode(

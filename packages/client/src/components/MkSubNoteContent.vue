@@ -8,8 +8,9 @@
 	>
 		<p v-if="cw" class="cw">
 			<MkA
-				v-if="!detailed && appearNote.replyId"
-				:to="`/notes/${appearNote.replyId}`"
+				v-if="!detailed && note.replyId"
+				:to="`#${note.replyId}`"
+				behavior="browser"
 				class="reply-icon"
 				@click.stop
 			>
@@ -18,11 +19,12 @@
 			<MkA
 				v-if="
 					conversation &&
-					appearNote.renoteId &&
-					appearNote.renoteId != parentId &&
-					!appearNote.replyId
+					note.renoteId &&
+					note.renoteId != parentId &&
+					!note.replyId
 				"
-				:to="`/notes/${appearNote.renoteId}`"
+				:to="`/notes/${note.renoteId}`"
+				v-tooltip="i18n.ts.jumpToPrevious"
 				class="reply-icon"
 				@click.stop
 			>
@@ -43,9 +45,24 @@
 				v-if="cw"
 				class="text"
 				:text="cw"
-				:author="appearNote.user"
+				:author="cwAuthor"
 				:i="$i"
 				:custom-emojis="appearNote.emojis"
+			/>
+
+			<XShowMoreButton
+				ref="showMoreButton"
+				v-if="isLong && collapsed"
+				v-model="collapsed"
+				v-on:keydown="focusFooter"
+			></XShowMoreButton>
+			<XCwButton
+				ref="cwButton"
+				v-if="note.cw && !showContent"
+				v-model="showContent"
+				:note="note"
+				v-on:keydown="focusFooter"
+				v-on:update:model-value="(val) => emit('expanded', val)"
 			/>
 		</p>
 		<div class="wrmlmaau">
@@ -58,18 +75,25 @@
 					disableAnim: disableMfm,
 				}"
 			>
-				<div class="body">
-					<span v-if="appearNote.deletedAt" style="opacity: 0.5"
+				<div
+					class="body"
+					v-bind="{
+						'aria-hidden': note.cw && !showContent ? 'true' : null,
+						tabindex: !showContent ? '-1' : null,
+					}"
+				>
+					<span v-if="note.deletedAt" style="opacity: 0.5"
 						>({{ i18n.ts.deleted }})</span
 					>
 					<template v-if="!cw">
 						<MkA
-							v-if="!detailed && appearNote.replyId"
-							:to="`/notes/${appearNote.replyId}`"
+							v-if="!detailed && note.replyId"
+							:to="`#${note.replyId}`"
+							behavior="browser"
+							v-tooltip="i18n.ts.jumpToPrevious"
 							class="reply-icon"
 							@click.stop
 						>
-							<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 						</MkA>
 						<MkA
 							v-if="
@@ -92,17 +116,19 @@
 						:i="$i"
 						:custom-emojis="appearNote.emojis"
 					/>
+
 					<MkButton
-						v-if="hasMfm"
+						v-if="hasMfm && defaultStore.state.animatedMfm"
 						@click.stop="toggleMfm"
-						:mini="true"
+						mini
+						rounded
 					>
 						<template v-if="disableMfm">
-							<i class="ph-play ph-bold"></i>
+							<i class="ph-play ph-fill"></i>
 							{{ i18n.ts._mfm.play }}
 						</template>
 						<template v-else>
-							<i class="ph-stop ph-bold"></i>
+							<i class="ph-stop ph-fill"></i>
 							{{ i18n.ts._mfm.stop }}
 						</template>
 					</MkButton>
@@ -190,6 +216,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{
 	(ev: "push", v): void;
+	(ev: "focusfooter"): void;
+	(ev: "expanded", v): void;
 }>();
 
 const note = props.note;
@@ -204,6 +232,7 @@ let appearNote = $computed(() =>
 	isRenote ? (note.renote as misskey.entities.Note) : note
 );
 let cw = $computed(() => appearNote.cw || note.cw);
+let cwAuthor = $computed(() => (appearNote.cw ? appearNote.user : note.user));
 const cwHighlight = defaultStore.state.highlightCw;
 const isRenoteCw = $computed(() => isRenote && !appearNote.cw && note.cw);
 
@@ -281,6 +310,10 @@ function focusFooter(ev) {
 </script>
 
 <style lang="scss" scoped>
+:deep(a) {
+	position: relative;
+	z-index: 2;
+}
 .reply-icon {
 	display: inline-block;
 	border-radius: 6px;

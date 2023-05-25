@@ -20,9 +20,11 @@ export async function importMastoPost(
 	}
 	const post = job.data.post;
 	let reply: Note | null = null;
+	job.progress(20);
 	if (post.object.inReplyTo != null) {
 		reply = await resolveNote(post.object.inReplyTo);
 	}
+	job.progress(40);
 	if (post.directMessage) {
 		done();
 		return;
@@ -33,13 +35,14 @@ export async function importMastoPost(
 			return;
 		}
 	}
+	job.progress(60);
 	let text;
 	try {
 		text = htmlToMfm(post.object.content, post.object.tag);
 	} catch (e) {
 		throw e;
 	}
-
+	job.progress(80);
 	const note = await create(user, {
 		createdAt: new Date(post.object.published),
 		files: undefined,
@@ -56,6 +59,8 @@ export async function importMastoPost(
 		apHashtags: undefined,
 		apEmojis: undefined,
 	});
-	logger.succ("Imported");
+	job.progress(100);
 	done();
+
+	logger.succ("Imported");
 }

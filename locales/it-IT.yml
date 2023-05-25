@@ -910,6 +910,8 @@ _mfm:
   fontDescription: "Puoi scegliere il tipo di carattere per il contenuto."
   rainbow: "Arcobaleno"
   rotate: "Ruota"
+  fade: "Dissolvenza"
+  fadeDescription: "Dissolvenza in entrata e in uscita del contenuto."
 _instanceTicker:
   none: "Nascondi"
   remote: "Mostra solo per gli/le utenti remotə"

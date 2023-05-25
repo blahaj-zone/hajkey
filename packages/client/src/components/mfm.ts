@@ -156,6 +156,14 @@ export default defineComponent({
 									}
 									return h(MkSparkle, {}, genEl(token.children));
 								}
+								case "fade": {
+									const direction = token.props.args.out
+										? "alternate-reverse"
+										: "alternate";
+									const speed = validTime(token.props.args.speed) || "1.5s";
+									style = `animation: mfm-fade ${speed} linear infinite; animation-direction: ${direction};`;
+									break;
+								}
 								case "flip": {
 									const transform =
 										token.props.args.h && token.props.args.v

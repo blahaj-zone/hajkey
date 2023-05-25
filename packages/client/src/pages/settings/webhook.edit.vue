@@ -109,6 +109,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: "Edit webhook",
-	icon: "ph-lightning ph-bold ph-lg",
+	icon: "ph-webhooks-logo ph-bold ph-lg",
 });
 </script>

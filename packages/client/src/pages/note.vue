@@ -27,11 +27,10 @@
 								v-if="!showNext && hasNext"
 								class="load next"
 								@click="showNext = true"
-								v-tooltip="
-									`${i18n.ts.loadMore} (${i18n.ts.newer})`
-								"
-								><i class="ph-caret-up ph-bold ph-lg"></i
-							></MkButton>
+							>
+								<i class="ph-caret-up ph-bold ph-lg"></i>
+								{{ `${i18n.ts.loadMore} (${i18n.ts.newer})` }}
+							</MkButton>
 							<div class="note _gap">
 								<MkRemoteCaution
 									v-if="note.user.host != null"
@@ -47,11 +46,10 @@
 								v-if="!showPrev && hasPrev"
 								class="load prev"
 								@click="showPrev = true"
-								v-tooltip="
-									`${i18n.ts.loadMore} (${i18n.ts.older})`
-								"
-								><i class="ph-caret-down ph-bold ph-lg"></i
-							></MkButton>
+							>
+								<i class="ph-caret-down ph-bold ph-lg"></i>
+								{{ `${i18n.ts.loadMore} (${i18n.ts.older})` }}
+							</MkButton>
 						</div>
 
 						<div v-if="showPrev" class="_gap">
@@ -164,12 +162,16 @@ definePageMetadata(
 	computed(() =>
 		note
 			? {
-					title: i18n.t("noteOf", { user: note.user.name }),
+					title: i18n.t("noteOf", {
+						user: note.user.name || note.user.username,
+					}),
 					subtitle: new Date(note.createdAt).toLocaleString(),
 					avatar: note.user,
 					path: `/notes/${note.id}`,
 					share: {
-						title: i18n.t("noteOf", { user: note.user.name }),
+						title: i18n.t("noteOf", {
+							user: note.user.name || note.user.username,
+						}),
 						text: note.text,
 					},
 			  }

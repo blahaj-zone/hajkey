@@ -2,6 +2,7 @@ import { Brackets } from "typeorm";
 import { UserProfiles, Users } from "@/models/index.js";
 import type { User } from "@/models/entities/user.js";
 import define from "../../define.js";
+import { sqlLikeEscape } from "@/misc/sql-like-escape.js";
 
 export const meta = {
 	tags: ["users"],
@@ -50,7 +51,7 @@ export default define(meta, paramDef, async (ps, me) => {
 	if (isUsername) {
 		const usernameQuery = Users.createQueryBuilder("user")
 			.where("user.usernameLower LIKE :username", {
-				username: `${ps.query.replace("@", "").toLowerCase()}%`,
+				username: `${sqlLikeEscape(ps.query.replace("@", "").toLowerCase())}%`,
 			})
 			.andWhere(
 				new Brackets((qb) => {
@@ -77,12 +78,14 @@ export default define(meta, paramDef, async (ps, me) => {
 		const nameQuery = Users.createQueryBuilder("user")
 			.where(
 				new Brackets((qb) => {
-					qb.where("user.name ILIKE :query", { query: `%${ps.query}%` });
+					qb.where("user.name ILIKE :query", {
+						query: `%${sqlLikeEscape(ps.query)}%`,
+					});
 
 					// Also search username if it qualifies as username
 					if (Users.validateLocalUsername(ps.query)) {
 						qb.orWhere("user.usernameLower LIKE :username", {
-							username: `%${ps.query.toLowerCase()}%`,
+							username: `%${sqlLikeEscape(ps.query.toLowerCase())}%`,
 						});
 					}
 				}),
@@ -113,7 +116,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			const profQuery = UserProfiles.createQueryBuilder("prof")
 				.select("prof.userId")
 				.where("prof.description ILIKE :query", {
-					query: `%${ps.query}%`,
+					query: `%${sqlLikeEscape(ps.query)}%`,
 				});
 
 			if (ps.origin === "local") {
