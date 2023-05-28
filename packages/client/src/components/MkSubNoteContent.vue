@@ -167,23 +167,6 @@
 						</div>
 					</template>
 				</div>
-				<button
-					v-if="isLong && collapsed"
-					class="fade _button"
-					@click.stop="collapsed = false"
-					v-on:keydown="focusFooter"
-				>
-					<span>{{ i18n.ts.showMore }}</span>
-				</button>
-				<button
-					v-if="isLong && !collapsed"
-					class="showLess _button"
-					@click.stop="collapsed = true"
-					v-on:keydown="focusFooter"
-				>
-					<span>{{ i18n.ts.showLess }}</span>
-				</button>
-				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
 			</div>
 		</div>
 	</div>

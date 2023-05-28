@@ -116,6 +116,12 @@ export function getNoteMenu(props: {
 		os.success();
 	}
 
+	function copyExternal(): void {
+		const url = appearNote.url || appearNote.uri;
+		copyToClipboard(url);
+		os.success();
+	}
+
 	function togglePin(pin: boolean): void {
 		os.apiWithDialog(
 			pin ? "i/pin" : "i/unpin",
@@ -288,15 +294,22 @@ export function getNoteMenu(props: {
 				text: i18n.ts.copyLink,
 				action: copyLink,
 			},
-			appearNote.url || appearNote.uri
-				? {
-						icon: "ph-arrow-square-out ph-bold ph-lg",
-						text: i18n.ts.showOnRemote,
-						action: () => {
-							window.open(appearNote.url || appearNote.uri, "_blank");
+			...(appearNote.url || appearNote.uri
+				? [
+						{
+							icon: "ph-link-simple ph-bold ph-lg",
+							text: i18n.ts.copyExternal,
+							action: copyExternal,
 						},
-				  }
-				: undefined,
+						{
+							icon: "ph-arrow-square-out ph-bold ph-lg",
+							text: i18n.ts.showOnRemote,
+							action: () => {
+								window.open(appearNote.url || appearNote.uri, "_blank");
+							},
+						},
+				  ]
+				: []),
 			shareAvailable()
 				? {
 						icon: "ph-share-network ph-bold ph-lg",
@@ -445,15 +458,22 @@ export function getNoteMenu(props: {
 				text: i18n.ts.copyLink,
 				action: copyLink,
 			},
-			appearNote.url || appearNote.uri
-				? {
-						icon: "ph-arrow-square-out ph-bold ph-lg",
-						text: i18n.ts.showOnRemote,
-						action: () => {
-							window.open(appearNote.url || appearNote.uri, "_blank");
+			...(appearNote.url || appearNote.uri
+				? [
+						{
+							icon: "ph-link-simple ph-bold ph-lg",
+							text: i18n.ts.copyLink,
+							action: copyLink,
 						},
-				  }
-				: undefined,
+						{
+							icon: "ph-arrow-square-out ph-bold ph-lg",
+							text: i18n.ts.showOnRemote,
+							action: () => {
+								window.open(appearNote.url || appearNote.uri, "_blank");
+							},
+						},
+				  ]
+				: []),
 		].filter((x) => x !== undefined);
 	}
 
