@@ -9,6 +9,7 @@
 		class="tkcbzcuz note-container"
 		:tabindex="!isDeleted ? '-1' : null"
 		:class="{ renote: isRenote }"
+		:id="appearNote.id"
 	>
 		<MkNoteSub
 			v-if="appearNote.reply && !detailedView && displayParent"
@@ -80,7 +81,7 @@
 				<div class="body">
 					<MkSubNoteContent
 						class="text"
-						:note="note"
+						:note="appearNote"
 						:detailed="true"
 						:detailedView="detailedView"
 						:parentId="appearNote.parentId"
@@ -222,17 +223,23 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, onMounted, ref, computed } from "vue";
+import { computed, inject, onMounted, onUnmounted, reactive, ref } from "vue";
+import * as mfm from "mfm-js";
 import type { Ref } from "vue";
 import type * as misskey from "calckey-js";
 import MkNoteSub from "@/components/MkNoteSub.vue";
 import MkSubNoteContent from "./MkSubNoteContent.vue";
 import XNoteHeader from "@/components/MkNoteHeader.vue";
+import XNoteSimple from "@/components/MkNoteSimple.vue";
+import XMediaList from "@/components/MkMediaList.vue";
+import XCwButton from "@/components/MkCwButton.vue";
+import XPoll from "@/components/MkPoll.vue";
 import XRenoteButton from "@/components/MkRenoteButton.vue";
 import XReactionsViewer from "@/components/MkReactionsViewer.vue";
 import XStarButton from "@/components/MkStarButton.vue";
 import XStarButtonNoEmoji from "@/components/MkStarButtonNoEmoji.vue";
 import XQuoteButton from "@/components/MkQuoteButton.vue";
+import MkUrlPreview from "@/components/MkUrlPreview.vue";
 import MkVisibility from "@/components/MkVisibility.vue";
 import copyToClipboard from "@/scripts/copy-to-clipboard";
 import { url } from "@/config";
@@ -290,10 +297,6 @@ const isRenote =
 	note.fileIds.length === 0 &&
 	note.poll == null;
 
-let appearNote = $computed(() =>
-	isRenote ? (note.renote as misskey.entities.Note) : note
-);
-
 const el = ref<HTMLElement>();
 const footerEl = ref<HTMLElement>();
 const menuButton = ref<HTMLElement>();
@@ -301,7 +304,11 @@ const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
+let appearNote = $computed(() =>
+	isRenote ? (note.renote as misskey.entities.Note) : note
+);
 const isMyRenote = $i && $i.id === note.userId;
+const showContent = ref(false);
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -373,6 +380,8 @@ const currentClipPage = inject<Ref<misskey.entities.Clip> | null>(
 function onContextmenu(ev: MouseEvent): void {
 	const isLink = (el: HTMLElement) => {
 		if (el.tagName === "A") return true;
+		// The Audio element's context menu is the browser default, such as for selecting playback speed.
+		if (el.tagName === "AUDIO") return true;
 		if (el.parentElement) {
 			return isLink(el.parentElement);
 		}
@@ -421,12 +430,12 @@ function onContextmenu(ev: MouseEvent): void {
 						copyToClipboard(`${url}${notePage(appearNote)}`);
 					},
 				},
-				note.user.host != null
+				appearNote.user.host != null
 					? {
 							type: "a",
 							icon: "ph-arrow-square-up-right ph-bold ph-lg",
 							text: i18n.ts.showOnRemote,
-							href: note.url ?? note.uri ?? "",
+							href: appearNote.url ?? appearNote.uri ?? "",
 							target: "_blank",
 					  }
 					: undefined,
@@ -518,28 +527,28 @@ function setPostExpanded(val: boolean) {
 }
 
 const accessibleLabel = computed(() => {
-	let label = `${props.note.user.username}; `;
-	if (props.note.renote) {
-		label += `${i18n.t("renoted")} ${props.note.renote.user.username}; `;
-		if (props.note.renote.cw) {
-			label += `${i18n.t("cw")}: ${props.note.renote.cw}; `;
+	let label = `${appearNote.user.username}; `;
+	if (appearNote.renote) {
+		label += `${i18n.t("renoted")} ${appearNote.renote.user.username}; `;
+		if (appearNote.renote.cw) {
+			label += `${i18n.t("cw")}: ${appearNote.renote.cw}; `;
 			if (postIsExpanded.value) {
-				label += `${props.note.renote.text}; `;
+				label += `${appearNote.renote.text}; `;
 			}
 		} else {
-			label += `${props.note.renote.text}; `;
+			label += `${appearNote.renote.text}; `;
 		}
 	} else {
-		if (props.note.cw) {
-			label += `${i18n.t("cw")}: ${props.note.cw}; `;
+		if (appearNote.cw) {
+			label += `${i18n.t("cw")}: ${appearNote.cw}; `;
 			if (postIsExpanded.value) {
-				label += `${props.note.text}; `;
+				label += `${appearNote.text}; `;
 			}
 		} else {
-			label += `${props.note.text}; `;
+			label += `${appearNote.text}; `;
 		}
 	}
-	const date = new Date(props.note.createdAt);
+	const date = new Date(appearNote.createdAt);
 	label += `${date.toLocaleTimeString()}`;
 	return label;
 });
@@ -558,6 +567,7 @@ defineExpose({
 	font-size: 1.05em;
 	overflow: clip;
 	contain: content;
+	-webkit-tap-highlight-color: transparent;
 
 	// これらの指定はパフォーマンス向上には有効だが、ノートの高さは一定でないため、
 	// 下の方までスクロールすると上のノートの高さがここで決め打ちされたものに変化し、表示しているノートの位置が変わってしまう
@@ -697,6 +707,7 @@ defineExpose({
 	}
 
 	> .article {
+		position: relative;
 		overflow: clip;
 		padding: 4px 32px 10px;
 		cursor: pointer;
@@ -804,6 +815,10 @@ defineExpose({
 					}
 					&:hover {
 						color: var(--fgHighlighted);
+					}
+
+					> i {
+						display: inline !important;
 					}
 
 					> .count {

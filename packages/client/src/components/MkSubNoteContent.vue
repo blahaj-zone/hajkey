@@ -49,21 +49,6 @@
 				:i="$i"
 				:custom-emojis="appearNote.emojis"
 			/>
-
-			<XShowMoreButton
-				ref="showMoreButton"
-				v-if="isLong && collapsed"
-				v-model="collapsed"
-				v-on:keydown="focusFooter"
-			></XShowMoreButton>
-			<XCwButton
-				ref="cwButton"
-				v-if="note.cw && !showContent"
-				v-model="showContent"
-				:note="note"
-				v-on:keydown="focusFooter"
-				v-on:update:model-value="(val) => emit('expanded', val)"
-			/>
 		</p>
 		<div class="wrmlmaau">
 			<div
@@ -71,10 +56,25 @@
 				:class="{
 					collapsed,
 					isLong,
+					manyImages: note.files.length > 4,
 					showContent: cw && !showContent,
-					disableAnim: disableMfm,
+					animatedMfm: !disableMfm,
 				}"
 			>
+				<XShowMoreButton
+					ref="showMoreButton"
+					v-if="isLong && collapsed"
+					v-model="collapsed"
+					v-on:keydown="focusFooter"
+				></XShowMoreButton>
+				<XCwButton
+					ref="cwButton"
+					v-if="note.cw && !showContent"
+					v-model="showContent"
+					:note="note"
+					v-on:keydown="focusFooter"
+					v-on:update:model-value="(val) => emit('expanded', val)"
+				/>
 				<div
 					class="body"
 					v-bind="{
@@ -116,22 +116,6 @@
 						:i="$i"
 						:custom-emojis="appearNote.emojis"
 					/>
-
-					<MkButton
-						v-if="hasMfm && defaultStore.state.animatedMfm"
-						@click.stop="toggleMfm"
-						mini
-						rounded
-					>
-						<template v-if="disableMfm">
-							<i class="ph-play ph-fill"></i>
-							{{ i18n.ts._mfm.play }}
-						</template>
-						<template v-else>
-							<i class="ph-stop ph-fill"></i>
-							{{ i18n.ts._mfm.stop }}
-						</template>
-					</MkButton>
 					<MkA
 						v-if="!detailed && appearNote.renoteId"
 						class="rp"
@@ -167,23 +151,11 @@
 						</div>
 					</template>
 				</div>
-				<button
-					v-if="isLong && collapsed"
-					class="fade _button"
-					@click.stop="collapsed = false"
-					v-on:keydown="focusFooter"
-				>
-					<span>{{ i18n.ts.showMore }}</span>
-				</button>
-				<button
+				<XShowMoreButton
 					v-if="isLong && !collapsed"
-					class="showLess _button"
-					@click.stop="collapsed = true"
-					v-on:keydown="focusFooter"
-				>
-					<span>{{ i18n.ts.showLess }}</span>
-				</button>
-				<XCwButton v-if="cw" v-model="showContent" :note="appearNote" />
+					v-model="collapsed"
+				></XShowMoreButton>
+				<XCwButton v-if="cw" v-model="showContent" :note="note" />
 			</div>
 		</div>
 	</div>
@@ -198,8 +170,10 @@ import XNoteSimple from "@/components/MkNoteSimple.vue";
 import XMediaList from "@/components/MkMediaList.vue";
 import XPoll from "@/components/MkPoll.vue";
 import MkUrlPreview from "@/components/MkUrlPreview.vue";
+import XShowMoreButton from "@/components/MkShowMoreButton.vue";
 import XCwButton from "@/components/MkCwButton.vue";
 import MkButton from "@/components/MkButton.vue";
+import { notePage } from "@/filters/note";
 import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
 import { extractMfmWithAnimation } from "@/scripts/extract-mfm";
 import { i18n } from "@/i18n";
@@ -304,13 +278,14 @@ async function toggleMfm() {
 
 function focusFooter(ev) {
 	if (ev.key == "Tab" && !ev.getModifierState("Shift")) {
-		emit("focusfooter", null);
+		emit("focusfooter");
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-:deep(a) {
+:deep(a),
+:deep(button) {
 	position: relative;
 	z-index: 2;
 }
@@ -333,7 +308,6 @@ function focusFooter(ev) {
 	padding: 0;
 	margin-bottom: 10px;
 	overflow-wrap: break-word;
-
 	> .text {
 		margin-right: 8px;
 		padding-inline-start: 0.25em;
@@ -398,7 +372,7 @@ function focusFooter(ev) {
 					background: var(--buttonHoverBg);
 				}
 			}
-			> .files {
+			> :deep(.files) {
 				margin-top: 0.4em;
 				margin-bottom: 0.4em;
 			}
@@ -441,75 +415,83 @@ function focusFooter(ev) {
 				margin-top: -50px;
 				padding-top: 50px;
 				overflow: hidden;
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
 			}
-			&.collapsed > .body {
+		}
+		&.collapsed {
+			&.manyImages {
+				max-height: calc(15em + 250px);
+			}
+			> .body {
 				box-sizing: border-box;
 			}
-			&.showContent {
-				> .body {
-					min-height: 2em;
-					max-height: 5em;
-					filter: blur(4px);
-					:deep(span) {
-						animation: none !important;
-						transform: none !important;
-					}
-					:deep(img) {
-						filter: blur(12px);
-					}
+		}
+		&.showContent {
+			> .body {
+				min-height: 2em;
+				max-height: 5em;
+				filter: blur(4px);
+				:deep(span) {
+					animation: none !important;
+					transform: none !important;
 				}
-				:deep(.fade) {
-					inset: 0;
-					top: 40px;
+				:deep(img) {
+					filter: blur(12px);
 				}
 			}
-
 			:deep(.fade) {
-				display: block;
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				> span {
-					display: inline-block;
-					background: var(--panel);
-					padding: 0.4em 1em;
-					font-size: 0.8em;
-					border-radius: 999px;
-					box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
-				}
-				&:hover {
-					> span {
-						background: var(--panelHighlight);
-					}
-				}
+				inset: 0;
+				top: 40px;
 			}
 		}
 
-		:deep(.showLess) {
+		:deep(.fade) {
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
 			width: 100%;
-			margin-top: 1em;
-			position: sticky;
-			bottom: var(--stickyBottom);
-
 			> span {
 				display: inline-block;
 				background: var(--panel);
-				padding: 6px 10px;
+				padding: 0.4em 1em;
 				font-size: 0.8em;
 				border-radius: 999px;
-				box-shadow: 0 0 7px 7px var(--bg);
+				box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+			}
+			&:hover {
+				> span {
+					background: var(--panelHighlight);
+				}
 			}
 		}
+	}
 
-		&.disableAnim > .body > span :deep(span) {
-			animation: none !important;
+	:deep(.showLess) {
+		width: 100%;
+		margin-top: 1em;
+		position: sticky;
+		bottom: var(--stickyBottom);
+
+		> span {
+			display: inline-block;
+			background: var(--panel);
+			padding: 6px 10px;
+			font-size: 0.8em;
+			border-radius: 999px;
+			box-shadow: 0 0 7px 7px var(--bg);
 		}
 	}
-	> :deep(button) {
-		margin-top: 10px;
-		margin-left: 0;
-		margin-right: 0.4rem;
+
+	&:not(.animatedMfm) > .body > span :deep(span) {
+		animation: none !important;
 	}
+}
+> :deep(button) {
+	margin-top: 10px;
+	margin-left: 0;
+	margin-right: 0.4rem;
 }
 </style>
