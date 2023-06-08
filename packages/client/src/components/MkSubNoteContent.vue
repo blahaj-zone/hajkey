@@ -151,11 +151,6 @@
 						</div>
 					</template>
 				</div>
-				<XShowMoreButton
-					v-if="isLong && !collapsed"
-					v-model="collapsed"
-				></XShowMoreButton>
-				<XCwButton v-if="cw" v-model="showContent" :note="note" />
 			</div>
 		</div>
 	</div>
