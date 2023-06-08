@@ -483,10 +483,11 @@ function focusFooter(ev) {
 	&:not(.animatedMfm) > .body > span :deep(span) {
 		animation: none !important;
 	}
-}
-> :deep(button) {
-	margin-top: 10px;
-	margin-left: 0;
-	margin-right: 0.4rem;
+
+	> :deep(button) {
+		margin-top: 10px;
+		margin-left: 0;
+		margin-right: 0.4rem;
+	}
 }
 </style>
