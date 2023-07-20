@@ -21,7 +21,7 @@
 							@load="iconLoaded"
 							@click="gravity"
 						/>
-						<div class="misskey">Firefish</div>
+						<div class="misskey">Iceshrimp</div>
 						<div class="version">v{{ version }}</div>
 						<span
 							v-for="emoji in easterEggEmojis"
@@ -51,20 +51,20 @@
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						<MkButton primary rounded inline @click="iLoveMisskey"
-							>I <Mfm text="$[jelly ❤]" /> #Firefish</MkButton
+							>I <Mfm text="$[jelly ❤]" /> #Iceshrimp</MkButton
 						>
 					</div>
 					<FormSection>
 						<div class="_formLinks">
 							<FormLink
-								to="https://codeberg.org/firefish/firefish"
+								to="https://git.ztn.sh/e2net/iceshrimp"
 								external
 							>
 								<template #icon
 									><i class="ph-code ph-bold ph-lg"></i
 								></template>
 								{{ i18n.ts._aboutFirefish.source }}
-								<template #suffix>Codeberg</template>
+								<template #suffix>zotan's git</template>
 							</FormLink>
 							<FormLink
 								to="https://opencollective.com/firefish"
@@ -227,7 +227,7 @@ function gravity() {
 
 function iLoveMisskey() {
 	os.post({
-		initialText: "I $[jelly ❤] #Firefish",
+		initialText: "I $[jelly ❤] #Iceshrimp",
 		instant: true,
 	});
 }

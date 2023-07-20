@@ -180,7 +180,7 @@ function showMenu(ev) {
 				text: i18n.ts.aboutFirefish,
 				icon: "ph-info ph-bold ph-lg",
 				action: () => {
-					os.pageWindow("/about-firefish");
+					os.pageWindow("/about-iceshrimp");
 				},
 			},
 		],

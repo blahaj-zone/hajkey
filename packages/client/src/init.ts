@@ -64,7 +64,7 @@ function checkForSplash() {
 }
 
 (async () => {
-	console.info(`Firefish v${version}`);
+	console.info(`Iceshrimp v${version}`);
 
 	if (_DEV_) {
 		console.warn("Development mode!!!");

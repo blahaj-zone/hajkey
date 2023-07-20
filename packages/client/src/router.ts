@@ -301,7 +301,7 @@ export const routes = [
 		hash: "initialTab",
 	},
 	{
-		path: "/about-firefish",
+		path: "/about-iceshrimp",
 		component: page(() => import("./pages/about-firefish.vue")),
 	},
 	{

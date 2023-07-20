@@ -59,10 +59,10 @@
 
 						<FormSection>
 							<MkKeyValue class="_formBlock" :copy="version">
-								<template #key>Firefish</template>
+								<template #key>Iceshrimp</template>
 								<template #value>{{ version }}</template>
 							</MkKeyValue>
-							<FormLink to="/about-firefish">{{
+							<FormLink to="/about-iceshrimp">{{
 								i18n.ts.aboutFirefish
 							}}</FormLink>
 						</FormSection>

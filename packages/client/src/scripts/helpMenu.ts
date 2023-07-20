@@ -22,7 +22,7 @@ export function openHelpMenu_(ev: MouseEvent) {
 				type: "link",
 				text: i18n.ts.aboutFirefish,
 				icon: "ph-lightbulb ph-bold ph-lg",
-				to: "/about-firefish",
+				to: "/about-iceshrimp",
 			},
 			{
 				type: "button",

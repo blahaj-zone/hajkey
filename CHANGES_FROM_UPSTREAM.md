@@ -1,7 +1,7 @@
-# All the changes to Firefish from stock Misskey
+# All the changes to Iceshrimp from stock Misskey
 
 > **Warning**
-> This list is incomplete. Please check the [Releases](https://codeberg.org/firefish/firefish/releases) and [Changelog](https://codeberg.org/firefish/firefish/src/branch/develop/CHANGELOG.md) for a more complete list of changes. There have been [>4000 commits (laggy link)](https://codeberg.org/firefish/firefish/compare/700a7110f7e34f314b070987aa761c451ec34efc...develop) since we forked Misskey!
+> This list is incomplete.
 
 ## Planned
 
@@ -102,7 +102,7 @@
 - Sonic search
 - Popular color schemes, including Nord, Gruvbox, and Catppuccin
 - Non-nyaify cat mode
-- Post imports from other Firefish/Misskey/Mastodon/Pleroma/Akkoma servers
+- Post imports from other Misskey/Mastodon/Pleroma/Akkoma servers
 - Improve Classic mode
 - Proper Helm/Kubernetes config
 - Multiple boost visibilities
@@ -118,7 +118,7 @@
   - Skin tone selection support
 - [DragonflyDB](https://dragonflydb.io/) support as a Redis alternative
 - Link verification
-- Importing posts from other Firefish/Misskey/Mastodon/Akkoma/Pleroma instances
+- Importing posts from other Misskey/Mastodon/Pleroma/Akkoma instances
 
 ## Implemented (remote)
 
