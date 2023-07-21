@@ -69,6 +69,7 @@ export function convertStatus(status: Entity.Status) {
 	}));
 	if (status.poll) status.poll = convertPoll(status.poll);
 	if (status.reblog) status.reblog = convertStatus(status.reblog);
+	if (status.quote) status.quote = convertStatus(status.quote);
 	status.reactions = status.reactions.map(convertReaction);
 
 	return status;
