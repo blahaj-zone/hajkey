@@ -109,20 +109,6 @@
 										v-tooltip.noDelay="i18n.ts.isBot"
 										><i class="ph-robot ph-bold ph-lg"></i
 									></span>
-									<span
-										v-if="
-											patrons?.includes(
-												`@${user.username}@${
-													user.host || host
-												}`,
-											)
-										"
-										v-tooltip.noDelay="i18n.ts.isPatron"
-										style="color: var(--badge)"
-										><i
-											class="ph-hand-coins ph-bold ph-lg"
-										></i
-									></span>
 								</div>
 							</div>
 						</div>
@@ -200,18 +186,6 @@
 									v-if="user.isBot"
 									v-tooltip.noDelay="i18n.ts.isBot"
 									><i class="ph-robot ph-bold ph-lg"></i
-								></span>
-								<span
-									v-if="
-										patrons?.includes(
-											`@${user.username}@${
-												user.host || host
-											}`,
-										)
-									"
-									v-tooltip.noDelay="i18n.ts.isPatron"
-									style="color: var(--badge)"
-									><i class="ph-hand-coins ph-bold ph-lg"></i
 								></span>
 							</div>
 						</div>
@@ -466,10 +440,6 @@ const timeForThem = $computed(() => {
 
 	return "";
 });
-
-let patrons = [];
-const patronsResp = await os.api("patrons");
-patrons = patronsResp.patrons;
 
 function parallaxLoop() {
 	parallaxAnimationId = window.requestAnimationFrame(parallaxLoop);
