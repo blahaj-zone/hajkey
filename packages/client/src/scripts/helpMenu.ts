@@ -20,7 +20,7 @@ export function openHelpMenu_(ev: MouseEvent) {
 			},
 			{
 				type: "link",
-				text: i18n.ts.aboutFirefish,
+				text: i18n.ts.aboutIceshrimp,
 				icon: "ph-lightbulb ph-bold ph-lg",
 				to: "/about-iceshrimp",
 			},

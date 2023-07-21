@@ -177,7 +177,7 @@ function showMenu(ev) {
 				},
 			},
 			{
-				text: i18n.ts.aboutFirefish,
+				text: i18n.ts.aboutIceshrimp,
 				icon: "ph-info ph-bold ph-lg",
 				action: () => {
 					os.pageWindow("/about-iceshrimp");

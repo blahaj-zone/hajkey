@@ -134,7 +134,7 @@ const headerActions = $computed(() => []);
 const headerTabs = $computed(() => []);
 
 definePageMetadata({
-	title: i18n.ts.aboutFirefish,
+	title: i18n.ts.aboutIceshrimp,
 	icon: null,
 });
 </script>
