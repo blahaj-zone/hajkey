@@ -1216,8 +1216,7 @@ _registry:
   domain: "Domain"
   createKey: "Create key"
 _aboutIceshrimp:
-  about: "Iceshrimp is a fork of Iceshrimp made by ThatOneCalculator, which has been in
-    development since 2022."
+  about: "Iceshrimp is yet another fork of Misskey, bringing you no-nonsense fixes, features & improvements you actually want since 2023."
   contributors: "Main contributors"
   allContributors: "All contributors"
   source: "Source code"
