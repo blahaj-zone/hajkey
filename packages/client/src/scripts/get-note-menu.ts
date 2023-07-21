@@ -1,5 +1,5 @@
 import { defineAsyncComponent, Ref, inject } from "vue";
-import * as misskey from "firefish-js";
+import * as misskey from "iceshrimp-js";
 import { $i } from "@/account";
 import { i18n } from "@/i18n";
 import { instance } from "@/instance";

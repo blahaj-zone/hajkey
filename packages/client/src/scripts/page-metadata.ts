@@ -1,4 +1,4 @@
-import * as misskey from "firefish-js";
+import * as misskey from "iceshrimp-js";
 import {
 	ComputedRef,
 	inject,

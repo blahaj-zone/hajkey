@@ -20,7 +20,7 @@ COPY package.json pnpm*.yaml ./
 COPY packages/backend/package.json packages/backend/package.json
 COPY packages/client/package.json packages/client/package.json
 COPY packages/sw/package.json packages/sw/package.json
-COPY packages/firefish-js/package.json packages/firefish-js/package.json
+COPY packages/iceshrimp-js/package.json packages/iceshrimp-js/package.json
 COPY packages/megalodon/package.json packages/megalodon/package.json
 COPY packages/backend/native-utils/package.json packages/backend/native-utils/package.json
 COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/backend/native-utils/npm/linux-x64-musl/package.json
@@ -58,7 +58,7 @@ COPY --from=build /firefish/node_modules /firefish/node_modules
 COPY --from=build /firefish/packages/backend/node_modules /firefish/packages/backend/node_modules
 COPY --from=build /firefish/packages/sw/node_modules /firefish/packages/sw/node_modules
 COPY --from=build /firefish/packages/client/node_modules /firefish/packages/client/node_modules
-COPY --from=build /firefish/packages/firefish-js/node_modules /firefish/packages/firefish-js/node_modules
+COPY --from=build /firefish/packages/iceshrimp-js/node_modules /firefish/packages/iceshrimp-js/node_modules
 
 # Copy the finished compiled files
 COPY --from=build /firefish/built /firefish/built

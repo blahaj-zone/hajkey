@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import * as firefish from "firefish-js";
+import * as firefish from "iceshrimp-js";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
 import { getProxiedImageUrlNullable } from "@/scripts/media-proxy";

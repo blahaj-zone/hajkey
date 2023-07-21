@@ -1,4 +1,4 @@
-import * as Acct from "firefish-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import { host as localHost } from "@/config";
 
 export async function genSearchQuery(v: any, q: string) {

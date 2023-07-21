@@ -35,7 +35,7 @@
 		"blurhash": "2.0.5",
 		"broadcast-channel": "5.1.0",
 		"browser-image-resizer": "github:misskey-dev/browser-image-resizer",
-		"firefish-js": "workspace:*",
+		"iceshrimp-js": "workspace:*",
 		"chart.js": "4.3.0",
 		"chartjs-adapter-date-fns": "3.0.0",
 		"chartjs-chart-matrix": "^2.0.1",

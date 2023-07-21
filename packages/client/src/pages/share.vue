@@ -33,9 +33,9 @@
 // SPECIFICATION: https://misskey-hub.net/docs/features/share-form.html
 
 import {} from "vue";
-import { noteVisibilities } from "firefish-js";
-import * as Acct from "firefish-js/built/acct";
-import * as Misskey from "firefish-js";
+import { noteVisibilities } from "iceshrimp-js";
+import * as Acct from "iceshrimp-js/built/acct";
+import * as Misskey from "iceshrimp-js";
 import MkButton from "@/components/MkButton.vue";
 import XPostForm from "@/components/MkPostForm.vue";
 import * as os from "@/os";

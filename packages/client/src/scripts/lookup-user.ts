@@ -1,4 +1,4 @@
-import * as Acct from "firefish-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import { i18n } from "@/i18n";
 import * as os from "@/os";
 
