@@ -42,7 +42,7 @@
 						/></span>
 					</div>
 					<div class="_formBlock" style="text-align: center">
-						{{ i18n.ts._aboutFirefish.about }}<br /><a
+						{{ i18n.ts._aboutIceshrimp.about }}<br /><a
 							href="https://iceshrimp.dev/"
 							target="_blank"
 							class="_link"
@@ -63,7 +63,7 @@
 								<template #icon
 									><i class="ph-code ph-bold ph-lg"></i
 								></template>
-								{{ i18n.ts._aboutFirefish.source }}
+								{{ i18n.ts._aboutIceshrimp.source }}
 								<template #suffix>Iceshrimp development</template>
 							</FormLink>
 						</div>

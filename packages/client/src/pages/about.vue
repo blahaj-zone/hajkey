@@ -102,7 +102,7 @@
 									><i class="ph-money ph-bold ph-lg"></i
 								></template>
 								{{
-									i18n.t("_aboutFirefish.donateHost", {
+									i18n.t("_aboutIceshrimp.donateHost", {
 										host: $instance.name || host,
 									})
 								}}
