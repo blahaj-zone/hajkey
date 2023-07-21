@@ -1,6 +1,6 @@
 ## Install dev and compilation dependencies, build files
 FROM alpine:3.18 as build
-WORKDIR /firefish
+WORKDIR /iceshrimp
 
 # Install compilation dependencies
 RUN apk add --no-cache --no-progress git alpine-sdk python3 nodejs-current npm rust cargo vips
@@ -13,7 +13,7 @@ COPY packages/backend/native-utils/migration/Cargo.toml packages/backend/native-
 COPY packages/backend/native-utils/migration/src/lib.rs packages/backend/native-utils/migration/src/
 
 # Install cargo dependencies
-RUN cargo fetch --locked --manifest-path /firefish/packages/backend/native-utils/Cargo.toml
+RUN cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
 
 # Copy only the dependency-related files first, to cache efficiently
 COPY package.json pnpm*.yaml ./
@@ -44,30 +44,30 @@ RUN pnpm i --prod --frozen-lockfile
 
 ## Runtime container
 FROM alpine:3.18
-WORKDIR /firefish
+WORKDIR /iceshrimp
 
 # Install runtime dependencies
 RUN apk add --no-cache --no-progress tini ffmpeg vips-dev zip unzip nodejs-current
 
 COPY . ./
 
-COPY --from=build /firefish/packages/megalodon /firefish/packages/megalodon
+COPY --from=build /iceshrimp/packages/megalodon /iceshrimp/packages/megalodon
 
 # Copy node modules
-COPY --from=build /firefish/node_modules /firefish/node_modules
-COPY --from=build /firefish/packages/backend/node_modules /firefish/packages/backend/node_modules
-COPY --from=build /firefish/packages/sw/node_modules /firefish/packages/sw/node_modules
-COPY --from=build /firefish/packages/client/node_modules /firefish/packages/client/node_modules
-COPY --from=build /firefish/packages/iceshrimp-js/node_modules /firefish/packages/iceshrimp-js/node_modules
+COPY --from=build /iceshrimp/node_modules /iceshrimp/node_modules
+COPY --from=build /iceshrimp/packages/backend/node_modules /iceshrimp/packages/backend/node_modules
+COPY --from=build /iceshrimp/packages/sw/node_modules /iceshrimp/packages/sw/node_modules
+COPY --from=build /iceshrimp/packages/client/node_modules /iceshrimp/packages/client/node_modules
+COPY --from=build /iceshrimp/packages/iceshrimp-js/node_modules /iceshrimp/packages/iceshrimp-js/node_modules
 
 # Copy the finished compiled files
-COPY --from=build /firefish/built /firefish/built
-COPY --from=build /firefish/packages/backend/built /firefish/packages/backend/built
-COPY --from=build /firefish/packages/backend/assets/instance.css /firefish/packages/backend/assets/instance.css
-COPY --from=build /firefish/packages/backend/native-utils/built /firefish/packages/backend/native-utils/built
+COPY --from=build /iceshrimp/built /iceshrimp/built
+COPY --from=build /iceshrimp/packages/backend/built /iceshrimp/packages/backend/built
+COPY --from=build /iceshrimp/packages/backend/assets/instance.css /iceshrimp/packages/backend/assets/instance.css
+COPY --from=build /iceshrimp/packages/backend/native-utils/built /iceshrimp/packages/backend/native-utils/built
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 ENV NODE_ENV=production
-VOLUME "/firefish/files"
+VOLUME "/iceshrimp/files"
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "pnpm", "run", "migrateandstart" ]
