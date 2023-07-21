@@ -1,4 +1,4 @@
-import { Entity } from "megalodon";
+import { Entity } from "megalodon/src";
 import { convertId, IdType } from "../index.js";
 
 function simpleConvert(data: any) {

@@ -1,4 +1,4 @@
-import megalodon, { MegalodonInterface } from "megalodon";
+import megalodon, { MegalodonInterface } from "megalodon/src";
 import Router from "@koa/router";
 import { koaBody } from "koa-body";
 import { convertId, IdType } from "../../index.js";

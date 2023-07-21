@@ -1,5 +1,5 @@
 import Router from "@koa/router";
-import megalodon, { MegalodonInterface } from "megalodon";
+import megalodon, { MegalodonInterface } from "megalodon/src";
 import { apiAuthMastodon } from "./endpoints/auth.js";
 import { apiAccountMastodon } from "./endpoints/account.js";
 import { apiStatusMastodon } from "./endpoints/status.js";
