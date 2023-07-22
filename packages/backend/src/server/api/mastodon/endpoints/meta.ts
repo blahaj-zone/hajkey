@@ -2,13 +2,18 @@ import { Entity } from "megalodon";
 import config from "@/config/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import { Users, Notes } from "@/models/index.js";
-import { IsNull, MoreThan } from "typeorm";
+import { IsNull } from "typeorm";
+import { MAX_NOTE_TEXT_LENGTH, FILE_TYPE_BROWSERSAFE } from "@/const.js";
 
 // TODO: add iceshrimp features
-export async function getInstance(response: Entity.Instance) {
-	const meta = await fetchMeta(true);
-	const totalUsers = Users.count({ where: { host: IsNull() } });
-	const totalStatuses = Notes.count({ where: { userHost: IsNull() } });
+export async function getInstance(response: Entity.Instance, contact: Entity.Account) {
+	const [meta, totalUsers, totalStatuses] =
+		await Promise.all([
+			fetchMeta(true),
+			Users.count({ where: { host: IsNull() } }),
+			Notes.count({ where: { userHost: IsNull() } }),
+		]);
+
 	return {
 		uri: response.uri,
 		title: response.title || "Iceshrimp",
@@ -35,41 +40,12 @@ export async function getInstance(response: Entity.Instance) {
 				max_featured_tags: 20,
 			},
 			statuses: {
-				max_characters: 3000,
-				max_media_attachments: 4,
+				max_characters: MAX_NOTE_TEXT_LENGTH,
+				max_media_attachments: 16,
 				characters_reserved_per_url: response.uri.length,
 			},
 			media_attachments: {
-				supported_mime_types: [
-					"image/jpeg",
-					"image/png",
-					"image/gif",
-					"image/heic",
-					"image/heif",
-					"image/webp",
-					"image/avif",
-					"video/webm",
-					"video/mp4",
-					"video/quicktime",
-					"video/ogg",
-					"audio/wave",
-					"audio/wav",
-					"audio/x-wav",
-					"audio/x-pn-wave",
-					"audio/vnd.wave",
-					"audio/ogg",
-					"audio/vorbis",
-					"audio/mpeg",
-					"audio/mp3",
-					"audio/webm",
-					"audio/flac",
-					"audio/aac",
-					"audio/m4a",
-					"audio/x-m4a",
-					"audio/mp4",
-					"audio/3gpp",
-					"video/x-ms-asf",
-				],
+				supported_mime_types: FILE_TYPE_BROWSERSAFE,
 				image_size_limit: 10485760,
 				image_matrix_limit: 16777216,
 				video_size_limit: 41943040,
@@ -77,36 +53,13 @@ export async function getInstance(response: Entity.Instance) {
 				video_matrix_limit: 2304000,
 			},
 			polls: {
-				max_options: 8,
+				max_options: 10,
 				max_characters_per_option: 50,
-				min_expiration: 300,
+				min_expiration: 50,
 				max_expiration: 2629746,
 			},
 		},
-		contact_account: {
-			id: "1",
-			username: "admin",
-			acct: "admin",
-			display_name: "admin",
-			locked: true,
-			bot: true,
-			discoverable: false,
-			group: false,
-			created_at: new Date().toISOString(),
-			note: "<p>Please refer to the original instance for the actual admin contact.</p>",
-			url: `${response.uri}/`,
-			avatar: `${response.uri}/static-assets/badges/info.png`,
-			avatar_static: `${response.uri}/static-assets/badges/info.png`,
-			header: "/static-assets/transparent.png",
-			header_static: "/static-assets/transparent.png",
-			followers_count: -1,
-			following_count: 0,
-			statuses_count: 0,
-			last_status_at: new Date().toISOString(),
-			noindex: true,
-			emojis: [],
-			fields: [],
-		},
+		contact_account: contact,
 		rules: [],
 	};
 }
