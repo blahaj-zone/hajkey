@@ -1241,7 +1241,7 @@ _mfm:
   warn: "MFM may contain rapidly moving or flashy animations"
   alwaysPlay: "Always autoplay all animated MFM"
   cheatSheet: "MFM Cheatsheet"
-  intro: "MFM is a markup language used on Iceshrimp, Iceshrimp, Akkoma, and more that
+  intro: "MFM is a markup language used on Iceshrimp, Misskey, Akkoma, and more that
     can be used in many places. Here you can view a list of all available MFM syntax."
   dummy: "Iceshrimp expands the world of the Fediverse"
   advanced: "Advanced MFM"
@@ -2091,7 +2091,7 @@ _experiments:
   title: "Experiments"
   enablePostImports: "Enable post imports"
   postImportsCaption: "Allows users to import their posts from past Iceshrimp,\
-    \ Iceshrimp, Mastodon, Akkoma, and Pleroma accounts. It may cause slowdowns during\
+    \ Misskey, Mastodon, Akkoma, and Pleroma accounts. It may cause slowdowns during\
     \ load if your queue is bottlenecked."
 _dialog:
   charactersExceeded: "Max characters exceeded! Current: {current}/Limit: {max}"
