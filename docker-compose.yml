@@ -2,8 +2,8 @@ version: "3"
 
 services:
   web:
-    image: docker.io/thatonecalculator/firefish
-    container_name: firefish_web
+    image: iceshrimp.dev/iceshrimp/iceshrimp
+    container_name: iceshrimp_web
     restart: unless-stopped
     depends_on:
       - db
@@ -14,29 +14,29 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - calcnet
+      - ishnet
 #     - web
     environment:
       NODE_ENV: production
     volumes:
-      - ./files:/firefish/files
-      - ./.config:/firefish/.config:ro
+      - ./files:/iceshrimp/files
+      - ./.config:/iceshrimp/.config:ro
 
   redis:
     restart: unless-stopped
     image: docker.io/redis:7.0-alpine
-    container_name: firefish_redis
+    container_name: iceshrimp_redis
     networks:
-      - calcnet
+      - ishnet
     volumes:
       - ./redis:/data
 
   db:
     restart: unless-stopped
     image: docker.io/postgres:12.2-alpine
-    container_name: firefish_db
+    container_name: iceshrimp_db
     networks:
-      - calcnet
+      - ishnet
     env_file:
       - .config/docker.env
     volumes:
@@ -53,7 +53,7 @@ services:
 #    ports:
 #      - "7700:7700"
 #    networks:
-#      - calcnet
+#      - ishnet
 #    volumes:
 #      - ./meili_data:/meili_data
 #    restart: unless-stopped
@@ -62,13 +62,13 @@ services:
 #    restart: unless-stopped
 #    image: docker.io/valeriansaliou/sonic:v1.4.0
 #    networks:
-#      - calcnet
+#      - ishnet
 #    volumes:
 #      - ./sonic:/var/lib/sonic/store
 #      - ./sonic/config.cfg:/etc/sonic.cfg
 
 networks:
-  calcnet:
+  ishnet:
   #  web:
   #    external:
   #      name: web
