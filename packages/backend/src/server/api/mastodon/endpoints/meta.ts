@@ -1,4 +1,4 @@
-import { Entity } from "megalodon/src";
+import { Entity } from "megalodon";
 import config from "@/config/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import { Users, Notes } from "@/models/index.js";

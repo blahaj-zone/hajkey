@@ -1,8 +1,8 @@
-import megalodon, { MegalodonInterface } from "megalodon/src";
+import megalodon, { MegalodonInterface } from "megalodon";
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import axios from "axios";
-import { Converter } from "megalodon/src";
+import { Converter } from "megalodon";
 import { convertTimelinesArgsId, limitToInt } from "./timeline.js";
 import { convertAccount, convertStatus } from "../converters.js";
 
