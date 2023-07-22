@@ -84,7 +84,7 @@ function tick() {
 
 if (
 	!invalid &&
-	props.origin === null &&
+	!props.origin &&
 	(props.mode === "relative" || props.mode === "detail")
 ) {
 	onMounted(() => {
