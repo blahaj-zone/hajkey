@@ -181,7 +181,6 @@ function close() {
 			}
 
 			> .animateIndicator {
-				animation: blink 1s infinite;
 			}
 		}
 	}

@@ -704,7 +704,6 @@ console.log(mainRouter.currentRoute.value.name);
 				}
 
 				> .animateIndicator {
-					animation: blink 1s infinite;
 				}
 			}
 
@@ -728,7 +727,6 @@ console.log(mainRouter.currentRoute.value.name);
 			}
 
 			> .animateIndicator {
-				animation: blink 1s infinite;
 			}
 
 			&:first-child {

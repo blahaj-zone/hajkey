@@ -731,18 +731,6 @@ hr {
 	transform: scale(0.9);
 }
 
-@keyframes blink {
-	0% {
-		opacity: 1;
-	}
-	70% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
 @keyframes tada {
 	from {
 		transform: scale3d(1, 1, 1);
@@ -783,15 +771,6 @@ hr {
 
 		to {
 			transform: scale3d(1, 1, 1);
-		}
-	}
-
-	@keyframes blink {
-		0% {
-			opacity: 1;
-		}
-		100% {
-			opacity: 1;
 		}
 	}
 }

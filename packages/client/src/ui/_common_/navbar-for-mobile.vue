@@ -350,7 +350,6 @@ function more() {
 				}
 
 				> .animateIndicator {
-					animation: blink 1s infinite;
 				}
 
 				> .text {

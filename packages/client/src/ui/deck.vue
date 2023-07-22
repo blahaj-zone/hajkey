@@ -570,7 +570,6 @@ async function deleteProfile() {
 			}
 
 			> .animateIndicator {
-				animation: blink 1s infinite;
 			}
 
 			&:first-child {
