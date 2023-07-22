@@ -21,6 +21,7 @@ export function getNoteMenu(props: {
 	const isRenote =
 		props.note.renote != null &&
 		props.note.text == null &&
+		props.note.cw == null &&
 		props.note.fileIds.length === 0 &&
 		props.note.poll == null;
 

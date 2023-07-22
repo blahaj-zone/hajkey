@@ -596,7 +596,11 @@ export default async (
 			});
 
 			//#region AP deliver
-			if (Users.isLocalUser(user) && !dontFederateInitially) {
+			if (
+				Users.isLocalUser(user) &&
+				!data.localOnly &&
+				!dontFederateInitially
+			) {
 				(async () => {
 					const noteActivity = await renderNoteOrRenoteActivity(data, note);
 					const dm = new DeliverManager(user, noteActivity);
@@ -661,12 +665,11 @@ async function renderNoteOrRenoteActivity(data: Option, note: Note) {
 	const content =
 		data.renote &&
 		data.text == null &&
+		data.cw == null &&
 		data.poll == null &&
 		(data.files == null || data.files.length === 0)
 			? renderAnnounce(
-					data.renote.uri
-						? data.renote.uri
-						: `${config.url}/notes/${data.renote.id}`,
+					data.renote.uri ?? `${config.url}/notes/${data.renote.id}`,
 					note,
 			  )
 			: renderCreate(await renderNote(note, false), note);

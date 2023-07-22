@@ -61,6 +61,7 @@ export default async function (
 			if (
 				note.renoteId &&
 				note.text == null &&
+				note.cw == null &&
 				!note.hasPoll &&
 				(note.fileIds == null || note.fileIds.length === 0)
 			) {
