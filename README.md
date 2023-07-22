@@ -1,6 +1,7 @@
 # 🧡 About Iceshrimp
 
 - Iceshrimp is yet another Misskey fork (you know the drill by now)
+- Need help or want to contribute? Join the [matrix room](https://matrix.to/#/%23iceshrimp-dev:161.rocks)!
 - Project goals:
   - No-nonsense bug fixes
   - QoL improvements
