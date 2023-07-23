@@ -25,6 +25,15 @@
 		>
 			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 		</MkA>
+		<MkA
+			v-else-if="note.replyId && !note.reply"
+			behavior="browser"
+			v-tooltip="i18n.ts.jumpToPrevious"
+			class="reply-icon"
+			@click.stop
+		>
+			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+		</MkA>
 		<Mfm
 			v-if="note.cw != ''"
 			class="text"
@@ -90,6 +99,15 @@
 								? `#${note.replyId}`
 								: `${notePage(note)}#${note.replyId}`
 						"
+						behavior="browser"
+						v-tooltip="i18n.ts.jumpToPrevious"
+						class="reply-icon"
+						@click.stop
+					>
+						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+					</MkA>
+					<MkA
+						v-else-if="note.replyId && !note.reply"
 						behavior="browser"
 						v-tooltip="i18n.ts.jumpToPrevious"
 						class="reply-icon"

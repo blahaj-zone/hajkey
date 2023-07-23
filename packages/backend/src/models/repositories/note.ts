@@ -246,7 +246,7 @@ export const NoteRepository = db.getRepository(Note).extend({
 			...(opts.detail
 				? {
 						reply: note.replyId
-							? this.pack(note.reply || note.replyId, me, {
+							? this.tryPack(note.reply || note.replyId, me, {
 									detail: false,
 									_hint_: options?._hint_,
 							  })
@@ -281,6 +281,24 @@ export const NoteRepository = db.getRepository(Note).extend({
 		}
 
 		return packed;
+	},
+
+	async tryPack(
+		src: Note["id"] | Note,
+		me?: { id: User["id"] } | null | undefined,
+		options?: {
+			detail?: boolean;
+			_hint_?: {
+				myReactions: Map<Note["id"], NoteReaction | null>;
+			};
+		},
+	): Promise<Packed<"Note"> | undefined> {
+		try {
+			return await this.pack(src, me, options);
+		}
+		catch {
+			return undefined;
+		}
 	},
 
 	async packMany(
