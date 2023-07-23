@@ -26,7 +26,7 @@
 		</FormSlot>
 		<div class="buttons">
 			<MkButton inline @click="addItem"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.addItem }}</MkButton>
-			<MkButton inline danger @click="reset"><i class="ph-arrows-clockwise ph-bold ph-lg"></i> {{ i18n.ts.default }}</MkButton>
+			<MkButton inline danger @click="reset"><i class="ph-arrow-clockwise ph-bold ph-lg"></i> {{ i18n.ts.default }}</MkButton>
 			<MkButton inline primary class="save" @click="save"><i class="ph-floppy-disk ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 		</div>
 	

@@ -24,7 +24,7 @@
 		</template>
 
 		<div class="yrolvcoq" :style="{ background: pageMetadata?.value?.bg }">
-			<RouterView :router="router" />
+			<RouterView :key="reloadCount" :router="router" />
 		</div>
 	</XWindow>
 </template>
@@ -78,15 +78,21 @@ const buttonsLeft = $computed(() => {
 });
 const buttonsRight = $computed(() => {
 	const buttons = [
-		{
-			icon: "ph-arrows-out-simple ph-bold ph-lg",
-			title: i18n.ts.showInPage,
-			onClick: expand,
-		},
+	{
+		icon: 'ph-arrow-clockwise ph-bold ph-lg',
+		title: i18n.ts.reload,
+		onClick: reload,
+	}, 
+	{
+		icon: "ph-arrows-out-simple ph-bold ph-lg",
+		title: i18n.ts.showInPage,
+		onClick: expand,
+	},
 	];
 
 	return buttons;
 });
+let reloadCount = $ref(0);
 
 router.addListener("push", (ctx) => {
 	history.push({ path: ctx.path, key: ctx.key });
@@ -138,6 +144,10 @@ function back() {
 		history[history.length - 1].path,
 		history[history.length - 1].key,
 	);
+}
+
+function reload() {
+	reloadCount++;
 }
 
 function close() {
