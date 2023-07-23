@@ -96,6 +96,7 @@
 		"vue-draggable-plus": "^0.2.2",
 		"vue-isyourpasswordsafe": "^2.0.0",
 		"vue-plyr": "^7.0.0",
-		"vue-prism-editor": "2.0.0-alpha.2"
+		"vue-prism-editor": "2.0.0-alpha.2",
+		"vuedraggable": "next"
 	}
 }
