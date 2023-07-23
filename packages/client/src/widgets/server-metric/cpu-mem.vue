@@ -131,7 +131,7 @@ function onStats(connStats) {
 	]);
 	const memPolylinePointsStats = stats.map((s, i) => [
 		viewBoxX - (stats.length - 1 - i),
-		(1 - s.mem.active / props.meta.mem.total) * viewBoxY,
+		(1 - s.mem.active / s.mem.total) * viewBoxY,
 	]);
 	cpuPolylinePoints = cpuPolylinePointsStats
 		.map((xy) => `${xy[0]},${xy[1]}`)
@@ -153,7 +153,7 @@ function onStats(connStats) {
 	memHeadY = memPolylinePointsStats[memPolylinePointsStats.length - 1][1];
 
 	cpuP = (connStats.cpu * 100).toFixed(0);
-	memP = ((connStats.mem.active / props.meta.mem.total) * 100).toFixed(0);
+	memP = ((connStats.mem.active / connStats.mem.total) * 100).toFixed(0);
 }
 
 function onStatsLog(statsLog) {

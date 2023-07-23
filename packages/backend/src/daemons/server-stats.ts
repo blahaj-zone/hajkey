@@ -37,6 +37,7 @@ export default function () {
 			mem: {
 				used: round(memStats.used - memStats.buffers - memStats.cached),
 				active: round(memStats.active),
+				total: round(memStats.total),
 			},
 			net: {
 				rx: round(Math.max(0, netStats.rx_sec)),

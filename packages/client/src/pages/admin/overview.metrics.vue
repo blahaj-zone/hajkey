@@ -84,8 +84,8 @@ const diskAvailable = $computed(() => meta.fs.total - meta.fs.used);
 function onStats(stats) {
 	cpuUsage = stats.cpu;
 
-	memUsage = stats.mem.active / meta.mem.total;
-	memTotal = meta.mem.total;
+	memUsage = stats.mem.active / stats.mem.total;
+	memTotal = stats.mem.total;
 	memUsed = stats.mem.active;
 	memFree = memTotal - memUsed;
 
