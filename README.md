@@ -9,5 +9,5 @@
   - Change of focus to actual community needs
 - Project anti-goals:
   - Flashy marketing
-  - Commercialization of all forms
+  - Commercialization of any kind
 - Read **[this document](./CHANGES_FROM_UPSTREAM.md)** all for current and future differences.
