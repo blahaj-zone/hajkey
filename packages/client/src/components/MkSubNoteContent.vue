@@ -25,15 +25,14 @@
 		>
 			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 		</MkA>
-		<MkA
+		<span
 			v-else-if="note.replyId && !note.reply"
-			behavior="browser"
-			v-tooltip="i18n.ts.jumpToPrevious"
 			class="reply-icon"
 			@click.stop
 		>
 			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
-		</MkA>
+			<i class="ph-lock ph-bold"></i>
+		</span>
 		<Mfm
 			v-if="note.cw != ''"
 			class="text"
@@ -106,15 +105,14 @@
 					>
 						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
 					</MkA>
-					<MkA
+					<span
 						v-else-if="note.replyId && !note.reply"
-						behavior="browser"
-						v-tooltip="i18n.ts.jumpToPrevious"
 						class="reply-icon"
 						@click.stop
 					>
 						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
-					</MkA>
+						<i class="ph-lock ph-bold"></i>
+					</span>
 				</template>
 				<Mfm
 					v-if="note.text"
