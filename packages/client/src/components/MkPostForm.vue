@@ -1068,6 +1068,8 @@ onMounted(() => {
 			position: absolute;
 			top: 0;
 			right: 0;
+			display: flex;
+			align-items: center;
 
 			> .text-count {
 				opacity: 0.7;
@@ -1082,6 +1084,10 @@ onMounted(() => {
 				& + .localOnly {
 					margin-left: 0 !important;
 				}
+
+				> span:only-child > i {
+					display: block;
+				}
 			}
 
 			> .local-only {
@@ -1093,7 +1099,7 @@ onMounted(() => {
 				display: inline-block;
 				padding: 0;
 				margin: 0 8px 0 0;
-				font-size: 16px;
+				font-size: inherit !important;
 				width: 34px;
 				height: 34px;
 				border-radius: 6px;
