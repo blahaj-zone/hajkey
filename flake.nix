@@ -17,7 +17,7 @@
 				inputs.devenv.flakeModule
 			];
 
-			# Define the systems that this works on. Only tested with x66_64-linux, add more if you test and it works.
+			# Define the systems that this works on. Only tested with x86_64-linux, add more if you test and it works.
 			systems = [
 				"x86_64-linux"
 			];
