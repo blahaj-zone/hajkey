@@ -48,7 +48,7 @@ export function apiStatusMastodon(router: Router): void {
 				try {
 					const id = body.in_reply_to_id;
 					const post = await client.getStatus(id);
-					const react = post.data.emoji_reactions.filter((e) => e.me)[0].name;
+					const react = post.data.reactions.filter((e) => e.me)[0].name;
 					const data = await client.deleteEmojiReaction(id, react);
 					ctx.body = data.data;
 				} catch (e: any) {
@@ -367,6 +367,47 @@ export function apiStatusMastodon(router: Router): void {
 			}
 		},
 	);
+
+	router.post<{ Params: { id: string; name: string } }>(
+		"/v1/statuses/:id/react/:name",
+		async (ctx) => {
+			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+			const accessTokens = ctx.headers.authorization;
+			const client = getClient(BASE_URL, accessTokens);
+			try {
+				const data = await client.reactStatus(
+					convertId(ctx.params.id, IdType.FirefishId),
+					ctx.params.name,
+				);
+				ctx.body = convertStatus(data.data);
+			} catch (e: any) {
+				console.error(e);
+				ctx.status = 401;
+				ctx.body = e.response.data;
+			}
+		},
+	);
+
+	router.post<{ Params: { id: string; name: string } }>(
+		"/v1/statuses/:id/unreact/:name",
+		async (ctx) => {
+			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+			const accessTokens = ctx.headers.authorization;
+			const client = getClient(BASE_URL, accessTokens);
+			try {
+				const data = await client.unreactStatus(
+					convertId(ctx.params.id, IdType.FirefishId),
+					ctx.params.name,
+				);
+				ctx.body = convertStatus(data.data);
+			} catch (e: any) {
+				console.error(e);
+				ctx.status = 401;
+				ctx.body = e.response.data;
+			}
+		},
+	);
+
 	router.get<{ Params: { id: string } }>("/v1/media/:id", async (ctx) => {
 		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
 		const accessTokens = ctx.headers.authorization;

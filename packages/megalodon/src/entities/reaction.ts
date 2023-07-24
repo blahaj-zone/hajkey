@@ -6,6 +6,7 @@ namespace Entity {
 		me: boolean;
 		name: string;
 		url?: string;
+		static_url?: string;
 		accounts?: Array<Account>;
 	};
 }

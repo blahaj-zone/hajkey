@@ -38,7 +38,7 @@ namespace Entity {
 		application: Application | null;
 		language: string | null;
 		pinned: boolean | null;
-		emoji_reactions: Array<Reaction>;
+		reactions: Array<Reaction>;
 		quote: Status | null;
 		bookmarked: boolean;
 	};

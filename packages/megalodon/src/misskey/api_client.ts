@@ -321,7 +321,10 @@ namespace MisskeyAPI {
 				content: n.text ? this.escapeMFM(n.text) : "",
 				plain_content: n.text ? n.text : null,
 				created_at: n.createdAt,
-				emojis: n.emojis.map((e) => this.emoji(e)),
+				// Remove reaction emojis with names containing @ from the emojis list.
+				emojis: n.emojis
+					.filter((e) => e.name.indexOf("@") === -1)
+					.map((e) => this.emoji(e)),
 				replies_count: n.repliesCount,
 				reblogs_count: n.renoteCount,
 				favourites_count: this.getTotalReactions(n.reactions),
@@ -339,28 +342,36 @@ namespace MisskeyAPI {
 				application: null,
 				language: null,
 				pinned: null,
-				emoji_reactions: this.mapReactions(n.reactions, n.myReaction),
+				// Use emojis list to provide URLs for emoji reactions.
+				reactions: this.mapReactions(n.emojis, n.reactions, n.myReaction),
 				bookmarked: false,
 				quote: n.renote && n.text ? this.note(n.renote, host) : null,
 			};
 		};
 
 		mapReactions = (
+			emojis: Array<MisskeyEntity.Emoji>,
 			r: { [key: string]: number },
 			myReaction?: string,
 		): Array<MegalodonEntity.Reaction> => {
+			// Map of emoji shortcodes to image URLs.
+			const emojiUrls = new Map<string, string>(
+				emojis.map((e) => [e.name, e.url]),
+			);
 			return Object.keys(r).map((key) => {
-				if (myReaction && key === myReaction) {
-					return {
-						count: r[key],
-						me: true,
-						name: key,
-					};
-				}
+				// Strip colons from custom emoji reaction names to match emoji shortcodes.
+				const shortcode = key.replaceAll(":", "");
+				// If this is a custom emoji (vs. a Unicode emoji), find its image URL.
+				const url = emojiUrls.get(shortcode);
+				// Finally, remove trailing @. from local custom emoji reaction names.
+				const name = shortcode.replace("@.", "");
 				return {
 					count: r[key],
-					me: false,
-					name: key,
+					me: key === myReaction,
+					name,
+					url,
+					// We don't actually have a static version of the asset, but clients expect one anyway.
+					static_url: url,
 				};
 			});
 		};
@@ -422,7 +433,7 @@ namespace MisskeyAPI {
 				case NotificationType.Mention:
 					return MisskeyNotificationType.Reply;
 				case NotificationType.Favourite:
-				case NotificationType.EmojiReaction:
+				case NotificationType.Reaction:
 					return MisskeyNotificationType.Reaction;
 				case NotificationType.Reblog:
 					return MisskeyNotificationType.Renote;
@@ -448,7 +459,7 @@ namespace MisskeyAPI {
 				case MisskeyNotificationType.Quote:
 					return NotificationType.Reblog;
 				case MisskeyNotificationType.Reaction:
-					return NotificationType.EmojiReaction;
+					return NotificationType.Reaction;
 				case MisskeyNotificationType.PollEnded:
 					return NotificationType.Poll;
 				case MisskeyNotificationType.ReceiveFollowRequest:
@@ -496,11 +507,11 @@ namespace MisskeyAPI {
 						account: this.note(n.note, host).account,
 					});
 				}
-			}
-			if (n.reaction) {
-				notification = Object.assign(notification, {
-					emoji: n.reaction,
-				});
+				if (n.reaction) {
+					notification = Object.assign(notification, {
+						reaction: this.mapReactions(n.note.emojis, { [n.reaction]: 1 })[0],
+					});
+				}
 			}
 			return notification;
 		};

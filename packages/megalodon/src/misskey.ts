@@ -2009,6 +2009,63 @@ export default class Misskey implements MegalodonInterface {
 			}));
 	}
 
+	/**
+	 * Convert a Unicode emoji or custom emoji name to a Misskey reaction.
+	 * @see Misskey's reaction-lib.ts
+	 */
+	private reactionName(name: string): string {
+		// See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
+		const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name);
+		if (isUnicodeEmoji) {
+			return name;
+		}
+		return `:${name}:`;
+	}
+
+	/**
+	 * POST /api/notes/reactions/create
+	 */
+	public async reactStatus(id: string, name: string): Promise<Response<Entity.Status>> {
+		await this.client.post<{}>("/api/notes/reactions/create", {
+			noteId: id,
+			reaction: this.reactionName(name),
+		});
+		return this.client
+			.post<MisskeyAPI.Entity.Note>("/api/notes/show", {
+				noteId: id,
+			})
+			.then(async (res) => ({
+				...res,
+				data: await this.noteWithDetails(
+					res.data,
+					this.baseUrlToHost(this.baseUrl),
+					this.getFreshAccountCache(),
+				),
+			}));
+	}
+
+	/**
+	 * POST /api/notes/reactions/delete
+	 */
+	public async unreactStatus(id: string, name: string): Promise<Response<Entity.Status>> {
+		await this.client.post<{}>("/api/notes/reactions/delete", {
+			noteId: id,
+			reaction: this.reactionName(name),
+		});
+		return this.client
+			.post<MisskeyAPI.Entity.Note>("/api/notes/show", {
+				noteId: id,
+			})
+			.then(async (res) => ({
+				...res,
+				data: await this.noteWithDetails(
+					res.data,
+					this.baseUrlToHost(this.baseUrl),
+					this.getFreshAccountCache(),
+				),
+			}));
+	}
+
 	// ======================================
 	// statuses/media
 	// ======================================
