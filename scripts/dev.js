@@ -1,31 +1,41 @@
 const execa = require("execa");
 
 (async () => {
-	await execa("pnpm", ["clean"], {
+	await execa("yarn", ["clean"], {
 		cwd: __dirname + "/../",
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa("pnpm", ["dlx", "gulp", "watch"], {
+	await execa("yarn", ["workspace", "iceshrimp-js", "build"], {
+		stdout: process.stdout,
+		stderr: process.stderr,
+	})
+
+	await execa("yarn", ["workspaces", "foreach", "run", "build"], {
+		stdout: process.stdout,
+		stderr: process.stderr,
+	});
+
+	execa("yarn", ["gulp", "watch"], {
 		cwd: __dirname + "/../",
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa("pnpm", ["--filter", "backend", "watch"], {
+	execa("yarn", ["workspace", "backend", "watch"], {
 		cwd: __dirname + "/../",
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa("pnpm", ["--filter", "client", "watch"], {
+	execa("yarn", ["workspace", "client", "watch"], {
 		cwd: __dirname + "/../",
 		stdout: process.stdout,
 		stderr: process.stderr,
 	});
 
-	execa("pnpm", ["--filter", "sw", "watch"], {
+	execa("yarn", ["workspace", "sw", "watch"], {
 		cwd: __dirname + "/../",
 		stdout: process.stdout,
 		stderr: process.stderr,
@@ -33,7 +43,7 @@ const execa = require("execa");
 
 	const start = async () => {
 		try {
-			await execa("pnpm", ["start"], {
+			await execa("yarn", ["start"], {
 				cwd: __dirname + "/../",
 				stdout: process.stdout,
 				stderr: process.stderr,

@@ -61,9 +61,16 @@ packages/megalodon/.idea
 *.blend4
 *.blend5
 
-# old yarn
-.yarn
-yarn*
+#old pnpm
+pnpm*
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Nix Development shell items
 .devenv

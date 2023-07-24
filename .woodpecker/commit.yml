@@ -6,9 +6,9 @@ pipeline:
       - cp .config/ci.yml .config/default.yml
       - corepack enable
       - corepack prepare pnpm@latest --activate
-      - pnpm i --frozen-lockfile
-      - pnpm run build
-      - pnpm run migrate
+      - yarn
+      - yarn build
+      - yarn migrate
 
 services:
   database:

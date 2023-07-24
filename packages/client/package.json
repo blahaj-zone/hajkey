@@ -2,11 +2,11 @@
 	"name": "client",
 	"private": true,
 	"scripts": {
-		"watch": "pnpm vite build --watch --mode development",
-		"build": "pnpm vite build",
-		"lint": "pnpm rome check **/*.ts --apply && pnpm run lint:vue",
-		"lint:vue": "pnpm paralint --ext .vue --fix '**/*.vue' --cache",
-		"format": "pnpm rome format * --write && pnpm prettier --write '**/*.{scss,vue}' --cache --cache-strategy metadata"
+		"watch": "vite build --watch --mode development",
+		"build": "vite build",
+		"lint": "rome check **/*.ts --apply && yarn lint:vue",
+		"lint:vue": "paralint --ext .vue --fix '**/*.vue' --cache",
+		"format": "rome format * --write && prettier --write '**/*.{scss,vue}' --cache --cache-strategy metadata"
 	},
 	"devDependencies": {
 		"@discordapp/twemoji": "14.1.2",
@@ -34,7 +34,7 @@
 		"autosize": "5.0.2",
 		"blurhash": "2.0.5",
 		"broadcast-channel": "5.1.0",
-		"browser-image-resizer": "github:misskey-dev/browser-image-resizer",
+		"browser-image-resizer": "https://iceshrimp.dev/nullrequest/browser-image-resizer.git",
 		"chart.js": "4.3.0",
 		"chartjs-adapter-date-fns": "3.0.0",
 		"chartjs-chart-matrix": "^2.0.1",

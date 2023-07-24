@@ -31,7 +31,7 @@
 							name = "iceshrimp-dev-shell";
 							# Add additional packages to our environment
 							packages = [
-								pkgs.nodePackages.pnpm
+								pkgs.nodePackages.yarn
 
 								pkgs.python3
 							];
@@ -49,12 +49,12 @@
 								dev-server.exec = "pnpm run dev";
 							};
 							scripts = {
-								build.exec = "pnpm run build";
-								clean.exec = "pnpm run clean";
+								build.exec = "yarn run build";
+								clean.exec = "yarn run clean";
 								clear-state.exec = "rm -rf .devenv/state/redis .devenv/state/postgres";
-								format.exec = "pnpm run format";
-								install-deps.exec = "pnpm install";
-								migrate.exec = "pnpm run migrate";
+								format.exec = "yarn run format";
+								install-deps.exec = "yarn install";
+								migrate.exec = "yarn run migrate";
 								prepare-config.exec = "cp .config/devenv.yml .config/default.yml";
 							};
 							services = {
