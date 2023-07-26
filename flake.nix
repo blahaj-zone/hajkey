@@ -65,9 +65,9 @@
 										name = "iceshrimp";
 									}];
 									initialScript = ''
-										CREATE USER firefish WITH PASSWORD 'firefish';
+										CREATE USER iceshrimp WITH PASSWORD 'iceshrimp';
 										ALTER USER firefish WITH SUPERUSER;
-										GRANT ALL ON DATABASE firefish TO firefish;
+										GRANT ALL ON DATABASE iceshrimp TO iceshrimp;
 									'';
 									listen_addresses = "127.0.0.1";
 									port = 5432;
