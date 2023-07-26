@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { PropType } from "vue";
 import { TransitionGroup, defineComponent, h } from "vue";
-import MkAd from "@/components/global/MkAd.vue";
 import { i18n } from "@/i18n";
 import { defaultStore } from "@/store";
 
@@ -27,12 +26,7 @@ export default defineComponent({
 			type: Boolean,
 			required: false,
 			default: false,
-		},
-		ad: {
-			type: Boolean,
-			required: false,
-			default: false,
-		},
+		}
 	},
 
 	setup(props, { slots, expose }) {
@@ -91,18 +85,7 @@ export default defineComponent({
 
 					return [el, separator];
 				} else {
-					if (props.ad && item._shouldInsertAd_) {
-						return [
-							h(MkAd, {
-								class: "a", // advertiseの意(ブロッカー対策)
-								key: item.id + ":ad",
-								prefer: ["inline", "inline-big"],
-							}),
-							el,
-						];
-					} else {
-						return el;
-					}
+					return el;
 				}
 			});
 

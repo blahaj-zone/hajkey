@@ -1,6 +1,5 @@
 <template>
 	<aside class="widgets" :aria-label="i18n.ts._deck._columns.widgets">
-		<MkAd class="a" :prefer="['widget']" />
 		<XWidgets
 			:edit="editMode"
 			:widgets="defaultStore.reactiveState.widgets.value"

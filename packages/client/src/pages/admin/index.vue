@@ -219,12 +219,6 @@ const menuDef = $computed(() => [
 				active: currentPage?.route.name === "announcements",
 			},
 			{
-				icon: "ph-money ph-bold ph-lg",
-				text: i18n.ts.ads,
-				to: "/admin/ads",
-				active: currentPage?.route.name === "ads",
-			},
-			{
 				icon: "ph-warning-circle ph-bold ph-lg",
 				text: i18n.ts.abuseReports,
 				to: "/admin/abuses",

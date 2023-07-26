@@ -20,7 +20,6 @@
 					:direction="pagination.reversed ? 'up' : 'down'"
 					:reversed="pagination.reversed"
 					:no-gap="noGap"
-					:ad="true"
 					class="notes"
 				>
 					<XNote

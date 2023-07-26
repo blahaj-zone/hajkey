@@ -5,10 +5,6 @@ import * as ep___admin_abuseUserReports from "./endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from "./endpoints/admin/accounts/create.js";
 import * as ep___admin_accounts_delete from "./endpoints/admin/accounts/delete.js";
 import * as ep___admin_accounts_hosted from "./endpoints/admin/accounts/hosted.js";
-import * as ep___admin_ad_create from "./endpoints/admin/ad/create.js";
-import * as ep___admin_ad_delete from "./endpoints/admin/ad/delete.js";
-import * as ep___admin_ad_list from "./endpoints/admin/ad/list.js";
-import * as ep___admin_ad_update from "./endpoints/admin/ad/update.js";
 import * as ep___admin_announcements_create from "./endpoints/admin/announcements/create.js";
 import * as ep___admin_announcements_delete from "./endpoints/admin/announcements/delete.js";
 import * as ep___admin_announcements_list from "./endpoints/admin/announcements/list.js";
@@ -351,10 +347,6 @@ const eps = [
 	["admin/accounts/create", ep___admin_accounts_create],
 	["admin/accounts/delete", ep___admin_accounts_delete],
 	["admin/accounts/hosted", ep___admin_accounts_hosted],
-	["admin/ad/create", ep___admin_ad_create],
-	["admin/ad/delete", ep___admin_ad_delete],
-	["admin/ad/list", ep___admin_ad_list],
-	["admin/ad/update", ep___admin_ad_update],
 	["admin/announcements/create", ep___admin_announcements_create],
 	["admin/announcements/delete", ep___admin_announcements_delete],
 	["admin/announcements/list", ep___admin_announcements_list],

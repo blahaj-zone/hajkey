@@ -11,7 +11,6 @@
 			>{{ column.name }}</template
 		>
 		<div class="wtdtxvec">
-			<MkAd class="a" :prefer="['widget']" />
 			<div
 				v-if="!(column.widgets && column.widgets.length > 0) && !edit"
 				class="intro"

@@ -83,7 +83,6 @@ const defaultStoreSaveKeys: (keyof (typeof defaultStore)["state"])[] = [
 	"overridedDeviceKind",
 	"serverDisconnectedBehavior",
 	"nsfw",
-	"showAds",
 	"animation",
 	"animatedMfm",
 	"loadRawImages",

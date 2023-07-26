@@ -4,7 +4,6 @@ pub mod prelude;
 
 pub mod abuse_user_report;
 pub mod access_token;
-pub mod ad;
 pub mod announcement;
 pub mod announcement_read;
 pub mod antenna;

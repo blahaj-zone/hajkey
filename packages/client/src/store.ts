@@ -102,14 +102,6 @@ export const defaultStore = markRaw(
 			where: "account",
 			default: [],
 		},
-		mutedAds: {
-			where: "account",
-			default: [] as string[],
-		},
-		showAds: {
-			where: "account",
-			default: true,
-		},
 		menu: {
 			where: "deviceAccount",
 			default: menuOptions,

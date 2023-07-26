@@ -66,7 +66,6 @@ import { Channel } from "@/models/entities/channel.js";
 import { ChannelFollowing } from "@/models/entities/channel-following.js";
 import { ChannelNotePining } from "@/models/entities/channel-note-pining.js";
 import { RegistryItem } from "@/models/entities/registry-item.js";
-import { Ad } from "@/models/entities/ad.js";
 import { PasswordResetRequest } from "@/models/entities/password-reset-request.js";
 import { UserPending } from "@/models/entities/user-pending.js";
 import { Webhook } from "@/models/entities/webhook.js";
@@ -175,7 +174,6 @@ export const entities = [
 	ChannelFollowing,
 	ChannelNotePining,
 	RegistryItem,
-	Ad,
 	PasswordResetRequest,
 	UserPending,
 	Webhook,

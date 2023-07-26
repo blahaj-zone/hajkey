@@ -168,7 +168,6 @@
 						</template>
 					</div> -->
 					</div>
-					<MkAd :prefer="['inline', 'inline-big']" />
 					<MkContainer
 						:max-height="300"
 						:foldable="true"

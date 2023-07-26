@@ -2,7 +2,6 @@
 
 pub use super::abuse_user_report::Entity as AbuseUserReport;
 pub use super::access_token::Entity as AccessToken;
-pub use super::ad::Entity as Ad;
 pub use super::announcement::Entity as Announcement;
 pub use super::announcement_read::Entity as AnnouncementRead;
 pub use super::antenna::Entity as Antenna;

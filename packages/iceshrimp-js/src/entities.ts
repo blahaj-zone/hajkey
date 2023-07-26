@@ -301,13 +301,6 @@ export type LiteInstanceMetadata = {
 	enableDiscordIntegration: boolean;
 	enableServiceWorker: boolean;
 	emojis: CustomEmoji[];
-	ads: {
-		id: ID;
-		ratio: number;
-		place: string;
-		url: string;
-		imageUrl: string;
-	}[];
 };
 
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {
@@ -406,8 +399,6 @@ export type AuthSession = {
 	app: App;
 	token: string;
 };
-
-export type Ad = TODO;
 
 export type Clip = TODO;
 

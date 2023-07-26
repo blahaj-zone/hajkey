@@ -155,9 +155,6 @@
 
 		<FormSection>
 			<template #label>{{ i18n.ts.appearance }}</template>
-			<FormSwitch v-model="showAds" class="_formBlock">{{
-				i18n.ts.showAds
-			}}</FormSwitch>
 			<FormSwitch v-model="useBlurEffect" class="_formBlock">{{
 				i18n.ts.useBlurEffect
 			}}</FormSwitch>
@@ -298,7 +295,6 @@ const useBlurEffect = computed(defaultStore.makeGetterSetter("useBlurEffect"));
 const showGapBetweenNotesInTimeline = computed(
 	defaultStore.makeGetterSetter("showGapBetweenNotesInTimeline"),
 );
-const showAds = computed(defaultStore.makeGetterSetter("showAds"));
 const advancedMfm = computed(defaultStore.makeGetterSetter("advancedMfm"));
 const autoplayMfm = computed(
 	defaultStore.makeGetterSetter(
@@ -392,7 +388,6 @@ watch(
 		showGapBetweenNotesInTimeline,
 		instanceTicker,
 		overridedDeviceKind,
-		showAds,
 		showUpdates,
 		swipeOnMobile,
 		swipeOnDesktop,

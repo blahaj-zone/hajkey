@@ -485,11 +485,6 @@ export const routes = [
 				component: page(() => import("./pages/admin/announcements.vue")),
 			},
 			{
-				path: "/ads",
-				name: "ads",
-				component: page(() => import("./pages/admin/promotions.vue")),
-			},
-			{
 				path: "/database",
 				name: "database",
 				component: page(() => import("./pages/admin/database.vue")),
