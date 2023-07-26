@@ -8,7 +8,8 @@
 			<template #caption>
 				<I18n :src="i18n.ts.i18nInfo" tag="span">
 					<template #link>
-						<MkLink url="https://hosted.weblate.org/engage/firefish/"
+						<MkLink
+							url="https://hosted.weblate.org/engage/firefish/"
 							>Weblate</MkLink
 						>
 					</template>

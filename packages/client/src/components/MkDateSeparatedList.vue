@@ -26,7 +26,7 @@ export default defineComponent({
 			type: Boolean,
 			required: false,
 			default: false,
-		}
+		},
 	},
 
 	setup(props, { slots, expose }) {

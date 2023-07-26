@@ -8,64 +8,103 @@
 					itemKey="id"
 					:animation="150"
 					:handle="'.' + $style.itemHandle"
-					@start="e => e.item.classList.add('active')"
-					@end="e => e.item.classList.remove('active')"
+					@start="(e) => e.item.classList.add('active')"
+					@end="(e) => e.item.classList.remove('active')"
 				>
-					<template #item="{element,index}">
+					<template #item="{ element, index }">
 						<div
-							v-if="element.type === '-' || navbarItemDef[element.type]"
+							v-if="
+								element.type === '-' ||
+								navbarItemDef[element.type]
+							"
 							:class="$style.item"
 						>
-							<button class="_button" :class="$style.itemHandle"><i class="ph-list ph-bold ph-lg"></i></button>
-							<i class="ti-fw" :class="[$style.itemIcon, navbarItemDef[element.type]?.icon]"></i><span :class="$style.itemText">{{ i18n.ts[navbarItemDef[element.type]?.title] ?? i18n.ts.divider }}</span>
-							<button class="_button" :class="$style.itemRemove" @click="removeItem(index)"><i class="ph-x ph-bold ph-lg"></i></button>
+							<button class="_button" :class="$style.itemHandle">
+								<i class="ph-list ph-bold ph-lg"></i>
+							</button>
+							<i
+								class="ti-fw"
+								:class="[
+									$style.itemIcon,
+									navbarItemDef[element.type]?.icon,
+								]"
+							></i
+							><span :class="$style.itemText">{{
+								i18n.ts[navbarItemDef[element.type]?.title] ??
+								i18n.ts.divider
+							}}</span>
+							<button
+								class="_button"
+								:class="$style.itemRemove"
+								@click="removeItem(index)"
+							>
+								<i class="ph-x ph-bold ph-lg"></i>
+							</button>
 						</div>
 					</template>
 				</Sortable>
 			</MkContainer>
 		</FormSlot>
 		<div class="buttons">
-			<MkButton inline @click="addItem"><i class="ph-plus ph-bold ph-lg"></i> {{ i18n.ts.addItem }}</MkButton>
-			<MkButton inline danger @click="reset"><i class="ph-arrow-clockwise ph-bold ph-lg"></i> {{ i18n.ts.default }}</MkButton>
-			<MkButton inline primary class="save" @click="save"><i class="ph-floppy-disk ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
+			<MkButton inline @click="addItem"
+				><i class="ph-plus ph-bold ph-lg"></i>
+				{{ i18n.ts.addItem }}</MkButton
+			>
+			<MkButton inline danger @click="reset"
+				><i class="ph-arrow-clockwise ph-bold ph-lg"></i>
+				{{ i18n.ts.default }}</MkButton
+			>
+			<MkButton inline primary class="save" @click="save"
+				><i class="ph-floppy-disk ph-bold ph-lg"></i>
+				{{ i18n.ts.save }}</MkButton
+			>
 		</div>
-	
+
 		<FormRadios v-model="menuDisplay">
 			<template #label>{{ i18n.ts.display }}</template>
-			<option value="sideFull">{{ i18n.ts._menuDisplay.sideFull }}</option>
-			<option value="sideIcon">{{ i18n.ts._menuDisplay.sideIcon }}</option>
+			<option value="sideFull">
+				{{ i18n.ts._menuDisplay.sideFull }}
+			</option>
+			<option value="sideIcon">
+				{{ i18n.ts._menuDisplay.sideIcon }}
+			</option>
 			<!--<option value="top">{{ i18n.ts._menuDisplay.top }}</option>-->
-			<!-- <MkRadio v-model="menuDisplay" value="hide" disabled>{{ i18n.ts._menuDisplay.hide }}</MkRadio>--> <!-- TODO: サイドバーを完全に隠せるようにすると、別途ハンバーガーボタンのようなものをUIに表示する必要があり面倒 -->
+			<!-- <MkRadio v-model="menuDisplay" value="hide" disabled>{{ i18n.ts._menuDisplay.hide }}</MkRadio>-->
+			<!-- TODO: サイドバーを完全に隠せるようにすると、別途ハンバーガーボタンのようなものをUIに表示する必要があり面倒 -->
 		</FormRadios>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, defineAsyncComponent, ref, watch } from 'vue';
+import { computed, defineAsyncComponent, ref, watch } from "vue";
 import FormRadios from "@/components/form/radios.vue";
-import MkButton from '@/components/MkButton.vue';
-import FormSlot from '@/components/form/slot.vue';
-import MkContainer from '@/components/MkContainer.vue';
-import * as os from '@/os';
-import { navbarItemDef } from '@/navbar';
-import { defaultStore } from '@/store';
-import { unisonReload } from '@/scripts/unison-reload';
-import { i18n } from '@/i18n';
-import { definePageMetadata } from '@/scripts/page-metadata';
-import { deepClone } from '@/scripts/clone';
+import MkButton from "@/components/MkButton.vue";
+import FormSlot from "@/components/form/slot.vue";
+import MkContainer from "@/components/MkContainer.vue";
+import * as os from "@/os";
+import { navbarItemDef } from "@/navbar";
+import { defaultStore } from "@/store";
+import { unisonReload } from "@/scripts/unison-reload";
+import { i18n } from "@/i18n";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import { deepClone } from "@/scripts/clone";
 
-const Sortable = defineAsyncComponent(() => import('vuedraggable').then(x => x.default));
+const Sortable = defineAsyncComponent(() =>
+	import("vuedraggable").then((x) => x.default),
+);
 
-const items = ref(defaultStore.state.menu.map(x => ({
-	id: Math.random().toString(),
-	type: x,
-})));
+const items = ref(
+	defaultStore.state.menu.map((x) => ({
+		id: Math.random().toString(),
+		type: x,
+	})),
+);
 
-const menuDisplay = computed(defaultStore.makeGetterSetter('menuDisplay'));
+const menuDisplay = computed(defaultStore.makeGetterSetter("menuDisplay"));
 
 async function reloadAsk() {
 	const { canceled } = await os.confirm({
-		type: 'info',
+		type: "info",
 		text: i18n.ts.reloadToApplySetting,
 	});
 	if (canceled) return;
@@ -74,20 +113,30 @@ async function reloadAsk() {
 }
 
 async function addItem() {
-	const menu = Object.keys(navbarItemDef).filter(k => !defaultStore.state.menu.includes(k));
+	const menu = Object.keys(navbarItemDef).filter(
+		(k) => !defaultStore.state.menu.includes(k),
+	);
 	const { canceled, result: item } = await os.select({
 		title: i18n.ts.addItem,
-		items: [...menu.map(k => ({
-			value: k, text: i18n.ts[navbarItemDef[k].title],
-		})), {
-			value: '-', text: i18n.ts.divider,
-		}],
+		items: [
+			...menu.map((k) => ({
+				value: k,
+				text: i18n.ts[navbarItemDef[k].title],
+			})),
+			{
+				value: "-",
+				text: i18n.ts.divider,
+			},
+		],
 	});
 	if (canceled) return;
-	items.value = [...items.value, {
-		id: Math.random().toString(),
-		type: item,
-	}];
+	items.value = [
+		...items.value,
+		{
+			id: Math.random().toString(),
+			type: item,
+		},
+	];
 }
 
 function removeItem(index: number) {
@@ -95,12 +144,15 @@ function removeItem(index: number) {
 }
 
 async function save() {
-	defaultStore.set('menu', items.value.map(x => x.type));
+	defaultStore.set(
+		"menu",
+		items.value.map((x) => x.type),
+	);
 	await reloadAsk();
 }
 
 function reset() {
-	items.value = defaultStore.def.menu.default.map(x => ({
+	items.value = defaultStore.def.menu.default.map((x) => ({
 		id: Math.random().toString(),
 		type: x,
 	}));
@@ -116,7 +168,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.navbar,
-	icon: 'ti ti-list',
+	icon: "ti ti-list",
 });
 </script>
 

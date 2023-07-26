@@ -78,16 +78,16 @@ const buttonsLeft = $computed(() => {
 });
 const buttonsRight = $computed(() => {
 	const buttons = [
-	{
-		icon: 'ph-arrow-clockwise ph-bold ph-lg',
-		title: i18n.ts.reload,
-		onClick: reload,
-	}, 
-	{
-		icon: "ph-arrows-out-simple ph-bold ph-lg",
-		title: i18n.ts.showInPage,
-		onClick: expand,
-	},
+		{
+			icon: "ph-arrow-clockwise ph-bold ph-lg",
+			title: i18n.ts.reload,
+			onClick: reload,
+		},
+		{
+			icon: "ph-arrows-out-simple ph-bold ph-lg",
+			title: i18n.ts.showInPage,
+			onClick: expand,
+		},
 	];
 
 	return buttons;

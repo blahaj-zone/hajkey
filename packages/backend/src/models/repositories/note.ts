@@ -295,8 +295,7 @@ export const NoteRepository = db.getRepository(Note).extend({
 	): Promise<Packed<"Note"> | undefined> {
 		try {
 			return await this.pack(src, me, options);
-		}
-		catch {
+		} catch {
 			return undefined;
 		}
 	},

@@ -8,7 +8,11 @@ import { apiTimelineMastodon } from "./endpoints/timeline.js";
 import { apiNotificationsMastodon } from "./endpoints/notifications.js";
 import { apiSearchMastodon } from "./endpoints/search.js";
 import { getInstance } from "./endpoints/meta.js";
-import {convertAccount, convertAnnouncement, convertFilter} from "./converters.js";
+import {
+	convertAccount,
+	convertAnnouncement,
+	convertFilter,
+} from "./converters.js";
 import { convertId, IdType } from "../index.js";
 import { Users } from "@/models/index.js";
 import { IsNull } from "typeorm";
@@ -55,15 +59,18 @@ export function apiMastodonCompatible(router: Router): void {
 		try {
 			const data = await client.getInstance();
 			const admin = await Users.findOne({
-					where: {
-						host: IsNull(),
-						isAdmin: true,
-						isDeleted: false,
-						isSuspended: false,
-					},
-					order: { id: "ASC" },
-				});
-			const contact = admin == null ? null : convertAccount((await client.getAccount(admin.id)).data);
+				where: {
+					host: IsNull(),
+					isAdmin: true,
+					isDeleted: false,
+					isSuspended: false,
+				},
+				order: { id: "ASC" },
+			});
+			const contact =
+				admin == null
+					? null
+					: convertAccount((await client.getAccount(admin.id)).data);
 			ctx.body = await getInstance(data.data, contact);
 		} catch (e: any) {
 			console.error(e);

@@ -6,13 +6,15 @@ import { IsNull } from "typeorm";
 import { MAX_NOTE_TEXT_LENGTH, FILE_TYPE_BROWSERSAFE } from "@/const.js";
 
 // TODO: add iceshrimp features
-export async function getInstance(response: Entity.Instance, contact: Entity.Account) {
-	const [meta, totalUsers, totalStatuses] =
-		await Promise.all([
-			fetchMeta(true),
-			Users.count({ where: { host: IsNull() } }),
-			Notes.count({ where: { userHost: IsNull() } }),
-		]);
+export async function getInstance(
+	response: Entity.Instance,
+	contact: Entity.Account,
+) {
+	const [meta, totalUsers, totalStatuses] = await Promise.all([
+		fetchMeta(true),
+		Users.count({ where: { host: IsNull() } }),
+		Notes.count({ where: { userHost: IsNull() } }),
+	]);
 
 	return {
 		uri: response.uri,

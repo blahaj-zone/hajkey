@@ -64,7 +64,9 @@
 									><i class="ph-code ph-bold ph-lg"></i
 								></template>
 								{{ i18n.ts._aboutIceshrimp.source }}
-								<template #suffix>Iceshrimp development</template>
+								<template #suffix
+									>Iceshrimp development</template
+								>
 							</FormLink>
 						</div>
 					</FormSection>
