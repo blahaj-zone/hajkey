@@ -27,7 +27,7 @@ COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/back
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
 
 # Configure corepack and pnpm, and install dev mode dependencies for compilation
-RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm i --frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm i
 
 # Copy in the rest of the native-utils rust files
 COPY packages/backend/native-utils packages/backend/native-utils/
@@ -40,7 +40,7 @@ COPY . ./
 RUN env NODE_ENV=production sh -c "pnpm run --filter '!native-utils' build && pnpm run gulp"
 
 # Trim down the dependencies to only those for production
-RUN pnpm i --prod --frozen-lockfile
+RUN pnpm i --prod
 
 ## Runtime container
 FROM alpine:3.18

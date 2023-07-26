@@ -28,7 +28,7 @@
 					shells = {
 						# The default shell, used by nix-direnv
 						default = {
-							name = "firefish-dev-shell";
+							name = "iceshrimp-dev-shell";
 							# Add additional packages to our environment
 							packages = [
 								pkgs.nodePackages.pnpm
@@ -44,7 +44,7 @@
 							languages.javascript.package = pkgs.nodejs_18;
 							# Enable stable Rust for the backend
 							languages.rust.enable = true;
-							languages.rust.version = "stable";
+							languages.rust.channel = "stable";
 							processes = {
 								dev-server.exec = "pnpm run dev";
 							};
@@ -62,7 +62,7 @@
 									enable = true;
 									package = pkgs.postgresql_12;
 									initialDatabases = [{
-										name = "firefish";
+										name = "iceshrimp";
 									}];
 									initialScript = ''
 										CREATE USER firefish WITH PASSWORD 'firefish';
