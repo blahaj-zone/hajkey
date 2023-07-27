@@ -8913,8 +8913,8 @@ __metadata:
 
 "emojilib@https://iceshrimp.dev/iceshrimp/emojilib.git":
   version: 3.0.10
-  resolution: "emojilib@https://iceshrimp.dev/iceshrimp/emojilib.git#commit=5b31891203b2d32dd45c2db5d0827f4dfc80b7a4"
-  checksum: 13a39419f8442ff209f1348f04222f9757eaa79a820e8861d575b562404b0e448f9628d89654108a7d8ef33ef7c56c8e283bee69ba4360c041428effc7e9826d
+  resolution: "emojilib@https://iceshrimp.dev/iceshrimp/emojilib.git#commit=60cabfdb5e8dbd3005414366fc6caa65e54f7746"
+  checksum: 773dbd4a9c0f9f0e8854a8ae15a5337a27a03b0fdf12fdc53fe326d5b958d5ff024655ee21c5a3e75f428bbb2c5aba0c6954dd718c71d342458b441d272f6116
   languageName: node
   linkType: hard
 
