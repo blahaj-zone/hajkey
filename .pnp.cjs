@@ -7814,6 +7814,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@swc/core-android-arm64", "npm:1.3.11"],\
             ["@syuilo/aiscript", "npm:0.11.1"],\
             ["@tensorflow/tfjs", "npm:4.9.0"],\
+            ["@tensorflow/tfjs-backend-webgl", "virtual:99af600b5f993391adb48d4b9c27bfd77e64414400b06f57d48f61f2c8b7b1d8e4a6f9d9e027097e8dcc1a397c244d6d04544fe28c4d03aa7a307b289e973cd3#npm:4.9.0"],\
+            ["@tensorflow/tfjs-core", "npm:4.9.0"],\
             ["@tensorflow/tfjs-node", "npm:3.21.1"],\
             ["@types/adm-zip", "npm:0.5.0"],\
             ["@types/bcryptjs", "npm:2.4.2"],\
