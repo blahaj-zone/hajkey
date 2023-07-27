@@ -27,7 +27,7 @@ COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/back
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
 
 # Configure corepack and yarn, and install dev mode dependencies for compilation
-RUN corepack enable && corepack prepare yarn@latest --activate && yarn
+RUN corepack enable && corepack prepare yarn@stable --activate && yarn
 
 # Copy in the rest of the native-utils rust files
 COPY packages/backend/native-utils packages/backend/native-utils/
