@@ -64,9 +64,8 @@ packages/megalodon/.idea
 #old pnpm
 pnpm*
 
-.pnp.*
-.pnp.loader.mjs
 .yarn/*
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
