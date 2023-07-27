@@ -9,7 +9,7 @@
 	"private": true,
 	"scripts": {
 		"rebuild": "clean && node ./scripts/build-greet.js && yarn workspace iceshrimp-js build &&  yarn workspaces -pi run build && gulp",
-		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces run build && gulp",
+		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces foreach run build && gulp",
 		"start": "yarn workspace backend run start",
 		"start:test": "yarn workspace backend run start:test",
 		"init": "yarn migrate",

@@ -6261,9 +6261,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browser-image-resizer@https://iceshrimp.dev/nullrequest/browser-image-resizer.git":
+"browser-image-resizer@https://iceshrimp.dev/iceshrimp/browser-image-resizer.git":
   version: 2.2.1-misskey.4
-  resolution: "browser-image-resizer@https://iceshrimp.dev/nullrequest/browser-image-resizer.git#commit=798c66aeb9e86a792e7408067ee3c5d7d8575f1a"
+  resolution: "browser-image-resizer@https://iceshrimp.dev/iceshrimp/browser-image-resizer.git#commit=798c66aeb9e86a792e7408067ee3c5d7d8575f1a"
   checksum: 6bfec4a7dad881a38b5ae8cd8cb2d5b16e6361312ff231b2f9fc1ca4724f94fa6fb49ce0efa5d6a0a0a3f2c34463a4641de9c7852432653f9a27370fb1ebd086
   languageName: node
   linkType: hard
@@ -7112,7 +7112,7 @@ __metadata:
     autosize: 5.0.2
     blurhash: 2.0.5
     broadcast-channel: 5.1.0
-    browser-image-resizer: "https://iceshrimp.dev/nullrequest/browser-image-resizer.git"
+    browser-image-resizer: "https://iceshrimp.dev/iceshrimp/browser-image-resizer.git"
     chart.js: 4.3.0
     chartjs-adapter-date-fns: 3.0.0
     chartjs-chart-matrix: ^2.0.1
@@ -7124,7 +7124,7 @@ __metadata:
     cross-env: 7.0.3
     cypress: 10.11.0
     date-fns: 2.30.0
-    emojilib: "github:thatonecalculator/emojilib"
+    emojilib: "https://iceshrimp.dev/iceshrimp/emojilib.git"
     escape-regexp: 0.0.1
     eslint: ^8.45.0
     eslint-config-prettier: ^8.6.0
@@ -8911,10 +8911,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emojilib@github:thatonecalculator/emojilib":
+"emojilib@https://iceshrimp.dev/iceshrimp/emojilib.git":
   version: 3.0.10
-  resolution: "emojilib@https://github.com/thatonecalculator/emojilib.git#commit=d3c8c6a77d4362b3b3180099f1d2eac344ce245c"
-  checksum: 44f3fa6fd9184142f3feb33bbc6c86693fd6d51112a182f354f05ee9fc9303053d3ff393acd224e4671b2d3fdeaf7a3a00cfc45dacfdae2c8b25fe94900e0f34
+  resolution: "emojilib@https://iceshrimp.dev/iceshrimp/emojilib.git#commit=5b31891203b2d32dd45c2db5d0827f4dfc80b7a4"
+  checksum: 13a39419f8442ff209f1348f04222f9757eaa79a820e8861d575b562404b0e448f9628d89654108a7d8ef33ef7c56c8e283bee69ba4360c041428effc7e9826d
   languageName: node
   linkType: hard
 
