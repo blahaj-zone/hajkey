@@ -65,6 +65,7 @@ packages/megalodon/.idea
 pnpm*
 
 .pnp.*
+.pnp.loader.mjs
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
