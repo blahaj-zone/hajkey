@@ -3,7 +3,7 @@ FROM alpine:3.18 as build
 WORKDIR /iceshrimp
 
 # Install compilation dependencies
-RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current rust cargo vips
+RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current npm rust cargo vips
 
 # Copy only the cargo dependency-related files first, to cache efficiently
 COPY packages/backend/native-utils/Cargo.toml packages/backend/native-utils/Cargo.toml
@@ -16,7 +16,7 @@ COPY packages/backend/native-utils/migration/src/lib.rs packages/backend/native-
 RUN cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
 
 # Copy only the dependency-related files first, to cache efficiently
-COPY package.json pnpm*.yaml ./
+COPY package.json yarn.lock .pnp.cjs .pnp.loader.mjs ./
 COPY packages/backend/package.json packages/backend/package.json
 COPY packages/client/package.json packages/client/package.json
 COPY packages/sw/package.json packages/sw/package.json
@@ -25,6 +25,9 @@ COPY packages/megalodon/package.json packages/megalodon/package.json
 COPY packages/backend/native-utils/package.json packages/backend/native-utils/package.json
 COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/backend/native-utils/npm/linux-x64-musl/package.json
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
+
+# Copy yarn cache
+COPY .yarn/cache .yarn/cache/
 
 # Configure corepack and yarn, and install dev mode dependencies for compilation
 RUN corepack enable && corepack prepare yarn@stable --activate && yarn
