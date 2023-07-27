@@ -3,7 +3,7 @@ FROM alpine:3.18 as build
 WORKDIR /iceshrimp
 
 # Install compilation dependencies
-RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current npm rust cargo vips
+RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current rust cargo vips
 
 # Copy only the cargo dependency-related files first, to cache efficiently
 COPY packages/backend/native-utils/Cargo.toml packages/backend/native-utils/Cargo.toml
@@ -26,21 +26,21 @@ COPY packages/backend/native-utils/package.json packages/backend/native-utils/pa
 COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/backend/native-utils/npm/linux-x64-musl/package.json
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
 
-# Configure corepack and pnpm, and install dev mode dependencies for compilation
-RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm i
+# Configure corepack and yarn, and install dev mode dependencies for compilation
+RUN corepack enable && corepack prepare yarn@latest --activate && yarn
 
 # Copy in the rest of the native-utils rust files
 COPY packages/backend/native-utils packages/backend/native-utils/
 
 # Compile native-utils
-RUN pnpm run --filter native-utils build
+RUN yarn workspace native-utils build
 
 # Copy in the rest of the files to compile
 COPY . ./
-RUN env NODE_ENV=production sh -c "pnpm run --filter '!native-utils' build && pnpm run gulp"
+RUN env NODE_ENV=production sh -c "yarn workspaces foreach --exclude native-utils build && yarn gulp"
 
 # Trim down the dependencies to only those for production
-RUN pnpm i --prod
+RUN yarn workspaces focus --all --production
 
 ## Runtime container
 FROM alpine:3.18
@@ -66,8 +66,8 @@ COPY --from=build /iceshrimp/packages/backend/built /iceshrimp/packages/backend/
 COPY --from=build /iceshrimp/packages/backend/assets/instance.css /iceshrimp/packages/backend/assets/instance.css
 COPY --from=build /iceshrimp/packages/backend/native-utils/built /iceshrimp/packages/backend/native-utils/built
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare yarn@latest --activate
 ENV NODE_ENV=production
 VOLUME "/iceshrimp/files"
 ENTRYPOINT [ "/sbin/tini", "--" ]
-CMD [ "pnpm", "run", "migrateandstart" ]
+CMD [ "yarn", "run", "migrateandstart" ]
