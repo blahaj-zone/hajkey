@@ -9260,7 +9260,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cross-env", "npm:7.0.3"],\
             ["cypress", "npm:10.11.0"],\
             ["date-fns", "npm:2.30.0"],\
-            ["emojilib", "https://iceshrimp.dev/iceshrimp/emojilib.git#commit=c5f49f603971178bf06f2d25c75effd9e5c0d189"],\
+            ["emojilib", "https://iceshrimp.dev/iceshrimp/emojilib.git#commit=6da2033596e67662a509a20997cb05bcf17a6310"],\
             ["escape-regexp", "npm:0.0.1"],\
             ["eslint", "npm:8.45.0"],\
             ["eslint-config-prettier", "virtual:53ee7992132b8e069dc99c9f0f3d05821836bcb37183dd466da76224f67e18ee1c7c92a27051df007cb908288116489612199ddda9fa1e776557a21308d9d714#npm:8.9.0"],\
@@ -11516,10 +11516,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["emojilib", [\
-        ["https://iceshrimp.dev/iceshrimp/emojilib.git#commit=c5f49f603971178bf06f2d25c75effd9e5c0d189", {\
-          "packageLocation": "./.yarn/cache/emojilib-https-3d8762c319-773dbd4a9c.zip/node_modules/emojilib/",\
+        ["https://iceshrimp.dev/iceshrimp/emojilib.git#commit=6da2033596e67662a509a20997cb05bcf17a6310", {\
+          "packageLocation": "./.yarn/cache/emojilib-https-b2ce1af2be-773dbd4a9c.zip/node_modules/emojilib/",\
           "packageDependencies": [\
-            ["emojilib", "https://iceshrimp.dev/iceshrimp/emojilib.git#commit=c5f49f603971178bf06f2d25c75effd9e5c0d189"]\
+            ["emojilib", "https://iceshrimp.dev/iceshrimp/emojilib.git#commit=6da2033596e67662a509a20997cb05bcf17a6310"]\
           ],\
           "linkType": "HARD"\
         }]\
