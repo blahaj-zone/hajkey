@@ -63,9 +63,9 @@ loadMore: "Load more"
 showMore: "Show more"
 newer: "newer"
 older: "older"
-showLess: "Close"
 expandAllCws: "Show content for all replies"
 collapseAllCws: "Hide content for all replies"
+showLess: "Show less"
 youGotNewFollower: "followed you"
 receiveFollowRequest: "Follow request received"
 followRequestAccepted: "Follow request accepted"
@@ -1127,6 +1127,7 @@ removeQuote: "Remove quote"
 removeRecipient: "Remove recipient"
 removeMember: "Remove member"
 verifiedLink: "Verified link"
+noteHidden: "This note is hidden"
 
 _sensitiveMediaDetection:
   description: "Reduces the effort of server moderation through automatically recognizing
@@ -1623,7 +1624,7 @@ _widgets:
   meiliIndexCount: "Indexed posts"
 
 _cw:
-  hide: "Hide"
+  hide: "Hide content"
   show: "Show content"
   chars: "{count} characters"
   files: "{count} file(s)"

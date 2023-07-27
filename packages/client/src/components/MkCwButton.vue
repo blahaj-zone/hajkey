@@ -114,7 +114,7 @@ defineExpose({
 			padding: 0.4em 3em;
 			font-size: 0.8em;
 			border-radius: 999px;
-			box-shadow: 0 0 7px 7px var(--bg);
+			box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
 		}
 	}
 }

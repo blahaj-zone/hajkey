@@ -59,6 +59,7 @@
 				v-model="collapsed"
 				v-on:keydown="focusFooter"
 			></XShowMoreButton>
+			<span v-if="note.cw && !showContent" class="hiddenNote">{{ i18n.ts.noteHidden }}</span>
 			<XCwButton
 				ref="cwButton"
 				v-if="note.cw && !showContent"
@@ -314,6 +315,13 @@ function focusFooter(ev) {
 .wrmlmaau {
 	.content {
 		overflow-wrap: break-word;
+		> .hiddenNote {
+			display: block;
+			padding: 0.5em 0 0.5em;
+			font-weight: 700;
+			font-size: 1.1em;
+			text-align: center;
+		}
 		> .body {
 			transition: filter 0.1s;
 			> .rp {
@@ -363,6 +371,7 @@ function focusFooter(ev) {
 		&.collapsed,
 		&.showContent {
 			position: relative;
+			min-height: calc(1em + 100px);
 			max-height: calc(15em + 100px);
 			> .body {
 				max-height: inherit;
@@ -397,7 +406,7 @@ function focusFooter(ev) {
 			}
 			:deep(.fade) {
 				inset: 0;
-				top: 90px;
+				top: 0;
 			}
 		}
 
