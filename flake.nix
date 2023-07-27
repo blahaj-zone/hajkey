@@ -66,7 +66,7 @@
 									}];
 									initialScript = ''
 										CREATE USER iceshrimp WITH PASSWORD 'iceshrimp';
-										ALTER USER firefish WITH SUPERUSER;
+										ALTER USER iceshrimp WITH SUPERUSER;
 										GRANT ALL ON DATABASE iceshrimp TO iceshrimp;
 									'';
 									listen_addresses = "127.0.0.1";
