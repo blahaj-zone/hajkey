@@ -40,7 +40,7 @@ RUN yarn workspace native-utils build
 
 # Copy in the rest of the files to compile
 COPY . ./
-RUN env NODE_ENV=production sh -c "yarn workspaces foreach --exclude native-utils build && yarn gulp"
+RUN env NODE_ENV=production sh -c "yarn workspaces foreach --exclude native-utils run build && yarn gulp"
 
 # Trim down the dependencies to only those for production
 RUN yarn workspaces focus --all --production
