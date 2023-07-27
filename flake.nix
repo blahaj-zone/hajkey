@@ -31,7 +31,7 @@
 							name = "iceshrimp-dev-shell";
 							# Add additional packages to our environment
 							packages = [
-								pkgs.nodePackages.yarn
+								pkgs.yarn-berry
 
 								pkgs.python3
 							];
