@@ -71,6 +71,7 @@ pnpm*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+!.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97
 
 # Nix Development shell items
 .devenv

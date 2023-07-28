@@ -155,7 +155,7 @@ router.get("/twemoji/(.*)", async (ctx) => {
 	);
 
 	await send(ctx as any, path, {
-		root: `${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/`,
+		root: `${_dirname}/../../../.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97/dist/svg/`,
 		maxage: 30 * DAY,
 	});
 });
@@ -169,7 +169,7 @@ router.get("/twemoji-badge/(.*)", async (ctx) => {
 	}
 
 	const mask = await sharp(
-		`${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/${path.replace(
+		`${_dirname}/../../../.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97/dist/svg/${path.replace(
 			".png",
 			"",
 		)}.svg`,
