@@ -215,6 +215,7 @@ const props = defineProps<{
 	conversation?;
 	detailed?: boolean;
 	detailedView?: boolean;
+	forceExpandCw?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -238,7 +239,14 @@ const urls = props.note.text
 	? extractUrlFromMfm(mfm.parse(props.note.text)).slice(0, 5)
 	: null;
 
-let showContent = $ref(false);
+let _showContent = $ref(null);
+let showContent = $computed({
+	set(val) { _showContent = val },
+	get() {
+		if (_showContent != null) return _showContent;
+		return props.forceExpandCw || false;
+	},
+})
 
 const mfms = props.note.text
 	? extractMfmWithAnimation(mfm.parse(props.note.text))

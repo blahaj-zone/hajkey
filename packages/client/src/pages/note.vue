@@ -39,6 +39,7 @@
 								<XNoteDetailed
 									:key="appearNote.id"
 									v-model:note="appearNote"
+									:expandAllCws="expandAllCws"
 									class="note"
 								/>
 							</div>
@@ -91,6 +92,7 @@ let showNext = $ref(false);
 let error = $ref();
 let isRenote = $ref(false);
 let appearNote = $ref<null | misskey.entities.Note>();
+let expandAllCws = $ref(false);
 
 const prevPagination = {
 	endpoint: "users/notes" as const,
@@ -160,11 +162,21 @@ function fetchNote() {
 		});
 }
 
+function toggleAllCws() {
+	expandAllCws = !expandAllCws;
+}
+
 watch(() => props.noteId, fetchNote, {
 	immediate: true,
 });
 
-const headerActions = $computed(() => []);
+const headerActions = $computed(() => appearNote ? [
+	{
+		icon: `${expandAllCws ? "ph-eye" : "ph-eye-slash"} ph-bold ph-lg`,
+		text: expandAllCws ? i18n.ts.collapseAllCws : i18n.ts.expandAllCws,
+		handler: toggleAllCws,
+	},
+]:[]);
 
 const headerTabs = $computed(() => []);
 

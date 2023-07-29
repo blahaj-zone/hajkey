@@ -35,6 +35,7 @@
 						:parentId="parentId"
 						:conversation="conversation"
 						:detailedView="detailedView"
+						:forceExpandCw="props.forceExpandCw"
 						@focusfooter="footerEl.focus()"
 					/>
 					<div v-if="translating || translation" class="translation">
@@ -148,6 +149,7 @@
 				:replyLevel="replyLevel + 1"
 				:parentId="appearNote.id"
 				:detailedView="detailedView"
+				:forceExpandCw="props.forceExpandCw"
 			/>
 			<div v-else-if="replies.length > 0" class="more">
 				<div class="line"></div>
@@ -211,6 +213,7 @@ const props = withDefaults(
 		conversation?: misskey.entities.Note[];
 		parentId?;
 		detailedView?;
+		forceExpandCw?: boolean;
 
 		// how many notes are in between this one and the note being viewed in detail
 		depth?: number;

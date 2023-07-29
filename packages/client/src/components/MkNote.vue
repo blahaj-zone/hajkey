@@ -14,6 +14,7 @@
 		<MkNoteSub
 			v-if="appearNote.reply && !detailedView && !collapsedReply"
 			:note="appearNote.reply"
+			:forceExpandCw="props.forceExpandCw"
 			class="reply-to"
 		/>
 		<div
@@ -105,6 +106,7 @@
 						:detailed="true"
 						:detailedView="detailedView"
 						:parentId="appearNote.parentId"
+						:forceExpandCw="props.forceExpandCw"
 						@push="(e) => router.push(notePage(e))"
 						@focusfooter="footerEl.focus()"
 						@expanded="(e) => setPostExpanded(e)"
@@ -298,6 +300,7 @@ const props = defineProps<{
 	pinned?: boolean;
 	detailedView?: boolean;
 	collapsedReply?: boolean;
+	forceExpandCw?: boolean;
 }>();
 
 const inChannel = inject("inChannel", null);

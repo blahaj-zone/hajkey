@@ -16,6 +16,7 @@
 			class="reply-to"
 			:note="note"
 			:detailedView="true"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="note.reply" mini />
 		<MkNoteSub
@@ -23,6 +24,7 @@
 			:note="note.reply"
 			class="reply-to"
 			:detailedView="true"
+			:forceExpandCw="props.expandAllCws"
 		/>
 
 		<MkNote
@@ -31,6 +33,7 @@
 			tabindex="-1"
 			:note="note"
 			detailedView
+			:forceExpandCw="props.expandAllCws"
 		></MkNote>
 
 		<MkTab v-model="tab" :style="'underline'" @update:modelValue="loadTab">
@@ -72,6 +75,7 @@
 			:conversation="replies"
 			:detailedView="true"
 			:parentId="note.id"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="tab === 'replies' && note.repliesCount > 0" />
 
@@ -84,6 +88,7 @@
 			:conversation="replies"
 			:detailedView="true"
 			:parentId="note.id"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="tab === 'quotes' && directQuotes.length > 0" />
 
@@ -186,6 +191,7 @@ import appear from "@/directives/appear";
 const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
+	expandAllCws?: boolean;
 }>();
 
 let tab = $ref("replies");
