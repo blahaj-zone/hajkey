@@ -34,7 +34,7 @@
 			<i class="ph-lock ph-bold"></i>
 		</span>
 		<Mfm
-			v-if="note.cw != ''"
+			v-if="note.cw != '' && showContent"
 			class="text"
 			:text="note.cw"
 			:author="note.user"
@@ -59,7 +59,7 @@
 				v-model="collapsed"
 				v-on:keydown="focusFooter"
 			></XShowMoreButton>
-			<span v-if="note.cw && !showContent" class="hiddenNote">{{ i18n.ts.noteHidden }}</span>
+			<Mfm v-if="note.cw && !showContent" class="hiddenNote" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
 			<XCwButton
 				ref="cwButton"
 				v-if="note.cw && !showContent"

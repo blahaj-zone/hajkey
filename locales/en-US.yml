@@ -1127,7 +1127,6 @@ removeQuote: "Remove quote"
 removeRecipient: "Remove recipient"
 removeMember: "Remove member"
 verifiedLink: "Verified link"
-noteHidden: "This note is hidden"
 
 _sensitiveMediaDetection:
   description: "Reduces the effort of server moderation through automatically recognizing
