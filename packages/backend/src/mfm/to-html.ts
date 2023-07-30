@@ -3,6 +3,7 @@ import type * as mfm from "mfm-js";
 import config from "@/config/index.js";
 import { intersperse } from "@/prelude/array.js";
 import type { IMentionedRemoteUsers } from "@/models/entities/note.js";
+import { engine } from "@/config/sane-defaults.js";
 
 export function toHtml(
 	nodes: mfm.MfmNode[] | null,
@@ -156,7 +157,7 @@ export function toHtml(
 
 		search(node) {
 			const a = doc.createElement("a");
-			a.href = `https://search.annoyingorange.xyz/search?q=${node.props.query}`;
+			a.href = `${engine}{node.props.query}`;
 			a.textContent = node.props.content;
 			return a;
 		},
