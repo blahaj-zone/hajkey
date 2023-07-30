@@ -22,7 +22,7 @@ function checkWordMute(
 	let text = `${note.cw ?? ""} ${note.text ?? ""}`;
 	if (note.files != null)
 		text += ` ${note.files.map((f) => f.comment ?? "").join(" ")}`;
-	text = text.trim();
+	text = text.trim().toLowerCase();
 
 	if (text === "") return false;
 
@@ -33,7 +33,7 @@ function checkWordMute(
 
 			if (
 				keywords.length > 0 &&
-				keywords.every((keyword) => text.includes(keyword))
+				keywords.every((keyword) => text.includes(keyword.toLowerCase()))
 			)
 				return true;
 		} else {

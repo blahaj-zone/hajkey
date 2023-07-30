@@ -13,7 +13,7 @@ function checkWordMute(
 	let text = `${note.cw ?? ""} ${note.text ?? ""}`;
 	if (note.files != null)
 		text += ` ${note.files.map((f) => f.comment ?? "").join(" ")}`;
-	text = text.trim();
+	text = text.trim().toLowerCase();
 
 	if (text === "") return NotMuted;
 
@@ -26,7 +26,7 @@ function checkWordMute(
 
 			if (
 				keywords.length > 0 &&
-				keywords.every((keyword) => text.includes(keyword))
+				keywords.every((keyword) => text.includes(keyword.toLowerCase()))
 			) {
 				result.muted = true;
 				result.matched.push(...keywords);
