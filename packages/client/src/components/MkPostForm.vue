@@ -1255,8 +1255,8 @@ onMounted(() => {
 				padding: 0;
 				margin: 0;
 				font-size: 16px;
-				width: 48px;
-				height: 48px;
+				width: 40px;
+				height: 40px;
 				border-radius: 6px;
 
 				&:hover {
@@ -1316,8 +1316,8 @@ onMounted(() => {
 			> footer {
 				> button {
 					font-size: 14px;
-					width: 44px;
-					height: 44px;
+					width: 40px;
+					height: 40px;
 				}
 			}
 		}
