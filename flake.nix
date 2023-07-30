@@ -39,14 +39,14 @@
 							devenv.warnOnNewVersion = false;
 							# Enable typescript support
 							languages.typescript.enable = true;
-							# Enable javascript for NPM and PNPM
+							# Enable javascript for NPM and Yarn
 							languages.javascript.enable = true;
 							languages.javascript.package = pkgs.nodejs_18;
 							# Enable stable Rust for the backend
 							languages.rust.enable = true;
 							languages.rust.channel = "stable";
 							processes = {
-								dev-server.exec = "pnpm run dev";
+								dev-server.exec = "yarn run dev";
 							};
 							scripts = {
 								build.exec = "yarn run build";
