@@ -65,7 +65,7 @@ COPY --from=build /iceshrimp/packages/backend/built /iceshrimp/packages/backend/
 COPY --from=build /iceshrimp/packages/backend/assets/instance.css /iceshrimp/packages/backend/assets/instance.css
 COPY --from=build /iceshrimp/packages/backend/native-utils/built /iceshrimp/packages/backend/native-utils/built
 
-RUN corepack enable && corepack prepare yarn@latest --activate
+RUN corepack enable && corepack prepare yarn@stable --activate
 ENV NODE_ENV=production
 VOLUME "/iceshrimp/files"
 ENTRYPOINT [ "/sbin/tini", "--" ]
