@@ -10,6 +10,7 @@ pub struct Model {
     #[sea_orm(column_name = "caughtAt")]
     pub caught_at: DateTimeWithTimeZone,
     pub host: String,
+    pub account_domain: Option<String>,
     #[sea_orm(column_name = "usersCount")]
     pub users_count: i32,
     #[sea_orm(column_name = "notesCount")]

@@ -170,4 +170,9 @@ export class Instance {
 		nullable: true,
 	})
 	public infoUpdatedAt: Date | null;
+
+	@Column("Domains for account ats", {
+		nullable: true,
+	})
+	public accountDomain: string | null;
 }

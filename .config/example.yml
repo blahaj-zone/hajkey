@@ -8,7 +8,12 @@
 #───┘ URL └─────────────────────────────────────────────────────
 
 # Final accessible URL seen by a user.
-url: https://example.com/
+url: https://example.org/
+
+# (Optional - ADVANCED) Domain used for account handles.
+# Only uncomment this if you want to for example have the URL be ice.example.org
+# and the handles to be example.org
+# accountDomain: example.org
 
 #   ┌───────────────────────┐
 #───┘ Port and TLS settings └───────────────────────────────────

@@ -32,7 +32,7 @@ export async function resolveUser(
 
 	host = toPuny(host);
 
-	if (config.host === host) {
+	if (config.host === host || config.accountDomain === host) {
 		logger.info(`return local user: ${usernameLower}`);
 		return await Users.findOneBy({ usernameLower, host: IsNull() }).then(
 			(u) => {

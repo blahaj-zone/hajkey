@@ -40,6 +40,8 @@ export default function load() {
 
 	config.url = url.origin;
 
+	if (!config.accountDomain) config.accountDomain = url.hostname
+
 	config.port = config.port || parseInt(process.env.PORT || "", 10);
 
 	mixin.version = meta.version;

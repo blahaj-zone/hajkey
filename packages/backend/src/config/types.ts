@@ -5,6 +5,7 @@ export type Source = {
 	repository_url?: string;
 	feedback_url?: string;
 	url: string;
+	accountDomain?: string;
 	port: number;
 	disableHsts?: boolean;
 	db: {

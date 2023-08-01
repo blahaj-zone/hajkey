@@ -18,6 +18,7 @@ export async function getInstance(
 
 	return {
 		uri: response.uri,
+		account_domain: config.accountDomain,
 		title: response.title || "Iceshrimp",
 		short_description:
 			response.description?.substring(0, 50) || "See real server website",
