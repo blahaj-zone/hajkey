@@ -53,7 +53,7 @@ const nodeinfo2 = async () => {
 			name: "iceshrimp",
 			version: config.version,
 			repository: meta.repositoryUrl,
-			homepage: "https://joinfirefish.org/",
+			homepage: "https://iceshrimp.dev/",
 		},
 		protocols: ["activitypub"],
 		services: {
