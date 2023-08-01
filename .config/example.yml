@@ -190,6 +190,13 @@ reservedUsernames: [
 # Proxy remote files (default: false)
 #proxyRemoteFiles: true
 
+# Media cleanup settings (defaults: false, 0, false, false)
+#mediaCleanup:
+#  cron: true
+#  maxAgeDays: 30
+#  cleanAvatars: false
+#  cleanHeaders: false
+
 #allowedPrivateNetworks: [
 #  '127.0.0.1/32'
 #]

@@ -59,6 +59,13 @@ export type Source = {
 		ssl: boolean;
 	};
 
+	mediaCleanup?: {
+		cron?: boolean;
+		maxAgeDays?: number;
+		keepAvatars?: boolean;
+		keepHeaders?: boolean;
+	};
+
 	proxy?: string;
 	proxySmtp?: string;
 	proxyBypassHosts?: string[];
