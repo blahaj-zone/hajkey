@@ -57,11 +57,7 @@ COPY . ./
 COPY --from=build /iceshrimp/packages/megalodon /iceshrimp/packages/megalodon
 
 # Copy node modules
-COPY --from=build /iceshrimp/node_modules /iceshrimp/node_modules
-COPY --from=build /iceshrimp/packages/backend/node_modules /iceshrimp/packages/backend/node_modules
-COPY --from=build /iceshrimp/packages/sw/node_modules /iceshrimp/packages/sw/node_modules
-COPY --from=build /iceshrimp/packages/client/node_modules /iceshrimp/packages/client/node_modules
-COPY --from=build /iceshrimp/packages/iceshrimp-js/node_modules /iceshrimp/packages/iceshrimp-js/node_modules
+COPY --from=build /iceshrimp/.yarn /iceshrimp/.yarn
 
 # Copy the finished compiled files
 COPY --from=build /iceshrimp/built /iceshrimp/built
