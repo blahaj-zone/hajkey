@@ -27,6 +27,8 @@ export function apiStatusMastodon(router: Router): void {
 			let body: any = ctx.request.body;
 			if (body.in_reply_to_id)
 				body.in_reply_to_id = convertId(body.in_reply_to_id, IdType.FirefishId);
+			if (body.quote_id)
+				body.quote_id = convertId(body.quote_id, IdType.FirefishId);
 			if (
 				(!body.poll && body["poll[options][]"]) ||
 				(!body.media_ids && body["media_ids[]"])
