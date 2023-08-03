@@ -5,6 +5,22 @@ WORKDIR /iceshrimp
 # Install compilation dependencies
 RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current npm rust cargo vips
 
+# Collect sccache args
+ARG SCCACHE_VERSION
+ARG SCCACHE_ARCHITECTURE
+ARG SCCACHE_MEMORY_LIMIT
+
+# Download and initialize sccache
+RUN wget https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz && \
+    tar xzf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
+    mv sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl/sccache /usr/local/bin && \
+    rm -rf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl*
+
+# Set sccache as the Rust compiler, set default dir, and set cache memory limit
+ENV RUSTC_WRAPPER=sccache
+ENV SCCACHE_DIR=/tmp/sccache
+ENV SCCACHE_CACHE_SIZE=${SCCACHE_MEMORY_LIMIT}
+
 # Copy only the cargo dependency-related files first, to cache efficiently
 COPY packages/backend/native-utils/Cargo.toml packages/backend/native-utils/Cargo.toml
 COPY packages/backend/native-utils/Cargo.lock packages/backend/native-utils/Cargo.lock
@@ -35,8 +51,8 @@ RUN corepack enable && corepack prepare yarn@stable --activate && yarn
 # Copy in the rest of the native-utils rust files
 COPY packages/backend/native-utils packages/backend/native-utils/
 
-# Compile native-utils
-RUN yarn workspace native-utils build
+# Compile native-utils utilising sccache
+RUN --mount=type=cache,target=/tmp/sccache yarn workspace native-utils build
 
 # Copy in the rest of the files to compile
 COPY . ./
