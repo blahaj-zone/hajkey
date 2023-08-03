@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:1.2
 ## Install dev and compilation dependencies, build files
 FROM alpine:3.18 as build
 WORKDIR /iceshrimp
@@ -6,9 +7,9 @@ WORKDIR /iceshrimp
 RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current npm rust cargo vips
 
 # Collect sccache args
-ARG SCCACHE_VERSION
-ARG SCCACHE_ARCHITECTURE
-ARG SCCACHE_MEMORY_LIMIT
+ARG SCCACHE_VERSION=v0.5.4
+ARG SCCACHE_ARCHITECTURE=x86_64
+ARG SCCACHE_MEMORY_LIMIT=10G
 
 # Download and initialize sccache
 RUN wget https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
@@ -29,7 +30,7 @@ COPY packages/backend/native-utils/migration/Cargo.toml packages/backend/native-
 COPY packages/backend/native-utils/migration/src/lib.rs packages/backend/native-utils/migration/src/
 
 # Install cargo dependencies
-RUN cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
+RUN --mount=type=cache,target=/root/.cargo cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
 
 # Copy only the dependency-related files first, to cache efficiently
 COPY package.json yarn.lock .pnp.cjs .pnp.loader.mjs ./
@@ -42,17 +43,21 @@ COPY packages/backend/native-utils/package.json packages/backend/native-utils/pa
 COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/backend/native-utils/npm/linux-x64-musl/package.json
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
 
-# Copy yarn cache
-COPY .yarn/cache .yarn/cache/
+# Prepare yarn cache
+COPY .yarn/cache .yarn/cache
+RUN --mount=type=cache,target=/iceshrimp/.yarncache cp -Tr .yarncache .yarn
 
 # Configure corepack and yarn, and install dev mode dependencies for compilation
 RUN corepack enable && corepack prepare yarn@stable --activate && yarn
+
+# Save yarn cache
+RUN --mount=type=cache,target=/iceshrimp/.yarncache rm -rf .yarncache/* && cp -Tr .yarn .yarncache
 
 # Copy in the rest of the native-utils rust files
 COPY packages/backend/native-utils packages/backend/native-utils/
 
 # Compile native-utils utilising sccache
-RUN --mount=type=cache,target=/tmp/sccache yarn workspace native-utils build
+RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/tmp/sccache yarn workspace native-utils build
 
 # Copy in the rest of the files to compile
 COPY . ./
