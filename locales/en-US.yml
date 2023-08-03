@@ -1127,6 +1127,7 @@ removeQuote: "Remove quote"
 removeRecipient: "Remove recipient"
 removeMember: "Remove member"
 verifiedLink: "Verified link"
+openInMainColumn: "Open in main column"
 
 _sensitiveMediaDetection:
   description: "Reduces the effort of server moderation through automatically recognizing

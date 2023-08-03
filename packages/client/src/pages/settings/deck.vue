@@ -1,13 +1,14 @@
 <template>
 	<div class="_formRoot">
-		<FormSwitch v-model="navWindow"
-			>{{ i18n.ts.defaultNavigationBehaviour }}:
-			{{ i18n.ts.openInWindow }}</FormSwitch
-		>
-
 		<FormSwitch v-model="alwaysShowMainColumn" class="_formBlock">{{
 			i18n.ts._deck.alwaysShowMainColumn
 		}}</FormSwitch>
+
+		<FormRadios v-model="navWindow" class="_formBlock">
+			<template #label>{{ i18n.ts.defaultNavigationBehaviour }}</template>
+			<option value="window">{{ i18n.ts.openInWindow }}</option>
+			<option value="column">{{ i18n.ts.openInMainColumn }}</option>
+		</FormRadios>
 
 		<FormRadios v-model="columnAlign" class="_formBlock">
 			<template #label>{{ i18n.ts._deck.columnAlign }}</template>

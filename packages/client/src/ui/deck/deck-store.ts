@@ -60,7 +60,7 @@ export const deckStore = markRaw(
 		},
 		navWindow: {
 			where: "deviceAccount",
-			default: true,
+			default: "window" as "window" | "column",
 		},
 	}),
 );
