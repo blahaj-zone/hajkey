@@ -11,7 +11,7 @@ ARG SCCACHE_ARCHITECTURE
 ARG SCCACHE_MEMORY_LIMIT
 
 # Download and initialize sccache
-RUN wget https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz && \
+RUN wget https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
     tar xzf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
     mv sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl/sccache /usr/local/bin && \
     rm -rf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl*
