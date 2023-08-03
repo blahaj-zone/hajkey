@@ -339,7 +339,6 @@ function more(ev: MouseEvent) {
 					&.active {
 						&:before {
 							background: var(--accentLighten);
-							transition: all 0.4s ease;
 						}
 					}
 
