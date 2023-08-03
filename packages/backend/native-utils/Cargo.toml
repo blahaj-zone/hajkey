@@ -45,3 +45,7 @@ napi-build = "2.0.1"
 
 [profile.release]
 lto = true
+
+[profile.release-no-lto]
+inherits = "release"
+lto = false
