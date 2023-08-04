@@ -4,14 +4,7 @@ services:
   web:
     image: iceshrimp.dev/iceshrimp/iceshrimp:latest
 ### If you want to build the image locally
-#    build: 
-#     context: .
-#     args:
-#      - SCCACHE_VERSION=v0.5.4
-#      - SCCACHE_ARCHITECTURE=x86_64
-### If you are using ARM64
-#      - SCCACHE_ARCHITECTURE=aarch64
-#      - SCCACHE_MEMORY_LIMIT=10G #You may want to lower or increase this value as you see fit. 10G is 10GB.
+#    build: .
     container_name: iceshrimp_web
     restart: unless-stopped
     depends_on:
