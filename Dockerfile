@@ -63,8 +63,14 @@ RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/tmp/sccach
 COPY . ./
 RUN env NODE_ENV=production sh -c "yarn workspace iceshrimp-js run build && yarn workspaces foreach --exclude native-utils --include sw --include client --include backend --include megalodon run build && yarn gulp"
 
+# Prepare yarn cache (production)
+RUN --mount=type=cache,target=/iceshrimp/.yarncache_prod cp -Tr .yarncache_prod .yarn
+
 # Trim down the dependencies to only those for production
 RUN yarn workspaces focus --all --production
+
+# Save yarn cache (production)
+RUN --mount=type=cache,target=/iceshrimp/.yarncache_prod rm -rf .yarncache_prod/* && cp -Tr .yarn .yarncache_prod
 
 ## Runtime container
 FROM alpine:3.18
