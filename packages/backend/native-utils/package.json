@@ -36,7 +36,7 @@
 		"artifacts": "napi artifacts",
 		"build": "yarn build:napi && yarn build:migration",
 		"build:napi": "napi build --features napi --platform --release ./built/",
-		"build:migration": "cargo build --locked --profile release-no-lto -p migration && cp ./target/release-no-lto/migration ./built/migration",
+		"build:migration": "cargo build --locked --profile release-no-lto -p migration --target-dir migration/target && cp ./migration/target/release-no-lto/migration ./built/migration",
 		"build:debug": "napi build --platform ./built/ && cargo build -p migration",
 		"prepublishOnly": "napi prepublish -t npm",
 		"test": "yarn cargo:test && yarn build:napi && ava",
