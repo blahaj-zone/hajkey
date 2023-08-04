@@ -57,7 +57,7 @@ RUN --mount=type=cache,target=/iceshrimp/.yarncache rm -rf .yarncache/* && cp -T
 COPY packages/backend/native-utils packages/backend/native-utils/
 
 # Compile native-utils utilising sccache
-RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/tmp/sccache --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/migration/target yarn workspace native-utils build
+RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/tmp/sccache --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/migration/target yarn workspace native-utils build
 
 # Copy in the rest of the files to compile
 COPY . ./
