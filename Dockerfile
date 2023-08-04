@@ -6,22 +6,6 @@ WORKDIR /iceshrimp
 # Install compilation dependencies
 RUN apk add --no-cache --no-progress git alpine-sdk vips-dev python3 nodejs-current npm rust cargo vips
 
-# Collect sccache args
-ARG SCCACHE_VERSION=v0.5.4
-ARG SCCACHE_ARCHITECTURE=x86_64
-ARG SCCACHE_MEMORY_LIMIT=10G
-
-# Download and initialize sccache
-RUN wget https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
-    tar xzf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl.tar.gz && \
-    mv sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl/sccache /usr/local/bin && \
-    rm -rf sccache-${SCCACHE_VERSION}-${SCCACHE_ARCHITECTURE}-unknown-linux-musl*
-
-# Set sccache as the Rust compiler, set default dir, and set cache memory limit
-ENV RUSTC_WRAPPER=sccache
-ENV SCCACHE_DIR=/tmp/sccache
-ENV SCCACHE_CACHE_SIZE=${SCCACHE_MEMORY_LIMIT}
-
 # Copy only the cargo dependency-related files first, to cache efficiently
 COPY packages/backend/native-utils/Cargo.toml packages/backend/native-utils/Cargo.toml
 COPY packages/backend/native-utils/Cargo.lock packages/backend/native-utils/Cargo.lock
@@ -53,15 +37,18 @@ RUN corepack enable && corepack prepare yarn@stable --activate && yarn
 # Save yarn cache
 RUN --mount=type=cache,target=/iceshrimp/.yarncache rm -rf .yarncache/* && cp -Tr .yarn .yarncache
 
-# Copy in the rest of the native-utils rust files
-COPY packages/backend/native-utils packages/backend/native-utils/
-
-# Compile native-utils utilising sccache
-RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/tmp/sccache --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/migration/target yarn workspace native-utils build
-
 # Copy in the rest of the files to compile
 COPY . ./
-RUN env NODE_ENV=production sh -c "yarn workspace iceshrimp-js run build && yarn workspaces foreach --exclude native-utils --include sw --include client --include backend --include megalodon run build && yarn gulp"
+
+# Fix napi-rs jank
+RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/.napi_buildcache /iceshrimp/packages/backend/native-utils/built
+RUN --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target if [[ ! -f /iceshrimp/packages/backend/native-utils/built/index.js ]]; then rm -rf /iceshrimp/packages/backend/native-utils/target/release; fi
+
+# Build the thing
+RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target env NODE_ENV=production sh -c "yarn build && yarn gulp"
+
+# Fix napi-rs jank (part 2)
+RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/packages/backend/native-utils/built /iceshrimp/.napi_buildcache
 
 # Prepare yarn cache (production)
 RUN --mount=type=cache,target=/iceshrimp/.yarncache_prod cp -Tr .yarncache_prod .yarn
