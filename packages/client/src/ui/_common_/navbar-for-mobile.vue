@@ -80,6 +80,7 @@
 					<i class="icon ph-door ph-bold ph-lg ph-fw ph-lg"></i
 					><span class="text">{{ i18n.ts.controlPanel }}</span>
 				</MkA>
+				<div class="divider" v-if="$i.isAdmin || $i.isModerator"></div>
 				<button v-click-anime class="item _button" @click="more">
 					<i
 						class="icon ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"
@@ -111,13 +112,6 @@
 					<i class="icon ph-pencil ph-bold ph-lg ph-fw ph-lg"></i
 					><span class="text">{{ i18n.ts.note }}</span>
 				</button>
-				<button
-					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button help"
-					@click="openHelpMenu"
-				>
-					<i class="help icon ph-info ph-bold ph-xl ph-fw"></i>
-				</button>
 			</div>
 		</div>
 	</div>
@@ -135,7 +129,6 @@ import {
 import * as os from "@/os";
 import { navbarItemDef } from "@/navbar";
 import { openAccountMenu as openAccountMenu_ } from "@/account";
-import { openHelpMenu_ } from "@/scripts/helpMenu";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 
@@ -155,10 +148,6 @@ function openAccountMenu(ev: MouseEvent) {
 		},
 		ev,
 	);
-}
-
-function openHelpMenu(ev: MouseEvent) {
-	openHelpMenu_(ev);
 }
 
 function more() {
