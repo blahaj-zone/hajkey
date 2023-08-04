@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: iceshrimp.dev/iceshrimp/iceshrimp
+    image: iceshrimp.dev/iceshrimp/iceshrimp:latest
 ### If you want to build the image locally
 #    build: 
 #     context: .
