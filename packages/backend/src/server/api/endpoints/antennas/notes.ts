@@ -126,17 +126,25 @@ export default define(meta, paramDef, async (ps, user) => {
 		readNote(user.id, notes);
 	}
 
+	const packedNotes = (await Notes.packMany(notes, user)).sort(
+		(a, b) =>
+			paginationMap.findIndex((p) => p[0] == a.id) -
+			paginationMap.findIndex((p) => p[0] == b.id),
+	);
+
 	if (notes.length < ps.limit) {
 		pagination = "-1";
 	} else {
 		// I'm so sorry, FIXME: rewrite pagination system
 		pagination = paginationMap.find(
-			(p) => p[0] == notes[notes.length - (notes.length > 1 ? 2 : 1)].id,
+			(p) =>
+				p[0] ==
+				packedNotes[packedNotes.length - (packedNotes.length > 1 ? 2 : 1)].id,
 		)[1];
 	}
 
 	return {
 		pagination: pagination,
-		notes: await Notes.packMany(notes, user),
+		notes: packedNotes,
 	};
 });
