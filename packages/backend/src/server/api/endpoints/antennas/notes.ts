@@ -25,15 +25,27 @@ export const meta = {
 	},
 
 	res: {
-		type: "array",
+		type: "object",
 		optional: false,
 		nullable: false,
-		items: {
-			type: "object",
-			optional: false,
-			nullable: false,
-			ref: "Note",
-		},
+		properties: {
+			pagination: {
+				type: "string",
+				nullable: false,
+				optional: false,
+			},
+			notes: {
+				type: "array",
+				optional: false,
+				nullable: false,
+				items: {
+					type: "object",
+					optional: false,
+					nullable: false,
+					ref: "Note",
+				},
+			}
+		}
 	},
 } as const;
 
@@ -42,10 +54,7 @@ export const paramDef = {
 	properties: {
 		antennaId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "misskey:id" },
-		untilId: { type: "string", format: "misskey:id" },
-		sinceDate: { type: "integer" },
-		untilDate: { type: "integer" },
+		pagination: { type: "string", default: "+" },
 	},
 	required: ["antennaId"],
 } as const;
@@ -62,30 +71,25 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	const noteIdsRes = await redisClient.xrevrange(
 		`antennaTimeline:${antenna.id}`,
-		ps.untilDate || "+",
+		ps.pagination || "+",
 		"-",
 		"COUNT",
 		ps.limit + 1,
-	); // untilIdに指定したものも含まれるため+1
+	);
 
 	if (noteIdsRes.length === 0) {
 		return [];
 	}
 
 	const noteIds = noteIdsRes
-		.map((x) => x[1][1])
-		.filter((x) => x !== ps.untilId);
+		.map((x) => x[1][1]);
 
 	if (noteIds.length === 0) {
-		return [];
+		return {pagination: "", notes: []};
 	}
 
 	const query = makePaginationQuery(
-		Notes.createQueryBuilder("note"),
-		ps.sinceId,
-		ps.untilId,
-		ps.sinceDate,
-		ps.untilDate,
+		Notes.createQueryBuilder("note")
 	)
 		.where("note.id IN (:...noteIds)", { noteIds: noteIds })
 		.innerJoinAndSelect("note.user", "user")
@@ -111,5 +115,8 @@ export default define(meta, paramDef, async (ps, user) => {
 		readNote(user.id, notes);
 	}
 
-	return await Notes.packMany(notes, user);
+	return {
+		pagination: noteIdsRes[noteIdsRes.length - 1][0],
+		notes: await Notes.packMany(notes, user),
+	};
 });

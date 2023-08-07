@@ -139,6 +139,8 @@ const isBackTop = ref(false);
 const empty = computed(() => items.value.length === 0);
 const error = ref(false);
 
+let redisPaginationStr = ref("+");
+
 const init = async (): Promise<void> => {
 	queue.value = [];
 	fetching.value = true;
@@ -156,6 +158,10 @@ const init = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
 				for (let i = 0; i < res.length; i++) {
 					const item = res[i];
 					if (props.pagination.reversed) {
@@ -251,6 +257,11 @@ const fetchMore = async (): Promise<void> => {
 			? props.pagination.params.value
 			: props.pagination.params
 		: {};
+
+	if (props.pagination.endpoint == 'antennas/notes') {
+		params.pagination = redisPaginationStr;
+	}
+
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
@@ -269,6 +280,11 @@ const fetchMore = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
+
 				for (let i = 0; i < res.length; i++) {
 					const item = res[i];
 					if (props.pagination.reversed) {
@@ -312,6 +328,11 @@ const fetchMoreAhead = async (): Promise<void> => {
 			? props.pagination.params.value
 			: props.pagination.params
 		: {};
+
+	if (props.pagination.endpoint == 'antennas/notes') {
+		params.pagination = redisPaginationStr;
+	}
+
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
@@ -330,6 +351,11 @@ const fetchMoreAhead = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
+
 				if (res.length > SECOND_FETCH_LIMIT) {
 					res.pop();
 					items.value = props.pagination.reversed
