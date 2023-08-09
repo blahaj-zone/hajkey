@@ -1,0 +1,15 @@
+[Unit]
+Description=Iceshrimp daemon
+
+[Service]
+Type=simple
+User=iceshrimp
+ExecStart=/usr/bin/yarn start
+WorkingDirectory=/home/iceshrimp/iceshrimp
+Environment="NODE_ENV=production"
+TimeoutSec=60
+SyslogIdentifier=iceshrimp
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
