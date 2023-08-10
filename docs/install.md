@@ -11,8 +11,8 @@ This document will guide you through manual installation of Iceshrimp on dev bra
 
 ### Required
 - [**Node.js**](https://nodejs.org) v18.16.0+ (v20 recommended)
-- [**PostgreSQL**](https://www.postgresql.org/) 12+ (14 recommended) 
-- [**Redis**](https://redis.io/) 6+ (7 recommended)
+- [**PostgreSQL**](https://www.postgresql.org/) 12+ 
+- [**Redis**](https://redis.io/) 6+
 - [**libvips**](https://www.libvips.org/)
 - **Web proxy**
   - nginx
@@ -45,7 +45,7 @@ Following steps will require you to run them as the user you have made, so use `
 - Copy `.config/example.yml` to `.config/default.yml`
 - Edit `.config/default.yml` with text editor
 	- Make sure to set PostgreSQL and Redis section correctly
-	- Make sure to set/uncomment caching server and/or text search sections if you happen to set up these too
+	- Make sure to set/uncomment caching server and/or text search sections if you have chosen to set up these
 
 ## Installing project dependencies
 ```sh
@@ -97,7 +97,7 @@ example.com {
 ## Running Iceshrimp
 
 ### Running manually
-- Start Iceshrimp by running `yarn run start`.  
+- Start Iceshrimp by running `NODE_ENV=production yarn run start`.  
 If this is your first run, after Iceshrimp has started successfully, you'll be able to go to the URL you have specified in `.config/default.yml` and create first user.  
 - To stop the server, use `Ctrl-C`.
 
@@ -112,12 +112,12 @@ If this is your first run, after Iceshrimp has started successfully, you'll be a
 Shut down Iceshrimp and then run these commands
 
 ```sh
-## Do git stash commands only if you had made changes to the repo
+## Run git stash commands only if you have uncommitted changes
 git stash
 git pull
 git stash pop
 yarn
-NODE_ENV=production yarn build && yarn migrate
+yarn build && yarn migrate
 ```
 
 Start Iceshrimp back up
