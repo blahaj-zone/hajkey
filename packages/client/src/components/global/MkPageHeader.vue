@@ -353,8 +353,7 @@ onUnmounted(() => {
 		content: "";
 		position: absolute;
 		inset: 0;
-		background: var(--bg);
-		opacity: 0.85;
+		background: var(--pageHeader);
 		z-index: -2;
 	}
 

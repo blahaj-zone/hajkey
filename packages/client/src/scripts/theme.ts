@@ -128,7 +128,7 @@ function compile(theme: Theme): Record<string, string> {
 			const arg = parseFloat(parts.shift());
 			const color = getColor(parts.join("<"));
 
-			const ignoreAlphaForKeys = ["windowHeader", "acrylicPanel"];
+			const ignoreAlphaForKeys = ["windowHeader", "acrylicPanel", "pageHeader"];
 
 			switch (func) {
 				case "darken":
