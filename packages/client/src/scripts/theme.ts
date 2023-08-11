@@ -14,6 +14,7 @@ export type Theme = {
 import lightTheme from "@/themes/_light.json5";
 import darkTheme from "@/themes/_dark.json5";
 import { deepClone } from "./clone";
+import { defaultStore } from "@/store";
 
 export const themeProps = Object.keys(lightTheme.props).filter(
 	(key) => !key.startsWith("X"),
@@ -109,7 +110,7 @@ export function applyTheme(theme: Theme, persist = true) {
 }
 
 function compile(theme: Theme): Record<string, string> {
-	function getColor(val: string): tinycolor.Instance {
+	function getColor(val: string, key?: string): tinycolor.Instance {
 		// ref (prop)
 		if (val[0] === "@") {
 			return getColor(theme.props[val.slice(1)]);
@@ -127,13 +128,20 @@ function compile(theme: Theme): Record<string, string> {
 			const arg = parseFloat(parts.shift());
 			const color = getColor(parts.join("<"));
 
+			const ignoreAlphaForKeys = ["windowHeader", "acrylicPanel"];
+
 			switch (func) {
 				case "darken":
 					return color.darken(arg);
 				case "lighten":
 					return color.lighten(arg);
 				case "alpha":
-					return color.setAlpha(arg);
+					if (!defaultStore.state.useBlurEffect && key && ignoreAlphaForKeys.includes(key)) {
+						return color.setAlpha(1.0);
+					}
+					else {
+						return color.setAlpha(arg);
+					}
 				case "hue":
 					return color.spin(arg);
 				case "saturate":
@@ -152,7 +160,7 @@ function compile(theme: Theme): Record<string, string> {
 
 		props[k] = v.startsWith('"')
 			? v.replace(/^"\s*/, "")
-			: genValue(getColor(v));
+			: genValue(getColor(v, k));
 	}
 
 	return props;
