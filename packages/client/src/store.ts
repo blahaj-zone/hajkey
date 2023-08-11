@@ -204,7 +204,7 @@ export const defaultStore = markRaw(
 		},
 		useBlurEffect: {
 			where: "device",
-			default: true,
+			default: false,
 		},
 		showFixedPostForm: {
 			where: "device",
