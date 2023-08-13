@@ -1,5 +1,5 @@
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Firefish configuration
+# Iceshrimp configuration
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # After starting your server, please don't change the URL! Doing so will break federation.
@@ -19,19 +19,19 @@ url: https://example.org/
 #───┘ Port and TLS settings └───────────────────────────────────
 
 #
-# Firefish requires a reverse proxy to support HTTPS connections.
+# Iceshrimp requires a reverse proxy to support HTTPS connections.
 #
-#                 +----- https://example.com/ ------------+
-#   +------+      |+-------------+      +----------------+|
-#   | User | ---> || Proxy (443) | ---> | Firefish (3000) ||
-#   +------+      |+-------------+      +----------------+|
-#                 +---------------------------------------+
+#                 +------- https://example.com/ ------------+
+#   +------+      |+-------------+      +------------------+|
+#   | User | ---> || Proxy (443) | ---> | Iceshrimp (3000) ||
+#   +------+      |+-------------+      +------------------+|
+#                 +-----------------------------------------+
 #
 #   You need to set up a reverse proxy. (e.g. nginx, caddy)
 #   An encrypted connection with HTTPS is highly recommended
 #   because tokens may be transferred in GET requests.
 
-# The port that your Firefish server should listen on.
+# The port that your Iceshrimp server should listen on.
 port: 3000
 
 #   ┌──────────────────────────┐
@@ -42,11 +42,11 @@ db:
   port: 5432
   #ssl: false
   # Database name
-  db: firefish
+  db: iceshrimp
 
   # Auth
-  user: example-firefish-user
-  pass: example-firefish-pass
+  user: example-iceshrimp-user
+  pass: example-iceshrimp-pass
 
   # Whether disable Caching queries
   #disableCache: true
@@ -72,8 +72,8 @@ redis:
   #db: 1
   #user: default
 
-#   ┌─────────────────────────────┐
-#───┘ Cache server configuration └─────────────────────────────────────
+#   ┌────────────────────────────┐
+#───┘ Cache server configuration └──────────────────────────────
 
 # A Redis-compatible server (DragonflyDB, Keydb, Redis) for caching
 # If left blank, it will use the Redis server from above
@@ -90,7 +90,7 @@ redis:
 # If both MeiliSearch and Sonic configurations are present, MeiliSearch will take precedence.
 
 #   ┌───────────────────────────┐
-#───┘ MeiliSearch configuration └─────────────────────────────────────
+#───┘ MeiliSearch configuration └───────────────────────────────
 #meilisearch:
 #  host: meilisearch
 #  port: 7700
@@ -212,7 +212,7 @@ reservedUsernames: [
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Congrats, you've reached the end of the config file needed for most deployments!
-# Enjoy your Firefish server!
+# Enjoy your Iceshrimp server!
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 
