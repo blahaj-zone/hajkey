@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: iceshrimp.dev/iceshrimp/iceshrimp:latest
+    image: iceshrimp.dev/iceshrimp/iceshrimp:dev
 ### If you want to build the image locally
 #    build: .
     container_name: iceshrimp_web
@@ -13,6 +13,10 @@ services:
 ### Uncomment one of the following to use a search engine
 #     - meilisearch
 #     - sonic
+### Uncomment one of the following to use a cache server
+#     - dragonflydb
+#     - keydb
+#     - redis_cache
     ports:
       - "3000:3000"
     networks:
@@ -44,12 +48,13 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
 
+### Search Engines
 ### Only one of the below should be used.
 ### Meilisearch is better overall, but resource-intensive. Sonic is a very light full text search engine.
 
 #  meilisearch:
-#    container_name: meilisearch
-#    image: getmeili/meilisearch:v1.1.1
+#    container_name: iceshrimp_meilisearch
+#    image: docker.io/getmeili/meilisearch:v1.1.1
 #    environment:
 #      - MEILI_ENV=${MEILI_ENV:-development}
 #    ports:
@@ -61,6 +66,7 @@ services:
 #    restart: unless-stopped
 
 #  sonic:
+#    container_name: iceshrimp_sonic
 #    restart: unless-stopped
 #    image: docker.io/valeriansaliou/sonic:v1.4.0
 #    networks:
@@ -68,6 +74,40 @@ services:
 #    volumes:
 #      - ./sonic:/var/lib/sonic/store
 #      - ./sonic/config.cfg:/etc/sonic.cfg
+
+### Cache Servers
+### Only one of the below should be used.
+### DragonflyDB is the fastest overall, however it is NOT open source, but source-available (BSL). KeyDB is still faster than pure Redis, and it's BSD-licensed.
+#  dragonflydb:
+#    container_name: iceshrimp_dragonflydb
+#    restart: unless-stopped
+#    image: 'docker.dragonflydb.io/dragonflydb/dragonfly:v1.8.0'
+#    ulimits:
+#      memlock: -1
+#    networks:
+#      - ishnet
+#    volumes:
+#      - ./dragonflydb:/data
+
+#  keydb:
+#    container_name: iceshrimp_keydb
+#    restart: unless-stopped
+### Choose an image depending on your architecture, keydb doesn't build alpine for arm, and the way they do tags is very weird in general
+##    image: 'docker.io/eqalpha/keydb:alpine_x86_64_v6.3.3'
+##    image: 'docker.io/eqalpha/keydb:arm64_v6.3.3'
+#    networks:
+#      - ishnet
+#    volumes:
+#      - ./keydb:/data
+
+#  redis_cache:
+#    restart: unless-stopped
+#    image: docker.io/redis:7.0-alpine
+#    container_name: iceshrimp_redis_cache
+#    networks:
+#      - ishnet
+#    volumes:
+#      - ./redis_cache:/data
 
 networks:
   ishnet:
