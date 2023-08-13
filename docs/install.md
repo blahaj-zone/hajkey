@@ -1,15 +1,18 @@
 # Installing Iceshrimp
+
 This document will guide you through manual installation of Iceshrimp on dev branch, for main branch, use Firefish's installation guide.
 
 ## Dependencies
 
 ### Build
+
 - **Rust** 1.68+
 - C/C++ compiler like **GCC** or **Clang**
 - Build tools like **make**
 - **Python 3**
 
 ### Required
+
 - [**Node.js**](https://nodejs.org) v18.16.0+ (v20 recommended)
 - [**PostgreSQL**](https://www.postgresql.org/) 12+ 
 - [**Redis**](https://redis.io/) 6+
@@ -19,6 +22,7 @@ This document will guide you through manual installation of Iceshrimp on dev bra
   - Caddy
   
 ### Optional
+
 - [**FFmpeg**](https://ffmpeg.org/) for video transcoding
 - Full text search (Choose one)  
   Iceshrimp has full text search powered by Postgres by default, however it's very slow, and these are alternatives for that
@@ -33,21 +37,25 @@ This document will guide you through manual installation of Iceshrimp on dev bra
 ## Preparations
 
 ### Download repository
+
 ```sh
 git clone https://iceshrimp.dev/iceshrimp/iceshrimp
 ```
 
 ### Creating a new user
+
 In case you want to run Iceshrimp as a different user, run `adduser --disabled-password --disabled-login iceshrimp`  
 Following steps will require you to run them as the user you have made, so use `su - iceshrimp`, or `sudo -iu iceshrimp`, or whatever else method in order to temporarily log in as that user. 
 
 ### Configuration
+
 - Copy `.config/example.yml` to `.config/default.yml`
 - Edit `.config/default.yml` with text editor
 	- Make sure to set PostgreSQL and Redis section correctly
 	- Make sure to set/uncomment caching server and/or text search sections if you have chosen to set up these
 
 ## Installing project dependencies
+
 ```sh
 corepack enable
 corepack prepare yarn@stable --activate
@@ -56,11 +64,14 @@ yarn
 <!--TODO: Find out a way to do no-optional (no tensorflow) install on yarn berry, so far I have found none-->
 
 ## Building Iceshrimp
+
 ```sh
 yarn build
 ```
 ## Database
+
 ### Creating database
+
 This will create a postgres user with your password and database, while also granting that user all privileges on database.  
 Using `psql` prompt:
 ```sh
@@ -74,19 +85,23 @@ grant all privileges on database iceshrimp to iceshrimp;
 ```
 
 ### First migration
+
 In order for Iceshrimp to work properly, you need to initialise the database using
 ```bash
 yarn run init
 ```
 
 ## Setting up Webproxy
+
 ### Nginx
+
 - Run `sudo cp docs/examples/iceshrimp.nginx.conf /etc/nginx/sites-available/ && cd /etc/nginx/sites-available/`
 - Edit `iceshrimp.nginx.conf` to reflect your server properly
 - Run `sudo ln -s ./iceshrimp.nginx.conf ../sites-enabled/iceshrimp.nginx.conf`
 - Run `sudo nginx -t` to check that the config is valid, then restart the nginx service.
 
 ### Caddy
+
 - Add the following to your Caddyfile, and replace `example.com` with your domain
 ```
 example.com {
@@ -97,11 +112,13 @@ example.com {
 ## Running Iceshrimp
 
 ### Running manually
+
 - Start Iceshrimp by running `NODE_ENV=production yarn run start`.  
 If this is your first run, after Iceshrimp has started successfully, you'll be able to go to the URL you have specified in `.config/default.yml` and create first user.  
 - To stop the server, use `Ctrl-C`.
 
 ### Running using systemd
+
 - Run `sudo cp docs/examples/iceshrimp.service /etc/systemd/system/`
 - Edit `/etc/systemd/system/iceshrimp.service` with text editor, and change `User`, `WorkingDir`, `ExecStart` if necessary.
 - Run `sudo systemctl daemon-reload`
@@ -109,6 +126,7 @@ If this is your first run, after Iceshrimp has started successfully, you'll be a
 - (Optional) Check if instance is running using `sudo systemctl status iceshrimp`
 
 ### Updating Iceshrimp
+
 Shut down Iceshrimp and then run these commands
 
 ```sh
@@ -123,4 +141,5 @@ yarn build && yarn migrate
 Start Iceshrimp back up
 
 ## Post-install
+
 See [post-install](post-install.md).
