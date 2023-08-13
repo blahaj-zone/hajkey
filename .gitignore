@@ -22,19 +22,26 @@ coverage
 # config
 /.config/*
 !/.config/example.yml
+!/.config/example-docker.yml
 !/.config/devenv.yml
 !/.config/docker_example.env
 !/.config/helm_values_example.yml
 !/.config/LICENSE
 
-# docker dev config
+# docker configs
 /dev/docker-compose.yml
+docker-compose.yml
 
 # misskey
 built
 db
 elasticsearch
 redis
+meili_data
+sonic
+dragonflydb
+keydb
+redis_cache
 npm-debug.log
 *.pem
 run.bat
