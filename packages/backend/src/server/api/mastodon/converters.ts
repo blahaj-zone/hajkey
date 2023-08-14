@@ -74,3 +74,13 @@ export function convertStatus(status: Entity.Status) {
 
 	return status;
 }
+
+export function convertConversation(conversation: Entity.Conversation) {
+	conversation.id = convertId(conversation.id, IdType.MastodonId);
+	conversation.accounts = conversation.accounts.map(convertAccount);
+	if (conversation.last_status) {
+		conversation.last_status = convertStatus(conversation.last_status);
+	}
+
+	return conversation;
+}

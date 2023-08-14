@@ -1,7 +1,12 @@
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import { ParsedUrlQuery } from "querystring";
-import { convertAccount, convertList, convertStatus } from "../converters.js";
+import {
+	convertAccount,
+	convertConversation,
+	convertList,
+	convertStatus,
+} from "../converters.js";
 import { convertId, IdType } from "../../index.js";
 
 export function limitToInt(q: ParsedUrlQuery) {
@@ -136,7 +141,9 @@ export function apiTimelineMastodon(router: Router): void {
 			const data = await client.getConversationTimeline(
 				convertTimelinesArgsId(limitToInt(ctx.query)),
 			);
-			ctx.body = data.data;
+			ctx.body = data.data.map((conversation) =>
+				convertConversation(conversation),
+			);
 		} catch (e: any) {
 			console.error(e);
 			console.error(e.response.data);
