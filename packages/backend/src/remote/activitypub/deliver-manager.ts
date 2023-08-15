@@ -1,8 +1,9 @@
-import { IsNull, Not } from "typeorm";
-import { Users, Followings } from "@/models/index.js";
-import type { ILocalUser, IRemoteUser, User } from "@/models/entities/user.js";
-import { deliver } from "@/queue/index.js";
-import { skippedInstances } from "@/misc/skipped-instances.js";
+import {IsNull, Not} from "typeorm";
+import {Followings, Users} from "@/models/index.js";
+import type {ILocalUser, IRemoteUser, User} from "@/models/entities/user.js";
+import {deliver} from "@/queue/index.js";
+import {skippedInstances} from "@/misc/skipped-instances.js";
+import {apLogger} from "@/remote/activitypub/logger";
 
 //#region types
 interface IRecipe {
@@ -132,7 +133,18 @@ export default class DeliverManager {
 		// deliver
 		for (const inbox of inboxes) {
 			// skip instances as indicated
-			if (instancesToSkip.includes(new URL(inbox).host)) continue;
+
+			try {
+				const host = new URL(inbox).host;
+				if (instancesToSkip.includes(host))
+					continue;
+
+			} catch (e) {
+				// skip invalid URLs
+				apLogger.error(`Invalid inbox URL: ${inbox}`);
+				continue;
+			}
+
 
 			deliver(this.actor, this.activity, inbox);
 		}
