@@ -531,9 +531,14 @@ onBeforeUnmount(() => {
 				border-radius: 12px;
 			}
 
-			> i {
+			> i,
+			.avatar {
 				margin-right: 14px;
 				width: 24px;
+			}
+			
+			> .avatar {
+				height: 24px;
 			}
 		}
 
