@@ -1,8 +1,8 @@
 _lang_: "Deutsch"
-headlineIceshrimp: "Eine dezentralisierte Open-Source Social Media Plattform, die für
-  immer gratis bleibt! 🚀"
-introIceshrimp: "Willkommen! Iceshrimp ist eine dezentralisierte Open-Source Social Media
-  Plattform, die für immer gratis bleibt!🚀"
+headlineIceshrimp: "Eine dezentralisierte Open-Source Social Media Plattform, die
+  für immer gratis bleibt! 🚀"
+introIceshrimp: "Willkommen! Iceshrimp ist eine dezentralisierte Open-Source Social
+  Media Plattform, die für immer gratis bleibt!🚀"
 monthAndDay: "{month}/{day}"
 search: "Suchen"
 notifications: "Benachrichtigungen"
@@ -101,7 +101,7 @@ follow: "Folge ich"
 followRequest: "Follow anfragen"
 followRequests: "Follow-Anfragen"
 unfollow: "Nicht mehr folgen"
-followRequestPending: "Follow-up-Anfrage ausstehend"
+followRequestPending: "Follow-Anfrage ausstehend"
 enterEmoji: "Ein Emoji eingeben"
 renote: "Boost"
 unrenote: "Boost zurücknehmen"
@@ -717,8 +717,8 @@ unclip: "Aus Clip entfernen"
 confirmToUnclipAlreadyClippedNote: "Dieser Beitrag ist bereits im \"{name}\" Clip
   enthalten. Möchtest du ihn aus diesem Clip entfernen?"
 public: "Öffentlich"
-i18nInfo: "Iceshrimp wird durch freiwillige Helfer in viele verschiedene Sprachen übersetzt.
-  Auf {link} kannst du mithelfen."
+i18nInfo: "Iceshrimp wird durch freiwillige Helfer in viele verschiedene Sprachen
+  übersetzt. Auf {link} kannst du mithelfen."
 manageAccessTokens: "Zugriffstokens verwalten"
 accountInfo: "Nutzerkonto-Informationen"
 notesCount: "Anzahl der Beiträge"
@@ -777,10 +777,10 @@ nUsers: "{n} Nutzer"
 nNotes: "{n} Beiträge"
 sendErrorReports: "Fehlerberichte senden"
 sendErrorReportsDescription: "Ist diese Option aktiviert, so werden beim Auftreten
-  von Fehlern detaillierte Fehlerinformationen an Iceshrimp weitergegeben, was zur Verbesserung
-  der Qualität von Iceshrimp beiträgt.\nEnthalten in diesen Informationen sind u.a.
-  die Version deines Betriebssystems, welchen Browser du verwendest und ein Verlauf
-  deiner Aktivitäten innerhalb Iceshrimp."
+  von Fehlern detaillierte Fehlerinformationen an Iceshrimp weitergegeben, was zur
+  Verbesserung der Qualität von Iceshrimp beiträgt.\nEnthalten in diesen Informationen
+  sind u.a. die Version deines Betriebssystems, welchen Browser du verwendest und
+  ein Verlauf deiner Aktivitäten innerhalb Iceshrimp."
 myTheme: "Meine Farbkombination"
 backgroundColor: "Hintergrundfarbe"
 accentColor: "Akzentfarbe"
@@ -1086,8 +1086,8 @@ _registry:
   domain: "Domain"
   createKey: "Schlüssel erstellen"
 _aboutIceshrimp:
-  about: "Iceshrimp ist ein Fork von Iceshrimp, der seit 2022 von ThatOneCalculator entwickelt
-    wird."
+  about: "Iceshrimp ist ein Fork von Iceshrimp, der seit 2022 von ThatOneCalculator
+    entwickelt wird."
   contributors: "Hauptmitwirkende"
   allContributors: "Alle Mitwirkenden"
   source: "Quellcode"
@@ -1096,6 +1096,7 @@ _aboutIceshrimp:
   morePatrons: "Wir schätzen ebenso die Unterstützung vieler anderer hier nicht gelisteter
     Personen sehr. Danke! 🥰"
   patrons: "UnterstützerInnen"
+  donateTitle: Gefällt dir Iceshrimp?
 _nsfw:
   respect: "Mit NSFW gekennzeichnete Bilder verbergen"
   ignore: "Mit NSFW gekennzeichnete Bilder nicht verbergen"
@@ -1191,6 +1192,7 @@ _mfm:
   alwaysPlay: Alle animierten MFM immer automatisch abspielen
   advancedDescription: Wenn diese Funktion deaktiviert ist, können nur einfache Formatierungen
     vorgenommen werden, es sei denn, animiertes MFM ist aktiviert
+  advanced: Erweitertes MFM
 _instanceTicker:
   none: "Nie anzeigen"
   remote: "Für Nutzer eines anderen Servers anzeigen"
@@ -1367,8 +1369,8 @@ _tutorial:
     Fediverse beigetreten, einem Netzwerk mit Tausenden von, miteinander verbundenen,
     Servern."
   step6_3: "Jeder der Server funktioniert auf unterschiedliche Weise, und nicht alle
-    Server führen Iceshrimp aus. Dieser jedoch schon! Es ist zu Beginn vielleicht ein
-    wenig kompliziert, aber Sie werden in kürzester Zeit den Dreh raus haben."
+    Server führen Iceshrimp aus. Dieser jedoch schon! Es ist zu Beginn vielleicht
+    ein wenig kompliziert, aber Sie werden in kürzester Zeit den Dreh raus haben."
   step6_4: "Jetzt bist Du startbereit, entdecke die Möglichkeiten und hab Spaß dabei!"
 _2fa:
   alreadyRegistered: "Du hast bereits ein Gerät für Zwei-Faktor-Authentifizierung
@@ -1404,6 +1406,7 @@ _2fa:
   registerTOTPBeforeKey: Bitte registriere eine Authentificator App, um einen Hardware-Security-Key
     oder einen Passkey zu nutzen.
   securityKeyName: Gib einen Namen für den Key ein
+  token: 2FA-Token
 _permissions:
   "read:account": "Deine Nutzerkontoinformationen lesen"
   "write:account": "Deine Nutzerkontoinformationen bearbeiten"
@@ -1449,6 +1452,7 @@ _auth:
   callback: "Es wird zur Anwendung zurückgekehrt"
   denied: "Zugriff verweigert"
   copyAsk: Bitte fügen Sie den folgenden Autorisierungscode in die Anwendung ein
+  allPermissions: Voller Kontozugriff
 _antennaSources:
   all: "Alle Beiträge"
   homeTimeline: "Beiträge von Nutzern, denen gefolgt wird"
@@ -1551,7 +1555,8 @@ _profile:
   metadata: "Zusätzliche Informationen"
   metadataEdit: "Zusätzliche Informationen bearbeiten"
   metadataDescription: "Hierdurch kannst du auf deinem Profil zusätzliche Informationsblöcke
-    anzeigen lassen. Sie können ein {a}-Tag oder ein {l}-Tag mit {rel} hinzufügen, um den Link in Ihrem Profil zu überprüfen!"
+    anzeigen lassen. Sie können ein {a}-Tag oder ein {l}-Tag mit {rel} hinzufügen,
+    um den Link in Ihrem Profil zu überprüfen!"
   metadataLabel: "Beschriftung"
   metadataContent: "Inhalt"
   changeAvatar: "Profilbild ändern"
@@ -2130,7 +2135,8 @@ _filters:
   withFile: Mit Datei
   fromDomain: Von Domain
   notesBefore: Beiträge vor
-  followingOnly: Nur Folgende
+  followingOnly: Von Benutzern denen ich folge
+  followersOnly: Von Benutzern die mir folgen
 isBot: Dieses Konto ist ein Bot
 isModerator: Moderator
 isAdmin: Administrator
@@ -2150,3 +2156,24 @@ clipsDesc: Clips sind wie teilbare, kategorisierte Lesezeichen. Du kannst Clips 
 channelFederationWarn: Kanäle föderieren noch nicht zu anderen Servern
 reactionPickerSkinTone: Bevorzugte Emoji-Hautfarbe
 swipeOnMobile: Wischen zwischen den Seiten erlauben
+enableServerMachineStats: Server-Hardware-Statistiken aktivieren
+showPopup: Nutzer mit Pop-up benachrichtigen
+youHaveUnreadAnnouncements: Du hast ungelesene Bekanntmachungen
+donationLink: Link zur Spendenseite
+neverShow: Nicht mehr anzeigen
+remindMeLater: Vielleicht später
+removeQuote: Zitat entfernen
+removeRecipient: Empfänger entfernen
+removeMember: Mitglied entfernen
+openInMainColumn: In Hauptspalte öffnen
+_feeds:
+  atom: Atom
+  jsonFeed: JSON feed
+  rss: RSS
+expandAllCws: Inhaltswarnungen aller Antworten anzeigen
+collapseAllCws: Inhaltswarnungen aller Antworten ausblenden
+xl: Sehr Groß
+alt: Bildbeschreibung
+isLocked: Dieses Konto hat Folge-Anfragen aktiviert
+enableIdenticonGeneration: Identicon-Generierung aktivieren
+verifiedLink: Bestätigter Link
