@@ -3,7 +3,7 @@ import {Followings, Users} from "@/models/index.js";
 import type {ILocalUser, IRemoteUser, User} from "@/models/entities/user.js";
 import {deliver} from "@/queue/index.js";
 import {skippedInstances} from "@/misc/skipped-instances.js";
-import {apLogger} from "@/remote/activitypub/logger";
+import {apLogger} from "@/remote/activitypub/logger.js";
 
 //#region types
 interface IRecipe {
