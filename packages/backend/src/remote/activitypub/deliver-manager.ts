@@ -126,7 +126,14 @@ export default class DeliverManager {
 		const instancesToSkip = await skippedInstances(
 			// get (unique) list of hosts
 			Array.from(
-				new Set(Array.from(inboxes).map((inbox) => new URL(inbox).host)),
+				new Set(Array.from(inboxes).map((inbox) => {
+					try {
+						return new URL(inbox).host;
+					} catch (e) {
+						apLogger.error(`Invalid inbox URL: ${inbox}`);
+						return null;
+					}
+				} ).filter((host) => host != null) as string[]),
 			),
 		);
 
