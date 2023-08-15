@@ -5,6 +5,11 @@ services:
     image: iceshrimp.dev/iceshrimp/iceshrimp:dev
 ### If you want to build the image locally
 #    build: .
+### If you want to build the image locally AND use Docker 20.10
+#		 build:
+#      context: .
+#      args:
+#        DOCKER_BUILDKIT: 1
     container_name: iceshrimp_web
     restart: unless-stopped
     depends_on:

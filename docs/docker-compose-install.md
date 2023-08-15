@@ -1,12 +1,12 @@
 # Installing Iceshrimp with Docker
 
-This guide is based on `docker compose`/Docker Compose v2, but `docker-compose`/Docker Compose v1 will work as well.
+This guide is based on `docker compose`/Docker Compose v2, but `docker-compose`/Docker Compose v1 should work as well. Docker 20.10+ is required for building your own images because of BuildKit usage, and Docker 20.10 users need to [enable BuildKit first](https://docs.docker.com/build/buildkit/#getting-started), or [upgrade to latest Docker](https://docs.docker.com/engine/install/#server).
 
 ## Preparations
 
 ### Getting needed files
 
-Run `git clone https://iceshrimp.dev/iceshrimp/iceshrimp` <!--but if you are not planning on building your own image, just grabbing `.config` and `docker-compose.yml.example` from the repo will suffice.-->
+Run `git clone https://iceshrimp.dev/iceshrimp/iceshrimp`, but if you are not planning on building your own image, just grabbing `.config` and `docker-compose.yml.example` from the repo will suffice.
 
 ### docker-compose.yml
 
@@ -37,6 +37,7 @@ docker compose up
 ### Building the image
 
 Depending on your machine specs, this can take well over 30 minutes
+
 ```sh
 docker compose build
 docker compose up
