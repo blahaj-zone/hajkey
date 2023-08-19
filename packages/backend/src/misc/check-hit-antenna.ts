@@ -101,8 +101,8 @@ export async function checkHitAntenna(
 		const matched = keywords.some((and) =>
 			and.every((keyword) =>
 				antenna.caseSensitive
-					? note.text!.includes(keyword)
-					: note.text!.toLowerCase().includes(keyword.toLowerCase()),
+					? note.text!.includes(keyword) || note.cw?.includes(keyword)
+					: note.text!.toLowerCase().includes(keyword.toLowerCase()) || note.cw?.toLowerCase().includes(keyword.toLowerCase()),
 			),
 		);
 
@@ -120,8 +120,8 @@ export async function checkHitAntenna(
 		const matched = excludeKeywords.some((and) =>
 			and.every((keyword) =>
 				antenna.caseSensitive
-					? note.text!.includes(keyword)
-					: note.text!.toLowerCase().includes(keyword.toLowerCase()),
+					? note.text!.includes(keyword) || note.cw?.includes(keyword)
+					: note.text!.toLowerCase().includes(keyword.toLowerCase()) || note.cw?.toLowerCase().includes(keyword.toLowerCase()),
 			),
 		);
 
