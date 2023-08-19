@@ -337,7 +337,7 @@ onMounted(() => {
 	fetch();
 	definePageMetadata(
 		computed(() => ({
-			title: group != null ? group.name : user?.name,
+			title: group != null ? group.name : user?.name ?? 'Chat',
 			icon: "ph-chats-teardrop-bold ph-lg",
 		})),
 	);
