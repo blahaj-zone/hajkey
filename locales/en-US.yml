@@ -1216,7 +1216,7 @@ _preferencesBackups:
   updatedAt: "Updated at: {date} {time}"
   cannotLoad: "Loading failed"
   invalidFile: "Invalid file format"
-  delete: Delete backup
+  delete: "Delete backup"
 _registry:
   scope: "Scope"
   key: "Key"
