@@ -244,8 +244,12 @@ let _showContent = $ref(null);
 let showContent = $computed({
 	set(val) { _showContent = val },
 	get() {
-		if (_showContent != null) return _showContent;
-		return props.forceExpandCw || false;
+		if (props.forceExpandCw != null) {
+			_showContent = props.forceExpandCw;
+			props.forceExpandCw = null;
+		}
+
+		return _showContent || false;
 	},
 })
 
