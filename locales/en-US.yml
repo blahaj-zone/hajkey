@@ -2125,3 +2125,8 @@ _feeds:
   rss: "RSS"
   atom: "Atom"
   jsonFeed: "JSON feed"
+cwStyle: "Content Warning appearance"
+_cwStyle:
+  modern: "Modern"
+  classic: "Classic (Misskey/Foundkey-like)"
+  alternative: "Alternative (Firefish-like)"

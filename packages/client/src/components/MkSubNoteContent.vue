@@ -1,5 +1,5 @@
 <template>
-	<p v-if="note.cw != null" class="cw">
+	<p v-if="note.cw != null" class="cw" :class="cwStyle">
 		<MkA
 			v-if="conversation && note.renoteId == parentId"
 			:to="
@@ -34,24 +34,32 @@
 			<i class="ph-lock ph-bold"></i>
 		</span>
 		<Mfm
-			v-if="note.cw != '' && showContent"
+			v-if="note.cw != '' && (showContent || defaultStore.state.cwStyle !== 'modern')"
 			class="text"
 			:text="note.cw"
 			:author="note.user"
 			:i="$i"
 			:custom-emojis="note.emojis"
 		/>
+		<XCwButton
+			ref="cwButton"
+			v-if="note.cw && defaultStore.state.cwStyle === 'classic'"
+			v-model="showContent"
+			:note="note"
+			v-on:keydown="focusFooter"
+			v-on:update:model-value="(val) => emit('expanded', val)"
+		/>
 	</p>
 	<div class="wrmlmaau">
 		<div
 			class="content"
-			:class="{
+			:class="[{
 				collapsed,
 				isLong,
 				manyImages: note.files.length > 4,
 				showContent: note.cw && !showContent,
 				animatedMfm: !disableMfm,
-			}"
+			}, cwStyle]"
 		>
 			<XShowMoreButton
 				ref="showMoreButton"
@@ -59,10 +67,10 @@
 				v-model="collapsed"
 				v-on:keydown="focusFooter"
 			></XShowMoreButton>
-			<Mfm v-if="note.cw && !showContent" class="hiddenNote" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
+			<Mfm v-if="note.cw && ((!showContent && defaultStore.state.cwStyle === 'modern'))" class="hiddenNote" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
 			<XCwButton
 				ref="cwButton"
-				v-if="note.cw && !showContent"
+				v-if="note.cw && !showContent && defaultStore.state.cwStyle !== 'classic'"
 				v-model="showContent"
 				:note="note"
 				v-on:keydown="focusFooter"
@@ -167,7 +175,7 @@
 				v-model="collapsed"
 			></XShowMoreButton>
 			<XCwButton
-				v-if="note.cw && showContent"
+				v-if="note.cw && showContent && defaultStore.state.cwStyle !== 'classic'"
 				v-model="showContent"
 				:note="note"
 			/>
@@ -193,7 +201,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import * as misskey from "iceshrimp-js";
 import * as mfm from "mfm-js";
 import * as os from "@/os";
@@ -240,6 +248,7 @@ const urls = props.note.text
 	? extractUrlFromMfm(mfm.parse(props.note.text)).slice(0, 5)
 	: null;
 
+const cwStyle = computed (() => `_cw_style_${defaultStore.state.cwStyle}`);
 let _showContent = $ref(null);
 let showContent = $computed({
 	set(val) { _showContent = val },
@@ -309,7 +318,9 @@ function focusFooter(ev) {
 	display: block;
 	margin: 0;
 	padding: 0;
-	margin-bottom: 10px;
+	&:not(._cw_style_classic) {
+		margin-bottom: 10px;
+	}
 	overflow-wrap: break-word;
 	> .text {
 		margin-right: 8px;
@@ -319,12 +330,23 @@ function focusFooter(ev) {
 .wrmlmaau {
 	.content {
 		overflow-wrap: break-word;
-		> .hiddenNote {
+		&._cw_style_modern {
+			> .hiddenNote {
+				display: block;
+				padding: 0.5em 0 0.5em;
+				font-weight: 700;
+				font-size: 1.1em;
+				text-align: center;
+			}
+		}
+		&._cw_style_classic {
+			overflow: clip;
+
+			cursor: default;
 			display: block;
-			padding: 0.5em 0 0.5em;
-			font-weight: 700;
-			font-size: 1.1em;
-			text-align: center;
+			margin: 0;
+			padding: 0;
+			overflow-wrap: break-word;
 		}
 		> .body {
 			transition: filter 0.1s;
@@ -375,7 +397,9 @@ function focusFooter(ev) {
 		&.collapsed,
 		&.showContent {
 			position: relative;
-			min-height: calc(1em + 100px);
+			&._cw_style_modern {
+				min-height: calc(1em + 100px);
+			}
 			max-height: calc(15em + 100px);
 			> .body {
 				max-height: inherit;
@@ -403,14 +427,39 @@ function focusFooter(ev) {
 			}
 		}
 		&.showContent {
-			> .body {
-				min-height: 2em;
-				max-height: 5em;
-				visibility: hidden;
+			&._cw_style_alternative {
+				> .body {
+					min-height: 2em;
+					max-height: 5em;
+					filter: blur(4px);
+					:deep(span) {
+						animation: none !important;
+						transform: none !important;
+					}
+					:deep(img) {
+						filter: blur(12px);
+					}
+				}
+				:deep(.fade) {
+					inset: 0;
+					top: 90px;
+				}
 			}
-			:deep(.fade) {
-				inset: 0;
-				top: 0;
+			&._cw_style_modern {
+				> .body {
+					min-height: 2em;
+					max-height: 5em;
+					visibility: hidden;
+				}
+				:deep(.fade) {
+					inset: 0;
+					top: 0;
+				}
+			}
+			&._cw_style_classic {
+				> .body {
+					display: none;
+				}
 			}
 		}
 

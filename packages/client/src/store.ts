@@ -334,6 +334,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		cwStyle: {
+			where: "device",
+			default: "modern" as "modern" | "classic" | "alternative",
+		},
 	}),
 );
 

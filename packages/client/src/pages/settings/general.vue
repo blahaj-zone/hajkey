@@ -200,6 +200,20 @@
 				class="_formBlock"
 				>{{ i18n.ts.showAdminUpdates }}</FormSwitch
 			>
+
+			<FormSelect v-model="cwStyle" class="_formBlock">
+				<template #label>{{ i18n.ts.cwStyle }}</template>
+				<option value="modern">
+					{{ i18n.ts._cwStyle.modern }}
+				</option>
+				<option value="classic">
+					{{ i18n.ts._cwStyle.classic }}
+				</option>
+				<option value="alternative">
+					{{ i18n.ts._cwStyle.alternative }}
+				</option>
+			</FormSelect>
+
 			<FormSelect v-model="instanceTicker" class="_formBlock">
 				<template #label>{{ i18n.ts.instanceTicker }}</template>
 				<option value="none">{{ i18n.ts._instanceTicker.none }}</option>
@@ -353,6 +367,9 @@ const showAdminUpdates = computed(
 const showTimelineReplies = computed(
 	defaultStore.makeGetterSetter("showTimelineReplies"),
 );
+const cwStyle = computed(
+	defaultStore.makeGetterSetter("cwStyle"),
+);
 
 watch(swipeOnDesktop, () => {
 	defaultStore.set("swipeOnMobile", true);
@@ -397,6 +414,7 @@ watch(
 		advancedMfm,
 		autoplayMfm,
 		expandOnNoteClick,
+		cwStyle
 	],
 	async () => {
 		await reloadAsk();
