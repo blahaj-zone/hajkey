@@ -9,13 +9,13 @@ export function genOpenapiSpec() {
 
 		info: {
 			version: "v1",
-			title: "Firefish API",
+			title: "Iceshrimp API",
 			"x-logo": { url: "/static-assets/api-doc.png" },
 		},
 
 		externalDocs: {
 			description: "Repository",
-			url: "https://codeberg.org/firefish/firefish",
+			url: "https://iceshrimp.dev/iceshrimp/iceshrimp",
 		},
 
 		servers: [
@@ -106,7 +106,7 @@ export function genOpenapiSpec() {
 			description: desc,
 			externalDocs: {
 				description: "Source code",
-				url: `https://codeberg.org/firefish/firefish/src/branch/develop/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
+				url: `https://iceshrimp.dev/iceshrimp/iceshrimp/src/branch/dev/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
 			},
 			tags: endpoint.meta.tags || undefined,
 			security,

@@ -1,6 +1,6 @@
-# Firefish.js
+# iceshrimp.js
 
-Fork of Misskey.js for Firefish
+Fork of Misskey.js for Iceshrimp
 
 https://www.npmjs.com/package/iceshrimp-js
 

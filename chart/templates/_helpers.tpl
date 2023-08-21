@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "firefish.name" -}}
+{{- define "iceshrimp.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "firefish.fullname" -}}
+{{- define "iceshrimp.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "firefish.chart" -}}
+{{- define "iceshrimp.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "firefish.labels" -}}
-helm.sh/chart: {{ include "firefish.chart" . }}
-{{ include "firefish.selectorLabels" . }}
+{{- define "iceshrimp.labels" -}}
+helm.sh/chart: {{ include "iceshrimp.chart" . }}
+{{ include "iceshrimp.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "firefish.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "firefish.name" . }}
+{{- define "iceshrimp.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "iceshrimp.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "firefish.serviceAccountName" -}}
+{{- define "iceshrimp.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "firefish.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "iceshrimp.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -65,31 +65,31 @@ Create the name of the service account to use
 Create a default fully qualified name for dependent services.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "firefish.elasticsearch.fullname" -}}
+{{- define "iceshrimp.elasticsearch.fullname" -}}
 {{- printf "%s-%s" .Release.Name "elasticsearch" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "firefish.redis.fullname" -}}
+{{- define "iceshrimp.redis.fullname" -}}
 {{- printf "%s-%s" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "firefish.postgresql.fullname" -}}
+{{- define "iceshrimp.postgresql.fullname" -}}
 {{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 config/default.yml content
 */}}
-{{- define "firefish.configDir.default.yml" -}}
+{{- define "iceshrimp.configDir.default.yml" -}}
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Firefish configuration
+# iceshrimp configuration
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 #   ┌─────┐
 #───┘ URL └─────────────────────────────────────────────────────
 
 # Final accessible URL seen by a user.
-url: "https://{{ .Values.firefish.domain }}/"
+url: "https://{{ .Values.iceshrimp.domain }}/"
 
 # ONCE YOU HAVE STARTED THE INSTANCE, DO NOT CHANGE THE
 # URL SETTINGS AFTER THAT!
@@ -118,7 +118,7 @@ port: 3000
 
 db:
   {{- if .Values.postgresql.enabled }}
-  host: {{ template "firefish.postgresql.fullname" . }}
+  host: {{ template "iceshrimp.postgresql.fullname" . }}
   port: '5432'
   {{- else }}
   host: {{ .Values.postgresql.postgresqlHostname }}
@@ -146,7 +146,7 @@ db:
 
 redis:
   {{- if .Values.redis.enabled }}
-  host: {{ template "firefish.redis.fullname" . }}-master
+  host: {{ template "iceshrimp.redis.fullname" . }}-master
   {{- else }}
   host: {{ required "When the redis chart is disabled .Values.redis.hostname is required" .Values.redis.hostname }}
   {{- end }}
@@ -218,7 +218,7 @@ id: 'aid'
 
 # Reserved usernames that only the administrator can register with
 reservedUsernames:
-{{ .Values.firefish.reservedUsernames | toYaml }}
+{{ .Values.iceshrimp.reservedUsernames | toYaml }}
 
 # Whether disable HSTS
 #disableHsts: true
@@ -266,7 +266,7 @@ reservedUsernames:
 #proxyRemoteFiles: true
 
 allowedPrivateNetworks:
-{{ .Values.firefish.allowedPrivateNetworks | toYaml }}
+{{ .Values.iceshrimp.allowedPrivateNetworks | toYaml }}
 
 # TWA
 #twa:
@@ -286,34 +286,34 @@ allowedPrivateNetworks:
 # If you mess this up, that's on you, you've been warned...
 
 #maxUserSignups: 100
-isManagedHosting: {{ .Values.firefish.isManagedHosting }}
+isManagedHosting: {{ .Values.iceshrimp.isManagedHosting }}
 deepl:
-  managed: {{ .Values.firefish.deepl.managed }}
-  authKey: {{ .Values.firefish.deepl.authKey | quote}}
-  isPro: {{ .Values.firefish.deepl.isPro }}
+  managed: {{ .Values.iceshrimp.deepl.managed }}
+  authKey: {{ .Values.iceshrimp.deepl.authKey | quote}}
+  isPro: {{ .Values.iceshrimp.deepl.isPro }}
 
 libreTranslate:
-  managed: {{ .Values.firefish.libreTranslate.managed }}
-  apiUrl: {{ .Values.firefish.libreTranslate.apiUrl | quote }}
-  apiKey: {{ .Values.firefish.libreTranslate.apiKey | quote }}
+  managed: {{ .Values.iceshrimp.libreTranslate.managed }}
+  apiUrl: {{ .Values.iceshrimp.libreTranslate.apiUrl | quote }}
+  apiKey: {{ .Values.iceshrimp.libreTranslate.apiKey | quote }}
 
 email:
-  managed: {{ .Values.firefish.smtp.managed }}
-  address: {{ .Values.firefish.smtp.from_address | quote }}
-  host: {{ .Values.firefish.smtp.server | quote }}
-  port: {{ .Values.firefish.smtp.port }}
-  user: {{ .Values.firefish.smtp.login | quote }}
-  pass: {{ .Values.firefish.smtp.password | quote }}
-  useImplicitSslTls: {{ .Values.firefish.smtp.useImplicitSslTls }}
+  managed: {{ .Values.iceshrimp.smtp.managed }}
+  address: {{ .Values.iceshrimp.smtp.from_address | quote }}
+  host: {{ .Values.iceshrimp.smtp.server | quote }}
+  port: {{ .Values.iceshrimp.smtp.port }}
+  user: {{ .Values.iceshrimp.smtp.login | quote }}
+  pass: {{ .Values.iceshrimp.smtp.password | quote }}
+  useImplicitSslTls: {{ .Values.iceshrimp.smtp.useImplicitSslTls }}
 objectStorage:
-  managed: {{ .Values.firefish.objectStorage.managed }}
-  baseUrl: {{ .Values.firefish.objectStorage.baseUrl | quote }}
-  bucket: {{ .Values.firefish.objectStorage.bucket | quote }}
-  prefix: {{ .Values.firefish.objectStorage.prefix | quote }}
-  endpoint: {{ .Values.firefish.objectStorage.endpoint | quote }}
-  region: {{ .Values.firefish.objectStorage.region | quote }}
-  accessKey: {{ .Values.firefish.objectStorage.access_key | quote }}
-  secretKey: {{ .Values.firefish.objectStorage.access_secret | quote }}
+  managed: {{ .Values.iceshrimp.objectStorage.managed }}
+  baseUrl: {{ .Values.iceshrimp.objectStorage.baseUrl | quote }}
+  bucket: {{ .Values.iceshrimp.objectStorage.bucket | quote }}
+  prefix: {{ .Values.iceshrimp.objectStorage.prefix | quote }}
+  endpoint: {{ .Values.iceshrimp.objectStorage.endpoint | quote }}
+  region: {{ .Values.iceshrimp.objectStorage.region | quote }}
+  accessKey: {{ .Values.iceshrimp.objectStorage.access_key | quote }}
+  secretKey: {{ .Values.iceshrimp.objectStorage.access_secret | quote }}
   useSsl: true
   connnectOverProxy: false
   setPublicReadOnUpload: true

@@ -92,7 +92,7 @@ export function validateNote(object: any, uri: string) {
 /**
  * Fetch Notes.
  *
- * If the target Note is registered in Firefish, it will be returned.
+ * If the target Note is registered in Iceshrimp, it will be returned.
  */
 export async function fetchNote(
 	object: string | IObject,
@@ -397,8 +397,8 @@ export async function createNote(
 /**
  * Resolve Note.
  *
- * If the target Note is registered in Firefish, return it, otherwise
- * Fetch from remote server, register with Firefish and return it.
+ * If the target Note is registered in Iceshrimp, return it, otherwise
+ * Fetch from remote server, register with Iceshrimp and return it.
  */
 export async function resolveNote(
 	value: string | IObject,

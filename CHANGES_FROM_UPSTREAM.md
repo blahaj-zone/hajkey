@@ -85,7 +85,7 @@
 - Undo renote button inside original note
 - Custom locales
 - Obliteration of Ai-chan
-- Switch to [Firefish.js](https://codeberg.org/firefish/firefish.js)
+- Switch to [Iceshrimp.js](https://iceshrimp.dev/iceshrimp/iceshrimp/)
 - Woozy mode 🥴
 - Improve blocking servers
 - Release notes

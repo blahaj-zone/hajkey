@@ -1,7 +1,7 @@
 {
 	"name": "iceshrimp-js",
 	"version": "0.0.24",
-	"description": "Firefish SDK for JavaScript",
+	"description": "iceshrimp SDK for JavaScript",
 	"main": "./built/index.js",
 	"types": "./built/index.d.ts",
 	"scripts": {
@@ -18,7 +18,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://codeberg.org/firefish/firefish.git"
+		"url": "https://iceshrimp.dev/iceshrimp/iceshrimp.git"
 	},
 	"devDependencies": {
 		"@microsoft/api-documenter": "^7.22.21",

@@ -3,7 +3,7 @@ import * as Misskey from "../src";
 
 describe("Streaming", () => {
 	test("emit type", async () => {
-		const stream = new Misskey.Stream("https://firefish.test", {
+		const stream = new Misskey.Stream("https://iceshrimp.test", {
 			token: "TOKEN",
 		});
 		const mainChannel = stream.useChannel("main");
@@ -13,7 +13,7 @@ describe("Streaming", () => {
 	});
 
 	test("params type", async () => {
-		const stream = new Misskey.Stream("https://firefish.test", {
+		const stream = new Misskey.Stream("https://iceshrimp.test", {
 			token: "TOKEN",
 		});
 		// TODO: 「stream.useChannel の第二引数として受け入れる型が

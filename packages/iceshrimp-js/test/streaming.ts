@@ -3,8 +3,8 @@ import Stream from "../src/streaming";
 
 describe("Streaming", () => {
 	test("useChannel", async () => {
-		const server = new WS("wss://firefish.test/streaming");
-		const stream = new Stream("https://firefish.test", { token: "TOKEN" });
+		const server = new WS("wss://iceshrimp.test/streaming");
+		const stream = new Stream("https://iceshrimp.test", { token: "TOKEN" });
 		const mainChannelReceived: any[] = [];
 		const main = stream.useChannel("main");
 		main.on("meUpdated", (payload) => {
@@ -44,8 +44,8 @@ describe("Streaming", () => {
 	});
 
 	test("useChannel with parameters", async () => {
-		const server = new WS("wss://firefish.test/streaming");
-		const stream = new Stream("https://firefish.test", { token: "TOKEN" });
+		const server = new WS("wss://iceshrimp.test/streaming");
+		const stream = new Stream("https://iceshrimp.test", { token: "TOKEN" });
 		const messagingChannelReceived: any[] = [];
 		const messaging = stream.useChannel("messaging", { otherparty: "aaa" });
 		messaging.on("message", (payload) => {
@@ -86,8 +86,8 @@ describe("Streaming", () => {
 	});
 
 	test("ちゃんとチャンネルごとにidが異なる", async () => {
-		const server = new WS("wss://firefish.test/streaming");
-		const stream = new Stream("https://firefish.test", { token: "TOKEN" });
+		const server = new WS("wss://iceshrimp.test/streaming");
+		const stream = new Stream("https://iceshrimp.test", { token: "TOKEN" });
 
 		stream.useChannel("messaging", { otherparty: "aaa" });
 		stream.useChannel("messaging", { otherparty: "bbb" });
@@ -111,8 +111,8 @@ describe("Streaming", () => {
 	});
 
 	test("Connection#send", async () => {
-		const server = new WS("wss://firefish.test/streaming");
-		const stream = new Stream("https://firefish.test", { token: "TOKEN" });
+		const server = new WS("wss://iceshrimp.test/streaming");
+		const stream = new Stream("https://iceshrimp.test", { token: "TOKEN" });
 
 		const messaging = stream.useChannel("messaging", { otherparty: "aaa" });
 		messaging.send("read", { id: "aaa" });
@@ -136,8 +136,8 @@ describe("Streaming", () => {
 	});
 
 	test("Connection#dispose", async () => {
-		const server = new WS("wss://firefish.test/streaming");
-		const stream = new Stream("https://firefish.test", { token: "TOKEN" });
+		const server = new WS("wss://iceshrimp.test/streaming");
+		const stream = new Stream("https://iceshrimp.test", { token: "TOKEN" });
 		const mainChannelReceived: any[] = [];
 		const main = stream.useChannel("main");
 		main.on("meUpdated", (payload) => {

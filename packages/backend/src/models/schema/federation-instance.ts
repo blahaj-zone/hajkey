@@ -19,7 +19,7 @@ export const packedFederationInstanceSchema = {
 			type: "string",
 			optional: false,
 			nullable: false,
-			example: "firefish.example.com",
+			example: "iceshrimp.example.com",
 		},
 		accountDomain: {
 			type: "string",
@@ -83,7 +83,7 @@ export const packedFederationInstanceSchema = {
 			type: "string",
 			optional: false,
 			nullable: true,
-			example: "firefish",
+			example: "iceshrimp",
 		},
 		softwareVersion: {
 			type: "string",

@@ -2,7 +2,7 @@ pipeline:
   publish-docker-latest:
     image: plugins/kaniko
     settings:
-      repo: thatonecalculator/firefish
+      repo: iceshrimp/iceshrimp
       tags: rc
       dockerfile: Dockerfile
       username:

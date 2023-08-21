@@ -20,7 +20,7 @@ describe("API", () => {
 		fetchMock.resetMocks();
 		fetchMock.mockResponse(async (req) => {
 			const body = await req.json();
-			if (req.method === "POST" && req.url === "https://firefish.test/api/i") {
+			if (req.method === "POST" && req.url === "https://iceshrimp.test/api/i") {
 				if (body.i === "TOKEN") {
 					return JSON.stringify({ id: "foo" });
 				} else {
@@ -32,7 +32,7 @@ describe("API", () => {
 		});
 
 		const cli = new APIClient({
-			origin: "https://firefish.test",
+			origin: "https://iceshrimp.test",
 			credential: "TOKEN",
 		});
 
@@ -43,7 +43,7 @@ describe("API", () => {
 		});
 
 		expect(getFetchCall(fetchMock.mock.calls[0])).toEqual({
-			url: "https://firefish.test/api/i",
+			url: "https://iceshrimp.test/api/i",
 			method: "POST",
 			body: { i: "TOKEN" },
 		});
@@ -55,7 +55,7 @@ describe("API", () => {
 			const body = await req.json();
 			if (
 				req.method === "POST" &&
-				req.url === "https://firefish.test/api/notes/show"
+				req.url === "https://iceshrimp.test/api/notes/show"
 			) {
 				if (body.i === "TOKEN" && body.noteId === "aaaaa") {
 					return JSON.stringify({ id: "foo" });
@@ -68,7 +68,7 @@ describe("API", () => {
 		});
 
 		const cli = new APIClient({
-			origin: "https://firefish.test",
+			origin: "https://iceshrimp.test",
 			credential: "TOKEN",
 		});
 
@@ -79,7 +79,7 @@ describe("API", () => {
 		});
 
 		expect(getFetchCall(fetchMock.mock.calls[0])).toEqual({
-			url: "https://firefish.test/api/notes/show",
+			url: "https://iceshrimp.test/api/notes/show",
 			method: "POST",
 			body: { i: "TOKEN", noteId: "aaaaa" },
 		});
@@ -90,7 +90,7 @@ describe("API", () => {
 		fetchMock.mockResponse(async (req) => {
 			if (
 				req.method === "POST" &&
-				req.url === "https://firefish.test/api/reset-password"
+				req.url === "https://iceshrimp.test/api/reset-password"
 			) {
 				return { status: 204 };
 			} else {
@@ -99,7 +99,7 @@ describe("API", () => {
 		});
 
 		const cli = new APIClient({
-			origin: "https://firefish.test",
+			origin: "https://iceshrimp.test",
 			credential: "TOKEN",
 		});
 
@@ -111,7 +111,7 @@ describe("API", () => {
 		expect(res).toEqual(null);
 
 		expect(getFetchCall(fetchMock.mock.calls[0])).toEqual({
-			url: "https://firefish.test/api/reset-password",
+			url: "https://iceshrimp.test/api/reset-password",
 			method: "POST",
 			body: { i: "TOKEN", token: "aaa", password: "aaa" },
 		});
@@ -121,7 +121,7 @@ describe("API", () => {
 		fetchMock.resetMocks();
 		fetchMock.mockResponse(async (req) => {
 			const body = await req.json();
-			if (req.method === "POST" && req.url === "https://firefish.test/api/i") {
+			if (req.method === "POST" && req.url === "https://iceshrimp.test/api/i") {
 				if (typeof body.i === "string") {
 					return JSON.stringify({ id: "foo" });
 				} else {
@@ -143,7 +143,7 @@ describe("API", () => {
 
 		try {
 			const cli = new APIClient({
-				origin: "https://firefish.test",
+				origin: "https://iceshrimp.test",
 				credential: "TOKEN",
 			});
 
@@ -172,7 +172,7 @@ describe("API", () => {
 
 		try {
 			const cli = new APIClient({
-				origin: "https://firefish.test",
+				origin: "https://iceshrimp.test",
 				credential: "TOKEN",
 			});
 
@@ -189,7 +189,7 @@ describe("API", () => {
 
 		try {
 			const cli = new APIClient({
-				origin: "https://firefish.test",
+				origin: "https://iceshrimp.test",
 				credential: "TOKEN",
 			});
 
@@ -210,7 +210,7 @@ describe("API", () => {
 
 		try {
 			const cli = new APIClient({
-				origin: "https://firefish.test",
+				origin: "https://iceshrimp.test",
 				credential: "TOKEN",
 			});
 

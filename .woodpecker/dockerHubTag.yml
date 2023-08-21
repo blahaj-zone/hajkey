@@ -2,7 +2,7 @@ pipeline:
   publish-docker-tag:
     image: plugins/kaniko
     settings:
-      repo: thatonecalculator/firefish
+      repo: iceshrimp/iceshrimp
       # Uses the tag from git for the container tag
       tags: ${CI_COMMIT_TAG}
       dockerfile: Dockerfile

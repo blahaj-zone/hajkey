@@ -42,7 +42,7 @@ export const meta = {
 				optional: false,
 				nullable: false,
 				format: "url",
-				example: "https://firefish.example.com",
+				example: "https://iceshrimp.example.com",
 			},
 			description: {
 				type: "string",
@@ -68,13 +68,13 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/firefish/firefish",
+				default: "https://iceshrimp.dev/iceshrimp/iceshrimp",
 			},
 			feedbackUrl: {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/firefish/firefish/issues",
+				default: "https://iceshrimp.dev/iceshrimp/iceshrimp/issues",
 			},
 			defaultDarkTheme: {
 				type: "string",

@@ -6,7 +6,7 @@
 	id: 'light',
 
 	name: 'Light',
-	author: 'Firefish Contributors',
+	author: 'Iceshrimp Contributors',
 	desc: 'Default light theme',
 	kind: 'light',
 

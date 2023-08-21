@@ -254,10 +254,10 @@ function more(ev: MouseEvent) {
 		box-sizing: border-box;
 		overflow: auto;
 		overflow-x: clip;
-		#firefish_app > :not(.wallpaper) & {
+		#iceshrimp_app > :not(.wallpaper) & {
 			background: var(--navBg);
 		}
-		#firefish_app > .wallpaper:not(.centered) & {
+		#iceshrimp_app > .wallpaper:not(.centered) & {
 			border-right: 1px solid var(--divider);
 		}
 		contain: strict;

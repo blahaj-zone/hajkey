@@ -6,7 +6,7 @@
 	id: 'dark',
 
 	name: 'Dark',
-	author: 'Firefish Contributors',
+	author: 'Iceshrimp Contributors',
 	desc: 'Default dark theme',
 	kind: 'dark',
 

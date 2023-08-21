@@ -1,6 +1,6 @@
 apiVersion: v2
-name: firefish
-description: A fun, new, open way to experience social media https://joinfirefish.org
+name: iceshrimp
+description: A fun, new, open way to experience social media https://iceshrimp.dev
 
 # A chart can be either an 'application' or a 'library' chart.
 #

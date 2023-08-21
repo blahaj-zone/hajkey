@@ -1,6 +1,6 @@
 # Changelog
 
-All changes from v13.0.0 onwards, for a list of differences read FIREFISH.md
+All changes from v13.0.0 onwards, for a list of differences read CHANGES_FROM_UPSTREAM.md
 
 ## [1.0.0] - 2023-07-19
 

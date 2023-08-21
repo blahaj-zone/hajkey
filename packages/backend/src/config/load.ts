@@ -53,7 +53,7 @@ export default function load() {
 	mixin.apiUrl = `${mixin.scheme}://${mixin.host}/api`;
 	mixin.authUrl = `${mixin.scheme}://${mixin.host}/auth`;
 	mixin.driveUrl = `${mixin.scheme}://${mixin.host}/files`;
-	mixin.userAgent = `Firefish/${meta.version} (${config.url})`;
+	mixin.userAgent = `Iceshrimp/${meta.version} (${config.url})`;
 	mixin.clientEntry = clientManifest["src/init.ts"];
 
 	if (!config.redis.prefix) config.redis.prefix = mixin.hostname;

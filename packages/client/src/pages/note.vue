@@ -215,7 +215,7 @@ definePageMetadata(
 }
 
 .fcuexfpr {
-	#firefish_app > :not(.wallpaper) & {
+	#iceshrimp_app > :not(.wallpaper) & {
 		background: var(--bg);
 	}
 
