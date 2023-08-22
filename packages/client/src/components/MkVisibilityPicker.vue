@@ -1,12 +1,15 @@
 <template>
 	<MkModal
 		ref="modal"
+		v-slot="{ type }"
 		:z-priority="'high'"
 		:src="src"
 		@click="modal.close()"
 		@closed="emit('closed')"
 	>
-		<div class="_popup" :class="$style.root">
+		<div 
+			class="_popup" 
+			:class="{ [$style.root]: true, [$style.asDrawer]: type === 'drawer' }">
 			<button
 				key="public"
 				class="_button"
@@ -167,6 +170,25 @@ function choose(visibility: (typeof misskey.noteVisibilities)[number]): void {
 .root {
 	width: 240px;
 	padding: 8px 0;
+	&.asDrawer {
+		padding: 12px 0 calc(env(safe-area-inset-bottom, 0px) + 12px) 0;
+		width: 100%;
+		border-radius: 24px;
+		border-bottom-right-radius: 0;
+		border-bottom-left-radius: 0;
+		.icon {
+			width: 18px;
+			margin-right: 24px;
+		}
+		.item {
+			font-size: 14px;
+			padding: 10px 24px;
+		}
+		.toggle {
+			margin-left: 24px;
+			width: 18px;
+		}
+	}
 }
 
 .divider {
