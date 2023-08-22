@@ -45,7 +45,7 @@ const themeColor =
 	instance.themeColor ?? computedStyle.getPropertyValue("--bg");
 
 const bg = {
-	background: `linear-gradient(90deg, ${themeColor}, ${themeColor}55)`,
+	background: `${themeColor}B3`,
 };
 
 function getInstanceIcon(instance): string {
@@ -80,6 +80,7 @@ function getInstanceIcon(instance): string {
 
 	> .name {
 		display: none;
+		color: #fff;
 		margin-left: 4px;
 		font-size: 0.85em;
 		vertical-align: top;
@@ -87,10 +88,10 @@ function getInstanceIcon(instance): string {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		text-shadow:
-			-1px -1px 0 var(--bg),
-			1px -1px 0 var(--bg),
-			-1px 1px 0 var(--bg),
-			1px 1px 0 var(--bg);
+			-1px -1px 0 #000,
+			1px -1px 0 #000,
+			-1px 1px 0 #000,
+			1px 1px 0 #000;
 		.article > .main &,
 		.header > .body & {
 			display: unset;
