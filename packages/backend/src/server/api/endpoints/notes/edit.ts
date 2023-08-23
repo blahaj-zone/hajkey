@@ -146,6 +146,12 @@ export const meta = {
 				code: "CANNOT_CHANGE_VISIBILITY",
 				id: "2917fd0b-da04-41de-949f-146835a006c6",
 		},
+
+		cannotQuoteOwnNote: {
+			message: "You cannot quote your own note.",
+			code: "CANNOT_QUOTE_OWN_NOTE",
+			id: "070eee98-5f8a-4eca-9dc0-830b4d4e52ac",
+		},
 	}
 } as const;
 
@@ -273,6 +279,10 @@ export default define(meta, paramDef, async (ps, user) => {
 				throw new ApiError(meta.errors.noSuchRenoteTarget);
 			throw e;
 		});
+
+		if (ps.renoteId === note.id) {
+			throw new ApiError(meta.errors.cannotQuoteOwnNote);
+		}
 
 		if (renote.renoteId && !renote.text && !renote.fileIds && !renote.hasPoll) {
 			throw new ApiError(meta.errors.cannotReRenote);
