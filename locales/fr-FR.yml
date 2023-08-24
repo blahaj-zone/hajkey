@@ -1,10 +1,10 @@
 _lang_: "Français"
-headlineIceshrimp: "Une plateforme de réseaux sociaux décentralisé, libre pour toujours ! 🚀"
-introIceshrimp: "Bienvenue ! Iceshrimp est un service de microblogage décentralisé, libre
-  et ouvert.\nÉcrivez des « notes » et partagez ce qui se passe à l’instant présent,
-  autour de vous avec les autres 📡\nLa fonction « réactions », vous permet également
-  d’ajouter une réaction rapide aux notes des autres utilisateur·rice·s 👍\nExplorons
-  un nouveau monde 🚀"
+headlineIceshrimp: "Une plateforme de réseaux sociaux décentralisé, libre pour toujours
+  ! 🚀"
+introIceshrimp: "Bienvenue ! Iceshrimp est un service de microblogage décentralisé,
+  libre et ouvert.\nPubliez des textes et médias dans le fédiverse 📡\nBoostez et/ou
+  citez les publications les plus intéressantes 📣\nAjoutez des réactions par émojis
+  aux publications des autres utilisateur·rice·s ❤️⭐️👍🎉🤣"
 monthAndDay: "{day}/{month}"
 search: "Rechercher"
 notifications: "Notifications"
@@ -48,8 +48,8 @@ copyContent: "Copier le contenu"
 copyLink: "Copier le lien"
 delete: "Supprimer"
 deleteAndEdit: "Supprimer et réécrire"
-deleteAndEditConfirm: "Êtes-vous sûr·e de vouloir supprimer cette publication et la reformuler ?
- Vous perdrez toutes les réactions, boosts et réponses liées."
+deleteAndEditConfirm: "Êtes-vous sûr·e de vouloir supprimer cette publication et la
+  reformuler ? Vous perdrez toutes les réactions, boosts et réponses liées."
 addToList: "Ajouter à une liste"
 sendMessage: "Envoyer un message"
 copyUsername: "Copier le nom d’utilisateur·rice"
@@ -120,7 +120,8 @@ reaction: "Réactions"
 reactionSetting: "Réactions à afficher dans le sélecteur de réactions"
 reactionSettingDescription2: "Déplacer pour réorganiser, cliquer pour effacer, utiliser
   « + » pour ajouter."
-rememberNoteVisibility: "Réutiliser le paramètre de visibilité utilisée lors de la publication précédente."
+rememberNoteVisibility: "Réutiliser le paramètre de visibilité utilisée lors de la
+  publication précédente"
 attachCancel: "Supprimer le fichier attaché"
 markAsSensitive: "Marquer comme sensible (NSFW)"
 unmarkAsSensitive: "Supprimer le marquage comme sensible (NSFW)"
@@ -706,8 +707,8 @@ createNew: "Créer nouveau"
 optional: "Facultatif"
 createNewClip: "Créer un nouveau clip"
 public: "Public"
-i18nInfo: "Iceshrimp est traduit dans différentes langues par des bénévoles. Vous pouvez
-  contribuer à {link}."
+i18nInfo: "Iceshrimp est traduit dans différentes langues par des bénévoles. Vous
+  pouvez contribuer à {link}."
 manageAccessTokens: "Gérer les jetons d’accès"
 accountInfo: "Informations du compte"
 notesCount: "Nombre de publications"
@@ -969,9 +970,9 @@ _forgotPassword:
     adresse."
   ifNoEmail: "Si vous n’avez pas enregistré d’adresse e-mail, merci de contacter l’administrateur·rice
     de votre instance."
-  contactAdmin: "Cette instance ne permettant pas l’utilisation d’adresses e-mail, prenez
-    contact avec l’administrateur·rice pour procéder à la réinitialisation de votre
-    mot de passe."
+  contactAdmin: "Cette instance ne permettant pas l’utilisation d’adresses e-mail,
+    prenez contact avec l’administrateur·rice pour procéder à la réinitialisation
+    de votre mot de passe."
 _gallery:
   my: "Mes publications"
   liked: "Publications que j’ai aimé"
@@ -1000,14 +1001,17 @@ _aboutIceshrimp:
   translation: "Traduire Iceshrimp"
   donate: "Soutenir Iceshrimp"
   donateTitle: Iceshrimp vous plaît ?
-  pleaseDonateToIceshrimp: Merci de considérer de faire un don pour soutenir le développement de Iceshrimp.
-  pleaseDonateToHost: Également, veuillez envisager de faire un don à votre instance d’accueil, {host}, pour contribuer à couvrir ses frais de fonctionnement.
+  pleaseDonateToIceshrimp: Merci de considérer de faire un don pour soutenir le développement
+    de Iceshrimp.
+  pleaseDonateToHost: Également, veuillez envisager de faire un don à votre instance
+    d’accueil, {host}, pour contribuer à couvrir ses frais de fonctionnement.
   donateHost: Faire un don à {host}
   morePatrons: "Nous apprécions vraiment le soutien de nombreuses autres personnes
     non mentionnées ici. Merci à toutes et à tous ! 🥰"
   sponsors: Sponsors Iceshrimp
   patrons: "Contributeurs"
-  patronsList: Listé chronologiquement, pas par taille de donation. Faite un don avec le lien ci-dessus pour avoir votre nom affiché ici !
+  patronsList: Listé chronologiquement, pas par taille de donation. Faite un don avec
+    le lien ci-dessus pour avoir votre nom affiché ici !
 _nsfw:
   respect: "Cacher les médias marqués comme contenu sensible (NSFW)"
   ignore: "Afficher les médias sensibles (NSFW)"
@@ -1028,8 +1032,7 @@ _mfm:
   link: "Lien"
   linkDescription: "Une partie précise d’une phrase peut être liée à l’adresse web."
   bold: "Gras"
-  boldDescription: "Mise en évidence du texte en le mettant en
-    gras."
+  boldDescription: "Mise en évidence du texte en le mettant en gras."
   small: "Diminuer l’emphase"
   smallDescription: "Le contenu peut être affiché en petit et fin."
   center: "Centrer"
@@ -1149,7 +1152,8 @@ _instanceMute:
   title: "Masque les publications provenant des instances listés."
   heading: "Instances à mettre en sourdine/masquer"
   instanceMuteDescription: Ceci va masquer toute publication ou boost de instances
-    listés, incluant celles des personnes répondant à des personnes des instances masqués.
+    listés, incluant celles des personnes répondant à des personnes des instances
+    masqués.
 _theme:
   explore: "Explorer les thèmes"
   install: "Installer un thème"
@@ -1978,6 +1982,7 @@ _preferencesBackups:
   save: Enregistrer les changements
   inputName: Merci d’entrer un nom pour cette sauvegarde
   cannotSave: La sauvegarde a échoué
+  delete: Supprimer la sauvegarde
 privateMode: Mode privé
 privateModeInfo: Si activé, seules les instances autorisées peuvent fédérer avec votre
   instance. Toutes les publications seront masquées de la visibilité publique.
@@ -2014,8 +2019,8 @@ hiddenTagsDescription: "Lister les hashtags (sans le #) que vous souhaitez cache
 antennaInstancesDescription: Lister un hôte d’instance par ligne
 userSaysSomethingReason: "{name} a dit {reason}"
 breakFollowConfirm: Êtes vous sur de vouloir retirer l’abonné ?
-recommendedInstancesDescription: Instances recommandées séparées par une nouvelle ligne
-  pour apparaître dans le fil recommandé.
+recommendedInstancesDescription: Instances recommandées séparées par une nouvelle
+  ligne pour apparaître dans le fil recommandé.
 sendPushNotificationReadMessage: Supprimer les notifications push une fois que les
   notifications ou messages concernés ont été lus
 sendPushNotificationReadMessageCaption: Une notification contenant le texte "{emptyPushNotificationMessage}"
@@ -2099,9 +2104,9 @@ _experiments:
     est congestionnée.
 findOtherInstance: Trouver une autre instance
 userSaysSomethingReasonQuote: "{name} a cité une publication contenant {reason}"
-signupsDisabled: Les inscriptions sur cette instance sont actuellement désactivés, mais
-  vous pouvez toujours vous inscrire sur une autre instance ! Si vous avez un code d’invitation
-  pour cette instance, entrez-le ci-dessous s’il vous plait.
+signupsDisabled: Les inscriptions sur cette instance sont actuellement désactivés,
+  mais vous pouvez toujours vous inscrire sur une autre instance ! Si vous avez un
+  code d’invitation pour cette instance, entrez-le ci-dessous s’il vous plait.
 apps: Applications
 userSaysSomethingReasonReply: "{noms} a répondu à une publication contenant {raison}"
 defaultValueIs: "défaut : {valeur}"
@@ -2205,3 +2210,13 @@ deletePasskeysConfirm: Cela supprimera de manière irréversible toutes les clé
   et les clés de sécurité sur ce compte. Souhaitez-vous continuer ?
 addRe: Ajouter "re:" au début d’un avertissement de contenu (CW) en réponse à une
   publication avec un avertissement de contenu
+expandAllCws: Afficher le contenu de toutes les réponses
+_cwStyle:
+  modern: Moderne
+  alternative: Alternatif (Firefish)
+  classic: Classique (Misskey/Foundkey)
+cannotChangeScopeWhenEditing: Vous ne pouvez pas modifier la visibilité de ce message
+  pendant son édition
+openInMainColumn: Ouvrir dans la colonne principale
+cwStyle: Apparence des «Avertissement de contenu»
+collapseAllCws: Cacher le contenu de toutes les réponses
