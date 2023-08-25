@@ -1133,6 +1133,8 @@ removeRecipient: "Remove recipient"
 removeMember: "Remove member"
 verifiedLink: "Verified link"
 openInMainColumn: "Open in main column"
+searchNotLoggedIn_1: "You have to be authenticated in order to use full text search."
+searchNotLoggedIn_2: "However, you can search using hashtags, and search users."
 
 _sensitiveMediaDetection:
   description: "Reduces the effort of server moderation through automatically recognizing

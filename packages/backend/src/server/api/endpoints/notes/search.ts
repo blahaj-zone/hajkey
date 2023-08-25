@@ -15,7 +15,7 @@ import { sqlLikeEscape } from "@/misc/sql-like-escape.js";
 export const meta = {
 	tags: ["notes"],
 
-	requireCredential: false,
+	requireCredential: true,
 	requireCredentialPrivateMode: true,
 
 	res: {
