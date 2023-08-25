@@ -8,8 +8,8 @@
 	},
 	"private": true,
 	"scripts": {
-		"rebuild": "clean && node ./scripts/build-greet.js && yarn workspace iceshrimp-js build &&  yarn workspaces foreach -pi run build && gulp",
-		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces foreach -pt run build && gulp",
+		"rebuild": "clean && node ./scripts/build-greet.js && yarn workspace iceshrimp-js build &&  yarn workspaces foreach -pitv run build && gulp",
+		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces foreach -pitv run build && gulp",
 		"start": "yarn workspace backend run start",
 		"start:test": "yarn workspace backend run start:test",
 		"init": "yarn migrate",
