@@ -202,10 +202,6 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
-		useBlurEffectForModal: {
-			where: "device",
-			default: true,
-		},
 		useBlurEffect: {
 			where: "device",
 			default: true,

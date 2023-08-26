@@ -92,7 +92,6 @@ const defaultStoreSaveKeys: (keyof (typeof defaultStore)["state"])[] = [
 	"enterSendsMessage",
 	"useOsNativeEmojis",
 	"disableDrawer",
-	"useBlurEffectForModal",
 	"useBlurEffect",
 	"showFixedPostForm",
 	"enableInfiniteScroll",

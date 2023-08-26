@@ -159,9 +159,6 @@
 			<FormSwitch v-model="useBlurEffect" class="_formBlock">{{
 				i18n.ts.useBlurEffect
 			}}</FormSwitch>
-			<FormSwitch v-model="useBlurEffectForModal" class="_formBlock">{{
-				i18n.ts.useBlurEffectForModal
-			}}</FormSwitch>
 			<FormSwitch
 				v-model="showGapBetweenNotesInTimeline"
 				class="_formBlock"
@@ -302,9 +299,6 @@ const reduceAnimation = computed(
 		(v) => !v,
 		(v) => !v,
 	),
-);
-const useBlurEffectForModal = computed(
-	defaultStore.makeGetterSetter("useBlurEffectForModal"),
 );
 const useBlurEffect = computed(defaultStore.makeGetterSetter("useBlurEffect"));
 const showGapBetweenNotesInTimeline = computed(

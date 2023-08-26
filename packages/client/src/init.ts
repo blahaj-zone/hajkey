@@ -364,17 +364,6 @@ function checkForSplash() {
 	});
 
 	watch(
-		defaultStore.reactiveState.useBlurEffectForModal,
-		(v) => {
-			document.documentElement.style.setProperty(
-				"--modalBgFilter",
-				v ? "blur(4px)" : "none",
-			);
-		},
-		{ immediate: true },
-	);
-
-	watch(
 		defaultStore.reactiveState.useBlurEffect,
 		(v) => {
 			if (v && deviceKind !== "smartphone") {
@@ -382,6 +371,12 @@ function checkForSplash() {
 			} else {
 				document.documentElement.style.setProperty("--blur", "none");
 			}
+
+			document.documentElement.style.setProperty(
+				"--modalBgFilter",
+				v ? "blur(4px)" : "none",
+			);
+
 			const theme = defaultStore.state.darkMode ? ColdDeviceStorage.get("darkTheme") : ColdDeviceStorage.get("lightTheme");
 			applyTheme(theme);
 		},
