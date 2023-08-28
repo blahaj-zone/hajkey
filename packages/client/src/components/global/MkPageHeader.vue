@@ -91,6 +91,17 @@
 			</nav>
 		</template>
 		<div class="buttons right">
+			<template v-for="action in actions">
+				<button
+					v-tooltip.noDelay="action.text"
+					class="_buttonIcon _button"
+					:class="{ highlighted: action.highlighted }"
+					@click.stop="action.handler"
+					@touchstart="preventDrag"
+				>
+					<i :class="action.icon"></i>
+				</button>
+			</template>
 			<template v-if="metadata && metadata.avatar">
 				<MkFollowButton
 					v-if="narrow"
@@ -104,17 +115,6 @@
 					:full="true"
 					class="fullButton"
 				></MkFollowButton>
-			</template>
-			<template v-for="action in actions">
-				<button
-					v-tooltip.noDelay="action.text"
-					class="_buttonIcon button"
-					:class="{ highlighted: action.highlighted }"
-					@click.stop="action.handler"
-					@touchstart="preventDrag"
-				>
-					<i :class="action.icon"></i>
-				</button>
 			</template>
 		</div>
 	</header>

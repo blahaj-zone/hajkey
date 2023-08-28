@@ -1,7 +1,7 @@
 <template>
 	<button
 		v-if="!hideMenu"
-		class="menu _button"
+		class="_buttonIcon _button"
 		@click.stop="menu"
 		v-tooltip="i18n.ts.menu"
 	>
@@ -181,11 +181,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-.menu {
-	width: 3em;
-	height: 2em;
-	vertical-align: middle;
-}
 .follow-button {
 	position: relative;
 	display: inline-flex;
@@ -201,6 +196,7 @@ onBeforeUnmount(() => {
 	border-radius: 100px;
 	background: var(--bg);
 	vertical-align: middle;
+	margin-left: 0.5em;
 
 	&.full {
 		padding: 0.2em 0.7em;
