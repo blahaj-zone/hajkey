@@ -1,9 +1,9 @@
 <template>
 	<div class="adhpbeos">
 		<label>
-			<span class="label">
+			<div class="label">
 				<slot name="label"></slot>
-			</span>
+			</div>
 			<div class="input" :class="{ disabled, focused, tall, pre }">
 				<textarea
 					ref="inputEl"
