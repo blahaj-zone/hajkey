@@ -366,7 +366,7 @@ function checkForSplash() {
 	watch(
 		defaultStore.reactiveState.useBlurEffect,
 		(v) => {
-			if (v && deviceKind !== "smartphone") {
+			if (v) {
 				document.documentElement.style.removeProperty("--blur");
 			} else {
 				document.documentElement.style.setProperty("--blur", "none");
