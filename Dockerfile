@@ -45,7 +45,7 @@ RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/.nap
 RUN --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target if [[ ! -f /iceshrimp/packages/backend/native-utils/built/index.js ]]; then rm -rf /iceshrimp/packages/backend/native-utils/target/release; fi
 
 # Build the thing
-RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target env NODE_ENV=production sh -c "yarn build && yarn gulp"
+RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target env NODE_ENV=production yarn build
 
 # Fix napi-rs jank (part 2)
 RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/packages/backend/native-utils/built /iceshrimp/.napi_buildcache
