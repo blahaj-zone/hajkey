@@ -14,23 +14,7 @@
 					mode="out-in"
 				>
 					<div v-if="appearNote" class="note">
-						<div v-if="showNext" class="_gap">
-							<XNotes
-								class="_content"
-								:pagination="nextPagination"
-								:no-gap="true"
-							/>
-						</div>
-
 						<div class="main _gap">
-							<MkButton
-								v-if="!showNext && hasNext"
-								class="load next"
-								@click="showNext = true"
-							>
-								<i class="ph-caret-up ph-bold ph-lg"></i>
-								{{ `${i18n.ts.loadMore} (${i18n.ts.newer})` }}
-							</MkButton>
 							<div class="note _gap">
 								<MkRemoteCaution
 									v-if="appearNote.user.host != null"
@@ -43,22 +27,6 @@
 									class="note"
 								/>
 							</div>
-							<MkButton
-								v-if="!showPrev && hasPrev"
-								class="load prev"
-								@click="showPrev = true"
-							>
-								<i class="ph-caret-down ph-bold ph-lg"></i>
-								{{ `${i18n.ts.loadMore} (${i18n.ts.older})` }}
-							</MkButton>
-						</div>
-
-						<div v-if="showPrev" class="_gap">
-							<XNotes
-								class="_content"
-								:pagination="prevPagination"
-								:no-gap="true"
-							/>
 						</div>
 					</div>
 					<MkError v-else-if="error" @retry="fetch()" />
@@ -85,10 +53,6 @@ const props = defineProps<{
 }>();
 
 let note = $ref<null | misskey.entities.Note>();
-let hasPrev = $ref(false);
-let hasNext = $ref(false);
-let showPrev = $ref(false);
-let showNext = $ref(false);
 let error = $ref();
 let isRenote = $ref(false);
 let appearNote = $ref<null | misskey.entities.Note>();
@@ -122,10 +86,6 @@ const nextPagination = {
 };
 
 function fetchNote() {
-	hasPrev = false;
-	hasNext = false;
-	showPrev = false;
-	showNext = false;
 	note = null;
 	os.api("notes/show", {
 		noteId: props.noteId,
@@ -140,22 +100,6 @@ function fetchNote() {
 			appearNote = isRenote
 				? (note.renote as misskey.entities.Note)
 				: note;
-
-			Promise.all([
-				os.api("users/notes", {
-					userId: note.userId,
-					untilId: note.id,
-					limit: 1,
-				}),
-				os.api("users/notes", {
-					userId: note.userId,
-					sinceId: note.id,
-					limit: 1,
-				}),
-			]).then(([prev, next]) => {
-				hasPrev = prev.length !== 0;
-				hasNext = next.length !== 0;
-			});
 		})
 		.catch((err) => {
 			error = err;
