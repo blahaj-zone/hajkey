@@ -14,3 +14,8 @@
   - Flashy marketing
   - Commercialization of any kind
 - Read **[this document](./CHANGES_FROM_UPSTREAM.md)** all for current and future differences.
+
+---
+
+![](https://hc.ztn.sh/badge/4fc73efa-2790-4146-86bf-8685c5d6b1f7/lnm3Am5W-2/docker-build-amd64.svg)
+![](https://hc.ztn.sh/badge/4fc73efa-2790-4146-86bf-8685c5d6b1f7/5BFUY416-2/docker-build-arm64.svg)
