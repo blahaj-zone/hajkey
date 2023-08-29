@@ -14,12 +14,12 @@ export default async function cleanRemoteFiles(
 	done: any,
 ): Promise<void> {
 	let progress = 0;
-	let until = new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000));
-	until.setDate(until.getDate() - (config.mediaCleanup?.maxAgeDays ?? 0));
-	const avatars = config.mediaCleanup?.avatars ?? false;
-	const headers = config.mediaCleanup?.headers ?? false;
+	const untilDate = new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000));
+	untilDate.setDate(untilDate.getDate() - (config.mediaCleanup?.maxAgeDays ?? 0));
+	const avatars = !(config.mediaCleanup?.keepHeaders ?? true);
+	const headers = !(config.mediaCleanup?.keepHeaders ?? true);
 
-	until = until.toISOString().replace("T", " ").slice(0, -1);
+	const until = untilDate.toISOString().replace("T", " ").slice(0, -1);
 
 	let target = "files";
 	if (avatars)
