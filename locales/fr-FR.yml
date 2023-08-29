@@ -226,7 +226,7 @@ noteDeleteConfirm: "Êtes-vous sûr·e de vouloir supprimer cette publication ?"
 pinLimitExceeded: "Vous ne pouvez pas épingler plus de publications"
 intro: "L’installation de Iceshrimp est terminée ! Veuillez créer un compte administrateur."
 done: "Terminé"
-processing: "Traitement en cours"
+processing: "Traitement en cours…"
 preview: "Aperçu"
 default: "Par défaut"
 noCustomEmojis: "Il n’y a pas d’émoji"
@@ -259,7 +259,7 @@ remove: "Supprimer"
 removed: "Supprimé"
 removeAreYouSure: "Êtes-vous sûr·e de vouloir supprimer «{x}» ?"
 deleteAreYouSure: "Êtes-vous sûr·e de vouloir supprimer «{x}» ?"
-resetAreYouSure: "Voulez-vous réinitialiser ?"
+resetAreYouSure: "Êtes-vous sûr de vouloir réinitialiser ?"
 saved: "Enregistré"
 messaging: "Discuter"
 upload: "Téléverser"
@@ -583,7 +583,7 @@ removeAllFollowing: "Retenir tous les abonnements"
 removeAllFollowingDescription: "Se désabonner de tous les comptes de {host}. Veuillez
   lancer cette action uniquement si l’instance n’existe plus."
 userSuspended: "Cet·te utilisateur·rice a été suspendu·e."
-userSilenced: "Cette utilisateur·trice a été mis·e en sourdine."
+userSilenced: "Cette utilisateur·rice est en sourdine."
 yourAccountSuspendedTitle: "Ce compte est suspendu"
 yourAccountSuspendedDescription: "Ce compte est suspendu car vous avez enfreint les
   conditions d’utilisation de l’instance, ou pour un motif similaire. Si vous souhaitez
@@ -1049,7 +1049,8 @@ _mfm:
   quote: "Citer"
   quoteDescription: "Affiche le contenu sous forme de citation."
   emoji: "Émojis personnalisés"
-  emojiDescription: "Encadrer le nom de l’émoji personnalisé de deux points pour l’afficher."
+  emojiDescription: "Encadrer le nom de l’émoji personnalisé de deux points pour l’afficher.
+    :nomEmoji:"
   search: "Rechercher"
   searchDescription: "Affiche une boîte de recherche avec du texte pré-saisi."
   flip: "Inverser"
@@ -2220,3 +2221,7 @@ cannotChangeScopeWhenEditing: Vous ne pouvez pas modifier la visibilité de ce m
 openInMainColumn: Ouvrir dans la colonne principale
 cwStyle: Apparence des «Avertissement de contenu»
 collapseAllCws: Cacher le contenu de toutes les réponses
+searchNotLoggedIn_1: Vous devez être authentifié pour pouvoir utiliser la recherche
+  en texte intégral.
+searchNotLoggedIn_2: Toutefois, vous pouvez effectuer des recherches à l'aide de hashtags
+  et rechercher des utilisateurs.
