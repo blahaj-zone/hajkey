@@ -3,7 +3,11 @@ const siteName = (
 	document.querySelector('meta[property="og:site_name"]') as HTMLMetaElement
 )?.content;
 
-export const host = address.host;
+export function setHost(newHost: string): void {
+	host = newHost;
+}
+
+export let host = address.host;
 export const hostname = address.hostname;
 export const url = address.origin;
 export const apiUrl = `${url}/api`;
