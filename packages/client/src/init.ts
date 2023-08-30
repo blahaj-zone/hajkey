@@ -376,11 +376,16 @@ function checkForSplash() {
 				"--modalBgFilter",
 				v ? "blur(4px)" : "none",
 			);
-
-			const theme = defaultStore.state.darkMode ? ColdDeviceStorage.get("darkTheme") : ColdDeviceStorage.get("lightTheme");
-			applyTheme(theme);
 		},
 		{ immediate: true },
+	);
+
+	watch(
+		defaultStore.reactiveState.useBlurEffect,
+		() => {
+			const theme = defaultStore.state.darkMode ? ColdDeviceStorage.get("darkTheme") : ColdDeviceStorage.get("lightTheme");
+			applyTheme(theme);
+		}
 	);
 
 	let reloadDialogShowing = false;
