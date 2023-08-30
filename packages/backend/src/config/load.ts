@@ -44,6 +44,13 @@ export default function load() {
 
 	config.port = config.port || parseInt(process.env.PORT || "", 10);
 
+	config.images = {
+		...config.images,
+		info: '/twemoji/1f440.svg',
+		notFound: '/twemoji/2049.svg',
+		error: '/twemoji/1f480.svg',
+	};
+
 	mixin.version = meta.version;
 	mixin.host = url.host;
 	mixin.hostname = url.hostname;

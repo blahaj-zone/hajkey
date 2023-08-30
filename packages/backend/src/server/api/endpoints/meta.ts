@@ -269,6 +269,15 @@ export const meta = {
 				optional: false,
 				nullable: true,
 			},
+			images: {
+				type: 'object',
+				optional: false, nullable: false,
+				properties: {
+					info: { type: 'string' },
+					notFound: { type: 'string' },
+					error: { type: 'string' },
+				},
+			},
 			features: {
 				type: "object",
 				optional: true,
@@ -440,6 +449,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		defaultDarkTheme: instance.defaultDarkTheme
 			? JSON.stringify(JSON5.parse(instance.defaultDarkTheme))
 			: null,
+
+		images: config.images,
 
 		enableEmail: instance.enableEmail,
 

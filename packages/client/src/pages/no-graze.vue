@@ -2,7 +2,7 @@
 	<transition :name="$store.state.animation ? 'zoom' : ''" appear>
 		<div :class="$style.root">
 			<img
-				src="/static-assets/badges/info.png"
+				:src="instance.images.info"
 				class="_ghost"
 				alt="Error"
 			/>
@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 </script>
 
 <style lang="scss" module>

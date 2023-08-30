@@ -8,7 +8,7 @@
 			<slot name="empty">
 				<div class="_fullinfo">
 					<img
-						src="/static-assets/badges/info.png"
+						:src="instance.images.info"
 						class="_ghost"
 						alt="Error"
 					/>
@@ -84,6 +84,7 @@ import {
 } from "@/scripts/scroll";
 import MkButton from "@/components/MkButton.vue";
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 
 export type Paging<
 	E extends keyof misskey.Endpoints = keyof misskey.Endpoints,

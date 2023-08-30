@@ -3,7 +3,7 @@
 		<template #empty>
 			<div class="_fullinfo">
 				<img
-					src="/static-assets/badges/info.png"
+					:src="instance.images.info"
 					class="_ghost"
 					alt="Info"
 				/>
@@ -30,6 +30,7 @@ import MkUserInfo from "@/components/MkUserInfo.vue";
 import MkPagination, { Paging } from "@/components/MkPagination.vue";
 import { userPage } from "@/filters/user";
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 
 const props = defineProps<{
 	pagination: Paging;

@@ -17,7 +17,7 @@
 						<template #empty>
 							<div class="_fullinfo">
 								<img
-									src="/static-assets/badges/info.png"
+									:src="instance.images.info"
 									class="_ghost"
 									alt="Info"
 								/>
@@ -116,6 +116,7 @@ import { i18n } from "@/i18n";
 import { $i } from "@/account";
 import { defaultStore } from "@/store";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import {instance} from "@/instance";
 
 const props = defineProps<{
 	userAcct?: string;

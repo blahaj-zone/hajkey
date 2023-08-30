@@ -3,7 +3,7 @@
 		<template #empty>
 			<div class="_fullinfo">
 				<img
-					src="/static-assets/badges/not-found.png"
+					:src="instance.images.notFound"
 					class="_ghost"
 					:alt="i18n.ts.notFound"
 				/>
@@ -27,6 +27,7 @@ import MkChannelPreview from "@/components/MkChannelPreview.vue";
 import type { Paging } from "@/components/MkPagination.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 
 const props = withDefaults(
 	defineProps<{

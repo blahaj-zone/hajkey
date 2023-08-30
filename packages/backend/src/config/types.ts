@@ -66,6 +66,12 @@ export type Source = {
 		keepHeaders?: boolean;
 	};
 
+	images?: {
+		error?: string;
+		notFound?: string;
+		info?: string;
+	};
+
 	proxy?: string;
 	proxySmtp?: string;
 	proxyBypassHosts?: string[];

@@ -28,9 +28,9 @@ html
 		link(rel='icon' href= icon || `/favicon.ico?${ timestamp }`)
 		link(rel='apple-touch-icon' href= icon || `/apple-touch-icon.png?${ timestamp }`)
 		link(rel='manifest' href='/manifest.json')
-		link(rel='prefetch' href=`/static-assets/badges/info.png?${ timestamp }`)
-		link(rel='prefetch' href=`/static-assets/badges/not-found.png?${ timestamp }`)
-		link(rel='prefetch' href=`/static-assets/badges/error.png?${ timestamp }`)
+		link(rel='prefetch' href=config.images.info)
+		link(rel='prefetch' href=config.images.notFound)
+		link(rel='prefetch' href=config.images.error)
 		link(rel='stylesheet' href=`/static-assets/instance.css?${ timestamp }`)
 		link(rel='modulepreload' href=`/assets/${clientEntry.file}`)
 

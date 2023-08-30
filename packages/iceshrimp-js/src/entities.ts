@@ -301,6 +301,11 @@ export type LiteInstanceMetadata = {
 	enableDiscordIntegration: boolean;
 	enableServiceWorker: boolean;
 	emojis: CustomEmoji[];
+	images: {
+		error: string;
+		notFound: string;
+		info: string;
+	};
 };
 
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {

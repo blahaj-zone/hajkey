@@ -32,7 +32,7 @@
 						<transition :name="$store.state.animation ? 'zoom' : ''" appear>
 							<div class="_fullinfo" ref="notes">
 								<img
-									src="/static-assets/badges/info.png"
+									:src="instance.images.info"
 									class="_ghost"
 									alt="Info"
 								/>
@@ -69,6 +69,7 @@ import { deviceKind } from "@/scripts/device-kind";
 import { $i } from "@/account";
 import "swiper/scss";
 import "swiper/scss/virtual";
+import {instance} from "@/instance";
 
 const props = defineProps<{
 	query: string;
