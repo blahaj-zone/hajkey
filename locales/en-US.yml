@@ -424,6 +424,8 @@ withFileAntenna: "Only posts with files"
 enableServiceworker: "Enable Push-Notifications for your Browser"
 antennaUsersDescription: "List one username per line"
 antennaInstancesDescription: "List one server host per line"
+antennaTimelineHint: "Antennas display matching posts in order they have been received in,
+  which is not necessarily chronological."
 caseSensitive: "Case sensitive"
 withReplies: "Include replies"
 connectedTo: "Following account(s) are connected"

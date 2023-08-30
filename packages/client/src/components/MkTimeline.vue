@@ -101,6 +101,9 @@ if (props.src === "antenna") {
 		antennaId: props.antenna,
 	});
 	connection.on("note", prepend);
+
+  tlHint = i18n.ts.antennaTimelineHint;
+  tlHintClosed = defaultStore.state.tlAntennaHintClosed;
 } else if (props.src === "home") {
 	endpoint = "notes/timeline";
 	query = {
@@ -220,6 +223,9 @@ function closeHint() {
 		case "global":
 			defaultStore.set("tlGlobalHintClosed", true);
 			break;
+    case "antenna":
+      defaultStore.set("tlAntennaHintClosed", true);
+      break;
 	}
 }
 

@@ -46,6 +46,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		tlAntennaHintClosed: {
+			where: "device",
+			default: false,
+		},
 		keepCw: {
 			where: "account",
 			default: true,
