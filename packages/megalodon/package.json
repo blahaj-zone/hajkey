@@ -5,6 +5,7 @@
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
+    "build:debug": "yarn build",
     "lint": "rome check **/*.ts --apply",
     "format": "rome format --write src/**/*.ts",
     "doc": "typedoc --out ../docs ./src",

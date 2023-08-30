@@ -10,6 +10,7 @@
 	"scripts": {
 		"rebuild": "clean && node ./scripts/build-greet.js && yarn workspace iceshrimp-js build &&  yarn workspaces foreach -pitv run build && gulp",
 		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces foreach -pitv run build && gulp",
+		"build:debug": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build:debug && yarn workspaces foreach -pitv run build:debug && gulp",
 		"start": "yarn workspace backend run start",
 		"start:test": "yarn workspace backend run start:test",
 		"init": "yarn migrate",

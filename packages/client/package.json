@@ -4,6 +4,7 @@
 	"scripts": {
 		"watch": "vite build --watch --mode development",
 		"build": "vite build",
+		"build:debug": "yarn build",
 		"lint": "rome check **/*.ts --apply && yarn lint:vue",
 		"lint:vue": "paralint --ext .vue --fix '**/*.vue' --cache",
 		"format": "rome format * --write && prettier --write '**/*.{scss,vue}' --cache --cache-strategy metadata"
