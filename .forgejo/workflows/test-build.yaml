@@ -4,7 +4,7 @@ jobs:
   test-build:
     runs-on: docker
     container:
-      image: iceshrimp.dev/iceshrimp/iceshrimp:ci-env
+      image: iceshrimp.dev/iceshrimp/ci-env:latest
       options: --volume /opt/iceshrimp-cache/yarn:/iceshrimp-caches/yarn --volume /opt/iceshrimp-cache/cargo:/root/.cargo --volume /opt/iceshrimp-cache/built:/iceshrimp-caches/built --volume /opt/iceshrimp-cache/target:/iceshrimp-caches/target
     services:
       database:
