@@ -197,6 +197,12 @@ reservedUsernames: [
 #  cleanAvatars: false
 #  cleanHeaders: false
 
+# Status code images
+#images:
+#  info: '/twemoji/1f440.svg'
+#  notFound: '/twemoji/2049.svg'
+#  error: '/twemoji/1f480.svg'
+
 #allowedPrivateNetworks: [
 #  '127.0.0.1/32'
 #]
