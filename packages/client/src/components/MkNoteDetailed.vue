@@ -185,7 +185,7 @@ import { getNoteMenu } from "@/scripts/get-note-menu";
 import { useNoteCapture } from "@/scripts/use-note-capture";
 import { deepClone } from "@/scripts/clone";
 import { stream } from "@/stream";
-import { NoteUpdatedEvent } from "iceshrimp-js/built/streaming.types";
+import { NoteUpdatedEvent } from "iceshrimp-js/src/streaming.types";
 import appear from "@/directives/appear";
 
 const props = defineProps<{
@@ -403,41 +403,24 @@ function loadTab() {
 async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	const { type, id, body } = noteData;
 
-	let found = -1;
-	if (id === note.id) {
-		found = 0;
-	} else {
-		for (let i = 0; i < replies.value.length; i++) {
-			const reply = replies.value[i];
-			if (reply.id === id) {
-				found = i + 1;
-				break;
-			}
-		}
-	}
-
-	if (found === -1) {
-		return;
-	}
-
 	switch (type) {
 		case "replied":
-			const { id: createdId } = body;
+			const createdId = body.id;
 			const replyNote = await os.api("notes/show", {
 				noteId: createdId,
 			});
-
-			replies.value.splice(found, 0, replyNote);
-			if (found === 0) {
-				directReplies.push(replyNote);
+			delete replyNote.reply;
+			replies.value.unshift(replyNote);
+			if (id === note.id) {
+				directReplies?.push(replyNote);
 			}
 			break;
 
 		case "deleted":
-			if (found === 0) {
+			if (id === note.id) {
 				isDeleted.value = true;
 			} else {
-				replies.value.splice(found - 1, 1);
+				replies.value.splice(replies.value.findIndex(p => p.id == id), 1);
 			}
 			break;
 	}

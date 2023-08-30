@@ -258,13 +258,13 @@ const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
 const replies: misskey.entities.Note[] =
-	props.conversation
-		?.filter(
-			(item) =>
-				item.replyId === props.note.id ||
-				item.renoteId === props.note.id,
-		)
-		.reverse() ?? [];
+	$computed(() => props.conversation
+      ?.filter(
+          (item) =>
+              item.replyId === props.note.id ||
+              item.renoteId === props.note.id,
+      )
+      .reverse() ?? []);
 const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
 const expandOnNoteClick = defaultStore.state.expandOnNoteClick;
 
