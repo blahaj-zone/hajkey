@@ -197,6 +197,9 @@
 				class="_formBlock"
 				>{{ i18n.ts.showAdminUpdates }}</FormSwitch
 			>
+      <FormSwitch v-model="alwaysExpandCws" class="_formBlock">{{
+        i18n.ts.alwaysExpandCws
+      }}</FormSwitch>
 
 			<FormSelect v-model="cwStyle" class="_formBlock">
 				<template #label>{{ i18n.ts.cwStyle }}</template>
@@ -330,6 +333,9 @@ const expandOnNoteClick = computed(
 );
 const showFixedPostForm = computed(
 	defaultStore.makeGetterSetter("showFixedPostForm"),
+);
+const alwaysExpandCws = computed(
+    defaultStore.makeGetterSetter("alwaysExpandCws"),
 );
 const numberOfPageCache = computed(
 	defaultStore.makeGetterSetter("numberOfPageCache"),

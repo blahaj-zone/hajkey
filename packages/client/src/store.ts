@@ -338,6 +338,10 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: "modern" as "modern" | "classic" | "alternative",
 		},
+		alwaysExpandCws: {
+			where: "device",
+			default: false,
+		},
 	}),
 );
 

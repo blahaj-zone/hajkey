@@ -47,6 +47,7 @@ import MkButton from "@/components/MkButton.vue";
 import * as os from "@/os";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { i18n } from "@/i18n";
+import { defaultStore } from "@/store";
 
 const props = defineProps<{
 	noteId: string;
@@ -56,7 +57,7 @@ let note = $ref<null | misskey.entities.Note>();
 let error = $ref();
 let isRenote = $ref(false);
 let appearNote = $ref<null | misskey.entities.Note>();
-let expandAllCws = $ref(false);
+let expandAllCws = $ref(defaultStore.state.alwaysExpandCws);
 
 const prevPagination = {
 	endpoint: "users/notes" as const,
