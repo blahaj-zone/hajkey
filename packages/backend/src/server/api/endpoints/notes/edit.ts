@@ -159,7 +159,7 @@ export const paramDef = {
 	type: "object",
 	properties: {
 		editId: { type: "string", format: "misskey:id" },
-		visibility: { type: "string", enum: noteVisibilities, default: "public" },
+		visibility: { type: "string", enum: noteVisibilities, nullable: true },
 		visibleUserIds: {
 			type: "array",
 			uniqueItems: true,
@@ -332,6 +332,11 @@ export default define(meta, paramDef, async (ps, user) => {
 		if (channel == null) {
 			throw new ApiError(meta.errors.noSuchChannel);
 		}
+	}
+
+	// keep visibility on edit if not specified
+	if (ps.visibility == null) {
+		ps.visibility = note.visibility;
 	}
 
 	// enforce silent clients on server

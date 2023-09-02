@@ -96,6 +96,56 @@ export function apiStatusMastodon(router: Router): void {
 			ctx.body = e.response.data;
 		}
 	});
+	router.put("/v1/statuses/:id", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			ctx.params.id = convertId(ctx.params.id, IdType.IceshrimpId);
+			let body: any = ctx.request.body;
+			if (
+				(!body.poll && body["poll[options][]"]) ||
+				(!body.media_ids && body["media_ids[]"])
+			) {
+				body = normalizeQuery(body);
+			}
+			if (!body.media_ids) body.media_ids = undefined;
+			if (body.media_ids && !body.media_ids.length) body.media_ids = undefined;
+			if (body.media_ids) {
+				body.media_ids = (body.media_ids as string[]).map((p) =>
+					convertId(p, IdType.IceshrimpId),
+				);
+			}
+			const { sensitive } = body;
+			body.sensitive =
+				typeof sensitive === "string" ? sensitive === "true" : sensitive;
+
+			if (body.poll) {
+				if (
+					body.poll.expires_in != null &&
+					typeof body.poll.expires_in === "string"
+				)
+					body.poll.expires_in = parseInt(body.poll.expires_in);
+				if (
+					body.poll.multiple != null &&
+					typeof body.poll.multiple === "string"
+				)
+					body.poll.multiple = body.poll.multiple == "true";
+				if (
+					body.poll.hide_totals != null &&
+					typeof body.poll.hide_totals === "string"
+				)
+					body.poll.hide_totals = body.poll.hide_totals == "true";
+			}
+
+			const data = await client.editStatus(ctx.params.id, body);
+			ctx.body = convertStatus(data.data);
+		} catch (e: any) {
+			console.error(e);
+			ctx.status = ctx.status == 404 ? 404 : 401;
+			ctx.body = e.response.data;
+		}
+	});
 	router.get<{ Params: { id: string } }>("/v1/statuses/:id", async (ctx) => {
 		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
 		const accessTokens = ctx.headers.authorization;
