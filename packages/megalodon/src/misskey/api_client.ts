@@ -319,7 +319,7 @@ namespace MisskeyAPI {
 				in_reply_to_account_id: n.reply?.userId ?? null,
 				reblog: n.renote ? this.note(n.renote, host) : null,
 				content: n.text ? this.escapeMFM(n.text) : "",
-				plain_content: n.text ? n.text : null,
+				text: n.text ? n.text : null,
 				created_at: n.createdAt,
 				// Remove reaction emojis with names containing @ from the emojis list.
 				emojis: n.emojis

@@ -1518,7 +1518,7 @@ export default class Misskey implements MegalodonInterface {
 		const origin = idx < 0 ? null : status.account.acct.substring(idx + 1);
 
 		status.mentions = (
-			await this.getMentions(status.plain_content!, origin, cache)
+			await this.getMentions(status.text!, origin, cache)
 		).filter((p) => p != null);
 		for (const m of status.mentions.filter(
 			(value, index, array) => array.indexOf(value) === index,
@@ -1699,10 +1699,12 @@ export default class Misskey implements MegalodonInterface {
 	/**
 	 * POST /api/notes/delete
 	 */
-	public async deleteStatus(id: string): Promise<Response<{}>> {
-		return this.client.post<{}>("/api/notes/delete", {
+	public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
+		const status = await this.getStatus(id);
+		await this.client.post<{}>("/api/notes/delete", {
 			noteId: id,
 		});
+		return status;
 	}
 
 	/**
