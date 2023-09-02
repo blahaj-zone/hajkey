@@ -249,16 +249,16 @@ const urls = props.note.text
 	: null;
 
 const cwStyle = computed (() => `_cw_style_${defaultStore.state.cwStyle}`);
-let _showContent = $ref(null);
+let _showContent = $ref(defaultStore.state.alwaysExpandCws);
 let showContent = $computed({
 	set(val) { _showContent = val },
 	get() {
-		if (props.forceExpandCw != null) {
+		if (props.forceExpandCw != null && props.detailedView) {
 			_showContent = props.forceExpandCw;
 			props.forceExpandCw = null;
 		}
 
-		return _showContent || false;
+		return _showContent;
 	},
 })
 

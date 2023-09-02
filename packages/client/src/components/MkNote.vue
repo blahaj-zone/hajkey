@@ -346,7 +346,7 @@ let appearNote = $computed(() =>
 	isRenote ? (note.renote as misskey.entities.Note) : note,
 );
 const isMyRenote = $i && $i.id === note.userId;
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.alwaysExpandCws);
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);

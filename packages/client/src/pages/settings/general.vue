@@ -414,7 +414,8 @@ watch(
 		advancedMfm,
 		autoplayMfm,
 		expandOnNoteClick,
-		cwStyle
+		cwStyle,
+		alwaysExpandCws
 	],
 	async () => {
 		await reloadAsk();
