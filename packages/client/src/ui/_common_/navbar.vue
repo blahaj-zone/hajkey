@@ -388,6 +388,10 @@ function more(ev: MouseEvent) {
 			> .middle {
 				flex: 0.1;
 
+				> a {
+					text-decoration: none;
+				}
+
 				> .divider {
 					margin: 16px 16px;
 					border-top: solid 0.5px var(--divider);
@@ -428,17 +432,6 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
-					&:focus-within {
-						text-decoration: none;
-						color: var(--navHoverFg);
-						transition: all 0.4s ease;
-					}
-
-					&.active {
-						color: var(--navActive);
-					}
-
-					&:hover,
 					&:focus-within,
 					&.active {
 						color: var(--accent);
@@ -456,6 +449,18 @@ function more(ev: MouseEvent) {
 							right: 0;
 							bottom: 0;
 							border-radius: 999px;
+						}
+					}
+
+					&:hover,
+					&:focus-within {
+						&:before {
+							background: var(--panelHighlight);
+						}
+					}
+
+					&.active {
+						&:before {
 							background: var(--accentedBg);
 						}
 					}
@@ -568,6 +573,10 @@ function more(ev: MouseEvent) {
 			> .middle {
 				flex: 0.1;
 
+				> a {
+					text-decoration: none;
+				}
+
 				> .divider {
 					margin: 8px auto;
 					width: calc(100% - 32px);
@@ -620,12 +629,24 @@ function more(ev: MouseEvent) {
 							right: 0;
 							bottom: 0;
 							border-radius: 999px;
-							background: var(--accentedBg);
 						}
 
 						> .icon,
 						> .text {
 							opacity: 1;
+						}
+					}
+					
+					&:hover,
+					&:focus-within {
+						&:before {
+							background: var(--panelHighlight);
+						}
+					}
+
+					&.active {
+						&:before {
+							background: var(--accentedBg);
 						}
 					}
 				}
