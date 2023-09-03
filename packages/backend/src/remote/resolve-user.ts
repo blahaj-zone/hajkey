@@ -17,6 +17,8 @@ export async function resolveUser(
 ): Promise<User> {
 	const usernameLower = username.toLowerCase();
 
+	// Return local user if host part is empty
+
 	if (host == null) {
 		logger.info(`return local user: ${usernameLower}`);
 		return await Users.findOneBy({ usernameLower, host: IsNull() }).then(
@@ -32,6 +34,8 @@ export async function resolveUser(
 
 	host = toPuny(host);
 
+	// Also return local user if host part is specified but referencing the local instance
+
 	if (config.host === host || config.accountDomain === host) {
 		logger.info(`return local user: ${usernameLower}`);
 		return await Users.findOneBy({ usernameLower, host: IsNull() }).then(
@@ -45,18 +49,52 @@ export async function resolveUser(
 		);
 	}
 
-	const user = (await Users.findOneBy({
+	// Check if remote user is already in the database
+
+	let user = (await Users.findOneBy({
 		usernameLower,
 		host,
 	})) as IRemoteUser | null;
 
 	const acctLower = `${usernameLower}@${host}`;
 
-	if (user == null) {
-		const self = await resolveSelf(acctLower);
+	// If not, look up the user on the remote server
 
-		logger.succ(`return new remote user: ${chalk.magenta(acctLower)}`);
-		return await createPerson(self.href);
+	if (user == null) {
+		// Run WebFinger
+		const fingerRes = await resolveUserWebFinger(acctLower);
+		const finalAcct = subjectToAcct(fingerRes.subject);
+		const finalAcctLower = finalAcct.toLowerCase();
+		const m = finalAcct.match(/^([^@]+)@(.*)/);
+		const subjectHost = m ? m[2] : undefined;
+
+		// If subject is different, we're dealing with a split domain setup (that's already been validated by resolveUserWebFinger)
+		if (acctLower != finalAcctLower) {
+			logger.info('re-resolving split domain redirect user...');
+			const m = finalAcct.match(/^([^@]+)@(.*)/);
+			if (m) {
+				// Re-check if we already have the user in the database post-redirect
+				user = (await Users.findOneBy({
+					usernameLower: usernameLower,
+					host: subjectHost,
+				})) as IRemoteUser | null;
+
+				// If yes, return existing user
+				if (user != null) {
+					logger.succ(`return existing remote user: ${chalk.magenta(finalAcctLower)}`);
+					return user;
+				}
+				// Otherwise create and return new user
+				else {
+					logger.succ(`return new remote user: ${chalk.magenta(finalAcctLower)}`);
+					return await createPerson(fingerRes.self.href, undefined, subjectHost);
+				}
+			}
+		}
+
+		// Not a split domain setup, so we can simply create and return the new user
+		logger.succ(`return new remote user: ${chalk.magenta(finalAcctLower)}`);
+		return await createPerson(fingerRes.self.href, undefined, subjectHost);
 	}
 
 	// If user information is out of date, return it by starting over from WebFilger
@@ -70,17 +108,17 @@ export async function resolveUser(
 		});
 
 		logger.info(`try resync: ${acctLower}`);
-		const self = await resolveSelf(acctLower);
+		const fingerRes = await resolveUserWebFinger(acctLower);
 
-		if (user.uri !== self.href) {
+		if (user.uri !== fingerRes.self.href) {
 			// if uri mismatch, Fix (user@host <=> AP's Person id(IRemoteUser.uri)) mapping.
 			logger.info(`uri missmatch: ${acctLower}`);
 			logger.info(
-				`recovery missmatch uri for (username=${username}, host=${host}) from ${user.uri} to ${self.href}`,
+				`recovery mismatch uri for (username=${username}, host=${host}) from ${user.uri} to ${fingerRes.self.href}`,
 			);
 
 			// validate uri
-			const uri = new URL(self.href);
+			const uri = new URL(fingerRes.self.href);
 			if (uri.hostname !== host) {
 				throw new Error("Invalid uri");
 			}
@@ -91,17 +129,36 @@ export async function resolveUser(
 					host: host,
 				},
 				{
-					uri: self.href,
+					uri: fingerRes.self.href,
 				},
 			);
 		} else {
 			logger.info(`uri is fine: ${acctLower}`);
 		}
 
-		await updatePerson(self.href);
+		const finalAcct = subjectToAcct(fingerRes.subject);
+		const finalAcctLower = finalAcct.toLowerCase();
+		const m = finalAcct.match(/^([^@]+)@(.*)/);
+		const finalHost = m ? m[2] : null;
 
-		logger.info(`return resynced remote user: ${acctLower}`);
-		return await Users.findOneBy({ uri: self.href }).then((u) => {
+		// Update user.host if we're dealing with an account that's part of a split domain setup that hasn't been fixed yet
+		if (m && user.host != finalHost) {
+			logger.info(`updating user host to subject acct host: ${user.host} -> ${finalHost}`);
+			await Users.update(
+				{
+					usernameLower,
+					host: user.host,
+				},
+				{
+					host: finalHost,
+				},
+			);
+		}
+
+		await updatePerson(fingerRes.self.href);
+
+		logger.info(`return resynced remote user: ${finalAcctLower}`);
+		return await Users.findOneBy({ uri: fingerRes.self.href }).then((u) => {
 			if (u == null) {
 				throw new Error("user not found");
 			} else {
@@ -114,9 +171,15 @@ export async function resolveUser(
 	return user;
 }
 
-async function resolveSelf(acctLower: string) {
+async function resolveUserWebFinger(acctLower: string, recurse: boolean = true): Promise<{
+	subject: string,
+	self: {
+		href: string;
+		rel?: string;
+	}
+}> {
 	logger.info(`WebFinger for ${chalk.yellow(acctLower)}`);
-	const finger = await webFinger(acctLower).catch((e) => {
+	const fingerRes = await webFinger(acctLower).catch((e) => {
 		logger.error(
 			`Failed to WebFinger for ${chalk.yellow(acctLower)}: ${
 				e.statusCode || e.message
@@ -126,7 +189,7 @@ async function resolveSelf(acctLower: string) {
 			`Failed to WebFinger for ${acctLower}: ${e.statusCode || e.message}`,
 		);
 	});
-	const self = finger.links.find(
+	const self = fingerRes.links.find(
 		(link) => link.rel != null && link.rel.toLowerCase() === "self",
 	);
 	if (!self) {
@@ -135,5 +198,45 @@ async function resolveSelf(acctLower: string) {
 		);
 		throw new Error("self link not found");
 	}
-	return self;
+	if (`${acctToSubject(acctLower)}` !== normalizeSubject(fingerRes.subject)) {
+		logger.info(`acct subject mismatch (${acctToSubject(acctLower)} !== ${normalizeSubject(fingerRes.subject)}), possible split domain deployment detected, repeating webfinger`)
+		if (!recurse){
+			logger.error('split domain verification failed (recurse limit reached), aborting')
+			throw new Error('split domain verification failed (recurse limit reached), aborting');
+		}
+		const initialAcct = subjectToAcct(fingerRes.subject);
+		const initialAcctLower = initialAcct.toLowerCase();
+		const splitFingerRes = await resolveUserWebFinger(initialAcctLower, false);
+		const finalAcct = subjectToAcct(splitFingerRes.subject);
+		const finalAcctLower = finalAcct.toLowerCase();
+		if (initialAcct !== finalAcct) {
+			logger.error('split domain verification failed (subject mismatch), aborting')
+			throw new Error('split domain verification failed (subject mismatch), aborting');
+		}
+
+		logger.info(`split domain configuration detected: ${acctLower} -> ${finalAcctLower}`);
+
+		return splitFingerRes;
+	}
+
+	return {
+		subject: fingerRes.subject,
+		self: self
+	};
+}
+
+function subjectToAcct(subject: string): string {
+	if (!subject.startsWith('acct:')) {
+		logger.error("Subject isnt a valid acct");
+		throw ("Subject isnt a valid acct");
+	}
+	return subject.substring(5);
+}
+
+function acctToSubject(acct: string): string {
+	return normalizeSubject(`acct:${acct}`);
+}
+
+function normalizeSubject(subject: string): string {
+	return subject.toLowerCase();
 }

@@ -164,6 +164,7 @@ export async function fetchPerson(
 export async function createPerson(
 	uri: string,
 	resolver?: Resolver,
+	subjectHost?: string,
 ): Promise<User> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
@@ -183,7 +184,7 @@ export async function createPerson(
 
 	logger.info(`Creating the Person: ${person.id}`);
 
-	const host = toPuny(new URL(object.id).hostname);
+	const host = subjectHost ?? toPuny(new URL(object.id).hostname);
 
 	const { fields } = analyzeAttachments(person.attachment || []);
 
