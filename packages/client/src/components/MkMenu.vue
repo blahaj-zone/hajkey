@@ -140,11 +140,12 @@
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
-						<span class="caret"
-							><i
+						<i
 								class="ph-caret-right ph-bold ph-lg ph-fw ph-lg"
+								style="margin-left: auto;
+											 margin-right: unset;"
 							></i
-						></span>
+						>
 					</button>
 					<button
 						v-else-if="!item.hidden"
@@ -352,8 +353,9 @@ onBeforeUnmount(() => {
 	}
 
 	> .item {
-		display: block;
+		display: flex;
 		position: relative;
+		align-items: center;
 		padding: 6px 16px;
 		width: 100%;
 		box-sizing: border-box;
@@ -471,10 +473,6 @@ onBeforeUnmount(() => {
 			display: flex;
 			align-items: center;
 			cursor: default;
-
-			> .caret {
-				margin-left: auto;
-			}
 
 			&.childShowing {
 				color: var(--accent);
