@@ -64,3 +64,5 @@ yarn*
 # Nix Development shell items
 .devenv
 .direnv
+
+.pnpm-store

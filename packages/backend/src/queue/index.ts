@@ -473,8 +473,8 @@ export function createCleanRemoteFilesJob() {
 		"cleanRemoteFiles",
 		{},
 		{
-			removeOnComplete: true,
-			removeOnFail: true,
+			removeOnComplete: false,
+			removeOnFail: false,
 		},
 	);
 }

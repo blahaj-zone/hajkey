@@ -64,13 +64,13 @@ export async function deleteFileSync(file: DriveFile, isExpired = false) {
 		await Promise.all(promises);
 	}
 
-	postProcess(file, isExpired);
+	await postProcess(file, isExpired);
 }
 
 async function postProcess(file: DriveFile, isExpired = false) {
-	// リモートファイル期限切れ削除後は直リンクにする
+	const promises = [];
 	if (isExpired && file.userHost !== null && file.uri != null) {
-		DriveFiles.update(file.id, {
+		promises.push(DriveFiles.update(file.id, {
 			isLink: true,
 			url: file.uri,
 			thumbnailUrl: null,
@@ -80,17 +80,19 @@ async function postProcess(file: DriveFile, isExpired = false) {
 			accessKey: uuid(),
 			thumbnailAccessKey: `thumbnail-${uuid()}`,
 			webpublicAccessKey: `webpublic-${uuid()}`,
-		});
+		}));
 	} else {
-		DriveFiles.delete(file.id);
+		promises.push(DriveFiles.delete(file.id));
 	}
 
 	// 統計を更新
-	driveChart.update(file, false);
-	perUserDriveChart.update(file, false);
+	promises.push(driveChart.update(file, false));
+	promises.push(perUserDriveChart.update(file, false));
 	if (file.userHost !== null) {
-		instanceChart.updateDrive(file, false);
+		promises.push(instanceChart.updateDrive(file, false));
 	}
+
+	await Promise.all(promises);
 }
 
 export async function deleteObjectStorageFile(key: string) {
