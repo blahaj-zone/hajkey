@@ -139,6 +139,10 @@ function close() {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 
+		> a {
+			text-decoration: none;
+		}
+
 		> * {
 			position: relative;
 			display: flex;
@@ -153,7 +157,6 @@ function close() {
 			&:focus-visible {
 				color: var(--accent);
 				background: var(--accentedBg);
-				text-decoration: none;
 			}
 
 			> .icon {
