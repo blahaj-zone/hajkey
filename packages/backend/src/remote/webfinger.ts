@@ -33,15 +33,19 @@ async function hostMetaToWebFingerTemplate(url: string) {
 			headers: Object.assign(
 				{
 					"User-Agent": config.userAgent,
-					Accept: "application/xml, text/xml, */*",
+					Accept: "application/xrd+xml.",
 				},
 				{},
 			),
 			timeout: 10000,
 		});
-		const parser = new XMLParser({ignoreAttributes: false});
+		const options = {
+			ignoreAttributes: false,
+			isArray: (_name: string, jpath: string) => jpath === 'XRD.Link',
+		};
+		const parser = new XMLParser(options);
 		const hostMeta = parser.parse(await res.text());
-		const template = hostMeta['XRD']['Link']['@_template'];
+		const template = (hostMeta['XRD']['Link'] as Array<any>).filter(p => p['@_rel'] === 'lrdd')[0]['@_template'];
 		return template.indexOf('{uri}') < 0 ? null : template;
 	}
 	catch {
