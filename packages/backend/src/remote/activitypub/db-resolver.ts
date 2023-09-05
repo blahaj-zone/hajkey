@@ -18,6 +18,7 @@ import { uriPersonCache, userByIdCache } from "@/services/user-cache.js";
 import type { IObject } from "./type.js";
 import { getApId } from "./type.js";
 import { resolvePerson } from "./models/person.js";
+import {redisClient, subscriber} from "@/db/redis.js";
 
 const publicKeyCache = new Cache<UserPublickey | null>("publicKey", 60 * 30);
 const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
@@ -204,3 +205,28 @@ export default class DbResolver {
 		};
 	}
 }
+
+subscriber.on("message", async (_, data) => {
+	const obj = JSON.parse(data);
+
+	if (obj.channel === "internal") {
+		const { type, body } = obj.message;
+		switch (type) {
+			case "remoteUserDeleted":
+			case "localUserDeleted": {
+				const toDelete = Array.from(await publicKeyByUserIdCache.getAll())
+					.filter((v) => v[1]?.userId === body.id)
+					.map((v) => v[0]);
+				const toDeleteKey = Array.from(await publicKeyCache.getAll())
+					.filter((v) => v[1]?.userId === body.id)
+					.map((v) => v[0]);
+				await publicKeyByUserIdCache.delete(...toDelete);
+				await publicKeyCache.delete(...toDeleteKey);
+				break;
+			}
+			default:
+				break;
+		}
+	}
+});
+
