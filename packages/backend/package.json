@@ -64,6 +64,7 @@
 		"decompress": "^4.2.1",
 		"deep-email-validator": "0.1.21",
 		"escape-regexp": "0.0.1",
+		"fast-xml-parser": "^4.2.7",
 		"feed": "4.2.2",
 		"file-type": "17.1.6",
 		"fluent-ffmpeg": "2.1.2",

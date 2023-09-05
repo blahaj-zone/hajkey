@@ -3274,7 +3274,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "fast-xml-parser",\
-        "npm:3.21.1"\
+        "npm:4.2.7"\
       ],\
       [\
         "fastest-levenshtein",\
@@ -15259,6 +15259,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["escape-regexp", "npm:0.0.1"],\
             ["eslint", "npm:8.45.0"],\
             ["execa", "npm:6.1.0"],\
+            ["fast-xml-parser", "npm:4.2.7"],\
             ["feed", "npm:4.2.2"],\
             ["file-type", "npm:17.1.6"],\
             ["fluent-ffmpeg", "npm:2.1.2"],\
@@ -20795,6 +20796,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/fast-xml-parser-npm-3.21.1-d651ad1d26-73b9c907a4.zip/node_modules/fast-xml-parser/",\
           "packageDependencies": [\
             ["fast-xml-parser", "npm:3.21.1"],\
+            ["strnum", "npm:1.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.2.7", {\
+          "packageLocation": "./.yarn/cache/fast-xml-parser-npm-4.2.7-c57a954c1f-d8b0c9e047.zip/node_modules/fast-xml-parser/",\
+          "packageDependencies": [\
+            ["fast-xml-parser", "npm:4.2.7"],\
             ["strnum", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
