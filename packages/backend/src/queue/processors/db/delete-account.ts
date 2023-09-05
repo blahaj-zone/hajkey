@@ -8,6 +8,7 @@ import { MoreThan } from "typeorm";
 import { deleteFileSync } from "@/services/drive/delete-file.js";
 import { sendEmail } from "@/services/send-email.js";
 import meilisearch from "@/db/meilisearch.js";
+import { publishInternalEvent } from "@/services/stream.js";
 
 const logger = queueLogger.createSubLogger("delete-account");
 
@@ -18,6 +19,7 @@ export async function deleteAccount(
 
 	const user = await Users.findOneBy({ id: job.data.user.id });
 	if (!user) return;
+	const isLocal = Users.isLocalUser(user);
 
 	{
 		// Delete notes
@@ -98,6 +100,7 @@ export async function deleteAccount(
 		// nop
 	} else {
 		await Users.delete(job.data.user.id);
+		publishInternalEvent(isLocal ? "localUserDeleted" : "remoteUserDeleted", { id: user.id });
 	}
 
 	return "Account deleted";

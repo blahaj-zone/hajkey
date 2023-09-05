@@ -27,6 +27,19 @@ subscriber.on("message", async (_, data) => {
 	if (obj.channel === "internal") {
 		const { type, body } = obj.message;
 		switch (type) {
+			case "localUserDeleted": {
+				await userByIdCache.delete(body.id);
+				await localUserByIdCache.delete(body.id);
+				const toDelete = Array.from(await localUserByNativeTokenCache.getAll())
+					.filter((v) => v[1]?.id === body.id)
+					.map((v) => v[0]);
+				await localUserByNativeTokenCache.delete(...toDelete);
+				const uriCacheToDelete = Array.from(await uriPersonCache.getAll())
+					.filter((v) => v[1]?.id === body.id)
+					.map((v) => v[0]);
+				await uriPersonCache.delete(...uriCacheToDelete);
+				break;
+			}
 			case "localUserUpdated": {
 				await userByIdCache.delete(body.id);
 				await localUserByIdCache.delete(body.id);
@@ -53,6 +66,14 @@ subscriber.on("message", async (_, data) => {
 					await localUserByNativeTokenCache.set(user.token, user);
 					await localUserByIdCache.set(user.id, user);
 				}
+				break;
+			}
+			case "remoteUserDeleted": {
+				await userByIdCache.delete(body.id);
+				const toDelete = Array.from(await uriPersonCache.getAll())
+					.filter((v) => v[1]?.id === body.id)
+					.map((v) => v[0]);
+				await uriPersonCache.delete(...toDelete);
 				break;
 			}
 			case "userTokenRegenerated": {
