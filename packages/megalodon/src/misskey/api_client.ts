@@ -527,7 +527,7 @@ namespace MisskeyAPI {
 		meta = (m: Entity.Meta, s: Entity.Stats): MegalodonEntity.Instance => {
 			const wss = m.uri.replace(/^https:\/\//, "wss://");
 			return {
-				uri: m.uri,
+				uri: m.domain,
 				title: m.name,
 				description: m.description,
 				email: m.maintainerEmail,

@@ -164,6 +164,7 @@ export type Mixin = {
 	version: string;
 	host: string;
 	hostname: string;
+	domain: string;
 	scheme: string;
 	wsScheme: string;
 	apiUrl: string;

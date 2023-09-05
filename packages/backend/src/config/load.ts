@@ -40,8 +40,6 @@ export default function load() {
 
 	config.url = url.origin;
 
-	if (!config.accountDomain) config.accountDomain = url.hostname
-
 	config.port = config.port || parseInt(process.env.PORT || "", 10);
 
 	config.images = {
@@ -54,6 +52,7 @@ export default function load() {
 	mixin.version = meta.version;
 	mixin.host = url.host;
 	mixin.hostname = url.hostname;
+	mixin.domain = config.accountDomain ?? url.host;
 	mixin.scheme = url.protocol.replace(/:$/, "");
 	mixin.wsScheme = mixin.scheme.replace("http", "ws");
 	mixin.wsUrl = `${mixin.wsScheme}://${mixin.host}`;

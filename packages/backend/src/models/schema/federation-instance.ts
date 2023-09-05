@@ -21,12 +21,6 @@ export const packedFederationInstanceSchema = {
 			nullable: false,
 			example: "iceshrimp.example.com",
 		},
-		accountDomain: {
-			type: "string",
-			optional: true,
-			nullable: true,
-			example: "example.com",
-		},
 		usersCount: {
 			type: "number",
 			optional: false,

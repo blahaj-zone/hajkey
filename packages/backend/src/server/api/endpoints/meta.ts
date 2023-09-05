@@ -44,6 +44,13 @@ export const meta = {
 				format: "url",
 				example: "https://iceshrimp.example.com",
 			},
+			domain: {
+				type: "string",
+				optional: false,
+				nullable: false,
+				format: "domain",
+				example: "example.com",
+			},
 			description: {
 				type: "string",
 				optional: false,
@@ -411,6 +418,7 @@ export default define(meta, paramDef, async (ps, me) => {
 
 		name: instance.name,
 		uri: config.url,
+		domain: config.domain,
 		description: instance.description,
 		langs: instance.langs,
 		tosUrl: instance.ToSUrl,

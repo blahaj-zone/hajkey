@@ -180,7 +180,7 @@ function checkForSplash() {
 
 	fetchInstanceMetaPromise.then(() => {
 		localStorage.setItem("v", instance.version);
-		setHost(new URL(instance.uri).host);
+		setHost(instance.domain);
 
 		// Init service worker
 		initializeSw();

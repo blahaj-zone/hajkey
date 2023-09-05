@@ -7,6 +7,7 @@ namespace MisskeyEntity {
     name: string
     version: string
     uri: string
+    domain: string
     description: string
     langs: Array<string>
     disableRegistration: boolean

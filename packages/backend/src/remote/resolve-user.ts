@@ -36,7 +36,7 @@ export async function resolveUser(
 
 	// Also return local user if host part is specified but referencing the local instance
 
-	if (config.host === host || config.accountDomain === host) {
+	if (config.host === host || config.domain === host) {
 		logger.info(`return local user: ${usernameLower}`);
 		return await Users.findOneBy({ usernameLower, host: IsNull() }).then(
 			(u) => {

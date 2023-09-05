@@ -59,7 +59,7 @@ export async function sendEmail(
 			</footer>
 		</main>
 		<nav style="box-sizing: border-box; max-width: 500px; margin: 16px auto 0 auto; padding: 0 32px;">
-			<a href="${config.url}" style="color: #9ccfd8 !important;">${config.host}</a>
+			<a href="${config.url}" style="color: #9ccfd8 !important;">${config.domain}</a>
 		</nav>
 	</body>
 </html>`,

@@ -108,6 +108,7 @@ export default class Resolver {
 		if (
 			meta.privateMode &&
 			config.host !== host &&
+			config.domain !== host &&
 			!meta.allowedHosts.includes(host)
 		) {
 			throw new Error("Instance is not allowed");

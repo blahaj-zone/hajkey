@@ -34,7 +34,6 @@ export const InstanceRepository = db.getRepository(Instance).extend({
 			iconUrl: instance.iconUrl,
 			faviconUrl: instance.faviconUrl,
 			themeColor: instance.themeColor,
-			accountDomain: instance.accountDomain,
 			infoUpdatedAt: instance.infoUpdatedAt
 				? instance.infoUpdatedAt.toISOString()
 				: null,

@@ -170,10 +170,4 @@ export class Instance {
 		nullable: true,
 	})
 	public infoUpdatedAt: Date | null;
-
-	@Column("varchar", {
-		length: 128,
-		comment: "Domain for account ATs",
-	})
-	public accountDomain: string | null;
 }

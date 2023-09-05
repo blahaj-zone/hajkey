@@ -63,7 +63,7 @@ export async function masterMain() {
 	}
 
 	bootLogger.succ(
-		`Now listening on port ${config.port} on ${config.url} - using ${config.accountDomain}`,
+		`Now listening on port ${config.port} on ${config.url} - using ${config.domain}`,
 		null,
 		true,
 	);

@@ -345,7 +345,7 @@ export default hasConfig
 						userHost:
 							note.userHost !== ""
 								? note.userHost
-								: url.parse(config.host).host,
+								: config.domain,
 						channelId: note.channelId ? note.channelId : "",
 						mediaAttachment: attachmentType,
 						userName: note.user?.username ?? "UNKNOWN",
