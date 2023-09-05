@@ -48,6 +48,7 @@ import Resolver from "../resolver.js";
 import { extractApHashtags } from "./tag.js";
 import { resolveNote, extractEmojis } from "./note.js";
 import { resolveImage } from "./image.js";
+import { getSubjectHostFromUri } from "@/remote/resolve-user.js"
 
 const logger = apLogger;
 
@@ -184,7 +185,7 @@ export async function createPerson(
 
 	logger.info(`Creating the Person: ${person.id}`);
 
-	const host = subjectHost ?? toPuny(new URL(object.id).hostname);
+	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? toPuny(new URL(object.id).hostname);
 
 	const { fields } = analyzeAttachments(person.attachment || []);
 

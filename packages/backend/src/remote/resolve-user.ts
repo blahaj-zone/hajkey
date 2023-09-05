@@ -171,6 +171,22 @@ export async function resolveUser(
 	return user;
 }
 
+export async function getSubjectHostFromUri( uri: string): Promise<string | null> {
+	try {
+		const acct = subjectToAcct((await webFinger(uri)).subject);
+		const res = await resolveUserWebFinger(acct.toLowerCase());
+		const finalAcct = subjectToAcct(res.subject);
+		const m = finalAcct.match(/^([^@]+)@(.*)/);
+		if (!m) {
+			return null;
+		}
+		return m[2];
+	}
+	catch {
+		return null;
+	}
+}
+
 async function resolveUserWebFinger(acctLower: string, recurse: boolean = true): Promise<{
 	subject: string,
 	self: {
