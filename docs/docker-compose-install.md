@@ -6,11 +6,11 @@ This guide is based on `docker compose`/Docker Compose v2, but `docker-compose`/
 
 ### Getting needed files
 
-Run `git clone https://iceshrimp.dev/iceshrimp/iceshrimp`, but if you are not planning on building your own image, just grabbing `.config` and `docker-compose.yml.example` from the repo will suffice.
+Run `git clone https://iceshrimp.dev/iceshrimp/iceshrimp`, but if you are not planning on building your own image, just grabbing `.config` and `docs/examples/docker-compose.yml` from the repo will suffice.
 
 ### docker-compose.yml
 
-First, run `cp docker-compose.yml.example docker-compose.yml`, and edit `docker-compose.yml` if
+First, run `cp docs/examples/docker-compose.yml docker-compose.yml`, and edit `docker-compose.yml` if
 - you want to build the image yourself or choose a [different tag](https://iceshrimp.dev/iceshrimp/-/packages/container/iceshrimp/versions), and/or
 - you want a search engine for better search performance and/or a cache server for better antenna handling.
 

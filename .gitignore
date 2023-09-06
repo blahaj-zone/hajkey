@@ -30,7 +30,7 @@ coverage
 
 # docker configs
 /dev/docker-compose.yml
-docker-compose.yml
+/docker-compose.yml
 
 # misskey
 built
