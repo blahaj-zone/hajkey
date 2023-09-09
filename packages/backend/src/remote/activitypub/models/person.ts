@@ -448,6 +448,8 @@ export async function updatePerson(
 
 	const person = validateActor(object, uri);
 
+	const host = await getSubjectHostFromUri(uri);
+
 	logger.info(`Updating the Person: ${person.id}`);
 
 	// Fetch avatar and header image
@@ -552,6 +554,10 @@ export async function updatePerson(
 
 	if (banner) {
 		updates.bannerId = banner.id;
+	}
+
+	if (host) {
+		updates.host = host;
 	}
 
 	// Update user
