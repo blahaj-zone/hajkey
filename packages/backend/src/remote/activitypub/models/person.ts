@@ -187,6 +187,43 @@ export async function createPerson(
 
 	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? toPuny(new URL(object.id).hostname);
 
+	let checkUser = (await Users.findOneBy({
+		usernameLower: person.preferredUsername!.toLowerCase(),
+		host: toPuny(new URL(object.id).hostname),
+	})) as IRemoteUser | null;
+
+	if (checkUser != null) {
+		logger.info('Person already exists');
+		if (host != checkUser.host) {
+			logger.info('Updating existing person with canonical account domain');
+			checkUser.host = host;
+			await Users.update(
+				{
+					usernameLower: checkUser.usernameLower,
+					host: checkUser.host,
+				},
+				{
+					host: host,
+				},
+			);
+		}
+		logger.info('Returning existing person');
+		return checkUser;
+	}
+
+	if (host != toPuny(new URL(object.id).hostname)) {
+		checkUser = (await Users.findOneBy({
+			usernameLower: person.preferredUsername!.toLowerCase(),
+			host: host,
+		})) as IRemoteUser | null;
+
+		if (checkUser != null) {
+			logger.info('Person already exists');
+			logger.info('Returning existing person');
+			return checkUser;
+		}
+	}
+
 	const { fields } = analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
