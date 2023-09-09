@@ -248,7 +248,7 @@ currentPassword: "Mot de passe actuel"
 newPassword: "Nouveau mot de passe"
 newPasswordRetype: "Répéter le nouveau mot de passe"
 attachFile: "Joindre un fichier"
-more: "Plus !"
+more: "Plus"
 featured: "Tendances"
 usernameOrUserId: "Nom d’utilisateur·rice ou ID utilisateur"
 noSuchUser: "Utilisateur·rice non trouvé·e"
@@ -277,7 +277,7 @@ noMoreHistory: "Il n’y a plus d’historique"
 startMessaging: "Commencer à discuter"
 nUsersRead: "Lu par {n} personnes"
 agreeTo: "J’accepte {0}"
-tos: "les conditions d’utilisation"
+tos: "Informations & Charte de l’instance"
 start: "Commencer"
 home: "Principal"
 remoteUserCaution: "Les informations de ce compte risqueraient d’être incomplètes
@@ -2225,3 +2225,6 @@ searchNotLoggedIn_1: Vous devez être authentifié pour pouvoir utiliser la rech
   en texte intégral.
 searchNotLoggedIn_2: Toutefois, vous pouvez effectuer des recherches à l'aide de hashtags
   et rechercher des utilisateurs.
+antennaTimelineHint: Les antennes affichent les messages correspondants dans l'ordre
+  dans lequel ils ont été reçus, ce qui n'est pas nécessairement chronologique.
+alwaysExpandCws: Toujours afficher les messages avec des avertissements sur le contenu
