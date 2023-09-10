@@ -187,6 +187,26 @@ export async function getSubjectHostFromUri(uri: string): Promise<string | null>
 	}
 }
 
+export async function getSubjectHostFromAcct(acct: string): Promise<string | null> {
+	try {
+		const res = await resolveUserWebFinger(acct.toLowerCase());
+		const finalAcct = subjectToAcct(res.subject);
+		const m = finalAcct.match(/^([^@]+)@(.*)/);
+		if (!m) {
+			return null;
+		}
+		return m[2];
+	}
+	catch {
+		return null;
+	}
+}
+
+
+export async function getSubjectHostFromRemoteUser(user: IRemoteUser | undefined): Promise<string | null> {
+	return user ? getSubjectHostFromAcct(`${user.username}@${user.host}`) : null;
+}
+
 async function resolveUserWebFinger(acctLower: string, recurse: boolean = true): Promise<{
 	subject: string,
 	self: {

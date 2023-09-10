@@ -48,7 +48,7 @@ import Resolver from "../resolver.js";
 import { extractApHashtags } from "./tag.js";
 import { resolveNote, extractEmojis } from "./note.js";
 import { resolveImage } from "./image.js";
-import { getSubjectHostFromUri } from "@/remote/resolve-user.js"
+import { getSubjectHostFromUri, getSubjectHostFromRemoteUser } from "@/remote/resolve-user.js"
 
 const logger = apLogger;
 
@@ -425,11 +425,13 @@ export async function createPerson(
  * @param uri URI of Person
  * @param resolver Resolver
  * @param hint Hint of Person object (If this value is a valid Person, it is used for updating without Remote resolve)
+ * @param userHint Hint of IRemoteUser object, used for updating user information for remotes that only support webfinger with acct: query
  */
 export async function updatePerson(
 	uri: string,
 	resolver?: Resolver | null,
 	hint?: IObject,
+	userHint?: IRemoteUser,
 ): Promise<void> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
@@ -452,9 +454,9 @@ export async function updatePerson(
 
 	const person = validateActor(object, uri);
 
-	const host = await getSubjectHostFromUri(uri);
-
 	logger.info(`Updating the Person: ${person.id}`);
+
+	const host = await getSubjectHostFromUri(uri) ?? await getSubjectHostFromRemoteUser(userHint);
 
 	// Fetch avatar and header image
 	const [avatar, banner] = await Promise.all(
