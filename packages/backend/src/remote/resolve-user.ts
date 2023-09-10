@@ -171,7 +171,7 @@ export async function resolveUser(
 	return user;
 }
 
-export async function getSubjectHostFromUri( uri: string): Promise<string | null> {
+export async function getSubjectHostFromUri(uri: string): Promise<string | null> {
 	try {
 		const acct = subjectToAcct((await webFinger(uri)).subject);
 		const res = await resolveUserWebFinger(acct.toLowerCase());
