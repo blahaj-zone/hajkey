@@ -187,40 +187,44 @@ export async function createPerson(
 
 	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? toPuny(new URL(object.id).hostname);
 
-	let checkUser = (await Users.findOneBy({
-		usernameLower: person.preferredUsername!.toLowerCase(),
-		host: toPuny(new URL(object.id).hostname),
-	})) as IRemoteUser | null;
+	const usernameLower = person.preferredUsername?.toLowerCase();
 
-	if (checkUser != null) {
-		logger.info('Person already exists');
-		if (host != checkUser.host) {
-			logger.info('Updating existing person with canonical account domain');
-			checkUser.host = host;
-			await Users.update(
-				{
-					usernameLower: checkUser.usernameLower,
-					host: checkUser.host,
-				},
-				{
-					host: host,
-				},
-			);
-		}
-		logger.info('Returning existing person');
-		return checkUser;
-	}
-
-	if (host != toPuny(new URL(object.id).hostname)) {
-		checkUser = (await Users.findOneBy({
-			usernameLower: person.preferredUsername!.toLowerCase(),
-			host: host,
+	if (usernameLower !== null) {
+		let checkUser = (await Users.findOneBy({
+			usernameLower: usernameLower,
+			host: toPuny(new URL(object.id).hostname),
 		})) as IRemoteUser | null;
 
 		if (checkUser != null) {
 			logger.info('Person already exists');
+			if (host != checkUser.host) {
+				logger.info(`Updating existing person with canonical account domain (${usernameLower}@${checkUser.host} -> ${usernameLower}@${host})`);
+				await Users.update(
+					{
+						usernameLower: usernameLower,
+						host: checkUser.host,
+					},
+					{
+						host: host,
+					},
+				);
+				checkUser.host = host;
+			}
 			logger.info('Returning existing person');
 			return checkUser;
+		}
+
+		if (host != toPuny(new URL(object.id).hostname)) {
+			checkUser = (await Users.findOneBy({
+				usernameLower: usernameLower,
+				host: host,
+			})) as IRemoteUser | null;
+
+			if (checkUser != null) {
+				logger.info('Person already exists');
+				logger.info('Returning existing person');
+				return checkUser;
+			}
 		}
 	}
 
