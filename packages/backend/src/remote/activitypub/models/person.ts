@@ -48,7 +48,11 @@ import Resolver from "../resolver.js";
 import { extractApHashtags } from "./tag.js";
 import { resolveNote, extractEmojis } from "./note.js";
 import { resolveImage } from "./image.js";
-import { getSubjectHostFromUri, getSubjectHostFromRemoteUser } from "@/remote/resolve-user.js"
+import {
+	getSubjectHostFromUri,
+	getSubjectHostFromRemoteUser,
+	getSubjectHostFromAcctParts
+} from "@/remote/resolve-user.js"
 
 const logger = apLogger;
 
@@ -185,9 +189,11 @@ export async function createPerson(
 
 	logger.info(`Creating the Person: ${person.id}`);
 
-	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? toPuny(new URL(object.id).hostname);
-
 	const usernameLower = person.preferredUsername?.toLowerCase();
+
+	const urlHostname = toPuny(new URL(object.id).hostname);
+
+	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? await getSubjectHostFromAcctParts(usernameLower, urlHostname) ?? urlHostname;
 
 	if (usernameLower !== null) {
 		let checkUser = (await Users.findOneBy({

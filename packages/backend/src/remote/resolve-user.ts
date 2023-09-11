@@ -207,6 +207,10 @@ export async function getSubjectHostFromRemoteUser(user: IRemoteUser | undefined
 	return user ? getSubjectHostFromAcct(`${user.username}@${user.host}`) : null;
 }
 
+export async function getSubjectHostFromAcctParts(username?: string | undefined, host?: string | undefined): Promise<string | null> {
+	return username !== null && host !== null ? getSubjectHostFromAcct(`${username}@${host}`) : null;
+}
+
 async function resolveUserWebFinger(acctLower: string, recurse: boolean = true): Promise<{
 	subject: string,
 	self: {
