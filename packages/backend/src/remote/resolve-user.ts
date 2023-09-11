@@ -193,16 +193,17 @@ export async function getSubjectHostFromUriAndUsernameCached(uri: string, userna
 	const hostname = new URL(uri).hostname;
 	username = username.substring(1); // remove leading @ from username
 
+	if (hostname === config.hostname) {
+		// user is local, return local account domain
+		return config.domain;
+	}
+
 	const user = await Users.findOneBy({
 		usernameLower: username.toLowerCase(),
 		host: hostname
 	});
 
-	if (user) {
-		return user.host;
-	}
-
-	return await uriHostCache.fetch(uri, async () => await getSubjectHostFromUri(uri) ?? hostname);
+	return user ? user.host : await uriHostCache.fetch(uri, async () => await getSubjectHostFromUri(uri) ?? hostname);
 }
 
 export async function getSubjectHostFromAcct(acct: string): Promise<string | null> {
