@@ -203,7 +203,7 @@ export async function getSubjectHostFromUriAndUsernameCached(uri: string, userna
 		host: hostname
 	});
 
-	return user ? user.host : await uriHostCache.fetch(uri, async () => await getSubjectHostFromUri(uri) ?? hostname);
+	return user ? user.host : await uriHostCache.fetch(uri, async () => await getSubjectHostFromUri(uri) ?? await getSubjectHostFromAcctParts(username, hostname) ?? hostname);
 }
 
 export async function getSubjectHostFromAcct(acct: string): Promise<string | null> {
