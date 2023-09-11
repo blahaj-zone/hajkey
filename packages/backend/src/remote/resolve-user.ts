@@ -8,8 +8,10 @@ import { toPuny } from "@/misc/convert-host.js";
 import webFinger from "./webfinger.js";
 import { createPerson, updatePerson } from "./activitypub/models/person.js";
 import { remoteLogger } from "./logger.js";
+import { Cache } from "@/misc/cache.js";
 
 const logger = remoteLogger.createSubLogger("resolve-user");
+const uriHostCache = new Cache<string>("resolveUserUriHost", 60 * 60 * 24);
 
 export async function resolveUser(
 	username: string,
@@ -200,7 +202,7 @@ export async function getSubjectHostFromUriAndUsernameCached(uri: string, userna
 		return user.host;
 	}
 
-	return await getSubjectHostFromUri(uri) ?? hostname;
+	return await uriHostCache.fetch(uri, async () => await getSubjectHostFromUri(uri) ?? hostname);
 }
 
 export async function getSubjectHostFromAcct(acct: string): Promise<string | null> {
