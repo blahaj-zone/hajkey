@@ -33,7 +33,7 @@ async function hostMetaToWebFingerTemplate(url: string) {
 			headers: Object.assign(
 				{
 					"User-Agent": config.userAgent,
-					Accept: "application/xrd+xml.",
+					Accept: "application/xrd+xml",
 				},
 				{},
 			),
