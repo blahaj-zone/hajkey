@@ -724,6 +724,7 @@ export async function updateFeatured(userId: User["id"], resolver?: Resolver) {
 	);
 
 	// Resolve and regist Notes
+	resolver.reset();
 	const limit = promiseLimit<Note | null>(2);
 	const featuredNotes = await Promise.all(
 		items
