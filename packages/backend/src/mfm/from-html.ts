@@ -5,7 +5,7 @@ import { defaultTreeAdapter as treeAdapter } from "parse5";
 const urlRegex = /^https?:\/\/[\w\/:%#@$&?!()\[\]~.,=+\-]+/;
 const urlRegexFull = /^https?:\/\/[\w\/:%#@$&?!()\[\]~.,=+\-]+$/;
 
-export function fromHtml(html: string, hashtagNames?: string[]): string {
+export async function fromHtml(html: string, hashtagNames?: string[]): Promise<string> {
 	// some AP servers like Pixelfed use br tags as well as newlines
 	html = html.replace(/<br\s?\/?>\r?\n/gi, "\n");
 
@@ -14,7 +14,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 	let text = "";
 
 	for (const n of dom.childNodes) {
-		analyze(n);
+		await analyze(n);
 	}
 
 	return text.trim();
@@ -31,15 +31,15 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 		return "";
 	}
 
-	function appendChildren(childNodes: TreeAdapter.ChildNode[]): void {
+	async function appendChildren(childNodes: TreeAdapter.ChildNode[]): Promise<void> {
 		if (childNodes) {
 			for (const n of childNodes) {
-				analyze(n);
+				await analyze(n);
 			}
 		}
 	}
 
-	function analyze(node: TreeAdapter.Node) {
+	async function analyze(node: TreeAdapter.Node) {
 		if (treeAdapter.isTextNode(node)) {
 			text += node.value;
 			return;
@@ -109,7 +109,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 
 			case "h1": {
 				text += "【";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "】\n";
 				break;
 			}
@@ -117,14 +117,14 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			case "b":
 			case "strong": {
 				text += "**";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "**";
 				break;
 			}
 
 			case "small": {
 				text += "<small>";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "</small>";
 				break;
 			}
@@ -132,7 +132,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			case "s":
 			case "del": {
 				text += "~~";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "~~";
 				break;
 			}
@@ -140,7 +140,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			case "i":
 			case "em": {
 				text += "<i>";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "</i>";
 				break;
 			}
@@ -155,7 +155,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 					text += getText(node.childNodes[0]);
 					text += "\n```\n";
 				} else {
-					appendChildren(node.childNodes);
+					await appendChildren(node.childNodes);
 				}
 				break;
 			}
@@ -163,7 +163,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			// inline code (<code>)
 			case "code": {
 				text += "`";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				text += "`";
 				break;
 			}
@@ -184,7 +184,7 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			case "h5":
 			case "h6": {
 				text += "\n\n";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				break;
 			}
 
@@ -197,13 +197,13 @@ export function fromHtml(html: string, hashtagNames?: string[]): string {
 			case "dt":
 			case "dd": {
 				text += "\n";
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				break;
 			}
 
 			default: {
 				// includes inline elements
-				appendChildren(node.childNodes);
+				await appendChildren(node.childNodes);
 				break;
 			}
 		}

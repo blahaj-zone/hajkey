@@ -234,7 +234,7 @@ export async function createPerson(
 		}
 	}
 
-	const { fields } = analyzeAttachments(person.attachment || []);
+	const { fields } = await analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
@@ -335,7 +335,7 @@ export async function createPerson(
 				new UserProfile({
 					userId: user.id,
 					description: person.summary
-						? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+						? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 						: null,
 					url: url,
 					fields,
@@ -481,7 +481,7 @@ export async function updatePerson(
 
 	const emojiNames = emojis.map((emoji) => emoji.name);
 
-	const { fields } = analyzeAttachments(person.attachment || []);
+	const { fields } = await analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
@@ -591,7 +591,7 @@ export async function updatePerson(
 			url: url,
 			fields,
 			description: person.summary
-				? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+				? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 				: null,
 			birthday: bday ? bday[0] : null,
 			location: person["vcard:Address"] || null,
@@ -676,7 +676,7 @@ function addService(target: { [x: string]: any }, source: IApPropertyValue) {
 	}
 }
 
-export function analyzeAttachments(
+export async function analyzeAttachments(
 	attachments: IObject | IObject[] | undefined,
 ) {
 	const fields: {
@@ -692,7 +692,7 @@ export function analyzeAttachments(
 			} else {
 				fields.push({
 					name: attachment.name,
-					value: fromHtml(attachment.value),
+					value: await fromHtml(attachment.value),
 				});
 			}
 		}

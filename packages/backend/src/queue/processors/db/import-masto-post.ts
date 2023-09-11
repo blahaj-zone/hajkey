@@ -40,7 +40,7 @@ export async function importMastoPost(
 	job.progress(60);
 	let text;
 	try {
-		text = htmlToMfm(post.object.content, post.object.tag);
+		text = await htmlToMfm(post.object.content, post.object.tag);
 	} catch (e) {
 		throw e;
 	}

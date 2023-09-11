@@ -313,7 +313,7 @@ export async function createNote(
 	} else if (typeof note._misskey_content !== "undefined") {
 		text = note._misskey_content;
 	} else if (typeof note.content === "string") {
-		text = htmlToMfm(note.content, note.tag);
+		text = await htmlToMfm(note.content, note.tag);
 	}
 
 	// vote
@@ -575,7 +575,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	} else if (typeof post._misskey_content !== "undefined") {
 		text = post._misskey_content;
 	} else if (typeof post.content === "string") {
-		text = htmlToMfm(post.content, post.tag);
+		text = await htmlToMfm(post.content, post.tag);
 	}
 
 	const cw = post.sensitive && post.summary;
