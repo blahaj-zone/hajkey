@@ -1,11 +1,12 @@
 import { URL } from "node:url";
 import * as parse5 from "parse5";
 import { defaultTreeAdapter as treeAdapter } from "parse5";
+import { getSubjectHostFromUriAndUsernameCached } from "@/remote/resolve-user.js";
 
 const urlRegex = /^https?:\/\/[\w\/:%#@$&?!()\[\]~.,=+\-]+/;
 const urlRegexFull = /^https?:\/\/[\w\/:%#@$&?!()\[\]~.,=+\-]+$/;
 
-export async function fromHtml(html: string, hashtagNames?: string[]): Promise<string> {
+export async function fromHtml(html: string, hashtagNames?: string[], basicMentionResolve: boolean = false): Promise<string> {
 	// some AP servers like Pixelfed use br tags as well as newlines
 	html = html.replace(/<br\s?\/?>\r?\n/gi, "\n");
 
@@ -72,7 +73,9 @@ export async function fromHtml(html: string, hashtagNames?: string[]): Promise<s
 
 					if (part.length === 2 && href) {
 						//#region ホスト名部分が省略されているので復元する
-						const acct = `${txt}@${new URL(href.value).hostname}`;
+						const acct = basicMentionResolve
+							? `${txt}@${new URL(href.value).hostname}`
+							: `${txt}@${await getSubjectHostFromUriAndUsernameCached(href.value, txt)}`;
 						text += acct;
 						//#endregion
 					} else if (part.length === 3) {

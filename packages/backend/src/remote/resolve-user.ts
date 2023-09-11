@@ -187,6 +187,22 @@ export async function getSubjectHostFromUri(uri: string): Promise<string | null>
 	}
 }
 
+export async function getSubjectHostFromUriAndUsernameCached(uri: string, username: string): Promise<string | null> {
+	const hostname = new URL(uri).hostname;
+	username = username.substring(1); // remove leading @ from username
+
+	const user = await Users.findOneBy({
+		usernameLower: username.toLowerCase(),
+		host: hostname
+	});
+
+	if (user) {
+		return user.host;
+	}
+
+	return await getSubjectHostFromUri(uri) ?? hostname;
+}
+
 export async function getSubjectHostFromAcct(acct: string): Promise<string | null> {
 	try {
 		const res = await resolveUserWebFinger(acct.toLowerCase());

@@ -111,6 +111,8 @@ describe("fromHtml", () => {
 		assert.deepStrictEqual(
 			await fromHtml(
 				'<p>a <a href="https://joiniceshrimp.org/@user" class="u-url mention">@user</a> d</p>',
+				undefined,
+				false
 			),
 			"a @user@joiniceshrimp.org d",
 		);
