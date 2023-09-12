@@ -1,0 +1,15 @@
+{
+	id: '0c74bfbe-c9b9-4a42-9798-2ee030e65f1c',
+
+	name: 'Iceshrimp Dark',
+	author: 'aylamz',
+
+	base: 'dark',
+
+	props: {
+		accent: '#47BFE8',
+		bg: '#212526',
+		shadow: 'rgba(0, 0, 0, 0)',
+		fgOnAccent: '@bg',
+	},
+}

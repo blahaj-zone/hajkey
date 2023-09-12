@@ -362,8 +362,8 @@ type Plugin = {
 /**
  * 常にメモリにロードしておく必要がないような設定情報を保管するストレージ(非リアクティブ)
  */
-import lightTheme from "@/themes/l-rosepinedawn.json5";
-import darkTheme from "@/themes/d-rosepine.json5";
+import lightTheme from "@/themes/l-iceshrimp.json5";
+import darkTheme from "@/themes/d-iceshrimp.json5";
 
 export class ColdDeviceStorage {
 	public static default = {

@@ -23,6 +23,7 @@ export const themeProps = Object.keys(lightTheme.props).filter(
 export const getBuiltinThemes = () =>
 	Promise.all(
 		[
+			"l-iceshrimp",
 			"l-rosepinedawn",
 			"l-light",
 			"l-nord",
@@ -35,6 +36,7 @@ export const getBuiltinThemes = () =>
 			"l-sushi",
 			"l-u0",
 
+			"d-iceshrimp",
 			"d-rosepine",
 			"d-rosepinemoon",
 			"d-dark",
@@ -50,7 +52,7 @@ export const getBuiltinThemes = () =>
 			"d-green-orange",
 			"d-cherry",
 			"d-ice",
-			"d-u0",
+			"d-u0"
 		].map((name) =>
 			import(`../themes/${name}.json5`).then(
 				({ default: _default }): Theme => _default,
