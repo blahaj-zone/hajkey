@@ -7,6 +7,10 @@ export function setHost(newHost: string): void {
 	host = newHost;
 }
 
+export function setSearchEngine(engine: string): void {
+	searchEngine = engine;
+}
+
 export let host = address.host;
 export const hostname = address.hostname;
 export const url = address.origin;
@@ -19,5 +23,6 @@ export const langs = _LANGS_;
 export const locale = JSON.parse(localStorage.getItem("locale"));
 export const version = _VERSION_;
 export const instanceName = siteName === "Iceshrimp" ? host : siteName;
+export let searchEngine = 'https://duckduckgo.com/?q=';
 export const ui = localStorage.getItem("ui");
 export const debug = localStorage.getItem("debug") === "true";

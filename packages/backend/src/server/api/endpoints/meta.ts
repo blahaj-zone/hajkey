@@ -190,6 +190,11 @@ export const meta = {
 				optional: false,
 				nullable: false,
 			},
+			searchEngine: {
+				type: "string",
+				optional: false,
+				nullable: false,
+			},
 			emojis: {
 				type: "array",
 				optional: false,
@@ -449,6 +454,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		logoImageUrl: instance.logoImageUrl,
 		maxNoteTextLength: MAX_NOTE_TEXT_LENGTH, // 後方互換性のため
 		maxCaptionTextLength: MAX_CAPTION_TEXT_LENGTH,
+		searchEngine: config.searchEngine,
 		emojis: instance.privateMode && !me ? [] : await Emojis.packMany(emojis),
 		// クライアントの手間を減らすためあらかじめJSONに変換しておく
 		defaultLightTheme: instance.defaultLightTheme

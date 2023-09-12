@@ -49,6 +49,8 @@ export default function load() {
 		error: '/twemoji/1f480.svg',
 	};
 
+	config.searchEngine = config.searchEngine ?? 'https://duckduckgo.com/?q=';
+
 	mixin.version = meta.version;
 	mixin.host = url.host;
 	mixin.hostname = url.hostname;

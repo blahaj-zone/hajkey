@@ -72,6 +72,8 @@ export type Source = {
 		info?: string;
 	};
 
+	searchEngine?: string;
+
 	proxy?: string;
 	proxySmtp?: string;
 	proxyBypassHosts?: string[];

@@ -203,6 +203,9 @@ reservedUsernames: [
 #  notFound: '/twemoji/2049.svg'
 #  error: '/twemoji/1f480.svg'
 
+# Search engine (MFM)
+#searchEngine: 'https://duckduckgo.com/?q='
+
 #allowedPrivateNetworks: [
 #  '127.0.0.1/32'
 #]
