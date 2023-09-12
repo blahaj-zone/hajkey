@@ -2,7 +2,7 @@
 
 ## Minor Security Issues
 
-If you discover a minor security issue in Calckey, please report it by sending an
+If you discover a minor security issue in Firefish, please report it by sending an
 email to [kainoa@t1c.dev](mailto:kainoa@t1c.dev).
 
 ## High Security Issues
@@ -13,4 +13,4 @@ If you discover a security issue, which is so high risk, that too much is affect
 This will allow us to assess the risk, and make a fix available before we add a
 bug report to the Codeberg repository.
 
-Thanks for helping make Calckey safe for everyone.
+Thanks for helping make Firefish safe for everyone.

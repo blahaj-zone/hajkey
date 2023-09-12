@@ -8,7 +8,7 @@ resources:
     cpu: 1
     memory: 1Gi
 
-calckey:
+firefish:
   domain: example.tld
   smtp:
     from_address: noreply@example.tld

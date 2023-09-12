@@ -11,8 +11,6 @@ export class LdSignature {
 	public preLoad = true;
 	public loderTimeout = 10 * 1000;
 
-	constructor() {}
-
 	public async signRsaSignature2017(
 		data: any,
 		privateKey: string,

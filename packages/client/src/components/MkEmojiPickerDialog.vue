@@ -12,7 +12,7 @@
 		:transparent-bg="true"
 		:manual-showing="manualShowing"
 		:src="src"
-		@click="modal?.close()"
+		@click="checkForShift"
 		@opening="opening"
 		@close="emit('close')"
 		@closed="emit('closed')"
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import MkModal from "@/components/MkModal.vue";
 import MkEmojiPicker from "@/components/MkEmojiPicker.vue";
 import { defaultStore } from "@/store";
@@ -47,7 +47,7 @@ withDefaults(
 		manualShowing: null,
 		showPinned: true,
 		asReactionPicker: false,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -59,13 +59,22 @@ const emit = defineEmits<{
 const modal = ref<InstanceType<typeof MkModal>>();
 const picker = ref<InstanceType<typeof MkEmojiPicker>>();
 
-function chosen(emoji: any) {
+function checkForShift(ev?: MouseEvent) {
+	if (ev?.shiftKey) return;
+	modal.value?.close(ev);
+}
+
+function chosen(emoji: any, ev: MouseEvent) {
 	emit("done", emoji);
-	modal.value?.close();
+	checkForShift(ev);
 }
 
 function opening() {
-	picker.value?.reset();
+	try {
+		picker.value?.reset();
+	} catch (e) {
+		console.error("Something's wrong with resetting the emoji picker", e);
+	}
 	picker.value?.focus();
 }
 </script>

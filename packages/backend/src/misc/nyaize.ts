@@ -20,5 +20,9 @@ export function nyaize(text: string): string {
 			)
 			.replace(/(다$)|(다(?=\.))|(다(?= ))|(다(?=!))|(다(?=\?))/gm, "다냥")
 			.replace(/(야(?=\?))|(야$)|(야(?= ))/gm, "냥")
+			// el-GR
+			.replaceAll("να", "νια")
+			.replaceAll("ΝΑ", "ΝΙΑ")
+			.replaceAll("Να", "Νια")
 	);
 }

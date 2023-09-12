@@ -1,7 +1,7 @@
 _lang_: "日本語"
-headlineMisskey: "ずっと無料でオープンソースの非中央集権型ソーシャルメディアプラットフォーム\U0001F680"
-introMisskey: "ようこそ！Calckeyは、オープンソースの非中央集権型ソーシャルメディアプラットフォームです。\nいま起こっていることを共有したり、あなたについて皆に発信しましょう\U0001F4E1\
-  \n「リアクション」機能で、皆の投稿に素早く反応を追加できます\U0001F44D\n新しい世界を探検しよう\U0001F680"
+headlineIceshrimp: "ずっと無料でオープンソースの非中央集権型ソーシャルメディアプラットフォーム🚀"
+introIceshrimp: "ようこそ！Iceshrimpは、オープンソースの非中央集権型ソーシャルメディアプラットフォームです。\nいま起こっていることを共有したり、あなたについて皆に発信しましょう📡\n\
+  「リアクション」機能で、皆の投稿に素早く反応を追加できます👍\n新しい世界を探検しよう🚀"
 monthAndDay: "{month}月 {day}日"
 search: "検索"
 notifications: "通知"
@@ -17,7 +17,7 @@ enterUsername: "ユーザー名を入力"
 renotedBy: "{user}がブースト"
 noNotes: "投稿はありません"
 noNotifications: "通知はありません"
-instance: "インスタンス"
+instance: "サーバー"
 settings: "設定"
 basicSettings: "基本設定"
 otherSettings: "その他の設定"
@@ -33,7 +33,7 @@ uploading: "アップロード中"
 save: "保存"
 users: "ユーザー"
 addUser: "ユーザーを追加"
-addInstance: "インスタンスを追加"
+addInstance: "サーバーを追加"
 favorite: "お気に入り"
 favorites: "お気に入り"
 unfavorite: "お気に入り解除"
@@ -133,6 +133,7 @@ unsuspendConfirm: "解凍しますか？"
 selectList: "リストを選択"
 selectAntenna: "アンテナを選択"
 selectWidget: "ウィジェットを選択"
+selectChannel: "チャンネルを選択"
 editWidgets: "ウィジェットを編集"
 editWidgetsExit: "編集を終了"
 customEmojis: "カスタム絵文字"
@@ -145,8 +146,8 @@ settingGuide: "おすすめ設定"
 cacheRemoteFiles: "リモートのファイルをキャッシュする"
 cacheRemoteFilesDescription: "この設定を無効にすると、リモートファイルをキャッシュせず直リンクします。サーバーのストレージを節約できますが、サムネイルが生成されないので通信量が増加します。"
 flagAsBot: "Botとして設定"
-flagAsBotDescription: "このアカウントがBotである場合は、この設定をオンにします。オンにすると、反応の連鎖を防ぐためのフラグとして他の開発者に役立ったり、Calckeyのシステム上での扱いがBotに合ったものになります。"
-flagAsCat: "あなたは…猫？\U0001F63A"
+flagAsBotDescription: "このアカウントがBotである場合は、この設定をオンにします。オンにすると、反応の連鎖を防ぐためのフラグとして他の開発者に役立ったり、Iceshrimpのシステム上での扱いがBotに合ったものになります。"
+flagAsCat: "あなたは…猫？😺"
 flagAsCatDescription: "このアカウントが猫であることを示す猫モードを有効にするには、このフラグをオンにします。"
 flagSpeakAsCat: "猫語で話す"
 flagSpeakAsCatDescription: "猫モードが有効の場合にオンにすると、あなたの投稿の「な」を「にゃ」に変換します。"
@@ -165,14 +166,14 @@ searchWith: "検索: {q}"
 youHaveNoLists: "リストがありません"
 followConfirm: "{name}をフォローしますか？"
 proxyAccount: "プロキシアカウント"
-proxyAccountDescription: "プロキシアカウントは、特定の条件下でユーザーのリモートフォローを代行するアカウントです。例えば、ユーザーがリモートユーザーをリストに入れたとき、リストに入れられたユーザーを誰もフォローしていないとアクティビティがインスタンスに配達されないため、代わりにプロキシアカウントがフォローするようにします。"
+proxyAccountDescription: "プロキシアカウントは、特定の条件下でユーザーのリモートフォローを代行するアカウントです。例えば、ユーザーがリモートユーザーをリストに入れたとき、リストに入れられたユーザーを誰もフォローしていないとアクティビティがサーバーに配達されないため、代わりにプロキシアカウントがフォローするようにします。"
 host: "ホスト"
 selectUser: "ユーザーを選択"
-selectInstance: "インスタンスを選択"
+selectInstance: "サーバーを選択"
 recipient: "宛先"
 annotation: "注釈"
 federation: "連合"
-instances: "インスタンス"
+instances: "サーバー"
 registeredAt: "初観測"
 latestRequestSentAt: "直近のリクエスト送信"
 latestRequestReceivedAt: "直近のリクエスト受信"
@@ -182,38 +183,37 @@ charts: "チャート"
 perHour: "1時間ごと"
 perDay: "1日ごと"
 stopActivityDelivery: "アクティビティの配送を停止"
-blockThisInstance: "このインスタンスをブロック"
-silenceThisInstance: "このインスタンスをサイレンス"
+blockThisInstance: "このサーバーをブロック"
+silenceThisInstance: "このサーバーをサイレンス"
 operations: "操作"
 software: "ソフトウェア"
 version: "バージョン"
 metadata: "メタデータ"
-withNFiles: "{n}つのファイル"
 monitor: "モニター"
 jobQueue: "ジョブキュー"
 cpuAndMemory: "CPUとメモリ"
 network: "ネットワーク"
 disk: "ディスク"
-instanceInfo: "インスタンス情報"
+instanceInfo: "サーバー情報"
 statistics: "統計"
 clearQueue: "キューをクリア"
 clearQueueConfirmTitle: "キューをクリアしますか？"
 clearQueueConfirmText: "未配達の投稿は配送されなくなります。通常この操作を行う必要はありません。"
 clearCachedFiles: "キャッシュをクリア"
 clearCachedFilesConfirm: "キャッシュされたリモートファイルをすべて削除しますか？"
-blockedInstances: "ブロックしたインスタンス"
-blockedInstancesDescription: "ブロックしたいインスタンスのホストを改行で区切って設定します。ブロックされたインスタンスは、このインスタンスとやり取りできなくなります。"
-silencedInstances: "サイレンスしたインスタンス"
-silencedInstancesDescription: "サイレンスしたいインスタンスのホストを改行で区切って設定します。サイレンスされたインスタンスに所属するアカウントはすべて「サイレンス」として扱われ、フォローがすべてリクエストになり、フォロワーでないローカルアカウントにはメンションできなくなります。ブロックしたインスタンスには影響しません。"
+blockedInstances: "ブロックしたサーバー"
+blockedInstancesDescription: "ブロックしたいサーバーのホストを改行で区切って設定します。ブロックされたサーバーは、このサーバーとやり取りできなくなります。"
+silencedInstances: "サイレンスしたサーバー"
+silencedInstancesDescription: "サイレンスしたいサーバーのホストを改行で区切って設定します。サイレンスされたサーバーに所属するアカウントはすべて「サイレンス」として扱われ、フォローがすべてリクエストになり、フォロワーでないローカルアカウントにはメンションできなくなります。ブロックしたサーバーには影響しません。"
 muteAndBlock: "ミュートとブロック"
 mutedUsers: "ミュートしたユーザー"
 blockedUsers: "ブロックしたユーザー"
 noUsers: "ユーザーはいません"
-noInstances: "インスタンスはありません"
+noInstances: "サーバーがありません"
 editProfile: "プロフィールを編集"
 noteDeleteConfirm: "この投稿を削除しますか？"
 pinLimitExceeded: "これ以上ピン留めできません"
-intro: "Calckeyのインストールが完了しました！管理者アカウントを作成しましょう。"
+intro: "Iceshrimpのインストールが完了しました！管理者アカウントを作成しましょう。"
 done: "完了"
 processing: "処理中"
 preview: "プレビュー"
@@ -229,9 +229,9 @@ all: "全て"
 subscribing: "購読中"
 publishing: "配信中"
 notResponding: "応答なし"
-instanceFollowing: "インスタンスのフォロー"
-instanceFollowers: "インスタンスのフォロワー"
-instanceUsers: "インスタンスのユーザー"
+instanceFollowing: "サーバーのフォロー"
+instanceFollowers: "サーバーのフォロワー"
+instanceUsers: "このサーバーの利用者"
 changePassword: "パスワードを変更"
 security: "セキュリティ"
 retypedNotMatch: "入力が一致しません。"
@@ -322,8 +322,8 @@ unwatch: "ウォッチ解除"
 accept: "許可"
 reject: "拒否"
 normal: "正常"
-instanceName: "インスタンス名"
-instanceDescription: "インスタンスの紹介"
+instanceName: "サーバー名"
+instanceDescription: "サーバーの紹介文"
 maintainerName: "管理者の名前"
 maintainerEmail: "管理者のメールアドレス"
 tosUrl: "利用規約URL"
@@ -354,7 +354,7 @@ basicInfo: "基本情報"
 pinnedUsers: "ピン留めユーザー"
 pinnedUsersDescription: "「みつける」ページなどにピン留めしたいユーザーを改行で区切って記述します。"
 pinnedPages: "ピン留めページ"
-pinnedPagesDescription: "インスタンスのトップページにピン留めしたいページのパスを改行で区切って記述します。"
+pinnedPagesDescription: "サーバーのトップページにピン留めしたいページのパスを改行で区切って記述します。"
 pinnedClipId: "ピン留めするクリップのID"
 pinnedNotes: "ピン留めされた投稿"
 hcaptcha: "hCaptcha"
@@ -377,7 +377,7 @@ notifyAntenna: "新しい投稿を通知する"
 withFileAntenna: "ファイルが添付された投稿のみ"
 enableServiceworker: "ブラウザへのプッシュ通知を有効にする"
 antennaUsersDescription: "ユーザー名を改行で区切って指定します"
-antennaInstancesDescription: "インスタンスを改行で区切って指定します"
+antennaInstancesDescription: "サーバーを改行で区切って指定します"
 caseSensitive: "大文字小文字を区別する"
 withReplies: "返信を含む"
 connectedTo: "次のアカウントに接続されています"
@@ -396,7 +396,7 @@ exploreFediverse: "Fediverseを探索"
 popularTags: "人気のタグ"
 userList: "リスト"
 about: "情報"
-aboutMisskey: "Calckeyについて"
+aboutIceshrimp: "Iceshrimpについて"
 administrator: "管理者"
 token: "トークン"
 twoStepAuthentication: "二段階認証"
@@ -502,8 +502,8 @@ showFeaturedNotesInTimeline: "タイムラインにおすすめの投稿を表�
 objectStorage: "オブジェクトストレージ"
 useObjectStorage: "オブジェクトストレージを使用"
 objectStorageBaseUrl: "Base URL"
-objectStorageBaseUrlDesc: "参照に使用するURL。CDNやProxyを使用している場合はそのURL、S3: 'https://<bucket>.s3.amazonaws.com'、GCS等:\
-  \ 'https://storage.googleapis.com/<bucket>'。"
+objectStorageBaseUrlDesc: "参照に使用するURL。CDNやProxyを使用している場合はそのURL、S3: 'https://<bucket>.s3.amazonaws.com'、GCS等:
+  'https://storage.googleapis.com/<bucket>'。"
 objectStorageBucket: "Bucket"
 objectStorageBucketDesc: "使用サービスのbucket名を指定してください。"
 objectStoragePrefix: "Prefix"
@@ -543,7 +543,7 @@ sort: "ソート"
 ascendingOrder: "昇順"
 descendingOrder: "降順"
 scratchpad: "スクラッチパッド"
-scratchpadDescription: "スクラッチパッドは、AiScriptの実験環境を提供します。Calckeyと対話するコードの記述、実行、結果の確認ができます。"
+scratchpadDescription: "スクラッチパッドは、AiScriptの実験環境を提供します。Iceshrimpと対話するコードの記述、実行、結果の確認ができます。"
 output: "出力"
 script: "スクリプト"
 disablePagesScript: "ページのスクリプトを無効にする"
@@ -551,7 +551,7 @@ updateRemoteUser: "リモートユーザー情報の更新"
 deleteAllFiles: "すべてのファイルを削除"
 deleteAllFilesConfirm: "すべてのファイルを削除しますか？"
 removeAllFollowing: "フォローを全解除"
-removeAllFollowingDescription: "{host}からのフォローをすべて解除します。そのインスタンスがもう存在しなくなった場合などに実行してください。"
+removeAllFollowingDescription: "{host}からのフォローをすべて解除します。そのサーバーがもう存在しなくなった場合などに実行してください。"
 userSuspended: "このユーザーは凍結されています。"
 userSilenced: "このユーザーはサイレンスされています。"
 yourAccountSuspendedTitle: "アカウントが凍結されています"
@@ -616,7 +616,7 @@ testEmail: "配信テスト"
 wordMute: "ワードミュート"
 regexpError: "正規表現エラー"
 regexpErrorDescription: "{tab}ワードミュートの{line}行目の正規表現にエラーが発生しました:"
-instanceMute: "インスタンスミュート"
+instanceMute: "サーバーミュート"
 userSaysSomething: "{name}が何かを言いました"
 userSaysSomethingReason: "{name}が{reason}と言いました"
 userSaysSomethingReasonReply: "{name}が{reason}を含む投稿に返信しました"
@@ -651,15 +651,15 @@ abuseReported: "内容が送信されました。ご報告ありがとうござ�
 reporter: "通報者"
 reporteeOrigin: "通報先"
 reporterOrigin: "通報元"
-forwardReport: "リモートインスタンスに通報を転送する"
-forwardReportIsAnonymous: "リモートインスタンスからはあなたの情報は見れず、匿名のシステムアカウントとして表示されます。"
+forwardReport: "リモートサーバーに通報を転送する"
+forwardReportIsAnonymous: "リモートサーバーからはあなたの情報は見られず、匿名のシステムアカウントとして表示されます。"
 send: "送信"
 abuseMarkAsResolved: "対応済みにする"
 openInNewTab: "新しいタブで開く"
 openInSideView: "サイドビューで開く"
 defaultNavigationBehaviour: "デフォルトのナビゲーション"
 editTheseSettingsMayBreakAccount: "これらの設定を編集するとアカウントが破損する可能性があります。"
-instanceTicker: "投稿のインスタンス情報"
+instanceTicker: "投稿のサーバー情報"
 waitingFor: "{x}を待っています"
 random: "ランダム"
 system: "システム"
@@ -672,7 +672,7 @@ createNewClip: "新しいクリップを作成"
 unclip: "クリップ解除"
 confirmToUnclipAlreadyClippedNote: "この投稿はすでにクリップ「{name}」に含まれています。投稿をこのクリップから除外しますか？"
 public: "公開"
-i18nInfo: "Calckeyは有志によって様々な言語に翻訳されています。{link}で翻訳に協力できます。"
+i18nInfo: "Iceshrimpは有志によって様々な言語に翻訳されています。{link}で翻訳に協力できます。"
 manageAccessTokens: "アクセストークンの管理"
 accountInfo: "アカウント情報"
 notesCount: "投稿の数"
@@ -723,7 +723,8 @@ onlineUsersCount: "{n}人がオンライン"
 nUsers: "{n}ユーザー"
 nNotes: "{n}投稿"
 sendErrorReports: "エラーリポートを送信"
-sendErrorReportsDescription: "オンにすると、問題が発生したときにエラーの詳細情報がCalckeyに共有され、ソフトウェアの品質向上に役立てられます。エラー情報には、OSのバージョン、ブラウザの種類、行動履歴などが含まれます。"
+sendErrorReportsDescription: "オンにすると、問題が発生したときにエラーの詳細情報がIceshrimpに共有され、ソフトウェアの品質向上に役立てられます。\n\
+  エラー情報には、OSのバージョン、ブラウザの種類、行動履歴などが含まれます。"
 myTheme: "マイテーマ"
 backgroundColor: "背景"
 accentColor: "アクセント"
@@ -747,7 +748,7 @@ capacity: "容量"
 inUse: "使用中"
 editCode: "コードを編集"
 apply: "適用"
-receiveAnnouncementFromInstance: "インスタンスからのお知らせを受け取る"
+receiveAnnouncementFromInstance: "サーバーからのお知らせを受け取る"
 emailNotification: "メール通知"
 publish: "公開"
 inChannelSearch: "チャンネル内検索"
@@ -775,7 +776,7 @@ active: "アクティブ"
 offline: "オフライン"
 notRecommended: "非推奨"
 botProtection: "Botプロテクション"
-instanceBlocking: "連合ブロック・サイレンス"
+instanceBlocking: "連合の管理"
 selectAccount: "アカウントを選択"
 switchAccount: "アカウントを切り替え"
 enabled: "有効"
@@ -803,12 +804,12 @@ low: "低"
 emailNotConfiguredWarning: "メールアドレスの設定がされていません。"
 ratio: "比率"
 secureMode: "セキュアモード (Authorized Fetch)"
-instanceSecurity: "インスタンスのセキュリティー"
-secureModeInfo: "他のインスタンスからリクエストするときに、証明を付けなければ返送しません。他のインスタンスの設定ファイルでsignToActivityPubGetはtrueにしてください。"
+instanceSecurity: "サーバーのセキュリティー"
+secureModeInfo: "認証情報の無いリモートサーバーからのリクエストに応えません。"
 privateMode: "非公開モード"
-privateModeInfo: "有効にすると、許可したインスタンスのみからリクエストを受け付けます。"
-allowedInstances: "許可されたインスタンス"
-allowedInstancesDescription: "許可したいインスタンスのホストを改行で区切って設定します。非公開モードだけで有効です。"
+privateModeInfo: "有効にすると、許可したサーバーのみからリクエストを受け付けます。"
+allowedInstances: "許可されたサーバー"
+allowedInstancesDescription: "許可したいサーバーのホストを改行で区切って設定します。非公開モードだけで有効です。"
 previewNoteText: "本文をプレビュー"
 customCss: "カスタムCSS"
 customCssWarn: "この設定は必ず知識のある方が行ってください。不適切な設定を行うとクライアントが正常に使用できなくなる恐れがあります。"
@@ -823,7 +824,7 @@ hashtags: "ハッシュタグ"
 troubleshooting: "トラブルシューティング"
 useBlurEffect: "UIにぼかし効果を使用"
 learnMore: "詳しく"
-misskeyUpdated: "Calckeyが更新されました！"
+iceshrimpUpdated: "Iceshrimpが更新されました！"
 whatIsNew: "更新情報を見る"
 translate: "翻訳"
 translatedFrom: "{x}から翻訳"
@@ -847,7 +848,7 @@ controlPanel: "コントロールパネル"
 manageAccounts: "アカウントを管理"
 makeReactionsPublic: "リアクション一覧を公開する"
 makeReactionsPublicDescription: "あなたがしたリアクション一覧を誰でも見れるようにします。"
-classic: "クラシック"
+classic: "中央寄せ"
 muteThread: "スレッドをミュート"
 unmuteThread: "スレッドのミュートを解除"
 ffVisibility: "つながりの公開範囲"
@@ -873,8 +874,8 @@ themeColor: "テーマカラー"
 size: "サイズ"
 numberOfColumn: "列の数"
 searchByGoogle: "検索"
-instanceDefaultLightTheme: "インスタンスデフォルトのライトテーマ"
-instanceDefaultDarkTheme: "インスタンスデフォルトのダークテーマ"
+instanceDefaultLightTheme: "サーバーの標準ライトテーマ"
+instanceDefaultDarkTheme: "サーバーの標準ダークテーマ"
 instanceDefaultThemeDescription: "オブジェクト形式のテーマコードを記入します。"
 mutePeriod: "ミュートする期限"
 indefinitely: "無期限"
@@ -896,7 +897,7 @@ check: "チェック"
 driveCapOverrideLabel: "このユーザーのドライブ容量上限を変更"
 driveCapOverrideCaption: "0以下を指定すると解除されます。"
 requireAdminForView: "閲覧するには管理者アカウントでログインしている必要があります。"
-isSystemAccount: "システムにより自動で作成・管理されているアカウントです。"
+isSystemAccount: "システムにより自動で作成・管理されているアカウントです。モデレーション・編集・削除を行うとサーバーの動作が不正になる可能性があるため、操作しないでください。"
 typeToConfirm: "この操作を行うには {x} と入力してください"
 deleteAccount: "アカウント削除"
 document: "ドキュメント"
@@ -923,7 +924,7 @@ cannotUploadBecauseNoFreeSpace: "ドライブの空き容量が無いためア�
 cannotUploadBecauseExceedsFileSizeLimit: "ファイルサイズの制限を超えているためアップロードできません。"
 beta: "ベータ"
 enableAutoSensitive: "自動NSFW判定"
-enableAutoSensitiveDescription: "利用可能な場合は、機械学習を利用して自動でメディアにNSFWフラグを設定します。この機能をオフにしても、インスタンスによっては自動で設定されることがあります。"
+enableAutoSensitiveDescription: "利用可能な場合は、機械学習を利用して自動でメディアにNSFWフラグを設定します。この機能をオフにしても、サーバーによっては自動で設定されることがあります。"
 activeEmailValidationDescription: "ユーザーのメールアドレスのバリデーションを、捨てアドかどうかや実際に通信可能かどうかなどを判定しより積極的に行います。オフにすると単に文字列として正しいかどうかのみチェックされます。"
 showAds: "広告を表示する"
 navbar: "ナビゲーションバー"
@@ -934,48 +935,56 @@ pushNotification: "プッシュ通知"
 subscribePushNotification: "プッシュ通知を有効化"
 unsubscribePushNotification: "プッシュ通知を停止する"
 pushNotificationAlreadySubscribed: "プッシュ通知は有効です"
-pushNotificationNotSupported: "ブラウザかサーバーがプッシュ通知に非対応"
+pushNotificationNotSupported: "ブラウザまたはサーバーがプッシュ通知に非対応です"
 sendPushNotificationReadMessage: "通知やメッセージが既読になったらプッシュ通知を削除する"
 sendPushNotificationReadMessageCaption: "「{emptyPushNotificationMessage}」という通知が一瞬表示されるようになります。端末の電池消費量が増加する可能性があります。"
 adminCustomCssWarn: "この設定は、それが何をするものであるかを知っている場合のみ使用してください。不適切な値を入力すると、クライアントが正常に動作しなくなる可能性があります。ユーザー設定でCSSをテストし、正しく動作することを確認してください。"
 customMOTD: "カスタムMOTD(スプラッシュスクリーンメッセージ)"
 customMOTDDescription: "ユーザがページをロード/リロードするたびにランダムに表示される、改行で区切られたMOTD(スプラッシュスクリーン)用のカスタムメッセージ"
 customSplashIcons: "カスタムスプラッシュスクリーンアイコン"
-customSplashIconsDescription: "ユーザがページをロード/リロードするたびにランダムに表示される、改行で区切られたカスタムスプラッシュスクリーンアイコンの\
-  \ URL。画像は静的なURLで、できればすべて192x192にリサイズしてください。"
-showUpdates: "Calckeyの更新時にポップアップを表示する"
-recommendedInstances: "おすすめインスタンス"
-recommendedInstancesDescription: "おすすめタイムラインに表示するインスタンスを改行区切りで入力してください。`https://`は書かず、ドメインのみを入力してください。"
+customSplashIconsDescription: "ユーザがページをロード/リロードするたびにランダムに表示される、改行で区切られたカスタムスプラッシュスクリーンアイコンの
+  URL。画像は静的なURLで、できればすべて192x192にリサイズしてください。"
+showUpdates: "Iceshrimpの更新時にポップアップを表示する"
+recommendedInstances: "おすすめサーバー"
+recommendedInstancesDescription: "おすすめタイムラインに表示するサーバーを改行区切りで入力してください。"
 caption: "自動キャプション"
 splash: "スプラッシュスクリーン"
 updateAvailable: "アップデートがありますよ！"
 swipeOnDesktop: "デスクトップでモバイルスタイルのスワイプを可能にする"
 logoImageUrl: "ロゴのURL"
-showAdminUpdates: "新しいCalckeyのバージョンが利用可能なときに通知する(管理者のみ)"
+showAdminUpdates: "新しいIceshrimpのバージョンが利用可能なときに通知する(管理者のみ)"
 replayTutorial: "もう一度チュートリアルを見る"
 migration: "アカウントの引っ越し"
 moveTo: "このアカウントを新しいアカウントに引っ越す"
 moveToLabel: "引っ越し先のアカウント："
 moveAccount: "引っ越し実行！"
-moveAccountDescription: "この操作は取り消せません。まずは引っ越し先のアカウントでこのアカウントに対しエイリアスを作成したことを確認してください。エイリアス作成後、引っ越し先のアカウントをこのように入力してください：@person@instance.com"
+moveAccountDescription: "この操作は取り消せません。まずは引っ越し先のアカウントでこのアカウントに対しエイリアスを作成したことを確認してください。エイリアス作成後、引っ越し先のアカウントをこのように入力してください：@person@server.com"
 moveFrom: "別のアカウントからこのアカウントに引っ越す"
 moveFromLabel: "引っ越し元のアカウント："
-moveFromDescription: "別のアカウントからこのアカウントにフォロワーを引き継いで引っ越したい場合、ここでエイリアスを作成しておく必要があります。必ず引っ越しを実行する前に作成してください！引っ越し元のアカウントをこのように入力してください：@person@instance.com"
+moveFromDescription: "別のアカウントからこのアカウントにフォロワーを引き継いで引っ越したい場合、ここでエイリアスを作成しておく必要があります。必ず引っ越しを実行する前に作成してください！引っ越し元のアカウントをこのように入力してください：@person@server.com"
 migrationConfirm: "本当にこのアカウントを {account} に引っ越しますか？一度引っ越しを行うと取り消せず、二度とこのアカウントを元の状態で使用できなくなります。\n\
   この操作を行う前に引っ越し先のアカウントでエイリアスを作成する必要があります。エイリアスが作成されているか、必ず確認してください。"
 defaultReaction: "リモートとローカルの投稿に対するデフォルトの絵文字リアクション"
 license: "ライセンス"
 indexPosts: "投稿をインデックス"
-indexFrom: "この投稿ID以降をインデックスする（空白で全ての投稿を指定します）"
+indexFrom: "この投稿ID以降をインデックスする"
+indexFromDescription: "空白で全ての投稿を指定します"
 indexNotice: "インデックスを開始しました。完了まで時間がかかる場合があるため、少なくとも1時間はサーバーを再起動しないでください。"
 customKaTeXMacro: "カスタムKaTeXマクロ"
-customKaTeXMacroDescription: "数式入力を楽にするためのマクロを設定しましょう！記法はLaTeXにおけるコマンドの定義と同様に \\newcommand{\\\
-  name}{content} または \\newcommand{\\add}[2]{#1 + #2} のように記述します。後者の例では \\add{3}{foo}\
-  \ が 3 + foo に展開されます。また、マクロの名前を囲む波括弧を丸括弧 () および角括弧 [] に変更した場合、マクロの引数に使用する括弧が変更されます。マクロの定義は一行に一つのみで、途中で改行はできません。マクロの定義が無効な行は無視されます。文字列を単純に置換する機能のみに対応していて、条件分岐などの高度な構文は使用できません。"
+customKaTeXMacroDescription: "数式入力を楽にするためのマクロを設定しましょう！記法はLaTeXにおけるコマンドの定義と同様に \\newcommand{\\
+  name}{content} または \\newcommand{\\add}[2]{#1 + #2} のように記述します。後者の例では \\add{3}{foo}
+  が 3 + foo に展開されます。また、マクロの名前を囲む波括弧を丸括弧 () および角括弧 [] に変更した場合、マクロの引数に使用する括弧が変更されます。マクロの定義は一行に一つのみで、途中で改行はできません。マクロの定義が無効な行は無視されます。文字列を単純に置換する機能のみに対応していて、条件分岐などの高度な構文は使用できません。"
 enableCustomKaTeXMacro: "カスタムKaTeXマクロを有効にする"
 preventAiLearning: "AIによる学習を防止"
 preventAiLearningDescription: "投稿したノート、添付した画像などのコンテンツを学習の対象にしないようAIに要求します。これはnoaiフラグをHTMLレスポンスに含めることによって実現されます。"
-noGraze: "ブラウザの拡張機能「Graze for Mastodon」は、Calckeyの動作を妨げるため、無効にしてください。"
+noGraze: "ブラウザの拡張機能「Graze for Mastodon」は、Iceshrimpの動作を妨げるため、無効にしてください。"
+enableServerMachineStats: "サーバーのマシン情報を公開する"
+enableIdenticonGeneration: "ユーザーごとのIdenticon生成を有効にする"
+showPopup: "ポップアップを表示してユーザーに知らせる"
+showWithSparkles: "タイトルをキラキラさせる"
+youHaveUnreadAnnouncements: "未読のお知らせがあります"
+neverShow: "今後表示しない"
+remindMeLater: "また後で"
 
 _sensitiveMediaDetection:
   description: "機械学習を使って自動でセンシティブなメディアを検出し、モデレーションに役立てられます。サーバーの負荷が少し増えます。"
@@ -1012,7 +1021,7 @@ _ad:
 _forgotPassword:
   enterEmail: "アカウントに登録したメールアドレスを入力してください。そのアドレス宛てに、パスワードリセット用のリンクが送信されます。"
   ifNoEmail: "メールアドレスを登録していない場合は、管理者までお問い合わせください。"
-  contactAdmin: "このインスタンスではメールがサポートされていないため、パスワードリセットを行う場合は管理者までお問い合わせください。"
+  contactAdmin: "このインスタンスではメールアドレスの登録がサポートされていないため、パスワードリセットを行う場合は管理者までお問い合わせください。"
 _gallery:
   my: "自分の投稿"
   liked: "いいねした投稿"
@@ -1051,29 +1060,34 @@ _registry:
   keys: "キー"
   domain: "ドメイン"
   createKey: "キーを作成"
-_aboutMisskey:
-  about: "Calckeyは、2022年に生まれたThatOneCalculatorによるMisskeyのforkです。"
+_aboutIceshrimp:
+  about: "Iceshrimpは、2022年に生まれたThatOneCalculatorによるIceshrimpのforkです。"
   contributors: "主なコントリビューター"
   allContributors: "全てのコントリビューター"
   source: "ソースコード"
-  translation: "Calckeyを翻訳"
-  donate: "Calckeyに寄付"
-  morePatrons: "他にも多くの方が支援してくれています。ありがとうございます！ \U0001F970"
+  translation: "Iceshrimpを翻訳"
+  donate: "Iceshrimpに寄付"
+  morePatrons: "他にも多くの方が支援してくれています。ありがとうございます！ 🥰"
   patrons: "支援者"
+  patronsList: 寄付額ではなく時系列順に並んでいます。上記のリンクから寄付を行ってここにあなたのIDを載せましょう！
+  pleaseDonateToIceshrimp: Iceshrimp開発への寄付をご検討ください。
+  pleaseDonateToHost: また、このサーバー {host} の運営者への寄付もご検討ください。
+  donateHost: '{host} に寄付する'
+  donateTitle: Iceshrimpを気に入りましたか？
 _nsfw:
   respect: "閲覧注意のメディアは隠す"
   ignore: "閲覧注意のメディアを隠さない"
   force: "常にメディアを隠す"
 _mfm:
   cheatSheet: "MFMチートシート"
-  intro: "MFMは、MisskeyやCalckey、Akkomaなどの様々な場所で使用できるマークアップ言語です。ここでは、MFMで使用可能な構文一覧が確認できます。"
-  dummy: "CalckeyでFediverseの世界が広がります"
+  intro: "MFMは、IceshrimpやIceshrimp、Akkomaなどの様々な場所で使用できるマークアップ言語です。ここでは、MFMで使用可能な構文一覧が確認できます。"
+  dummy: "IceshrimpでFediverseの世界が広がります"
   mention: "メンション"
   mentionDescription: "アットマーク + ユーザー名で、特定のユーザーを示せます。"
   hashtag: "ハッシュタグ"
   hashtagDescription: "ナンバーサイン + タグで、ハッシュタグを示せます。"
   url: "URL"
-  urlDescription: "URLを示せます。"
+  urlDescription: "URLを表示できます。"
   link: "リンク"
   linkDescription: "文章の特定の範囲を、URLに紐づけられます。"
   bold: "太字"
@@ -1131,9 +1145,9 @@ _mfm:
   plain: "プレーン"
   plainDescription: "内側の構文を全て無効にします。"
   position: 位置
-  stop: MFMアニメーションを停止
+  stop: MFMを停止
   alwaysPlay: MFMアニメーションを自動再生する
-  play: MFMアニメーションを再生
+  play: MFMを再生
   warn: MFMアニメーションは激しい動きを含む可能性があります。
   positionDescription: 位置を指定した値だけずらします。
   foreground: 文字色
@@ -1142,6 +1156,12 @@ _mfm:
   scale: 拡大・縮小
   scaleDescription: 大きさを指定した値に拡大・縮小します。
   foregroundDescription: 文字の色を変更します。
+  fade: フェード
+  fadeDescription: フェードインとフェードアウトする。
+  crop: 切り抜き
+  cropDescription: 内容を切り抜く。
+  advancedDescription: オフにすると、アニメーション再生中を除いて基本的なMFMだけ表示します。
+  advanced: 高度なMFM
 _instanceTicker:
   none: "表示しない"
   remote: "リモートユーザーに表示"
@@ -1181,10 +1201,10 @@ _wordMute:
   hard: "ハード"
   mutedNotes: "ミュートされた投稿"
 _instanceMute:
-  instanceMuteDescription: "ミュートしたインスタンスのユーザーへの返信を含めて、設定したインスタンスの全ての投稿とブーストをミュートします。"
+  instanceMuteDescription: "ミュートしたサーバーのユーザーへの返信を含めて、設定したサーバーの全ての投稿とブーストをミュートします。"
   instanceMuteDescription2: "改行で区切って設定します"
-  title: "設定したインスタンスの投稿を隠します。"
-  heading: "ミュートするインスタンス"
+  title: "設定したサーバーの投稿を隠します。"
+  heading: "ミュートするサーバー"
 _theme:
   explore: "テーマを探す"
   install: "テーマのインストール"
@@ -1283,7 +1303,7 @@ _time:
   hour: "時間"
   day: "日"
 _tutorial:
-  title: "Calckeyの使い方"
+  title: "Iceshrimpの使い方"
   step1_1: "ようこそ！"
   step1_2: "使い始める前に、いくつか設定を済ませましょう。すぐできますよ！"
   step2_1: "最初に、あなたのプロフィールを作りましょう。"
@@ -1294,26 +1314,41 @@ _tutorial:
   step4_1: "投稿してみましょう！"
   step4_2: "最初は{introduction}に投稿したり、シンプルに「こんにちは、アカウント作ってみました！」などの投稿をする人もいます。"
   step5_1: "タイムライン、タイムラインだらけ！"
-  step5_2: "あなたのインスタンスでは{timelines}種類のタイムラインが有効になっています。"
-  step5_3: "ホーム{icon}タイムラインでは、あなたがフォローしているアカウントとこのインスタンスのみんなの投稿を見られます。もしフォローしているアカウントの投稿だけ見たい場合は、設定から変更できます。"
-  step5_4: "ローカル{icon}タイムラインでは、このインスタンスにいるみんなの投稿を見られます。"
-  step5_5: "ソーシャル{icon}タイムラインでは、あなたがフォローしているアカウントの投稿を見られます。"
-  step5_6: "おすすめ{icon}タイムラインでは、管理人がおすすめするインスタンスの投稿を見られます。"
-  step5_7: "グローバル{icon}タイムラインでは、接続している他のすべてのインスタンスからの投稿を見られます。"
+  step5_2: "あなたのサーバーでは{timelines}種類のタイムラインが有効になっています。"
+  step5_3: "ホーム{icon}タイムラインでは、あなたがフォローしているアカウントの投稿を見られます。"
+  step5_4: "ローカル{icon}タイムラインでは、このサーバーにいるみんなの投稿を見られます。"
+  step5_5: "ソーシャル{icon}タイムラインでは、ホームタイムラインとローカルタイムラインの投稿が両方表示されます。"
+  step5_6: "おすすめ{icon}タイムラインでは、管理人がおすすめするサーバーの投稿を見られます。"
+  step5_7: "グローバル{icon}タイムラインでは、接続している他のすべてのサーバーからの投稿を見られます。"
   step6_1: "じゃあ、ここはどんな場所なの？"
-  step6_2: "実は、あなたはただCalckeyに参加しただけではありません。ここは、何千もの相互接続されたサーバーが構成する Fediverse への入口です。各サーバーは「インスタンス」と呼ばれます。"
-  step6_3: "それぞれのサーバーでは必ずしもCalckeyが使われているわけではなく、異なる動作をするサーバーもあります。しかし、あなたは他のサーバーのアカウントもフォローしたり、返信・ブーストができます。一見難しそうですが大丈夫！すぐ慣れます。"
+  step6_2: "実は、あなたはただIceshrimpに参加しただけではありません。ここは、何千もの相互接続されたサーバーが構成する Fediverse への入口です。"
+  step6_3: "それぞれのサーバーでは必ずしもIceshrimpが使われているわけではなく、異なる動作をするサーバーもあります。しかし、あなたは他のサーバーのアカウントもフォローしたり、返信・ブーストができます。一見難しそうですが大丈夫！すぐ慣れます。"
   step6_4: "これで完了です。お楽しみください！"
 _2fa:
   alreadyRegistered: "既に設定は完了しています。"
-  registerDevice: "デバイスを登録"
-  registerKey: "キーを登録"
+  registerTOTP: "認証アプリの設定を開始"
   step1: "まず、{a}や{b}などの認証アプリをお使いのデバイスにインストールします。"
   step2: "次に、表示されているQRコードをアプリでスキャンします。"
-  step2Url: "デスクトップアプリでは次のURLを入力します:"
-  step3: "アプリに表示されているトークンを入力して完了です。"
-  step4: "これからログインするときも、同じようにトークンを入力します。"
-  securityKeyInfo: "FIDO2をサポートするハードウェアセキュリティキーもしくは端末の指紋認証やPINを使用してログインするように設定できます。"
+  step2Click: "QRコードをクリックすると、お使いの端末にインストールされている認証アプリやキーリングに登録できます。"
+  step2Url: "デスクトップアプリでは次のURIを入力します:"
+  step3Title: "確認コードを入力"
+  step3: "アプリに表示されている確認コード（トークン）を入力して完了です。"
+  step4: "これからログインするときも、同じように確認コードを入力します。"
+  securityKeyNotSupported: "お使いのブラウザはセキュリティキーに対応していません。"
+  registerTOTPBeforeKey: "セキュリティキー・パスキーを登録するには、まず認証アプリの設定を行なってください。"
+  securityKeyInfo: "FIDO2をサポートするハードウェアセキュリティキー、端末の生体認証やPINロック、パスキーといった、WebAuthn由来の鍵を登録します。"
+  chromePasskeyNotSupported: "Chromeのパスキーは現在サポートしていません。"
+  registerSecurityKey: "セキュリティキー・パスキーを登録する"
+  securityKeyName: "キーの名前を入力"
+  tapSecurityKey: "ブラウザの指示に従い、セキュリティキーやパスキーを登録してください"
+  removeKey: "セキュリティキーを削除"
+  removeKeyConfirm: "{name}を削除しますか？"
+  whyTOTPOnlyRenew: "セキュリティキーが登録されている場合、認証アプリの設定は解除できません。"
+  renewTOTP: "認証アプリを再設定"
+  renewTOTPConfirm: "今までの認証アプリの確認コードは使用できなくなります"
+  renewTOTPOk: "再設定する"
+  renewTOTPCancel: "やめておく"
+  token: "多要素認証トークン"
 _permissions:
   "read:account": "アカウントの情報を見る"
   "write:account": "アカウントの情報を変更する"
@@ -1350,18 +1385,19 @@ _permissions:
 _auth:
   shareAccess: "「{name}」がアカウントにアクセスすることを許可しますか？"
   shareAccessAsk: "アカウントへのアクセスを許可しますか？"
-  permissionAsk: "このアプリケーションは次の権限を要求しています"
+  permissionAsk: "このアプリケーションは次の権限を要求しています:"
   pleaseGoBack: "アプリケーションに戻り続行してください"
   callback: "アプリケーションに戻っています"
   denied: "アクセスを拒否しました"
-  copyAsk: "以下の認証コードをアプリケーションにコピーしてください"
+  copyAsk: "以下の認証コードをアプリケーションにコピーしてください:"
+  allPermissions: 全てのアクセス権
 _antennaSources:
   all: "全ての投稿"
   homeTimeline: "フォローしているユーザーの投稿"
   users: "指定した一人または複数のユーザーの投稿"
   userList: "指定したリストのユーザーの投稿"
   userGroup: "指定したグループのユーザーの投稿"
-  instances: "指定したインスタンスの全ユーザーの投稿"
+  instances: "指定したサーバーの全ユーザーの投稿"
 _weekday:
   sunday: "日曜日"
   monday: "月曜日"
@@ -1384,7 +1420,7 @@ _widgets:
   digitalClock: "デジタル時計"
   unixClock: "UNIX時計"
   federation: "連合"
-  instanceCloud: "インスタンスクラウド"
+  instanceCloud: "サーバークラウド"
   postForm: "投稿フォーム"
   slideshow: "スライドショー"
   button: "ボタン"
@@ -1395,6 +1431,10 @@ _widgets:
   userList: "ユーザーリスト"
   _userList:
     chooseList: "リストを選択"
+  meiliStatus: サーバーステータス
+  serverInfo: サーバー情報
+  meiliSize: インデックスサイズ
+  meiliIndexCount: インデックス済みの投稿
 _cw:
   hide: "隠す"
   show: "もっと見る"
@@ -1424,11 +1464,11 @@ _poll:
   remainingSeconds: "終了まであと{s}秒"
 _visibility:
   public: "公開"
-  publicDescription: "全てのユーザーに公開"
+  publicDescription: "全ての公開タイムラインに配信されます"
   home: "未収載"
   homeDescription: "ホームタイムラインのみに公開"
   followers: "フォロワー"
-  followersDescription: "自分のフォロワーのみに公開"
+  followersDescription: "フォロワーと会話相手のみに公開"
   specified: "ダイレクト"
   specifiedDescription: "指定したユーザーのみに公開"
   localOnly: "ローカルのみ"
@@ -1451,7 +1491,7 @@ _profile:
   youCanIncludeHashtags: "ハッシュタグを含められます。"
   metadata: "追加情報"
   metadataEdit: "追加情報を編集"
-  metadataDescription: "プロフィールに表として追加情報を表示できます。"
+  metadataDescription: "プロフィールに表として追加情報を表示できます。{a}タグまたは{l}タグを{rel}とともに追加すると、プロフィールのリンクを確認できます。"
   metadataLabel: "ラベル"
   metadataContent: "内容"
   changeAvatar: "アバター画像を変更"
@@ -1823,6 +1863,9 @@ _notification:
     followBack: "フォローバック"
     reply: "返信"
     renote: "ブースト"
+  reacted: がリアクションしました
+  renoted: がブーストしました
+  voted: が投票しました
 _deck:
   alwaysShowMainColumn: "常にメインカラムを表示"
   columnAlign: "カラムの寄せ"
@@ -1849,6 +1892,7 @@ _deck:
     tl: "タイムライン"
     antenna: "アンテナ"
     list: "リスト"
+    channel: "チャンネル"
     mentions: "あなた宛て"
     direct: "ダイレクト"
 noteId: 投稿のID
@@ -1856,13 +1900,62 @@ hiddenTagsDescription: 'トレンドと「みつける」から除外したい�
 hiddenTags: 非表示にするハッシュタグ
 apps: "アプリ"
 _experiments:
-  enablePostEditing: 投稿の編集機能を有効にする
   title: 試験的な機能
-  postEditingCaption: 投稿のメニューに既存の投稿を編集するボタンを表示します。
-sendModMail: モデレーションノートを送る
+  postImportsCaption: 
+    ユーザーが過去の投稿をIceshrimp・Iceshrimp・Mastodon・Akkoma・Pleromaからインポートすることを許可します。キューが溜まっているときにインポートするとサーバーに負荷がかかる可能性があります。
+  enablePostImports: 投稿のインポートを有効にする
+sendModMail: モデレーション通知を送る
 deleted: 削除済み
 editNote: 投稿を編集
-edited: 編集済み
+edited: '編集済み: {date} {time}'
 signupsDisabled: 
   現在、このサーバーでは新規登録が一般開放されていません。招待コードをお持ちの場合には、以下の欄に入力してください。招待コードをお持ちでない場合にも、新規登録を開放している他のサーバーには入れますよ！
 findOtherInstance: 他のサーバーを探す
+newer: 新しい投稿
+older: 古い投稿
+accessibility: アクセシビリティ
+jumpToPrevious: 前に戻る
+cw: 閲覧注意
+silencedWarning: スパムの可能性があるため、これらのユーザーが所属するサーバーは管理者によりサイレンスされています。
+searchPlaceholder: Iceshrimpを検索
+channelFederationWarn: 現時点では、チャンネルは他のサーバーへ連合しません
+listsDesc: リストでは指定したユーザーだけのタイムラインを作れます。リストには「タイムライン」のページからアクセスできます。
+antennasDesc: "アンテナでは指定した条件に合致する投稿が表示されます。\nアンテナには「タイムライン」のページからアクセスできます。"
+expandOnNoteClickDesc: オフの場合、右クリックメニューか日付をクリックすることで開けます。
+expandOnNoteClick: クリックで投稿の詳細を開く
+clipsDesc: クリップは分類と共有ができるブックマークです。各投稿のメニューからクリップを作成できます。
+_dialog:
+  charactersExceeded: "最大文字数を超えています！ 現在 {current} / 制限 {max}"
+  charactersBelow: "最小文字数を下回っています！ 現在 {current} / 制限 {min}"
+_filters:
+  followersOnly: フォロワーのみ
+  fromUser: ユーザーを指定
+  withFile: 添付ファイルあり
+  fromDomain: ドメインを指定
+  notesBefore: 指定の日付以前
+  notesAfter: 指定の日付以降
+  followingOnly: フォロー中のみ
+isModerator: モデレーター
+audio: 音声
+image: 画像
+video: 動画
+isBot: このアカウントはBotです
+isLocked: このアカウントのフォローは承認制です
+isAdmin: 管理者
+isPatron: Iceshrimp 後援者
+_skinTones:
+  light: ペールオレンジ
+  mediumLight: ミディアムライト
+  medium: ミディアム
+  mediumDark: ミディアムダーク
+  yellow: 黄色
+  dark: 茶色
+removeReaction: リアクションを取り消す
+alt: 代替テキスト
+swipeOnMobile: ページ間のスワイプを有効にする
+reactionPickerSkinTone: 優先する絵文字のスキン色
+xl: 特大
+donationLink: 寄付ページへのリンク
+removeMember: メンバーを削除
+removeQuote: 引用を削除
+removeRecipient: 宛先を削除

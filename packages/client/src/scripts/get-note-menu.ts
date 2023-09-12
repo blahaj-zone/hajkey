@@ -1,5 +1,5 @@
 import { defineAsyncComponent, Ref, inject } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import { $i } from "@/account";
 import { i18n } from "@/i18n";
 import { instance } from "@/instance";
@@ -8,6 +8,7 @@ import copyToClipboard from "@/scripts/copy-to-clipboard";
 import { url } from "@/config";
 import { noteActions } from "@/store";
 import { shareAvailable } from "@/scripts/share-available";
+import { getUserMenu } from "@/scripts/get-user-menu";
 
 export function getNoteMenu(props: {
 	note: misskey.entities.Note;
@@ -20,6 +21,7 @@ export function getNoteMenu(props: {
 	const isRenote =
 		props.note.renote != null &&
 		props.note.text == null &&
+		props.note.cw == null &&
 		props.note.fileIds.length === 0 &&
 		props.note.poll == null;
 
@@ -116,9 +118,8 @@ export function getNoteMenu(props: {
 		os.success();
 	}
 
-	function copyExternal(): void {
-		const url = appearNote.url || appearNote.uri;
-		copyToClipboard(url);
+	function copyOriginal(): void {
+		copyToClipboard(appearNote.url ?? appearNote.uri);
 		os.success();
 	}
 
@@ -277,54 +278,6 @@ export function getNoteMenu(props: {
 						null,
 				  ]
 				: []),
-			instance.features.postEditing && isAppearAuthor
-				? {
-						icon: "ph-pencil-line ph-bold ph-lg",
-						text: i18n.ts.edit,
-						action: edit,
-				  }
-				: undefined,
-			{
-				icon: "ph-clipboard-text ph-bold ph-lg",
-				text: i18n.ts.copyContent,
-				action: copyContent,
-			},
-			{
-				icon: "ph-link-simple ph-bold ph-lg",
-				text: i18n.ts.copyLink,
-				action: copyLink,
-			},
-			...(appearNote.url || appearNote.uri
-				? [
-						{
-							icon: "ph-link-simple ph-bold ph-lg",
-							text: i18n.ts.copyExternal,
-							action: copyExternal,
-						},
-						{
-							icon: "ph-arrow-square-out ph-bold ph-lg",
-							text: i18n.ts.showOnRemote,
-							action: () => {
-								window.open(appearNote.url || appearNote.uri, "_blank");
-							},
-						},
-				  ]
-				: []),
-			shareAvailable()
-				? {
-						icon: "ph-share-network ph-bold ph-lg",
-						text: i18n.ts.share,
-						action: share,
-				  }
-				: undefined,
-			instance.translatorAvailable
-				? {
-						icon: "ph-translate ph-bold ph-lg",
-						text: i18n.ts.translate,
-						action: translate,
-				  }
-				: undefined,
-			null,
 			statePromise.then((state) =>
 				state?.isFavorited
 					? {
@@ -384,6 +337,53 @@ export function getNoteMenu(props: {
 							action: () => togglePin(true),
 					  }
 				: undefined,
+			instance.translatorAvailable
+				? {
+						icon: "ph-translate ph-bold ph-lg",
+						text: i18n.ts.translate,
+						action: translate,
+				  }
+				: undefined,
+			appearNote.url || appearNote.uri
+				? {
+						icon: "ph-arrow-square-out ph-bold ph-lg",
+						text: i18n.ts.showOnRemote,
+						action: () => {
+							window.open(appearNote.url || appearNote.uri, "_blank");
+						},
+				  }
+				: undefined,
+			{
+				type: "parent",
+				icon: "ph-share-network ph-bold ph-lg",
+				text: i18n.ts.share,
+				children: [
+					{
+						icon: "ph-clipboard-text ph-bold ph-lg",
+						text: i18n.ts.copyContent,
+						action: copyContent,
+					},
+					{
+						icon: "ph-link-simple ph-bold ph-lg",
+						text: i18n.ts.copyLink,
+						action: copyLink,
+					},
+					appearNote.url || appearNote.uri
+						? {
+								icon: "ph-link-simple ph-bold ph-lg",
+								text: `${i18n.ts.copyLink} (${i18n.ts.remote})`,
+								action: copyOriginal,
+						  }
+						: undefined,
+					shareAvailable()
+						? {
+								icon: "ph-share-network ph-bold ph-lg",
+								text: i18n.ts.share,
+								action: share,
+						  }
+						: undefined,
+				],
+			},
 			/*
 		...($i.isModerator || $i.isAdmin ? [
 			null,
@@ -394,41 +394,45 @@ export function getNoteMenu(props: {
 			}]
 			: []
 		),*/
-			...(!isAppearAuthor
-				? [
-						null,
-						{
-							icon: "ph-warning-circle ph-bold ph-lg",
-							text: i18n.ts.reportAbuse,
-							action: () => {
-								const u =
-									appearNote.url ||
-									appearNote.uri ||
-									`${url}/notes/${appearNote.id}`;
-								os.popup(
-									defineAsyncComponent(
-										() => import("@/components/MkAbuseReportWindow.vue"),
-									),
-									{
-										user: appearNote.user,
-										initialComment: `Note: ${u}\n-----\n`,
-									},
-									{},
-									"closed",
-								);
-							},
-						},
-				  ]
-				: []),
-
 			null,
-
-			{
-				icon: "ph-copy ph-bold ph-lg",
-				text: i18n.ts.duplicate,
-				action: duplicate,
-			},
-
+			!isAppearAuthor
+				? {
+						icon: "ph-warning-circle ph-bold ph-lg",
+						text: i18n.ts.reportAbuse,
+						action: () => {
+							const u =
+								appearNote.url ||
+								appearNote.uri ||
+								`${url}/notes/${appearNote.id}`;
+							os.popup(
+								defineAsyncComponent(
+									() => import("@/components/MkAbuseReportWindow.vue"),
+								),
+								{
+									user: appearNote.user,
+									initialComment: `Note: ${u}\n-----\n`,
+								},
+								{},
+								"closed",
+							);
+						},
+				  }
+				: undefined,
+			isAppearAuthor
+				? {
+						icon: "ph-pencil-line ph-bold ph-lg",
+						text: i18n.ts.edit,
+						accent: true,
+						action: edit,
+				  }
+				: undefined,
+			isAppearAuthor
+				? {
+						icon: "ph-eraser ph-bold ph-lg",
+						text: i18n.ts.deleteAndEdit,
+						action: delEdit,
+				  }
+				: undefined,
 			isAppearAuthor || isModerator
 				? {
 						icon: "ph-trash ph-bold ph-lg",
@@ -437,17 +441,27 @@ export function getNoteMenu(props: {
 						action: del,
 				  }
 				: undefined,
-
-			isAppearAuthor
+			!isAppearAuthor ? null : undefined,
+			!isAppearAuthor
 				? {
-						icon: "ph-eraser ph-bold ph-lg",
-						text: i18n.ts.deleteAndEdit,
-						action: delEdit,
+						type: "parent",
+						icon: "ph-user ph-bold ph-lg",
+						text: i18n.ts.user,
+						children: getUserMenu(appearNote.user),
 				  }
 				: undefined,
 		].filter((x) => x !== undefined);
 	} else {
 		menu = [
+			appearNote.url || appearNote.uri
+				? {
+						icon: "ph-arrow-square-out ph-bold ph-lg",
+						text: i18n.ts.showOnRemote,
+						action: () => {
+							window.open(appearNote.url || appearNote.uri, "_blank");
+						},
+				  }
+				: undefined,
 			{
 				icon: "ph-clipboard-text ph-bold ph-lg",
 				text: i18n.ts.copyContent,
@@ -458,22 +472,20 @@ export function getNoteMenu(props: {
 				text: i18n.ts.copyLink,
 				action: copyLink,
 			},
-			...(appearNote.url || appearNote.uri
-				? [
-						{
-							icon: "ph-link-simple ph-bold ph-lg",
-							text: i18n.ts.copyLink,
-							action: copyLink,
-						},
-						{
-							icon: "ph-arrow-square-out ph-bold ph-lg",
-							text: i18n.ts.showOnRemote,
-							action: () => {
-								window.open(appearNote.url || appearNote.uri, "_blank");
-							},
-						},
-				  ]
-				: []),
+			appearNote.url || appearNote.uri
+				? {
+						icon: "ph-link-simple ph-bold ph-lg",
+						text: `${i18n.ts.copyLink} (${i18n.ts.remote})`,
+						action: copyOriginal,
+				  }
+				: undefined,
+			shareAvailable()
+				? {
+						icon: "ph-share-network ph-bold ph-lg",
+						text: i18n.ts.share,
+						action: share,
+				  }
+				: undefined,
 		].filter((x) => x !== undefined);
 	}
 

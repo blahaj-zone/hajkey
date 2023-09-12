@@ -81,7 +81,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent } from "vue";
-import * as Acct from "calckey-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
 import MkSelect from "@/components/form/select.vue";
@@ -137,7 +137,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.files,
 		icon: "ph-cloud ph-bold ph-lg",
-	}))
+	})),
 );
 </script>
 

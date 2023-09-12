@@ -23,9 +23,9 @@ const extensions = [
 ];
 
 export default defineConfig(({ command, mode }) => {
-	fs.mkdirSync(__dirname + "/../../built", { recursive: true });
+	fs.mkdirSync(`${__dirname}/../../built`, { recursive: true });
 	fs.writeFileSync(
-		__dirname + "/../../built/meta.json",
+		`${__dirname}/../../built/meta.json`,
 		JSON.stringify({ version: meta.version }),
 		"utf-8",
 	);
@@ -40,15 +40,16 @@ export default defineConfig(({ command, mode }) => {
 			pluginJson5(),
 			viteCompression({
 				algorithm: "brotliCompress",
+				verbose: false,
 			}),
 		],
 
 		resolve: {
 			extensions,
 			alias: {
-				"@/": __dirname + "/src/",
-				"/client-assets/": __dirname + "/assets/",
-				"/static-assets/": __dirname + "/../backend/assets/",
+				"@/": `${__dirname}/src/`,
+				"/client-assets/": `${__dirname}/assets/`,
+				"/static-assets/": `${__dirname}/../backend/assets/`,
 			},
 		},
 
@@ -82,17 +83,19 @@ export default defineConfig(({ command, mode }) => {
 			},
 			cssCodeSplit: true,
 			assetsInlineLimit: 0,
-			outDir: __dirname + "/../../built/_client_dist_",
+			outDir: `${__dirname}/../../built/_client_dist_`,
 			assetsDir: ".",
 			emptyOutDir: false,
 			sourcemap: process.env.NODE_ENV === "development",
 			reportCompressedSize: false,
 			commonjsOptions: {
-				include: [/calckey-js/, /node_modules/],
+				include: [/iceshrimp-js/, /node_modules/],
 			},
 		},
 		optimizeDeps: {
 			auto: true,
 		},
+
+		logLevel: "warn",
 	};
 });

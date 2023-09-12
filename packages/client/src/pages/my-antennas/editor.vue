@@ -115,7 +115,7 @@
 
 <script lang="ts" setup>
 import { watch } from "vue";
-import * as Acct from "calckey-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
 import MkTextarea from "@/components/form/textarea.vue";
@@ -141,10 +141,10 @@ let userGroupId: any = $ref(props.antenna.userGroupId);
 let users: string = $ref(props.antenna.users.join("\n"));
 let instances: string = $ref(props.antenna.instances.join("\n"));
 let keywords: string = $ref(
-	props.antenna.keywords.map((x) => x.join("  ")).join("\n")
+	props.antenna.keywords.map((x) => x.join(" ")).join("\n"),
 );
 let excludeKeywords: string = $ref(
-	props.antenna.excludeKeywords.map((x) => x.join("  ")).join("\n")
+	props.antenna.excludeKeywords.map((x) => x.join(" ")).join("\n"),
 );
 let caseSensitive: boolean = $ref(props.antenna.caseSensitive);
 let withReplies: boolean = $ref(props.antenna.withReplies);
@@ -166,7 +166,7 @@ watch(
 
 			userGroups = [...groups1, ...groups2];
 		}
-	}
+	},
 );
 
 const stripPrefix = (s: string, p: string): string =>

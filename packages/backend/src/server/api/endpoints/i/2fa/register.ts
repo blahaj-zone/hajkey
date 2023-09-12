@@ -1,4 +1,4 @@
-import * as speakeasy from "speakeasy";
+import * as OTPAuth from "otpauth";
 import * as QRCode from "qrcode";
 import config from "@/config/index.js";
 import { UserProfiles } from "@/models/index.js";
@@ -30,25 +30,24 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 
 	// Generate user's secret key
-	const secret = speakeasy.generateSecret({
-		length: 32,
-	});
+	const secret = new OTPAuth.Secret();
 
 	await UserProfiles.update(user.id, {
 		twoFactorTempSecret: secret.base32,
 	});
 
 	// Get the data URL of the authenticator URL
-	const url = speakeasy.otpauthURL({
-		secret: secret.base32,
-		encoding: "base32",
+	const totp = new OTPAuth.TOTP({
+		secret,
+		digits: 6,
 		label: user.username,
 		issuer: config.host,
 	});
-	const dataUrl = await QRCode.toDataURL(url);
+	const url = totp.toString();
+	const qr = await QRCode.toDataURL(url);
 
 	return {
-		qr: dataUrl,
+		qr,
 		url,
 		secret: secret.base32,
 		label: user.username,

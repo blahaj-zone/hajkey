@@ -43,12 +43,12 @@ function menu(ev) {
 								type: "info",
 								text: `${res.license || i18n.ts.notSet}`,
 							});
-						}
+						},
 					);
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 </script>

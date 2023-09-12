@@ -2,9 +2,9 @@ version: "3"
 
 services:
   web:
-    image: docker.io/thatonecalculator/calckey
+    image: docker.io/thatonecalculator/firefish
     build: ..
-    container_name: calckey_web
+    container_name: firefish_web
     restart: always
     depends_on:
       - db
@@ -16,12 +16,12 @@ services:
       - network
 #      - web
     volumes:
-      - ../files:/calckey/files
-      - ../.config:/calckey/.config:ro
+      - ../files:/firefish/files
+      - ../.config:/firefish/.config:ro
 
   redis:
     restart: always
-    container_name: calckey_redis
+    container_name: firefish_redis
     image: docker.io/redis:7.0-alpine
     networks:
       - network
@@ -31,7 +31,7 @@ services:
   db:
     restart: always
     image: docker.io/postgres:12.2-alpine
-    container_name: calckey_db
+    container_name: firefish_db
     networks:
       - network
     env_file:

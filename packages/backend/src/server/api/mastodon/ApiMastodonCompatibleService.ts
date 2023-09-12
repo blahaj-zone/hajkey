@@ -1,5 +1,5 @@
 import Router from "@koa/router";
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import { apiAuthMastodon } from "./endpoints/auth.js";
 import { apiAccountMastodon } from "./endpoints/account.js";
 import { apiStatusMastodon } from "./endpoints/status.js";
@@ -8,8 +8,14 @@ import { apiTimelineMastodon } from "./endpoints/timeline.js";
 import { apiNotificationsMastodon } from "./endpoints/notifications.js";
 import { apiSearchMastodon } from "./endpoints/search.js";
 import { getInstance } from "./endpoints/meta.js";
-import { convertAnnouncement, convertFilter } from "./converters.js";
+import {
+	convertAccount,
+	convertAnnouncement,
+	convertFilter,
+} from "./converters.js";
 import { convertId, IdType } from "../index.js";
+import { Users } from "@/models/index.js";
+import { IsNull } from "typeorm";
 
 export function getClient(
 	BASE_URL: string,
@@ -18,11 +24,7 @@ export function getClient(
 	const accessTokenArr = authorization?.split(" ") ?? [null];
 	const accessToken = accessTokenArr[accessTokenArr.length - 1];
 	const generator = (megalodon as any).default;
-	const client = generator(
-		"misskey",
-		BASE_URL,
-		accessToken,
-	) as MegalodonInterface;
+	const client = generator(BASE_URL, accessToken) as MegalodonInterface;
 	return client;
 }
 
@@ -56,7 +58,20 @@ export function apiMastodonCompatible(router: Router): void {
 		// displayed without being logged in
 		try {
 			const data = await client.getInstance();
-			ctx.body = await getInstance(data.data);
+			const admin = await Users.findOne({
+				where: {
+					host: IsNull(),
+					isAdmin: true,
+					isDeleted: false,
+					isSuspended: false,
+				},
+				order: { id: "ASC" },
+			});
+			const contact =
+				admin == null
+					? null
+					: convertAccount((await client.getAccount(admin.id)).data);
+			ctx.body = await getInstance(data.data, contact);
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -88,7 +103,7 @@ export function apiMastodonCompatible(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.dismissInstanceAnnouncement(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = data.data;
 			} catch (e: any) {

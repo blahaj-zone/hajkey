@@ -1,4 +1,6 @@
-export class I18n<T extends Record<string, any>> {
+export type Locale = { [key: string]: string | Locale };
+
+export class I18n<T extends Locale = Locale> {
 	public ts: T;
 
 	constructor(locale: T) {
@@ -15,7 +17,8 @@ export class I18n<T extends Record<string, any>> {
 		try {
 			let str = key
 				.split(".")
-				.reduce((o, i) => o[i], this.ts) as unknown as string;
+				.reduce<Locale | Locale[keyof Locale]>((o, i) => o[i], this.ts);
+			if (typeof str !== "string") throw new Error();
 
 			if (args) {
 				for (const [k, v] of Object.entries(args)) {

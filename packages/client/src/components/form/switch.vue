@@ -4,7 +4,7 @@
 			type="checkbox"
 			:checked="modelValue"
 			:disabled="disabled"
-			v-on:change="(x) => toggle(x)"
+			@change="(x) => toggle(x)"
 		/>
 		<div class="button">
 			<div class="knob"></div>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref } from "vue";
+import type { Ref } from "vue";
 
 const props = defineProps<{
 	modelValue: boolean | Ref<boolean>;

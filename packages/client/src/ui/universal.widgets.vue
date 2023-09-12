@@ -1,6 +1,5 @@
 <template>
-	<aside class="efzpzdvf" :aria-label="i18n.ts._deck._columns.widgets">
-		<MkAd class="a" :prefer="['widget']" />
+	<aside class="widgets" :aria-label="i18n.ts._deck._columns.widgets">
 		<XWidgets
 			:edit="editMode"
 			:widgets="defaultStore.reactiveState.widgets.value"
@@ -39,8 +38,8 @@ const emit = defineEmits<{
 	(ev: "mounted", el: Element): void;
 }>();
 
-let editMode = $ref(false);
-let rootEl = $ref<HTMLDivElement>();
+const editMode = $ref(false);
+const rootEl = $ref<HTMLDivElement>();
 
 onMounted(() => {
 	emit("mounted", rootEl);
@@ -59,7 +58,7 @@ function addWidget(widget) {
 function removeWidget(widget) {
 	defaultStore.set(
 		"widgets",
-		defaultStore.state.widgets.filter((w) => w.id !== widget.id)
+		defaultStore.state.widgets.filter((w) => w.id !== widget.id),
 	);
 }
 
@@ -72,8 +71,8 @@ function updateWidget({ id, data }) {
 						...w,
 						data,
 				  }
-				: w
-		)
+				: w,
+		),
 	);
 }
 
@@ -83,20 +82,25 @@ function updateWidgets(widgets) {
 </script>
 
 <style lang="scss" scoped>
-.efzpzdvf {
-	position: sticky;
+.widgets {
 	height: min-content;
 	min-height: 100vh;
 	padding: var(--margin) 0;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 
-	> * {
-		margin: var(--margin) 0;
+	> :deep(*) {
+		margin-top: var(--margin);
 		width: 300px;
 
 		&:first-child {
 			margin-top: 0;
 		}
+	}
+
+	.a:empty {
+		display: none;
 	}
 
 	> .add {

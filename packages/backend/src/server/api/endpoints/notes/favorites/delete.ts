@@ -42,15 +42,15 @@ export default define(meta, paramDef, async (ps, user) => {
 	});
 
 	// if already favorited
-	const exist = await NoteFavorites.findOneBy({
+	const favorite = await NoteFavorites.findOneBy({
 		noteId: note.id,
 		userId: user.id,
 	});
 
-	if (exist == null) {
+	if (favorite == null) {
 		throw new ApiError(meta.errors.notFavorited);
 	}
 
 	// Delete favorite
-	await NoteFavorites.delete(exist.id);
+	await NoteFavorites.delete(favorite.id);
 });

@@ -18,7 +18,7 @@
 			<div class="xkpnjxcv _formRoot">
 				<template
 					v-for="item in Object.keys(form).filter(
-						(item) => !form[item].hidden
+						(item) => !form[item].hidden,
 					)"
 				>
 					<FormInput

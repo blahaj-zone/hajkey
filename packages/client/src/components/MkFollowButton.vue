@@ -1,5 +1,13 @@
 <template>
 	<button
+		v-if="!hideMenu"
+		class="menu _button"
+		@click.stop="menu"
+		v-tooltip="i18n.ts.menu"
+	>
+		<i class="ph-dots-three-outline ph-bold ph-lg"></i>
+	</button>
+	<button
 		v-if="$i != null && $i.id != user.id"
 		class="kpoogebi _button follow-button"
 		:class="{
@@ -10,44 +18,43 @@
 			blocking: isBlocking,
 		}"
 		:disabled="wait"
-		@click="onClick"
+		@click.stop="onClick"
 		:aria-label="`${state} ${user.name || user.username}`"
+		v-tooltip="full ? null : `${state} ${user.name || user.username}`"
 	>
 		<template v-if="!wait">
 			<template v-if="isBlocking">
-				<span v-if="full">{{ (state = i18n.ts.blocked) }}</span
+				<span>{{ (state = i18n.ts.blocked) }}</span
 				><i class="ph-prohibit ph-bold ph-lg"></i>
 			</template>
 			<template
 				v-else-if="hasPendingFollowRequestFromYou && user.isLocked"
 			>
-				<span v-if="full">{{
-					(state = i18n.ts.followRequestPending)
-				}}</span
+				<span>{{ (state = i18n.ts.followRequestPending) }}</span
 				><i class="ph-hourglass-medium ph-bold ph-lg"></i>
 			</template>
 			<template
 				v-else-if="hasPendingFollowRequestFromYou && !user.isLocked"
 			>
 				<!-- つまりリモートフォローの場合。 -->
-				<span v-if="full">{{ (state = i18n.ts.processing) }}</span
+				<span>{{ (state = i18n.ts.processing) }}</span
 				><i class="ph-circle-notch ph-bold ph-lg fa-pulse"></i>
 			</template>
 			<template v-else-if="isFollowing">
-				<span v-if="full">{{ (state = i18n.ts.unfollow) }}</span
+				<span>{{ (state = i18n.ts.unfollow) }}</span
 				><i class="ph-minus ph-bold ph-lg"></i>
 			</template>
 			<template v-else-if="!isFollowing && user.isLocked">
-				<span v-if="full">{{ (state = i18n.ts.followRequest) }}</span
-				><i class="ph-plus ph-bold ph-lg"></i>
+				<span>{{ (state = i18n.ts.followRequest) }}</span
+				><i class="ph-lock-open ph-bold ph-lg"></i>
 			</template>
 			<template v-else-if="!isFollowing && !user.isLocked">
-				<span v-if="full">{{ (state = i18n.ts.follow) }}</span
+				<span>{{ (state = i18n.ts.follow) }}</span
 				><i class="ph-plus ph-bold ph-lg"></i>
 			</template>
 		</template>
 		<template v-else>
-			<span v-if="full">{{ (state = i18n.ts.processing) }}</span
+			<span>{{ (state = i18n.ts.processing) }}</span
 			><i class="ph-circle-notch ph-bold ph-lg fa-pulse ph-fw ph-lg"></i>
 		</template>
 	</button>
@@ -55,11 +62,15 @@
 
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted } from "vue";
-import type * as Misskey from "calckey-js";
+import type * as Misskey from "iceshrimp-js";
 import * as os from "@/os";
 import { stream } from "@/stream";
 import { i18n } from "@/i18n";
 import { $i } from "@/account";
+import { getUserMenu } from "@/scripts/get-user-menu";
+import { useRouter } from "@/router";
+
+const router = useRouter();
 
 const emit = defineEmits(["refresh"]);
 const props = withDefaults(
@@ -67,11 +78,12 @@ const props = withDefaults(
 		user: Misskey.entities.UserDetailed;
 		full?: boolean;
 		large?: boolean;
+		hideMenu?: boolean;
 	}>(),
 	{
 		full: false,
 		large: false,
-	}
+	},
 );
 
 const isBlocking = computed(() => props.user.isBlocking);
@@ -80,7 +92,7 @@ let state = $ref(i18n.ts.processing);
 
 let isFollowing = $ref(props.user.isFollowing);
 let hasPendingFollowRequestFromYou = $ref(
-	props.user.hasPendingFollowRequestFromYou
+	props.user.hasPendingFollowRequestFromYou,
 );
 let wait = $ref(false);
 const connection = stream.useChannel("main");
@@ -151,6 +163,13 @@ async function onClick() {
 	}
 }
 
+function menu(ev) {
+	os.popupMenu(
+		getUserMenu(props.user, router),
+		ev.currentTarget ?? ev.target,
+	);
+}
+
 onMounted(() => {
 	connection.on("follow", onFollowChange);
 	connection.on("unfollow", onFollowChange);
@@ -162,6 +181,11 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+.menu {
+	width: 3em;
+	height: 2em;
+	vertical-align: middle;
+}
 .follow-button {
 	position: relative;
 	display: inline-flex;
@@ -176,6 +200,7 @@ onBeforeUnmount(() => {
 	height: 2em;
 	border-radius: 100px;
 	background: var(--bg);
+	vertical-align: middle;
 
 	&.full {
 		padding: 0.2em 0.7em;
@@ -191,6 +216,9 @@ onBeforeUnmount(() => {
 
 	&:not(.full) {
 		width: 31px;
+		span {
+			display: none;
+		}
 	}
 
 	&:focus-visible {

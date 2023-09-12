@@ -18,7 +18,7 @@ block desc
 
 block og
 	unless privateMode
-		meta(property='og:type'        content='article')
+		meta(property='og:type' content='article')
 		meta(property='og:title'       content= title)
 		meta(property='og:description' content= summary)
 		meta(property='og:url'         content= url)
@@ -27,7 +27,7 @@ block og
 			meta(property='og:image:width'     content=note.files[0].properties.width)
 			meta(property='og:image:height'    content=note.files[0].properties.height)
 			meta(property='og:image:type'      content=note.files[0].type)
-			meta(property='twitter:card'       content="summary_large_image")
+			meta(property='twitter:card' content="summary_large_image")
 		if isVideo
 			meta(property='og:video:type'      content=note.files[0].type)
 			meta(property='og:video'           content=note.files[0].url)

@@ -1,9 +1,9 @@
 _lang_: "Deutsch"
-headlineMisskey: "Eine dezentralisierte Open-Source Social Media Plattform, die für
+headlineIceshrimp: "Eine dezentralisierte Open-Source Social Media Plattform, die für
   immer gratis bleibt! 🚀"
-introMisskey: "Willkommen! Calckey ist eine dezentralisierte Open-Source Social Media
+introIceshrimp: "Willkommen! Iceshrimp ist eine dezentralisierte Open-Source Social Media
   Plattform, die für immer gratis bleibt!🚀"
-monthAndDay: "{day}.{month}."
+monthAndDay: "{month}/{day}"
 search: "Suchen"
 notifications: "Benachrichtigungen"
 username: "Nutzername"
@@ -25,9 +25,9 @@ openInWindow: "In einem Fenster öffnen"
 profile: "Profil"
 timeline: "Timelines"
 noAccountDescription: "Dieser Nutzer hat seine Profilbeschreibung noch nicht ausgefüllt."
-login: "Anmelden"
+login: "Login"
 loggingIn: "Du wirst angemeldet"
-logout: "Abmelden"
+logout: "Logout"
 signup: "Registrieren"
 uploading: "Wird hochgeladen …"
 save: "Speichern"
@@ -66,7 +66,7 @@ import: "Import"
 export: "Export"
 files: "Dateien"
 download: "Herunterladen"
-driveFileDeleteConfirm: "Möchtest du die Datei „{name}“ wirklich löschen? Es wird
+driveFileDeleteConfirm: "Möchtest du die Datei \"{name}\" wirklich löschen? Es wird
   aus allen Beiträgen entfernt, die die Datei als Anhang enthalten."
 unfollowConfirm: "Bist du dir sicher, daß du {name} nicht mehr folgen möchtest?"
 exportRequested: "Du hast einen Export angefragt. Dies kann etwas Zeit in Anspruch
@@ -150,12 +150,12 @@ settingGuide: "Empfohlene Einstellungen"
 cacheRemoteFiles: "Cache für entfernte Dateien"
 cacheRemoteFilesDescription: "Ist diese Einstellung deaktiviert, so werden Dateien
   von anderen Servern direkt von dort geladen. Hierdurch wird Speicherplatz auf diesem
-  Server eingespart, aber durch die fehlende Generierung von Vorschaubildern mehr
-  Bandbreite benötigt."
+  Server eingespart, aber durch die fehlende Generierung von Vorschaubildern wird
+  mehr Bandbreite benötigt."
 flagAsBot: "Dieses Nutzerkonto als Bot kennzeichnen"
 flagAsBotDescription: "Aktiviere diese Option, falls dieses Nutzerkonto durch ein
   Programm gesteuert wird. Falls aktiviert, agiert es als Flag für andere Entwickler
-  zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Calckeys
+  zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Iceshrimps
   interne Systeme dieses Nutzerkonto als Bot behandeln."
 flagAsCat: "Bist du eine Katze? 😺"
 flagAsCatDescription: "Du bekommst Katzenohren und sprichst wie eine Katze!"
@@ -166,7 +166,7 @@ autoAcceptFollowed: "Automatisches Genehmigen von Folgeanfragen von Benutzern, d
   Sie folgen"
 addAccount: "Nutzerkonto hinzufügen"
 loginFailed: "Anmeldung fehlgeschlagen"
-showOnRemote: "Ansicht auf dem Herkunftsserver"
+showOnRemote: "Zur Ansicht auf dem Herkunftsserver"
 general: "Allgemein"
 wallpaper: "Hintergrundbild"
 setWallpaper: "Hintergrundbild festlegen"
@@ -200,7 +200,6 @@ operations: "Tätigkeiten"
 software: "Software"
 version: "Version"
 metadata: "Metadaten"
-withNFiles: "{n} Datei(en)"
 monitor: "Überwachung"
 jobQueue: "Auftragswarteschlange"
 cpuAndMemory: "CPU und Speicher"
@@ -226,7 +225,7 @@ noUsers: "Es sind keine Nutzer vorhanden"
 editProfile: "Profil bearbeiten"
 noteDeleteConfirm: "Sind Sie sicher, dass Sie diesen Beitrag löschen wollen?"
 pinLimitExceeded: "Sie können keine weiteren Beiträge anpinnen"
-intro: "Die Installation von Calckey ist abgeschlossen! Bitte erstellen Sie einen
+intro: "Die Installation von Iceshrimp ist abgeschlossen! Bitte erstellen Sie einen
   Admin-Benutzer."
 done: "Erledigt"
 processing: "In Bearbeitung"
@@ -235,14 +234,14 @@ default: "Standard"
 defaultValueIs: "Der Standardwert ist: {value}"
 noCustomEmojis: "Es gibt keine benutzerdefinierten Emoji"
 noJobs: "Keine Jobs vorhanden"
-federating: "Wird föderiert"
+federating: "Eine Verbindung zum Server wird hergestellt"
 blocked: "Blockiert"
 suspended: "suspendiert"
 all: "Alles"
 subscribing: "Registrieren"
 publishing: "Veröffentlichen"
 notResponding: "Antwortet nicht"
-instanceFollowing: "Auf dem Server folgen"
+instanceFollowing: "Folgen auf dem Server"
 instanceFollowers: "Follower des Servers"
 instanceUsers: "Nutzer dieses Servers"
 changePassword: "Passwort ändern"
@@ -253,7 +252,7 @@ newPassword: "Neues Passwort"
 newPasswordRetype: "Neues Passwort bestätigen"
 attachFile: "Dateien anhängen"
 more: "Mehr!"
-featured: "Ausgewählt"
+featured: "Besonderheiten"
 usernameOrUserId: "Nutzername oder Nutzer-ID"
 noSuchUser: "Nutzer nicht gefunden"
 lookup: "Suche nach"
@@ -287,7 +286,7 @@ agreeTo: "Ich stimme {0} zu"
 tos: "Nutzungsbedingungen"
 start: "Beginnen Sie"
 home: "Home"
-remoteUserCaution: "Informationen von Remote-Nutzern können unvollständig sein."
+remoteUserCaution: "Informationen von Nutzern anderer Server sind möglicherweise unvollständig."
 activity: "Aktivität"
 images: "Bilder"
 birthday: "Geburtstag"
@@ -339,8 +338,8 @@ unwatch: "Nicht mehr beobachten"
 accept: "Akzeptieren"
 reject: "Ablehnen"
 normal: "Normal"
-instanceName: "Name des Servers"
-instanceDescription: "Beschreibung des Servers"
+instanceName: "Server-Name"
+instanceDescription: "Server-Beschreibung"
 maintainerName: "Betreiber"
 maintainerEmail: "Betreiber-Email"
 tosUrl: "URL der Nutzungsbedingungen"
@@ -372,8 +371,9 @@ pinnedUsers: "Angeheftete Nutzer"
 pinnedUsersDescription: "Gib durch Leerzeichen getrennte Nutzer an, die an die \"\
   Erkunden\"-Seite angeheftet werden sollen."
 pinnedPages: "Angeheftete Nutzer-Seiten"
-pinnedPagesDescription: "Geben Sie die Pfade der Nutzer-Seiten, getrennt durch Zeilenumbrüche,
-  ein, die Sie an die oberste Startseite dieses Servers anheften möchten."
+pinnedPagesDescription: "Geben Sie die Dateipfade, getrennt durch Zeilenumbrüche,
+  derjenigen Seiten ein, die Sie an die obere Seitenbegrenzung des Servers anpinnen
+  möchten."
 pinnedClipId: "ID des anzuheftenden Clips"
 pinnedNotes: "Angeheftete Beiträge"
 hcaptcha: "hCaptcha"
@@ -419,7 +419,7 @@ exploreFediverse: "Das Fediverse erkunden"
 popularTags: "Beliebte Schlagwörter"
 userList: "Liste"
 about: "Über"
-aboutMisskey: "Über Calckey"
+aboutIceshrimp: "Über Iceshrimp"
 administrator: "Administrator"
 token: "Token"
 twoStepAuthentication: "Zwei-Faktor-Authentifizierung"
@@ -575,7 +575,7 @@ ascendingOrder: "Aufsteigende Reihenfolge"
 descendingOrder: "Absteigende Reihenfolge"
 scratchpad: "Testumgebung"
 scratchpadDescription: "Die Testumgebung bietet einen Bereich für AiScript-Experimente.
-  Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Calckey
+  Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Iceshrimp
   überprüfen."
 output: "Ausgabe"
 script: "Skript"
@@ -585,7 +585,7 @@ deleteAllFiles: "Alle Dateien löschen"
 deleteAllFilesConfirm: "Möchtest du wirklich alle Dateien löschen?"
 removeAllFollowing: "Allen gefolgten Nutzern entfolgen"
 removeAllFollowingDescription: "Wenn Sie dies ausführen, werden alle Konten von {host}
-  entfolgt. Bitte führen Sie dies aus, wenn der Server z.B. nicht mehr existiert."
+  entfolgt. Bitte führen Sie dies aus, wenn der Server beispielsweise nicht mehr existiert."
 userSuspended: "Dieser Nutzer wurde gesperrt."
 userSilenced: "Dieser Nutzer wurde instanzweit stummgeschaltet."
 yourAccountSuspendedTitle: "Dieses Nutzerkonto ist gesperrt"
@@ -663,7 +663,7 @@ display: "Anzeigeart"
 copy: "Kopieren"
 metrics: "Metriken"
 overview: "Übersicht"
-logs: "Logs"
+logs: "Protokolle"
 delayed: "Verzögert"
 database: "Datenbank"
 channel: "Channels"
@@ -693,9 +693,9 @@ abuseReported: "Deine Meldung wurde versendet. Vielen Dank."
 reporter: "Melder"
 reporteeOrigin: "Herkunft des Gemeldeten"
 reporterOrigin: "Herkunft des Meldenden"
-forwardReport: "Einen Bericht auch an den beteiligten anderen Server weiterleiten"
-forwardReportIsAnonymous: "Anstelle Ihres Nutzerkontos wird ein anonymes Systemkonto
-  als Berichterstatter auf dem beteiligten anderen Server angezeigt."
+forwardReport: "Meldung auch an den mit-beteiligten Server weiterleiten"
+forwardReportIsAnonymous: "Anstelle deines Nutzerkontos wird ein anonymes Systemkonto
+  als Hinweisgeber auf dem mit-beteiligten Server angezeigt."
 send: "Senden"
 abuseMarkAsResolved: "Meldung als gelöst markieren"
 openInNewTab: "In neuem Tab öffnen"
@@ -703,7 +703,7 @@ openInSideView: "In Seitenansicht öffnen"
 defaultNavigationBehaviour: "Standardnavigationsverhalten"
 editTheseSettingsMayBreakAccount: "Bei Bearbeitung dieser Einstellungen besteht die
   Gefahr, dein Nutzerkonto zu beschädigen."
-instanceTicker: "Serveranzeige zu Beiträgen"
+instanceTicker: "Zeige zu einem Beitrag den Herkunfts-Server an"
 waitingFor: "Warte auf {x}"
 random: "Zufällig"
 system: "System"
@@ -717,7 +717,7 @@ unclip: "Aus Clip entfernen"
 confirmToUnclipAlreadyClippedNote: "Dieser Beitrag ist bereits im \"{name}\" Clip
   enthalten. Möchtest du ihn aus diesem Clip entfernen?"
 public: "Öffentlich"
-i18nInfo: "Calckey wird durch freiwillige Helfer in viele verschiedene Sprachen übersetzt.
+i18nInfo: "Iceshrimp wird durch freiwillige Helfer in viele verschiedene Sprachen übersetzt.
   Auf {link} kannst du mithelfen."
 manageAccessTokens: "Zugriffstokens verwalten"
 accountInfo: "Nutzerkonto-Informationen"
@@ -777,10 +777,10 @@ nUsers: "{n} Nutzer"
 nNotes: "{n} Beiträge"
 sendErrorReports: "Fehlerberichte senden"
 sendErrorReportsDescription: "Ist diese Option aktiviert, so werden beim Auftreten
-  von Fehlern detaillierte Fehlerinformationen an Calckey weitergegeben, was zur Verbesserung
-  der Qualität von Calckey beiträgt.\nEnthalten in diesen Informationen sind u.a.
+  von Fehlern detaillierte Fehlerinformationen an Iceshrimp weitergegeben, was zur Verbesserung
+  der Qualität von Iceshrimp beiträgt.\nEnthalten in diesen Informationen sind u.a.
   die Version deines Betriebssystems, welchen Browser du verwendest und ein Verlauf
-  deiner Aktivitäten innerhalb Calckey."
+  deiner Aktivitäten innerhalb Iceshrimp."
 myTheme: "Meine Farbkombination"
 backgroundColor: "Hintergrundfarbe"
 accentColor: "Akzentfarbe"
@@ -812,7 +812,7 @@ useReactionPickerForContextMenu: "Reaktionsauswahl durch Rechtsklick öffnen"
 typingUsers: "{users} ist/sind am schreiben"
 jumpToSpecifiedDate: "Zu bestimmtem Datum springen"
 showingPastTimeline: "Es wird eine alte Timeline angezeigt"
-clear: "Zurückkehren"
+clear: "Leeren"
 markAllAsRead: "Alle als gelesen markieren"
 goBack: "Zurück"
 unlikeConfirm: "\"Gefällt mir\" wirklich entfernen?"
@@ -835,7 +835,7 @@ active: "Aktiv"
 offline: "Offline"
 notRecommended: "Nicht empfohlen"
 botProtection: "Schutz vor Bots"
-instanceBlocking: "Föderierte Blockieren/Stummschalten"
+instanceBlocking: "Verbundene Server verwalten"
 selectAccount: "Nutzerkonto auswählen"
 switchAccount: "Konto wechseln"
 enabled: "Aktiviert"
@@ -875,7 +875,7 @@ hashtags: "Hashtags"
 troubleshooting: "Problembehandlung"
 useBlurEffect: "Weichzeichnungseffekt in der Benutzeroberfläche verwenden"
 learnMore: "Mehr erfahren"
-misskeyUpdated: "Calckey wurde aktualisiert!"
+iceshrimpUpdated: "Iceshrimp wurde aktualisiert!"
 whatIsNew: "Änderungen anzeigen"
 translate: "Übersetzen"
 translatedFrom: "Aus {x} übersetzt"
@@ -900,7 +900,7 @@ manageAccounts: "Nutzerkonten verwalten"
 makeReactionsPublic: "Reaktionsverlauf veröffentlichen"
 makeReactionsPublicDescription: "Jeder wird die Liste deiner gesendeten Reaktionen
   einsehen können."
-classic: "Classic"
+classic: "Mittig/zentriert"
 muteThread: "Thread stummschalten"
 unmuteThread: "Threadstummschaltung aufheben"
 ffVisibility: "Sichtbarkeit von Gefolgten/Followern"
@@ -922,7 +922,7 @@ overridedDeviceKind: "Gerätetyp"
 smartphone: "Smartphone"
 tablet: "Tablet"
 auto: "Automatisch"
-themeColor: "Farbe der Laufschrift (Ticker)"
+themeColor: "Farbe der Ticker-Laufschrift"
 size: "Größe"
 numberOfColumn: "Spaltenanzahl"
 searchByGoogle: "Suchen"
@@ -946,18 +946,19 @@ recentNHours: "Die letzten {n} Stunden"
 recentNDays: "Die letzten {n} Tage"
 noEmailServerWarning: "Es ist kein Email-Server konfiguriert."
 thereIsUnresolvedAbuseReportWarning: "Es liegen ungelöste Meldungen vor."
-recommended: "Empfehlung"
+recommended: "Favoriten"
 check: "Kontrolle"
 driveCapOverrideLabel: "Die Cloud-Drive-Kapazität dieses Nutzers verändern"
 driveCapOverrideCaption: "Gib einen Wert von 0 oder weniger ein, um die Kapazität
   auf den Standard zurückzusetzen."
 requireAdminForView: "Melde dich mit einem Administratorkonto an, um dies einzusehen."
-isSystemAccount: "Ein Nutzerkonto, dass durch das System erstellt und automatisch
-  kontrolliert wird."
+isSystemAccount: "Dieses Konto wird vom System erstellt und automatisch verwaltet.
+  Bitte moderieren, bearbeiten, löschen oder manipulieren Sie dieses Konto nicht,
+  da es sonst zu einem Server-Absturz kommen könnte."
 typeToConfirm: "Bitte gib zur Bestätigung {x} ein"
 deleteAccount: "Nutzerkonto löschen"
 document: "Dokumentation"
-numberOfPageCache: "Seitencachegröße"
+numberOfPageCache: "Anzahl der zwischengespeicherten Seiten"
 numberOfPageCacheDescription: "Das Erhöhen dieses Caches führt zu einer angenehmerern
   Nutzererfahrung, erhöht aber Serverlast und Arbeitsspeicherauslastung."
 logoutConfirm: "Wirklich abmelden?"
@@ -966,7 +967,7 @@ statusbar: "Statusleiste"
 pleaseSelect: "Wähle eine Option"
 reverse: "Umkehren"
 colored: "Farbig"
-refreshInterval: "Aktualisierungsrate "
+refreshInterval: "Aktualisierungsintervall "
 label: "Beschriftung"
 type: "Art"
 speed: "Geschwindigkeit"
@@ -981,7 +982,7 @@ cannotUploadBecauseInappropriate: "Diese Datei kann nicht hochgeladen werden, da
 cannotUploadBecauseNoFreeSpace: "Die Datei konnte nicht hochgeladen werden, da dein
   Cloud-Drive-Speicherplatz aufgebraucht ist."
 beta: "Beta"
-enableAutoSensitive: "NSFW-Automarkierung"
+enableAutoSensitive: "Selbstständige NSFW-Kennzeichnung"
 enableAutoSensitiveDescription: "Erlaubt, wo möglich, die automatische Erkennung und
   Kennzeichnung von NSFW-Medien durch maschinelles Lernen. Auch wenn diese Option
   deaktiviert ist, kann sie über den Server aktiviert sein."
@@ -1000,7 +1001,7 @@ _sensitiveMediaDetection:
   sensitivityDescription: "Durch das Senken der Sensitivität kann die Anzahl an Fehlerkennungen
     (sog. false positives) reduziert werden. Durch ein Erhöhen dieser kann die Anzahl
     an verpassten Erkennungen (sog. false negatives) reduziert werden."
-  setSensitiveFlagAutomatically: "Als NSFW markieren"
+  setSensitiveFlagAutomatically: "Als NSFW kennzeichnen"
   setSensitiveFlagAutomaticallyDescription: "Die Resultate der internen Erkennung
     werden beibehalten, auch wenn diese Option deaktiviert ist."
   analyzeVideos: "Videoanalyse aktivieren"
@@ -1040,9 +1041,9 @@ _forgotPassword:
   enterEmail: "Gib die Email-Adresse ein, mit der du dich registriert hast. An diese
     wird ein Link gesendet, mit dem du dein Passwort zurücksetzen kannst."
   ifNoEmail: "Solltest du bei der Registrierung keine Email-Adresse angegeben haben,
-    wende dich bitte an den Administrator."
-  contactAdmin: "Dieser Server unterstützt die Verwendung von Email-Adressen nicht.
-    Kontaktiere bitte den Server-Administrator, um dein Passwort zurücksetzen zu lassen."
+    wende dich bitte an den Server-Administrator."
+  contactAdmin: "Dieser Server unterstützt keine Verwendung von Email-Adressen. Kontaktiere
+    bitte den Server-Administrator, um dein Passwort zurücksetzen zu lassen."
 _gallery:
   my: "Meine Bilder-Galerie"
   liked: "Mit \"Gefällt mir\" markierte Beiträge"
@@ -1055,7 +1056,7 @@ _email:
     title: "Du hast eine Follow-Anfrage erhalten"
 _plugin:
   install: "Plugins installieren"
-  installWarn: "Installiere bitte nur vertrauenswürdige Plugins."
+  installWarn: "Bitte nur vertrauenswürdige Plugins installieren."
   manage: "Plugins verwalten"
 _preferencesBackups:
   list: "Erstellte Backups"
@@ -1084,27 +1085,27 @@ _registry:
   keys: "Schlüssel"
   domain: "Domain"
   createKey: "Schlüssel erstellen"
-_aboutMisskey:
-  about: "Calckey ist ein Fork von Misskey, der seit 2022 von ThatOneCalculator entwickelt
+_aboutIceshrimp:
+  about: "Iceshrimp ist ein Fork von Iceshrimp, der seit 2022 von ThatOneCalculator entwickelt
     wird."
   contributors: "Hauptmitwirkende"
   allContributors: "Alle Mitwirkenden"
   source: "Quellcode"
-  translation: "Calckey übersetzen"
-  donate: "An Calckey spenden"
+  translation: "Iceshrimp übersetzen"
+  donate: "An Iceshrimp spenden"
   morePatrons: "Wir schätzen ebenso die Unterstützung vieler anderer hier nicht gelisteter
     Personen sehr. Danke! 🥰"
   patrons: "UnterstützerInnen"
 _nsfw:
-  respect: "Als NSFW markierte Bilder verbergen"
-  ignore: "Als NSFW markierte Bilder nicht verbergen"
+  respect: "Mit NSFW gekennzeichnete Bilder verbergen"
+  ignore: "Mit NSFW gekennzeichnete Bilder nicht verbergen"
   force: "Alle Medien verbergen"
 _mfm:
   cheatSheet: "MFM Spickzettel"
-  intro: "MFM ist eine Markup-Sprache, die in Misskey, Calckey, Akkoma und anderen
+  intro: "MFM ist eine Markup-Sprache, die in Iceshrimp, Iceshrimp, Akkoma und anderen
     Programmen verwendet wird und an vielen Stellen eingesetzt werden kann. Hier können
     Sie eine Liste aller verfügbaren MFM-Syntaxe einsehen."
-  dummy: "Calckey erweitert die Welt des Fediverse"
+  dummy: "Iceshrimp erweitert die Welt des Fediverse"
   mention: "Erwähnung"
   mentionDescription: "Mit At-Zeichen und Nutzername kann ein individueller Nutzer
     angegeben werden."
@@ -1178,10 +1179,18 @@ _mfm:
   background: Hintergrundfarbe
   positionDescription: Inhalt um einen bestimmten Betrag verschieben.
   position: Position
+  cropDescription: Inhalt zuschneiden.
+  crop: Zuschneiden
   scale: Maßstab
   scaleDescription: Skaliere den Inhalt um einen bestimmten Betrag.
   foregroundDescription: Ändern der Vordergrundfarbe von Text.
   backgroundDescription: Ändern der Hintergrundfarbe von Text
+  play: MFM abspielen
+  stop: MFM anhalten
+  warn: MFM können schnell bewegte oder anderweitig auffallende Animationen enthalten
+  alwaysPlay: Alle animierten MFM immer automatisch abspielen
+  advancedDescription: Wenn diese Funktion deaktiviert ist, können nur einfache Formatierungen
+    vorgenommen werden, es sei denn, animiertes MFM ist aktiviert
 _instanceTicker:
   none: "Nie anzeigen"
   remote: "Für Nutzer eines anderen Servers anzeigen"
@@ -1224,12 +1233,12 @@ _wordMute:
   hard: "Schwer"
   mutedNotes: "Stummgeschaltete Beiträge"
 _instanceMute:
-  instanceMuteDescription: "Schaltet alle Beiträge/boosts stumm, die von den gelisteten
+  instanceMuteDescription: "Schaltet alle Beiträge/Boosts stumm, die von den gelisteten
     Servern stammen, inklusive Antworten von Nutzern an einen Nutzer eines stummgeschalteten
     Servers."
   instanceMuteDescription2: "Mit Zeilenumbrüchen trennen"
   title: "Blendet Beiträge von aufgelisteten Servern aus."
-  heading: "Liste der stummzuschaltenden Server"
+  heading: "Liste der Server die stummgeschaltet werden sollen"
 _theme:
   explore: "Farbkombinationen finden"
   install: "Eine Farbkombination installieren"
@@ -1328,7 +1337,7 @@ _time:
   hour: "Stunde(n)"
   day: "Tag(en)"
 _tutorial:
-  title: "Wie man Calckey benutzt"
+  title: "Wie man Iceshrimp benutzt"
   step1_1: "Willkommen!"
   step1_2: "Wir werden Sie einrichten. Sie werden im Handumdrehen einsatzbereit sein!"
   step2_1: "Bitte füllen Sie zuerst Ihr Profil aus."
@@ -1344,30 +1353,28 @@ _tutorial:
   step5_1: "Timelines, Timelines überall!"
   step5_2: "Dein Server hat {timelines} verschiedene Timelines aktiviert."
   step5_3: "Die {icon} Home-Timeline ist die Timeline, in der du die Beiträge der
-    Nutzerkonten sehen kannst, denen du folgst und von jedem anderen auf diesem Server.
-    Solltest du bevorzugen, dass deine Home-Timeline nur Beiträge von den Nutzerkonten
-    enthält, denen du folgst, kannst du das ganz einfach in den Einstellungen ändern!"
-  step5_4: "In der {Icon} Local-Timeline kannst du die Beiträge aller anderen Mitglieder
-    dieses Servers sehen."
-  step5_5: "Die {icon} Social-Timeline zeigt dir ausschließlich Beiträge von Nutzerkonten
-    denen Du folgst."
-  step5_6: "In der {icon} Empfehlungen-Timeline kannst du Beiträge von Servern sehen,
-    die dir von den Server-Administratoren empfohlen/vorgeschlagen werden."
-  step5_7: "In der {icon} Global-Timeline können Sie Beiträge von jedem anderen verbundenen
-    Server im fediverse sehen."
+    Nutzerkonten sehen kannst, denen du folgst."
+  step5_4: "In der {Icon} Local-Timeline kannst du die Beiträge von jedem/jeder sehen
+    der/die auf diesem Server registriert ist."
+  step5_5: "Die Social-Timeline {icon} ist eine Kombination aus der Home-Timeline
+    und der Local-Timeline."
+  step5_6: "In der Empfohlen-Timeline {icon} kannst du Posts sehen, die von den Admins
+    vorgeschlagen wurden."
+  step5_7: "In der {icon} Global-Timeline können Sie Beiträge von allen verknüpften
+    Servern aus dem Fediverse sehen."
   step6_1: "Also, was ist das hier?"
-  step6_2: "Schön, mit Deiner Anmeldung zu Calckey bist Du gleichzeitig einem Portal
-    zum Fediverse beigetreten, einem Netzwerk mit Tausenden von verbundenen Servern
-    (häufig noch als \"Instanzen\" bezeichnet)."
+  step6_2: "Mit Deiner Anmeldung zu Iceshrimp bist Du gleichzeitig einem Portal zum
+    Fediverse beigetreten, einem Netzwerk mit Tausenden von, miteinander verbundenen,
+    Servern."
   step6_3: "Jeder der Server funktioniert auf unterschiedliche Weise, und nicht alle
-    Server führen Calckey aus. Dieser jedoch schon! Es ist zu Beginn vielleicht ein
+    Server führen Iceshrimp aus. Dieser jedoch schon! Es ist zu Beginn vielleicht ein
     wenig kompliziert, aber Sie werden in kürzester Zeit den Dreh raus haben."
   step6_4: "Jetzt bist Du startbereit, entdecke die Möglichkeiten und hab Spaß dabei!"
 _2fa:
   alreadyRegistered: "Du hast bereits ein Gerät für Zwei-Faktor-Authentifizierung
     registriert."
-  registerDevice: "Neues Gerät registrieren"
-  registerKey: "Neuen Sicherheitsschlüssel registrieren"
+  registerTOTP: "Neues Gerät registrieren"
+  registerSecurityKey: "Neuen Sicherheitsschlüssel registrieren"
   step1: "Installiere zuerst eine Authentifizierungsapp (z.B. {a} oder {b}) auf deinem
     Gerät."
   step2: "Dann, scanne den angezeigten QR-Code mit deinem Gerät."
@@ -1378,6 +1385,25 @@ _2fa:
   securityKeyInfo: "Du kannst neben Fingerabdruck- oder PIN-Authentifizierung auf
     deinem Gerät auch Anmeldung mit Hilfe eines FIDO2-kompatiblen Hardware-Sicherheitsschlüssels
     einrichten."
+  step3Title: Gib deinen Authentifizierungscode ein
+  renewTOTPOk: Neu konfigurieren
+  securityKeyNotSupported: Dein Browser unterstützt Hardware-Security-Keys nicht.
+  chromePasskeyNotSupported: Chrome Passkeys werden momentan nicht unterstützt.
+  renewTOTP: Konfiguriere deine Authenticator App neu
+  renewTOTPCancel: Abbrechen
+  tapSecurityKey: Bitte folge den Anweisungen deines Browsers, um einen Hardware-Security-Key
+    oder einen Passkey zu registrieren
+  removeKey: Entferne deinen Hardware-Security-Key
+  removeKeyConfirm: Möchtest du wirklich deinen Key mit der Bezeichnung {name} löschen?
+  renewTOTPConfirm: Das wird dazu führen, dass du Verifizierungscodes deiner vorherigen
+    Authenticator App nicht mehr nutzen kannst
+  whyTOTPOnlyRenew: Die Authentificator App kann nicht entfernt werden, solange ein
+    Hardware-Security-Key registriert ist.
+  step2Click: Ein Klick auf diesen QR-Code erlaubt es dir eine 2FA-Methode zu deinem
+    Security Key oder deiner Authenticator App hinzuzufügen.
+  registerTOTPBeforeKey: Bitte registriere eine Authentificator App, um einen Hardware-Security-Key
+    oder einen Passkey zu nutzen.
+  securityKeyName: Gib einen Namen für den Key ein
 _permissions:
   "read:account": "Deine Nutzerkontoinformationen lesen"
   "write:account": "Deine Nutzerkontoinformationen bearbeiten"
@@ -1446,7 +1472,7 @@ _widgets:
   trends: "Trends"
   clock: "Uhr"
   rss: "RSS-Reader"
-  rssTicker: "RSS-Laufschrift (Ticker)"
+  rssTicker: "RSS Ticker"
   activity: "Aktivität"
   photos: "Fotos"
   digitalClock: "Digitaluhr"
@@ -1463,9 +1489,13 @@ _widgets:
   aichan: "Ai"
   _userList:
     chooseList: Wählen Sie eine Liste aus
-  userList: Nutzerliste
+  userList: Benutzerliste
+  serverInfo: Server-Infos
+  meiliStatus: Server-Status
+  meiliSize: Indexgröße
+  meiliIndexCount: Indexierte Beiträge
 _cw:
-  hide: "Inhalt verbergen"
+  hide: "Verbergen"
   show: "Inhalt anzeigen"
   chars: "{count} Zeichen"
   files: "{count} Datei(en)"
@@ -1521,7 +1551,7 @@ _profile:
   metadata: "Zusätzliche Informationen"
   metadataEdit: "Zusätzliche Informationen bearbeiten"
   metadataDescription: "Hierdurch kannst du auf deinem Profil zusätzliche Informationsblöcke
-    anzeigen lassen."
+    anzeigen lassen. Sie können ein {a}-Tag oder ein {l}-Tag mit {rel} hinzufügen, um den Link in Ihrem Profil zu überprüfen!"
   metadataLabel: "Beschriftung"
   metadataContent: "Inhalt"
   changeAvatar: "Profilbild ändern"
@@ -1567,9 +1597,9 @@ _timelines:
   local: "Local-TL"
   social: "Social-TL"
   global: "Global-TL"
-  recommended: Empfehlungen
+  recommended: Admin-Favoriten
 _pages:
-  newPage: "Seite erstellen"
+  newPage: "Neue Seite erstellen"
   editPage: "Seite bearbeiten"
   readPage: "Quelltextansicht"
   created: "Seite erfolgreich erstellt"
@@ -1897,6 +1927,9 @@ _notification:
     followBack: "folgt dir nun auch"
     reply: "Antworten"
     renote: "Renote"
+  voted: haben bei deiner Umfrage abgestimmt
+  reacted: hat auf deinen Beitrag reagiert
+  renoted: hat Ihren Beitrag geteilt
 _deck:
   alwaysShowMainColumn: "Hauptspalte immer zeigen"
   columnAlign: "Spaltenausrichtung"
@@ -1921,15 +1954,16 @@ _deck:
     widgets: "Widgets"
     notifications: "Benachrichtigungen"
     tl: "Timeline"
-    antenna: "News-Picker"
+    antenna: "Antenne"
     list: "Listen"
     mentions: "Erwähnungen"
     direct: "Direktnachrichten"
+    channel: Kanal
   renameProfile: Arbeitsbereich umbenennen
   nameAlreadyExists: Der Name für den Arbeitsbereich ist bereits vorhanden.
-enableRecommendedTimeline: Empfohlenen Zeitplan aktivieren
+enableRecommendedTimeline: '"Favoriten"-Timeline einschalten'
 secureMode: Sicherer Modus (Autorisierter Abruf)
-instanceSecurity: Serversicherheit
+instanceSecurity: Server-Sicherheit
 manageGroups: Gruppen verwalten
 noThankYou: Nein, danke
 privateMode: Privater Modus
@@ -1937,29 +1971,29 @@ enableEmojiReactions: Emoji-Reaktionen aktivieren
 flagSpeakAsCat: Wie eine Katze sprechen
 showEmojisInReactionNotifications: Emojis in Reaktionsbenachrichtigungen anzeigen
 userSaysSomethingReason: '{name} sagte {reason}'
-hiddenTagsDescription: 'Liste die Hashtags (ohne #) welche du von Trending und Explore
-  verstecken möchtest. Versteckte Hashtags sind durch andere Wege weiterhin auffindbar.
-  Blockierte Server sind nicht betroffen, auch wenn sie hier aufgeführt sind.'
+hiddenTagsDescription: 'Geben sie hier die Schlagworte (ohne #hashtag) an, die vom
+  "Trending and Explore" ausgeschlossen werden sollen. Versteckte Schlagworte sind
+  immer noch über andere Wege auffindbar.'
 addInstance: Server hinzufügen
 flagSpeakAsCatDescription: Deine Beiträge werden im Katzenmodus nyanisiert
 hiddenTags: Versteckte Hashtags
-antennaInstancesDescription: Nenne einen Servernamen pro Zeile
+antennaInstancesDescription: Geben sie einen Server-Namen pro Zeile ein
 secureModeInfo: Bei Anfragen an andere Server nicht ohne Nachweis zurücksenden.
 renoteMute: Boosts stummschalten
 renoteUnmute: Stummschaltung von Boosts aufheben
-noInstances: Es gibt keine Server
+noInstances: Keine Server gefunden
 privateModeInfo: Wenn diese Option aktiviert ist, können nur als vertrauenswürdig
-  eingestufte Server mit deinem Server föderieren. Alle Beiträge werden für die Öffentlichkeit
-  verborgen.
+  eingestufte Server mit diesem Server kommunizieren. Alle Beiträge werden für die
+  Öffentlichkeit verborgen.
 allowedInstances: Vertrauenswürdige Server
-selectInstance: Wähle einen Server
+selectInstance: Wähle einen Server aus
 silencedInstancesDescription: Liste die Hostnamen der Server auf, die du stummschalten
   möchtest. Nutzerkonten in den aufgelisteten Servern werden als "Stumm" behandelt,
   können nur Follow-Anfragen stellen und können keine lokalen Nutzerkonten erwähnen,
   wenn sie nicht gefolgt werden. Dies wirkt sich nicht auf die blockierten Server
   aus.
 editNote: Beitrag bearbeiten
-edited: Bearbeitet
+edited: 'Bearbeitet um {date} {time}'
 silenceThisInstance: Diesen Server stummschalten
 silencedInstances: Stummgeschaltete Server
 silenced: Stummgeschaltet
@@ -1967,7 +2001,7 @@ deleted: Gelöscht
 breakFollowConfirm: Sind sie sicher, dass sie eine(n) Follower entfernen möchten?
 unsubscribePushNotification: Push-Benachrichtigungen deaktivieren
 pushNotificationAlreadySubscribed: Push-Benachrichtigungen sind bereits aktiviert
-pushNotificationNotSupported: Dein Browser oder der Server unterstützt keine Push-Benachrichtigungen
+pushNotificationNotSupported: Ihr Browser oder der Server unterstützt keine Push-Benachrichtigungen
 pushNotification: Push-Benachrichtigungen
 subscribePushNotification: Push-Benachrichtigungen aktivieren
 showLocalPosts: 'Zeige lokale Beiträge in:'
@@ -1982,7 +2016,7 @@ moveToLabel: 'Nutzerkonto zu dem sie umziehen:'
 moveAccountDescription: 'Dieser Vorgang kann nicht rückgängig gemacht werden! Stellen
   sie vor dem Umzug dieses Nutzerkontos sicher, dass Sie einen Namen für Ihr neues
   Nutzerkonto eingerichtet haben. Bitte geben sie die Bezeichnung des neuen Nutzerkontos
-  wie folgt ein: @name@instance.xyz'
+  wie folgt ein: @name@server.xyz'
 findOtherInstance: Einen anderen Server finden
 sendPushNotificationReadMessage: Löschung der Push-Benachrichtigungen sobald die entsprechenden
   Benachrichtigungen oder Beiträge gelesen wurden.
@@ -1992,12 +2026,12 @@ signupsDisabled: Derzeit sind keine Anmeldungen auf diesem Server möglich! Anme
 swipeOnDesktop: Am Desktop PC das Wischen wie bei mobilen Geräten zulassen
 enterSendsMessage: Drücken sie zum Senden des Beitrages die Eingabetaste (Strg-Taste
   ausgeschaltet)
-showUpdates: Zeigt ein Popup-Fenster an, wenn Calckey aktualisiert wird.
+showUpdates: Zeigt ein Popup-Fenster an, wenn Iceshrimp aktualisiert wird.
 socialTimeline: Social-Timeline
 moveFrom: Bisheriges Nutzerkonto zu diesem Nutzerkonto umziehen
 _messaging:
   groups: Gruppen
-  dms: Persönlich
+  dms: Privat
 recommendedInstances: Empfohlene Server
 logoImageUrl: URL des Logo-Bildes
 userSaysSomethingReasonReply: '{name} hat auf einen Beitrag geantwortet der {reason}
@@ -2019,23 +2053,23 @@ adminCustomCssWarn: Diese Einstellung sollte nur verwendet werden, wenn Sie wiss
   mehr normal funktionieren. Bitte stellen Sie sicher, dass Ihr CSS ordnungsgemäß
   funktioniert, indem Sie es in Ihren Benutzereinstellungen testen.
 customMOTD: Benutzerdefinierte Meldung des Tages (Begrüßungsbildschirmmeldungen)
-allowedInstancesDescription: Hosts von Instanzen, die für den Verbund auf die Whitelist
-  gesetzt werden sollen, jeweils durch eine neue Zeile getrennt (gilt nur im privaten
-  Modus).
+allowedInstancesDescription: Hosts von Servern, die zur Verbindung auf die Liste vertrauenswürdiger
+  Server gesetzt werden sollen, werden jeweils durch eine neue Zeile getrennt eingegeben
+  (gilt nur im privaten Modus).
 migration: Migration
 updateAvailable: Es könnte eine Aktualisierung verfügbar sein!
-showAdminUpdates: Anzeigen, dass eine neue Calckey-Version verfügbar ist (nur Administrator)
+showAdminUpdates: Anzeigen, dass eine neue Iceshrimp-Version verfügbar ist (nur Administrator)
 customMOTDDescription: Benutzerdefinierte Meldungen für die Meldung des Tages (Begrüßungsbildschirm),
   die durch Zeilenumbrüche getrennt sind und nach dem Zufallsprinzip jedes Mal angezeigt
   werden, wenn ein Benutzer die Seite (neu) lädt.
-recommendedInstancesDescription: Empfohlene Instanzen, die durch Zeilenumbrüche getrennt
-  sind, werden in der empfohlenen Zeitachse angezeigt. Fügen Sie NICHT "https://"
-  hinzu, sondern NUR die Domain.
+recommendedInstancesDescription: Empfohlene Server, die durch Zeilenumbrüche getrennt
+  sind, werden in der "Favoriten"-Timeline angezeigt. Fügen Sie NICHT "https://" hinzu,
+  sondern NUR die Domain.
 sendModMail: Moderationshinweis senden
 moveFromDescription: 'Dadurch wird ein Alias Ihres alten Nutzerkontos festgelegt,
   sodass Sie von ihrem bisherigen Konto zu diesem Nutzerkonto wechseln können. Tun
   Sie dies, BEVOR Sie von Ihrem bisherigen Nutzerkonto hierhin wechseln. Bitte geben
-  Sie den Namen des Nutzerkontos wie folgt ein: person@server.xyz'
+  Sie den Namen des Nutzerkontos wie folgt ein: @person@server.xyz'
 preventAiLearning: KI gestütztes bot-scraping unterdrücken
 preventAiLearningDescription: Fordern Sie KI-Sprachmodelle von Drittanbietern auf,
   die von Ihnen hochgeladenen Inhalte, wie z. B. Beiträge und Bilder, nicht zu untersuchen.
@@ -2058,3 +2092,61 @@ older: älter
 newer: neuer
 accessibility: Erreichbarkeit
 jumpToPrevious: Zum Vorherigen springen
+silencedWarning: Diese Meldung wird angezeigt, weil diese Nutzer von Servern stammen,
+  die Ihr Administrator abgeschaltet hat, so dass es sich möglicherweise um Spam handelt.
+_experiments:
+  title: Funktionstests
+  enablePostImports: Beitragsimporte aktivieren
+  postImportsCaption: Erlaubt es Nutzer:innen ihre Posts von alten Iceshrimp, Iceshrimp,
+    Mastodon, Akkoma und Pleroma Accounts zu importieren. Bei Engpässen in der Warteschlange
+    kann es zu Verlangsamungen beim Laden während des Imports kommen.
+noGraze: Bitte deaktivieren Sie die Browsererweiterung "Graze for Mastodon", da sie
+  die Funktion von Iceshrimp stört.
+indexFrom: Indexieren ab Beitragskennung aufwärts
+indexNotice: Wird jetzt indexiert. Dies wird wahrscheinlich eine Weile dauern, bitte
+  starten Sie Ihren Server für mindestens eine Stunde nicht neu.
+customKaTeXMacroDescription: "Richten Sie Makros ein, um mathematische Ausdrücke einfach
+  zu schreiben! Die Notation entspricht den LaTeX-Befehlsdefinitionen und wird als\n
+  \\newcommand{\\name}{content} or \\newcommand{\\name}[number of arguments]{content}\n
+  geschrieben.\nZum Beispiel wird\n\\newcommand{\\add}[2]{#1 + #2} \\add{3}{foo} um
+  3 + foo erweitert.\nDie geschweiften Klammern, die den Makronamen umgeben, können
+  in runde oder eckige Klammern geändert werden. Dies hat Auswirkungen auf die Klammern,
+  die für die Argumente verwendet werden. Pro Zeile kann ein (und nur ein) Makro definiert
+  werden, und Sie können die Zeile nicht mitten in der Definition umbrechen. Ungültige
+  Zeilen werden einfach ignoriert. Es werden nur einfache Funktionen zur Substitution
+  von Zeichenketten unterstützt; erweiterte Syntax, wie z. B. bedingte Verzweigungen,
+  können hier nicht verwendet werden."
+expandOnNoteClickDesc: Wenn deaktiviert, können Sie Beiträge trotzdem über das Rechtsklickmenü
+  oder durch Anklicken des Zeitstempels öffnen.
+selectChannel: Wählen Sie einen Kanal aus
+expandOnNoteClick: Beitrag bei Klick öffnen
+image: Bild
+video: Video
+audio: Audio
+indexFromDescription: Leer lassen, um jeden Beitrag zu indexieren
+_filters:
+  fromUser: Von Benutzer
+  notesAfter: Beiträge nach
+  withFile: Mit Datei
+  fromDomain: Von Domain
+  notesBefore: Beiträge vor
+  followingOnly: Nur Folgende
+isBot: Dieses Konto ist ein Bot
+isModerator: Moderator
+isAdmin: Administrator
+_dialog:
+  charactersExceeded: 'Maximale Anzahl an Zeichen aufgebraucht! Limit: {current} /
+    {max}'
+  charactersBelow: Nicht genug Zeichen! Du hast aktuell {current} von {min} Zeichen
+searchPlaceholder: Iceshrimp durchsuchen
+antennasDesc: "Antennen zeigen neue Posts an, die deinen definierten Kriterien entsprechen!\n
+  Sie können von der Timeline-Seite aufgerufen werden."
+isPatron: Iceshrimp Patron
+removeReaction: Entferne deine Reaktion
+listsDesc: Listen lassen dich Timelines mit bestimmten Nutzer:innen erstellen. Sie
+  können von der Timeline-Seite erreicht werden.
+clipsDesc: Clips sind wie teilbare, kategorisierte Lesezeichen. Du kannst Clips vom
+  Menü individueller Posts aus erstellen.
+channelFederationWarn: Kanäle föderieren noch nicht zu anderen Servern
+reactionPickerSkinTone: Bevorzugte Emoji-Hautfarbe
+swipeOnMobile: Wischen zwischen den Seiten erlauben

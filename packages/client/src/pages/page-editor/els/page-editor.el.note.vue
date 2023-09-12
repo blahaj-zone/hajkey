@@ -53,7 +53,7 @@ const props = withDefaults(
 			note: null,
 			detailed: false,
 		},
-	}
+	},
 );
 
 let id: any = $ref(props.value.note);
@@ -74,6 +74,6 @@ watch(
 	},
 	{
 		immediate: true,
-	}
+	},
 );
 </script>

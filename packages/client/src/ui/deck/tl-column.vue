@@ -46,7 +46,8 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import XColumn from "./column.vue";
-import { removeColumn, updateColumn, Column } from "./deck-store";
+import type { Column } from "./deck-store";
+import { removeColumn, updateColumn } from "./deck-store";
 import XTimeline from "@/components/MkTimeline.vue";
 import * as os from "@/os";
 import { $i } from "@/account";
@@ -63,9 +64,9 @@ const emit = defineEmits<{
 	(ev: "parent-focus", direction: "up" | "down" | "left" | "right"): void;
 }>();
 
-let disabled = $ref(false);
-let indicated = $ref(false);
-let columnActive = $ref(true);
+let disabled = $ref(false),
+	indicated = $ref(false),
+	columnActive = $ref(true);
 
 onMounted(() => {
 	if (props.column.tl == null) {

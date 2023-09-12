@@ -58,7 +58,6 @@ import { AnnouncementRead } from "@/models/entities/announcement-read.js";
 import { Clip } from "@/models/entities/clip.js";
 import { ClipNote } from "@/models/entities/clip-note.js";
 import { Antenna } from "@/models/entities/antenna.js";
-import { AntennaNote } from "@/models/entities/antenna-note.js";
 import { PromoNote } from "@/models/entities/promo-note.js";
 import { PromoRead } from "@/models/entities/promo-read.js";
 import { Relay } from "@/models/entities/relay.js";
@@ -67,7 +66,6 @@ import { Channel } from "@/models/entities/channel.js";
 import { ChannelFollowing } from "@/models/entities/channel-following.js";
 import { ChannelNotePining } from "@/models/entities/channel-note-pining.js";
 import { RegistryItem } from "@/models/entities/registry-item.js";
-import { Ad } from "@/models/entities/ad.js";
 import { PasswordResetRequest } from "@/models/entities/password-reset-request.js";
 import { UserPending } from "@/models/entities/user-pending.js";
 import { Webhook } from "@/models/entities/webhook.js";
@@ -79,6 +77,7 @@ import { entities as charts } from "@/services/chart/entities.js";
 import { envOption } from "../env.js";
 import { dbLogger } from "./logger.js";
 import { redisClient } from "./redis.js";
+import { nativeInitDatabase } from "native-utils/built/index.js";
 
 const sqlLogger = dbLogger.createSubLogger("sql", "gray", false);
 
@@ -168,7 +167,6 @@ export const entities = [
 	Clip,
 	ClipNote,
 	Antenna,
-	AntennaNote,
 	PromoNote,
 	PromoRead,
 	Relay,
@@ -177,7 +175,6 @@ export const entities = [
 	ChannelFollowing,
 	ChannelNotePining,
 	RegistryItem,
-	Ad,
 	PasswordResetRequest,
 	UserPending,
 	Webhook,
@@ -209,9 +206,11 @@ export const db = new DataSource({
 					host: config.redis.host,
 					port: config.redis.port,
 					family: config.redis.family == null ? 0 : config.redis.family,
+					username: config.redis.user ?? "default",
 					password: config.redis.pass,
 					keyPrefix: `${config.redis.prefix}:query:`,
 					db: config.redis.db || 0,
+					tls: config.redis.tls,
 				},
 		  }
 		: false,
@@ -223,6 +222,11 @@ export const db = new DataSource({
 });
 
 export async function initDb(force = false) {
+	await nativeInitDatabase(
+		`postgres://${config.db.user}:${encodeURIComponent(config.db.pass)}@${
+			config.db.host
+		}:${config.db.port}/${config.db.db}`,
+	);
 	if (force) {
 		if (db.isInitialized) {
 			await db.destroy();

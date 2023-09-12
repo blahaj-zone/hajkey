@@ -11,7 +11,7 @@ const props = withDefaults(
 	}>(),
 	{
 		minWidth: 210,
-	}
+	},
 );
 
 const minWidth = props.minWidth + "px";

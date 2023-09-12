@@ -1,16 +1,13 @@
 <template>
 	<div class="_formRoot">
-		<FormSection>
+		<FormSection style="border: none !important">
 			<template #label>{{ i18n.ts.password }}</template>
-			<FormButton primary @click="change()">{{
+			<MkButton primary @click="change()">{{
 				i18n.ts.changePassword
-			}}</FormButton>
+			}}</MkButton>
 		</FormSection>
 
-		<FormSection>
-			<template #label>{{ i18n.ts.twoStepAuthentication }}</template>
-			<X2fa />
-		</FormSection>
+		<X2fa />
 
 		<FormSection>
 			<template #label>{{ i18n.ts.signinHistory }}</template>
@@ -43,9 +40,9 @@
 
 		<FormSection>
 			<FormSlot>
-				<FormButton danger @click="regenerateToken"
+				<MkButton danger @click="regenerateToken"
 					><i class="ph-arrows-clockwise ph-bold ph-lg"></i>
-					{{ i18n.ts.regenerateLoginToken }}</FormButton
+					{{ i18n.ts.regenerateLoginToken }}</MkButton
 				>
 				<template #caption>{{
 					i18n.ts.regenerateLoginTokenDescription
@@ -59,7 +56,7 @@
 import X2fa from "./2fa.vue";
 import FormSection from "@/components/form/section.vue";
 import FormSlot from "@/components/form/slot.vue";
-import FormButton from "@/components/MkButton.vue";
+import MkButton from "@/components/MkButton.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
@@ -70,24 +67,27 @@ const pagination = {
 	limit: 5,
 };
 
-async function change(): Promise<void> {
+async function change() {
 	const { canceled: canceled1, result: currentPassword } = await os.inputText(
 		{
 			title: i18n.ts.currentPassword,
 			type: "password",
-		}
+			autocomplete: "current-password",
+		},
 	);
 	if (canceled1) return;
 
 	const { canceled: canceled2, result: newPassword } = await os.inputText({
 		title: i18n.ts.newPassword,
 		type: "password",
+		autocomplete: "new-password",
 	});
 	if (canceled2) return;
 
 	const { canceled: canceled3, result: newPassword2 } = await os.inputText({
 		title: i18n.ts.newPasswordRetype,
 		type: "password",
+		autocomplete: "new-password",
 	});
 	if (canceled3) return;
 
@@ -105,13 +105,13 @@ async function change(): Promise<void> {
 	});
 }
 
-function regenerateToken(): void {
+function regenerateToken() {
 	os.inputText({
 		title: i18n.ts.password,
 		type: "password",
 	}).then(({ canceled, result: password }) => {
 		if (canceled) return;
-		os.api("i/regenerate_token", {
+		os.api("i/regenerate-token", {
 			password: password,
 		});
 	});
@@ -129,7 +129,7 @@ definePageMetadata({
 
 <style lang="scss" scoped>
 .timnmucd {
-	padding: 16px;
+	padding: 12px;
 
 	&:first-child {
 		border-top-left-radius: 6px;

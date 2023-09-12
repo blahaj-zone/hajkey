@@ -155,9 +155,9 @@ const calcBg = () => {
 	const tinyBg = tinycolor(
 		rawBg.startsWith("var(")
 			? getComputedStyle(document.documentElement).getPropertyValue(
-					rawBg.slice(4, -1)
+					rawBg.slice(4, -1),
 			  )
-			: rawBg
+			: rawBg,
 	);
 	tinyBg.setAlpha(0.85);
 	bg.value = tinyBg.toRgbString();
@@ -186,7 +186,7 @@ onMounted(() => {
 		},
 		{
 			immediate: true,
-		}
+		},
 	);
 });
 

@@ -259,7 +259,7 @@ watch(
 	() => {
 		fetching = true;
 		renderChart();
-	}
+	},
 );
 
 onMounted(async () => {

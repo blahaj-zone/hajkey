@@ -35,7 +35,7 @@
 			<div class="zuvgdzyt">
 				<XEmoji
 					v-for="emoji in customEmojis.filter(
-						(e) => e.category === category
+						(e) => e.category === category,
 					)"
 					:key="emoji.name"
 					class="emoji"
@@ -106,7 +106,7 @@ export default defineComponent({
 				this.searchEmojis = this.customEmojis.filter(
 					(emoji) =>
 						emoji.name.includes(this.q) ||
-						emoji.aliases.includes(this.q)
+						emoji.aliases.includes(this.q),
 				);
 			} else {
 				this.searchEmojis = this.customEmojis.filter(
@@ -114,8 +114,8 @@ export default defineComponent({
 						(emoji.name.includes(this.q) ||
 							emoji.aliases.includes(this.q)) &&
 						[...this.selectedTags].every((t) =>
-							emoji.aliases.includes(t)
-						)
+							emoji.aliases.includes(t),
+						),
 				);
 			}
 		},

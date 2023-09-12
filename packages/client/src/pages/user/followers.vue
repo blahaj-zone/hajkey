@@ -24,8 +24,8 @@ import {
 	onUnmounted,
 	watch,
 } from "vue";
-import * as Acct from "calckey-js/built/acct";
-import * as misskey from "calckey-js";
+import * as Acct from "iceshrimp-js/built/acct";
+import * as misskey from "iceshrimp-js";
 import XFollowList from "./follow-list.vue";
 import * as os from "@/os";
 import { definePageMetadata } from "@/scripts/page-metadata";
@@ -35,7 +35,7 @@ const props = withDefaults(
 	defineProps<{
 		acct: string;
 	}>(),
-	{}
+	{},
 );
 
 let user = $ref<null | misskey.entities.UserDetailed>(null);
@@ -73,8 +73,8 @@ definePageMetadata(
 					userName: user,
 					avatar: user,
 			  }
-			: null
-	)
+			: null,
+	),
 );
 </script>
 

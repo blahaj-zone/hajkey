@@ -55,7 +55,7 @@ attachCancel: Poista liite
 enterFileName: Anna tiedostonimi
 mute: Hiljennä
 unmute: Poista hiljennys
-headlineMisskey: Avoimen lähdekoodin, hajautettu sosiaalisen median alusta, joka on
+headlineIceshrimp: Avoimen lähdekoodin, hajautettu sosiaalisen median alusta, joka on
   ikuisesti ilmainen! 🚀
 monthAndDay: '{day}/{month}'
 deleteAndEditConfirm: Oletko varma, että haluat poistaa tämän lähetyksen ja muokata
@@ -127,7 +127,7 @@ cacheRemoteFiles: Taltioi etätiedostot välimuistiin
 flagAsBot: Merkitse tili botiksi
 flagAsBotDescription: Ota tämä vaihtoehto käyttöön, jos tätä tiliä ohjaa ohjelma.
   Jos se on käytössä, se toimii lippuna muille kehittäjille, jotta estetään loputtomat
-  vuorovaikutusketjut muiden bottien kanssa ja säädetään Calckeyn sisäiset järjestelmät
+  vuorovaikutusketjut muiden bottien kanssa ja säädetään Iceshrimpn sisäiset järjestelmät
   käsittelemään tätä tiliä botina.
 flagAsCat: Oletko kissa? 🐱
 flagAsCatDescription: Saat kissan korvat ja puhut kuin kissa!
@@ -182,7 +182,6 @@ followsYou: Seuraa sinua
 pageLoadErrorDescription: Tämä yleensä johtuu verkkovirheistä tai selaimen välimuistista.
   Kokeile tyhjentämällä välimuisti ja yritä sitten hetken kuluttua uudelleen.
 enterListName: Anna listalle nimi
-withNFiles: '{n} tiedosto(t)'
 instanceInfo: Instanssin tiedot
 clearQueue: Tyhjennä jono
 suspendConfirm: Oletko varma, että haluat keskeyttää tämän tilin?
@@ -215,7 +214,7 @@ perDay: Päivässä
 version: Versio
 statistics: Tilastot
 clearQueueConfirmTitle: Oletko varma, että haluat tyhjentää jonon?
-introMisskey: Tervetuloa! Calckey on avoimen lähdekoodin, hajautettu sosiaalisen median
+introIceshrimp: Tervetuloa! Iceshrimp on avoimen lähdekoodin, hajautettu sosiaalisen median
   alusta, joka on ikuisesti ilmainen! 🚀
 clearQueueConfirmText: Mitkään välittämättömät lähetykset, jotka ovat jonossa, eivät
   federoidu. Yleensä tätä toimintoa ei tarvita.
@@ -252,7 +251,7 @@ noInstances: Ei yhtään instanssia
 editProfile: Muokkaa profiilia
 noteDeleteConfirm: Oletko varma, että haluat poistaa tämän viestin?
 pinLimitExceeded: Et voi kiinnittää enempää viestejä
-intro: Calckey -asennus valmis! Ole hyvä ja luo admin-käyttäjä.
+intro: Iceshrimp -asennus valmis! Ole hyvä ja luo admin-käyttäjä.
 done: Valmis
 processing: Suorittaa
 preview: Esikatselu
@@ -473,7 +472,7 @@ silence: Hiljennä
 popularTags: Suositut tagit
 userList: Listat
 about: Tietoja
-aboutMisskey: Tietoja Calckeystä
+aboutIceshrimp: Tietoja Iceshrimpstä
 exploreFediverse: Tutustu fediverseen
 recentlyUpdatedUsers: Vastikään lisätyt käyttäjät
 recentlyRegisteredUsers: Uudet liittyneet jäyttäjät
@@ -619,7 +618,7 @@ sort: Järjestä
 ascendingOrder: Nousevasti
 scratchpadDescription: Raaputusalusta tarjoaa ympäristön AiScript-kokeiluja varten.
   Voit kirjoittaa, suorittaa ja tarkistaa sen tulokset vuorovaikutuksessa siinä olevan
-  Calckeyn kanssa.
+  Iceshrimpn kanssa.
 script: Skripti
 disablePagesScript: Poista AiScript käytöstä sivuilla
 updateRemoteUser: Päivitä etäkäyttäjän tiedot
@@ -801,14 +800,14 @@ smtpSecure: Käytä implisiittistä SSL/TLS:ää SMTP-yhteyksissä
 useGlobalSettingDesc: Jos se on päällä, käytetään tilisi ilmoitusasetuksia. Jos se
   on pois päältä, voit tehdä yksilöllisiä asetuksia.
 public: Julkinen
-i18nInfo: Vapaaehtoiset kääntävät Calckeyta eri kielille. Voit auttaa osoitteessa
+i18nInfo: Vapaaehtoiset kääntävät Iceshrimpta eri kielille. Voit auttaa osoitteessa
   {link}.
 lockedAccountInfo: Ellet aseta postauksen näkyvyydeksi "Vain seuraajille", postauksesi
   näkyvät kaikille, vaikka vaatisitkin seuraajilta manuaalista hyväksyntää.
 sendErrorReportsDescription: "Kun tämä on päällä, yksityiskohtaiset virhetiedot jaetaan\
-  \ Calckeyn kanssa ongelman ilmetessä, mikä auttaa parantamaan Calckeyn laatua.\n\
+  \ Iceshrimpn kanssa ongelman ilmetessä, mikä auttaa parantamaan Iceshrimpn laatua.\n\
   Näihin tietoihin sisältyy esimerkiksi käyttöjärjestelmäversio, käyttämäsi selain,\
-  \ toimintasi Calckeyssä jne."
+  \ toimintasi Iceshrimpssä jne."
 createdAt: Luotu
 youAreRunningUpToDateClient: Käytössäsi on asiakasohjelman uusin versio.
 needReloadToApply: Uudelleenlataus vaaditaan, jotta tämä näkyy.
@@ -832,7 +831,7 @@ makeReactionsPublic: Aseta reaktiohistoria julkiseksi
 unread: Lukematon
 deleted: Poistettu
 editNote: Muokkaa viestiä
-edited: Muokattu
+edited: 'Muokattu klo {date} {time}'
 avoidMultiCaptchaConfirm: Useiden Captcha-järjestelmien käyttö voi aiheuttaa häiriöitä
   niiden välillä. Haluatko poistaa käytöstä muut tällä hetkellä käytössä olevat Captcha-järjestelmät?
   Jos haluat, että ne pysyvät käytössä, paina peruutusnäppäintä.
@@ -883,7 +882,7 @@ squareAvatars: Näytä neliön malliset kuvakkeet
 seperateRenoteQuote: Erilliset buustaa ja lainaa -napit
 sent: Lähetetty
 useBlurEffect: Käytä blur-efektejä käyttöliittymässä
-misskeyUpdated: Calckey on päivitetty!
+iceshrimpUpdated: Iceshrimp on päivitetty!
 whatIsNew: Näytä muutokset
 translate: Käännä
 translatedFrom: Käännetty kielestä {x}

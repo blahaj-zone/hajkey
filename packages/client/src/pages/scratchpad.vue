@@ -106,7 +106,7 @@ async function run() {
 						break;
 				}
 			},
-		}
+		},
 	);
 
 	let ast;

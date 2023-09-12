@@ -37,7 +37,7 @@ const props = withDefaults(
 		value: {
 			fileId: null,
 		},
-	}
+	},
 );
 
 let file: any = $ref(null);

@@ -38,7 +38,7 @@ export default defineComponent({
 			os.api("notes/show", { noteId: props.block.note }).then(
 				(result) => {
 					note.value = result;
-				}
+				},
 			);
 		});
 

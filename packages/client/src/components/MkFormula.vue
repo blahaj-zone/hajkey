@@ -9,7 +9,7 @@ import * as os from "@/os";
 export default defineComponent({
 	components: {
 		XFormula: defineAsyncComponent(
-			() => import("@/components/MkFormulaCore.vue")
+			() => import("@/components/MkFormulaCore.vue"),
 		),
 	},
 	props: {

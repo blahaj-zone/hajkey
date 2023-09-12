@@ -4,10 +4,10 @@ export class AddSomeUrls1557761316509 {
 			`ALTER TABLE "meta" ADD "ToSUrl" character varying(512)`,
 		);
 		await queryRunner.query(
-			`ALTER TABLE "meta" ADD "repositoryUrl" character varying(512) NOT NULL DEFAULT 'https://codeberg.org/calckey/calckey'`,
+			`ALTER TABLE "meta" ADD "repositoryUrl" character varying(512) NOT NULL DEFAULT 'https://codeberg.org/firefish/firefish'`,
 		);
 		await queryRunner.query(
-			`ALTER TABLE "meta" ADD "feedbackUrl" character varying(512) DEFAULT 'https://codeberg.org/calckey/calckey/issues'`,
+			`ALTER TABLE "meta" ADD "feedbackUrl" character varying(512) DEFAULT 'https://codeberg.org/firefish/firefish/issues'`,
 		);
 	}
 	async down(queryRunner) {

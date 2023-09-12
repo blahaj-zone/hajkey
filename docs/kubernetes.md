@@ -1,7 +1,7 @@
-# Running a Calckey instance with Kubernetes and Helm
+# Running a Firefish server with Kubernetes and Helm
 
 This is a [Helm](https://helm.sh/) chart directory in the root of the project
-that you can use to deploy calckey to a Kubernetes cluster
+that you can use to deploy firefish to a Kubernetes cluster
 
 ## Deployment
 
@@ -17,29 +17,29 @@ helm dependency list $dir 2> /dev/null | tail +2 | head -n -1 | awk '{ print "he
 cd ../
 ```
 
-3. Create the calckey helm release (also used to update existing deployment):
+3. Create the firefish helm release (also used to update existing deployment):
 ```shell
 helm upgrade \
     --install \
-    --namespace calckey \
+    --namespace firefish \
     --create-namespace \
-    calckey chart/ \
+    firefish chart/ \
     -f .config/helm_values.yml
 ```
 
-4. Watch your calckey instance spin up:
+4. Watch your firefish server spin up:
 ```shell
-kubectl -n calckey get po -w
+kubectl -n firefish get po -w
 ```
 
 5. Initial the admin user and managed config:
 ```shell
-export CALCKEY_USERNAME="my_desired_admin_handle" && \
-export CALCKEY_PASSWORD="myDesiredInitialPassword" && \
-export CALCKEY_HOST="calckey.example.com" && \
-export CALCKEY_TOKEN=$(curl -X POST https://$CALCKEY_HOST/api/admin/accounts/create  -H "Content-Type: application/json" -d "{ \"username\":\"$CALCKEY_USERNAME\", \"password\":\"$CALCKEY_PASSWORD\" }" | jq -r '.token') && \
-echo "Save this token: ${CALCKEY_TOKEN}" && \
-curl -X POST -H "Authorization: Bearer $CALCKEY_TOKEN" https://$CALCKEY_HOST/api/admin/accounts/hosted
+export firefish_USERNAME="my_desired_admin_handle" && \
+export firefish_PASSWORD="myDesiredInitialPassword" && \
+export firefish_HOST="firefish.example.com" && \
+export firefish_TOKEN=$(curl -X POST https://$firefish_HOST/api/admin/accounts/create  -H "Content-Type: application/json" -d "{ \"username\":\"$firefish_USERNAME\", \"password\":\"$firefish_PASSWORD\" }" | jq -r '.token') && \
+echo "Save this token: ${firefish_TOKEN}" && \
+curl -X POST -H "Authorization: Bearer $firefish_TOKEN" https://$firefish_HOST/api/admin/accounts/hosted
 ```
 
 6. Enjoy!

@@ -77,7 +77,7 @@ const plugins = ref(ColdDeviceStorage.get("plugins"));
 function uninstall(plugin) {
 	ColdDeviceStorage.set(
 		"plugins",
-		plugins.value.filter((x) => x.id !== plugin.id)
+		plugins.value.filter((x) => x.id !== plugin.id),
 	);
 	os.success();
 	nextTick(() => {

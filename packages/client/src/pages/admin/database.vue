@@ -49,7 +49,7 @@ const databasePromiseFactory = () =>
 	os
 		.api("admin/get-table-stats")
 		.then((res) =>
-			Object.entries(res).sort((a, b) => b[1].size - a[1].size)
+			Object.entries(res).sort((a, b) => b[1].size - a[1].size),
 		);
 
 const headerActions = $computed(() => []);

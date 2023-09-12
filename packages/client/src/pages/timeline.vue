@@ -15,12 +15,6 @@
 					class="post-form _block"
 					fixed
 				/>
-
-				<div v-if="queue > 0" class="new">
-					<button class="_buttonPrimary" @click="top()">
-						{{ i18n.ts.newNoteRecived }}
-					</button>
-				</div>
 				<!-- <div v-if="!isMobile" class="tl _block">
 				<XTimeline
 					ref="tl"
@@ -33,14 +27,17 @@
 			</div> *v-else on next div* -->
 				<div class="tl _block">
 					<swiper
+						:round-lengths="true"
+						:touch-angle="25"
+						:threshold="10"
+						:centeredSlides="true"
 						:modules="[Virtual]"
 						:space-between="20"
 						:virtual="true"
 						:allow-touch-move="
-							!(
-								deviceKind === 'desktop' &&
-								!defaultStore.state.swipeOnDesktop
-							) && defaultStore.state.allowSwipe
+							defaultStore.state.swipeOnMobile &&
+							(deviceKind !== 'desktop' ||
+								defaultStore.state.swipeOnDesktop)
 						"
 						@swiper="setSwiperRef"
 						@slide-change="onSlideChange"
@@ -51,12 +48,12 @@
 							:virtual-index="index"
 						>
 							<XTimeline
+								v-if="index == timelines[swiperRef.activeIndex]"
 								ref="tl"
 								:key="src"
 								class="tl"
 								:src="src"
 								:sound="true"
-								@queue="queueUpdated"
 							/>
 						</swiper-slide>
 					</swiper>
@@ -67,13 +64,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch, ref, onMounted } from "vue";
-import { Virtual } from "swiper";
+import { computed, ref, onMounted } from "vue";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import XTutorial from "@/components/MkTutorialDialog.vue";
 import XTimeline from "@/components/MkTimeline.vue";
 import XPostForm from "@/components/MkPostForm.vue";
-import { scroll } from "@/scripts/scroll";
 import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
@@ -121,11 +117,11 @@ if (
 if (isLocalTimelineAvailable) {
 	timelines.push("local");
 }
-if (isRecommendedTimelineAvailable) {
-	timelines.push("recommended");
-}
 if (isLocalTimelineAvailable) {
 	timelines.push("social");
+}
+if (isRecommendedTimelineAvailable) {
+	timelines.push("recommended");
 }
 if (isGlobalTimelineAvailable) {
 	timelines.push("global");
@@ -135,7 +131,7 @@ const MOBILE_THRESHOLD = 500;
 
 // デスクトップでウィンドウを狭くしたときモバイルUIが表示されて欲しいことはあるので deviceKind === 'desktop' の判定は行わない
 const isMobile = ref(
-	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD,
 );
 window.addEventListener("resize", () => {
 	isMobile.value =
@@ -145,7 +141,6 @@ window.addEventListener("resize", () => {
 const tlComponent = $ref<InstanceType<typeof XTimeline>>();
 const rootEl = $ref<HTMLElement>();
 
-let queue = $ref(0);
 const src = $computed({
 	get: () => defaultStore.reactiveState.tl.value.src,
 	set: (x) => {
@@ -154,60 +149,54 @@ const src = $computed({
 	},
 });
 
-watch($$(src), () => (queue = 0));
-
-function queueUpdated(q: number): void {
-	queue = q;
+const lists = os.api("users/lists/list");
+async function chooseList(ev: MouseEvent) {
+	await lists.then((res) => {
+		const items = [
+			{
+				type: "link" as const,
+				text: i18n.ts.manageLists,
+				icon: "ph-faders-horizontal ph-bold ph-lg",
+				to: "/my/lists",
+			},
+		].concat(
+			res.map((list) => ({
+				type: "link" as const,
+				text: list.name,
+				icon: "",
+				to: `/timeline/list/${list.id}`,
+			})),
+		);
+		os.popupMenu(items, ev.currentTarget ?? ev.target);
+	});
 }
 
-function top(): void {
-	scroll(rootEl, { top: 0 });
-}
-
-async function chooseList(ev: MouseEvent): Promise<void> {
-	const lists = await os.api("users/lists/list");
-	const items = [
-		{
-			type: "link" as const,
-			text: i18n.ts.manageLists,
-			icon: "ph-faders-horizontal ph-bold ph-lg",
-			to: "/my/lists",
-		},
-	].concat(
-		lists.map((list) => ({
-			type: "link" as const,
-			text: list.name,
-			icon: "",
-			to: `/timeline/list/${list.id}`,
-		}))
-	);
-	os.popupMenu(items, ev.currentTarget ?? ev.target);
-}
-
-async function chooseAntenna(ev: MouseEvent): Promise<void> {
-	const antennas = await os.api("antennas/list");
-	const items = [
-		{
-			type: "link" as const,
-			indicate: false,
-			text: i18n.ts.manageAntennas,
-			icon: "ph-faders-horizontal ph-bold ph-lg",
-			to: "/my/antennas",
-		},
-	].concat(
-		antennas.map((antenna) => ({
-			type: "link" as const,
-			text: antenna.name,
-			icon: "",
-			indicate: antenna.hasUnreadNote,
-			to: `/timeline/antenna/${antenna.id}`,
-		}))
-	);
-	os.popupMenu(items, ev.currentTarget ?? ev.target);
+const antennas = os.api("antennas/list");
+async function chooseAntenna(ev: MouseEvent) {
+	await antennas.then((res) => {
+		const items = [
+			{
+				type: "link" as const,
+				indicate: false,
+				text: i18n.ts.manageAntennas,
+				icon: "ph-faders-horizontal ph-bold ph-lg",
+				to: "/my/antennas",
+			},
+		].concat(
+			res.map((antenna) => ({
+				type: "link" as const,
+				text: antenna.name,
+				icon: "",
+				indicate: antenna.hasUnreadNote,
+				to: `/timeline/antenna/${antenna.id}`,
+			})),
+		);
+		os.popupMenu(items, ev.currentTarget ?? ev.target);
+	});
 }
 
 function saveSrc(
-	newSrc: "home" | "local" | "recommended" | "social" | "global"
+	newSrc: "home" | "local" | "social" | "recommended" | "global",
 ): void {
 	defaultStore.set("tl", {
 		...defaultStore.state.tl,
@@ -267,22 +256,22 @@ const headerTabs = $computed(() => [
 				},
 		  ]
 		: []),
-	...(isRecommendedTimelineAvailable
-		? [
-				{
-					key: "recommended",
-					title: i18n.ts._timelines.recommended,
-					icon: "ph-thumbs-up ph-bold ph-lg",
-					iconOnly: true,
-				},
-		  ]
-		: []),
 	...(isLocalTimelineAvailable
 		? [
 				{
 					key: "social",
 					title: i18n.ts._timelines.social,
 					icon: "ph-handshake ph-bold ph-lg",
+					iconOnly: true,
+				},
+		  ]
+		: []),
+	...(isRecommendedTimelineAvailable
+		? [
+				{
+					key: "recommended",
+					title: i18n.ts._timelines.recommended,
+					icon: "ph-thumbs-up ph-bold ph-lg",
 					iconOnly: true,
 				},
 		  ]
@@ -312,7 +301,7 @@ definePageMetadata(
 				: src === "global"
 				? "ph-planet ph-bold ph-lg"
 				: "ph-house ph-bold ph-lg",
-	}))
+	})),
 );
 
 let swiperRef: any = null;
@@ -362,31 +351,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .cmuxhskf {
 	--swiper-theme-color: var(--accent);
-
-	> .new {
-		position: sticky;
-		top: calc(var(--stickyTop, 0px) + 16px);
-		z-index: 1000;
-		width: 100%;
-		pointer-events: none;
-
-		> button {
-			display: block;
-			margin: var(--margin) auto 0 auto;
-			padding: 8px 16px;
-			border-radius: 32px;
-			pointer-events: all;
-		}
-	}
-
-	> .post-form {
-		border-radius: var(--radius);
-	}
-
 	> .tl {
 		background: none;
-		border-radius: var(--radius);
-		overflow: clip;
 	}
 }
 </style>

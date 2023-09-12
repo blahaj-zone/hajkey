@@ -3,7 +3,7 @@
 		class="dkgtipfy"
 		:class="{ wallpaper, isMobile, centered: ui === 'classic' }"
 	>
-		<XSidebar v-if="!isMobile" class="sidebar" />
+		<XSidebar v-if="!isMobile" />
 
 		<MkStickyContainer class="contents">
 			<template #header
@@ -19,7 +19,7 @@
 			</main>
 		</MkStickyContainer>
 
-		<div v-if="isDesktop" ref="widgetsEl" class="widgets">
+		<div v-if="isDesktop" ref="widgetsEl" class="widgets-container">
 			<XWidgets @mounted="attachSticky" />
 		</div>
 
@@ -39,7 +39,10 @@
 			>
 				<div class="button-wrapper">
 					<i class="ph-list ph-bold ph-lg"></i
-					><span v-if="menuIndicated" class="indicator"
+					><span
+						v-if="menuIndicated"
+						class="indicator"
+						:class="{ animateIndicator: $store.state.animation }"
 						><i class="ph-circle ph-fill"></i
 					></span>
 				</div>
@@ -74,7 +77,10 @@
 					:class="buttonAnimIndex === 1 ? 'on' : ''"
 				>
 					<i class="ph-bell ph-bold ph-lg"></i
-					><span v-if="$i?.hasUnreadNotification" class="indicator"
+					><span
+						v-if="$i?.hasUnreadNotification"
+						class="indicator"
+						:class="{ animateIndicator: $store.state.animation }"
 						><i class="ph-circle ph-fill"></i
 					></span>
 				</div>
@@ -95,6 +101,7 @@
 					><span
 						v-if="$i?.hasUnreadMessagingMessage"
 						class="indicator"
+						:class="{ animateIndicator: $store.state.animation }"
 						><i class="ph-circle ph-fill"></i
 					></span>
 				</div>
@@ -162,13 +169,12 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, provide, onMounted, computed, ref } from "vue";
-import XCommon from "./_common_/common.vue";
-import * as Acct from "calckey-js/built/acct";
+import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
+import * as Acct from "iceshrimp-js/built/acct";
 import type { ComputedRef } from "vue";
+import XCommon from "./_common_/common.vue";
 import type { PageMetadata } from "@/scripts/page-metadata";
 import { instanceName, ui } from "@/config";
-import { StickySidebar } from "@/scripts/sticky-sidebar";
 import XDrawerMenu from "@/ui/_common_/navbar-for-mobile.vue";
 import XSidebar from "@/ui/_common_/navbar.vue";
 import * as os from "@/os";
@@ -185,7 +191,7 @@ import { deviceKind } from "@/scripts/device-kind";
 
 const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
 const XStatusBars = defineAsyncComponent(
-	() => import("@/ui/_common_/statusbars.vue")
+	() => import("@/ui/_common_/statusbars.vue"),
 );
 
 const DESKTOP_THRESHOLD = 1100;
@@ -194,7 +200,7 @@ const MOBILE_THRESHOLD = 500;
 // デスクトップでウィンドウを狭くしたときモバイルUIが表示されて欲しいことはあるので deviceKind === 'desktop' の判定は行わない
 const isDesktop = ref(window.innerWidth >= DESKTOP_THRESHOLD);
 const isMobile = ref(
-	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD,
 );
 window.addEventListener("resize", () => {
 	isMobile.value =
@@ -226,7 +232,7 @@ const menuIndicated = computed(() => {
 });
 
 function updateButtonState(): void {
-	let routerState = window.location.pathname;
+	const routerState = window.location.pathname;
 	if (routerState === "/") {
 		buttonAnimIndex.value = 0;
 		return;
@@ -240,7 +246,6 @@ function updateButtonState(): void {
 		return;
 	}
 	buttonAnimIndex.value = 3;
-	return;
 }
 
 updateButtonState();
@@ -249,8 +254,6 @@ mainRouter.on("change", () => {
 	drawerMenuShowing.value = false;
 	updateButtonState();
 });
-
-document.documentElement.style.overflowY = "scroll";
 
 if (defaultStore.state.widgets.length === 0) {
 	defaultStore.set("widgets", [
@@ -300,7 +303,7 @@ function messagingStart(ev) {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 
@@ -334,14 +337,11 @@ async function startGroup(): void {
 
 onMounted(() => {
 	if (!isDesktop.value) {
-		window.addEventListener(
-			"resize",
-			() => {
-				if (window.innerWidth >= DESKTOP_THRESHOLD)
-					isDesktop.value = true;
-			},
-			{ passive: true }
-		);
+		matchMedia(`(min-width: ${DESKTOP_THRESHOLD - 1}px)`).onchange = (
+			mql,
+		) => {
+			if (mql.matches) isDesktop.value = true;
+		};
 	}
 });
 
@@ -355,9 +355,9 @@ const onContextmenu = (ev: MouseEvent) => {
 	if (isLink(ev.target)) return;
 	if (
 		["INPUT", "TEXTAREA", "IMG", "VIDEO", "CANVAS"].includes(
-			ev.target.tagName
+			ev.target.tagName,
 		) ||
-		ev.target.attributes["contenteditable"]
+		ev.target.attributes.contenteditable
 	)
 		return;
 	if (window.getSelection()?.toString() !== "") return;
@@ -376,19 +376,30 @@ const onContextmenu = (ev: MouseEvent) => {
 				},
 			},
 		],
-		ev
+		ev,
 	);
 };
 
 const attachSticky = (el: any) => {
-	const sticky = new StickySidebar(widgetsEl);
-	window.addEventListener(
+	let lastScrollTop = 0;
+	addEventListener(
 		"scroll",
 		() => {
-			sticky.calc(window.scrollY);
+			requestAnimationFrame(() => {
+				widgetsEl.scrollTop += window.scrollY - lastScrollTop;
+				lastScrollTop = window.scrollY;
+			});
 		},
-		{ passive: true }
+		{ passive: true },
 	);
+	widgetsEl.classList.add("hide-scrollbar");
+	widgetsEl.onmouseenter = () => {
+		if (document.documentElement.scrollHeight <= window.innerHeight) {
+			widgetsEl.classList.remove("hide-scrollbar");
+		} else {
+			widgetsEl.classList.add("hide-scrollbar");
+		}
+	};
 };
 
 function top() {
@@ -404,7 +415,8 @@ console.log(mainRouter.currentRoute.value.name);
 .widgetsDrawer-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+	transition:
+		transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
 		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .widgetsDrawer-enter-from,
@@ -427,7 +439,8 @@ console.log(mainRouter.currentRoute.value.name);
 .menuDrawer-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+	transition:
+		transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
 		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .menuDrawer-enter-from,
@@ -466,6 +479,22 @@ console.log(mainRouter.currentRoute.value.name);
 	}
 	&.wallpaper {
 		background: var(--wallpaperOverlay);
+
+		:deep(.sidebar .middle) {
+			position: relative;
+			&::before {
+				content: "";
+				position: absolute;
+				inset: -10px 10px;
+				background: var(--bg);
+				border-radius: calc((2.85rem / 2) + 5px);
+				opacity: 1;
+				z-index: -3;
+			}
+			> ._button:last-child {
+				margin-bottom: 0 !important;
+			}
+		}
 	}
 
 	&.centered {
@@ -542,7 +571,7 @@ console.log(mainRouter.currentRoute.value.name);
 		&.wallpaper {
 			.contents {
 				background: var(--acrylicBg) !important;
-				backdrop-filter: blur(12px);
+				backdrop-filter: var(--blur, blur(12px));
 			}
 			:deep(.tl),
 			:deep(.notes) {
@@ -555,14 +584,20 @@ console.log(mainRouter.currentRoute.value.name);
 		width: 100%;
 		min-width: 0;
 		$widgets-hide-threshold: 1090px;
+		overflow-x: clip;
 		@media (max-width: $widgets-hide-threshold) {
 			padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
 		}
 	}
 
-	> .widgets {
+	> .widgets-container {
+		position: sticky;
+		top: 0;
+		max-height: 100vh;
+		overflow-y: auto;
 		padding: 0 var(--margin);
 		width: 300px;
+		min-width: max-content;
 		box-sizing: content-box;
 
 		@media (max-width: $widgets-hide-threshold) {
@@ -666,7 +701,9 @@ console.log(mainRouter.currentRoute.value.name);
 					left: 0;
 					color: var(--indicator);
 					font-size: 16px;
-					animation: blink 1s infinite;
+				}
+
+				> .animateIndicator {
 				}
 			}
 
@@ -687,7 +724,9 @@ console.log(mainRouter.currentRoute.value.name);
 				left: 0;
 				color: var(--indicator);
 				font-size: 16px;
-				animation: blink 1s infinite;
+			}
+
+			> .animateIndicator {
 			}
 
 			&:first-child {

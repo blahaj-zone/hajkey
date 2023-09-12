@@ -15,7 +15,7 @@ import { createSystemUser } from "./create-system-user.js";
 
 const ACTOR_USERNAME = "relay.actor" as const;
 
-const relaysCache = new Cache<Relay[]>(1000 * 60 * 10);
+const relaysCache = new Cache<Relay[]>("relay", 60 * 60);
 
 export async function getRelayActor(): Promise<ILocalUser> {
 	const user = await Users.findOneBy({
@@ -37,7 +37,7 @@ export async function addRelay(inbox: string) {
 	}).then((x) => Relays.findOneByOrFail(x.identifiers[0]));
 
 	const relayActor = await getRelayActor();
-	const follow = await renderFollowRelay(relay, relayActor);
+	const follow = renderFollowRelay(relay, relayActor);
 	const activity = renderActivity(follow);
 	deliver(relayActor, activity, relay.inbox);
 
@@ -60,6 +60,7 @@ export async function removeRelay(inbox: string) {
 	deliver(relayActor, activity, relay.inbox);
 
 	await Relays.delete(relay.id);
+	await updateRelaysCache();
 }
 
 export async function listRelay() {
@@ -67,12 +68,29 @@ export async function listRelay() {
 	return relays;
 }
 
+export async function getCachedRelays(): Promise<Relay[]> {
+	return await relaysCache.fetch(null, () =>
+		Relays.findBy({
+			status: "accepted",
+		}),
+	);
+}
+
 export async function relayAccepted(id: string) {
 	const result = await Relays.update(id, {
 		status: "accepted",
 	});
 
+	await updateRelaysCache();
+
 	return JSON.stringify(result);
+}
+
+async function updateRelaysCache() {
+	const relays = await Relays.findBy({
+		status: "accepted",
+	});
+	await relaysCache.set(null, relays);
 }
 
 export async function relayRejected(id: string) {
@@ -89,11 +107,7 @@ export async function deliverToRelays(
 ) {
 	if (activity == null) return;
 
-	const relays = await relaysCache.fetch(null, () =>
-		Relays.findBy({
-			status: "accepted",
-		}),
-	);
+	const relays = await getCachedRelays();
 	if (relays.length === 0) return;
 
 	// TODO

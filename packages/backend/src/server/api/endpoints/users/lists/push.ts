@@ -57,7 +57,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		userId: me.id,
 	});
 
-	if (userList == null) {
+	if (!userList) {
 		throw new ApiError(meta.errors.noSuchList);
 	}
 
@@ -70,18 +70,22 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	// Check blocking
 	if (user.id !== me.id) {
-		const block = await Blockings.findOneBy({
-			blockerId: user.id,
-			blockeeId: me.id,
+		const isBlocked = await Blockings.exist({
+			where: {
+				blockerId: user.id,
+				blockeeId: me.id,
+			},
 		});
-		if (block) {
+		if (isBlocked) {
 			throw new ApiError(meta.errors.youHaveBeenBlocked);
 		}
 	}
 
-	const exist = await UserListJoinings.findOneBy({
-		userListId: userList.id,
-		userId: user.id,
+	const exist = await UserListJoinings.exist({
+		where: {
+			userListId: ps.listId,
+			userId: user.id,
+		},
 	});
 
 	if (exist) {

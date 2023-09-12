@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { defaultStore } from "@/store";
@@ -52,7 +52,7 @@ const props = withDefaults(
 	{
 		isSelected: false,
 		selectMode: false,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -184,7 +184,7 @@ function onDragstart(ev: DragEvent) {
 	ev.dataTransfer.effectAllowed = "move";
 	ev.dataTransfer.setData(
 		_DATA_TRANSFER_DRIVE_FOLDER_,
-		JSON.stringify(props.folder)
+		JSON.stringify(props.folder),
 	);
 	isDragging.value = true;
 
@@ -256,13 +256,13 @@ function onContextmenu(ev: MouseEvent) {
 				action: () => {
 					os.popup(
 						defineAsyncComponent(
-							() => import("@/components/MkDriveWindow.vue")
+							() => import("@/components/MkDriveWindow.vue"),
 						),
 						{
 							initialFolder: props.folder,
 						},
 						{},
-						"closed"
+						"closed",
 					);
 				},
 			},
@@ -280,7 +280,7 @@ function onContextmenu(ev: MouseEvent) {
 				action: deleteFolder,
 			},
 		],
-		ev
+		ev,
 	);
 }
 </script>

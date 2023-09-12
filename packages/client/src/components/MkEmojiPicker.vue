@@ -42,13 +42,13 @@
 					<div v-if="searchResultUnicode.length > 0" class="body">
 						<button
 							v-for="emoji in searchResultUnicode"
-							:key="emoji.name"
+							:key="emoji.slug"
 							class="_button item"
-							:title="emoji.name"
+							:title="emoji.slug"
 							tabindex="0"
 							@click="chosen(emoji, $event)"
 						>
-							<MkEmoji class="emoji" :emoji="emoji.char" />
+							<MkEmoji class="emoji" :emoji="emoji.emoji" />
 						</button>
 					</div>
 				</section>
@@ -111,15 +111,20 @@
 				<div v-once class="group">
 					<header>{{ i18n.ts.emoji }}</header>
 					<XSection
-						v-for="category in categories"
+						v-for="category in unicodeEmojiCategories"
 						:key="category"
+						:skin-tone-selector="category === 'people'"
+						:skin-tones="unicodeEmojiSkinTones"
+						:skin-tone-labels="unicodeEmojiSkinToneLabels"
 						:emojis="
 							emojilist
 								.filter((e) => e.category === category)
-								.map((e) => e.char)
+								.map((e) => e.emoji)
 						"
 						@chosen="chosen"
-						>{{ category }}</XSection
+						>{{
+							getNicelyLabeledCategory(category) || category
+						}}</XSection
 					>
 				</div>
 			</div>
@@ -159,12 +164,13 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import XSection from "@/components/MkEmojiPicker.section.vue";
 import {
 	emojilist,
+	unicodeEmojiCategories,
 	UnicodeEmojiDef,
-	unicodeEmojiCategories as categories,
+	getNicelyLabeledCategory,
 } from "@/scripts/emojilist";
 import { getStaticImageUrl } from "@/scripts/get-static-image-url";
 import Ripple from "@/components/MkRipple.vue";
@@ -185,11 +191,11 @@ const props = withDefaults(
 	}>(),
 	{
 		showPinned: true,
-	}
+	},
 );
 
 const emit = defineEmits<{
-	(ev: "chosen", v: string): void;
+	(ev: "chosen", v: string, ev: MouseEvent): void;
 }>();
 
 const search = ref<HTMLInputElement>();
@@ -204,14 +210,32 @@ const {
 	recentlyUsedEmojis,
 } = defaultStore.reactiveState;
 
+const unicodeEmojiSkinTones = [
+	"#FFDC5E",
+	"#F7DFCF",
+	"#F3D3A3",
+	"#D6AE89",
+	"#B17F56",
+	"#7D523C",
+];
+
+const unicodeEmojiSkinToneLabels = [
+	i18n.ts._skinTones?.yellow ?? "Yellow",
+	i18n.ts._skinTones?.light ?? "Light",
+	i18n.ts._skinTones?.mediumLight ?? "Medium Light",
+	i18n.ts._skinTones?.medium ?? "Medium",
+	i18n.ts._skinTones?.mediumDark ?? "Medium Dark",
+	i18n.ts._skinTones?.dark ?? "Dark",
+];
+
 const size = computed(() =>
-	props.asReactionPicker ? reactionPickerSize.value : 1
+	props.asReactionPicker ? reactionPickerSize.value : 1,
 );
 const width = computed(() =>
-	props.asReactionPicker ? reactionPickerWidth.value : 3
+	props.asReactionPicker ? reactionPickerWidth.value : 3,
 );
 const height = computed(() =>
-	props.asReactionPicker ? reactionPickerHeight.value : 2
+	props.asReactionPicker ? reactionPickerHeight.value : 2,
 );
 const customEmojiCategories = emojiCategories;
 const customEmojis = instance.emojis;
@@ -232,7 +256,7 @@ watch(q, () => {
 	const newQ = q.value.replace(/:/g, "").toLowerCase();
 
 	const searchCustom = () => {
-		const max = 8;
+		const max = 16;
 		const emojis = customEmojis;
 		const matches = new Set<Misskey.entities.CustomEmoji>();
 
@@ -259,8 +283,8 @@ watch(q, () => {
 						(keyword) =>
 							emoji.name.includes(keyword) ||
 							emoji.aliases.some((alias) =>
-								alias.includes(keyword)
-							)
+								alias.includes(keyword),
+							),
 					)
 				) {
 					matches.add(emoji);
@@ -304,11 +328,11 @@ watch(q, () => {
 	};
 
 	const searchUnicode = () => {
-		const max = 8;
+		const max = 32;
 		const emojis = emojilist;
 		const matches = new Set<UnicodeEmojiDef>();
 
-		const exactMatch = emojis.find((emoji) => emoji.name === newQ);
+		const exactMatch = emojis.find((emoji) => emoji.slug === newQ);
 		if (exactMatch) matches.add(exactMatch);
 
 		if (newQ.includes(" ")) {
@@ -317,7 +341,7 @@ watch(q, () => {
 
 			// 名前にキーワードが含まれている
 			for (const emoji of emojis) {
-				if (keywords.every((keyword) => emoji.name.includes(keyword))) {
+				if (keywords.every((keyword) => emoji.slug.includes(keyword))) {
 					matches.add(emoji);
 					if (matches.size >= max) break;
 				}
@@ -329,10 +353,10 @@ watch(q, () => {
 				if (
 					keywords.every(
 						(keyword) =>
-							emoji.name.includes(keyword) ||
-							emoji.keywords.some((alias) =>
-								alias.includes(keyword)
-							)
+							emoji.slug.includes(keyword) ||
+							emoji.keywords?.some((alias) =>
+								alias.includes(keyword),
+							),
 					)
 				) {
 					matches.add(emoji);
@@ -341,7 +365,7 @@ watch(q, () => {
 			}
 		} else {
 			for (const emoji of emojis) {
-				if (emoji.name.startsWith(newQ)) {
+				if (emoji.slug.startsWith(newQ)) {
 					matches.add(emoji);
 					if (matches.size >= max) break;
 				}
@@ -350,7 +374,7 @@ watch(q, () => {
 
 			for (const emoji of emojis) {
 				if (
-					emoji.keywords.some((keyword) => keyword.startsWith(newQ))
+					emoji.keywords?.some((keyword) => keyword.startsWith(newQ))
 				) {
 					matches.add(emoji);
 					if (matches.size >= max) break;
@@ -359,7 +383,7 @@ watch(q, () => {
 			if (matches.size >= max) return matches;
 
 			for (const emoji of emojis) {
-				if (emoji.name.includes(newQ)) {
+				if (emoji.slug.includes(newQ)) {
 					matches.add(emoji);
 					if (matches.size >= max) break;
 				}
@@ -367,7 +391,7 @@ watch(q, () => {
 			if (matches.size >= max) return matches;
 
 			for (const emoji of emojis) {
-				if (emoji.keywords.some((keyword) => keyword.includes(newQ))) {
+				if (emoji.keywords?.some((keyword) => keyword.includes(newQ))) {
 					matches.add(emoji);
 					if (matches.size >= max) break;
 				}
@@ -395,9 +419,9 @@ function reset() {
 }
 
 function getKey(
-	emoji: string | Misskey.entities.CustomEmoji | UnicodeEmojiDef
+	emoji: string | Misskey.entities.CustomEmoji | UnicodeEmojiDef,
 ): string {
-	return typeof emoji === "string" ? emoji : emoji.char || `:${emoji.name}:`;
+	return typeof emoji === "string" ? emoji : emoji.emoji || `:${emoji.name}:`;
 }
 
 function chosen(emoji: any, ev?: MouseEvent) {
@@ -412,7 +436,7 @@ function chosen(emoji: any, ev?: MouseEvent) {
 	}
 
 	const key = getKey(emoji);
-	emit("chosen", key);
+	emit("chosen", key, ev);
 
 	// 最近使った絵文字更新
 	if (!pinned.value.includes(key)) {
@@ -441,7 +465,7 @@ function done(query?: any): boolean | void {
 		return true;
 	}
 	const exactMatchUnicode = emojilist.find(
-		(emoji) => emoji.char === q2 || emoji.name === q2
+		(emoji) => emoji.emoji === q2 || emoji.slug === q2,
 	);
 	if (exactMatchUnicode) {
 		chosen(exactMatchUnicode);

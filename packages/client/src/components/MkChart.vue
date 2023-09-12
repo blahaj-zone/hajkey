@@ -8,30 +8,31 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch, PropType, onUnmounted } from "vue";
+import type { PropType } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import {
-	Chart,
 	ArcElement,
-	LineElement,
-	BarElement,
-	PointElement,
 	BarController,
-	LineController,
+	BarElement,
 	CategoryScale,
-	LinearScale,
-	TimeScale,
+	Chart,
+	Filler,
 	Legend,
+	LineController,
+	LineElement,
+	LinearScale,
+	PointElement,
+	SubTitle,
+	TimeScale,
 	Title,
 	Tooltip,
-	SubTitle,
-	Filler,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { enUS } from "date-fns/locale";
 import zoomPlugin from "chartjs-plugin-zoom";
 // https://github.com/misskey-dev/misskey/pull/8575#issuecomment-1114242002
 // We can't use gradient because Vite throws a error.
-//import gradient from 'chartjs-plugin-gradient';
+// import gradient from 'chartjs-plugin-gradient';
 import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { useChartTooltip } from "@/scripts/use-chart-tooltip";
@@ -91,8 +92,8 @@ Chart.register(
 	Tooltip,
 	SubTitle,
 	Filler,
-	zoomPlugin
-	//gradient,
+	zoomPlugin,
+	// gradient,
 );
 
 const sum = (...arr) => arr.reduce((r, a) => r.map((b, i) => a[i] + b));
@@ -127,20 +128,20 @@ const getColor = (i) => {
 };
 
 const now = new Date();
-let chartInstance: Chart = null;
-let chartData: {
-	series: {
-		name: string;
-		type: "line" | "area";
-		color?: string;
-		dashed?: boolean;
-		hidden?: boolean;
-		data: {
-			x: number;
-			y: number;
+let chartInstance: Chart = null,
+	chartData: {
+		series: {
+			name: string;
+			type: "line" | "area";
+			color?: string;
+			dashed?: boolean;
+			hidden?: boolean;
+			data: {
+				x: number;
+				y: number;
+			}[];
 		}[];
-	}[];
-} = null;
+	} = null;
 
 const chartEl = ref<HTMLCanvasElement>(null);
 const fetching = ref(true);
@@ -179,11 +180,11 @@ const render = () => {
 
 	// フォントカラー
 	Chart.defaults.color = getComputedStyle(
-		document.documentElement
+		document.documentElement,
 	).getPropertyValue("--fg");
 
 	const maxes = chartData.series.map((x, i) =>
-		Math.max(...x.data.map((d) => d.y))
+		Math.max(...x.data.map((d) => d.y)),
 	);
 
 	chartInstance = new Chart(chartEl.value, {
@@ -210,7 +211,7 @@ const render = () => {
 						? x.color
 						: getColor(i)
 					: alpha(x.color ? x.color : getColor(i), 0.1),
-				/*gradient: props.bar ? undefined : {
+				/* gradient: props.bar ? undefined : {
 					backgroundColor: {
 						axis: 'y',
 						colors: {
@@ -218,7 +219,7 @@ const render = () => {
 							[maxes[i]]: alpha(x.color ? x.color : getColor(i), 0.2),
 						},
 					},
-				},*/
+				}, */
 				barPercentage: 0.9,
 				categoryPercentage: 0.9,
 				fill: x.type === "area",
@@ -271,7 +272,7 @@ const render = () => {
 					},
 					ticks: {
 						display: props.detailed,
-						//mirror: true,
+						// mirror: true,
 					},
 				},
 			},
@@ -331,7 +332,7 @@ const render = () => {
 							},
 					  }
 					: undefined,
-				//gradient,
+				// gradient,
 			},
 		},
 		plugins: [
@@ -471,9 +472,9 @@ const fetchNotesChart = async (type: string): Promise<typeof chartData> => {
 								raw.local.inc,
 								negate(raw.local.dec),
 								raw.remote.inc,
-								negate(raw.remote.dec)
+								negate(raw.remote.dec),
 						  )
-						: sum(raw[type].inc, negate(raw[type].dec))
+						: sum(raw[type].inc, negate(raw[type].dec)),
 				),
 				color: "#888888",
 			},
@@ -483,7 +484,7 @@ const fetchNotesChart = async (type: string): Promise<typeof chartData> => {
 				data: format(
 					type === "combined"
 						? sum(raw.local.diffs.renote, raw.remote.diffs.renote)
-						: raw[type].diffs.renote
+						: raw[type].diffs.renote,
 				),
 				color: colors.green,
 			},
@@ -493,7 +494,7 @@ const fetchNotesChart = async (type: string): Promise<typeof chartData> => {
 				data: format(
 					type === "combined"
 						? sum(raw.local.diffs.reply, raw.remote.diffs.reply)
-						: raw[type].diffs.reply
+						: raw[type].diffs.reply,
 				),
 				color: colors.yellow,
 			},
@@ -503,7 +504,7 @@ const fetchNotesChart = async (type: string): Promise<typeof chartData> => {
 				data: format(
 					type === "combined"
 						? sum(raw.local.diffs.normal, raw.remote.diffs.normal)
-						: raw[type].diffs.normal
+						: raw[type].diffs.normal,
 				),
 				color: colors.blue,
 			},
@@ -514,9 +515,9 @@ const fetchNotesChart = async (type: string): Promise<typeof chartData> => {
 					type === "combined"
 						? sum(
 								raw.local.diffs.withFile,
-								raw.remote.diffs.withFile
+								raw.remote.diffs.withFile,
 						  )
-						: raw[type].diffs.withFile
+						: raw[type].diffs.withFile,
 				),
 				color: colors.purple,
 			},
@@ -567,8 +568,8 @@ const fetchUsersChart = async (total: boolean): Promise<typeof chartData> => {
 								raw.local.inc,
 								negate(raw.local.dec),
 								raw.remote.inc,
-								negate(raw.remote.dec)
-						  )
+								negate(raw.remote.dec),
+						  ),
 				),
 			},
 			{
@@ -577,7 +578,7 @@ const fetchUsersChart = async (total: boolean): Promise<typeof chartData> => {
 				data: format(
 					total
 						? raw.local.total
-						: sum(raw.local.inc, negate(raw.local.dec))
+						: sum(raw.local.inc, negate(raw.local.dec)),
 				),
 			},
 			{
@@ -586,7 +587,7 @@ const fetchUsersChart = async (total: boolean): Promise<typeof chartData> => {
 				data: format(
 					total
 						? raw.remote.total
-						: sum(raw.remote.inc, negate(raw.remote.dec))
+						: sum(raw.remote.inc, negate(raw.remote.dec)),
 				),
 			},
 		],
@@ -675,8 +676,8 @@ const fetchDriveChart = async (): Promise<typeof chartData> => {
 						raw.local.incSize,
 						negate(raw.local.decSize),
 						raw.remote.incSize,
-						negate(raw.remote.decSize)
-					)
+						negate(raw.remote.decSize),
+					),
 				),
 			},
 			{
@@ -719,8 +720,8 @@ const fetchDriveFilesChart = async (): Promise<typeof chartData> => {
 						raw.local.incCount,
 						negate(raw.local.decCount),
 						raw.remote.incCount,
-						negate(raw.remote.decCount)
-					)
+						negate(raw.remote.decCount),
+					),
 				),
 			},
 			{
@@ -778,7 +779,7 @@ const fetchInstanceRequestsChart = async (): Promise<typeof chartData> => {
 };
 
 const fetchInstanceUsersChart = async (
-	total: boolean
+	total: boolean,
 ): Promise<typeof chartData> => {
 	const raw = await os.apiGet("charts/instance", {
 		host: props.args.host,
@@ -794,7 +795,7 @@ const fetchInstanceUsersChart = async (
 				data: format(
 					total
 						? raw.users.total
-						: sum(raw.users.inc, negate(raw.users.dec))
+						: sum(raw.users.inc, negate(raw.users.dec)),
 				),
 			},
 		],
@@ -802,7 +803,7 @@ const fetchInstanceUsersChart = async (
 };
 
 const fetchInstanceNotesChart = async (
-	total: boolean
+	total: boolean,
 ): Promise<typeof chartData> => {
 	const raw = await os.apiGet("charts/instance", {
 		host: props.args.host,
@@ -818,7 +819,7 @@ const fetchInstanceNotesChart = async (
 				data: format(
 					total
 						? raw.notes.total
-						: sum(raw.notes.inc, negate(raw.notes.dec))
+						: sum(raw.notes.inc, negate(raw.notes.dec)),
 				),
 			},
 		],
@@ -826,7 +827,7 @@ const fetchInstanceNotesChart = async (
 };
 
 const fetchInstanceFfChart = async (
-	total: boolean
+	total: boolean,
 ): Promise<typeof chartData> => {
 	const raw = await os.apiGet("charts/instance", {
 		host: props.args.host,
@@ -842,7 +843,7 @@ const fetchInstanceFfChart = async (
 				data: format(
 					total
 						? raw.following.total
-						: sum(raw.following.inc, negate(raw.following.dec))
+						: sum(raw.following.inc, negate(raw.following.dec)),
 				),
 			},
 			{
@@ -852,7 +853,7 @@ const fetchInstanceFfChart = async (
 				data: format(
 					total
 						? raw.followers.total
-						: sum(raw.followers.inc, negate(raw.followers.dec))
+						: sum(raw.followers.inc, negate(raw.followers.dec)),
 				),
 			},
 		],
@@ -860,7 +861,7 @@ const fetchInstanceFfChart = async (
 };
 
 const fetchInstanceDriveUsageChart = async (
-	total: boolean
+	total: boolean,
 ): Promise<typeof chartData> => {
 	const raw = await os.apiGet("charts/instance", {
 		host: props.args.host,
@@ -877,7 +878,7 @@ const fetchInstanceDriveUsageChart = async (
 				data: format(
 					total
 						? raw.drive.totalUsage
-						: sum(raw.drive.incUsage, negate(raw.drive.decUsage))
+						: sum(raw.drive.incUsage, negate(raw.drive.decUsage)),
 				),
 			},
 		],
@@ -885,7 +886,7 @@ const fetchInstanceDriveUsageChart = async (
 };
 
 const fetchInstanceDriveFilesChart = async (
-	total: boolean
+	total: boolean,
 ): Promise<typeof chartData> => {
 	const raw = await os.apiGet("charts/instance", {
 		host: props.args.host,
@@ -901,7 +902,7 @@ const fetchInstanceDriveFilesChart = async (
 				data: format(
 					total
 						? raw.drive.totalFiles
-						: sum(raw.drive.incFiles, negate(raw.drive.decFiles))
+						: sum(raw.drive.incFiles, negate(raw.drive.decFiles)),
 				),
 			},
 		],

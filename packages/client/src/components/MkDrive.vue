@@ -140,7 +140,7 @@ import {
 	ref,
 	watch,
 } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import MkButton from "./MkButton.vue";
 import XNavFolder from "@/components/MkDrive.navFolder.vue";
 import XFolder from "@/components/MkDrive.folder.vue";
@@ -161,17 +161,17 @@ const props = withDefaults(
 	{
 		multiple: false,
 		select: null,
-	}
+	},
 );
 
 const emit = defineEmits<{
 	(
 		ev: "selected",
-		v: Misskey.entities.DriveFile | Misskey.entities.DriveFolder
+		v: Misskey.entities.DriveFile | Misskey.entities.DriveFolder,
 	): void;
 	(
 		ev: "change-selection",
-		v: Misskey.entities.DriveFile[] | Misskey.entities.DriveFolder[]
+		v: Misskey.entities.DriveFile[] | Misskey.entities.DriveFolder[],
 	): void;
 	(ev: "move-root"): void;
 	(ev: "cd", v: Misskey.entities.DriveFolder | null): void;
@@ -207,7 +207,7 @@ const ilFilesObserver = new IntersectionObserver(
 		entries.some((entry) => entry.isIntersecting) &&
 		!fetching.value &&
 		moreFiles.value &&
-		fetchMoreFiles()
+		fetchMoreFiles(),
 );
 
 watch(folder, () => emit("cd", folder.value));
@@ -230,13 +230,13 @@ function onStreamDriveFileDeleted(fileId: string) {
 }
 
 function onStreamDriveFolderCreated(
-	createdFolder: Misskey.entities.DriveFolder
+	createdFolder: Misskey.entities.DriveFolder,
 ) {
 	addFolder(createdFolder, true);
 }
 
 function onStreamDriveFolderUpdated(
-	updatedFolder: Misskey.entities.DriveFolder
+	updatedFolder: Misskey.entities.DriveFolder,
 ) {
 	const current = folder.value ? folder.value.id : null;
 	if (current !== updatedFolder.parentId) {
@@ -433,7 +433,7 @@ function onChangeFileInput() {
 
 function upload(
 	file: File,
-	folderToUpload?: Misskey.entities.DriveFolder | null
+	folderToUpload?: Misskey.entities.DriveFolder | null,
 ) {
 	uploadFile(
 		file,
@@ -441,7 +441,7 @@ function upload(
 			? folderToUpload.id
 			: null,
 		undefined,
-		keepOriginal.value
+		keepOriginal.value,
 	).then((res) => {
 		addFile(res, true);
 	});
@@ -452,7 +452,7 @@ function chooseFile(file: Misskey.entities.DriveFile) {
 	if (props.multiple) {
 		if (isAlreadySelected) {
 			selectedFiles.value = selectedFiles.value.filter(
-				(f) => f.id !== file.id
+				(f) => f.id !== file.id,
 			);
 		} else {
 			selectedFiles.value.push(file);
@@ -470,12 +470,12 @@ function chooseFile(file: Misskey.entities.DriveFile) {
 
 function chooseFolder(folderToChoose: Misskey.entities.DriveFolder) {
 	const isAlreadySelected = selectedFolders.value.some(
-		(f) => f.id === folderToChoose.id
+		(f) => f.id === folderToChoose.id,
 	);
 	if (props.multiple) {
 		if (isAlreadySelected) {
 			selectedFolders.value = selectedFolders.value.filter(
-				(f) => f.id !== folderToChoose.id
+				(f) => f.id !== folderToChoose.id,
 			);
 		} else {
 			selectedFolders.value.push(folderToChoose);
@@ -707,7 +707,7 @@ function getMenu() {
 					icon: "ph-trash ph-bold ph-lg",
 					action: () => {
 						deleteFolder(
-							folder.value as Misskey.entities.DriveFolder
+							folder.value as Misskey.entities.DriveFolder,
 						);
 					},
 			  }
@@ -725,7 +725,7 @@ function getMenu() {
 function showMenu(ev: MouseEvent) {
 	os.popupMenu(
 		getMenu(),
-		(ev.currentTarget ?? ev.target ?? undefined) as HTMLElement | undefined
+		(ev.currentTarget ?? ev.target ?? undefined) as HTMLElement | undefined,
 	);
 }
 

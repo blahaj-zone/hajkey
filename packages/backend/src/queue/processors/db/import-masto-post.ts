@@ -6,6 +6,8 @@ import type Bull from "bull";
 import { htmlToMfm } from "@/remote/activitypub/misc/html-to-mfm.js";
 import { resolveNote } from "@/remote/activitypub/models/note.js";
 import { Note } from "@/models/entities/note.js";
+import { uploadFromUrl } from "@/services/drive/upload-from-url.js";
+import type { DriveFile } from "@/models/entities/drive-file.js";
 
 const logger = queueLogger.createSubLogger("import-masto-post");
 
@@ -43,14 +45,37 @@ export async function importMastoPost(
 		throw e;
 	}
 	job.progress(80);
+
+	let files: DriveFile[] = (post.object.attachment || [])
+		.map((x: any) => x?.driveFile)
+		.filter((x: any) => x);
+
+	if (files.length == 0) {
+		const urls = post.object.attachment
+			.map((x: any) => x.url)
+			.filter((x: String) => x.startsWith("http"));
+		files = [];
+		for (const url of urls) {
+			try {
+				const file = await uploadFromUrl({
+					url: url,
+					user: user,
+				});
+				files.push(file);
+			} catch (e) {
+				logger.error(`Skipped adding file to drive: ${url}`);
+			}
+		}
+	}
+
 	const note = await create(user, {
 		createdAt: new Date(post.object.published),
-		files: undefined,
+		files: files.length == 0 ? undefined : files,
 		poll: undefined,
 		text: text || undefined,
 		reply,
 		renote: null,
-		cw: post.sensitive,
+		cw: post.object.sensitive ? post.object.summary : undefined,
 		localOnly: false,
 		visibility: "hidden",
 		visibleUsers: [],

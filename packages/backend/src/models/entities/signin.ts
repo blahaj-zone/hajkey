@@ -14,8 +14,8 @@ export class Signin {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the Signin.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the Signin.",
 	})
 	public createdAt: Date;
 
@@ -23,20 +23,20 @@ export class Signin {
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
 	})
 	public ip: string;
 
-	@Column('jsonb')
+	@Column("jsonb")
 	public headers: Record<string, any>;
 
-	@Column('boolean')
+	@Column("boolean")
 	public success: boolean;
 }

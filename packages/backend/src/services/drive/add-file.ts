@@ -368,7 +368,7 @@ async function upload(
 		);
 }
 
-async function deleteOldFile(user: IRemoteUser) {
+async function expireOldFile(user: IRemoteUser, driveCapacity: number) {
 	const q = DriveFiles.createQueryBuilder("file")
 		.where("file.userId = :userId", { userId: user.id })
 		.andWhere("file.isLink = FALSE");
@@ -381,12 +381,22 @@ async function deleteOldFile(user: IRemoteUser) {
 		q.andWhere("file.id != :bannerId", { bannerId: user.bannerId });
 	}
 
+	//This selete is hard coded, be careful if change database schema
+	q.addSelect(
+		'SUM("file"."size") OVER (ORDER BY "file"."id" DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)',
+		"acc_usage",
+	);
+
 	q.orderBy("file.id", "ASC");
 
-	const oldFile = await q.getOne();
+	const fileList = await q.getRawMany();
+	const exceedFileIds = fileList
+		.filter((x: any) => x.acc_usage > driveCapacity)
+		.map((x: any) => x.file_id);
 
-	if (oldFile) {
-		deleteFile(oldFile, true);
+	for (const fileId of exceedFileIds) {
+		const file = await DriveFiles.findOneBy({ id: fileId });
+		deleteFile(file, true);
 	}
 }
 
@@ -529,8 +539,9 @@ export async function addFile({
 				);
 			} else {
 				// (アバターまたはバナーを含まず)最も古いファイルを削除する
-				deleteOldFile(
+				expireOldFile(
 					(await Users.findOneByOrFail({ id: user.id })) as IRemoteUser,
+					driveCapacity - info.size,
 				);
 			}
 		}

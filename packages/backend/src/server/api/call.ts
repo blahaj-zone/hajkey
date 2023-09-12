@@ -66,8 +66,11 @@ export default async (
 			limit as IEndpointMeta["limit"] & { key: NonNullable<string> },
 			limitActor,
 		).catch((e) => {
+			const remainingTime = e.remainingTime
+				? `Please try again in ${e.remainingTime}.`
+				: "Please try again later.";
 			throw new ApiError({
-				message: "Rate limit exceeded. Please try again later.",
+				message: `Rate limit exceeded. ${remainingTime}`,
 				code: "RATE_LIMIT_EXCEEDED",
 				id: "d5826d14-3982-4d2e-8011-b9e9f02499ef",
 				httpStatusCode: 429,
@@ -94,7 +97,7 @@ export default async (
 	}
 
 	if (ep.meta.requireAdmin && !user!.isAdmin) {
-		throw new ApiError(accessDenied, { reason: "You are not the admin." });
+		throw new ApiError(accessDenied, { reason: "You are not an admin." });
 	}
 
 	if (ep.meta.requireModerator && !isModerator) {

@@ -13,11 +13,10 @@ import type {
 import { htmlToMfm } from "../misc/html-to-mfm.js";
 import { extractApHashtags } from "./tag.js";
 import { unique, toArray, toSingle } from "@/prelude/array.js";
-import { extractPollFromQuestion, updateQuestion } from "./question.js";
+import { extractPollFromQuestion } from "./question.js";
 import vote from "@/services/note/polls/vote.js";
 import { apLogger } from "../logger.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
-import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
 import { extractDbHost, toPuny } from "@/misc/convert-host.js";
 import {
 	Emojis,
@@ -53,6 +52,7 @@ import { In } from "typeorm";
 import { DB_MAX_IMAGE_COMMENT_LENGTH } from "@/misc/hard-limits.js";
 import { truncate } from "@/misc/truncate.js";
 import { type Size, getEmojiSize } from "@/misc/emoji-meta.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
 
 const logger = apLogger;
 
@@ -92,7 +92,7 @@ export function validateNote(object: any, uri: string) {
 /**
  * Fetch Notes.
  *
- * If the target Note is registered in Calckey, it will be returned.
+ * If the target Note is registered in Firefish, it will be returned.
  */
 export async function fetchNote(
 	object: string | IObject,
@@ -333,9 +333,6 @@ export async function createNote(
 					`vote from AP: actor=${actor.username}@${actor.host}, note=${note.id}, choice=${name}`,
 				);
 				await vote(actor, reply, index);
-
-				// リモートフォロワーにUpdate配信
-				deliverQuestionUpdate(reply.id);
 			}
 			return null;
 		};
@@ -400,8 +397,8 @@ export async function createNote(
 /**
  * Resolve Note.
  *
- * If the target Note is registered in Calckey, return it, otherwise
- * Fetch from remote server, register with Calckey and return it.
+ * If the target Note is registered in Firefish, return it, otherwise
+ * Fetch from remote server, register with Firefish and return it.
  */
 export async function resolveNote(
 	value: string | IObject,

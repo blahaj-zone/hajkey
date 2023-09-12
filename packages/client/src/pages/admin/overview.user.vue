@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
 import { acct } from "@/filters/user";

@@ -1,4 +1,0 @@
-{
-  "eslint.packageManager": "pnpm",
-  "workspace.workspaceFolderCheckCwd": false
-}

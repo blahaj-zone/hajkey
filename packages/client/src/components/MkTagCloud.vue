@@ -28,7 +28,7 @@ const idForCanvas = Array.from(Array(16))
 		() =>
 			SAFE_FOR_HTML_ID[
 				Math.floor(Math.random() * SAFE_FOR_HTML_ID.length)
-			]
+			],
 	)
 	.join("");
 const idForTags = Array.from(Array(16))
@@ -36,7 +36,7 @@ const idForTags = Array.from(Array(16))
 		() =>
 			SAFE_FOR_HTML_ID[
 				Math.floor(Math.random() * SAFE_FOR_HTML_ID.length)
-			]
+			],
 	)
 	.join("");
 let available = $ref(false);
@@ -50,7 +50,7 @@ watch($$(available), () => {
 		window.TagCanvas.Start(idForCanvas, idForTags, {
 			textColour: "#ffffff",
 			outlineColour: tinycolor(
-				computedStyle.getPropertyValue("--accent")
+				computedStyle.getPropertyValue("--accent"),
 			).toHexString(),
 			outlineRadius: 10,
 			initial: [-0.03, -0.01],
@@ -80,7 +80,7 @@ onMounted(() => {
 				Object.assign(document.createElement("script"), {
 					async: true,
 					src: "/client-assets/tagcanvas.min.js",
-				})
+				}),
 			)
 			.addEventListener("load", () => (available = true));
 	}

@@ -11,7 +11,7 @@ import * as Acct from "@/misc/acct.js";
 import type { Packed } from "./schema.js";
 import { Cache } from "./cache.js";
 
-const blockingCache = new Cache<User["id"][]>(1000 * 60 * 5);
+const blockingCache = new Cache<User["id"][]>("blocking", 60 * 5);
 
 type matchFunction = (text: string) => boolean;
 const matcherCache = new Cache<matchFunction>(1000 * 60 * 60);
@@ -29,6 +29,7 @@ export async function checkHitAntenna(
 	antennaUserFollowing?: User["id"][],
 ): Promise<boolean> {
 	if (note.visibility === "specified") return false;
+	if (note.visibility === "home") return false;
 
 	// アンテナ作成者がノート作成者にブロックされていたらスキップ
 	const blockings = await blockingCache.fetch(noteUser.id, () =>

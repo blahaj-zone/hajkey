@@ -140,26 +140,26 @@
 										</template>
 									</I18n>
 								</li>
-								<li v-if="timelines.includes('recommended')">
+								<li v-if="timelines.includes('social')">
 									<I18n
 										:src="i18n.ts._tutorial.step5_5"
 										tag="div"
 									>
 										<template #icon>
 											<i
-												class="ph-thumbs-up ph-bold ph-lg"
+												class="ph-handshake ph-bold ph-lg"
 											/>
 										</template>
 									</I18n>
 								</li>
-								<li v-if="timelines.includes('social')">
+								<li v-if="timelines.includes('recommended')">
 									<I18n
 										:src="i18n.ts._tutorial.step5_6"
 										tag="div"
 									>
 										<template #icon>
 											<i
-												class="ph-handshake ph-bold ph-lg"
+												class="ph-thumbs-up ph-bold ph-lg"
 											/>
 										</template>
 									</I18n>
@@ -235,11 +235,11 @@ let timelines = ["home"];
 if (isLocalTimelineAvailable) {
 	timelines.push("local");
 }
-if (isRecommendedTimelineAvailable) {
-	timelines.push("recommended");
-}
 if (isLocalTimelineAvailable) {
 	timelines.push("social");
+}
+if (isRecommendedTimelineAvailable) {
+	timelines.push("recommended");
 }
 if (isGlobalTimelineAvailable) {
 	timelines.push("global");
@@ -265,15 +265,15 @@ const autoplayMfm = computed(
 	defaultStore.makeGetterSetter(
 		"animatedMfm",
 		(v) => !v,
-		(v) => !v
-	)
+		(v) => !v,
+	),
 );
 const reduceAnimation = computed(
 	defaultStore.makeGetterSetter(
 		"animation",
 		(v) => !v,
-		(v) => !v
-	)
+		(v) => !v,
+	),
 );
 
 function close(res) {

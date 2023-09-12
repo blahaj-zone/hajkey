@@ -1,5 +1,5 @@
 import type Koa from "koa";
-import * as speakeasy from "speakeasy";
+import * as OTPAuth from "otpauth";
 import signin from "../common/signin.js";
 import config from "@/config/index.js";
 import {
@@ -136,14 +136,18 @@ export default async (ctx: Koa.Context) => {
 			return;
 		}
 
-		const verified = (speakeasy as any).totp.verify({
-			secret: profile.twoFactorSecret,
-			encoding: "base32",
-			token: token,
-			window: 2,
+		if (profile.twoFactorSecret == null) {
+			throw new Error("Attempted 2FA signin without 2FA enabled.");
+		}
+
+		const delta = OTPAuth.TOTP.validate({
+			secret: OTPAuth.Secret.fromBase32(profile.twoFactorSecret),
+			digits: 6,
+			token,
+			window: 1,
 		});
 
-		if (verified) {
+		if (delta != null) {
 			signin(ctx, user);
 			return;
 		} else {

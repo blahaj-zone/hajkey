@@ -34,24 +34,26 @@
 		</ul>
 		<p v-if="!readOnly">
 			<span>{{ i18n.t("_poll.totalVotes", { n: total }) }}</span>
-			<span> · </span>
-			<a
-				v-if="!closed && !isVoted"
-				@click.stop="showResult = !showResult"
-				>{{
+			<span v-if="!closed && !isVoted">
+				<span> · </span>
+				<a @click.stop="showResult = !showResult">{{
 					showResult ? i18n.ts._poll.vote : i18n.ts._poll.showResult
-				}}</a
-			>
-			<span v-if="isVoted">{{ i18n.ts._poll.voted }}</span>
-			<span v-else-if="closed">{{ i18n.ts._poll.closed }}</span>
+				}}</a>
+			</span>
+			<span v-if="!isLocal">
+				<span> · </span>
+				<a @click.stop="refresh">{{ i18n.ts.reload }}</a>
+			</span>
+			<span v-if="isVoted"> · {{ i18n.ts._poll.voted }}</span>
+			<span v-else-if="closed"> · {{ i18n.ts._poll.closed }}</span>
 			<span v-if="remaining > 0"> · {{ timer }}</span>
 		</p>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onUnmounted, ref, toRef } from "vue";
-import * as misskey from "calckey-js";
+import { computed, ref } from "vue";
+import * as misskey from "iceshrimp-js";
 import { sum } from "@/scripts/array";
 import { pleaseLogin } from "@/scripts/please-login";
 import * as os from "@/os";
@@ -67,10 +69,11 @@ const remaining = ref(-1);
 
 const total = computed(() => sum(props.note.poll.choices.map((x) => x.votes)));
 const closed = computed(() => remaining.value === 0);
+const isLocal = computed(() => !props.note.uri);
 const isVoted = computed(
 	() =>
 		!props.note.poll.multiple &&
-		props.note.poll.choices.some((c) => c.isVoted)
+		props.note.poll.choices.some((c) => c.isVoted),
 );
 const timer = computed(() =>
 	i18n.t(
@@ -86,8 +89,8 @@ const timer = computed(() =>
 			m: Math.floor(remaining.value / 60) % 60,
 			h: Math.floor(remaining.value / 3600) % 24,
 			d: Math.floor(remaining.value / 86400),
-		}
-	)
+		},
+	),
 );
 
 const showResult = ref(props.readOnly || isVoted.value);
@@ -98,8 +101,8 @@ if (props.note.poll.expiresAt) {
 		remaining.value = Math.floor(
 			Math.max(
 				new Date(props.note.poll.expiresAt).getTime() - Date.now(),
-				0
-			) / 1000
+				0,
+			) / 1000,
 		);
 		if (remaining.value === 0) {
 			showResult.value = true;
@@ -110,6 +113,14 @@ if (props.note.poll.expiresAt) {
 		immediate: true,
 		afterMounted: false,
 	});
+}
+
+async function refresh() {
+	if (!props.note.uri) return;
+	const obj = await os.apiWithDialog("ap/show", { uri: props.note.uri });
+	if (obj.type === "Note" && obj.object.poll) {
+		props.note.poll = obj.object.poll;
+	}
 }
 
 const vote = async (id) => {

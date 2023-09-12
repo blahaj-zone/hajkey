@@ -1,5 +1,5 @@
-import * as misskey from "calckey-js";
-import * as Acct from "calckey-js/built/acct";
+import * as misskey from "iceshrimp-js";
+import * as Acct from "iceshrimp-js/built/acct";
 import { url } from "@/config";
 
 export const acct = (user: misskey.Acct) => {

@@ -5,10 +5,6 @@ import * as ep___admin_abuseUserReports from "./endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from "./endpoints/admin/accounts/create.js";
 import * as ep___admin_accounts_delete from "./endpoints/admin/accounts/delete.js";
 import * as ep___admin_accounts_hosted from "./endpoints/admin/accounts/hosted.js";
-import * as ep___admin_ad_create from "./endpoints/admin/ad/create.js";
-import * as ep___admin_ad_delete from "./endpoints/admin/ad/delete.js";
-import * as ep___admin_ad_list from "./endpoints/admin/ad/list.js";
-import * as ep___admin_ad_update from "./endpoints/admin/ad/update.js";
 import * as ep___admin_announcements_create from "./endpoints/admin/announcements/create.js";
 import * as ep___admin_announcements_delete from "./endpoints/admin/announcements/delete.js";
 import * as ep___admin_announcements_list from "./endpoints/admin/announcements/list.js";
@@ -174,6 +170,7 @@ import * as ep___i_2fa_keyDone from "./endpoints/i/2fa/key-done.js";
 import * as ep___i_2fa_passwordLess from "./endpoints/i/2fa/password-less.js";
 import * as ep___i_2fa_registerKey from "./endpoints/i/2fa/register-key.js";
 import * as ep___i_2fa_register from "./endpoints/i/2fa/register.js";
+import * as ep___i_2fa_updateKey from "./endpoints/i/2fa/update-key.js";
 import * as ep___i_2fa_removeKey from "./endpoints/i/2fa/remove-key.js";
 import * as ep___i_2fa_unregister from "./endpoints/i/2fa/unregister.js";
 import * as ep___i_apps from "./endpoints/i/apps.js";
@@ -290,7 +287,6 @@ import * as ep___pinnedUsers from "./endpoints/pinned-users.js";
 import * as ep___customMOTD from "./endpoints/custom-motd.js";
 import * as ep___customSplashIcons from "./endpoints/custom-splash-icons.js";
 import * as ep___latestVersion from "./endpoints/latest-version.js";
-import * as ep___patrons from "./endpoints/patrons.js";
 import * as ep___release from "./endpoints/release.js";
 import * as ep___promo_read from "./endpoints/promo/read.js";
 import * as ep___requestResetPassword from "./endpoints/request-reset-password.js";
@@ -346,7 +342,7 @@ import * as ep___wiki_list from "./endpoints/wiki/list.js";
 import * as ep___wiki_show from "./endpoints/wiki/show.js";
 import * as ep___wiki_save from "./endpoints/wiki/save.js";
 
-//Calckey Move
+//Firefish Move
 import * as ep___i_move from "./endpoints/i/move.js";
 import * as ep___i_known_as from "./endpoints/i/known-as.js";
 
@@ -356,10 +352,6 @@ const eps = [
 	["admin/accounts/create", ep___admin_accounts_create],
 	["admin/accounts/delete", ep___admin_accounts_delete],
 	["admin/accounts/hosted", ep___admin_accounts_hosted],
-	["admin/ad/create", ep___admin_ad_create],
-	["admin/ad/delete", ep___admin_ad_delete],
-	["admin/ad/list", ep___admin_ad_list],
-	["admin/ad/update", ep___admin_ad_update],
 	["admin/announcements/create", ep___admin_announcements_create],
 	["admin/announcements/delete", ep___admin_announcements_delete],
 	["admin/announcements/list", ep___admin_announcements_list],
@@ -533,6 +525,7 @@ const eps = [
 	["i/2fa/password-less", ep___i_2fa_passwordLess],
 	["i/2fa/register-key", ep___i_2fa_registerKey],
 	["i/2fa/register", ep___i_2fa_register],
+	["i/2fa/update-key", ep___i_2fa_updateKey],
 	["i/2fa/remove-key", ep___i_2fa_removeKey],
 	["i/2fa/unregister", ep___i_2fa_unregister],
 	["i/apps", ep___i_apps],
@@ -648,7 +641,6 @@ const eps = [
 	["custom-motd", ep___customMOTD],
 	["custom-splash-icons", ep___customSplashIcons],
 	["latest-version", ep___latestVersion],
-	["patrons", ep___patrons],
 	["release", ep___release],
 	["promo/read", ep___promo_read],
 	["request-reset-password", ep___requestResetPassword],

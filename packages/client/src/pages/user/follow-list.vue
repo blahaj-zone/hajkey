@@ -11,7 +11,7 @@
 			<div class="users">
 				<MkUserInfo
 					v-for="user in items.map((x) =>
-						type === 'following' ? x.followee : x.follower
+						type === 'following' ? x.followee : x.follower,
 					)"
 					:key="user.id"
 					class="user"
@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkUserInfo from "@/components/MkUserInfo.vue";
 import MkPagination from "@/components/MkPagination.vue";
 

@@ -55,7 +55,7 @@ watch(
 	() => props.showing,
 	() => {
 		if (!props.showing) done();
-	}
+	},
 );
 </script>
 

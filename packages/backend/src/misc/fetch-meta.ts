@@ -3,6 +3,32 @@ import { Meta } from "@/models/entities/meta.js";
 
 let cache: Meta;
 
+export function metaToPugArgs(meta: Meta): object {
+	let motd = ["Loading..."];
+	if (meta.customMOTD.length > 0) {
+		motd = meta.customMOTD;
+	}
+	let splashIconUrl = meta.iconUrl;
+	if (meta.customSplashIcons.length > 0) {
+		splashIconUrl =
+			meta.customSplashIcons[
+				Math.floor(Math.random() * meta.customSplashIcons.length)
+			];
+	}
+
+	return {
+		img: meta.bannerUrl,
+		title: meta.name || "Firefish",
+		instanceName: meta.name || "Firefish",
+		desc: meta.description,
+		icon: meta.iconUrl,
+		splashIcon: splashIconUrl,
+		themeColor: meta.themeColor,
+		randomMOTD: motd[Math.floor(Math.random() * motd.length)],
+		privateMode: meta.privateMode,
+	};
+}
+
 export async function fetchMeta(noCache = false): Promise<Meta> {
 	if (!noCache && cache) return cache;
 

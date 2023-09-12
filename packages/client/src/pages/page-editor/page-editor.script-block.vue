@@ -51,7 +51,7 @@
 				<option
 					v-for="v in hpml
 						.getVarsByType(
-							getExpectedType ? getExpectedType() : null
+							getExpectedType ? getExpectedType() : null,
 						)
 						.filter((x) => x.name !== name)"
 					:value="v.name"
@@ -66,7 +66,7 @@
 				<optgroup :label="i18n.ts._pages.script.pageVariables">
 					<option
 						v-for="v in hpml.getPageVarsByType(
-							getExpectedType ? getExpectedType() : null
+							getExpectedType ? getExpectedType() : null,
 						)"
 						:value="v"
 					>
@@ -76,7 +76,7 @@
 				<optgroup :label="i18n.ts._pages.script.enviromentVariables">
 					<option
 						v-for="v in hpml.getEnvVarsByType(
-							getExpectedType ? getExpectedType() : null
+							getExpectedType ? getExpectedType() : null,
 						)"
 						:value="v"
 					>
@@ -136,7 +136,7 @@
 				v-model="modelValue.args[i]"
 				:title="
 					i18n.t(
-						`_pages.script.blocks._${modelValue.type}.arg${i + 1}`
+						`_pages.script.blocks._${modelValue.type}.arg${i + 1}`,
 					)
 				"
 				:get-expected-type="() => _getExpectedType(i)"
@@ -164,7 +164,7 @@ export default defineComponent({
 		XContainer,
 		MkTextarea,
 		XV: defineAsyncComponent(
-			() => import("./page-editor.script-block.vue")
+			() => import("./page-editor.script-block.vue"),
 		),
 	},
 
@@ -302,7 +302,7 @@ export default defineComponent({
 							this.modelValue.args[i].type = "text";
 					}
 				}
-			}
+			},
 		);
 
 		this.$watch(
@@ -323,7 +323,7 @@ export default defineComponent({
 			},
 			{
 				deep: true,
-			}
+			},
 		);
 
 		this.$watch(
@@ -335,7 +335,7 @@ export default defineComponent({
 			},
 			{
 				deep: true,
-			}
+			},
 		);
 	},
 
@@ -344,7 +344,7 @@ export default defineComponent({
 			const { canceled, result: type } = await os.select({
 				title: i18n.ts._pages.selectType,
 				groupedItems: this.getScriptBlockList(
-					this.getExpectedType ? this.getExpectedType() : null
+					this.getExpectedType ? this.getExpectedType() : null,
 				),
 			});
 			if (canceled) return;

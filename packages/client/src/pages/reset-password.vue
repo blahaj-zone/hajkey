@@ -56,11 +56,11 @@ onMounted(() => {
 	if (props.token == null) {
 		os.popup(
 			defineAsyncComponent(
-				() => import("@/components/MkForgotPassword.vue")
+				() => import("@/components/MkForgotPassword.vue"),
 			),
 			{},
 			{},
-			"closed"
+			"closed",
 		);
 		mainRouter.push("/");
 	}

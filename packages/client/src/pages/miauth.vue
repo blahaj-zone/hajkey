@@ -28,11 +28,38 @@
 				</div>
 				<div class="_content">
 					<p>{{ i18n.ts._auth.permissionAsk }}</p>
-					<ul>
-						<li v-for="p in _permissions" :key="p">
+					<div
+						v-if="_permissions.length === 32"
+						:class="[$style.permissions]"
+					>
+						<div
+							:class="[$style.permission]"
+							style="
+								background-color: var(--error);
+								color: var(--fgOnAccent);
+							"
+						>
+							<i
+								class="ph-shield-warning ph-bold ph-xl"
+								style="margin-right: 0.5rem"
+							></i>
+							{{ i18n.ts._permissions.allPermissions }}
+						</div>
+					</div>
+					<div v-else :class="[$style.permissions]">
+						<div
+							v-for="p in _permissions"
+							:key="p"
+							:class="[$style.permission]"
+						>
+							<i
+								:class="[`ph-${getIcon(p)}`]"
+								class="ph-bold ph-xl"
+								style="margin-right: 0.5rem"
+							></i>
 							{{ i18n.t(`_permissions.${p}`) }}
-						</li>
-					</ul>
+						</div>
+					</div>
 				</div>
 				<div class="_footer">
 					<MkButton inline @click="deny">{{
@@ -71,6 +98,10 @@ const _permissions = props.permission.split(",");
 
 let state = $ref<string | null>(null);
 
+function getIcon(p: string) {
+	return p.includes("write") ? "pencil-simple" : "eye";
+}
+
 async function accept(): Promise<void> {
 	state = "waiting";
 	await os.api("miauth/gen-token", {
@@ -85,7 +116,7 @@ async function accept(): Promise<void> {
 		const cbUrl = new URL(props.callback);
 		if (
 			["javascript:", "file:", "data:", "mailto:", "tel:"].includes(
-				cbUrl.protocol
+				cbUrl.protocol,
 			)
 		)
 			throw new Error("invalid url");
@@ -93,7 +124,7 @@ async function accept(): Promise<void> {
 			props.callback,
 			query({
 				session: props.session,
-			})
+			}),
 		);
 	}
 }
@@ -107,4 +138,19 @@ function onLogin(res): void {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" module>
+.permissions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.permission {
+	display: inline-flex;
+	padding: 0.5rem 1rem;
+	border-radius: var(--radius);
+	background-color: var(--buttonBg);
+	color: var(--fg);
+}
+</style>

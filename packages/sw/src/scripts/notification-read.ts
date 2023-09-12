@@ -1,4 +1,4 @@
-declare var self: ServiceWorkerGlobalScope;
+declare let self: ServiceWorkerGlobalScope;
 
 import { get } from "idb-keyval";
 import { pushNotificationDataMap } from "@/types";

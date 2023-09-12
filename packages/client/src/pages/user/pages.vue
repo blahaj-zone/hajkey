@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkPagePreview from "@/components/MkPagePreview.vue";
 import MkPagination from "@/components/MkPagination.vue";
 

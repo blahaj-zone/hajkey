@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkContainer from "@/components/MkContainer.vue";
 import MkChart from "@/components/MkChart.vue";
 import * as os from "@/os";
@@ -43,7 +43,7 @@ const props = withDefaults(
 	}>(),
 	{
 		limit: 50,
-	}
+	},
 );
 
 let chartSrc = $ref("per-user-notes");
@@ -69,7 +69,7 @@ function showMenu(ev: MouseEvent) {
 		}
 	}*/,
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 </script>

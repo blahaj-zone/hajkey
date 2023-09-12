@@ -1,5 +1,5 @@
 <template>
-	<div class="jmgmzlwq _block">
+	<div class="caution _block">
 		{{ i18n.ts.remoteUserCaution
 		}}<a
 			class="link"
@@ -20,7 +20,7 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.jmgmzlwq {
+.caution {
 	padding: 16px;
 	font-size: 90%;
 	background: var(--infoWarnBg);

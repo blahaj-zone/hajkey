@@ -1,7 +1,7 @@
 _lang_: "Nederlands"
-headlineMisskey: "Een open source, gedecentraliseerd, social media platform dat voor
+headlineIceshrimp: "Een open source, gedecentraliseerd, social media platform dat voor
   altijd gratis is! 🚀"
-introMisskey: "Welkom! Calckey is een open source, gedecentraliseerde microblogdienst.\n
+introIceshrimp: "Welkom! Iceshrimp is een open source, gedecentraliseerde microblogdienst.\n
   Maak \"notities\" om je gedachten te delen met iedereen om je heen. 📡\nMet \"reacties\"\
   \ kun je ook snel je mening geven over berichten van anderen. 👍\nLaten we een nieuwe
   wereld verkennen! 🚀"
@@ -134,7 +134,7 @@ unsuspendConfirm: "Ben je zeker dat je deze account wil opnieuw aanstellen?"
 flagAsBot: "Markeer dit account als een robot"
 flagAsBotDescription: "Als dit account van een programma wordt beheerd, zet deze vlag
   aan. Het aanzetten helpt andere ontwikkelaars om bijvoorbeeld onbedoelde feedback
-  loops te doorbreken of om Calckey meer geschikt te maken."
+  loops te doorbreken of om Iceshrimp meer geschikt te maken."
 flagAsCat: "Markeer dit account als een kat."
 flagAsCatDescription: "Zet deze vlag aan als je wilt aangeven dat dit account een
   kat is."
@@ -179,7 +179,6 @@ operations: "Verwerkingen"
 software: "Software"
 version: "Versie"
 metadata: "Metadata"
-withNFiles: "{n} bestand(en)"
 monitor: "Monitor"
 jobQueue: "Job Queue"
 cpuAndMemory: "CPU en geheugen"
@@ -205,7 +204,7 @@ noUsers: "Er zijn geen gebruikers."
 editProfile: "Bewerk Profiel"
 noteDeleteConfirm: "Ben je zeker dat je deze post wil verwijderen?"
 pinLimitExceeded: "Je kunt geen posts meer vastprikken"
-intro: "Installatie van Calckey geëindigd! Maak nu een beheerder aan."
+intro: "Installatie van Iceshrimp geëindigd! Maak nu een beheerder aan."
 done: "Klaar"
 processing: "Bezig met verwerken"
 preview: "Voorbeeld"
@@ -305,7 +304,7 @@ disconnectedFromServer: "Verbinding met de server onderbroken."
 inMb: "in megabytes"
 pinnedNotes: "Vastgemaakte notitie"
 userList: "Lijsten"
-aboutMisskey: "Over Calckey"
+aboutIceshrimp: "Over Iceshrimp"
 administrator: "Beheerder"
 token: "Token"
 securityKeyName: "Sleutelnaam"
@@ -414,7 +413,7 @@ selectList: Selecteer een lijst
 selectAntenna: Selecteer een antenne
 deleted: Verwijderd
 editNote: Bewerk notitie
-edited: Bewerkt
+edited: 'Bewerkt om {date} {time}'
 emojis: Emojis
 emojiName: Emoji naam
 emojiUrl: Emoji URL
@@ -633,3 +632,53 @@ silenceThisInstance: Demp deze server
 silenced: Gedempt
 disablingTimelinesInfo: Beheerders en moderators zullen altijd toegang hebben tot
   alle tijdlijnen, zelfs als deze uitgeschakeld zijn.
+accountSettings: Account Instellingen
+numberOfDays: Aantal dagen
+hideThisNote: Verberg deze post
+dashboard: Dashboard
+accessibility: Toegankelijkheid
+promotion: Gepromoot
+promote: Promoten
+objectStorage: Objectopslag
+useObjectStorage: Gebruik objectopslag
+objectStorageBaseUrl: Basis -URL
+objectStorageUseSSLDesc: Schakel dit uit als je geen HTTPS voor je API connecties
+  gebruikt
+objectStorageUseProxy: Verbind over Proxy
+objectStorageUseProxyDesc: Schakel dit uit als je geen Proxy voor je API connecties
+  gebruikt
+sounds: Geluiden
+lastUsedDate: Laatst gebruikt op
+installedDate: Geautoriseerd op
+sort: Sorteren
+output: Uitvoer
+script: Script
+popout: Pop-out
+descendingOrder: Aflopend
+showInPage: Toon in de pagina
+chooseEmoji: Kies een emoji
+ascendingOrder: Oplopend
+volume: Volume
+masterVolume: Master volume
+details: Details
+unableToProcess: Deze operatie kon niet worden voltooid
+nothing: Niks te zien hier
+scratchpad: Kladblok
+recentUsed: Recentelijk gebruikt
+install: Installeer
+uninstall: Verwijderen
+installedApps: Geautoriseerde Applicaties
+state: Status
+updateRemoteUser: Update externe gebruikersinformatie
+listen: Luister
+none: Geen
+scratchpadDescription: Het kladblok is een omgeving voor AiScript experimenten. Je
+  kan hier schrijven, uitvoeren, en de resultaten bekijken van de interactie met Iceshrimp.
+disablePagesScript: Zet AiScript op Pages uit
+deleteAllFiles: Verwijder alle bestanden
+deleteAllFilesConfirm: Weet je zeker dat je alle bestanden wil verwijderen?
+removeAllFollowing: Ontvolg alle gevolgde gebruikers
+serverLogs: Server logboek
+deleteAll: Verwijder alles
+showFixedPostForm: Toon het post formulier bovenaan de tijdlijn
+newNoteRecived: Er zijn nieuwe posts

@@ -54,7 +54,7 @@ export const paramDef = {
 	anyOf: [
 		{
 			properties: {
-				userId: { type: "string", format: "misskey:id" },
+				userId: { type: "string" },
 			},
 			required: ["userId"],
 		},
@@ -65,7 +65,6 @@ export const paramDef = {
 					uniqueItems: true,
 					items: {
 						type: "string",
-						format: "misskey:id",
 					},
 				},
 			},
@@ -95,21 +94,27 @@ export default define(meta, paramDef, async (ps, me) => {
 			return [];
 		}
 
-		const users = await Users.findBy(
-			isAdminOrModerator
-				? {
-						id: In(ps.userIds),
-				  }
-				: {
-						id: In(ps.userIds),
-						isSuspended: false,
-				  },
-		);
+		const isUrl = ps.userIds[0].startsWith("http");
+		let users: User[];
+		if (isUrl) {
+			users = await Users.findBy(
+				isAdminOrModerator
+					? { uri: In(ps.userIds) }
+					: { uri: In(ps.userIds), isSuspended: false },
+			);
+		} else {
+			users = await Users.findBy(
+				isAdminOrModerator
+					? { id: In(ps.userIds) }
+					: { id: In(ps.userIds), isSuspended: false },
+			);
+		}
 
 		// リクエストされた通りに並べ替え
 		const _users: User[] = [];
 		for (const id of ps.userIds) {
-			_users.push(users.find((x) => x.id === id)!);
+			const res = users.find((x) => (isUrl ? x.uri === id : x.id === id));
+			if (res) _users.push(res);
 		}
 
 		return await Promise.all(
@@ -129,7 +134,9 @@ export default define(meta, paramDef, async (ps, me) => {
 		} else {
 			const q: FindOptionsWhere<User> =
 				ps.userId != null
-					? { id: ps.userId }
+					? ps.userId.startsWith("http")
+						? { uri: ps.userId }
+						: { id: ps.userId }
 					: { usernameLower: ps.username!.toLowerCase(), host: IsNull() };
 
 			user = await Users.findOneBy(q);

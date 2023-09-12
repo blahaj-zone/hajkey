@@ -7,15 +7,21 @@
 				:tabs="headerTabs"
 		/></template>
 		<MkSpacer :content-max="700">
+			<MkInfo class="_gap" :warn="true">{{
+				i18n.ts.channelFederationWarn
+			}}</MkInfo>
 			<swiper
+				:round-lengths="true"
+				:touch-angle="25"
+				:threshold="10"
+				:centeredSlides="true"
 				:modules="[Virtual]"
 				:space-between="20"
 				:virtual="true"
 				:allow-touch-move="
-					!(
-						deviceKind === 'desktop' &&
-						!defaultStore.state.swipeOnDesktop
-					) && defaultStore.state.allowSwipe
+					defaultStore.state.swipeOnMobile &&
+					(deviceKind !== 'desktop' ||
+						defaultStore.state.swipeOnDesktop)
 				"
 				@swiper="setSwiperRef"
 				@slide-change="onSlideChange"
@@ -106,7 +112,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, defineComponent, inject, watch } from "vue";
-import { Virtual } from "swiper";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MkChannelPreview from "@/components/MkChannelPreview.vue";
 import MkChannelList from "@/components/MkChannelList.vue";
@@ -115,6 +121,7 @@ import MkInput from "@/components/form/input.vue";
 import MkRadios from "@/components/form/radios.vue";
 import MkButton from "@/components/MkButton.vue";
 import MkFolder from "@/components/MkFolder.vue";
+import MkInfo from "@/components/MkInfo.vue";
 import { useRouter } from "@/router";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
@@ -210,7 +217,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.channel,
 		icon: "ph-television ph-bold ph-lg",
-	}))
+	})),
 );
 
 let swiperRef = null;

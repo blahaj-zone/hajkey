@@ -72,7 +72,7 @@ function openWindow(service: string, type: string) {
 	return window.open(
 		`${apiUrl}/${type}/${service}`,
 		`${service}_${type}_window`,
-		"height=570, width=520"
+		"height=570, width=520",
 	);
 }
 

@@ -27,6 +27,6 @@ definePageMetadata(
 	computed(() => ({
 		title: instanceName,
 		icon: null,
-	}))
+	})),
 );
 </script>

@@ -11,7 +11,7 @@
 						<div class="row">
 							<button
 								v-for="color in bgColors.filter(
-									(x) => x.kind === 'light'
+									(x) => x.kind === 'light',
 								)"
 								:key="color.color"
 								class="color _button"
@@ -29,7 +29,7 @@
 						<div class="row">
 							<button
 								v-for="color in bgColors.filter(
-									(x) => x.kind === 'dark'
+									(x) => x.kind === 'dark',
 								)"
 								:key="color.color"
 								class="color _button"
@@ -269,7 +269,7 @@ function setBgColor(color: (typeof bgColors)[number]) {
 			[
 				tinycolor(x.forLight).toRgbString(),
 				tinycolor(x.forDark).toRgbString(),
-			].includes(tinycolor(theme.props.fg).toRgbString())
+			].includes(tinycolor(theme.props.fg).toRgbString()),
 		);
 		if (matchedFgColor) setFgColor(matchedFgColor);
 	}

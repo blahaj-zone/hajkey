@@ -11,14 +11,14 @@ import { Note } from "./note.js";
 import { id } from "../id.js";
 
 @Entity()
-@Index(['userId', 'noteId', 'choice'], { unique: true })
+@Index(["userId", "noteId", "choice"], { unique: true })
 export class PollVote {
 	@PrimaryColumn(id())
 	public id: string;
 
 	@Index()
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the PollVote.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the PollVote.",
 	})
 	public createdAt: Date;
 
@@ -26,8 +26,8 @@ export class PollVote {
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
@@ -36,12 +36,12 @@ export class PollVote {
 	@Column(id())
 	public noteId: Note["id"];
 
-	@ManyToOne(type => Note, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Note, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public note: Note | null;
 
-	@Column('integer')
+	@Column("integer")
 	public choice: number;
 }

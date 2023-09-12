@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import copyToClipboard from "@/scripts/copy-to-clipboard";
 import MkDriveFileThumbnail from "@/components/MkDriveFileThumbnail.vue";
 import bytes from "@/filters/bytes";
@@ -56,7 +56,7 @@ const props = withDefaults(
 	{
 		isSelected: false,
 		selectMode: false,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -68,7 +68,7 @@ const emit = defineEmits<{
 const isDragging = ref(false);
 
 const title = computed(
-	() => `${props.file.name}\n${props.file.type} ${bytes(props.file.size)}`
+	() => `${props.file.name}\n${props.file.type} ${bytes(props.file.size)}`,
 );
 
 function getMenu() {
@@ -124,7 +124,7 @@ function onClick(ev: MouseEvent) {
 			getMenu(),
 			(ev.currentTarget ?? ev.target ?? undefined) as
 				| HTMLElement
-				| undefined
+				| undefined,
 		);
 	}
 }
@@ -138,7 +138,7 @@ function onDragstart(ev: DragEvent) {
 		ev.dataTransfer.effectAllowed = "move";
 		ev.dataTransfer.setData(
 			_DATA_TRANSFER_DRIVE_FILE_,
-			JSON.stringify(props.file)
+			JSON.stringify(props.file),
 		);
 	}
 	isDragging.value = true;
@@ -186,7 +186,7 @@ function describe() {
 				});
 			},
 		},
-		"closed"
+		"closed",
 	);
 }
 

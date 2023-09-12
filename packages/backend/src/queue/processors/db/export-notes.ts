@@ -4,7 +4,7 @@ import * as fs from "node:fs";
 import { queueLogger } from "../../logger.js";
 import { addFile } from "@/services/drive/add-file.js";
 import { format as dateFormat } from "date-fns";
-import { Users, Notes, Polls } from "@/models/index.js";
+import { Users, Notes, Polls, DriveFiles } from "@/models/index.js";
 import { MoreThan } from "typeorm";
 import type { Note } from "@/models/entities/note.js";
 import type { Poll } from "@/models/entities/poll.js";
@@ -75,7 +75,7 @@ export async function exportNotes(
 				if (note.hasPoll) {
 					poll = await Polls.findOneByOrFail({ noteId: note.id });
 				}
-				const content = JSON.stringify(serialize(note, poll));
+				const content = JSON.stringify(await serialize(note, poll));
 				const isFirst = exportedNotesCount === 0;
 				await write(isFirst ? content : ",\n" + content);
 				exportedNotesCount++;
@@ -112,15 +112,16 @@ export async function exportNotes(
 	done();
 }
 
-function serialize(
+async function serialize(
 	note: Note,
 	poll: Poll | null = null,
-): Record<string, unknown> {
+): Promise<Record<string, unknown>> {
 	return {
 		id: note.id,
 		text: note.text,
 		createdAt: note.createdAt,
 		fileIds: note.fileIds,
+		files: await DriveFiles.packMany(note.fileIds),
 		replyId: note.replyId,
 		renoteId: note.renoteId,
 		poll: poll,

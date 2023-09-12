@@ -22,10 +22,8 @@
 					><i class="ph-upload-simple ph-bold ph-lg"></i
 				></template>
 				<FormRadios v-model="importType" class="_formBlock">
-					<option value="calckey">Calckey/Misskey</option>
-					<option value="mastodon">
-						Mastodon/Akkoma/Pleroma (only outbox.json)
-					</option>
+					<option value="firefish">Firefish/Misskey</option>
+					<option value="mastodon">Mastodon/Akkoma/Pleroma</option>
 					<option :disabled="true" value="twitter">
 						Twitter (soon)
 					</option>
@@ -190,7 +188,7 @@ import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 
 const excludeMutingUsers = ref(false);
-const importType = ref("calckey");
+const importType = ref("firefish");
 const excludeInactiveUsers = ref(false);
 
 const onExportSuccess = () => {
@@ -222,7 +220,7 @@ const importPosts = async (ev) => {
 	const file = await selectFile(ev.currentTarget ?? ev.target);
 	os.api("i/import-posts", {
 		fileId: file.id,
-		signatureCheck: importType.value === "mastodon" ? true : false,
+		signatureCheck: false,
 	})
 		.then(onImportSuccess)
 		.catch(onError);

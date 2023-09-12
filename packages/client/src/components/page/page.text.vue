@@ -14,7 +14,7 @@ import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
 export default defineComponent({
 	components: {
 		MkUrlPreview: defineAsyncComponent(
-			() => import("@/components/MkUrlPreview.vue")
+			() => import("@/components/MkUrlPreview.vue"),
 		),
 	},
 	props: {

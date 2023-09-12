@@ -22,7 +22,7 @@
 								:value="usersComparedToThePrevDay"
 							></MkNumberDiff>
 						</div>
-						<div class="label">Users</div>
+						<div class="label">{{ i18n.ts.users }}</div>
 					</div>
 				</div>
 				<div class="item _panel notes">
@@ -41,7 +41,7 @@
 								:value="notesComparedToThePrevDay"
 							></MkNumberDiff>
 						</div>
-						<div class="label">Posts</div>
+						<div class="label">{{ i18n.ts.notes }}</div>
 					</div>
 				</div>
 				<div class="item _panel instances">
@@ -55,7 +55,7 @@
 								style="margin-right: 0.5em"
 							/>
 						</div>
-						<div class="label">Instances</div>
+						<div class="label">{{ i18n.ts.instances }}</div>
 					</div>
 				</div>
 				<div class="item _panel online">
@@ -69,10 +69,26 @@
 								style="margin-right: 0.5em"
 							/>
 						</div>
-						<div class="label">Online</div>
+						<div class="label">{{ i18n.ts.online }}</div>
+					</div>
+				</div>
+				<div class="item _panel emojis">
+					<div class="icon">
+						<i class="ph-smiley ph-bold ph-xl"></i>
+					</div>
+					<div class="body">
+						<div class="value">
+							<MkNumber
+								:value="emojiCount"
+								style="margin-right: 0.5em"
+							/>
+						</div>
+						<div class="label">{{ i18n.ts.emojis }}</div>
 					</div>
 				</div>
 			</div>
+
+			<!-- TODO: Drive -->
 		</Transition>
 	</div>
 </template>
@@ -90,6 +106,7 @@ let stats: any = $ref(null);
 let usersComparedToThePrevDay = $ref<number>();
 let notesComparedToThePrevDay = $ref<number>();
 let onlineUsersCount = $ref(0);
+let emojiCount = $ref(0);
 let fetching = $ref(true);
 
 onMounted(async () => {
@@ -108,6 +125,10 @@ onMounted(async () => {
 	os.apiGet("charts/notes", { limit: 2, span: "day" }).then((chart) => {
 		notesComparedToThePrevDay =
 			stats.originalNotesCount - chart.local.total[1];
+	});
+
+	os.api("meta", { detail: false }).then((meta) => {
+		emojiCount = meta.emojis.length;
 	});
 
 	fetching = false;
@@ -169,6 +190,13 @@ onMounted(async () => {
 				> .icon {
 					background: #907aa922;
 					color: #c4a7e7;
+				}
+			}
+
+			&.drive {
+				> .icon {
+					background: #b4637a22;
+					color: #eb6f92;
 				}
 			}
 

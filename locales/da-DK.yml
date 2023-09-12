@@ -83,7 +83,7 @@ deleteAndEditConfirm: Er du sikker på at du vil slet denne opslag og ændre det
   vil tabe alle reaktioner, forstærkninger og svarer indenfor denne opslag.
 editNote: Ændre note
 deleted: Slettet
-edited: Ændret
+edited: 'Ændret den {date} {time}'
 sendMessage: Send en besked
 youShouldUpgradeClient: Til at vise denne side, vær sød at refresh til at opdatere
   din brugerenhed.
@@ -117,7 +117,6 @@ operations: Operationer
 software: Software
 metadata: Metadata
 version: Version
-withNFiles: '{n} fil(er)'
 monitor: Vagt
 jobQueue: Jobkø
 statistics: Statistik
@@ -158,9 +157,9 @@ pageLoadErrorDescription: Dette er normalt på grund af netværksproblemer eller
   browser's cache. Prøv at ryd cachen og så gentage efter et styk tid.
 serverIsDead: Serveren svarer ikke. Vær sød at vente et styk tid og prøv igen.
 editWidgetsExit: Færdig
-headlineMisskey: En åben-kildekode, decentraliseret social-media platform som er frit
+headlineIceshrimp: En åben-kildekode, decentraliseret social-media platform som er frit
   forevigt! 🚀
-introMisskey: Velkommen! Calckey er en åbent-kildekode, decentraliseret social-media
+introIceshrimp: Velkommen! Iceshrimp er en åbent-kildekode, decentraliseret social-media
   platform som er frit forevigt!🚀
 enableEmojiReactions: Aktivere emoji reaktioner
 unsuspendConfirm: Er du sikker på at du vil ikke suspendere denne konto endnu længere?
@@ -179,7 +178,7 @@ cacheRemoteFiles: Cachere fremmed filer
 flagAsBotDescription: Aktivere denne valgmulighed hvis denne konto er kontrolleret
   af en komputerprogram. Hvis den et tændt så vil det signalere til andre udviklere
   som arbejder på komputer-kontrolleret social-media kontoer og det vil også adjustere
-  Calckey's indresystemer til at behandle denne konto som en robot.
+  Iceshrimp's indresystemer til at behandle denne konto som en robot.
 flagAsCat: Er du en kat? 😺
 flagSpeakAsCat: Tale som en kat
 emojiUrl: Emoji URL
@@ -217,3 +216,21 @@ perHour: Hver time
 perDay: Hver dag
 stopActivityDelivery: Stop med at sende aktiviteter
 blockThisInstance: Blokere denne instans
+muteAndBlock: Mutes og blokeringer
+mutedUsers: Mutede brugere
+newer: nyere
+older: ældre
+silencedInstances: Nedtonede servere
+clearQueue: Ryd kø
+clearQueueConfirmTitle: Er du sikker på, at du ønsker at rydde køen?
+clearCachedFiles: Ryd cache
+clearCachedFilesConfirm: Er du sikker på, at du ønsker at slette alle cachede eksterne
+  filer?
+blockedInstances: Blokerede servere
+blockedInstancesDescription: Listen af navne på servere, du ønsker at blokere. Servere
+  på listen vil ikke længere kunne kommunikere med denne server.
+hiddenTags: Skjulte hashtags
+clearQueueConfirmText: De indlæg i denne kø, der ikke allerede er leveret, vil ikke
+  blive federeret. Denne operation er almindeligvis ikke påkrævet.
+jumpToPrevious: Spring til tidligere
+cw: Advarsel om indhold

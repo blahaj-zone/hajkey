@@ -36,14 +36,14 @@ const props = defineProps<{
 	activity: any[];
 }>();
 
-let viewBoxX: number = $ref(147);
-let viewBoxY: number = $ref(60);
-let zoom: number = $ref(1);
-let pos: number = $ref(0);
-let pointsNote: any = $ref(null);
-let pointsReply: any = $ref(null);
-let pointsRenote: any = $ref(null);
-let pointsTotal: any = $ref(null);
+const viewBoxX: number = $ref(147);
+const viewBoxY: number = $ref(60);
+let zoom: number = $ref(1),
+	pos: number = $ref(0),
+	pointsNote: any = $ref(null),
+	pointsReply: any = $ref(null),
+	pointsRenote: any = $ref(null),
+	pointsTotal: any = $ref(null);
 
 function dragListen(fn) {
 	window.addEventListener("mousemove", fn);
@@ -65,8 +65,8 @@ function onMousedown(ev) {
 
 	// 動かした時
 	dragListen((me) => {
-		let moveLeft = me.clientX - clickX;
-		let moveTop = me.clientY - clickY;
+		const moveLeft = me.clientX - clickX;
+		const moveTop = me.clientY - clickY;
 
 		zoom = Math.max(1, baseZoom + -moveTop / 20);
 		pos = Math.min(0, basePos + moveLeft);
@@ -83,24 +83,26 @@ function render() {
 		const activity = props.activity.slice().reverse();
 		pointsNote = activity
 			.map(
-				(d, i) => `${i * zoom + pos},${(1 - d.notes / peak) * viewBoxY}`
+				(d, i) =>
+					`${i * zoom + pos},${(1 - d.notes / peak) * viewBoxY}`,
 			)
 			.join(" ");
 		pointsReply = activity
 			.map(
 				(d, i) =>
-					`${i * zoom + pos},${(1 - d.replies / peak) * viewBoxY}`
+					`${i * zoom + pos},${(1 - d.replies / peak) * viewBoxY}`,
 			)
 			.join(" ");
 		pointsRenote = activity
 			.map(
 				(d, i) =>
-					`${i * zoom + pos},${(1 - d.renotes / peak) * viewBoxY}`
+					`${i * zoom + pos},${(1 - d.renotes / peak) * viewBoxY}`,
 			)
 			.join(" ");
 		pointsTotal = activity
 			.map(
-				(d, i) => `${i * zoom + pos},${(1 - d.total / peak) * viewBoxY}`
+				(d, i) =>
+					`${i * zoom + pos},${(1 - d.total / peak) * viewBoxY}`,
 			)
 			.join(" ");
 	}

@@ -2,7 +2,7 @@ pipeline:
   publish-docker-latest:
     image: plugins/kaniko
     settings:
-      repo: thatonecalculator/calckey
+      repo: thatonecalculator/firefish
       tags: latest
       dockerfile: Dockerfile
       username:

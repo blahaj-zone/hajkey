@@ -40,12 +40,14 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 
 	// if already liked
-	const exist = await PageLikes.findOneBy({
-		pageId: page.id,
-		userId: user.id,
+	const exist = await PageLikes.exist({
+		where: {
+			pageId: page.id,
+			userId: user.id,
+		},
 	});
 
-	if (exist != null) {
+	if (exist) {
 		throw new ApiError(meta.errors.alreadyLiked);
 	}
 

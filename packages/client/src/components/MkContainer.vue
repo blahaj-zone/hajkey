@@ -125,7 +125,7 @@ export default defineComponent({
 			},
 			{
 				immediate: true,
-			}
+			},
 		);
 
 		this.$el.style.setProperty("--maxHeight", this.maxHeight + "px");
@@ -174,7 +174,9 @@ export default defineComponent({
 .container-toggle-enter-active,
 .container-toggle-leave-active {
 	overflow-y: hidden;
-	transition: opacity 0.5s, height 0.5s !important;
+	transition:
+		opacity 0.5s,
+		height 0.5s !important;
 }
 .container-toggle-enter-from {
 	opacity: 0;
@@ -196,6 +198,7 @@ export default defineComponent({
 	&.scrollable {
 		display: flex;
 		flex-direction: column;
+		flex-grow: 1;
 
 		> .content {
 			overflow: auto;

@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import * as os from "@/os";
 
 const meta = ref<Misskey.entities.DetailedInstanceMetadata>();

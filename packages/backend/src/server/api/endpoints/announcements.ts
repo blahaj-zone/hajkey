@@ -56,6 +56,16 @@ export const meta = {
 					optional: true,
 					nullable: false,
 				},
+				showPopup: {
+					type: "boolean",
+					optional: false,
+					nullable: false,
+				},
+				isGoodNews: {
+					type: "boolean",
+					optional: false,
+					nullable: false,
+				},
 			},
 		},
 	},

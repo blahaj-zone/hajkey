@@ -12,20 +12,19 @@ import { Note } from "./note.js";
 import type { User } from "./user.js";
 
 @Entity()
-@Index(['userId', 'ip'], { unique: true })
+@Index(["userId", "ip"], { unique: true })
 export class UserIp {
 	@PrimaryGeneratedColumn()
 	public id: string;
 
-	@Column('timestamp with time zone', {
-	})
+	@Column("timestamp with time zone", {})
 	public createdAt: Date;
 
 	@Index()
 	@Column(id())
 	public userId: User["id"];
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
 	})
 	public ip: string;

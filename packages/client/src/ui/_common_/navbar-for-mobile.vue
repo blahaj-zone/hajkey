@@ -62,6 +62,9 @@
 						<span
 							v-if="navbarItemDef[item].indicated"
 							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="icon ph-circle ph-fill"></i
 						></span>
 					</component>
@@ -82,7 +85,10 @@
 						class="icon ph-dots-three-outline ph-bold ph-lg ph-fw ph-lg"
 					></i
 					><span class="text">{{ i18n.ts.more }}</span>
-					<span v-if="otherMenuItemIndicated" class="indicator"
+					<span
+						v-if="otherMenuItemIndicated"
+						class="indicator"
+						:class="{ animateIndicator: $store.state.animation }"
 						><i class="icon ph-circle ph-fill"></i
 					></span>
 				</button>
@@ -147,7 +153,7 @@ function openAccountMenu(ev: MouseEvent) {
 		{
 			withExtraOperation: true,
 		},
-		ev
+		ev,
 	);
 }
 
@@ -160,7 +166,7 @@ function more() {
 		defineAsyncComponent(() => import("@/components/MkLaunchPad.vue")),
 		{},
 		{},
-		"closed"
+		"closed",
 	);
 }
 </script>
@@ -341,7 +347,9 @@ function more() {
 					left: 20px;
 					color: var(--navIndicator);
 					font-size: 8px;
-					animation: blink 1s infinite;
+				}
+
+				> .animateIndicator {
 				}
 
 				> .text {

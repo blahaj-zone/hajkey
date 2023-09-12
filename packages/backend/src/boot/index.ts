@@ -19,7 +19,7 @@ const ev = new Xev();
  * Init process
  */
 export default async function () {
-	process.title = `Calckey (${cluster.isPrimary ? "master" : "worker"})`;
+	process.title = `Iceshrimp (${cluster.isPrimary ? "master" : "worker"})`;
 
 	if (cluster.isPrimary || envOption.disableClustering) {
 		await masterMain();
@@ -42,7 +42,7 @@ export default async function () {
 		os.setPriority(10);
 	}
 
-	// For when Calckey is started in a child process during unit testing.
+	// For when Iceshrimp is started in a child process during unit testing.
 	// Otherwise, process.send cannot be used, so start it.
 	if (process.send) {
 		process.send("ok");

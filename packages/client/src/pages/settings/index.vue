@@ -100,7 +100,7 @@ const menuDef = computed(() => [
 				active: currentPage?.route.name === "profile",
 			},
 			{
-				icon: "ph-lock-open ph-bold ph-lg",
+				icon: "ph-keyhole ph-bold ph-lg",
 				text: i18n.ts.privacy,
 				to: "/settings/privacy",
 				active: currentPage?.route.name === "privacy",
@@ -320,7 +320,7 @@ watch(router.currentRef, (to) => {
 });
 
 const emailNotConfigured = computed(
-	() => instance.enableEmail && ($i.email == null || !$i.emailVerified)
+	() => instance.enableEmail && ($i.email == null || !$i.emailVerified),
 );
 
 provideMetadataReceiver((info) => {
@@ -343,6 +343,11 @@ definePageMetadata(INFO);
 <style lang="scss" scoped>
 .vvcocwet {
 	> .body {
+		.wallpaper & {
+			background: var(--bg);
+			padding: var(--margin);
+			border-radius: var(--radius);
+		}
 		> .nav {
 			.baaadecd {
 				> .info {

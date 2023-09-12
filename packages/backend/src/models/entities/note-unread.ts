@@ -12,7 +12,7 @@ import { id } from "../id.js";
 import type { Channel } from "./channel.js";
 
 @Entity()
-@Index(['userId', 'noteId'], { unique: true })
+@Index(["userId", "noteId"], { unique: true })
 export class NoteUnread {
 	@PrimaryColumn(id())
 	public id: string;
@@ -21,8 +21,8 @@ export class NoteUnread {
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
@@ -31,8 +31,8 @@ export class NoteUnread {
 	@Column(id())
 	public noteId: Note["id"];
 
-	@ManyToOne(type => Note, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Note, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public note: Note | null;
@@ -41,21 +41,21 @@ export class NoteUnread {
 	 * メンションか否か
 	 */
 	@Index()
-	@Column('boolean')
+	@Column("boolean")
 	public isMentioned: boolean;
 
 	/**
 	 * ダイレクト投稿か否か
 	 */
 	@Index()
-	@Column('boolean')
+	@Column("boolean")
 	public isSpecified: boolean;
 
 	//#region Denormalized fields
 	@Index()
 	@Column({
 		...id(),
-		comment: '[Denormalized]',
+		comment: "[Denormalized]",
 	})
 	public noteUserId: User["id"];
 
@@ -63,7 +63,7 @@ export class NoteUnread {
 	@Column({
 		...id(),
 		nullable: true,
-		comment: '[Denormalized]',
+		comment: "[Denormalized]",
 	})
 	public noteChannelId: Channel["id"] | null;
 	//#endregion

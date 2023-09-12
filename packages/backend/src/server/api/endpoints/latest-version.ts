@@ -16,7 +16,7 @@ export const paramDef = {
 export default define(meta, paramDef, async () => {
 	let tag_name;
 	await fetch(
-		"https://codeberg.org/api/v1/repos/calckey/calckey/releases?draft=false&pre-release=false&page=1&limit=1",
+		"https://codeberg.org/api/v1/repos/firefish/firefish/releases?draft=false&pre-release=false&page=1&limit=1",
 	)
 		.then((response) => response.json())
 		.then((data) => {

@@ -7,6 +7,8 @@ import DbResolver from "@/remote/activitypub/db-resolver.js";
 import { getApId } from "@/remote/activitypub/type.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 import type { IncomingMessage } from "http";
+import type { CacheableRemoteUser } from "@/models/entities/user.js";
+import type { UserPublickey } from "@/models/entities/user-publickey.js";
 
 export async function hasSignature(req: IncomingMessage): Promise<string> {
 	const meta = await fetchMeta();
@@ -94,4 +96,23 @@ export async function checkFetch(req: IncomingMessage): Promise<number> {
 		}
 	}
 	return 200;
+}
+
+export async function getSignatureUser(req: IncomingMessage): Promise<{
+	user: CacheableRemoteUser;
+	key: UserPublickey | null;
+} | null> {
+	const signature = httpSignature.parseRequest(req, { headers: [] });
+	const keyId = new URL(signature.keyId);
+	const dbResolver = new DbResolver();
+
+	// Retrieve from DB by HTTP-Signature keyId
+	const authUser = await dbResolver.getAuthUserFromKeyId(signature.keyId);
+	if (authUser) {
+		return authUser;
+	}
+
+	// Resolve if failed to retrieve by keyId
+	keyId.hash = "";
+	return await dbResolver.getAuthUserFromApId(getApId(keyId.toString()));
 }

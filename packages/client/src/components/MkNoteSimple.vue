@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import XNoteHeader from "@/components/MkNoteHeader.vue";
 import MkSubNoteContent from "@/components/MkSubNoteContent.vue";
 
@@ -20,8 +20,6 @@ const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
 }>();
-
-const showContent = $ref(false);
 </script>
 
 <style lang="scss" scoped>

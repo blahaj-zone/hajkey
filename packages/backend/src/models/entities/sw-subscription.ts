@@ -14,35 +14,35 @@ export class SwSubscription {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone')
+	@Column("timestamp with time zone")
 	public createdAt: Date;
 
 	@Index()
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 512,
 	})
 	public endpoint: string;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 256,
 	})
 	public auth: string;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
 	})
 	public publickey: string;
 
-	@Column('boolean', {
+	@Column("boolean", {
 		default: false,
 	})
 	public sendReadMessage: boolean;

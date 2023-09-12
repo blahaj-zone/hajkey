@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import bytes from "@/filters/bytes";
 
 const props = defineProps<{
@@ -48,19 +48,19 @@ const props = defineProps<{
 	meta: any;
 }>();
 
-let viewBoxX: number = $ref(50);
-let viewBoxY: number = $ref(30);
-let stats: any[] = $ref([]);
-let inPolylinePoints: string = $ref("");
-let outPolylinePoints: string = $ref("");
-let inPolygonPoints: string = $ref("");
-let outPolygonPoints: string = $ref("");
-let inHeadX: any = $ref(null);
-let inHeadY: any = $ref(null);
-let outHeadX: any = $ref(null);
-let outHeadY: any = $ref(null);
-let inRecent: number = $ref(0);
-let outRecent: number = $ref(0);
+const viewBoxX: number = $ref(50);
+const viewBoxY: number = $ref(30);
+const stats: any[] = $ref([]);
+let inPolylinePoints: string = $ref(""),
+	outPolylinePoints: string = $ref(""),
+	inPolygonPoints: string = $ref(""),
+	outPolygonPoints: string = $ref(""),
+	inHeadX: any = $ref(null),
+	inHeadY: any = $ref(null),
+	outHeadX: any = $ref(null),
+	outHeadY: any = $ref(null),
+	inRecent: number = $ref(0),
+	outRecent: number = $ref(0);
 
 onMounted(() => {
 	props.connection.on("stats", onStats);
@@ -82,14 +82,14 @@ function onStats(connStats) {
 	const inPeak = Math.max(1024 * 64, Math.max(...stats.map((s) => s.net.rx)));
 	const outPeak = Math.max(
 		1024 * 64,
-		Math.max(...stats.map((s) => s.net.tx))
+		Math.max(...stats.map((s) => s.net.tx)),
 	);
 
-	let inPolylinePointsStats = stats.map((s, i) => [
+	const inPolylinePointsStats = stats.map((s, i) => [
 		viewBoxX - (stats.length - 1 - i),
 		(1 - s.net.rx / inPeak) * viewBoxY,
 	]);
-	let outPolylinePointsStats = stats.map((s, i) => [
+	const outPolylinePointsStats = stats.map((s, i) => [
 		viewBoxX - (stats.length - 1 - i),
 		(1 - s.net.tx / outPeak) * viewBoxY,
 	]);

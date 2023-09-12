@@ -17,7 +17,7 @@
 			</slot>
 		</div>
 
-		<div v-else ref="rootEl">
+		<div v-else ref="rootEl" class="list">
 			<div
 				v-show="pagination.reversed && more"
 				key="_more_"
@@ -74,7 +74,7 @@ import {
 	ref,
 	watch,
 } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import * as os from "@/os";
 import {
 	onScrollTop,
@@ -86,7 +86,7 @@ import MkButton from "@/components/MkButton.vue";
 import { i18n } from "@/i18n";
 
 export type Paging<
-	E extends keyof misskey.Endpoints = keyof misskey.Endpoints
+	E extends keyof misskey.Endpoints = keyof misskey.Endpoints,
 > = {
 	endpoint: E;
 	limit: number;
@@ -119,7 +119,7 @@ const props = withDefaults(
 	}>(),
 	{
 		displayLimit: 30,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -196,7 +196,7 @@ const init = async (): Promise<void> => {
 			(err) => {
 				error.value = true;
 				fetching.value = false;
-			}
+			},
 		);
 };
 
@@ -222,11 +222,13 @@ const refresh = async (): void => {
 		})
 		.then(
 			(res) => {
-				let ids = items.value.reduce((a, b) => {
-					a[b.id] = true;
-					runFilter();
-					return a;
-				}, {} as { [id: string]: boolean });
+				let ids = items.value.reduce(
+					(a, b) => {
+						a[b.id] = true;
+						return a;
+					},
+					{} as { [id: string]: boolean },
+				);
 
 				for (let i = 0; i < res.length; i++) {
 					const item = res[i];
@@ -244,7 +246,7 @@ const refresh = async (): void => {
 			(err) => {
 				error.value = true;
 				fetching.value = false;
-			}
+			},
 		);
 };
 
@@ -307,7 +309,7 @@ const fetchMore = async (): Promise<void> => {
 			},
 			(err) => {
 				moreFetching.value = false;
-			}
+			},
 		);
 };
 
@@ -361,7 +363,7 @@ const fetchMoreAhead = async (): Promise<void> => {
 			},
 			(err) => {
 				moreFetching.value = false;
-			}
+			},
 		);
 };
 
@@ -464,7 +466,7 @@ watch(
 		if (a.length === 0 && b.length === 0) return;
 		emit("queue", queue.value.length);
 	},
-	{ deep: true }
+	{ deep: true },
 );
 
 init();
@@ -505,6 +507,13 @@ defineExpose({
 	> .button {
 		margin-left: auto;
 		margin-right: auto;
+	}
+}
+.list > :deep(._button) {
+	margin-inline: auto;
+	margin-bottom: 16px;
+	&:last-of-type:not(:first-child) {
+		margin-top: 16px;
 	}
 }
 </style>

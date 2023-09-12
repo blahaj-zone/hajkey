@@ -1,15 +1,5 @@
-import * as Misskey from "calckey-js";
-import { ComputedRef, Ref } from "vue";
-
-export type MenuClasses =
-	| Array<string>
-	| Ref<Array<string>>
-	| ComputedRef<Array<string>>;
-export type MenuBase = {
-	classes?: MenuClasses;
-	hidden?: boolean | Ref<boolean>;
-	visible?: boolean | Ref<boolean>;
-};
+import * as Misskey from "iceshrimp-js";
+import { Ref } from "vue";
 
 export type MenuAction = (ev: MouseEvent) => void;
 
@@ -60,6 +50,7 @@ export type MenuButton = MenuBase & {
 	icon?: string;
 	indicate?: boolean;
 	danger?: boolean;
+	accent?: boolean;
 	active?: boolean;
 	avatar?: Misskey.entities.User;
 	action: MenuAction;

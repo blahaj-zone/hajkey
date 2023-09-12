@@ -6,12 +6,7 @@
 		@closed="$emit('closed')"
 	>
 		<template #header>{{ i18n.ts._mfm.cheatSheet }}</template>
-
-		<div class="_monolithic_">
-			<div class="_section">
-				<XCheatSheet />
-			</div>
-		</div>
+		<XCheatSheet :popup="true" style="background: var(--bg)" />
 	</XModalWindow>
 </template>
 

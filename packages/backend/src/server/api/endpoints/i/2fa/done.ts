@@ -1,6 +1,7 @@
-import * as speakeasy from "speakeasy";
+import { publishMainStream } from "@/services/stream.js";
+import * as OTPAuth from "otpauth";
 import define from "../../../define.js";
-import { UserProfiles } from "@/models/index.js";
+import { Users, UserProfiles } from "@/models/index.js";
 
 export const meta = {
 	requireCredential: true,
@@ -25,13 +26,14 @@ export default define(meta, paramDef, async (ps, user) => {
 		throw new Error("二段階認証の設定が開始されていません");
 	}
 
-	const verified = (speakeasy as any).totp.verify({
-		secret: profile.twoFactorTempSecret,
-		encoding: "base32",
-		token: token,
+	const delta = OTPAuth.TOTP.validate({
+		secret: OTPAuth.Secret.fromBase32(profile.twoFactorTempSecret),
+		digits: 6,
+		token,
+		window: 1,
 	});
 
-	if (!verified) {
+	if (delta === null) {
 		throw new Error("not verified");
 	}
 
@@ -39,4 +41,11 @@ export default define(meta, paramDef, async (ps, user) => {
 		twoFactorSecret: profile.twoFactorTempSecret,
 		twoFactorEnabled: true,
 	});
+
+	const iObj = await Users.pack(user.id, user, {
+		detail: true,
+		includeSecrets: true,
+	});
+
+	publishMainStream(user.id, "meUpdated", iObj);
 });

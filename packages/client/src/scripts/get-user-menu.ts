@@ -1,4 +1,4 @@
-import * as Acct from "calckey-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import { defineAsyncComponent } from "vue";
 import { i18n } from "@/i18n";
 import copyToClipboard from "@/scripts/copy-to-clipboard";
@@ -226,6 +226,12 @@ export function getUserMenu(user, router: Router = mainRouter) {
 
 	let menu = [
 		{
+			type: "label",
+			text: user.host
+				? `@${user.username}@${user.host || host}`
+				: `@${user.username}`,
+		},
+		{
 			icon: "ph-at ph-bold ph-lg",
 			text: i18n.ts.copyUsername,
 			action: () => {
@@ -240,6 +246,34 @@ export function getUserMenu(user, router: Router = mainRouter) {
 			},
 		},
 		{
+			icon: "ph-newspaper ph-bold ph-lg",
+			text: i18n.ts._feeds.copyFeed,
+			type: "parent",
+			children: [
+				{
+					icon: "ph-rss ph-bold ph-lg",
+					text: i18n.ts._feeds.rss,
+					action: () => {
+						copyToClipboard(`https://${host}/@${user.username}.rss`);
+					},
+				},
+				{
+					icon: "ph-atom ph-bold ph-lg",
+					text: i18n.ts._feeds.atom,
+					action: () => {
+						copyToClipboard(`https://${host}/@${user.username}.atom`);
+					},
+				},
+				{
+					icon: "ph-brackets-curly ph-bold ph-lg",
+					text: i18n.ts._feeds.jsonFeed,
+					action: () => {
+						copyToClipboard(`https://${host}/@${user.username}.json`);
+					},
+				},
+			],
+		},
+		{
 			icon: "ph-envelope-simple-open ph-bold ph-lg",
 			text: i18n.ts.sendMessage,
 			action: () => {
@@ -252,6 +286,15 @@ export function getUserMenu(user, router: Router = mainRouter) {
 					icon: "ph-chats-teardrop ph-bold ph-lg",
 					text: i18n.ts.startMessaging,
 					to: `/my/messaging/${Acct.toString(user)}`,
+			  }
+			: undefined,
+		user.host != null && user.url
+			? {
+					type: "a",
+					icon: "ph-arrow-square-out ph-bold ph-lg",
+					text: i18n.ts.showOnRemote,
+					href: user.url,
+					target: "_blank",
 			  }
 			: undefined,
 		null,

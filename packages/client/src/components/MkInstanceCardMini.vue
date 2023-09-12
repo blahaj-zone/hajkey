@@ -24,13 +24,13 @@
 </template>
 
 <script lang="ts" setup>
-import * as calckey from "calckey-js";
+import * as firefish from "iceshrimp-js";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
 import { getProxiedImageUrlNullable } from "@/scripts/media-proxy";
 
 const props = defineProps<{
-	instance: calckey.entities.Instance;
+	instance: firefish.entities.Instance;
 }>();
 
 let chartValues = $ref<number[] | null>(null);

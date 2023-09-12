@@ -62,7 +62,7 @@ export default defineComponent({
 					if (this.$store.state.uploadFolder) {
 						formData.append(
 							"folderId",
-							this.$store.state.uploadFolder
+							this.$store.state.uploadFolder,
 						);
 					}
 

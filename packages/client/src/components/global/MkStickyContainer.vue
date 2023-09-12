@@ -11,19 +11,20 @@
 
 <script lang="ts">
 // なんか動かない
-//const CURRENT_STICKY_TOP = Symbol('CURRENT_STICKY_TOP');
+// const CURRENT_STICKY_TOP = Symbol('CURRENT_STICKY_TOP');
 const CURRENT_STICKY_TOP = "CURRENT_STICKY_TOP";
 </script>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, provide, inject, Ref, ref, watch } from "vue";
+import type { Ref } from "vue";
+import { inject, onMounted, onUnmounted, provide, ref, watch } from "vue";
 
 const rootEl = $ref<HTMLElement>();
 const headerEl = $ref<HTMLElement>();
 const bodyEl = $ref<HTMLElement>();
 
-let headerHeight = $ref<string | undefined>();
-let childStickyTop = $ref(0);
+let headerHeight = $ref<string | undefined>(),
+	childStickyTop = $ref(0);
 const parentStickyTop = inject<Ref<number>>(CURRENT_STICKY_TOP, ref(0));
 provide(CURRENT_STICKY_TOP, $$(childStickyTop));
 
@@ -50,7 +51,7 @@ onMounted(() => {
 		},
 		{
 			immediate: true,
-		}
+		},
 	);
 
 	headerEl.style.position = "sticky";

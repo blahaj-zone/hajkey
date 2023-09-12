@@ -44,7 +44,7 @@ const props = withDefaults(
 		colored: true,
 		mini: false,
 		em: false,
-	}
+	},
 );
 </script>
 

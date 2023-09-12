@@ -53,7 +53,7 @@
 				@click="choose('followers')"
 			>
 				<div :class="$style.icon">
-					<i class="ph-lock-simple-open ph-bold ph-lg"></i>
+					<i class="ph-lock ph-bold ph-lg"></i>
 				</div>
 				<div :class="$style.body">
 					<span :class="$style.itemTitle">{{
@@ -123,7 +123,7 @@
 
 <script lang="ts" setup>
 import { nextTick, watch } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkModal from "@/components/MkModal.vue";
 import { i18n } from "@/i18n";
 
@@ -135,13 +135,13 @@ const props = withDefaults(
 		currentLocalOnly: boolean;
 		src?: HTMLElement;
 	}>(),
-	{}
+	{},
 );
 
 const emit = defineEmits<{
 	(
 		ev: "changeVisibility",
-		v: (typeof misskey.noteVisibilities)[number]
+		v: (typeof misskey.noteVisibilities)[number],
 	): void;
 	(ev: "changeLocalOnly", v: boolean): void;
 	(ev: "closed"): void;
@@ -215,7 +215,6 @@ function choose(visibility: (typeof misskey.noteVisibilities)[number]): void {
 
 .body {
 	flex: 1 1 auto;
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -227,6 +226,8 @@ function choose(visibility: (typeof misskey.noteVisibilities)[number]): void {
 
 .itemDescription {
 	opacity: 0.6;
+	display: block;
+	line-height: 1.5;
 }
 
 .toggle {

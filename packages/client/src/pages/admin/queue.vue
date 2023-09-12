@@ -63,6 +63,6 @@ const headerTabs = $computed(() => [
 
 definePageMetadata({
 	title: i18n.ts.jobQueue,
-	icon: "ph-clipboard-text ph-bold ph-lg",
+	icon: "ph-queue ph-bold ph-lg",
 });
 </script>

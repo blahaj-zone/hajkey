@@ -4,6 +4,7 @@ import * as os from "@/os";
 export async function indexPosts() {
 	const { canceled, result: index } = await os.inputText({
 		title: i18n.ts.indexFrom,
+		text: i18n.ts.indexFromDescription,
 	});
 	if (canceled) return;
 

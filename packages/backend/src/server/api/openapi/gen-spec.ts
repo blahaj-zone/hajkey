@@ -9,13 +9,13 @@ export function genOpenapiSpec() {
 
 		info: {
 			version: "v1",
-			title: "Calckey API",
+			title: "Firefish API",
 			"x-logo": { url: "/static-assets/api-doc.png" },
 		},
 
 		externalDocs: {
 			description: "Repository",
-			url: "https://codeberg.org/calckey/calckey",
+			url: "https://codeberg.org/firefish/firefish",
 		},
 
 		servers: [
@@ -106,7 +106,7 @@ export function genOpenapiSpec() {
 			description: desc,
 			externalDocs: {
 				description: "Source code",
-				url: `https://codeberg.org/calckey/calckey/src/branch/develop/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
+				url: `https://codeberg.org/firefish/firefish/src/branch/develop/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
 			},
 			tags: endpoint.meta.tags || undefined,
 			security,
@@ -182,7 +182,7 @@ export function genOpenapiSpec() {
 				...(endpoint.meta.limit
 					? {
 							"429": {
-								description: "To many requests",
+								description: "Too many requests",
 								content: {
 									"application/json": {
 										schema: {

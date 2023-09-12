@@ -7,7 +7,12 @@
 			</div>
 			<div class="body">
 				<div class="content">
-					<Mfm :text="preprocess(text).trim()" :author="$i" :i="$i" />
+					<Mfm
+						:text="preprocess(text).trim()"
+						:author="$i"
+						:i="$i"
+						advancedMfm
+					/>
 				</div>
 			</div>
 		</div>

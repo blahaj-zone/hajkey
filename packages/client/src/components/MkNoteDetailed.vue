@@ -4,7 +4,7 @@
 		v-show="!isDeleted"
 		ref="el"
 		v-hotkey="keymap"
-		v-size="{ max: [500, 450, 350, 300] }"
+		v-size="{ max: [500, 350, 300] }"
 		class="lxwezrsl _block"
 		:tabindex="!isDeleted ? '-1' : undefined"
 		:class="{
@@ -24,10 +24,10 @@
 			:note="note"
 			:detailedView="true"
 		/>
-		<MkLoading v-else-if="appearNote.reply" mini />
+		<MkLoading v-else-if="note.reply" mini />
 		<MkNoteSub
-			v-if="appearNote.reply"
-			:note="appearNote.reply"
+			v-if="note.reply"
+			:note="note.reply"
 			class="reply-to"
 			:detailedView="true"
 		/>
@@ -36,21 +36,21 @@
 			ref="noteEl"
 			@contextmenu.stop="onContextmenu"
 			tabindex="-1"
-			:note="appearNote"
+			:note="note"
 			detailedView
 		></MkNote>
 
 		<MkTab v-model="tab" :style="'underline'" @update:modelValue="loadTab">
 			<option value="replies">
 				<!-- <i class="ph-arrow-u-up-left ph-bold ph-lg"></i> -->
-				<span v-if="appearNote.repliesCount > 0" class="count">{{
-					appearNote.repliesCount
+				<span v-if="note.repliesCount > 0" class="count">{{
+					note.repliesCount
 				}}</span>
 				{{ i18n.ts._notification._types.reply }}
 			</option>
-			<option value="renotes" v-if="appearNote.renoteCount > 0">
+			<option value="renotes" v-if="note.renoteCount > 0">
 				<!-- <i class="ph-repeat ph-bold ph-lg"></i> -->
-				<span class="count">{{ appearNote.renoteCount }}</span>
+				<span class="count">{{ note.renoteCount }}</span>
 				{{ i18n.ts._notification._types.renote }}
 			</option>
 			<option value="reactions" v-if="reactionsCount > 0">
@@ -78,10 +78,9 @@
 			class="reply"
 			:conversation="replies"
 			:detailedView="true"
+			:parentId="note.id"
 		/>
-		<MkLoading
-			v-else-if="tab === 'replies' && appearNote.repliesCount > 0"
-		/>
+		<MkLoading v-else-if="tab === 'replies' && note.repliesCount > 0" />
 
 		<MkNoteSub
 			v-if="directQuotes && tab === 'quotes'"
@@ -91,6 +90,7 @@
 			class="reply"
 			:conversation="replies"
 			:detailedView="true"
+			:parentId="note.id"
 		/>
 		<MkLoading v-else-if="tab === 'quotes' && directQuotes.length > 0" />
 
@@ -108,9 +108,7 @@
 			:with-chart="false"
 		/>
 		<!-- </MkPagination> -->
-		<MkLoading
-			v-else-if="tab === 'renotes' && appearNote.renoteCount > 0"
-		/>
+		<MkLoading v-else-if="tab === 'renotes' && note.renoteCount > 0" />
 
 		<div v-if="tab === 'clips' && clips.length > 0" class="_content clips">
 			<MkA
@@ -137,7 +135,7 @@
 
 		<MkReactedUsers
 			v-if="tab === 'reactions' && reactionsCount > 0"
-			:note-id="appearNote.id"
+			:note-id="note.id"
 		></MkReactedUsers>
 	</div>
 	<div v-else class="_panel muted" @click="muted.muted = false">
@@ -168,7 +166,7 @@ import {
 	reactive,
 	ref,
 } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkTab from "@/components/MkTab.vue";
 import MkNote from "@/components/MkNote.vue";
 import MkNoteSub from "@/components/MkNoteSub.vue";
@@ -189,8 +187,7 @@ import { getNoteMenu } from "@/scripts/get-note-menu";
 import { useNoteCapture } from "@/scripts/use-note-capture";
 import { deepClone } from "@/scripts/clone";
 import { stream } from "@/stream";
-import { NoteUpdatedEvent } from "calckey-js/built/streaming.types";
-import { DriveFile } from "calckey-js/built/entities";
+import { NoteUpdatedEvent } from "iceshrimp-js/built/streaming.types";
 import appear from "@/directives/appear";
 
 const props = defineProps<{
@@ -229,23 +226,12 @@ if (noteViewInterruptors.length > 0) {
 	});
 }
 
-const isRenote =
-	note.renote != null &&
-	note.text == null &&
-	note.fileIds.length === 0 &&
-	note.poll == null;
-
 const el = ref<HTMLElement>();
 const noteEl = $ref();
 const menuButton = ref<HTMLElement>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
-const renoteTime = ref<HTMLElement>();
 const reactButton = ref<HTMLElement>();
-let appearNote = $computed(() =>
-	isRenote ? (note.renote as misskey.entities.Note) : note
-);
-const isMyRenote = $i && $i.id === note.userId;
-const showContent = ref(defaultStore.state.autoShowCw);
+const showContent = ref(false);
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -261,7 +247,7 @@ let isScrolling = false;
 
 const reactionsCount = Object.values(props.note.reactions).reduce(
 	(x, y) => x + y,
-	0
+	0,
 );
 
 const keymap = {
@@ -274,15 +260,15 @@ const keymap = {
 };
 
 useNoteCapture({
-	rootEl: el as Ref<HTMLElement>,
-	note: $$(appearNote),
+	rootEl: el,
+	note: $$(note),
 	isDeletedRef: isDeleted,
 });
 
 function reply(viaKeyboard = false): void {
 	pleaseLogin();
 	os.post({
-		reply: appearNote,
+		reply: note,
 		animation: !viaKeyboard,
 	}).then(() => {
 		focus();
@@ -296,13 +282,13 @@ function react(viaKeyboard = false): void {
 		reactButton.value!,
 		(reaction) => {
 			os.api("notes/reactions/create", {
-				noteId: appearNote.id,
+				noteId: note.id,
 				reaction: reaction,
 			});
 		},
 		() => {
 			focus();
-		}
+		},
 	);
 }
 
@@ -330,7 +316,7 @@ function onContextmenu(ev: MouseEvent): void {
 				menuButton,
 				isDeleted,
 			}),
-			ev
+			ev,
 		).then(focus);
 	}
 }
@@ -347,7 +333,7 @@ function menu(viaKeyboard = false): void {
 		menuButton.value,
 		{
 			viaKeyboard,
-		}
+		},
 	).then(focus);
 }
 
@@ -361,27 +347,27 @@ function blur() {
 
 directReplies.value = null;
 os.api("notes/children", {
-	noteId: appearNote.id,
+	noteId: note.id,
 	limit: 30,
 	depth: repliesDepth + 1,
 }).then((res) => {
-	res = res.reduce((acc, note) => {
-		if (note.userId == appearNote.userId) {
-			return [...acc, note];
+	res = res.reduce((acc, resNote) => {
+		if (resNote.userId == note.userId) {
+			return [...acc, resNote];
 		}
-		return [note, ...acc];
+		return [resNote, ...acc];
 	}, []);
 	replies.value = res;
 	directReplies.value = res
-		.filter((note) => note.replyId === appearNote.id)
+		.filter((resNote) => resNote.replyId === note.id)
 		.reverse();
-	directQuotes.value = res.filter((note) => note.renoteId === appearNote.id);
+	directQuotes.value = res.filter((resNote) => resNote.renoteId === note.id);
 });
 
 conversation.value = null;
-if (appearNote.replyId) {
+if (note.replyId) {
 	os.api("notes/conversation", {
-		noteId: appearNote.replyId,
+		noteId: note.replyId,
 		limit: 30,
 	}).then((res) => {
 		conversation.value = res.reverse();
@@ -391,16 +377,24 @@ if (appearNote.replyId) {
 
 clips.value = null;
 os.api("notes/clips", {
-	noteId: appearNote.id,
+	noteId: note.id,
 }).then((res) => {
 	clips.value = res;
 });
+
+// const pagination = {
+// 	endpoint: "notes/renotes",
+// 	noteId: note.id,
+// 	limit: 10,
+// };
+
+// const pagingComponent = $ref<InstanceType<typeof MkPagination>>();
 
 renotes.value = null;
 function loadTab() {
 	if (tab === "renotes" && !renotes.value) {
 		os.api("notes/renotes", {
-			noteId: appearNote.id,
+			noteId: note.id,
 			limit: 100,
 		}).then((res) => {
 			renotes.value = res;
@@ -412,7 +406,7 @@ async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	const { type, id, body } = noteData;
 
 	let found = -1;
-	if (id === appearNote.id) {
+	if (id === note.id) {
 		found = 0;
 	} else if (replies?.value) {
 		for (let i = 0; i < replies.value.length; i++) {
@@ -548,12 +542,8 @@ onUnmounted(() => {
 
 	> .reply {
 		border-top: solid 0.5px var(--divider);
-		cursor: pointer;
 		padding-top: 24px;
 		padding-bottom: 10px;
-		@media (pointer: coarse) {
-			cursor: default;
-		}
 	}
 
 	// Hover
@@ -569,15 +559,17 @@ onUnmounted(() => {
 			background: var(--panelHighlight);
 			border-radius: var(--radius);
 			opacity: 0;
-			transition: opacity 0.2s;
+			transition:
+				opacity 0.2s,
+				background 0.2s;
 			z-index: -1;
 		}
 		&.reply-to {
 			&::before {
 				inset: 0px 8px;
 			}
-			&:not(.max-width_450px)::before {
-				bottom: 12px;
+			&:not(.max-width_500px)::before {
+				bottom: 16px;
 			}
 			&:first-of-type::before {
 				top: 12px;
@@ -604,6 +596,7 @@ onUnmounted(() => {
 			--panel: var(--panelHighlight);
 			&::before {
 				opacity: 1;
+				background: var(--panelHighlight) !important;
 			}
 		}
 		// @media (pointer: coarse) {
@@ -623,16 +616,26 @@ onUnmounted(() => {
 		&::before {
 			outline: auto;
 			opacity: 1;
+			background: none;
 		}
 	}
-
-	&.max-width_450px {
-		> .reply-to:first-child {
-			padding-top: 14px;
+	&.max-width_500px {
+		font-size: 0.975em;
+		> .reply-to {
+			&::before {
+				inset-inline: -24px;
+			}
+			&:first-child {
+				padding-top: 14px;
+				&::before {
+					top: -24px;
+				}
+			}
 		}
 
 		> :deep(.note-container) {
 			padding: 12px 0 0 0;
+			font-size: 1.05rem;
 			> .header > .body {
 				padding-left: 10px;
 			}

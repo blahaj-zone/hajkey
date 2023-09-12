@@ -9,7 +9,7 @@ import {
 	localUserByNativeTokenCache,
 } from "@/services/user-cache.js";
 
-const appCache = new Cache<App>(Infinity);
+const appCache = new Cache<App>("app", 60 * 30);
 
 export class AuthenticationError extends Error {
 	constructor(message: string) {
@@ -49,6 +49,7 @@ export default async (
 		const user = await localUserByNativeTokenCache.fetch(
 			token,
 			() => Users.findOneBy({ token }) as Promise<ILocalUser | null>,
+			true,
 		);
 
 		if (user == null) {
@@ -82,11 +83,14 @@ export default async (
 				Users.findOneBy({
 					id: accessToken.userId,
 				}) as Promise<ILocalUser>,
+			true,
 		);
 
 		if (accessToken.appId) {
-			const app = await appCache.fetch(accessToken.appId, () =>
-				Apps.findOneByOrFail({ id: accessToken.appId! }),
+			const app = await appCache.fetch(
+				accessToken.appId,
+				() => Apps.findOneByOrFail({ id: accessToken.appId! }),
+				true,
 			);
 
 			return [

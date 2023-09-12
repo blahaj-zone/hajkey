@@ -48,7 +48,7 @@ export default defineComponent({
 								{
 									class: "label",
 								},
-								[label]
+								[label],
 							),
 					  ]
 					: []),
@@ -69,9 +69,9 @@ export default defineComponent({
 								"onUpdate:modelValue": (value) =>
 									(this.value = value),
 							},
-							option.children
-						)
-					)
+							option.children,
+						),
+					),
 				),
 				...(caption
 					? [
@@ -80,11 +80,11 @@ export default defineComponent({
 								{
 									class: "caption",
 								},
-								[caption]
+								[caption],
 							),
 					  ]
 					: []),
-			]
+			],
 		);
 	},
 });

@@ -151,7 +151,7 @@ function signin() {
 			autoSet: true,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 }
 
@@ -162,7 +162,7 @@ function signup() {
 			autoSet: true,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 }
 
@@ -177,14 +177,14 @@ function showMenu(ev) {
 				},
 			},
 			{
-				text: i18n.ts.aboutMisskey,
+				text: i18n.ts.aboutIceshrimp,
 				icon: "ph-info ph-bold ph-lg",
 				action: () => {
-					os.pageWindow("/about-calckey");
+					os.pageWindow("/about-iceshrimp");
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 </script>

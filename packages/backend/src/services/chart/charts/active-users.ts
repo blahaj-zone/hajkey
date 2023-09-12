@@ -25,12 +25,12 @@ export default class ActiveUsersChart extends Chart<typeof schema> {
 		return {};
 	}
 
-	public async read(user: {
+	public read(user: {
 		id: User["id"];
 		host: null;
 		createdAt: User["createdAt"];
-	}): Promise<void> {
-		await this.commit({
+	}) {
+		this.commit({
 			read: [user.id],
 			registeredWithinWeek:
 				Date.now() - user.createdAt.getTime() < week ? [user.id] : [],

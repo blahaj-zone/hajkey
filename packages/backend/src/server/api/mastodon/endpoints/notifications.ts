@@ -1,9 +1,9 @@
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import Router from "@koa/router";
 import { koaBody } from "koa-body";
 import { convertId, IdType } from "../../index.js";
 import { getClient } from "../ApiMastodonCompatibleService.js";
-import { convertTimelinesArgsId, toTextWithReaction } from "./timeline.js";
+import { convertTimelinesArgsId } from "./timeline.js";
 import { convertNotification } from "../converters.js";
 function toLimitToInt(q: any) {
 	if (q.limit) if (typeof q.limit === "string") q.limit = parseInt(q.limit, 10);
@@ -25,10 +25,6 @@ export function apiNotificationsMastodon(router: Router): void {
 				n = convertNotification(n);
 				if (n.type !== "follow" && n.type !== "follow_request") {
 					if (n.type === "reaction") n.type = "favourite";
-					n.status = toTextWithReaction(
-						n.status ? [n.status] : [],
-						ctx.hostname,
-					)[0];
 					return n;
 				} else {
 					return n;
@@ -49,14 +45,16 @@ export function apiNotificationsMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const dataRaw = await client.getNotification(
-				convertId(ctx.params.id, IdType.CalckeyId),
+				convertId(ctx.params.id, IdType.FirefishId),
 			);
 			const data = convertNotification(dataRaw.data);
-			if (data.type !== "follow" && data.type !== "follow_request") {
-				if (data.type === "reaction") data.type = "favourite";
-				ctx.body = toTextWithReaction([data as any], ctx.request.hostname)[0];
-			} else {
-				ctx.body = data;
+			ctx.body = data;
+			if (
+				data.type !== "follow" &&
+				data.type !== "follow_request" &&
+				data.type === "reaction"
+			) {
+				data.type = "favourite";
 			}
 		} catch (e: any) {
 			console.error(e);
@@ -87,7 +85,7 @@ export function apiNotificationsMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.dismissNotification(
-				convertId(ctx.params.id, IdType.CalckeyId),
+				convertId(ctx.params.id, IdType.FirefishId),
 			);
 			ctx.body = data.data;
 		} catch (e: any) {

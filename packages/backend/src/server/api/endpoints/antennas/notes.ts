@@ -1,6 +1,8 @@
 import define from "../../define.js";
 import readNote from "@/services/note/read.js";
-import { Antennas, Notes, AntennaNotes } from "@/models/index.js";
+import { Antennas, Notes } from "@/models/index.js";
+import { redisClient } from "@/db/redis.js";
+import { genId } from "@/misc/gen-id.js";
 import { makePaginationQuery } from "../../common/make-pagination-query.js";
 import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
 import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
@@ -58,6 +60,26 @@ export default define(meta, paramDef, async (ps, user) => {
 		throw new ApiError(meta.errors.noSuchAntenna);
 	}
 
+	const noteIdsRes = await redisClient.xrevrange(
+		`antennaTimeline:${antenna.id}`,
+		ps.untilDate || "+",
+		"-",
+		"COUNT",
+		ps.limit + 1,
+	); // untilIdに指定したものも含まれるため+1
+
+	if (noteIdsRes.length === 0) {
+		return [];
+	}
+
+	const noteIds = noteIdsRes
+		.map((x) => x[1][1])
+		.filter((x) => x !== ps.untilId);
+
+	if (noteIds.length === 0) {
+		return [];
+	}
+
 	const query = makePaginationQuery(
 		Notes.createQueryBuilder("note"),
 		ps.sinceId,
@@ -65,11 +87,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		ps.sinceDate,
 		ps.untilDate,
 	)
-		.innerJoinAndSelect(
-			AntennaNotes.metadata.targetName,
-			"antennaNote",
-			"antennaNote.noteId = note.id",
-		)
+		.where("note.id IN (:...noteIds)", { noteIds: noteIds })
 		.innerJoinAndSelect("note.user", "user")
 		.leftJoinAndSelect("user.avatar", "avatar")
 		.leftJoinAndSelect("user.banner", "banner")
@@ -81,7 +99,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		.leftJoinAndSelect("renote.user", "renoteUser")
 		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
 		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
-		.andWhere("antennaNote.antennaId = :antennaId", { antennaId: antenna.id });
+		.andWhere("note.visibility != 'home'");
 
 	const order = query.expressionMap.orderBys;
 	query.orderBy("antennaNote.read", "ASC");

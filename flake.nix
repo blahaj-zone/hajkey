@@ -1,5 +1,5 @@
 {
-	description = "Calckey development flake";
+	description = "Firefish development flake";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -17,7 +17,7 @@
 				inputs.devenv.flakeModule
 			];
 
-			# Define the systems that this works on. Only tested with x66_64-linux, add more if you test and it works.
+			# Define the systems that this works on. Only tested with x86_64-linux, add more if you test and it works.
 			systems = [
 				"x86_64-linux"
 			];
@@ -28,7 +28,7 @@
 					shells = {
 						# The default shell, used by nix-direnv
 						default = {
-							name = "calckey-dev-shell";
+							name = "iceshrimp-dev-shell";
 							# Add additional packages to our environment
 							packages = [
 								pkgs.nodePackages.pnpm
@@ -41,10 +41,10 @@
 							languages.typescript.enable = true;
 							# Enable javascript for NPM and PNPM
 							languages.javascript.enable = true;
-							languages.javascript.package = pkgs.nodejs_19;
+							languages.javascript.package = pkgs.nodejs_18;
 							# Enable stable Rust for the backend
 							languages.rust.enable = true;
-							languages.rust.version = "stable";
+							languages.rust.channel = "stable";
 							processes = {
 								dev-server.exec = "pnpm run dev";
 							};
@@ -62,12 +62,12 @@
 									enable = true;
 									package = pkgs.postgresql_12;
 									initialDatabases = [{
-										name = "calckey";
+										name = "iceshrimp";
 									}];
 									initialScript = ''
-										CREATE USER calckey WITH PASSWORD 'calckey';
-										ALTER USER calckey WITH SUPERUSER;
-										GRANT ALL ON DATABASE calckey TO calckey;
+										CREATE USER iceshrimp WITH PASSWORD 'iceshrimp';
+										ALTER USER firefish WITH SUPERUSER;
+										GRANT ALL ON DATABASE iceshrimp TO iceshrimp;
 									'';
 									listen_addresses = "127.0.0.1";
 									port = 5432;

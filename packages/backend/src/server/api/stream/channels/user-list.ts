@@ -22,11 +22,13 @@ export default class extends Channel {
 		this.listId = params.listId as string;
 
 		// Check existence and owner
-		const list = await UserLists.findOneBy({
-			id: this.listId,
-			userId: this.user!.id,
+		const exist = await UserLists.exist({
+			where: {
+				id: this.listId,
+				userId: this.user!.id,
+			},
 		});
-		if (!list) return;
+		if (!exist) return;
 
 		// Subscribe stream
 		this.subscriber.on(`userListStream:${this.listId}`, this.send);
@@ -57,8 +59,7 @@ export default class extends Channel {
 		// 流れてきたNoteがブロックされているユーザーが関わるものだったら無視する
 		if (isUserRelated(note, this.blocking)) return;
 
-		if (note.renote && !note.text && isUserRelated(note, this.renoteMuting))
-			return;
+		if (note.renote && !note.text && this.renoteMuting.has(note.userId)) return;
 
 		this.send("note", note);
 	}

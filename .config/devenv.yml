@@ -5,10 +5,10 @@ db:
   host: 127.0.0.1
   port: 5432
 
-  db: calckey
+  db: firefish
 
-  user: calckey
-  pass: calckey
+  user: firefish
+  pass: firefish
 
 redis:
   host: localhost

@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import { getStaticImageUrl } from "@/scripts/get-static-image-url";
 import { notePage } from "@/filters/note";
 import * as os from "@/os";
@@ -98,6 +98,7 @@ onMounted(() => {
 		grid-gap: 6px;
 
 		> .img {
+			position: relative;
 			height: 128px;
 			border-radius: 6px;
 			overflow: clip;

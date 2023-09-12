@@ -2,6 +2,12 @@ html {
 	background-color: var(--bg);
 	color: var(--fg);
 }
+@media (prefers-color-scheme: dark) {
+	html {
+		--bg: rgb(17, 17, 27);
+		--fg: rgb(224, 222, 244);
+	}
+}
 
 #splash {
 	position: fixed;
@@ -26,9 +32,6 @@ html {
 	width: 64px;
 	height: 64px;
 	pointer-events: none;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	animation-name: tada;
 }
 
 #splashSpinner {
@@ -104,10 +107,6 @@ html {
 @media(prefers-reduced-motion) {
 	#splashSpinner {
 		display: block;
-	}
-
-	#splashIcon {
-		animation: none;
 	}
 }
 

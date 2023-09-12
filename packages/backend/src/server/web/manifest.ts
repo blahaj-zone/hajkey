@@ -9,8 +9,8 @@ export const manifestHandler = async (ctx: Koa.Context) => {
 
 	const instance = await fetchMeta(true);
 
-	res.short_name = instance.name || "Calckey";
-	res.name = instance.name || "Calckey";
+	res.short_name = instance.name || "Firefish";
+	res.name = instance.name || "Firefish";
 	if (instance.themeColor) res.theme_color = instance.themeColor;
 
 	ctx.set("Cache-Control", "max-age=300");

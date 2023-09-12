@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import JSON5 from "json5";
-import { Endpoints } from "calckey-js";
+import { Endpoints } from "iceshrimp-js";
 import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
 import MkTextarea from "@/components/form/textarea.vue";
@@ -71,7 +71,7 @@ function send() {
 	os.api(
 		endpoint.value as keyof Endpoints,
 		requestBody,
-		requestBody.i || (withCredential.value ? undefined : null)
+		requestBody.i || (withCredential.value ? undefined : null),
 	).then(
 		(resp) => {
 			sending.value = false;
@@ -80,7 +80,7 @@ function send() {
 		(err) => {
 			sending.value = false;
 			res.value = JSON5.stringify(err, null, 2);
-		}
+		},
 	);
 }
 
@@ -88,7 +88,7 @@ function onEndpointChange() {
 	os.api(
 		"endpoint",
 		{ endpoint: endpoint.value },
-		withCredential.value ? undefined : null
+		withCredential.value ? undefined : null,
 	).then((resp) => {
 		const endpointBody = {};
 		for (const p of resp.params) {

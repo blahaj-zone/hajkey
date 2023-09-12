@@ -18,7 +18,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.preview,
 		icon: "ph-eye ph-bold ph-lg",
-	}))
+	})),
 );
 </script>
 

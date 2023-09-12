@@ -24,7 +24,7 @@ const props = defineProps<{
 }>();
 
 const image = props.hpml.page.attachedFiles.find(
-	(x) => x.id === props.block.fileId
+	(x) => x.id === props.block.fileId,
 );
 </script>
 

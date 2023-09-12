@@ -1,13 +1,13 @@
 <template>
-	<div v-size="{ max: [500] }" class="ssazuxis">
-		<header
-			class="_button"
-			:style="{ background: bg }"
-			@click="showBody = !showBody"
-		>
+	<section class="ssazuxis">
+		<header class="_button" @click="showBody = !showBody">
 			<div class="title"><slot name="header"></slot></div>
 			<div class="divider"></div>
-			<button class="_button">
+			<button
+				class="_button"
+				:aria-expanded="showBody"
+				:aria-controls="bodyId"
+			>
 				<template v-if="showBody"
 					><i class="ph-caret-up ph-bold ph-lg"></i
 				></template>
@@ -23,16 +23,16 @@
 			@leave="leave"
 			@after-leave="afterLeave"
 		>
-			<div v-show="showBody">
+			<div v-show="showBody" :id="bodyId">
 				<slot></slot>
 			</div>
 		</transition>
-	</div>
+	</section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import tinycolor from "tinycolor2";
+import { getUniqueId } from "@/os";
 
 const localStoragePrefix = "ui:folder:";
 
@@ -51,12 +51,12 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			bg: null,
+			bodyId: getUniqueId(),
 			showBody:
 				this.persistKey &&
 				localStorage.getItem(localStoragePrefix + this.persistKey)
 					? localStorage.getItem(
-							localStoragePrefix + this.persistKey
+							localStoragePrefix + this.persistKey,
 					  ) === "t"
 					: this.expanded,
 		};
@@ -66,31 +66,10 @@ export default defineComponent({
 			if (this.persistKey) {
 				localStorage.setItem(
 					localStoragePrefix + this.persistKey,
-					this.showBody ? "t" : "f"
+					this.showBody ? "t" : "f",
 				);
 			}
 		},
-	},
-	mounted() {
-		function getParentBg(el: Element | null): string {
-			if (el == null || el.tagName === "BODY") return "var(--bg)";
-			const bg = el.style.background || el.style.backgroundColor;
-			if (bg) {
-				return bg;
-			} else {
-				return getParentBg(el.parentElement);
-			}
-		}
-		const rawBg = getParentBg(this.$el);
-		const bg = tinycolor(
-			rawBg.startsWith("var(")
-				? getComputedStyle(document.documentElement).getPropertyValue(
-						rawBg.slice(4, -1)
-				  )
-				: rawBg
-		);
-		bg.setAlpha(0.85);
-		this.bg = bg.toRgbString();
 	},
 	methods: {
 		toggleContent(show: boolean) {
@@ -123,7 +102,9 @@ export default defineComponent({
 .folder-toggle-enter-active,
 .folder-toggle-leave-active {
 	overflow-y: hidden;
-	transition: opacity 0.5s, height 0.5s !important;
+	transition:
+		opacity 0.5s,
+		height 0.5s !important;
 }
 .folder-toggle-enter-from {
 	opacity: 0;
@@ -159,6 +140,15 @@ export default defineComponent({
 			transparent
 		);
 
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: var(--bg);
+			opacity: 0.85;
+			z-index: -1;
+		}
+
 		> .title {
 			margin: 0;
 			padding: 12px 16px 12px 0;
@@ -181,14 +171,6 @@ export default defineComponent({
 
 		> button {
 			padding: 12px 0 12px 16px;
-		}
-	}
-
-	&.max-width_500px {
-		> header {
-			> .title {
-				padding: 8px 10px 8px 0;
-			}
 		}
 	}
 }

@@ -5,7 +5,7 @@ export const packedHashtagSchema = {
 			type: "string",
 			optional: false,
 			nullable: false,
-			example: "calckey",
+			example: "firefish",
 		},
 		mentionedUsersCount: {
 			type: "number",

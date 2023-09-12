@@ -24,8 +24,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import * as misskey from "calckey-js";
-import XNote from "@/components/MkNote.vue";
+import * as misskey from "iceshrimp-js";
 import XNotes from "@/components/MkNotes.vue";
 import MkTab from "@/components/MkTab.vue";
 import * as os from "@/os";

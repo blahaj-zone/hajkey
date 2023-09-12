@@ -3,7 +3,6 @@ import type { Note } from "@/models/entities/note.js";
 import type { User } from "@/models/entities/user.js";
 import {
 	NoteUnreads,
-	AntennaNotes,
 	Users,
 	Followings,
 	ChannelFollowings,
@@ -51,11 +50,11 @@ export default async function (
 				).map((x) => x.followeeId),
 		  );
 
-	const myAntennas = (await getAntennas()).filter((a) => a.userId === userId);
+	// const myAntennas = (await getAntennas()).filter((a) => a.userId === userId);
 	const readMentions: (Note | Packed<"Note">)[] = [];
 	const readSpecifiedNotes: (Note | Packed<"Note">)[] = [];
 	const readChannelNotes: (Note | Packed<"Note">)[] = [];
-	const readAntennaNotes: (Note | Packed<"Note">)[] = [];
+	// const readAntennaNotes: (Note | Packed<"Note">)[] = [];
 
 	for (const note of notes) {
 		if (note.mentions?.includes(userId)) {
@@ -68,22 +67,22 @@ export default async function (
 			readChannelNotes.push(note);
 		}
 
-		if (note.user != null) {
-			// たぶんnullになることは無いはずだけど一応
-			for (const antenna of myAntennas) {
-				if (
-					await checkHitAntenna(
-						antenna,
-						note,
-						note.user,
-						undefined,
-						Array.from(following),
-					)
-				) {
-					readAntennaNotes.push(note);
-				}
-			}
-		}
+		// if (note.user != null) {
+		// 	// たぶんnullになることは無いはずだけど一応
+		// 	for (const antenna of myAntennas) {
+		// 		if (
+		// 			await checkHitAntenna(
+		// 				antenna,
+		// 				note,
+		// 				note.user,
+		// 				undefined,
+		// 				Array.from(following),
+		// 			)
+		// 		) {
+		// 			readAntennaNotes.push(note);
+		// 		}
+		// 	}
+		// }
 	}
 
 	if (
@@ -141,33 +140,33 @@ export default async function (
 		});
 	}
 
-	if (readAntennaNotes.length > 0) {
-		await AntennaNotes.update(
-			{
-				antennaId: In(myAntennas.map((a) => a.id)),
-				noteId: In(readAntennaNotes.map((n) => n.id)),
-			},
-			{
-				read: true,
-			},
-		);
+	// if (readAntennaNotes.length > 0) {
+	// 	await AntennaNotes.update(
+	// 		{
+	// 			antennaId: In(myAntennas.map((a) => a.id)),
+	// 			noteId: In(readAntennaNotes.map((n) => n.id)),
+	// 		},
+	// 		{
+	// 			read: true,
+	// 		},
+	// 	);
 
-		// TODO: まとめてクエリしたい
-		for (const antenna of myAntennas) {
-			const count = await AntennaNotes.countBy({
-				antennaId: antenna.id,
-				read: false,
-			});
+	// 	// TODO: まとめてクエリしたい
+	// 	for (const antenna of myAntennas) {
+	// 		const count = await AntennaNotes.countBy({
+	// 			antennaId: antenna.id,
+	// 			read: false,
+	// 		});
 
-			if (count === 0) {
-				publishMainStream(userId, "readAntenna", antenna);
-			}
-		}
+	// 		if (count === 0) {
+	// 			publishMainStream(userId, "readAntenna", antenna);
+	// 		}
+	// 	}
 
-		Users.getHasUnreadAntenna(userId).then((unread) => {
-			if (!unread) {
-				publishMainStream(userId, "readAllAntennas");
-			}
-		});
-	}
+	// 	Users.getHasUnreadAntenna(userId).then((unread) => {
+	// 		if (!unread) {
+	// 			publishMainStream(userId, "readAllAntennas");
+	// 		}
+	// 	});
+	// }
 }

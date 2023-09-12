@@ -1,10 +1,13 @@
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { mainRouter } from "@/router";
+import { instance } from "@/instance";
 
 export async function search() {
 	const { canceled, result: query } = await os.inputText({
+		type: instance.features.searchFilters ? "search" : "text",
 		title: i18n.ts.search,
+		placeholder: i18n.ts.searchPlaceholder,
 	});
 	if (canceled || query == null || query === "") return;
 
@@ -16,7 +19,7 @@ export async function search() {
 	}
 
 	if (q.startsWith("#")) {
-		mainRouter.push(`/tags/${encodeURIComponent(q.substr(1))}`);
+		mainRouter.push(`/tags/${encodeURIComponent(q.slice(1))}`);
 		return;
 	}
 
@@ -35,9 +38,7 @@ export async function search() {
 		// TODO
 		//v.$root.$emit('warp', date);
 		os.alert({
-			icon: "ph-clock-counter-clockwise ph-bold ph-lg",
-			iconOnly: true,
-			autoClose: true,
+			type: "waiting",
 		});
 		return;
 	}

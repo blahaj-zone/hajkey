@@ -91,7 +91,7 @@
 					:key="instance.id"
 					v-tooltip.mfm="
 						`Last communicated: ${new Date(
-							instance.lastCommunicatedAt
+							instance.lastCommunicatedAt,
 						).toLocaleString()}\nStatus: ${getStatus(instance)}`
 					"
 					class="instance"

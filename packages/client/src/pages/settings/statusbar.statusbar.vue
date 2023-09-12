@@ -160,7 +160,7 @@ const props = defineProps<{
 }>();
 
 const statusbar = reactive(
-	deepClone(defaultStore.state.statusbars.find((x) => x.id === props._id))
+	deepClone(defaultStore.state.statusbars.find((x) => x.id === props._id)),
 );
 
 watch(
@@ -188,14 +188,14 @@ watch(
 			statusbar.props.marqueeDuration = 100;
 			statusbar.props.marqueeReverse = false;
 		}
-	}
+	},
 );
 
 watch(statusbar, save);
 
 async function save() {
 	const i = defaultStore.state.statusbars.findIndex(
-		(x) => x.id === props._id
+		(x) => x.id === props._id,
 	);
 	const statusbars = deepClone(defaultStore.state.statusbars);
 	statusbars[i] = deepClone(statusbar);
@@ -205,7 +205,7 @@ async function save() {
 function del() {
 	defaultStore.set(
 		"statusbars",
-		defaultStore.state.statusbars.filter((x) => x.id !== props._id)
+		defaultStore.state.statusbars.filter((x) => x.id !== props._id),
 	);
 }
 </script>

@@ -42,7 +42,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .toast-enter-active,
 .toast-leave-active {
-	transition: opacity 0.3s, transform 0.3s !important;
+	transition:
+		opacity 0.3s,
+		transform 0.3s !important;
 }
 .toast-enter-from,
 .toast-leave-to {

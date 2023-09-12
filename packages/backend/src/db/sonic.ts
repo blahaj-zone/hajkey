@@ -5,8 +5,6 @@ import config from "@/config/index.js";
 
 const logger = dbLogger.createSubLogger("sonic", "gray", false);
 
-logger.info("Connecting to Sonic");
-
 const handlers = (type: string): SonicChannel.Handlers => ({
 	connected: () => {
 		logger.succ(`Connected to Sonic ${type}`);
@@ -27,6 +25,10 @@ const handlers = (type: string): SonicChannel.Handlers => ({
 
 const hasConfig =
 	config.sonic && (config.sonic.host || config.sonic.port || config.sonic.auth);
+
+if (hasConfig) {
+	logger.info("Connecting to Sonic");
+}
 
 const host = hasConfig ? config.sonic.host ?? "localhost" : "";
 const port = hasConfig ? config.sonic.port ?? 1491 : 0;

@@ -15,9 +15,11 @@ export async function deleteActor(
 		return `skip: delete actor ${actor.uri} !== ${uri}`;
 	}
 
-	const user = await Users.findOneByOrFail({ id: actor.id });
-	if (user.isDeleted) {
-		logger.info("skip: already deleted");
+	const user = await Users.findOneBy({ id: actor.id });
+	if (!user) {
+		return `skip: actor ${actor.id} not found in the local database`;
+	} else if (user.isDeleted) {
+		return `skip: user ${user.id} already deleted`;
 	}
 
 	const job = await createDeleteAccountJob(actor);

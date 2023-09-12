@@ -9,14 +9,17 @@
 		<div>
 			<MkSpacer :content-max="800">
 				<swiper
+					:round-lengths="true"
+					:touch-angle="25"
+					:threshold="10"
+					:centeredSlides="true"
 					:modules="[Virtual]"
 					:space-between="20"
 					:virtual="true"
 					:allow-touch-move="
-						!(
-							deviceKind === 'desktop' &&
-							!defaultStore.state.swipeOnDesktop
-						) && defaultStore.state.allowSwipe
+						defaultStore.state.swipeOnMobile &&
+						(deviceKind !== 'desktop' ||
+							defaultStore.state.swipeOnDesktop)
 					"
 					@swiper="setSwiperRef"
 					@slide-change="onSlideChange"
@@ -86,8 +89,8 @@
 
 <script lang="ts" setup>
 import { ref, markRaw, onMounted, onUnmounted, watch } from "vue";
-import * as Acct from "calckey-js/built/acct";
-import { Virtual } from "swiper";
+import * as Acct from "iceshrimp-js/built/acct";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MkButton from "@/components/MkButton.vue";
 import MkChatPreview from "@/components/MkChatPreview.vue";
@@ -114,7 +117,7 @@ watch($$(tab), () => syncSlide(tabs.indexOf(tab)));
 
 const MOBILE_THRESHOLD = 500;
 const isMobile = ref(
-	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD,
 );
 window.addEventListener("resize", () => {
 	isMobile.value =
@@ -175,7 +178,7 @@ function onMessage(message): void {
 						m.userId === message.userId) ||
 					(m.recipientId === message.userId &&
 						m.userId === message.recipientId)
-				)
+				),
 		);
 
 		messages.unshift(message);
@@ -216,7 +219,7 @@ function startMenu(ev) {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 
@@ -279,12 +282,12 @@ onMounted(() => {
 					_messages.sort(
 						(a, b) =>
 							new Date(b.createdAt).getTime() -
-							new Date(a.createdAt).getTime()
+							new Date(a.createdAt).getTime(),
 					);
 					messages = _messages;
-				}
+				},
 			);
-		}
+		},
 	);
 });
 

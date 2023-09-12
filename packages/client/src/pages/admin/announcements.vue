@@ -7,7 +7,7 @@
 				:display-back-button="true"
 		/></template>
 		<MkSpacer :content-max="900">
-			<div class="ztgjmzrw">
+			<div :class="$style.root">
 				<section
 					v-for="announcement in announcements"
 					class="_card _gap announcements"
@@ -22,6 +22,17 @@
 						<MkInput v-model="announcement.imageUrl">
 							<template #label>{{ i18n.ts.imageUrl }}</template>
 						</MkInput>
+						<MkSwitch
+							v-model="announcement.showPopup"
+							class="_formBlock"
+							>{{ i18n.ts.showPopup }}</MkSwitch
+						>
+						<MkSwitch
+							v-if="announcement.showPopup"
+							v-model="announcement.isGoodNews"
+							class="_formBlock"
+							>{{ i18n.ts.showWithSparkles }}</MkSwitch
+						>
 						<p v-if="announcement.reads">
 							{{
 								i18n.t("nUsersRead", { n: announcement.reads })
@@ -57,6 +68,7 @@
 import {} from "vue";
 import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
+import MkSwitch from "@/components/form/switch.vue";
 import MkTextarea from "@/components/form/textarea.vue";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
@@ -74,6 +86,8 @@ function add() {
 		title: "",
 		text: "",
 		imageUrl: null,
+		showPopup: false,
+		isGoodNews: false,
 	});
 }
 
@@ -137,8 +151,8 @@ definePageMetadata({
 });
 </script>
 
-<style lang="scss" scoped>
-.ztgjmzrw {
+<style lang="scss" module>
+.root {
 	margin: var(--margin);
 }
 </style>

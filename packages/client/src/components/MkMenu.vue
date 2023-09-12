@@ -1,6 +1,11 @@
 <template>
-	<FocusTrap :active="false" ref="focusTrap">
-		<div tabindex="-1">
+	<FocusTrap
+		ref="focusTrap"
+		v-model:active="isActive"
+		:return-focus-on-deactivate="!noReturnFocus"
+		@deactivate="emit('close')"
+	>
+		<div>
 			<div
 				ref="itemsEl"
 				class="rrevdjwt _popup _shadow"
@@ -10,6 +15,7 @@
 					maxHeight: maxHeight ? maxHeight + 'px' : '',
 				}"
 				@contextmenu.self="(e) => e.preventDefault()"
+				tabindex="-1"
 			>
 				<template v-for="(item, i) in items2">
 					<div v-if="item === null" class="divider"></div>
@@ -65,7 +71,12 @@
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</MkA>
@@ -95,7 +106,12 @@
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</a>
@@ -116,7 +132,12 @@
 							class="avatar"
 							disableLink
 						/><MkUserName :user="item.user" />
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</button>
@@ -158,7 +179,7 @@
 							...classMap(item.classes),
 						}"
 						@mouseenter="showChildren(item, $event)"
-						@click="showChildren(item, $event)"
+						@click.stop="showChildren(item, $event)"
 					>
 						<i
 							v-if="item.icon"
@@ -186,8 +207,8 @@
 						class="_button item"
 						:class="{
 							danger: item.danger,
+							accent: item.accent,
 							active: item.active,
-							...classMap(item.classes),
 						}"
 						:disabled="item.active"
 						@click="clicked(item.action, $event)"
@@ -215,7 +236,12 @@
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</button>
@@ -232,6 +258,7 @@
 					:root-element="itemsEl"
 					showing
 					@actioned="childActioned"
+					@closed="closeChild"
 				/>
 			</div>
 		</div>
@@ -273,6 +300,7 @@ const props = defineProps<{
 	align?: "center" | string;
 	width?: number;
 	maxHeight?: number;
+	noReturnFocus?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -297,7 +325,7 @@ watch(
 	() => props.items,
 	() => {
 		const items: (MenuItem | MenuPending)[] = [...props.items].filter(
-			(item) => item !== undefined
+			(item) => item !== undefined,
 		);
 
 		for (let i = 0; i < items.length; i++) {
@@ -316,7 +344,7 @@ watch(
 	},
 	{
 		immediate: true,
-	}
+	},
 );
 
 let childMenu = $ref<MenuItem[] | null>();
@@ -384,21 +412,7 @@ function close(actioned = false) {
 	emit("close", actioned);
 }
 
-function focusUp() {
-	focusPrev(document.activeElement);
-}
-
-function focusDown() {
-	focusNext(document.activeElement);
-}
-
 onMounted(() => {
-	if (props.viaKeyboard) {
-		nextTick(() => {
-			focusNext(itemsEl.children[0], true, false);
-		});
-	}
-
 	document.addEventListener("mousedown", onGlobalMousedown, {
 		passive: true,
 	});
@@ -454,11 +468,8 @@ onBeforeUnmount(() => {
 			position: relative;
 		}
 
-		> &.icon {
-			transform: translateY(0em);
-		}
-
-		&:not(:disabled):hover {
+		&:not(:disabled):hover,
+		&:focus-visible {
 			color: var(--accent);
 			text-decoration: none;
 
@@ -483,6 +494,26 @@ onBeforeUnmount(() => {
 
 				&:before {
 					background: #b4637a;
+				}
+			}
+		}
+
+		&.accent {
+			color: var(--accent);
+
+			&:hover {
+				color: var(--accent);
+
+				&:before {
+					background: var(--accentedBg);
+				}
+			}
+
+			&:active {
+				color: var(--fgOnAccent);
+
+				&:before {
+					background: var(--accent);
 				}
 			}
 		}
@@ -556,6 +587,9 @@ onBeforeUnmount(() => {
 			left: 13px;
 			color: var(--indicator);
 			font-size: 12px;
+		}
+
+		> .animateIndicator {
 			animation: blink 1s infinite;
 		}
 	}

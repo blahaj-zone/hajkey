@@ -42,9 +42,9 @@ export async function insertNoteUnread(
 
 	// 2秒経っても既読にならなかったら「未読の投稿がありますよ」イベントを発行する
 	setTimeout(async () => {
-		const exist = await NoteUnreads.findOneBy({ id: unread.id });
+		const exist = await NoteUnreads.exist({ where: { id: unread.id } });
 
-		if (exist == null) return;
+		if (!exist) return;
 
 		if (params.isMentioned) {
 			publishMainStream(userId, "unreadMention", note.id);

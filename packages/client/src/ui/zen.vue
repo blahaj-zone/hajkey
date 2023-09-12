@@ -7,11 +7,12 @@
 </template>
 
 <script lang="ts" setup>
-import { provide, ComputedRef } from "vue";
+import type { ComputedRef } from "vue";
+import { provide } from "vue";
 import XCommon from "./_common_/common.vue";
 import { mainRouter } from "@/router";
+import type { PageMetadata } from "@/scripts/page-metadata";
 import {
-	PageMetadata,
 	provideMetadataReceiver,
 	setPageMetadata,
 } from "@/scripts/page-metadata";

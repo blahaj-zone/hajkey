@@ -20,12 +20,12 @@
 						<span v-if="ctx.progressValue !== undefined" class="kb"
 							>{{
 								String(
-									Math.floor(ctx.progressValue / 1024)
+									Math.floor(ctx.progressValue / 1024),
 								).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
 							}}<i>KB</i> /
 							{{
 								String(
-									Math.floor(ctx.progressMax / 1024)
+									Math.floor(ctx.progressMax / 1024),
 								).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
 							}}<i>KB</i></span
 						>
@@ -34,7 +34,7 @@
 							class="percentage"
 							>{{
 								Math.floor(
-									(ctx.progressValue / ctx.progressMax) * 100
+									(ctx.progressValue / ctx.progressMax) * 100,
 								)
 							}}</span
 						>
@@ -102,6 +102,7 @@ const zIndex = os.claimZIndex("high");
 	border-top: none;
 }
 .mk-uploader > ol > li > .img {
+	position: relative;
 	display: block;
 	background-size: cover;
 	background-position: center center;

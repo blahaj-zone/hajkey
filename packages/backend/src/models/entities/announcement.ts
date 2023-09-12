@@ -7,31 +7,44 @@ export class Announcement {
 	public id: string;
 
 	@Index()
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the Announcement.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the Announcement.",
 	})
 	public createdAt: Date;
 
-	@Column('timestamp with time zone', {
-		comment: 'The updated date of the Announcement.',
+	@Column("timestamp with time zone", {
+		comment: "The updated date of the Announcement.",
 		nullable: true,
 	})
 	public updatedAt: Date | null;
 
-	@Column('varchar', {
-		length: 8192, nullable: false,
+	@Column("varchar", {
+		length: 8192,
+		nullable: false,
 	})
 	public text: string;
 
-	@Column('varchar', {
-		length: 256, nullable: false,
+	@Column("varchar", {
+		length: 256,
+		nullable: false,
 	})
 	public title: string;
 
-	@Column('varchar', {
-		length: 1024, nullable: true,
+	@Column("varchar", {
+		length: 1024,
+		nullable: true,
 	})
 	public imageUrl: string | null;
+
+	@Column("boolean", {
+		default: false,
+	})
+	public showPopup: boolean;
+
+	@Column("boolean", {
+		default: false,
+	})
+	public isGoodNews: boolean;
 
 	constructor(data: Partial<Announcement>) {
 		if (data == null) return;

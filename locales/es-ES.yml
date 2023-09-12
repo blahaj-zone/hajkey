@@ -1,8 +1,8 @@
 _lang_: "Español"
-headlineMisskey: "¡Un proyecto de código abierto y una plataforma de medios de comunicación\
-  \ descentralizada que es gratis para siempre! \U0001F680"
-introMisskey: "¡Bienvenido! ¡Calckey es un proyecto de código abierto, plataforma\
-  \ descentralizado medios de comunicación social que es gratis para siempre! \U0001F680"
+headlineIceshrimp: "¡Un proyecto de código abierto y una plataforma de medios de comunicación
+  descentralizada que es gratis para siempre! 🚀"
+introIceshrimp: "¡Bienvenido! ¡Iceshrimp es un proyecto de código abierto, plataforma
+  descentralizado medios de comunicación social que es gratis para siempre! 🚀"
 monthAndDay: "{day}/{month}"
 search: "Buscar"
 notifications: "Notificaciones"
@@ -17,7 +17,7 @@ enterUsername: "Introduce el nombre de usuario"
 renotedBy: "Impulsado por {user}"
 noNotes: "No hay publicaciones"
 noNotifications: "No hay notificaciones"
-instance: "Instancia"
+instance: "Servidor"
 settings: "Configuración"
 basicSettings: "Configuración Básica"
 otherSettings: "Configuración avanzada"
@@ -45,8 +45,8 @@ copyContent: "Copiar contenido"
 copyLink: "Copiar enlace"
 delete: "Borrar"
 deleteAndEdit: "Borrar y editar"
-deleteAndEditConfirm: "¿Estás seguro de que quieres borrar esta publicación y editarla?\
-  \ Perderás todas las reacciones, impulsos y respuestas."
+deleteAndEditConfirm: "¿Estás seguro de que quieres borrar esta publicación y editarla?
+  Perderás todas las reacciones, impulsos y respuestas."
 addToList: "Agregar a lista"
 sendMessage: "Enviar un mensaje"
 copyUsername: "Copiar nombre de usuario"
@@ -66,11 +66,11 @@ import: "Importar"
 export: "Exportar"
 files: "Archivos"
 download: "Descargar"
-driveFileDeleteConfirm: "¿Desea borrar el archivo \"{name}\"? Las publicaciones que\
-  \ tengan este archivo como adjunto serán eliminadas."
+driveFileDeleteConfirm: "¿Desea borrar el archivo \"{name}\"? Será removido de todas
+  las publicaciones que tengan este archivo adjunto."
 unfollowConfirm: "¿Desea dejar de seguir a {name}?"
-exportRequested: "Se ha solicitado la exportación. Puede tomar un tiempo. Cuando termine\
-  \ la exportación, se añadirá en el drive."
+exportRequested: "Se ha solicitado la exportación. Puede tomar un tiempo. Cuando termine
+  la exportación, se añadirá en el drive."
 importRequested: "Se ha solicitado la importación. Puede tomar un tiempo."
 lists: "Listas"
 noLists: "No tiene listas"
@@ -85,11 +85,11 @@ error: "Error"
 somethingHappened: "Ocurrió un error"
 retry: "Reintentar"
 pageLoadError: "Error al cargar la página."
-pageLoadErrorDescription: "Normalmente es debido a la red o al caché del navegador.\
-  \ Por favor limpie el caché o intente más tarde."
+pageLoadErrorDescription: "Normalmente es debido a la red o al caché del navegador.
+  Por favor limpie el caché o intente más tarde."
 serverIsDead: "No hay respuesta del servidor. Espere un momento y vuelva a intentarlo."
-youShouldUpgradeClient: "Para ver esta página, por favor refrezca el navegador y utiliza\
-  \ una versión más reciente del cliente."
+youShouldUpgradeClient: "Para ver esta página, por favor refrezca el navegador y utiliza
+  una versión más reciente del cliente."
 enterListName: "Ingrese nombre de lista"
 privacy: "Privacidad"
 makeFollowManuallyApprove: "Aprobar manualmente las solicitudes de seguimiento"
@@ -114,8 +114,8 @@ sensitive: "Marcado como sensible"
 add: "Agregar"
 reaction: "Reacción"
 reactionSetting: "Reacciones para mostrar en el menú de reacciones"
-reactionSettingDescription2: "Arrastre para reordenar, click para borrar, apriete\
-  \ la tecla + para añadir."
+reactionSettingDescription2: "Arrastre para reordenar, click para borrar, apriete
+  la tecla + para añadir."
 rememberNoteVisibility: "Recordar la configuración de visibilidad de la publicación"
 attachCancel: "Quitar adjunto"
 markAsSensitive: "Marcar como sensible"
@@ -144,24 +144,24 @@ emojiUrl: "URL de la imágen del emoji"
 addEmoji: "Agregar emoji"
 settingGuide: "Configuración sugerida"
 cacheRemoteFiles: "Mantener en cache los archivos remotos"
-cacheRemoteFilesDescription: "Si desactiva esta configuración, Los archivos remotos\
-  \ se cargarán desde el link directo sin usar la caché. Con eso se puede ahorrar\
-  \ almacenamiento del servidor, pero eso aumentará el tráfico al no crear miniaturas."
+cacheRemoteFilesDescription: "Si desactiva esta configuración, los archivos remotos
+  se cargarán desde el servidor remoto sin usar la caché. Con eso se puede ahorrar
+  almacenamiento del servidor, pero eso aumentará el tráfico al no crear miniaturas."
 flagAsBot: "Esta cuenta es un bot"
-flagAsBotDescription: "En caso de que esta cuenta fuera usada por un programa, active\
-  \ esta opción. Al hacerlo, esta opción servirá para otros desarrolladores para evitar\
-  \ cadenas infinitas de reacciones, y ajustará los sistemas internos de Calckey para\
-  \ que trate a esta cuenta como un bot."
+flagAsBotDescription: "En caso de que esta cuenta fuera usada por un programa, active
+  esta opción. Al hacerlo, esta opción servirá para otros desarrolladores para evitar
+  cadenas infinitas de reacciones, y ajustará los sistemas internos de Iceshrimp para
+  que trate a esta cuenta como un bot."
 flagAsCat: "Esta cuenta es un gato"
 flagAsCatDescription: "Vas a tener orejas de gato y hablar como un gato!"
 flagShowTimelineReplies: "Mostrar respuestas a las notas en la biografía"
-flagShowTimelineRepliesDescription: "Cuando se marca, la línea de tiempo muestra respuestas\
-  \ a otras publicaciones además de las publicaciones del usuario."
-autoAcceptFollowed: "Aceptar automáticamente las solicitudes de seguimiento de los\
-  \ usuarios que sigues"
+flagShowTimelineRepliesDescription: "Cuando se marca, la línea de tiempo muestra respuestas
+  a otras publicaciones además de las publicaciones del usuario."
+autoAcceptFollowed: "Aceptar automáticamente las solicitudes de seguimiento de los
+  usuarios que sigues"
 addAccount: "Agregar Cuenta"
 loginFailed: "Error al iniciar sesión"
-showOnRemote: "Ver en una instancia remota"
+showOnRemote: "Ver en servidor remoto"
 general: "General"
 wallpaper: "Fondo de pantalla"
 setWallpaper: "Establecer fondo de pantalla"
@@ -170,17 +170,17 @@ searchWith: "Buscar: {q}"
 youHaveNoLists: "No tienes listas"
 followConfirm: "¿Desea seguir a {name}?"
 proxyAccount: "Cuenta proxy"
-proxyAccountDescription: "Una cuenta proxy es una cuenta que actúa como un seguidor\
-  \ remoto de un usuario bajo ciertas condiciones. Por ejemplo, cuando un usuario\
-  \ añade un usuario remoto a una lista, si ningún usuario local sigue al usuario\
-  \ agregado a la lista, la instancia no puede obtener su actividad. Así que la cuenta\
-  \ proxy sigue al usuario añadido a la lista."
+proxyAccountDescription: "Una cuenta proxy es una cuenta que actúa como un seguidor
+  remoto de un usuario bajo ciertas condiciones. Por ejemplo, cuando un usuario añade
+  un usuario remoto a una lista, si ningún usuario local sigue al usuario agregado
+  a la lista, el servidor no puede obtener su actividad. Así que la cuenta proxy sigue
+  al usuario añadido a la lista."
 host: "Host"
 selectUser: "Elegir usuario"
 recipient: "Recipiente"
 annotation: "Anotación"
 federation: "Federación"
-instances: "Instancia"
+instances: "Servidores"
 registeredAt: "Registrado en"
 latestRequestSentAt: "Ultimo pedido enviado"
 latestRequestReceivedAt: "Ultimo pedido recibido"
@@ -190,29 +190,27 @@ charts: "Chat"
 perHour: "por hora"
 perDay: "por día"
 stopActivityDelivery: "Dejar de enviar actividades"
-blockThisInstance: "Bloquear instancia"
+blockThisInstance: "Bloquear este servidor"
 operations: "Operaciones"
 software: "Software"
 version: "Versión"
 metadata: "Metadatos"
-withNFiles: "{n} archivos"
 monitor: "Monitor"
 jobQueue: "Cola de trabajos"
 cpuAndMemory: "CPU y Memoria"
 network: "Red"
 disk: "Disco"
-instanceInfo: "información de la instancia"
+instanceInfo: "Información del servidor"
 statistics: "Estadísticas"
 clearQueue: "Limpiar cola"
 clearQueueConfirmTitle: "¿Desea limpiar la cola?"
-clearQueueConfirmText: "Las publicaciones aún no entregadas no se federarán. Normalmente\
-  \ no se necesita ejecutar esta operación."
+clearQueueConfirmText: "Las publicaciones aún no entregadas no se federarán. Normalmente
+  no se necesita ejecutar esta operación."
 clearCachedFiles: "Limpiar caché"
 clearCachedFilesConfirm: "¿Desea borrar todos los archivos remotos cacheados?"
-blockedInstances: "Instancias bloqueadas"
-blockedInstancesDescription: "Seleccione los hosts de las instancias que desea bloquear,\
-  \ separadas por una linea nueva. Las instancias bloqueadas no podrán comunicarse\
-  \ con esta instancia."
+blockedInstances: "Servidores bloqueados"
+blockedInstancesDescription: "Escriba los hosts de los servidores que desea bloquear.
+  Los servidores bloqueados no podrán comunicarse con este servidor."
 muteAndBlock: "Silenciar y bloquear"
 mutedUsers: "Usuarios silenciados"
 blockedUsers: "Usuarios bloqueados"
@@ -220,7 +218,7 @@ noUsers: "No hay usuarios"
 editProfile: "Editar perfil"
 noteDeleteConfirm: "¿Desea borrar esta publicación?"
 pinLimitExceeded: "Ya no se pueden fijar más publicaciones"
-intro: "¡La instalación de Calckey ha terminado! Crea el usuario administrador."
+intro: "¡La instalación de Iceshrimp ha terminado! Crea el usuario administrador."
 done: "Terminado"
 processing: "Procesando"
 preview: "Vista previa"
@@ -235,9 +233,9 @@ all: "Todo"
 subscribing: "Suscribiendo"
 publishing: "Publicando"
 notResponding: "Sin respuestas"
-instanceFollowing: "Siguiendo instancias"
-instanceFollowers: "Seguidores de la instancia"
-instanceUsers: "Usuarios de la instancia"
+instanceFollowing: "Siguiendo en este servidor"
+instanceFollowers: "Seguidores del servidor"
+instanceUsers: "Usuarios de este servidor"
 changePassword: "Cambiar contraseña"
 security: "Seguridad"
 retypedNotMatch: "No hay coincidencia."
@@ -261,9 +259,9 @@ saved: "Guardado"
 messaging: "Chat"
 upload: "Subir"
 keepOriginalUploading: "Mantener la imagen original"
-keepOriginalUploadingDescription: "Mantener la versión original al cargar imágenes.\
-  \ Si está desactivado, el navegador generará imágenes para la publicación web en\
-  \ el momento de recargar la página."
+keepOriginalUploadingDescription: "Mantener la versión original al cargar imágenes.
+  Si está desactivado, el navegador generará imágenes para la publicación web en el
+  momento de recargar la página."
 fromDrive: "Desde el drive"
 fromUrl: "Desde la URL"
 uploadFromUrl: "Subir desde una URL"
@@ -312,8 +310,8 @@ unableToDelete: "No se puede borrar"
 inputNewFileName: "Ingrese un nuevo nombre de archivo"
 inputNewDescription: "Ingrese nueva descripción"
 inputNewFolderName: "Ingrese un nuevo nombre de la carpeta"
-circularReferenceFolder: "La carpeta de destino es una sub-carpeta de la carpeta que\
-  \ quieres mover."
+circularReferenceFolder: "La carpeta de destino es una sub-carpeta de la carpeta que
+  quieres mover."
 hasChildFilesOrFolders: "No se puede borrar esta carpeta. No está vacía."
 copyUrl: "Copiar URL"
 rename: "Renombrar"
@@ -330,8 +328,8 @@ unwatch: "Dejar de ver"
 accept: "Aceptar"
 reject: "Rechazar"
 normal: "Normal"
-instanceName: "Nombre de la instancia"
-instanceDescription: "Descripción de la instancia"
+instanceName: "Nombre del servidor"
+instanceDescription: "Descripción del servidor"
 maintainerName: "Nombre del administrador"
 maintainerEmail: "Correo del administrador"
 tosUrl: "URL de los términos de uso"
@@ -347,8 +345,8 @@ connectService: "Conectar"
 disconnectService: "Desconectar"
 enableLocalTimeline: "Habilitar linea de tiempo local"
 enableGlobalTimeline: "Habilitar linea de tiempo global"
-disablingTimelinesInfo: "Aunque se desactiven estas lineas de tiempo, por conveniencia\
-  \ el administrador y los moderadores pueden seguir usándolos"
+disablingTimelinesInfo: "Aunque se desactiven estas lineas de tiempo, por conveniencia
+  el administrador y los moderadores pueden seguir usándolos"
 registration: "Registro"
 enableRegistration: "Permitir nuevos registros"
 invite: "Invitar"
@@ -360,11 +358,11 @@ bannerUrl: "URL de la imagen del banner"
 backgroundImageUrl: "URL de la imagen de fondo"
 basicInfo: "Información básica"
 pinnedUsers: "Usuarios fijados"
-pinnedUsersDescription: "Describir los usuarios que quiere fijar en la página \"Descubrir\"\
-  \ separados por una linea nueva"
+pinnedUsersDescription: "Describir los usuarios que quiere fijar en la pestaña \"\
+  Explorar\" separados por líneas nuevas."
 pinnedPages: "Páginas fijadas"
-pinnedPagesDescription: "Describa las rutas de las páginas que desea fijar a la página\
-  \ principal de la instancia, separadas por lineas nuevas"
+pinnedPagesDescription: "Describa las rutas de las páginas que desea fijar a la página
+  principal del servidor, separadas por líneas nuevas."
 pinnedClipId: "Id del clip fijado"
 pinnedNotes: "Publicación fijada"
 hcaptcha: "hCaptcha"
@@ -375,17 +373,17 @@ recaptcha: "reCAPTCHA"
 enableRecaptcha: "activar reCAPTCHA"
 recaptchaSiteKey: "Clave del sitio"
 recaptchaSecretKey: "Clave secreta"
-avoidMultiCaptchaConfirm: "El uso de múltiples Captchas puede causar interferencia.\
-  \ ¿Desea desactivar el otro Captcha? Puede dejar múltiples Captchas habilitadas\
-  \ presionando cancelar."
+avoidMultiCaptchaConfirm: "El uso de múltiples Captchas puede causar interferencia.
+  ¿Desea desactivar el otro Captcha? Puede dejar múltiples Captchas habilitadas presionando
+  cancelar."
 antennas: "Antenas"
 manageAntennas: "Administrar antenas"
 name: "Nombre"
 antennaSource: "Origen de la antena"
 antennaKeywords: "Palabras clave para recibir"
 antennaExcludeKeywords: "Palabras clave para excluir"
-antennaKeywordsDescription: "Separar con espacios es una declaración AND, separar\
-  \ con una linea nueva es una declaración OR"
+antennaKeywordsDescription: "Separar con espacios es una declaración AND, separar
+  con una linea nueva es una declaración OR"
 notifyAntenna: "Notificar nueva publicación"
 withFileAntenna: "Sólo publicaciones con archivos adjuntados"
 enableServiceworker: "Activar ServiceWorker"
@@ -408,7 +406,7 @@ exploreFediverse: "Explorar fediverso"
 popularTags: "Etiquetas populares"
 userList: "Lista"
 about: "Información"
-aboutMisskey: "Sobre Calckey"
+aboutIceshrimp: "Sobre Iceshrimp"
 administrator: "Administrador"
 token: "Token"
 twoStepAuthentication: "Autenticación de dos factores"
@@ -473,8 +471,8 @@ strongPassword: "Muy buena contraseña"
 passwordMatched: "Correcto"
 passwordNotMatched: "Las contraseñas no son las mismas"
 signinWith: "Inicie sesión con {x}"
-signinFailed: "Autenticación fallida. Asegúrate de haber usado el nombre de usuario\
-  \ y contraseña correctos."
+signinFailed: "Autenticación fallida. Asegúrate de haber usado el nombre de usuario
+  y contraseña correctos."
 tapSecurityKey: "Toque la clave de seguridad"
 or: "O"
 language: "Idioma"
@@ -484,8 +482,8 @@ aboutX: "Acerca de {x}"
 useOsNativeEmojis: "Usa los emojis nativos de la plataforma"
 disableDrawer: "No mostrar los menús en cajones"
 youHaveNoGroups: "Sin grupos"
-joinOrCreateGroup: "Obtenga una invitación para unirse al grupos o puede crear su\
-  \ propio grupo."
+joinOrCreateGroup: "Obtenga una invitación para unirse al grupos o puede crear su
+  propio grupo."
 noHistory: "No hay datos en el historial"
 signinHistory: "Historial de ingresos"
 disableAnimatedMfm: "Deshabilitar MFM que tiene animaciones"
@@ -516,28 +514,28 @@ showFeaturedNotesInTimeline: "Mostrar publicaciones destacadas en la línea de t
 objectStorage: "Almacenamiento de objetos"
 useObjectStorage: "Usar almacenamiento de objetos"
 objectStorageBaseUrl: "Base URL"
-objectStorageBaseUrlDesc: "Prefijo de URL utilizado para construir URL para hacer\
-  \ referencia a objetos (medios). Especifique su URL si está utilizando un CDN o\
-  \ Proxy; de lo contrario, especifique la dirección a la que se puede acceder públicamente\
-  \ de acuerdo con la guía de servicio que va a utilizar. i.g 'https://<bucket>.s3.amazonaws.com'\
-  \ para AWS S3 y 'https://storage.googleapis.com/<bucket>' para GCS."
+objectStorageBaseUrlDesc: "Prefijo de URL utilizado para construir URL para hacer
+  referencia a objetos (medios). Especifique su URL si está utilizando un CDN o Proxy;
+  de lo contrario, especifique la dirección a la que se puede acceder públicamente
+  de acuerdo con la guía de servicio que va a utilizar. i.g 'https://<bucket>.s3.amazonaws.com'
+  para AWS S3 y 'https://storage.googleapis.com/<bucket>' para GCS."
 objectStorageBucket: "Bucket"
-objectStorageBucketDesc: "Especifique el nombre del depósito utilizado en el servicio\
-  \ configurado."
+objectStorageBucketDesc: "Especifique el nombre del depósito utilizado en el servicio
+  configurado."
 objectStoragePrefix: "Prefix"
 objectStoragePrefixDesc: "Los archivos se almacenarán en el directorio de este prefijo."
 objectStorageEndpoint: "Endpoint"
-objectStorageEndpointDesc: "Deje esto en blanco si está utilizando AWS S3; de lo contrario,\
-  \ especifique el punto final como '<host>' o '<host>: <port>' de acuerdo con la\
-  \ guía de servicio que va a utilizar."
+objectStorageEndpointDesc: "Deje esto en blanco si está utilizando AWS S3; de lo contrario,
+  especifique el punto final como '<host>' o '<host>: <port>' de acuerdo con la guía
+  de servicio que va a utilizar."
 objectStorageRegion: "Region"
-objectStorageRegionDesc: "Especifique una región como 'xx-east-1'. Si su servicio\
-  \ no tiene distinción sobre regiones, déjelo en blanco o complete con 'us-east-1'."
+objectStorageRegionDesc: "Especifique una región como 'xx-east-1'. Si su servicio
+  no tiene distinción sobre regiones, déjelo en blanco o complete con 'us-east-1'."
 objectStorageUseSSL: "Usar SSL"
 objectStorageUseSSLDesc: "Desactive esto si no va a usar HTTPS para la conexión API"
 objectStorageUseProxy: "Conectarse a través de Proxy"
-objectStorageUseProxyDesc: "Desactive esto si no va a usar Proxy para la conexión\
-  \ de Almacenamiento de objetos"
+objectStorageUseProxyDesc: "Desactive esto si no va a usar Proxy para la conexión
+  de Almacenamiento de objetos"
 objectStorageSetPublicRead: "Seleccionar \"public-read\" al subir "
 serverLogs: "Registros del servidor"
 deleteAll: "Eliminar todos"
@@ -565,8 +563,8 @@ sort: "Ordenar"
 ascendingOrder: "Ascendente"
 descendingOrder: "Descendente"
 scratchpad: "Scratch pad"
-scratchpadDescription: "Scratchpad proporciona un entorno experimental para AiScript.\
-  \ Puede escribir, ejecutar y verificar los resultados que interactúan con Calckey."
+scratchpadDescription: "Scratchpad proporciona un entorno experimental para AiScript.
+  Puede escribir, ejecutar y verificar los resultados que interactúan con Iceshrimp."
 output: "Salida"
 script: "Script"
 disablePagesScript: "Deshabilitar AiScript en Páginas"
@@ -574,14 +572,14 @@ updateRemoteUser: "Actualizar información de usuario remoto"
 deleteAllFiles: "Borrar todos los archivos"
 deleteAllFilesConfirm: "¿Desea borrar todos los archivos?"
 removeAllFollowing: "Retener todos los siguientes"
-removeAllFollowingDescription: "Cancelar todos los siguientes del servidor {host}.\
-  \ Ejecutar en caso de que esta instancia haya dejado de existir."
+removeAllFollowingDescription: "Cancelar todos los siguientes del servidor {host}.
+  Ejecutar en caso de que esta instancia haya dejado de existir."
 userSuspended: "Este usuario ha sido suspendido."
 userSilenced: "Este usuario ha sido silenciado."
 yourAccountSuspendedTitle: "Esta cuenta ha sido suspendida"
-yourAccountSuspendedDescription: "Esta cuenta ha sido suspendida debido a violaciones\
-  \ de los términos de servicio del servidor y otras razones. Para más información,\
-  \ póngase en contacto con el administrador. Por favor, no cree una nueva cuenta."
+yourAccountSuspendedDescription: "Esta cuenta ha sido suspendida debido a violaciones
+  de los términos de servicio del servidor y otras razones. Para más información,
+  póngase en contacto con el administrador. Por favor, no cree una nueva cuenta."
 menu: "Menú"
 divider: "Divisor"
 addItem: "Agregar elemento"
@@ -635,16 +633,16 @@ smtpHost: "Host"
 smtpPort: "Puerto"
 smtpUser: "Nombre de usuario"
 smtpPass: "Contraseña"
-emptyToDisableSmtpAuth: "Deje el nombre del usuario y la contraseña en blanco para\
-  \ deshabilitar la autenticación SMTP"
+emptyToDisableSmtpAuth: "Deje el nombre del usuario y la contraseña en blanco para
+  deshabilitar la autenticación SMTP"
 smtpSecure: "Usar SSL/TLS implícito en la conexión SMTP"
 smtpSecureInfo: "Apagar cuando se use STARTTLS"
 testEmail: "Prueba de envío"
 wordMute: "Silenciar palabras"
 regexpError: "Error de la expresión regular"
-regexpErrorDescription: "Ocurrió un error en la expresión regular en la linea {line}\
-  \ de las palabras muteadas {tab}"
-instanceMute: "Instancias silenciadas"
+regexpErrorDescription: "Ocurrió un error en la expresión regular en la linea {line}
+  de las palabras muteadas {tab}"
+instanceMute: "Servidores silenciados"
 userSaysSomething: "{name} dijo algo"
 makeActive: "Activar"
 display: "Apariencia"
@@ -659,13 +657,13 @@ create: "Crear"
 notificationSetting: "Ajustes de Notificaciones"
 notificationSettingDesc: "Por favor elija el tipo de notificación a mostrar"
 useGlobalSetting: "Usar ajustes globales"
-useGlobalSettingDesc: "Al activarse, se usará la configuración de notificaciones de\
-  \ la cuenta, al desactivarse se pueden hacer configuraciones particulares."
+useGlobalSettingDesc: "Al activarse, se usará la configuración de notificaciones de
+  la cuenta, al desactivarse se pueden hacer configuraciones particulares."
 other: "Otro"
 regenerateLoginToken: "Regenerar token de login"
-regenerateLoginTokenDescription: "Regenerar el token usado internamente durante el\
-  \ login. No siempre es necesario hacerlo. Al hacerlo de nuevo, se deslogueará en\
-  \ todos los dispositivos."
+regenerateLoginTokenDescription: "Regenerar el token usado internamente durante el
+  login. No siempre es necesario hacerlo. Al hacerlo de nuevo, se deslogueará en todos
+  los dispositivos."
 setMultipleBySeparatingWithSpace: "Puedes añadir mas de uno, separado por espacios."
 fileIdOrUrl: "Id del archivo o URL"
 behavior: "Comportamiento"
@@ -673,22 +671,22 @@ sample: "Muestra"
 abuseReports: "Reportes"
 reportAbuse: "Reportar"
 reportAbuseOf: "Reportar a {name}"
-fillAbuseReportDescription: "Ingrese los detalles del reporte. Si hay una nota en\
-  \ particular, ingrese la URL de esta."
+fillAbuseReportDescription: "Ingrese los detalles del reporte. Si hay una publicación
+  en particular, ingrese la URL de esta."
 abuseReported: "Se ha enviado el reporte. Muchas gracias."
 reporter: "Reportador"
 reporteeOrigin: "Reportar a"
 reporterOrigin: "Origen del reporte"
-forwardReport: "Transferir un informe a una instancia remota"
-forwardReportIsAnonymous: "No puede ver su información de la instancia remota y aparecerá\
-  \ como una cuenta anónima del sistema"
+forwardReport: "Transferir reporte a un servidor remoto"
+forwardReportIsAnonymous: "No puede ver su información del servidor remoto y aparecerá
+  como una cuenta anónima del sistema"
 send: "Enviar"
 abuseMarkAsResolved: "Marcar reporte como resuelto"
 openInNewTab: "Abrir en una Nueva Pestaña"
 openInSideView: "Abrir en una vista al costado"
 defaultNavigationBehaviour: "Navegación por defecto"
 editTheseSettingsMayBreakAccount: "Editar estas configuraciones puede dañar su cuenta."
-instanceTicker: "Información de notas de la instancia"
+instanceTicker: "Información de publicaciones de el servidor"
 waitingFor: "Esperando a {x}"
 random: "Aleatorio"
 system: "Sistema"
@@ -699,14 +697,14 @@ createNew: "Crear"
 optional: "Opcional"
 createNewClip: "Crear clip nuevo"
 unclip: "Quitar clip"
-confirmToUnclipAlreadyClippedNote: "Esta nota ya está incluida en el clip \"{name}\"\
-  . ¿Quiere quitar la nota del clip?"
+confirmToUnclipAlreadyClippedNote: "Esta publicación ya está incluida en el clip \"\
+  {name}\". ¿Quiere quitar la nota del clip?"
 public: "Público"
-i18nInfo: "Calckey está siendo traducido a varios idiomas gracias a voluntarios. Se\
-  \ puede colaborar traduciendo en {link}"
+i18nInfo: "Iceshrimp está siendo traducido a varios idiomas gracias a voluntarios. Se
+  puede colaborar traduciendo en {link}"
 manageAccessTokens: "Administrar tokens de acceso"
 accountInfo: "Información de la Cuenta"
-notesCount: "Cantidad de notas"
+notesCount: "Cantidad de publicaciones"
 repliesCount: "Cantidad de respuestas hechas"
 renotesCount: "Cantidad de renotas hechas"
 repliedCount: "Cantidad de respuestas recibidas"
@@ -722,21 +720,21 @@ no: "No"
 driveFilesCount: "Cantidad de archivos en el drive"
 driveUsage: "Uso del drive"
 noCrawle: "Rechazar indexación del crawler"
-noCrawleDescription: "Pedir a los motores de búsqueda que no indexen tu perfil, notas,\
-  \ páginas, etc."
-lockedAccountInfo: "A menos que configures la visibilidad de tus notas como \"Sólo\
-  \ seguidores\", tus notas serán visibles para cualquiera, incluso si requieres que\
-  \ los seguidores sean aprobados manualmente."
-alwaysMarkSensitive: "Marcar los medios de comunicación como contenido sensible por\
-  \ defecto"
+noCrawleDescription: "Pedir a los motores de búsqueda que no indexen tu perfil, publicaciones,
+  páginas, etc."
+lockedAccountInfo: "A menos que configures la visibilidad de tus notas como \"Sólo
+  seguidores\", tus notas serán visibles para cualquiera, incluso si requieres que
+  los seguidores sean aprobados manualmente."
+alwaysMarkSensitive: "Marcar los medios de comunicación como contenido sensible por
+  defecto"
 loadRawImages: "Cargar las imágenes originales en lugar de mostrar las miniaturas"
 disableShowingAnimatedImages: "No reproducir imágenes animadas"
-verificationEmailSent: "Se le ha enviado un correo electrónico de confirmación. Por\
-  \ favor, acceda al enlace proporcionado en el correo electrónico para completar\
-  \ la configuración."
+verificationEmailSent: "Se le ha enviado un correo electrónico de confirmación. Por
+  favor, acceda al enlace proporcionado en el correo electrónico para completar la
+  configuración."
 notSet: "Sin especificar"
 emailVerified: "Su dirección de correo electrónico ha sido verificada."
-noteFavoritesCount: "Número de notas favoritas"
+noteFavoritesCount: "Número de publicaciones favoritas"
 pageLikesCount: "Número de favoritos en la página"
 pageLikedCount: "Número de favoritos de su página"
 contact: "Contacto"
@@ -745,16 +743,16 @@ clips: "Clip"
 experimentalFeatures: "Características experimentales"
 developer: "Desarrolladores"
 makeExplorable: "Hacer visible la cuenta en \"Explorar\""
-makeExplorableDescription: "Si desactiva esta opción, su cuenta no aparecerá en la\
-  \ sección \"Explorar\"."
+makeExplorableDescription: "Si desactiva esta opción, su cuenta no aparecerá en la
+  sección \"Explorar\"."
 showGapBetweenNotesInTimeline: "Mostrar un intervalo entre notas en la línea de tiempo"
 duplicate: "Duplicar"
 left: "Izquierda"
 center: "Centrar"
 wide: "Ancho"
 narrow: "Estrecho"
-reloadToApplySetting: "Esta configuración sólo se aplicará después de recargar la\
-  \ página. ¿Recargar ahora?"
+reloadToApplySetting: "Esta configuración sólo se aplicará después de recargar la
+  página. ¿Recargar ahora?"
 needReloadToApply: "Se requiere un reinicio para la aplicar los cambios"
 showTitlebar: "Mostrar la barra de título"
 clearCache: "Limpiar caché"
@@ -762,11 +760,11 @@ onlineUsersCount: "{n} usuarios en línea"
 nUsers: "{n} Usuarios"
 nNotes: "{n} Notas"
 sendErrorReports: "Envíar informe de errores"
-sendErrorReportsDescription: "Si habilita esta opción, los detalles de los errores\
-  \ serán compartidos con Calckey cuando ocurra un problema, lo que ayudará a mejorar\
-  \ la calidad de Calckey. \nEsto incluye información como la versión del sistema\
-  \ operativo, el tipo de navegador que está utilizando y su historial en Calckey,\
-  \ entre otros datos."
+sendErrorReportsDescription: "Si habilita esta opción, los detalles de los errores
+  serán compartidos con Iceshrimp cuando ocurra un problema, lo que ayudará a mejorar
+  la calidad de Iceshrimp. \nEsto incluye información como la versión del sistema operativo,
+  el tipo de navegador que está utilizando y su historial en Iceshrimp, entre otros
+  datos."
 myTheme: "Mi Tema"
 backgroundColor: "Fondo"
 accentColor: "Acento"
@@ -794,8 +792,8 @@ receiveAnnouncementFromInstance: "Recibir notificaciones de la instancia"
 emailNotification: "Notificaciones por correo electrónico"
 publish: "Publicar"
 inChannelSearch: "Buscar en el canal"
-useReactionPickerForContextMenu: "Haga clic con el botón derecho para abrir el menu\
-  \ de reacciones"
+useReactionPickerForContextMenu: "Haga clic con el botón derecho para abrir el menu
+  de reacciones"
 typingUsers: "{users} está escribiendo"
 jumpToSpecifiedDate: "Saltar a una fecha específica"
 showingPastTimeline: "Mostrar líneas de tiempo antiguas"
@@ -806,16 +804,16 @@ unlikeConfirm: "¿Quitar como favorito?"
 fullView: "Vista completa"
 quitFullView: "quitar vista completa"
 addDescription: "Agregar descripción"
-userPagePinTip: "Puede mantener sus notas visibles aquí seleccionando Pin en el menú\
-  \ de notas individuales"
+userPagePinTip: "Puede mantener sus notas visibles aquí seleccionando Pin en el menú
+  de notas individuales"
 notSpecifiedMentionWarning: "Algunas menciones no están incluidas en el destino"
 info: "Información"
 userInfo: "Información del usuario"
 unknown: "Desconocido"
 onlineStatus: "En línea"
 hideOnlineStatus: "mostrarse como desconectado"
-hideOnlineStatusDescription: "Ocultar su estado en línea puede reducir la eficacia\
-  \ de algunas funciones, como la búsqueda"
+hideOnlineStatusDescription: "Ocultar su estado en línea puede reducir la eficacia
+  de algunas funciones, como la búsqueda"
 online: "En línea"
 active: "Activo"
 offline: "Sin conexión"
@@ -850,8 +848,8 @@ emailNotConfiguredWarning: "No se ha configurado una dirección de correo electr
 ratio: "Proporción"
 previewNoteText: "Mostrar vista preliminar"
 customCss: "CSS personalizado"
-customCssWarn: "Este ajuste sólo debe utilizarse si se sabe lo que hace. Introducir\
-  \ valores inadecuados puede hacer que el cliente deje de funcionar con normalidad."
+customCssWarn: "Este ajuste sólo debe utilizarse si se sabe lo que hace. Introducir
+  valores inadecuados puede hacer que el cliente deje de funcionar con normalidad."
 global: "Global"
 squareAvatars: "Mostrar iconos cuadrados"
 sent: "Enviar"
@@ -861,14 +859,14 @@ hashtags: "Hashtag"
 troubleshooting: "Solución de problemas"
 useBlurEffect: "Utilizar efecto de desenfoque en la interfaz de usuario"
 learnMore: "Ver más"
-misskeyUpdated: "¡Calckey ha sido actualizado!"
+iceshrimpUpdated: "¡Iceshrimp ha sido actualizado!"
 whatIsNew: "Mostrar cambios"
 translate: "Traducir"
 translatedFrom: "Traducido de {x}"
 accountDeletionInProgress: "La eliminación de la cuenta está en curso"
-usernameInfo: "Un nombre que identifique su cuenta de otras en este servidor.  Puede\
-  \ utilizar el alfabeto (a~z, A~Z), dígitos (0~9) o guiones bajos (_). Los nombres\
-  \ de usuario no se pueden cambiar posteriormente."
+usernameInfo: "Un nombre que identifique su cuenta de otras en este servidor.  Puede
+  utilizar el alfabeto (a~z, A~Z), dígitos (0~9) o guiones bajos (_). Los nombres
+  de usuario no se pueden cambiar posteriormente."
 aiChanMode: "Modo Ai"
 keepCw: "Mantener la advertencia de contenido"
 pubSub: "Cuentas Pub/Sub"
@@ -878,21 +876,21 @@ unresolved: "Sin resolver"
 breakFollow: "Dejar de seguir"
 itsOn: "¡Está encendido!"
 itsOff: "¡Está apagado!"
-emailRequiredForSignup: "Se requere una dirección de correo electrónico para el registro\
-  \ de la cuenta"
+emailRequiredForSignup: "Se requere una dirección de correo electrónico para el registro
+  de la cuenta"
 unread: "No leído"
 filter: "Filtro"
 controlPanel: "Panel de control"
 manageAccounts: "Administrar cuenta"
 makeReactionsPublic: "Hacer el historial de reacciones público"
-makeReactionsPublicDescription: "Todas las reacciones que hayas hecho serán públicamente\
-  \ visibles."
+makeReactionsPublicDescription: "Todas las reacciones que hayas hecho serán públicamente
+  visibles."
 classic: "Clásico"
 muteThread: "Ocultar hilo"
 unmuteThread: "Mostrar hilo"
 ffVisibility: "Visibilidad de seguidores y seguidos"
-ffVisibilityDescription: "Puedes configurar quien puede ver a quienes sigues y quienes\
-  \ te siguen"
+ffVisibilityDescription: "Puedes configurar quien puede ver a quienes sigues y quienes
+  te siguen"
 continueThread: "Ver la continuación del hilo"
 deleteAccountConfirm: "La cuenta será borrada. ¿Está seguro?"
 incorrectPassword: "La contraseña es incorrecta"
@@ -933,16 +931,16 @@ thereIsUnresolvedAbuseReportWarning: "Hay reportes sin resolver"
 recommended: "Recomendado"
 check: "Verificar"
 driveCapOverrideLabel: "Cambiar la capacidad de la unidad para este usuario"
-driveCapOverrideCaption: "Restablecer la capacidad a su predeterminado ingresando\
-  \ un valor de 0 o menos"
+driveCapOverrideCaption: "Restablecer la capacidad a su predeterminado ingresando
+  un valor de 0 o menos"
 requireAdminForView: "Necesitas iniciar sesión como administrador para ver esto."
 isSystemAccount: "Cuenta creada y operada automáticamente por el sistema"
 typeToConfirm: "Ingrese {x} para confirmar"
 deleteAccount: "Borrar cuenta"
 document: "Documento"
 numberOfPageCache: "Cantidad de páginas cacheadas"
-numberOfPageCacheDescription: "Al aumentar el número mejora la conveniencia pero tambien\
-  \ puede aumentar la carga y la memoria a usarse"
+numberOfPageCacheDescription: "Al aumentar el número mejora la conveniencia pero tambien
+  puede aumentar la carga y la memoria a usarse"
 logoutConfirm: "¿Cerrar sesión?"
 lastActiveDate: "Utilizado por última vez el"
 statusbar: "Barra de estado"
@@ -959,37 +957,36 @@ sensitiveMediaDetection: "Detección de contenido NSFW"
 localOnly: "Solo local"
 remoteOnly: "Sólo remoto"
 failedToUpload: "La subida falló"
-cannotUploadBecauseInappropriate: "Este archivo no se puede subir debido a que algunas\
-  \ partes han sido detectadas comoNSFW."
-cannotUploadBecauseNoFreeSpace: "La subida falló debido a falta de espacio libre en\
-  \ la unidad del usuario."
+cannotUploadBecauseInappropriate: "Este archivo no se puede subir debido a que algunas
+  partes han sido detectadas comoNSFW."
+cannotUploadBecauseNoFreeSpace: "La subida falló debido a falta de espacio libre en
+  la unidad del usuario."
 beta: "Beta"
 enableAutoSensitive: "Marcar automáticamente contenido NSFW"
-enableAutoSensitiveDescription: "Permite la detección y marcado automático de contenido\
-  \ NSFW usando 'Machine Learning' cuando sea posible. Incluso si esta opción está\
-  \ desactivada, puede ser activado para toda la instancia."
-activeEmailValidationDescription: "Habilita la validación estricta de direcciones\
-  \ de correo electrónico, lo cual incluye la revisión de direcciones desechables\
-  \ y si se puede comunicar con éstas. Cuando está deshabilitado, sólo el formato\
-  \ de la dirección es validado."
+enableAutoSensitiveDescription: "Permite la detección y marcado automático de contenido
+  NSFW usando 'Machine Learning' cuando sea posible. Incluso si esta opción está desactivada,
+  puede ser activado para toda la instancia."
+activeEmailValidationDescription: "Habilita la validación estricta de direcciones
+  de correo electrónico, lo cual incluye la revisión de direcciones desechables y
+  si se puede comunicar con éstas. Cuando está deshabilitado, sólo el formato de la
+  dirección es validado."
 navbar: "Barra de navegación"
 shuffle: "Aleatorio"
 account: "Cuentas"
 move: "Mover"
 _sensitiveMediaDetection:
-  description: "Reduce el esfuerzo de la moderación el el servidor a través del reconocimiento\
-    \ automático de contenido NSFW usando 'Machine Learning'. Esto puede incrementar\
-    \ ligeramente la carga en el servidor."
+  description: "Reduce el esfuerzo de la moderación de el servidor a través del reconocimiento
+    automático de contenido NSFW usando 'Machine Learning'. Esto puede incrementar
+    ligeramente la carga en el servidor."
   sensitivity: "Sensibilidad de detección"
-  sensitivityDescription: "Reducir la sensibilidad puede acarrear a varios falsos\
-    \ positivos, mientras que incrementarla puede reducir las detecciones (falsos\
-    \ negativos)."
+  sensitivityDescription: "Reducir la sensibilidad puede acarrear a varios falsos
+    positivos, mientras que incrementarla puede reducir las detecciones (falsos negativos)."
   setSensitiveFlagAutomatically: "Marcar como NSFW"
-  setSensitiveFlagAutomaticallyDescription: "Los resultados de la detección interna\
-    \ pueden ser retenidos incluso si la opción está desactivada."
+  setSensitiveFlagAutomaticallyDescription: "Los resultados de la detección interna
+    pueden ser retenidos incluso si la opción está desactivada."
   analyzeVideos: "Habilitar el análisis de videos"
-  analyzeVideosDescription: "Analizar videos en adición a las imágenes. Esto puede\
-    \ incrementar ligeramente la carga del servidor."
+  analyzeVideosDescription: "Analizar videos en adición a las imágenes. Esto puede
+    incrementar ligeramente la carga del servidor."
 _emailUnavailable:
   used: "Ya fue usado"
   format: "El formato de este correo electrónico no es válido"
@@ -1003,15 +1000,15 @@ _ffVisibility:
 _signup:
   almostThere: "Ya falta poco"
   emailAddressInfo: "Ingrese el correo electrónico que usa. Este no se hará público."
-  emailSent: "Se envió un correo de verificación a la dirección {email}. Acceda al\
-    \ link enviado en el correo para completar el ingreso."
+  emailSent: "Se envió un correo de verificación a la dirección {email}. Acceda al
+    link enviado en el correo para completar el ingreso."
 _accountDelete:
   accountDelete: "Eliminar Cuenta"
-  mayTakeTime: "La eliminación de la cuenta es un proceso que precisa de carga. Puede\
-    \ pasar un tiempo hasta que se complete si es mucho el contenido creado y los\
-    \ archivos subidos."
-  sendEmail: "Cuando se termine de borrar la cuenta, se enviará un correo a la dirección\
-    \ usada para el registro."
+  mayTakeTime: "La eliminación de la cuenta es un proceso que precisa de carga. Puede
+    pasar un tiempo hasta que se complete si es mucho el contenido creado y los archivos
+    subidos."
+  sendEmail: "Cuando se termine de borrar la cuenta, se enviará un correo a la dirección
+    usada para el registro."
   requestAccountDelete: "Pedir la eliminación de la cuenta."
   started: "El proceso de eliminación ha comenzado."
   inProgress: "La eliminación está en proceso."
@@ -1019,12 +1016,11 @@ _ad:
   back: "Deseleccionar"
   reduceFrequencyOfThisAd: "Mostrar menos este anuncio."
 _forgotPassword:
-  enterEmail: "Ingrese el correo usado para registrar la cuenta. Se enviará un link\
-    \ para resetear la contraseña."
+  enterEmail: "Ingrese el correo usado para registrar la cuenta. Se enviará un link
+    para resetear la contraseña."
   ifNoEmail: "Si no utilizó un correo para crear la cuenta, contáctese con el administrador."
-  contactAdmin: "Esta instancia no admite el uso de direcciones de correo electrónico,\
-    \ póngase en contacto con el administrador de la instancia para restablecer su\
-    \ contraseña"
+  contactAdmin: "Esta instancia no admite el uso de direcciones de correo electrónico,
+    póngase en contacto con el administrador de la instancia para restablecer su contraseña"
 _gallery:
   my: "Mi galería"
   liked: "Publicaciones que me gustan"
@@ -1047,15 +1043,15 @@ _preferencesBackups:
   save: "Guardar cambios"
   inputName: "Por favor, ingresa un nombre para este respaldo"
   cannotSave: "Fallo al guardar"
-  nameAlreadyExists: "Un respaldo llamado \"{name}\" ya existe. Por favor ingresa\
-    \ un nombre diferente"
+  nameAlreadyExists: "Un respaldo llamado \"{name}\" ya existe. Por favor ingresa
+    un nombre diferente"
   applyConfirm: "¿Realmente quieres aplicar los cambios desde el archivo \"{name}\"\
     \ a este dispositivo? Las configuraciones existentes serán sobreescritas. "
   saveConfirm: "¿Guardar respaldo como \"{name}\"?"
   deleteConfirm: "¿Borrar el respaldo \"{name}\"?"
   renameConfirm: "¿Renombrar este respaldo de \"{old}\" a \"{new}\"?"
-  noBackups: "No existen respaldos. Deberás respaldar las configuraciones del cliente\
-    \ en este servidor usando \"Crear nuevo respaldo\""
+  noBackups: "No existen respaldos. Deberás respaldar las configuraciones del cliente
+    en este servidor usando \"Crear nuevo respaldo\""
   createdAt: "Creado: {date} {time}"
   updatedAt: "Actualizado: {date} {time}"
   cannotLoad: "La carga falló"
@@ -1066,30 +1062,30 @@ _registry:
   keys: "Clave"
   domain: "Dominio"
   createKey: "Crear una llave"
-_aboutMisskey:
-  about: "Calckey es una bifurcación de Misskey creada por ThatOneCalculator, que\
-    \ ha estado en desarrollo desde el 2022."
+_aboutIceshrimp:
+  about: "Iceshrimp es una bifurcación de Iceshrimp creada por ThatOneCalculator, que
+    ha estado en desarrollo desde el 2022."
   contributors: "Principales colaboradores"
   allContributors: "Todos los colaboradores"
   source: "Código fuente"
-  translation: "Traducir Calckey"
-  donate: "Donar a Calckey"
-  morePatrons: "También apreciamos el apoyo de muchos más que no están enlistados\
-    \ aquí. ¡Gracias! \U0001F970"
-  patrons: "Mecenas de Calckey"
+  translation: "Traducir Iceshrimp"
+  donate: "Donar a Iceshrimp"
+  morePatrons: "También apreciamos el apoyo de muchos más que no están enlistados
+    aquí. ¡Gracias! 🥰"
+  patrons: "Mecenas de Iceshrimp"
 _nsfw:
   respect: "Ocultar medios NSFW"
   ignore: "No esconder medios NSFW "
   force: "Ocultar todos los medios"
 _mfm:
   cheatSheet: "Hoja de referencia de MFM"
-  intro: "MFM es un lenguaje de marcado dedicado que se puede usar en varios lugares\
-    \ dentro de Misskey, Calckey, Akkoma, y mucho más. Aquí puede ver una lista de\
-    \ sintaxis disponibles en MFM."
-  dummy: "Calckey expande el mundo de la Fediverso"
+  intro: "MFM es un lenguaje de marcado dedicado que se puede usar en varios lugares
+    dentro de Iceshrimp, Iceshrimp, Akkoma, y mucho más. Aquí puede ver una lista de sintaxis
+    disponibles en MFM."
+  dummy: "Iceshrimp expande el mundo de la Fediverso"
   mention: "Menciones"
-  mentionDescription: "El signo @ seguido de un nombre de usuario se puede utilizar\
-    \ para notificar a un usuario en particular."
+  mentionDescription: "El signo @ seguido de un nombre de usuario se puede utilizar
+    para notificar a un usuario en particular."
   hashtag: "Hashtag"
   hashtagDescription: "Puede especificar un hashtag con un numeral y el texto."
   url: "URL"
@@ -1105,8 +1101,8 @@ _mfm:
   inlineCode: "Código (insertado)"
   inlineCodeDescription: "Muestra el código de un programa resaltando su sintaxis"
   blockCode: "Código (bloque)"
-  blockCodeDescription: "Código de resaltado de sintaxis, como programas de varias\
-    \ líneas con bloques."
+  blockCodeDescription: "Código de resaltado de sintaxis, como programas de varias
+    líneas con bloques."
   inlineMath: "Fórmula (insertado)"
   inlineMathDescription: "Muestra fórmulas (KaTeX) insertadas"
   blockMath: "Fórmula (bloque)"
@@ -1118,8 +1114,8 @@ _mfm:
   search: "Buscar"
   searchDescription: "Muestra una caja de búsqueda con texto pre-escrito"
   flip: "Echar de un capirotazo"
-  flipDescription: "Voltea el contenido hacia arriba / abajo o hacia la izquierda\
-    \ / derecha."
+  flipDescription: "Voltea el contenido hacia arriba / abajo o hacia la izquierda
+    / derecha."
   jelly: "Animación (gelatina)"
   jellyDescription: "Aplica un efecto de animación tipo gelatina"
   tada: "Animación (tadá)"
@@ -1141,8 +1137,8 @@ _mfm:
   x4: "Totalmente grande"
   x4Description: "Muestra el contenido totalmente grande"
   blur: "Desenfoque"
-  blurDescription: "Para desenfocar el contenido. Se muestra claramente al colocar\
-    \ el puntero encima."
+  blurDescription: "Para desenfocar el contenido. Se muestra claramente al colocar
+    el puntero encima."
   font: "Fuente"
   fontDescription: "Elegir la fuente del contenido"
   rainbow: "Arcoíris"
@@ -1152,8 +1148,8 @@ _mfm:
   rotate: "Rotar"
   rotateDescription: "Rota el contenido a un ángulo especificado."
   plain: "Plano"
-  plainDescription: "Desactiva los efectos de todo el contenido MFM con este efecto\
-    \ MFM."
+  plainDescription: "Desactiva los efectos de todo el contenido MFM con este efecto
+    MFM."
   position: Posición
 _instanceTicker:
   none: "No mostrar"
@@ -1183,20 +1179,19 @@ _menuDisplay:
   hide: "Ocultar"
 _wordMute:
   muteWords: "Palabras que silenciar"
-  muteWordsDescription: "Separar con espacios indica una declaracion And, separar\
-    \ con lineas nuevas indica una declaracion Or。"
-  muteWordsDescription2: "Encerrar las palabras clave entre numerales para usar expresiones\
-    \ regulares"
+  muteWordsDescription: "Separar con espacios indica una declaracion And, separar
+    con lineas nuevas indica una declaracion Or。"
+  muteWordsDescription2: "Encerrar las palabras clave entre numerales para usar expresiones
+    regulares"
   softDescription: "Ocultar en la linea de tiempo las notas que cumplen las condiciones"
-  hardDescription: "Evitar que se agreguen a la linea de tiempo las notas que cumplen\
-    \ las condiciones. Las notas no agregadas seguirán quitadas aunque cambien las\
-    \ condiciones."
+  hardDescription: "Evitar que se agreguen a la linea de tiempo las notas que cumplen
+    las condiciones. Las notas no agregadas seguirán quitadas aunque cambien las condiciones."
   soft: "Suave"
   hard: "Duro"
   mutedNotes: "Notas silenciadas"
 _instanceMute:
-  instanceMuteDescription: "Silencia todas las notas y reposts de la instancias seleccionadas,\
-    \ incluyendo respuestas a los usuarios de las mismas"
+  instanceMuteDescription: "Silencia todas las notas y reposts de la instancias seleccionadas,
+    incluyendo respuestas a los usuarios de las mismas"
   instanceMuteDescription2: "Separar por líneas"
   title: "Oculta las notas de las instancias listadas."
   heading: "Instancias a silenciar"
@@ -1298,51 +1293,51 @@ _time:
   hour: "Horas"
   day: "Días"
 _tutorial:
-  title: "Cómo usar Calckey"
+  title: "Cómo usar Iceshrimp"
   step1_1: "¡Bienvenido!"
-  step1_2: "Vamos a configurarte. Estarás listo y funcionando en poco tiempo"
+  step1_2: "Vamos a configurarte. ¡Estarás listo y funcionando en poco tiempo!"
   step2_1: "En primer lugar, rellena tu perfil"
-  step2_2: "Proporcionar algo de información sobre quién eres hará que sea más fácil\
-    \ para los demás saber si quieren ver tus notas o seguirte."
+  step2_2: "Proporcionar algo de información sobre quién eres hará que sea más fácil
+    para los demás saber si quieren ver tus notas o seguirte."
   step3_1: "¡Ahora es el momento de seguir a algunas personas!"
-  step3_2: "Tu página de inicio y tus líneas de tiempo sociales se basan en quién\
-    \ sigues, así que intenta seguir un par de cuentas para empezar.\nHaz clic en\
-    \ el círculo más en la parte superior derecha de un perfil para seguirlos."
+  step3_2: "Tu página de inicio y tus líneas de tiempo sociales se basan en quién
+    sigues, así que intenta seguir un par de cuentas para empezar.\nHaz clic en el
+    círculo más en la parte superior derecha de un perfil para seguirlos."
   step4_1: "Vamos a salir a la calle"
-  step4_2: "Para tu primer post, a algunas personas les gusta hacer un post de {introduction}\
-    \ o un simple \"¡Hola mundo!\""
+  step4_2: "Para tu primer post, a algunas personas les gusta hacer un post de {introduction}
+    o un simple \"¡Hola mundo!\""
   step5_1: "¡Líneas de tiempo, líneas de tiempo por todas partes!"
   step5_2: "Su instancia tiene {timelines} diferentes líneas de tiempo habilitadas"
-  step5_3: "La línea de tiempo Inicio {icon} es donde puedes ver las publicaciones\
-    \ de tus seguidores."
-  step5_4: "La línea de tiempo Local {icon} es donde puedes ver las publicaciones\
-    \ de todos los demás en esta instancia."
-  step5_5: "La línea de tiempo {icon} recomendada es donde puedes ver las publicaciones\
-    \ de las instancias que los administradores recomiendan."
-  step5_6: "La línea de tiempo Social {icon} es donde puedes ver las publicaciones\
-    \ de los amigos de tus seguidores."
-  step5_7: "La línea de tiempo Global {icon} es donde puedes ver las publicaciones\
-    \ de todas las demás instancias conectadas."
+  step5_3: "La línea de tiempo Inicio {icon} es donde puedes ver las publicaciones
+    de tus seguidores."
+  step5_4: "La línea de tiempo Local {icon} es donde puedes ver las publicaciones
+    de todos los demás en esta instancia."
+  step5_5: "La línea de tiempo {icon} recomendada es donde puedes ver las publicaciones
+    de las instancias que los administradores recomiendan."
+  step5_6: "La línea de tiempo Social {icon} es donde puedes ver las publicaciones
+    de los amigos de tus seguidores."
+  step5_7: "La línea de tiempo Global {icon} es donde puedes ver las publicaciones
+    de todas las demás instancias conectadas."
   step6_1: "Entonces, ¿qué es este lugar?"
-  step6_2: "Bueno, no sólo te has unido a Calckey. Te has unido a un portal del Fediverso,\
-    \ una red interconectada de miles de servidores, llamada \"instancias\""
-  step6_3: "Cada servidor funciona de forma diferente, y no todos los servidores ejecutan\
-    \ Calckey. Sin embargo, ¡éste lo hace! Es un poco complicado, pero le cogerás\
-    \ el tranquillo enseguida"
+  step6_2: "Bueno, no sólo te has unido a Iceshrimp. Te has unido a un portal del Fediverso,
+    una red interconectada de miles de servidores, llamada \"instancias\""
+  step6_3: "Cada servidor funciona de forma diferente, y no todos los servidores ejecutan
+    Iceshrimp. Sin embargo, ¡éste lo hace! Es un poco complicado, pero le cogerás el
+    tranquillo enseguida"
   step6_4: "¡Ahora ve, explora y diviértete!"
 _2fa:
   alreadyRegistered: "Ya has completado la configuración."
-  registerDevice: "Registrar dispositivo"
-  registerKey: "Registrar clave"
-  step1: "Primero, instale en su dispositivo la aplicación de autenticación {a} o\
-    \ {b} u otra."
+  registerTOTP: "Registrar dispositivo"
+  registerSecurityKey: "Registrar clave"
+  step1: "Primero, instale en su dispositivo la aplicación de autenticación {a} o
+    {b} u otra."
   step2: "Luego, escanee con la aplicación el código QR mostrado en pantalla."
   step2Url: "En una aplicación de escritorio se puede ingresar la siguiente URL:"
   step3: "Para terminar, ingrese el token mostrado en la aplicación."
   step4: "Ahora cuando inicie sesión, ingrese el mismo token"
-  securityKeyInfo: "Se puede configurar el inicio de sesión usando una clave de seguridad\
-    \ de hardware que soporte FIDO2 o con un certificado de huella digital o con un\
-    \ PIN"
+  securityKeyInfo: "Se puede configurar el inicio de sesión usando una clave de seguridad
+    de hardware que soporte FIDO2 o con un certificado de huella digital o con un
+    PIN"
 _permissions:
   "read:account": "Ver información de la cuenta"
   "write:account": "Editar información de la cuenta"
@@ -1378,8 +1373,8 @@ _permissions:
   "write:gallery-likes": "Editar favoritos de la galería"
 _auth:
   shareAccess: "¿Desea permitir el acceso a la cuenta \"{name}\"?"
-  shareAccessAsk: "¿Está seguro de que desea autorizar esta aplicación para acceder\
-    \ a su cuenta?"
+  shareAccessAsk: "¿Está seguro de que desea autorizar esta aplicación para acceder
+    a su cuenta?"
   permissionAsk: "Esta aplicación requiere los siguientes permisos"
   pleaseGoBack: "Por favor, vuelve a la aplicación"
   callback: "Volviendo a la aplicación"
@@ -1480,7 +1475,7 @@ _profile:
   youCanIncludeHashtags: "Puedes añadir hashtags"
   metadata: "información adicional"
   metadataEdit: "Editar información adicional"
-  metadataDescription: "Muestra la información adicional en el perfil"
+  metadataDescription: "Muestra la información adicional en el perfil. ¡Puede agregar una etiqueta {a} o una etiqueta {l} con {rel} para verificar el enlace en su perfil!"
   metadataLabel: "Etiqueta"
   metadataContent: "Contenido"
   changeAvatar: "Cambiar avatar"
@@ -1773,8 +1768,8 @@ _pages:
       _seedRandomPick:
         arg1: "Semilla"
         arg2: "Listas"
-      DRPWPM: "Elegir aleatoriamente de la lista ponderada (Diariamente para cada\
-        \ usuario)"
+      DRPWPM: "Elegir aleatoriamente de la lista ponderada (Diariamente para cada
+        usuario)"
       _DRPWPM:
         arg1: "Lista de texto"
       pick: "Elegir de la lista"
@@ -1794,7 +1789,7 @@ _pages:
       splitStrByLine: "Separar texto en lineas"
       _splitStrByLine:
         arg1: "Texto"
-      ref: "Variables"
+      ref: "Variable"
       aiScriptVar: "Variable de AiScript"
       fn: "funciones"
       _fn:
@@ -1805,8 +1800,8 @@ _pages:
       _for:
         arg1: "Cantidad de repeticiones"
         arg2: "Acción"
-    typeError: "El slot {slot} acepta el tipo {expect} pero fue ingresado el tipo\
-      \ {actual}"
+    typeError: "El slot {slot} acepta el tipo \"{expect}\" pero fue ingresado el tipo
+      \"{actual}\""
     thereIsEmptySlot: "El slot {slot} está vacío"
     types:
       string: "Texto"
@@ -1870,10 +1865,10 @@ _deck:
   newProfile: "Nuevo perfil"
   deleteProfile: "Eliminar perfil"
   introduction: "¡Crea la interfaz perfecta para tí organizando las columnas libremente!"
-  introduction2: "Presiona en la  + de la derecha de la pantalla para añadir nuevas\
-    \ columnas donde quieras."
-  widgetsIntroduction: "Por favor selecciona \"Editar Widgets\" en el menú columna\
-    \ y agrega un widget."
+  introduction2: "Presiona en la  + de la derecha de la pantalla para añadir nuevas
+    columnas donde quieras."
+  widgetsIntroduction: "Por favor selecciona \"Editar Widgets\" en el menú columna
+    y agrega un widget."
   _columns:
     main: "Principal"
     widgets: "Widgets"
@@ -1886,11 +1881,11 @@ _deck:
 manageGroups: Administrar grupos
 replayTutorial: Repetir Tutorial
 privateMode: Modo privado
-addInstance: Añadir una instancia
+addInstance: Añadir un servidor
 renoteMute: Silenciar impulsos
 renoteUnmute: Dejar de silenciar impulsos
 flagSpeakAsCat: Habla como un gato
-selectInstance: Selectiona una instancia
+selectInstance: Selecciona un servidor
 flagSpeakAsCatDescription: Tu publicación se "nyanified" cuando esté en modo gato
 allowedInstances: Instancias en la lista blanca
 breakFollowConfirm: ¿Estás seguro de que quieres eliminar el seguidor?
@@ -1906,7 +1901,7 @@ license: Licencia
 noThankYou: No gracias
 userSaysSomethingReason: '{name} dijo {reason}'
 hiddenTags: Etiquetas Ocultas
-noInstances: No hay instancias
+noInstances: No hay servidores
 accountMoved: 'Usuario ha movido a una cuenta nueva:'
 caption: Auto Subtítulos
 showAds: Mostrar Anuncios
@@ -1923,8 +1918,26 @@ apps: Aplicaciones
 migration: Migración
 silenced: Silenciado
 deleted: Eliminado
-edited: Editado
+edited: 'Editado a las {date} {time}'
 editNote: Editar nota
-silenceThisInstance: Silenciar esta instancia
+silenceThisInstance: Silenciar este servidor
 findOtherInstance: Buscar otro servidor
 userSaysSomethingReasonRenote: '{name} impulsó una publicación que contiene {reason]'
+enableRecommendedTimeline: Habilitar línea de tiempo "Recomendado"
+searchPlaceholder: Buscar en Iceshrimp
+listsDesc: Las listas te permiten crear líneas de tiempo con usuarios específicos.
+  Puedes acceder a ellas desde la pestaña "Línea de tiempo".
+removeReaction: Quitar tu reacción
+selectChannel: Seleccionar canal
+showEmojisInReactionNotifications: Mostrar emojis en notificaciones de reacciones
+silencedInstancesDescription: Escriba los hosts de los servidores que desea bloquear.
+  Las cuentas en estos servidores serán tratadas como "silenciadas", solo podrán hacer
+  solicitudes de seguimiento, y no podrán mencionar a usuarios de este servidor si
+  no les siguen. Esto no afecta los servidores bloqueados.
+silencedInstances: Servidores silenciados
+hiddenTagsDescription: 'Escriba los hashtags (sin el #) que desea ocultar de las secciones
+  de Tendencias y Explorar. Los hashtags ocultos seguirán siendo descubribles por
+  otros métodos.'
+jumpToPrevious: Ver anterior
+enableEmojiReactions: Habilitar reacciones de emoji
+cw: Aviso de contenido

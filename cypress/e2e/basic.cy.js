@@ -1,4 +1,4 @@
-describe('Before setup instance', () => {
+describe("Before setup instance", () => {
 	beforeEach(() => {
 		cy.resetState();
 	});
@@ -9,31 +9,31 @@ describe('Before setup instance', () => {
 		cy.wait(1000);
 	});
 
-  it('successfully loads', () => {
-    cy.visit('/');
-  });
+	it("successfully loads", () => {
+		cy.visit("/");
+	});
 
-	it('setup instance', () => {
-    cy.visit('/');
+	it("setup instance", () => {
+		cy.visit("/");
 
-		cy.intercept('POST', '/api/admin/accounts/create').as('signup');
-	
-		cy.get('[data-cy-admin-username] input').type('admin');
-		cy.get('[data-cy-admin-password] input').type('admin1234');
-		cy.get('[data-cy-admin-ok]').click();
+		cy.intercept("POST", "/api/admin/accounts/create").as("signup");
+
+		cy.get("[data-cy-admin-username] input").type("admin");
+		cy.get("[data-cy-admin-password] input").type("admin1234");
+		cy.get("[data-cy-admin-ok]").click();
 
 		// なぜか動かない
 		//cy.wait('@signup').should('have.property', 'response.statusCode');
-		cy.wait('@signup');
-  });
+		cy.wait("@signup");
+	});
 });
 
-describe('After setup instance', () => {
+describe("After setup instance", () => {
 	beforeEach(() => {
 		cy.resetState();
 
 		// インスタンス初期セットアップ
-		cy.registerUser('admin', 'pass', true);
+		cy.registerUser("admin", "pass", true);
 	});
 
 	afterEach(() => {
@@ -42,34 +42,34 @@ describe('After setup instance', () => {
 		cy.wait(1000);
 	});
 
-  it('successfully loads', () => {
-    cy.visit('/');
-  });
+	it("successfully loads", () => {
+		cy.visit("/");
+	});
 
-	it('signup', () => {
-		cy.visit('/');
+	it("signup", () => {
+		cy.visit("/");
 
-		cy.intercept('POST', '/api/signup').as('signup');
+		cy.intercept("POST", "/api/signup").as("signup");
 
-		cy.get('[data-cy-signup]').click();
-		cy.get('[data-cy-signup-username] input').type('alice');
-		cy.get('[data-cy-signup-password] input').type('alice1234');
-		cy.get('[data-cy-signup-password-retype] input').type('alice1234');
-		cy.get('[data-cy-signup-submit]').click();
+		cy.get("[data-cy-signup]").click();
+		cy.get("[data-cy-signup-username] input").type("alice");
+		cy.get("[data-cy-signup-password] input").type("alice1234");
+		cy.get("[data-cy-signup-password-retype] input").type("alice1234");
+		cy.get("[data-cy-signup-submit]").click();
 
-		cy.wait('@signup');
-  });
+		cy.wait("@signup");
+	});
 });
 
-describe('After user signup', () => {
+describe("After user signup", () => {
 	beforeEach(() => {
 		cy.resetState();
 
 		// インスタンス初期セットアップ
-		cy.registerUser('admin', 'pass', true);
+		cy.registerUser("admin", "pass", true);
 
 		// ユーザー作成
-		cy.registerUser('alice', 'alice1234');
+		cy.registerUser("alice", "alice1234");
 	});
 
 	afterEach(() => {
@@ -78,51 +78,53 @@ describe('After user signup', () => {
 		cy.wait(1000);
 	});
 
-  it('successfully loads', () => {
-    cy.visit('/');
-  });
+	it("successfully loads", () => {
+		cy.visit("/");
+	});
 
-	it('signin', () => {
-		cy.visit('/');
+	it("signin", () => {
+		cy.visit("/");
 
-		cy.intercept('POST', '/api/signin').as('signin');
+		cy.intercept("POST", "/api/signin").as("signin");
 
-		cy.get('[data-cy-signin]').click();
-		cy.get('[data-cy-signin-username] input').type('alice');
+		cy.get("[data-cy-signin]").click();
+		cy.get("[data-cy-signin-username] input").type("alice");
 		// Enterキーでサインインできるかの確認も兼ねる
-		cy.get('[data-cy-signin-password] input').type('alice1234{enter}');
+		cy.get("[data-cy-signin-password] input").type("alice1234{enter}");
 
-		cy.wait('@signin');
-  });
+		cy.wait("@signin");
+	});
 
-	it('suspend', function() {
-		cy.request('POST', '/api/admin/suspend-user', {
+	it("suspend", function () {
+		cy.request("POST", "/api/admin/suspend-user", {
 			i: this.admin.token,
 			userId: this.alice.id,
 		});
 
-		cy.visit('/');
+		cy.visit("/");
 
-		cy.get('[data-cy-signin]').click();
-		cy.get('[data-cy-signin-username] input').type('alice');
-		cy.get('[data-cy-signin-password] input').type('alice1234{enter}');
+		cy.get("[data-cy-signin]").click();
+		cy.get("[data-cy-signin-username] input").type("alice");
+		cy.get("[data-cy-signin-password] input").type("alice1234{enter}");
 
 		// TODO: cypressにブラウザの言語指定できる機能が実装され次第英語のみテストするようにする
-		cy.contains(/アカウントが凍結されています|This account has been suspended due to/gi);
+		cy.contains(
+			/アカウントが凍結されています|This account has been suspended due to/gi,
+		);
 	});
 });
 
-describe('After user singed in', () => {
+describe("After user singed in", () => {
 	beforeEach(() => {
 		cy.resetState();
 
 		// インスタンス初期セットアップ
-		cy.registerUser('admin', 'pass', true);
+		cy.registerUser("admin", "pass", true);
 
 		// ユーザー作成
-		cy.registerUser('alice', 'alice1234');
+		cy.registerUser("alice", "alice1234");
 
-		cy.login('alice', 'alice1234');
+		cy.login("alice", "alice1234");
 	});
 
 	afterEach(() => {
@@ -131,17 +133,17 @@ describe('After user singed in', () => {
 		cy.wait(1000);
 	});
 
-  it('successfully loads', () => {
-		cy.get('[data-cy-open-post-form]').should('be.visible');
-  });
+	it("successfully loads", () => {
+		cy.get("[data-cy-open-post-form]").should("be.visible");
+	});
 
-	it('note', () => {
-		cy.get('[data-cy-open-post-form]').click();
-		cy.get('[data-cy-post-form-text]').type('Hello, Misskey!');
-		cy.get('[data-cy-open-post-form-submit]').click();
+	it("note", () => {
+		cy.get("[data-cy-open-post-form]").click();
+		cy.get("[data-cy-post-form-text]").type("Hello, Misskey!");
+		cy.get("[data-cy-open-post-form-submit]").click();
 
-		cy.contains('Hello, Misskey!');
-  });
+		cy.contains("Hello, Misskey!");
+	});
 });
 
 // TODO: 投稿フォームの公開範囲指定のテスト

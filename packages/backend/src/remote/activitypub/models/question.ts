@@ -1,7 +1,7 @@
 import config from "@/config/index.js";
 import Resolver from "../resolver.js";
 import type { IObject, IQuestion } from "../type.js";
-import { isQuestion } from "../type.js";
+import { getApId, isQuestion } from "../type.js";
 import { apLogger } from "../logger.js";
 import { Notes, Polls } from "@/models/index.js";
 import type { IPoll } from "@/models/entities/poll.js";
@@ -47,11 +47,14 @@ export async function extractPollFromQuestion(
 
 /**
  * Update votes of Question
- * @param uri URI of AP Question object
+ * @param value URI of AP Question object or object itself
  * @returns true if updated
  */
-export async function updateQuestion(value: any, resolver?: Resolver) {
-	const uri = typeof value === "string" ? value : value.id;
+export async function updateQuestion(
+	value: string | IQuestion,
+	resolver?: Resolver,
+): Promise<boolean> {
+	const uri = typeof value === "string" ? value : getApId(value);
 
 	// Skip if URI points to this server
 	if (uri.startsWith(`${config.url}/`)) throw new Error("uri points local");
@@ -65,22 +68,23 @@ export async function updateQuestion(value: any, resolver?: Resolver) {
 	//#endregion
 
 	// resolve new Question object
-	if (resolver == null) resolver = new Resolver();
-	const question = (await resolver.resolve(value)) as IQuestion;
+	const _resolver = resolver ?? new Resolver();
+	const question = (await _resolver.resolve(value)) as IQuestion;
 	apLogger.debug(`fetched question: ${JSON.stringify(question, null, 2)}`);
 
 	if (question.type !== "Question") throw new Error("object is not a Question");
 
 	const apChoices = question.oneOf || question.anyOf;
+	if (!apChoices) return false;
 
 	let changed = false;
 
 	for (const choice of poll.choices) {
 		const oldCount = poll.votes[poll.choices.indexOf(choice)];
-		const newCount = apChoices!.filter((ap) => ap.name === choice)[0].replies!
-			.totalItems;
+		const newCount = apChoices.filter((ap) => ap.name === choice)[0].replies
+			?.totalItems;
 
-		if (oldCount !== newCount) {
+		if (newCount !== undefined && oldCount !== newCount) {
 			changed = true;
 			poll.votes[poll.choices.indexOf(choice)] = newCount;
 		}

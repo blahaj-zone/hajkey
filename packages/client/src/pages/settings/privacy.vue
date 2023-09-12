@@ -155,13 +155,13 @@ let ffVisibility = $ref($i.ffVisibility);
 let preventAiLearning = $ref($i.preventAiLearning);
 
 let defaultNoteVisibility = $computed(
-	defaultStore.makeGetterSetter("defaultNoteVisibility")
+	defaultStore.makeGetterSetter("defaultNoteVisibility"),
 );
 let defaultNoteLocalOnly = $computed(
-	defaultStore.makeGetterSetter("defaultNoteLocalOnly")
+	defaultStore.makeGetterSetter("defaultNoteLocalOnly"),
 );
 let rememberNoteVisibility = $computed(
-	defaultStore.makeGetterSetter("rememberNoteVisibility")
+	defaultStore.makeGetterSetter("rememberNoteVisibility"),
 );
 let keepCw = $computed(defaultStore.makeGetterSetter("keepCw"));
 
@@ -184,6 +184,6 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.privacy,
-	icon: "ph-lock-open ph-bold ph-lg",
+	icon: "ph-keyhole ph-bold ph-lg",
 });
 </script>

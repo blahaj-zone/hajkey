@@ -108,7 +108,7 @@ const headerTabs = $computed(() => []);
 
 definePageMetadata({
 	title: i18n.ts.relays,
-	icon: "ph-flow-arrow ph-bold ph-lg",
+	icon: "ph-arrows-merge ph-bold ph-lg",
 });
 </script>
 

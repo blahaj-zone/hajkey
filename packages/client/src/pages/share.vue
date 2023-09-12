@@ -33,9 +33,9 @@
 // SPECIFICATION: https://misskey-hub.net/docs/features/share-form.html
 
 import {} from "vue";
-import { noteVisibilities } from "calckey-js";
-import * as Acct from "calckey-js/built/acct";
-import * as Misskey from "calckey-js";
+import { noteVisibilities } from "iceshrimp-js";
+import * as Acct from "iceshrimp-js/built/acct";
+import * as Misskey from "iceshrimp-js";
 import MkButton from "@/components/MkButton.vue";
 import XPostForm from "@/components/MkPostForm.vue";
 import * as os from "@/os";
@@ -55,10 +55,10 @@ let initialText = $ref(null as string | null);
 let reply = $ref(null as Misskey.entities.Note | null);
 let renote = $ref(null as Misskey.entities.Note | null);
 let visibility = $ref(
-	noteVisibilities.includes(visibilityQuery) ? visibilityQuery : null
+	noteVisibilities.includes(visibilityQuery) ? visibilityQuery : null,
 );
 let localOnly = $ref(
-	localOnlyQuery === "0" ? false : localOnlyQuery === "1" ? true : null
+	localOnlyQuery === "0" ? false : localOnlyQuery === "1" ? true : null,
 );
 let files = $ref([] as Misskey.entities.DriveFile[]);
 let visibleUsers = $ref([] as Misskey.entities.User[]);
@@ -92,7 +92,7 @@ async function init() {
 								username: q.username,
 								host: q.host === null ? undefined : q.host,
 						  }
-						: q
+						: q,
 				)
 				.map((q) =>
 					os.api("users/show", q).then(
@@ -101,11 +101,11 @@ async function init() {
 						},
 						() => {
 							console.error(
-								`Invalid user query: ${JSON.stringify(q)}`
+								`Invalid user query: ${JSON.stringify(q)}`,
 							);
-						}
-					)
-				)
+						},
+					),
+				),
 		);
 	}
 
@@ -155,9 +155,9 @@ async function init() {
 						},
 						() => {
 							console.error(`Failed to fetch a file ${fileId}`);
-						}
-					)
-				)
+						},
+					),
+				),
 			);
 		}
 		//#endregion

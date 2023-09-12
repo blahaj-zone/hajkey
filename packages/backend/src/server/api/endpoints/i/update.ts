@@ -12,7 +12,9 @@ import type { UserProfile } from "@/models/entities/user-profile.js";
 import { notificationTypes } from "@/types.js";
 import { normalizeForSearch } from "@/misc/normalize-for-search.js";
 import { langmap } from "@/misc/langmap.js";
+import { verifyLink } from "@/services/fetch-rel-me.js";
 import { ApiError } from "../../error.js";
+import config from "@/config/index.js";
 import define from "../../define.js";
 
 export const meta = {
@@ -57,6 +59,18 @@ export const meta = {
 			message: "Invalid Regular Expression.",
 			code: "INVALID_REGEXP",
 			id: "0d786918-10df-41cd-8f33-8dec7d9a89a5",
+		},
+
+		invalidFieldName: {
+			message: "Invalid field name.",
+			code: "INVALID_FIELD_NAME",
+			id: "8f81972e-8b53-4d30-b0d2-efb026dda673",
+		},
+
+		invalidFieldValue: {
+			message: "Invalid field value.",
+			code: "INVALID_FIELD_VALUE",
+			id: "aede7444-244b-11ee-be56-0242ac120002",
 		},
 	},
 
@@ -106,7 +120,6 @@ export const paramDef = {
 		isBot: { type: "boolean" },
 		isCat: { type: "boolean" },
 		speakAsCat: { type: "boolean" },
-		showTimelineReplies: { type: "boolean" },
 		injectFeaturedNote: { type: "boolean" },
 		receiveAnnouncementEmail: { type: "boolean" },
 		alwaysMarkNsfw: { type: "boolean" },
@@ -190,8 +203,6 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 	if (typeof ps.publicReactions === "boolean")
 		profileUpdates.publicReactions = ps.publicReactions;
 	if (typeof ps.isBot === "boolean") updates.isBot = ps.isBot;
-	if (typeof ps.showTimelineReplies === "boolean")
-		updates.showTimelineReplies = ps.showTimelineReplies;
 	if (typeof ps.carefulBot === "boolean")
 		profileUpdates.carefulBot = ps.carefulBot;
 	if (typeof ps.autoAcceptFollowed === "boolean")
@@ -242,16 +253,29 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 	}
 
 	if (ps.fields) {
+		for (const field of ps.fields) {
+			if (!field || field.name === "" || field.value === "") {
+				continue;
+			}
+			if (typeof field.name !== "string" || field.name === "") {
+				throw new ApiError(meta.errors.invalidFieldName);
+			}
+			if (typeof field.value !== "string" || field.value === "") {
+				throw new ApiError(meta.errors.invalidFieldValue);
+			}
+			if (field.value.startsWith("http")) {
+				field.verified = await verifyLink(field.value, user.username);
+			}
+		}
+
 		profileUpdates.fields = ps.fields
-			.filter(
-				(x) =>
-					typeof x.name === "string" &&
-					x.name !== "" &&
-					typeof x.value === "string" &&
-					x.value !== "",
-			)
+			.filter((x) => Object.keys(x).length !== 0)
 			.map((x) => {
-				return { name: x.name, value: x.value };
+				return {
+					name: x.name,
+					value: x.value,
+					verified: x.verified,
+				};
 			});
 	}
 

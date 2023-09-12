@@ -138,7 +138,7 @@ function createDoughnut(chartEl, tooltip, data) {
 				{
 					backgroundColor: data.map((x) => x.color),
 					borderColor: getComputedStyle(
-						document.documentElement
+						document.documentElement,
 					).getPropertyValue("--panel"),
 					borderWidth: 2,
 					hoverOffset: 0,
@@ -161,7 +161,7 @@ function createDoughnut(chartEl, tooltip, data) {
 					ev,
 					"nearest",
 					{ intersect: true },
-					false
+					false,
 				)[0];
 				if (hit && data[hit.index].onClick) {
 					data[hit.index].onClick();
@@ -206,7 +206,7 @@ onMounted(() => {
 						color: "#80808080",
 						value: fedStats.otherFollowersCount,
 					},
-				])
+				]),
 		);
 
 		createDoughnut(
@@ -227,7 +227,7 @@ onMounted(() => {
 						color: "#80808080",
 						value: fedStats.otherFollowingCount,
 					},
-				])
+				]),
 		);
 	});
 });

@@ -57,6 +57,16 @@ export const meta = {
 					optional: false,
 					nullable: false,
 				},
+				showPopup: {
+					type: "boolean",
+					optional: true,
+					nullable: false,
+				},
+				isGoodNews: {
+					type: "boolean",
+					optional: true,
+					nullable: false,
+				},
 			},
 		},
 	},
@@ -100,5 +110,7 @@ export default define(meta, paramDef, async (ps) => {
 		text: announcement.text,
 		imageUrl: announcement.imageUrl,
 		reads: reads.get(announcement)!,
+		showPopup: announcement.showPopup,
+		isGoodNews: announcement.isGoodNews,
 	}));
 });

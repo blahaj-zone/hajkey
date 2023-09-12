@@ -60,7 +60,7 @@ import MkInput from "@/components/form/input.vue";
 import XModalWindow from "@/components/MkModalWindow.vue";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
-import { Instance } from "calckey-js/built/entities";
+import { Instance } from "iceshrimp-js/built/entities";
 
 const emit = defineEmits<{
 	(ev: "ok", selected: Instance): void;
@@ -95,7 +95,7 @@ const search = () => {
 					id: x.id,
 					host: x.host,
 					iconUrl: x.iconUrl,
-				} as Instance)
+				}) as Instance,
 		);
 	});
 };

@@ -20,12 +20,15 @@
 					}}</template>
 				</MkKeyValue>
 
-				<FormButton
+				<MkButton
 					primary
 					class="_formBlock"
 					@click="chooseProxyAccount"
-					>{{ i18n.ts.selectAccount }}</FormButton
+					>{{ i18n.ts.selectAccount }}</MkButton
 				>
+				<MkButton danger class="_formBlock" @click="del">{{
+					i18n.ts.remove
+				}}</MkButton>
 			</FormSuspense>
 		</MkSpacer>
 	</MkStickyContainer>
@@ -34,7 +37,7 @@
 <script lang="ts" setup>
 import {} from "vue";
 import MkKeyValue from "@/components/MkKeyValue.vue";
-import FormButton from "@/components/MkButton.vue";
+import MkButton from "@/components/MkButton.vue";
 import MkInfo from "@/components/MkInfo.vue";
 import FormSuspense from "@/components/form/suspense.vue";
 import * as os from "@/os";
@@ -54,7 +57,7 @@ async function init() {
 }
 
 function chooseProxyAccount() {
-	os.selectUser().then((user) => {
+	os.selectLocalUser().then((user) => {
 		proxyAccount = user;
 		proxyAccountId = user.id;
 		save();
@@ -64,6 +67,14 @@ function chooseProxyAccount() {
 function save() {
 	os.apiWithDialog("admin/update-meta", {
 		proxyAccountId: proxyAccountId,
+	}).then(() => {
+		fetchInstance();
+	});
+}
+
+function del() {
+	os.apiWithDialog("admin/update-meta", {
+		proxyAccountId: null,
 	}).then(() => {
 		fetchInstance();
 	});

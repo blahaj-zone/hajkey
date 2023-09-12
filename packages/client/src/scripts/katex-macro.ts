@@ -14,7 +14,7 @@ function parseSingleKaTeXMacro(src: string): [string, KaTeXMacro] {
 	if (!src.startsWith("\\newcommand") || src.slice(-1) !== "}") return invalid;
 
 	// current index we are checking (= "\\newcommand".length)
-	let currentPos: number = 11;
+	let currentPos = 11;
 	currentPos = skipSpaces(currentPos);
 
 	// parse {\name}, (\name), or [\name]
@@ -61,8 +61,8 @@ function parseSingleKaTeXMacro(src: string): [string, KaTeXMacro] {
 	currentPos = skipSpaces(currentPos);
 
 	while (currentPos < src.length - 1) {
-		let numbersignPos: number = -1;
-		let isEscaped: boolean = false;
+		let numbersignPos = -1;
+		let isEscaped = false;
 
 		for (let i = currentPos; i < src.length - 1; ++i) {
 			if (src[i] !== "\\" && src[i] !== "#") {

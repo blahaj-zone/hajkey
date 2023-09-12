@@ -83,7 +83,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.groups,
 		icon: "ph-users-three ph-bold ph-lg",
-	}))
+	})),
 );
 
 async function create() {
@@ -111,6 +111,10 @@ async function leave(group) {
 </script>
 
 <style lang="scss" scoped>
+._fullinfo {
+	display: none !important;
+}
+
 ._card {
 	margin-bottom: 1rem;
 	._title {

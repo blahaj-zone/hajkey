@@ -4,6 +4,7 @@
 import { defineAsyncComponent, Directive, ref } from "vue";
 import { isTouchUsing } from "@/scripts/touch";
 import { popup, alert } from "@/os";
+import { mainRouter } from "@/router";
 
 const start = isTouchUsing ? "touchstart" : "mouseover";
 const end = isTouchUsing ? "touchend" : "mouseleave";
@@ -98,6 +99,8 @@ export default {
 
 		el.addEventListener(end, hideTooltip, { passive: true });
 		el.addEventListener("focusout", hideTooltip, { passive: true });
+
+		mainRouter.on("change", hideTooltip);
 
 		el.addEventListener("click", () => {
 			window.clearTimeout(self.showTimer);

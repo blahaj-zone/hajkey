@@ -23,7 +23,7 @@ const props = withDefaults(
 		showS: true,
 		showMs: false,
 		offset: 0 - new Date().getTimezoneOffset(),
-	}
+	},
 );
 
 let intervalId;
@@ -45,7 +45,7 @@ watch(showColon, (v) => {
 const tick = () => {
 	const now = new Date();
 	now.setMinutes(
-		now.getMinutes() + (new Date().getTimezoneOffset() + props.offset)
+		now.getMinutes() + (new Date().getTimezoneOffset() + props.offset),
 	);
 	hh.value = now.getHours().toString().padStart(2, "0");
 	mm.value = now.getMinutes().toString().padStart(2, "0");
@@ -65,7 +65,7 @@ watch(
 		if (intervalId) window.clearInterval(intervalId);
 		intervalId = window.setInterval(tick, props.showMs ? 10 : 1000);
 	},
-	{ immediate: true }
+	{ immediate: true },
 );
 
 onUnmounted(() => {

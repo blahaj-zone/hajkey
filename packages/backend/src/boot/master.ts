@@ -29,37 +29,12 @@ const themeColor = chalk.hex("#31748f");
 
 function greet() {
 	if (!envOption.quiet) {
-		//#region Calckey logo
-		const v = `v${meta.version}`;
-		console.log(themeColor("   ___      _      _              "));
-		console.log(themeColor("  / __\\__ _| | ___| | _____ _   _ "));
-		console.log(themeColor(" / /  / _` | |/ __| |/ / _  | | |"));
-		console.log(themeColor("/ /__| (_| | | (__|   <  __/ |_| |"));
-		console.log(themeColor("\\____/\\__,_|_|\\___|_|\\_\\___|\\__, |"));
-		console.log(themeColor("                            (___/ "));
-		//#endregion
-
-		console.log(
-			" Calckey is an open-source decentralized microblogging platform.",
-		);
-		console.log(
-			chalk.rgb(
-				255,
-				136,
-				0,
-			)(
-				" If you like Calckey, please consider starring or contributing to the repo. https://codeberg.org/calckey/calckey",
-			),
-		);
-
-		console.log("");
 		console.log(
 			chalkTemplate`--- ${os.hostname()} {gray (PID: ${process.pid.toString()})} ---`,
 		);
 	}
 
-	bootLogger.info("Welcome to Calckey!");
-	bootLogger.info(`Calckey v${meta.version}`, null, true);
+	bootLogger.info(`Iceshrimp v${meta.version}, initializing...`, null, true);
 }
 
 /**
@@ -77,11 +52,12 @@ export async function masterMain() {
 		config = loadConfigBoot();
 		await connectDb();
 	} catch (e) {
+		bootLogger.error(e as Error, null, true);
 		bootLogger.error("Fatal error occurred during initialization", null, true);
 		process.exit(1);
 	}
 
-	bootLogger.succ("Calckey initialized");
+	bootLogger.succ("Iceshrimp initialized");
 
 	if (!envOption.disableClustering) {
 		await spawnWorkers(config.clusterLimit);
@@ -167,7 +143,7 @@ async function connectDb(): Promise<void> {
 	}
 }
 
-async function spawnWorkers(limit: number = 1) {
+async function spawnWorkers(limit = 1) {
 	const workers = Math.min(limit, os.cpus().length);
 	bootLogger.info(`Starting ${workers} worker${workers === 1 ? "" : "s"}...`);
 	await Promise.all([...Array(workers)].map(spawnWorker));

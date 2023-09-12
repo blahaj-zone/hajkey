@@ -3,6 +3,7 @@ import { getUserKeypair } from "@/misc/keypair-store.js";
 import type { User } from "@/models/entities/user.js";
 import { getResponse } from "../../misc/fetch.js";
 import { createSignedPost, createSignedGet } from "./ap-request.js";
+import { apLogger } from "@/remote/activitypub/logger.js";
 
 export default async (user: { id: User["id"] }, url: string, object: any) => {
 	const body = JSON.stringify(object);
@@ -35,6 +36,7 @@ export default async (user: { id: User["id"] }, url: string, object: any) => {
  * @param url URL to fetch
  */
 export async function signedGet(url: string, user: { id: User["id"] }) {
+	apLogger.debug(`Running signedGet on url: ${url}`);
 	const keypair = await getUserKeypair(user.id);
 
 	const req = createSignedGet({

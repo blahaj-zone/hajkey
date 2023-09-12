@@ -1,4 +1,3 @@
-import { Brackets } from "typeorm";
 import { Notes } from "@/models/index.js";
 import define from "../../define.js";
 import { makePaginationQuery } from "../../common/make-pagination-query.js";
@@ -11,6 +10,7 @@ export const meta = {
 
 	requireCredential: false,
 	requireCredentialPrivateMode: true,
+	description: "Get threaded/chained replies to a note",
 
 	res: {
 		type: "array",
@@ -23,13 +23,14 @@ export const meta = {
 			ref: "Note",
 		},
 	},
-};
+} as const;
 
 export const paramDef = {
 	type: "object",
 	properties: {
 		noteId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
+		depth: { type: "integer", minimum: 1, maximum: 100, default: 12 },
 		sinceId: { type: "string", format: "misskey:id" },
 		untilId: { type: "string", format: "misskey:id" },
 	},

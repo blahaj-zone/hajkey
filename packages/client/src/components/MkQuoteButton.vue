@@ -3,7 +3,7 @@
 		v-if="canRenote && $store.state.seperateRenoteQuote"
 		v-tooltip.noDelay.bottom="i18n.ts.quote"
 		class="eddddedb _button"
-		@click="quote()"
+		@click.stop="quote()"
 	>
 		<i class="ph-quotes ph-bold ph-lg"></i>
 	</button>
@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import type { Note } from "calckey-js/built/entities";
+import type { Note } from "iceshrimp-js/built/entities";
 import { pleaseLogin } from "@/scripts/please-login";
 import * as os from "@/os";
 import { $i } from "@/account";
@@ -24,7 +24,7 @@ const props = defineProps<{
 const canRenote = computed(
 	() =>
 		["public", "home"].includes(props.note.visibility) ||
-		props.note.userId === $i?.id
+		props.note.userId === $i?.id,
 );
 
 function quote(): void {

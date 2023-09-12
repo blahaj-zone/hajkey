@@ -5,7 +5,7 @@
 				<span class="year">{{ i18n.t("yearX", { year }) }}</span>
 				<span class="month">{{ i18n.t("monthX", { month }) }}</span>
 			</p>
-			<p v-if="month === 1 && day === 1" class="day">
+			<p v-if="(month === 1 && day === 1) || isBirthday" class="day">
 				🎉{{ i18n.t("dayX", { day })
 				}}<span style="display: inline-block; transform: scaleX(-1)"
 					>🎉</span
@@ -45,16 +45,16 @@
 
 <script lang="ts" setup>
 import { onUnmounted, ref } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import { i18n } from "@/i18n";
 import { useInterval } from "@/scripts/use-interval";
+import { $i } from "@/account";
 
 const name = "calendar";
 
@@ -68,8 +68,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -77,8 +77,10 @@ const { widgetProps, configure } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
+
+const hasBirthday = Boolean($i?.birthday);
 
 const year = ref(0);
 const month = ref(0);
@@ -88,6 +90,8 @@ const yearP = ref(0);
 const monthP = ref(0);
 const dayP = ref(0);
 const isHoliday = ref(false);
+const isBirthday = ref(false);
+
 const tick = () => {
 	const now = new Date();
 	const nd = now.getDate();
@@ -108,7 +112,7 @@ const tick = () => {
 	][now.getDay()];
 
 	const dayNumer = now.getTime() - new Date(ny, nm, nd).getTime();
-	const dayDenom = 1000 /*ms*/ * 60 /*s*/ * 60 /*m*/ * 24; /*h*/
+	const dayDenom = 1000 /* ms */ * 60 /* s */ * 60 /* m */ * 24; /* h */
 	const monthNumer = now.getTime() - new Date(ny, nm, 1).getTime();
 	const monthDenom =
 		new Date(ny, nm + 1, 1).getTime() - new Date(ny, nm, 1).getTime();
@@ -121,6 +125,13 @@ const tick = () => {
 	yearP.value = (yearNumer / yearDenom) * 100;
 
 	isHoliday.value = now.getDay() === 0 || now.getDay() === 6;
+
+	if (hasBirthday) {
+		const [bdayYear, bdayMonth, bdayDay] = $i.birthday.split("-");
+		if (month.value === +bdayMonth && day.value == +bdayDay) {
+			isBirthday.value = true;
+		}
+	}
 };
 
 useInterval(tick, 1000, {

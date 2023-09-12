@@ -38,7 +38,7 @@ onMounted(() => {
 				{
 					backgroundColor: props.data.map((x) => x.color),
 					borderColor: getComputedStyle(
-						document.documentElement
+						document.documentElement,
 					).getPropertyValue("--panel"),
 					borderWidth: 2,
 					hoverOffset: 0,
@@ -60,7 +60,7 @@ onMounted(() => {
 					ev,
 					"nearest",
 					{ intersect: true },
-					false
+					false,
 				)[0];
 				if (hit && props.data[hit.index].onClick) {
 					props.data[hit.index].onClick();

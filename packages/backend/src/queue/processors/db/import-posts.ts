@@ -1,4 +1,5 @@
 import { downloadTextFile } from "@/misc/download-text-file.js";
+import { processMastoNotes } from "@/misc/process-masto-notes.js";
 import { Users, DriveFiles } from "@/models/index.js";
 import type { DbUserImportPostsJobData } from "@/queue/types.js";
 import { queueLogger } from "../../logger.js";
@@ -26,6 +27,26 @@ export async function importPosts(
 		id: job.data.fileId,
 	});
 	if (file == null) {
+		done();
+		return;
+	}
+
+	if (file.name.endsWith("tar.gz") || file.name.endsWith("zip")) {
+		try {
+			logger.info("Reading Mastodon archive");
+			const outbox = await processMastoNotes(
+				file.name,
+				file.url,
+				job.data.user.id,
+			);
+			for (const post of outbox.orderedItems) {
+				createImportMastoPostJob(job.data.user, post, job.data.signatureCheck);
+			}
+		} catch (e) {
+			// handle error
+			logger.warn(`Failed reading Mastodon archive: ${e}`);
+		}
+		logger.succ("Mastodon archive imported");
 		done();
 		return;
 	}

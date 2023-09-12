@@ -1,33 +1,41 @@
 import probeImageSize from "probe-image-size";
-import { Mutex, withTimeout } from "async-mutex";
+import { Mutex } from "redis-semaphore";
 
 import { FILE_TYPE_BROWSERSAFE } from "@/const.js";
 import Logger from "@/services/logger.js";
 import { Cache } from "./cache.js";
+import { redisClient } from "@/db/redis.js";
 
 export type Size = {
 	width: number;
 	height: number;
 };
 
-const cache = new Cache<boolean>(1000 * 60 * 10); // once every 10 minutes for the same url
-const mutex = withTimeout(new Mutex(), 1000);
+const cache = new Cache<boolean>("emojiMeta", 60 * 10); // once every 10 minutes for the same url
+const logger = new Logger("emoji");
 
 export async function getEmojiSize(url: string): Promise<Size> {
-	const logger = new Logger("emoji");
+	let attempted = true;
 
-	await mutex.runExclusive(() => {
-		const attempted = cache.get(url);
-		if (!attempted) {
-			cache.set(url, true);
-		} else {
-			logger.warn(`Attempt limit exceeded: ${url}`);
-			throw new Error("Too many attempts");
-		}
-	});
+	const lock = new Mutex(redisClient, "getEmojiSize");
+	await lock.acquire();
 
 	try {
-		logger.info(`Retrieving emoji size from ${url}`);
+		attempted = (await cache.get(url)) === true;
+		if (!attempted) {
+			await cache.set(url, true);
+		}
+	} finally {
+		await lock.release();
+	}
+
+	if (attempted) {
+		logger.warn(`Attempt limit exceeded: ${url}`);
+		throw new Error("Too many attempts");
+	}
+
+	try {
+		logger.debug(`Retrieving emoji size from ${url}`);
 		const { width, height, mime } = await probeImageSize(url, {
 			timeout: 5000,
 		});

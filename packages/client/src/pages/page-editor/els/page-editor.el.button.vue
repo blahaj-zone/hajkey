@@ -59,7 +59,7 @@
 					<option :value="null">
 						{{
 							i18n.t(
-								"_pages.blocks._button._action._pushEvent.no-variable"
+								"_pages.blocks._button._action._pushEvent.no-variable",
 							)
 						}}
 					</option>
@@ -119,7 +119,7 @@ withDefaults(
 			var: null,
 			fn: null,
 		},
-	}
+	},
 );
 </script>
 

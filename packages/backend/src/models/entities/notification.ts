@@ -20,8 +20,8 @@ export class Notification {
 	public id: string;
 
 	@Index()
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the Notification.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the Notification.",
 	})
 	public createdAt: Date;
 
@@ -31,12 +31,12 @@ export class Notification {
 	@Index()
 	@Column({
 		...id(),
-		comment: 'The ID of recipient user of the Notification.',
+		comment: "The ID of recipient user of the Notification.",
 	})
 	public notifieeId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public notifiee: User | null;
@@ -48,12 +48,12 @@ export class Notification {
 	@Column({
 		...id(),
 		nullable: true,
-		comment: 'The ID of sender user of the Notification.',
+		comment: "The ID of sender user of the Notification.",
 	})
 	public notifierId: User["id"] | null;
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public notifier: User | null;
@@ -74,9 +74,9 @@ export class Notification {
 	 * app - App notifications.
 	 */
 	@Index()
-	@Column('enum', {
+	@Column("enum", {
 		enum: notificationTypes,
-		comment: 'The type of the Notification.',
+		comment: "The type of the Notification.",
 	})
 	public type: typeof notificationTypes[number];
 
@@ -84,9 +84,9 @@ export class Notification {
 	 * Whether the notification was read.
 	 */
 	@Index()
-	@Column('boolean', {
+	@Column("boolean", {
 		default: false,
-		comment: 'Whether the notification was read.',
+		comment: "Whether the notification was read.",
 	})
 	public isRead: boolean;
 
@@ -96,8 +96,8 @@ export class Notification {
 	})
 	public noteId: Note["id"] | null;
 
-	@ManyToOne(type => Note, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Note, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public note: Note | null;
@@ -108,8 +108,8 @@ export class Notification {
 	})
 	public followRequestId: FollowRequest["id"] | null;
 
-	@ManyToOne(type => FollowRequest, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => FollowRequest, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public followRequest: FollowRequest | null;
@@ -120,18 +120,19 @@ export class Notification {
 	})
 	public userGroupInvitationId: UserGroupInvitation["id"] | null;
 
-	@ManyToOne(type => UserGroupInvitation, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => UserGroupInvitation, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public userGroupInvitation: UserGroupInvitation | null;
 
-	@Column('varchar', {
-		length: 128, nullable: true,
+	@Column("varchar", {
+		length: 128,
+		nullable: true,
 	})
 	public reaction: string | null;
 
-	@Column('integer', {
+	@Column("integer", {
 		nullable: true,
 	})
 	public choice: number | null;
@@ -139,8 +140,9 @@ export class Notification {
 	/**
 	 * App notification body
 	 */
-	@Column('varchar', {
-		length: 2048, nullable: true,
+	@Column("varchar", {
+		length: 2048,
+		nullable: true,
 	})
 	public customBody: string | null;
 
@@ -148,8 +150,9 @@ export class Notification {
 	 * App notification header
 	 * (If omitted, it is expected to be displayed with the app name)
 	 */
-	@Column('varchar', {
-		length: 256, nullable: true,
+	@Column("varchar", {
+		length: 256,
+		nullable: true,
 	})
 	public customHeader: string | null;
 
@@ -157,8 +160,9 @@ export class Notification {
 	 * App notification icon (URL)
 	 * (If omitted, it is expected to be displayed as an app icon)
 	 */
-	@Column('varchar', {
-		length: 1024, nullable: true,
+	@Column("varchar", {
+		length: 1024,
+		nullable: true,
 	})
 	public customIcon: string | null;
 
@@ -172,8 +176,8 @@ export class Notification {
 	})
 	public appAccessTokenId: AccessToken["id"] | null;
 
-	@ManyToOne(type => AccessToken, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => AccessToken, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public appAccessToken: AccessToken | null;

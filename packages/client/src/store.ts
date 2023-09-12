@@ -26,6 +26,26 @@ export const defaultStore = markRaw(
 			where: "account",
 			default: 0,
 		},
+		tlHomeHintClosed: {
+			where: "device",
+			default: false,
+		},
+		tlLocalHintClosed: {
+			where: "device",
+			default: false,
+		},
+		tlRecommendedHintClosed: {
+			where: "device",
+			default: false,
+		},
+		tlSocialHintClosed: {
+			where: "device",
+			default: false,
+		},
+		tlGlobalHintClosed: {
+			where: "device",
+			default: false,
+		},
 		keepCw: {
 			where: "account",
 			default: true,
@@ -82,14 +102,6 @@ export const defaultStore = markRaw(
 			where: "account",
 			default: [],
 		},
-		mutedAds: {
-			where: "account",
-			default: [] as string[],
-		},
-		showAds: {
-			where: "account",
-			default: true,
-		},
 		menu: {
 			where: "deviceAccount",
 			default: menuOptions,
@@ -142,15 +154,19 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: true,
 		},
-		highlightCw: {
+		expandOnNoteClick: {
 			where: "device",
-			default: false,
+			default: true,
 		},
 		nsfw: {
 			where: "device",
 			default: "respect" as "respect" | "force" | "ignore",
 		},
 		animation: {
+			where: "device",
+			default: true,
+		},
+		advancedMfm: {
 			where: "device",
 			default: true,
 		},
@@ -217,6 +233,10 @@ export const defaultStore = markRaw(
 		instanceTicker: {
 			where: "device",
 			default: "remote" as "none" | "remote" | "always",
+		},
+		reactionPickerSkinTone: {
+			where: "account",
+			default: 1,
 		},
 		reactionPickerSize: {
 			where: "device",
@@ -285,6 +305,10 @@ export const defaultStore = markRaw(
 		swipeOnDesktop: {
 			where: "device",
 			default: false,
+		},
+		swipeOnMobile: {
+			where: "device",
+			default: true,
 		},
 		showAdminUpdates: {
 			where: "account",
@@ -420,57 +444,9 @@ export const defaultStore = markRaw(
 			where: "account",
 			default: true,
 		},
-		showTimelineFilter: {
+		showTimelineReplies: {
 			where: "device",
-			default: true,
-		},
-		filterShowPosts: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowMentions: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowReplies: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowBoosts: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowQuotes: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowPolls: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowCws: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterShowNonCws: {
-			where: "device",
-			default: "show" as "force" | "show" | "hide" | "never",
-		},
-		filterDisplayParent: {
-			where: "device",
-			default: true,
-		},
-		filterDisplayPreviews: {
-			where: "device",
-			default: true,
-		},
-		filterDisplayMedia: {
-			where: "device",
-			default: true,
-		},
-		filterHideDuplicates: {
-			where: "device",
-			default: true,
+			default: false,
 		},
 	}),
 );

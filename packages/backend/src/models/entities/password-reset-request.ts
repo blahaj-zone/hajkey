@@ -14,11 +14,11 @@ export class PasswordResetRequest {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone')
+	@Column("timestamp with time zone")
 	public createdAt: Date;
 
 	@Index({ unique: true })
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 256,
 	})
 	public token: string;
@@ -29,8 +29,8 @@ export class PasswordResetRequest {
 	})
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;

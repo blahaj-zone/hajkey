@@ -2,7 +2,7 @@
 	<MkA
 		v-if="url.startsWith('/')"
 		v-user-preview="canonical"
-		class="akbvjaqn"
+		class="mention"
 		:class="{ isMe }"
 		:to="url"
 		@click.stop
@@ -19,7 +19,7 @@
 	</MkA>
 	<a
 		v-else
-		class="akbvjaqn"
+		class="mention"
 		:href="url"
 		target="_blank"
 		rel="noopener"
@@ -58,7 +58,7 @@ const isMe =
 </script>
 
 <style lang="scss" scoped>
-.akbvjaqn {
+.mention {
 	position: relative;
 	display: inline-block;
 	padding: 2px 8px 2px 2px;
@@ -68,6 +68,7 @@ const isMe =
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	color: var(--mention);
+	isolation: isolate;
 
 	&::before {
 		content: "";

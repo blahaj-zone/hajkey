@@ -1,6 +1,5 @@
 import { Meta } from "@/models/entities/meta.js";
 import { insertModerationLog } from "@/services/insert-moderation-log.js";
-import { DB_MAX_NOTE_TEXT_LENGTH } from "@/misc/hard-limits.js";
 import { db } from "@/db/postgre.js";
 import define from "../../define.js";
 
@@ -174,9 +173,12 @@ export const paramDef = {
 			type: "object",
 			nullable: true,
 			properties: {
-				postEditing: { type: "boolean" },
+				postImports: { type: "boolean" },
 			},
 		},
+		enableServerMachineStats: { type: "boolean" },
+		enableIdenticonGeneration: { type: "boolean" },
+		donationLink: { type: "string", nullable: true },
 	},
 	required: [],
 } as const;
@@ -218,6 +220,15 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	if (Array.isArray(ps.recommendedInstances)) {
 		set.recommendedInstances = ps.recommendedInstances.filter(Boolean);
+		if (set.recommendedInstances?.length > 0) {
+			set.recommendedInstances.forEach((instance, index) => {
+				if (/^https?:\/\//i.test(instance)) {
+					set.recommendedInstances![index] = instance
+						.replace(/^https?:\/\//i, "")
+						.replace(/\/$/, "");
+				}
+			});
+		}
 	}
 
 	if (Array.isArray(ps.hiddenTags)) {
@@ -566,6 +577,21 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	if (ps.experimentalFeatures !== undefined) {
 		set.experimentalFeatures = ps.experimentalFeatures || undefined;
+	}
+
+	if (ps.enableServerMachineStats !== undefined) {
+		set.enableServerMachineStats = ps.enableServerMachineStats;
+	}
+
+	if (ps.enableIdenticonGeneration !== undefined) {
+		set.enableIdenticonGeneration = ps.enableIdenticonGeneration;
+	}
+
+	if (ps.donationLink !== undefined) {
+		set.donationLink = ps.donationLink;
+		if (set.donationLink && !/^https?:\/\//i.test(set.donationLink)) {
+			set.donationLink = `https://${set.donationLink}`;
+		}
 	}
 
 	await db.transaction(async (transactionalEntityManager) => {

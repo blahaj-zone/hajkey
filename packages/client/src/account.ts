@@ -1,6 +1,5 @@
 import { defineAsyncComponent, reactive } from "vue";
-import * as misskey from "calckey-js";
-import { showSuspendedDialog } from "./scripts/show-suspended-dialog";
+import * as misskey from "iceshrimp-js";
 import { i18n } from "./i18n";
 import { del, get, set } from "@/scripts/idb-proxy";
 import { apiUrl } from "@/config";
@@ -163,7 +162,7 @@ export async function openAccountMenu(
 			{
 				done: (res) => {
 					addAccount(res.id, res.i);
-					success();
+					switchAccountWithToken(res.i);
 				},
 			},
 			"closed",

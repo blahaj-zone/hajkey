@@ -49,7 +49,7 @@ const props = withDefaults(
 			title: "",
 			values: [],
 		},
-	}
+	},
 );
 
 let values: string = $ref(props.value.values.join("\n"));
@@ -61,6 +61,6 @@ watch(
 	},
 	{
 		deep: true,
-	}
+	},
 );
 </script>

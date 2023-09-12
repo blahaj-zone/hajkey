@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import { v4 as uuid } from "uuid";
 
 const props = defineProps<{
@@ -90,23 +90,23 @@ const props = defineProps<{
 	meta: any;
 }>();
 
-let viewBoxX: number = $ref(50);
-let viewBoxY: number = $ref(30);
-let stats: any[] = $ref([]);
+const viewBoxX: number = $ref(50);
+const viewBoxY: number = $ref(30);
+const stats: any[] = $ref([]);
 const cpuGradientId = uuid();
 const cpuMaskId = uuid();
 const memGradientId = uuid();
 const memMaskId = uuid();
-let cpuPolylinePoints: string = $ref("");
-let memPolylinePoints: string = $ref("");
-let cpuPolygonPoints: string = $ref("");
-let memPolygonPoints: string = $ref("");
-let cpuHeadX: any = $ref(null);
-let cpuHeadY: any = $ref(null);
-let memHeadX: any = $ref(null);
-let memHeadY: any = $ref(null);
-let cpuP: string = $ref("");
-let memP: string = $ref("");
+let cpuPolylinePoints: string = $ref(""),
+	memPolylinePoints: string = $ref(""),
+	cpuPolygonPoints: string = $ref(""),
+	memPolygonPoints: string = $ref(""),
+	cpuHeadX: any = $ref(null),
+	cpuHeadY: any = $ref(null),
+	memHeadX: any = $ref(null),
+	memHeadY: any = $ref(null),
+	cpuP: string = $ref(""),
+	memP: string = $ref("");
 
 onMounted(() => {
 	props.connection.on("stats", onStats);
@@ -125,13 +125,13 @@ function onStats(connStats) {
 	stats.push(connStats);
 	if (stats.length > 50) stats.shift();
 
-	let cpuPolylinePointsStats = stats.map((s, i) => [
+	const cpuPolylinePointsStats = stats.map((s, i) => [
 		viewBoxX - (stats.length - 1 - i),
 		(1 - s.cpu) * viewBoxY,
 	]);
-	let memPolylinePointsStats = stats.map((s, i) => [
+	const memPolylinePointsStats = stats.map((s, i) => [
 		viewBoxX - (stats.length - 1 - i),
-		(1 - s.mem.active / props.meta.mem.total) * viewBoxY,
+		(1 - s.mem.active / s.mem.total) * viewBoxY,
 	]);
 	cpuPolylinePoints = cpuPolylinePointsStats
 		.map((xy) => `${xy[0]},${xy[1]}`)
@@ -153,7 +153,7 @@ function onStats(connStats) {
 	memHeadY = memPolylinePointsStats[memPolylinePointsStats.length - 1][1];
 
 	cpuP = (connStats.cpu * 100).toFixed(0);
-	memP = ((connStats.mem.active / props.meta.mem.total) * 100).toFixed(0);
+	memP = ((connStats.mem.active / connStats.mem.total) * 100).toFixed(0);
 }
 
 function onStatsLog(statsLog) {

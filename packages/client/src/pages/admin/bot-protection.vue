@@ -85,7 +85,7 @@ import { fetchInstance } from "@/instance";
 import { i18n } from "@/i18n";
 
 const MkCaptcha = defineAsyncComponent(
-	() => import("@/components/MkCaptcha.vue")
+	() => import("@/components/MkCaptcha.vue"),
 );
 
 let provider = $ref(null);

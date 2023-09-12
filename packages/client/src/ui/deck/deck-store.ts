@@ -1,6 +1,6 @@
 import { throttle } from "throttle-debounce";
 import { markRaw } from "vue";
-import { notificationTypes } from "calckey-js";
+import { notificationTypes } from "iceshrimp-js";
 import { Storage } from "../../pizzax";
 import { i18n } from "@/i18n";
 import { api } from "@/os";
@@ -20,6 +20,7 @@ export type Column = {
 		| "notifications"
 		| "tl"
 		| "antenna"
+		| "channel"
 		| "list"
 		| "mentions"
 		| "direct";
@@ -29,9 +30,10 @@ export type Column = {
 	active?: boolean;
 	flexible?: boolean;
 	antennaId?: string;
+	channelId?: string;
 	listId?: string;
 	includingTypes?: typeof notificationTypes[number][];
-	tl?: "home" | "local" | "social" | "global";
+	tl?: "home" | "local" | "social" | "recommended" | "global";
 };
 
 export const deckStore = markRaw(

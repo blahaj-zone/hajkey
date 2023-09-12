@@ -15,8 +15,13 @@
 					class="_card announcement"
 				>
 					<div class="_title">
-						<span v-if="$i && !announcement.isRead">🆕 </span
-						>{{ announcement.title }}
+						<span v-if="$i && !announcement.isRead">🆕 </span>
+						<h3>{{ announcement.title }}</h3>
+						<MkTime :time="announcement.createdAt" />
+						<div v-if="announcement.updatedAt">
+							{{ i18n.ts.updatedAt }}:
+							<MkTime :time="announcement.createdAt" />
+						</div>
 					</div>
 					<div class="_content">
 						<Mfm :text="announcement.text" />
@@ -74,6 +79,10 @@ definePageMetadata({
 	> .announcement {
 		&:not(:last-child) {
 			margin-bottom: var(--margin);
+		}
+
+		> ._title {
+			padding: 14px 32px !important;
 		}
 
 		> ._content {

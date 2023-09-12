@@ -1,6 +1,8 @@
 import si from "systeminformation";
 import Xev from "xev";
 import * as osUtils from "os-utils";
+import { fetchMeta } from "@/misc/fetch-meta.js";
+import meilisearch from "../db/meilisearch.js";
 
 const ev = new Xev();
 
@@ -19,17 +21,23 @@ export default function () {
 		ev.emit(`serverStatsLog:${x.id}`, log.slice(0, x.length || 50));
 	});
 
+	fetchMeta().then((meta) => {
+		if (!meta.enableServerMachineStats) return;
+	});
+
 	async function tick() {
 		const cpu = await cpuUsage();
 		const memStats = await mem();
 		const netStats = await net();
 		const fsStats = await fs();
+		const meilisearchStats = await meilisearchStatus();
 
 		const stats = {
 			cpu: roundCpu(cpu),
 			mem: {
 				used: round(memStats.used - memStats.buffers - memStats.cached),
 				active: round(memStats.active),
+				total: round(memStats.total),
 			},
 			net: {
 				rx: round(Math.max(0, netStats.rx_sec)),
@@ -39,6 +47,7 @@ export default function () {
 				r: round(Math.max(0, fsStats.rIO_sec ?? 0)),
 				w: round(Math.max(0, fsStats.wIO_sec ?? 0)),
 			},
+			meilisearch: meilisearchStats,
 		};
 		ev.emit("serverStats", stats);
 		log.unshift(stats);
@@ -76,4 +85,17 @@ async function net() {
 async function fs() {
 	const data = await si.disksIO().catch(() => ({ rIO_sec: 0, wIO_sec: 0 }));
 	return data || { rIO_sec: 0, wIO_sec: 0 };
+}
+
+// MEILI STAT
+async function meilisearchStatus() {
+	if (meilisearch) {
+		return meilisearch.serverStats();
+	} else {
+		return {
+			health: "unconfigured",
+			size: 0,
+			indexed_count: 0,
+		};
+	}
 }

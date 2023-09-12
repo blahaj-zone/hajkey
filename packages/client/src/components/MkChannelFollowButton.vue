@@ -34,7 +34,7 @@ const props = withDefaults(
 	}>(),
 	{
 		full: false,
-	}
+	},
 );
 
 const isFollowing = ref<boolean>(props.channel.isFollowing);

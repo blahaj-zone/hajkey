@@ -38,17 +38,16 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
 import XCalendar from "./activity.calendar.vue";
 import XChart from "./activity.chart.vue";
 import MkHeatmap from "@/components/MkHeatmap.vue";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import MkContainer from "@/components/MkContainer.vue";
 import { $i } from "@/account";
@@ -79,8 +78,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -88,7 +87,7 @@ const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const activity = ref(null);

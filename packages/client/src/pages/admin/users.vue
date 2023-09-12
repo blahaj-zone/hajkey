@@ -105,7 +105,7 @@
 								:key="user.id"
 								v-tooltip.mfm="
 									`Last posted: ${new Date(
-										user.updatedAt
+										user.updatedAt,
 									).toLocaleString()}`
 								"
 								class="user"
@@ -208,7 +208,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.users,
 		icon: "ph-users ph-bold ph-lg",
-	}))
+	})),
 );
 </script>
 

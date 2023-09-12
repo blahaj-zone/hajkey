@@ -1,23 +1,36 @@
 /*
  * Notification manager for SW
  */
-declare var self: ServiceWorkerGlobalScope;
-
-import { swLang } from "@/scripts/lang";
-import { cli } from "@/scripts/operations";
-import { pushNotificationDataMap } from "@/types";
-import getUserName from "@/scripts/get-user-name";
-import { I18n } from "@/scripts/i18n";
-import { getAccountFromId } from "@/scripts/get-account-from-id";
+import type { BadgeNames, PushNotificationDataMap } from "@/types";
 import { char2fileName } from "@/scripts/twemoji-base";
-import * as url from "@/scripts/url";
+import { cli } from "@/scripts/operations";
+import { getAccountFromId } from "@/scripts/get-account-from-id";
+import { swLang } from "@/scripts/lang";
+import { getUserName } from "@/scripts/get-user-name";
 
-const iconUrl = (name: string) =>
-	`/static-assets/notification-badges/${name}.png`;
+const closeNotificationsByTags = async (tags: string[]): Promise<void> => {
+	for (const n of (
+		await Promise.all(
+			tags.map((tag) => globalThis.registration.getNotifications({ tag })),
+		)
+	).flat()) {
+		n.close();
+	}
+};
+
+const iconUrl = (name: BadgeNames): string =>
+	`/static-assets/tabler-badges/${name}.png`;
+/* How to add a new badge:
+ * 1. Find the icon and download png from https://tabler-icons.io/
+ * 2. vips resize ~/Downloads/icon-name.png vipswork.png 0.4; vips scRGB2BW vipswork.png ~/icon-name.png"[compression=9,strip]"; rm vipswork.png;
+ * 3. mv ~/icon-name.png ~/misskey/packages/backend/assets/tabler-badges/
+ * 4. Add 'icon-name' to BadgeNames
+ * 5. Add `badge: iconUrl('icon-name'),`
+ */
 
 export async function createNotification<
-	K extends keyof pushNotificationDataMap,
->(data: pushNotificationDataMap[K]) {
+	K extends keyof PushNotificationDataMap,
+>(data: PushNotificationDataMap[K]): Promise<void> {
 	const n = await composeNotification(data);
 
 	if (n) {
@@ -28,11 +41,10 @@ export async function createNotification<
 	}
 }
 
-async function composeNotification<K extends keyof pushNotificationDataMap>(
-	data: pushNotificationDataMap[K],
+async function composeNotification(
+	data: PushNotificationDataMap[keyof PushNotificationDataMap],
 ): Promise<[string, NotificationOptions] | null> {
-	if (!swLang.i18n) swLang.fetchLocale();
-	const i18n = (await swLang.i18n) as I18n<any>;
+	const i18n = await (swLang.i18n ?? swLang.fetchLocale());
 	const { t } = i18n;
 	switch (data.type) {
 		/*
@@ -45,7 +57,7 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(
 		*/
 		case "notification":
 			switch (data.body.type) {
-				case "follow":
+				case "follow": {
 					// users/showの型定義をswos.apiへ当てはめるのが困難なのでapiFetch.requestを直接使用
 					const account = await getAccountFromId(data.userId);
 					if (!account) return null;
@@ -71,6 +83,7 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(
 								  ],
 						},
 					];
+				}
 
 				case "mention":
 					return [
@@ -157,44 +170,26 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(
 						},
 					];
 
-				case "reaction":
+				case "reaction": {
 					let reaction = data.body.reaction;
 					let badge: string | undefined;
 
 					if (reaction.startsWith(":")) {
 						// カスタム絵文字の場合
-						const customEmoji = data.body.note.emojis.find(
-							(x) => x.name === reaction.substr(1, reaction.length - 2),
-						);
-						if (customEmoji) {
-							if (reaction.includes("@")) {
-								reaction = `:${reaction.substr(1, reaction.indexOf("@") - 1)}:`;
-							}
-
-							const u = new URL(customEmoji.url);
-							if (u.href.startsWith(`${origin}/proxy/`)) {
-								// もう既にproxyっぽそうだったらsearchParams付けるだけ
-								u.searchParams.set("badge", "1");
-								badge = u.href;
-							} else {
-								const dummy = `${u.host}${u.pathname}`; // 拡張子がないとキャッシュしてくれないCDNがあるので
-								badge = `${origin}/proxy/${dummy}?${url.query({
-									url: u.href,
-									badge: "1",
-								})}`;
-							}
-						}
+						const name = reaction.substring(1, reaction.length - 1);
+						const badgeUrl = new URL(`/emoji/${name}.webp`, origin);
+						badgeUrl.searchParams.set("badge", "1");
+						badge = badgeUrl.href;
+						reaction = name.split("@")[0];
 					} else {
 						// Unicode絵文字の場合
 						badge = `/twemoji-badge/${char2fileName(reaction)}.png`;
 					}
 
 					if (
-						badge
-							? await fetch(badge)
-									.then((res) => res.status !== 200)
-									.catch(() => true)
-							: true
+						await fetch(badge)
+							.then((res) => res.status !== 200)
+							.catch(() => true)
 					) {
 						badge = iconUrl("plus");
 					}
@@ -214,6 +209,7 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(
 							],
 						},
 					];
+				}
 
 				case "pollVote":
 					return [
@@ -337,10 +333,9 @@ async function composeNotification<K extends keyof pushNotificationDataMap>(
 	}
 }
 
-export async function createEmptyNotification() {
+export async function createEmptyNotification(): Promise<void> {
 	return new Promise<void>(async (res) => {
-		if (!swLang.i18n) swLang.fetchLocale();
-		const i18n = (await swLang.i18n) as I18n<any>;
+		const i18n = await (swLang.i18n ?? swLang.fetchLocale());
 		const { t } = i18n;
 
 		await self.registration.showNotification(

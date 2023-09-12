@@ -53,6 +53,11 @@ export const paramDef = {
 		untilId: { type: "string", format: "misskey:id" },
 		sinceDate: { type: "integer" },
 		untilDate: { type: "integer" },
+		withReplies: {
+			type: "boolean",
+			default: false,
+			description: "Show replies in the timeline",
+		},
 	},
 	required: [],
 } as const;
@@ -87,7 +92,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
 		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
 
-	generateRepliesQuery(query, user);
+	generateRepliesQuery(query, ps.withReplies, user);
 	if (user) {
 		generateMutedUserQuery(query, user);
 		generateMutedNoteQuery(query, user);

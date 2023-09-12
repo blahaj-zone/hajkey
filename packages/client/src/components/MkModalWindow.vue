@@ -11,23 +11,24 @@
 				ref="rootEl"
 				class="ebkgoccj"
 				:style="{
-					width: `${width}px`,
+					width: `${props.width}px`,
 					height: scroll
 						? height
-							? `${height}px`
+							? `${props.height}px`
 							: null
 						: height
-						? `min(${height}px, 100%)`
+						? `min(${props.height}px, 100%)`
 						: '100%',
 				}"
-				@keydown="onKeydown"
 				tabindex="-1"
 			>
 				<div ref="headerEl" class="header">
 					<button
-						v-if="withOkButton"
+						v-if="props.withOkButton"
+						:aria-label="i18n.t('close')"
 						class="_button"
 						@click="$emit('close')"
+						v-tooltip="i18n.ts.close"
 					>
 						<i class="ph-x ph-bold ph-lg"></i>
 					</button>
@@ -35,16 +36,18 @@
 						<slot name="header"></slot>
 					</span>
 					<button
-						v-if="!withOkButton"
+						v-if="!props.withOkButton"
+						:aria-label="i18n.t('close')"
 						class="_button"
 						@click="$emit('close')"
 					>
 						<i class="ph-x ph-bold ph-lg"></i>
 					</button>
 					<button
-						v-if="withOkButton"
+						v-if="props.withOkButton"
+						:aria-label="i18n.t('ok')"
 						class="_button"
-						:disabled="okButtonDisabled"
+						:disabled="props.okButtonDisabled"
 						@click="$emit('ok')"
 					>
 						<i class="ph-check ph-bold ph-lg"></i>
@@ -61,6 +64,7 @@
 <script lang="ts" setup>
 import { FocusTrap } from "focus-trap-vue";
 import MkModal from "./MkModal.vue";
+import { i18n } from "@/i18n";
 
 const props = withDefaults(
 	defineProps<{
@@ -76,7 +80,7 @@ const props = withDefaults(
 		width: 400,
 		height: null,
 		scroll: true,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -90,8 +94,8 @@ let modal = $shallowRef<InstanceType<typeof MkModal>>();
 let rootEl = $shallowRef<HTMLElement>();
 let headerEl = $shallowRef<HTMLElement>();
 
-const close = () => {
-	modal.close();
+const close = (ev) => {
+	modal?.close(ev);
 };
 
 const onBgClick = () => {

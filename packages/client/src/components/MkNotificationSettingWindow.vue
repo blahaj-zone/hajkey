@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import { notificationTypes } from "calckey-js";
+import { notificationTypes } from "iceshrimp-js";
 import MkSwitch from "./form/switch.vue";
 import MkInfo from "./MkInfo.vue";
 import MkButton from "./MkButton.vue";
@@ -60,7 +60,7 @@ const props = withDefaults(
 	{
 		includingTypes: () => [],
 		showGlobalToggle: true,
-	}
+	},
 );
 
 let includingTypes = $computed(() => props.includingTypes || []);
@@ -70,7 +70,7 @@ const dialog = $ref<InstanceType<typeof XModalWindow>>();
 let typesMap = $ref<Record<(typeof notificationTypes)[number], boolean>>({});
 let useGlobalSetting = $ref(
 	(includingTypes === null || includingTypes.length === 0) &&
-		props.showGlobalToggle
+		props.showGlobalToggle,
 );
 
 for (const ntype of notificationTypes) {

@@ -24,7 +24,8 @@
 
 <script lang="ts" setup>
 import MkChannelPreview from "@/components/MkChannelPreview.vue";
-import MkPagination, { Paging } from "@/components/MkPagination.vue";
+import type { Paging } from "@/components/MkPagination.vue";
+import MkPagination from "@/components/MkPagination.vue";
 import { i18n } from "@/i18n";
 
 const props = withDefaults(
@@ -35,7 +36,7 @@ const props = withDefaults(
 	}>(),
 	{
 		extractor: (item) => item,
-	}
+	},
 );
 </script>
 

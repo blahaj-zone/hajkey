@@ -149,7 +149,7 @@
 		</template>
 
 		<template #default="{ items: notes }">
-			<div class="giivymft" :class="{ noGap }">
+			<div class="giivymft" :class="{ noGap }" ref="tlEl">
 				<XList
 					ref="notes"
 					v-slot="{ item: note }"
@@ -157,7 +157,6 @@
 					:direction="pagination.reversed ? 'up' : 'down'"
 					:reversed="pagination.reversed"
 					:no-gap="noGap"
-					:ad="true"
 					class="notes"
 				>
 					<XNote
@@ -178,12 +177,9 @@ import XNote from "@/components/MkNote.vue";
 import XList from "@/components/MkDateSeparatedList.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import { i18n } from "@/i18n";
-import FormSwitch from "@/components/form/switch.vue";
-import FormRadios from "@/components/form/radios.vue";
-import FormFolder from "@/components/form/folder.vue";
-import { defaultStore } from "@/store";
-import { Note } from "calckey-js/built/entities";
-import { $i } from "@/account";
+import { scroll } from "@/scripts/scroll";
+
+const tlEl = ref<HTMLElement>();
 
 const props = defineProps<{
 	pagination: Paging;
@@ -192,114 +188,13 @@ const props = defineProps<{
 
 const pagingComponent = ref<InstanceType<typeof MkPagination>>();
 
-const timer = ref<NodeJS.Timeout>();
-const refresh = () => {
-	if (timer.value) clearTimeout(timer.value);
-	timer.value = setTimeout(update, 2500);
-};
-
-const update = () => {
-	timer.value = undefined;
-	pagingComponent.value?.runFilter();
-};
-
-const showTimelineFilter = $computed(
-	defaultStore.makeGetterSetter("showTimelineFilter")
-);
-const showMentions = $computed(
-	defaultStore.makeGetterSetter("filterShowMentions")
-);
-const showReplies = $computed(
-	defaultStore.makeGetterSetter("filterShowReplies")
-);
-const showPosts = $computed(defaultStore.makeGetterSetter("filterShowPosts"));
-const showBoosts = $computed(defaultStore.makeGetterSetter("filterShowBoosts"));
-const showQuotes = $computed(defaultStore.makeGetterSetter("filterShowQuotes"));
-const showPolls = $computed(defaultStore.makeGetterSetter("filterShowPolls"));
-const showCws = $computed(defaultStore.makeGetterSetter("filterShowCws"));
-const showNonCws = $computed(defaultStore.makeGetterSetter("filterShowNonCws"));
-const displayParent = $computed(
-	defaultStore.makeGetterSetter("filterDisplayParent")
-);
-const displayPreviews = $computed(
-	defaultStore.makeGetterSetter("filterDisplayPreviews")
-);
-const displayMedia = $computed(
-	defaultStore.makeGetterSetter("filterDisplayMedia")
-);
-const hideDuplicates = $computed(
-	defaultStore.makeGetterSetter("filterHideDuplicates")
-);
-
-let duplicates: Record<string, boolean> = {};
-const visibleCheck = (item: Note | false) => {
-	if (item === false) {
-		duplicates = {};
-		return;
-	}
-
-	const appearNoteId = item.renoteId ? item.renoteId : item.id;
-
-	const mentions = [
-		...(item.mentions ?? []),
-		...(item.renote?.mentions ?? []),
-		...(item.reply?.mentions ?? []),
-	];
-
-	const mentioned = mentions.some((userId) => userId === $i?.id);
-	const isReply = !!item.replyId;
-	const isBoost = !!item.renoteId && !item.text;
-	const isQuote = !!item.renoteId && !!item.text;
-	const isPoll = !!item.poll;
-	const hasCw = !!(item.cw || item.renote?.cw || item.reply?.cw);
-	const isPost = !isReply && !isBoost && !isQuote && !isPoll;
-	const isDuplicate = duplicates[appearNoteId];
-	duplicates[appearNoteId] = true;
-
-	if (isDuplicate && hideDuplicates.value) {
-		return false;
-	}
-
-	let hide = false;
-	let force = false;
-
-	const test = (
-		check: boolean,
-		condition: "always" | "show" | "hide" | "never"
-	): boolean => {
-		if (!check) {
-			return true;
-		}
-		switch (condition) {
-			case "always":
-				force = true;
-				break;
-			case "hide":
-				hide = true;
-				break;
-			case "never":
-				return false;
-		}
-		return true;
-	};
-
-	if (!test(mentioned, showMentions)) return false;
-	if (!test(isPost, showPosts)) return false;
-	if (!test(isReply, showReplies)) return false;
-	if (!test(isBoost, showBoosts)) return false;
-	if (!test(isQuote, showQuotes)) return false;
-	if (!test(isPoll, showPolls)) return false;
-	if (!test(hasCw, showCws)) return false;
-	if (!test(!hasCw, showNonCws)) return false;
-
-	if (force) {
-		return true;
-	}
-	return !hide;
-};
+function scrollTop() {
+	scroll(tlEl.value, { top: 0, behavior: "smooth" });
+}
 
 defineExpose({
 	pagingComponent,
+	scrollTop,
 });
 </script>
 

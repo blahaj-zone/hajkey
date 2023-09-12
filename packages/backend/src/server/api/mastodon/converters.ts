@@ -1,9 +1,11 @@
-import { Entity } from "@calckey/megalodon";
+import { Entity } from "megalodon";
 import { convertId, IdType } from "../index.js";
 
 function simpleConvert(data: any) {
-	data.id = convertId(data.id, IdType.MastodonId);
-	return data;
+	// copy the object to bypass weird pass by reference bugs
+	const result = Object.assign({}, data);
+	result.id = convertId(data.id, IdType.MastodonId);
+	return result;
 }
 
 export function convertAccount(account: Entity.Account) {
@@ -20,6 +22,9 @@ export function convertFilter(filter: Entity.Filter) {
 }
 export function convertList(list: Entity.List) {
 	return simpleConvert(list);
+}
+export function convertFeaturedTag(tag: Entity.FeaturedTag) {
+	return simpleConvert(tag);
 }
 
 export function convertNotification(notification: Entity.Notification) {

@@ -57,8 +57,7 @@ export const paramDef = {
 } as const;
 
 export default define(meta, paramDef, async (ps, me) => {
-	// if already subscribed
-	const exist = await SwSubscriptions.findOneBy({
+	const subscription = await SwSubscriptions.findOneBy({
 		userId: me.id,
 		endpoint: ps.endpoint,
 		auth: ps.auth,
@@ -67,13 +66,14 @@ export default define(meta, paramDef, async (ps, me) => {
 
 	const instance = await fetchMeta(true);
 
-	if (exist != null) {
+	// if already subscribed
+	if (subscription != null) {
 		return {
 			state: "already-subscribed" as const,
 			key: instance.swPublicKey,
 			userId: me.id,
-			endpoint: exist.endpoint,
-			sendReadMessage: exist.sendReadMessage,
+			endpoint: subscription.endpoint,
+			sendReadMessage: subscription.sendReadMessage,
 		};
 	}
 

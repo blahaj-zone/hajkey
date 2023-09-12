@@ -25,9 +25,8 @@ import { readNotification } from "../common/read-notification.js";
 import channels from "./channels/index.js";
 import type Channel from "./channel.js";
 import type { StreamEventEmitter, StreamMessages } from "./types.js";
-import { Converter } from "@calckey/megalodon";
+import { Converter } from "megalodon";
 import { getClient } from "../mastodon/ApiMastodonCompatibleService.js";
-import { toTextWithReaction } from "../mastodon/endpoints/timeline.js";
 
 /**
  * Main stream connection
@@ -46,7 +45,7 @@ export default class Connection {
 	private channels: Channel[] = [];
 	private subscribingNotes: Map<string, number> = new Map();
 	private cachedNotes: Packed<"Note">[] = [];
-	private isMastodonCompatible: boolean = false;
+	private isMastodonCompatible = false;
 	private host: string;
 	private accessToken: string;
 	private currentSubscribe: string[][] = [];
@@ -248,7 +247,7 @@ export default class Connection {
 
 		for (const obj of objs) {
 			const { type, body } = obj;
-			//console.log(type, body);
+			// console.log(type, body);
 			switch (type) {
 				case "readNotification":
 					this.onReadNotification(body);
@@ -394,19 +393,13 @@ export default class Connection {
 	 * クライアントにメッセージ送信
 	 */
 	public sendMessageToWs(type: string, payload: any) {
-		//console.log(payload, this.isMastodonCompatible);
 		if (this.isMastodonCompatible) {
 			if (payload.type === "note") {
 				this.wsConnection.send(
 					JSON.stringify({
 						stream: [payload.id],
 						event: "update",
-						payload: JSON.stringify(
-							toTextWithReaction(
-								[Converter.note(payload.body, this.host)],
-								this.host,
-							)[0],
-						),
+						payload: JSON.stringify(Converter.note(payload.body, this.host)),
 					}),
 				);
 				this.onSubscribeNote({
@@ -416,7 +409,7 @@ export default class Connection {
 				// reaction
 				const client = getClient(this.host, this.accessToken);
 				client.getStatus(payload.id).then((data) => {
-					const newPost = toTextWithReaction([data.data], this.host);
+					const newPost = [data.data];
 					const targetPost = newPost[0];
 					for (const stream of this.currentSubscribe) {
 						this.wsConnection.send(
@@ -443,10 +436,6 @@ export default class Connection {
 				if (payload.id === "user") {
 					const body = Converter.notification(payload.body, this.host);
 					if (body.type === "reaction") body.type = "favourite";
-					body.status = toTextWithReaction(
-						body.status ? [body.status] : [],
-						"",
-					)[0];
 					this.wsConnection.send(
 						JSON.stringify({
 							stream: ["user"],

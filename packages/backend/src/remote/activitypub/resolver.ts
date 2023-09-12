@@ -23,6 +23,7 @@ import renderCreate from "@/remote/activitypub/renderer/create.js";
 import { renderActivity } from "@/remote/activitypub/renderer/index.js";
 import renderFollow from "@/remote/activitypub/renderer/follow.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
+import { apLogger } from "@/remote/activitypub/logger.js";
 
 export default class Resolver {
 	private history: Set<string>;
@@ -35,6 +36,15 @@ export default class Resolver {
 		if (user) {
 			this.user = user;
 		}
+	}
+
+	public setUser(user) {
+		this.user = user;
+	}
+
+	public reset(): Resolver {
+		this.history = new Set();
+		return this;
 	}
 
 	public getHistory(): string[] {
@@ -59,14 +69,19 @@ export default class Resolver {
 		}
 
 		if (typeof value !== "string") {
+			apLogger.debug("Object to resolve is not a string");
 			if (typeof value.id !== "undefined") {
 				const host = extractDbHost(getApId(value));
 				if (await shouldBlockInstance(host)) {
 					throw new Error("instance is blocked");
 				}
 			}
+			apLogger.debug("Returning existing object:");
+			apLogger.debug(JSON.stringify(value, null, 2));
 			return value;
 		}
+
+		apLogger.debug(`Resolving: ${value}`);
 
 		if (value.includes("#")) {
 			// URLs with fragment parts cannot be resolved correctly because
@@ -104,6 +119,9 @@ export default class Resolver {
 		if (!this.user) {
 			this.user = await getInstanceActor();
 		}
+
+		apLogger.debug("Getting object from remote, authenticated as user:");
+		apLogger.debug(JSON.stringify(this.user, null, 2));
 
 		const object = (
 			this.user

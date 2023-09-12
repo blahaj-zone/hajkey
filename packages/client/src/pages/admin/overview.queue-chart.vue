@@ -40,7 +40,7 @@ Chart.register(
 	Title,
 	Tooltip,
 	SubTitle,
-	Filler
+	Filler,
 );
 
 const props = defineProps<{
@@ -64,7 +64,7 @@ const gridColor = defaultStore.state.darkMode
 
 // フォントカラー
 Chart.defaults.color = getComputedStyle(
-	document.documentElement
+	document.documentElement,
 ).getPropertyValue("--fg");
 
 const { handler: externalTooltipHandler } = useChartTooltip();
@@ -74,7 +74,7 @@ let chartInstance: Chart;
 const onStats = (stats) => {
 	chartInstance.data.labels.push("");
 	chartInstance.data.datasets[0].data.push(
-		stats[props.domain].activeSincePrevTick
+		stats[props.domain].activeSincePrevTick,
 	);
 	chartInstance.data.datasets[1].data.push(stats[props.domain].active);
 	chartInstance.data.datasets[2].data.push(stats[props.domain].waiting);
@@ -93,7 +93,7 @@ const onStatsLog = (statsLog) => {
 	for (const stats of [...statsLog].reverse()) {
 		chartInstance.data.labels.push("");
 		chartInstance.data.datasets[0].data.push(
-			stats[props.domain].activeSincePrevTick
+			stats[props.domain].activeSincePrevTick,
 		);
 		chartInstance.data.datasets[1].data.push(stats[props.domain].active);
 		chartInstance.data.datasets[2].data.push(stats[props.domain].waiting);

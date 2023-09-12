@@ -1,4 +1,4 @@
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import Router from "@koa/router";
 import { koaBody } from "koa-body";
 import { getClient } from "../ApiMastodonCompatibleService.js";

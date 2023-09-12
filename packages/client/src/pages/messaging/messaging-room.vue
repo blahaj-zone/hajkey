@@ -28,6 +28,7 @@
 							#default="{ items: messages, fetching: pFetching }"
 						>
 							<XList
+								aria-live="polite"
 								v-if="messages.length > 0"
 								v-slot="{ item: message }"
 								:class="{
@@ -48,7 +49,11 @@
 					</MkPagination>
 				</div>
 				<footer>
-					<div v-if="typers.length > 0" class="typers">
+					<div
+						v-if="typers.length > 0"
+						class="typers"
+						aria-live="polite"
+					>
 						<I18n
 							:src="i18n.ts.typingUsers"
 							text-tag="span"
@@ -93,8 +98,8 @@
 
 <script lang="ts" setup>
 import { computed, watch, onMounted, nextTick, onBeforeUnmount } from "vue";
-import * as Misskey from "calckey-js";
-import * as Acct from "calckey-js/built/acct";
+import * as Misskey from "iceshrimp-js";
+import * as Acct from "iceshrimp-js/built/acct";
 import XMessage from "./messaging-room.message.vue";
 import XForm from "./messaging-room.form.vue";
 import XList from "@/components/MkDateSeparatedList.vue";
@@ -290,7 +295,7 @@ function onDeleted(id) {
 	const msg = pagingComponent.items.find((m) => m.id === id);
 	if (msg) {
 		pagingComponent.items = pagingComponent.items.filter(
-			(m) => m.id !== msg.id
+			(m) => m.id !== msg.id,
 		);
 	}
 }
@@ -334,7 +339,7 @@ onMounted(() => {
 		computed(() => ({
 			title: group != null ? group.name : user?.name,
 			icon: "ph-chats-teardrop-bold ph-lg",
-		}))
+		})),
 	);
 });
 

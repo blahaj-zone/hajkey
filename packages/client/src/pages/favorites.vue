@@ -20,7 +20,6 @@
 						:items="items"
 						:direction="'down'"
 						:no-gap="false"
-						:ad="false"
 					>
 						<XNote
 							:key="item.id"

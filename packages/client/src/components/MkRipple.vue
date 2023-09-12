@@ -85,7 +85,7 @@ const props = withDefaults(
 	}>(),
 	{
 		particle: true,
-	}
+	},
 );
 
 const emit = defineEmits<{

@@ -3,17 +3,23 @@ import type {
 	CacheableUser,
 	ILocalUser,
 } from "@/models/entities/user.js";
-import { User } from "@/models/entities/user.js";
 import { Users } from "@/models/index.js";
 import { Cache } from "@/misc/cache.js";
-import { subscriber } from "@/db/redis.js";
+import { redisClient, subscriber } from "@/db/redis.js";
 
-export const userByIdCache = new Cache<CacheableUser>(Infinity);
+export const userByIdCache = new Cache<CacheableUser>("userById", 60 * 30);
 export const localUserByNativeTokenCache = new Cache<CacheableLocalUser | null>(
-	Infinity,
+	"localUserByNativeToken",
+	60 * 30,
 );
-export const localUserByIdCache = new Cache<CacheableLocalUser>(Infinity);
-export const uriPersonCache = new Cache<CacheableUser | null>(Infinity);
+export const localUserByIdCache = new Cache<CacheableLocalUser>(
+	"localUserByIdCache",
+	60 * 30,
+);
+export const uriPersonCache = new Cache<CacheableUser | null>(
+	"uriPerson",
+	60 * 30,
+);
 
 subscriber.on("message", async (_, data) => {
 	const obj = JSON.parse(data);
@@ -22,13 +28,12 @@ subscriber.on("message", async (_, data) => {
 		const { type, body } = obj.message;
 		switch (type) {
 			case "localUserUpdated": {
-				userByIdCache.delete(body.id);
-				localUserByIdCache.delete(body.id);
-				localUserByNativeTokenCache.cache.forEach((v, k) => {
-					if (v.value?.id === body.id) {
-						localUserByNativeTokenCache.delete(k);
-					}
-				});
+				await userByIdCache.delete(body.id);
+				await localUserByIdCache.delete(body.id);
+				const toDelete = Array.from(await localUserByNativeTokenCache.getAll())
+					.filter((v) => v[1]?.id === body.id)
+					.map((v) => v[0]);
+				await localUserByNativeTokenCache.delete(...toDelete);
 				break;
 			}
 			case "userChangeSuspendedState":
@@ -36,15 +41,17 @@ subscriber.on("message", async (_, data) => {
 			case "userChangeModeratorState":
 			case "remoteUserUpdated": {
 				const user = await Users.findOneByOrFail({ id: body.id });
-				userByIdCache.set(user.id, user);
-				for (const [k, v] of uriPersonCache.cache.entries()) {
-					if (v.value?.id === user.id) {
-						uriPersonCache.set(k, user);
+				await userByIdCache.set(user.id, user);
+				const trans = redisClient.multi();
+				for (const [k, v] of (await uriPersonCache.getAll()).entries()) {
+					if (v?.id === user.id) {
+						await uriPersonCache.set(k, user, trans);
 					}
 				}
+				await trans.exec();
 				if (Users.isLocalUser(user)) {
-					localUserByNativeTokenCache.set(user.token, user);
-					localUserByIdCache.set(user.id, user);
+					await localUserByNativeTokenCache.set(user.token, user);
+					await localUserByIdCache.set(user.id, user);
 				}
 				break;
 			}
@@ -52,8 +59,8 @@ subscriber.on("message", async (_, data) => {
 				const user = (await Users.findOneByOrFail({
 					id: body.id,
 				})) as ILocalUser;
-				localUserByNativeTokenCache.delete(body.oldToken);
-				localUserByNativeTokenCache.set(body.newToken, user);
+				await localUserByNativeTokenCache.delete(body.oldToken);
+				await localUserByNativeTokenCache.set(body.newToken, user);
 				break;
 			}
 			default:

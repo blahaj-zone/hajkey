@@ -55,33 +55,33 @@ describe("fromHtml", () => {
 
 	it("link with different text", () => {
 		assert.deepStrictEqual(
-			fromHtml('<p>a <a href="https://calckey.org/b">c</a> d</p>'),
-			"a [c](https://calckey.org/b) d",
+			fromHtml('<p>a <a href="https://joinfirefish.org/b">c</a> d</p>'),
+			"a [c](https://joinfirefish.org/b) d",
 		);
 	});
 
 	it("link with different text, but not encoded", () => {
 		assert.deepStrictEqual(
-			fromHtml('<p>a <a href="https://calckey.org/ä">c</a> d</p>'),
-			"a [c](<https://calckey.org/ä>) d",
+			fromHtml('<p>a <a href="https://joinfirefish.org/ä">c</a> d</p>'),
+			"a [c](<https://joinfirefish.org/ä>) d",
 		);
 	});
 
 	it("link with same text", () => {
 		assert.deepStrictEqual(
 			fromHtml(
-				'<p>a <a href="https://calckey.org/b">https://calckey.org/b</a> d</p>',
+				'<p>a <a href="https://joinfirefish.org/b">https://joinfirefish.org/b</a> d</p>',
 			),
-			"a https://calckey.org/b d",
+			"a https://joinfirefish.org/b d",
 		);
 	});
 
 	it("link with same text, but not encoded", () => {
 		assert.deepStrictEqual(
 			fromHtml(
-				'<p>a <a href="https://calckey.org/ä">https://calckey.org/ä</a> d</p>',
+				'<p>a <a href="https://joinfirefish.org/ä">https://joinfirefish.org/ä</a> d</p>',
 			),
-			"a <https://calckey.org/ä> d",
+			"a <https://joinfirefish.org/ä> d",
 		);
 	});
 
@@ -98,8 +98,8 @@ describe("fromHtml", () => {
 
 	it("link without text", () => {
 		assert.deepStrictEqual(
-			fromHtml('<p>a <a href="https://calckey.org/b"></a> d</p>'),
-			"a https://calckey.org/b d",
+			fromHtml('<p>a <a href="https://joinfirefish.org/b"></a> d</p>'),
+			"a https://joinfirefish.org/b d",
 		);
 	});
 
@@ -110,15 +110,15 @@ describe("fromHtml", () => {
 	it("mention", () => {
 		assert.deepStrictEqual(
 			fromHtml(
-				'<p>a <a href="https://calckey.org/@user" class="u-url mention">@user</a> d</p>',
+				'<p>a <a href="https://joinfirefish.org/@user" class="u-url mention">@user</a> d</p>',
 			),
-			"a @user@calckey.org d",
+			"a @user@joinfirefish.org d",
 		);
 	});
 
 	it("hashtag", () => {
 		assert.deepStrictEqual(
-			fromHtml('<p>a <a href="https://calckey.org/tags/a">#a</a> d</p>', [
+			fromHtml('<p>a <a href="https://joinfirefish.org/tags/a">#a</a> d</p>', [
 				"#a",
 			]),
 			"a #a d",

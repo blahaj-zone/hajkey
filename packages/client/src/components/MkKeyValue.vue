@@ -32,7 +32,7 @@ const props = withDefaults(
 	{
 		copy: null,
 		oneline: false,
-	}
+	},
 );
 
 const copy_ = () => {

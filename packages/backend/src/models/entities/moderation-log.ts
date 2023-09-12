@@ -14,8 +14,8 @@ export class ModerationLog {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the ModerationLog.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the ModerationLog.",
 	})
 	public createdAt: Date;
 
@@ -23,17 +23,17 @@ export class ModerationLog {
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
 	})
 	public type: string;
 
-	@Column('jsonb')
+	@Column("jsonb")
 	public info: Record<string, any>;
 }

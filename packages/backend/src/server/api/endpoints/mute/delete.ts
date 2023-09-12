@@ -56,18 +56,18 @@ export default define(meta, paramDef, async (ps, user) => {
 	});
 
 	// Check not muting
-	const exist = await Mutings.findOneBy({
+	const muting = await Mutings.findOneBy({
 		muterId: muter.id,
 		muteeId: mutee.id,
 	});
 
-	if (exist == null) {
+	if (muting == null) {
 		throw new ApiError(meta.errors.notMuting);
 	}
 
 	// Delete mute
 	await Mutings.delete({
-		id: exist.id,
+		id: muting.id,
 	});
 
 	publishUserEvent(user.id, "unmute", mutee);

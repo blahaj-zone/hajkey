@@ -41,7 +41,7 @@
 					<MkInfo v-if="updateAvailable" warn class="info"
 						>{{ i18n.ts.updateAvailable }}
 						<a
-							href="https://codeberg.org/calckey/calckey/releases"
+							href="https://codeberg.org/firefish/firefish/releases"
 							target="_bank"
 							class="_link"
 							>{{ i18n.ts.check }}</a
@@ -201,7 +201,7 @@ const menuDef = $computed(() => [
 				active: currentPage?.route.name === "federation",
 			},
 			{
-				icon: "ph-clipboard-text ph-bold ph-lg",
+				icon: "ph-queue ph-bold ph-lg",
 				text: i18n.ts.jobQueue,
 				to: "/admin/queue",
 				active: currentPage?.route.name === "queue",
@@ -217,12 +217,6 @@ const menuDef = $computed(() => [
 				text: i18n.ts.announcements,
 				to: "/admin/announcements",
 				active: currentPage?.route.name === "announcements",
-			},
-			{
-				icon: "ph-money ph-bold ph-lg",
-				text: i18n.ts.ads,
-				to: "/admin/ads",
-				active: currentPage?.route.name === "ads",
 			},
 			{
 				icon: "ph-warning-circle ph-bold ph-lg",
@@ -264,7 +258,7 @@ const menuDef = $computed(() => [
 							active: currentPage?.route.name === "security",
 						},
 						{
-							icon: "ph-flow-arrow ph-bold ph-lg",
+							icon: "ph-arrows-merge ph-bold ph-lg",
 							text: i18n.ts.relays,
 							to: "/admin/relays",
 							active: currentPage?.route.name === "relays",
@@ -379,7 +373,7 @@ async function lookupNote() {
 		"notes/show",
 		q.startsWith("http://") || q.startsWith("https://")
 			? { url: q.trim() }
-			: { noteId: q.trim() }
+			: { noteId: q.trim() },
 	)
 		.then((note) => {
 			os.pageWindow(`/notes/${note.id}`);
@@ -426,7 +420,7 @@ const lookup = (ev) => {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 };
 

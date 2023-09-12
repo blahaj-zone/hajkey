@@ -6,7 +6,7 @@ import { ApiError } from "../../../error.js";
 import rndstr from "rndstr";
 import { publishBroadcastStream } from "@/services/stream.js";
 import { db } from "@/db/postgre.js";
-import { type Size, getEmojiSize } from "@/misc/emoji-meta.js";
+import { getEmojiSize } from "@/misc/emoji-meta.js";
 
 export const meta = {
 	tags: ["admin"],
@@ -40,12 +40,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		? file.name.split(".")[0]
 		: `_${rndstr("a-z0-9", 8)}_`;
 
-	let size: Size = { width: 0, height: 0 };
-	try {
-		size = await getEmojiSize(file.url);
-	} catch {
-		/* skip if any error happens */
-	}
+	const size = await getEmojiSize(file.url);
 
 	const emoji = await Emojis.insert({
 		id: genId(),

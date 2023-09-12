@@ -42,6 +42,6 @@ withDefaults(
 		value: {
 			name: "",
 		},
-	}
+	},
 );
 </script>

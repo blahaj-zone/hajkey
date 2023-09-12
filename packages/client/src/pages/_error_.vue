@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkButton from "@/components/MkButton.vue";
 import { version } from "@/config";
 import * as os from "@/os";
@@ -48,7 +48,7 @@ const props = withDefaults(
 	defineProps<{
 		error?: Error;
 	}>(),
-	{}
+	{},
 );
 
 let loaded = $ref(false);
@@ -67,7 +67,7 @@ os.api("meta", {
 	() => {
 		loaded = true;
 		serverIsDead = true;
-	}
+	},
 );
 
 function reload() {

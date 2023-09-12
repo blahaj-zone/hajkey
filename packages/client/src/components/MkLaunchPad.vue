@@ -29,7 +29,12 @@
 					>
 						<i class="icon" :class="item.icon"></i>
 						<div class="text">{{ item.text }}</div>
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</button>
@@ -41,7 +46,12 @@
 					>
 						<i class="icon" :class="item.icon"></i>
 						<div class="text">{{ item.text }}</div>
-						<span v-if="item.indicate" class="indicator"
+						<span
+							v-if="item.indicate"
+							class="indicator"
+							:class="{
+								animateIndicator: $store.state.animation,
+							}"
 							><i class="ph-circle ph-fill"></i
 						></span>
 					</MkA>
@@ -68,7 +78,7 @@ const props = withDefaults(
 	}>(),
 	{
 		anchor: () => ({ x: "right", y: "center" }),
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -163,12 +173,14 @@ function close() {
 				left: 32px;
 				color: var(--indicator);
 				font-size: 8px;
-				animation: blink 1s infinite;
 
 				@media (max-width: 500px) {
 					top: 16px;
 					left: 16px;
 				}
+			}
+
+			> .animateIndicator {
 			}
 		}
 	}

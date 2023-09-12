@@ -26,7 +26,7 @@ import { $i } from "@/account";
 import { stream } from "@/stream";
 
 const XStreamIndicator = defineAsyncComponent(
-	() => import("./stream-indicator.vue")
+	() => import("./stream-indicator.vue"),
 );
 const XUpload = defineAsyncComponent(() => import("./upload.vue"));
 
@@ -42,13 +42,13 @@ const onNotification = (notification) => {
 
 		popup(
 			defineAsyncComponent(
-				() => import("@/components/MkNotificationToast.vue")
+				() => import("@/components/MkNotificationToast.vue"),
 			),
 			{
 				notification,
 			},
 			{},
-			"closed"
+			"closed",
 		);
 	}
 

@@ -1,5 +1,7 @@
 packages:
  - 'packages/backend'
+ - 'packages/backend/native-utils'
  - 'packages/client'
  - 'packages/sw'
- - 'packages/calckey-js'
+ - 'packages/iceshrimp-js'
+ - 'packages/megalodon'

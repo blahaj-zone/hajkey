@@ -114,6 +114,7 @@ async function del() {
 <style lang="scss" scoped>
 .yigymqpb {
 	> .img {
+		position: relative;
 		display: block;
 		height: 64px;
 		margin: 0 auto;

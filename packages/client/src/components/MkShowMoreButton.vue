@@ -41,7 +41,9 @@ defineExpose({
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	z-index: 2;
+	padding: 20px;
+	margin-bottom: -10px;
+	z-index: 5;
 	> span {
 		display: inline-block;
 		background: var(--panel);
@@ -58,9 +60,10 @@ defineExpose({
 }
 .showLess {
 	width: 100%;
-	margin-top: 1em;
 	position: sticky;
-	bottom: var(--stickyBottom);
+	bottom: calc(var(--stickyBottom) - 1em);
+	padding: 20px;
+	z-index: 5;
 
 	> span {
 		display: inline-block;

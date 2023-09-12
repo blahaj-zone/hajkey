@@ -12,10 +12,15 @@
 		<template #func
 			><button
 				class="_button"
+				:aria-label="i18n.ts.markAllAsRead"
 				@click="os.apiWithDialog('notifications/mark-all-as-read')"
 			>
 				<i class="ph-check ph-bold ph-lg"></i></button
-			><button class="_button" @click="configureNotification()">
+			><button
+				class="_button"
+				:aria-label="i18n.ts.notificationSetting"
+				@click="configureNotification()"
+			>
 				<i class="ph-gear-six ph-bold ph-lg"></i></button
 		></template>
 		<div>
@@ -26,14 +31,13 @@
 
 <script lang="ts" setup>
 import { defineAsyncComponent } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import MkContainer from "@/components/MkContainer.vue";
 import XNotifications from "@/components/MkNotifications.vue";
 import * as os from "@/os";
@@ -60,8 +64,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -69,13 +73,13 @@ const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const configureNotification = () => {
 	os.popup(
 		defineAsyncComponent(
-			() => import("@/components/MkNotificationSettingWindow.vue")
+			() => import("@/components/MkNotificationSettingWindow.vue"),
 		),
 		{
 			includingTypes: widgetProps.includingTypes,
@@ -87,7 +91,7 @@ const configureNotification = () => {
 				save();
 			},
 		},
-		"closed"
+		"closed",
 	);
 };
 

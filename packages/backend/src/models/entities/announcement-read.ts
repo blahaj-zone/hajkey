@@ -11,13 +11,13 @@ import { Announcement } from "./announcement.js";
 import { id } from "../id.js";
 
 @Entity()
-@Index(['userId', 'announcementId'], { unique: true })
+@Index(["userId", "announcementId"], { unique: true })
 export class AnnouncementRead {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the AnnouncementRead.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the AnnouncementRead.",
 	})
 	public createdAt: Date;
 
@@ -25,8 +25,8 @@ export class AnnouncementRead {
 	@Column(id())
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
@@ -35,8 +35,8 @@ export class AnnouncementRead {
 	@Column(id())
 	public announcementId: Announcement["id"];
 
-	@ManyToOne(type => Announcement, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Announcement, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public announcement: Announcement | null;

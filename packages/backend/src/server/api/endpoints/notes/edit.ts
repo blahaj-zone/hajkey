@@ -35,6 +35,8 @@ import { renderActivity } from "@/remote/activitypub/renderer/index.js";
 import renderNote from "@/remote/activitypub/renderer/note.js";
 import renderUpdate from "@/remote/activitypub/renderer/update.js";
 import { deliverToRelays } from "@/services/relay.js";
+// import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
 
 export const meta = {
 	tags: ["notes"],
@@ -466,14 +468,20 @@ export default define(meta, paramDef, async (ps, user) => {
 			if (poll.noteVisibility !== ps.visibility) {
 				pollUpdate.noteVisibility = ps.visibility;
 			}
-			// We can't do an unordered equal check because the order of choices
-			// is important and if it changes, we need to reset the votes.
-			if (JSON.stringify(poll.choices) !== JSON.stringify(pp.choices)) {
-				pollUpdate.choices = pp.choices;
-				pollUpdate.votes = new Array(pp.choices.length).fill(0);
+			// Keep votes for unmodified choices, reset votes if choice is modified or new
+			const oldVoteCounts = new Map<string, number>();
+			for (let i = 0; i < poll.choices.length; i++) {
+				oldVoteCounts.set(poll.choices[i], poll.votes[i]);
 			}
+			const newVotes = pp.choices.map(
+				(choice) => oldVoteCounts.get(choice) || 0,
+			);
+			pollUpdate.choices = pp.choices;
+			pollUpdate.votes = newVotes;
 			if (notEmpty(pollUpdate)) {
 				await Polls.update(note.id, pollUpdate);
+				// Seemingly already handled by by the rendered update activity
+				// await deliverQuestionUpdate(note.id);
 			}
 			publishing = true;
 		}
@@ -510,8 +518,11 @@ export default define(meta, paramDef, async (ps, user) => {
 	if (ps.text !== note.text) {
 		update.text = ps.text;
 	}
-	if (ps.cw !== note.cw) {
+	if (ps.cw !== note.cw || (ps.cw && !note.cw)) {
 		update.cw = ps.cw;
+	}
+	if (!ps.cw && note.cw) {
+		update.cw = null;
 	}
 	if (ps.visibility !== note.visibility) {
 		update.visibility = ps.visibility;
@@ -583,7 +594,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	}
 
 	if (publishing) {
-		index(note);
+		index(note, true);
 
 		// Publish update event for the updated note details
 		publishNoteStream(note.id, "updated", {

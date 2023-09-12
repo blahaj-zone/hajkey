@@ -18,7 +18,7 @@ export default define(meta, paramDef, async () => {
 	let release;
 
 	await fetch(
-		"https://codeberg.org/calckey/calckey/raw/branch/develop/release.json",
+		"https://codeberg.org/firefish/firefish/raw/branch/develop/release.json",
 	)
 		.then((response) => response.json())
 		.then((data) => {

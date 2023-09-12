@@ -311,8 +311,8 @@ export const routes = [
 		hash: "initialTab",
 	},
 	{
-		path: "/about-calckey",
-		component: page(() => import("./pages/about-calckey.vue")),
+		path: "/about-iceshrimp",
+		component: page(() => import("./pages/about-firefish.vue")),
 	},
 	{
 		path: "/theme-editor",
@@ -495,11 +495,6 @@ export const routes = [
 				component: page(() => import("./pages/admin/announcements.vue")),
 			},
 			{
-				path: "/ads",
-				name: "ads",
-				component: page(() => import("./pages/admin/promotions.vue")),
-			},
-			{
 				path: "/database",
 				name: "database",
 				component: page(() => import("./pages/admin/database.vue")),
@@ -660,11 +655,6 @@ export const routes = [
 		path: "/timeline/antenna/:antennaId",
 		component: page(() => import("./pages/antenna-timeline.vue")),
 		loginRequired: true,
-	},
-	{
-		path: "/wiki/:mode/:slug",
-		component: page(() => import("./pages/wiki.vue")),
-		loginRequired: false,
 	},
 	{
 		name: "index",

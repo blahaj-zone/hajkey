@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import * as misskey from "calckey-js";
+import type * as misskey from "iceshrimp-js";
 
 const props = withDefaults(
 	defineProps<{
@@ -19,7 +19,7 @@ const props = withDefaults(
 	}>(),
 	{
 		nowrap: true,
-	}
+	},
 );
 </script>
 

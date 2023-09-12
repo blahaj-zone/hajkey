@@ -4,7 +4,6 @@ import { createNotification } from "@/services/create-notification.js";
 import { deliver } from "@/queue/index.js";
 import { renderActivity } from "@/remote/activitypub/renderer/index.js";
 import renderVote from "@/remote/activitypub/renderer/vote.js";
-import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
 import {
 	PollVotes,
 	NoteWatchings,
@@ -188,7 +187,4 @@ export default define(meta, paramDef, async (ps, user) => {
 			pollOwner.inbox,
 		);
 	}
-
-	// リモートフォロワーにUpdate配信
-	deliverQuestionUpdate(note.id);
 });

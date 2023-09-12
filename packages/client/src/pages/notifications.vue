@@ -10,14 +10,17 @@
 		</template>
 		<MkSpacer :content-max="800">
 			<swiper
+				:round-lengths="true"
+				:touch-angle="25"
+				:threshold="10"
+				:centeredSlides="true"
 				:modules="[Virtual]"
 				:space-between="20"
 				:virtual="true"
 				:allow-touch-move="
-					!(
-						deviceKind === 'desktop' &&
-						!defaultStore.state.swipeOnDesktop
-					) && defaultStore.state.allowSwipe
+					defaultStore.state.swipeOnMobile &&
+					(deviceKind !== 'desktop' ||
+						defaultStore.state.swipeOnDesktop)
 				"
 				@swiper="setSwiperRef"
 				@slide-change="onSlideChange"
@@ -49,9 +52,9 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
-import { Virtual } from "swiper";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { notificationTypes } from "calckey-js";
+import { notificationTypes } from "iceshrimp-js";
 import XNotifications from "@/components/MkNotifications.vue";
 import XNotes from "@/components/MkNotes.vue";
 import * as os from "@/os";
@@ -72,7 +75,7 @@ os.api("notifications/mark-all-as-read");
 
 const MOBILE_THRESHOLD = 500;
 const isMobile = ref(
-	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD,
 );
 window.addEventListener("resize", () => {
 	isMobile.value =
@@ -136,7 +139,7 @@ const headerActions = $computed(() =>
 					},
 			  }
 			: undefined,
-	].filter((x) => x !== undefined)
+	].filter((x) => x !== undefined),
 );
 
 const headerTabs = $computed(() => [
@@ -166,7 +169,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.notifications,
 		icon: "ph-bell ph-bold ph-lg",
-	}))
+	})),
 );
 
 let swiperRef = null;

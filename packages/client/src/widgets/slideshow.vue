@@ -24,14 +24,13 @@
 
 <script lang="ts" setup>
 import { nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import { useInterval } from "@/scripts/use-interval";
 import { i18n } from "@/i18n";
@@ -53,8 +52,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -62,7 +61,7 @@ const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const images = ref([]);

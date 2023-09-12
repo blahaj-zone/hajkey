@@ -95,7 +95,7 @@ function copyThemeCode() {
 function uninstall() {
 	removeTheme(selectedTheme.value as Theme);
 	installedThemes.value = installedThemes.value.filter(
-		(t) => t.id !== selectedThemeId.value
+		(t) => t.id !== selectedThemeId.value,
 	);
 	selectedThemeId.value = null;
 	os.success();

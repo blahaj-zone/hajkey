@@ -54,10 +54,10 @@ import * as os from "@/os";
 import { defaultStore } from "@/store";
 const XRss = defineAsyncComponent(() => import("./statusbar-rss.vue"));
 const XFederation = defineAsyncComponent(
-	() => import("./statusbar-federation.vue")
+	() => import("./statusbar-federation.vue"),
 );
 const XUserList = defineAsyncComponent(
-	() => import("./statusbar-user-list.vue")
+	() => import("./statusbar-user-list.vue"),
 );
 </script>
 

@@ -16,31 +16,33 @@ export class Antenna {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the Antenna.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the Antenna.",
 	})
 	public createdAt: Date;
 
 	@Index()
 	@Column({
 		...id(),
-		comment: 'The owner ID.',
+		comment: "The owner ID.",
 	})
 	public userId: User["id"];
 
-	@ManyToOne(type => User, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
-		comment: 'The name of the Antenna.',
+		comment: "The name of the Antenna.",
 	})
 	public name: string;
 
-	@Column('enum', { enum: ['home', 'all', 'users', 'list', 'group', 'instances'] })
+	@Column("enum", {
+		enum: ["home", "all", "users", "list", "group", "instances"],
+	})
 	public src: "home" | "all" | "users" | "list" | "group" | "instances";
 
 	@Column({
@@ -49,8 +51,8 @@ export class Antenna {
 	})
 	public userListId: UserList["id"] | null;
 
-	@ManyToOne(type => UserList, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => UserList, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public userList: UserList | null;
@@ -61,51 +63,53 @@ export class Antenna {
 	})
 	public userGroupJoiningId: UserGroupJoining["id"] | null;
 
-	@ManyToOne(type => UserGroupJoining, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => UserGroupJoining, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public userGroupJoining: UserGroupJoining | null;
 
-	@Column('varchar', {
-		length: 1024, array: true,
-		default: '{}',
+	@Column("varchar", {
+		length: 1024,
+		array: true,
+		default: "{}",
 	})
 	public users: string[];
 
-	@Column('jsonb', {
+	@Column("jsonb", {
 		default: [],
 	})
 	public instances: string[];
 
-	@Column('jsonb', {
+	@Column("jsonb", {
 		default: [],
 	})
 	public keywords: string[][];
 
-	@Column('jsonb', {
+	@Column("jsonb", {
 		default: [],
 	})
 	public excludeKeywords: string[][];
 
-	@Column('boolean', {
+	@Column("boolean", {
 		default: false,
 	})
 	public caseSensitive: boolean;
 
-	@Column('boolean', {
+	@Column("boolean", {
 		default: false,
 	})
 	public withReplies: boolean;
 
-	@Column('boolean')
+	@Column("boolean")
 	public withFile: boolean;
 
-	@Column('varchar', {
-		length: 2048, nullable: true,
+	@Column("varchar", {
+		length: 2048,
+		nullable: true,
 	})
 	public expression: string | null;
 
-	@Column('boolean')
+	@Column("boolean")
 	public notify: boolean;
 }

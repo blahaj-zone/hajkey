@@ -11,7 +11,6 @@
 			>{{ column.name }}</template
 		>
 		<div class="wtdtxvec">
-			<MkAd class="a" :prefer="['widget']" />
 			<div
 				v-if="!(column.widgets && column.widgets.length > 0) && !edit"
 				class="intro"
@@ -34,9 +33,9 @@
 <script lang="ts" setup>
 import {} from "vue";
 import XColumn from "./column.vue";
+import type { Column } from "./deck-store";
 import {
 	addColumnWidget,
-	Column,
 	removeColumnWidget,
 	setColumnWidgets,
 	updateColumnWidget,

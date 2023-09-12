@@ -8,28 +8,29 @@
 		/></template>
 		<MkSpacer :content-max="700">
 			<div class="qtcaoidl">
-				<MkButton primary class="add" @click="create"
-					><i class="ph-plus ph-bold ph-lg"></i>
-					{{ i18n.ts.add }}</MkButton
-				>
-
 				<MkPagination
-					v-slot="{ items }"
 					ref="pagingComponent"
 					:pagination="pagination"
 					class="list"
 				>
-					<MkA
-						v-for="item in items"
-						:key="item.id"
-						:to="`/clips/${item.id}`"
-						class="item _panel _gap"
-					>
-						<b>{{ item.name }}</b>
-						<div v-if="item.description" class="description">
-							{{ item.description }}
-						</div>
-					</MkA>
+					<template #empty>
+						<MkInfo :icon="'paperclip'" :card="true">
+							<p>{{ i18n.ts.clipsDesc }}</p>
+						</MkInfo>
+					</template>
+					<template #default="{ items }">
+						<MkA
+							v-for="item in items"
+							:key="item.id"
+							:to="`/clips/${item.id}`"
+							class="item _panel _gap"
+						>
+							<b>{{ item.name }}</b>
+							<div v-if="item.description" class="description">
+								{{ item.description }}
+							</div>
+						</MkA>
+					</template>
 				</MkPagination>
 			</div>
 		</MkSpacer>
@@ -40,6 +41,7 @@
 import {} from "vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkButton from "@/components/MkButton.vue";
+import MkInfo from "@/components/MkInfo.vue";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
@@ -100,10 +102,6 @@ definePageMetadata({
 
 <style lang="scss" scoped>
 .qtcaoidl {
-	> .add {
-		margin: 0 auto 16px auto;
-	}
-
 	> .list {
 		> .item {
 			display: block;

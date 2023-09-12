@@ -1,6 +1,6 @@
 import { Instances, NoteReactions, Notes, Users } from "@/models/index.js";
 import define from "../define.js";
-import {} from "@/services/chart/index.js";
+import { driveChart, notesChart, usersChart } from "@/services/chart/index.js";
 import { IsNull } from "typeorm";
 
 export const meta = {
@@ -60,19 +60,25 @@ export const paramDef = {
 } as const;
 
 export default define(meta, paramDef, async () => {
+	const notesChartData = await notesChart.getChart("hour", 1, null);
+	const notesCount =
+		notesChartData.local.total[0] + notesChartData.remote.total[0];
+	const originalNotesCount = notesChartData.local.total[0];
+
+	const usersChartData = await usersChart.getChart("hour", 1, null);
+	const usersCount =
+		usersChartData.local.total[0] + usersChartData.remote.total[0];
+	const originalUsersCount = usersChartData.local.total[0];
+	const driveChartData = await driveChart.getChart("hour", 1, null);
+	//TODO: fixme currently returns 0
+	const driveUsageLocal = driveChartData.local.incSize[0];
+	const driveUsageRemote = driveChartData.remote.incSize[0];
+
 	const [
-		notesCount,
-		originalNotesCount,
-		usersCount,
-		originalUsersCount,
 		reactionsCount,
 		//originalReactionsCount,
 		instances,
 	] = await Promise.all([
-		Notes.count({ cache: 3600000 }), // 1 hour
-		Notes.count({ where: { userHost: IsNull() }, cache: 3600000 }),
-		Users.count({ cache: 3600000 }),
-		Users.count({ where: { host: IsNull() }, cache: 3600000 }),
 		NoteReactions.count({ cache: 3600000 }), // 1 hour
 		//NoteReactions.count({ where: { userHost: IsNull() }, cache: 3600000 }),
 		Instances.count({ cache: 3600000 }),
@@ -86,7 +92,7 @@ export default define(meta, paramDef, async () => {
 		reactionsCount,
 		//originalReactionsCount,
 		instances,
-		driveUsageLocal: 0,
-		driveUsageRemote: 0,
+		driveUsageLocal,
+		driveUsageRemote,
 	};
 });

@@ -2,7 +2,7 @@
 	<button
 		v-tooltip.noDelay.bottom="i18n.ts._gallery.like"
 		class="button _button"
-		@click="star($event)"
+		@click.stop="star($event)"
 	>
 		<svg
 			v-if="defaultStore.state.woozyMode === true"
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Note } from "calckey-js/built/entities";
+import type { Note } from "iceshrimp-js/built/entities";
 import Ripple from "@/components/MkRipple.vue";
 import { pleaseLogin } from "@/scripts/please-login";
 import * as os from "@/os";

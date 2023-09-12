@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkGalleryPostPreview from "@/components/MkGalleryPostPreview.vue";
 import MkPagination from "@/components/MkPagination.vue";
 
@@ -23,7 +23,7 @@ const props = withDefaults(
 	defineProps<{
 		user: misskey.entities.User;
 	}>(),
-	{}
+	{},
 );
 
 const pagination = {

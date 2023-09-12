@@ -9,6 +9,7 @@
 			ref="rootEl"
 			class="ebkgocck"
 			:class="{ maximized }"
+			v-bind="$attrs"
 		>
 			<div
 				class="body _shadow _narrow_"
@@ -160,7 +161,7 @@ const props = withDefaults(
 		contextmenu: null,
 		buttonsLeft: () => [],
 		buttonsRight: () => [],
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -511,7 +512,9 @@ defineExpose({
 <style lang="scss" scoped>
 .window-enter-active,
 .window-leave-active {
-	transition: opacity 0.2s, transform 0.2s !important;
+	transition:
+		opacity 0.2s,
+		transform 0.2s !important;
 }
 .window-enter-from,
 .window-leave-to {
@@ -594,6 +597,11 @@ defineExpose({
 			overflow: auto;
 			background: var(--panel);
 		}
+	}
+
+	&.page-window > .body > .body {
+		background: var(--bg);
+		scrollbar-gutter: stable;
 	}
 
 	> .handle {

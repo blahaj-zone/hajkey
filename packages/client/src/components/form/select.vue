@@ -1,38 +1,39 @@
 <template>
 	<div class="vblkjoeq">
-		<label>
-			<div class="label"><slot name="label"></slot></div>
-			<div
-				ref="container"
-				class="input"
-				:class="{ inline, disabled, focused }"
-				@click.prevent="onClick"
-				tabindex="-1"
+		<div class="label" @click="focus"><slot name="label"></slot></div>
+		<div
+			ref="container"
+			class="input"
+			:class="{ inline, disabled, focused }"
+			@mousedown.prevent="show"
+		>
+			<div ref="prefixEl" class="prefix"><slot name="prefix"></slot></div>
+			<select
+				ref="inputEl"
+				v-model="v"
+				v-adaptive-border
+				class="select"
+				:disabled="disabled"
+				:required="required"
+				:readonly="readonly"
+				:placeholder="placeholder"
+				@focus="focused = true"
+				@blur="focused = false"
+				@input="onInput"
 			>
-				<div ref="prefixEl" class="prefix">
-					<slot name="prefix"></slot>
-				</div>
-				<select
-					ref="inputEl"
-					v-model="v"
-					v-adaptive-border
-					class="select"
-					:disabled="disabled"
-					:required="required"
-					:readonly="readonly"
-					:placeholder="placeholder"
-					@focus="focused = true"
-					@blur="focused = false"
-					@input="onInput"
-				>
-					<slot></slot>
-				</select>
-				<div ref="suffixEl" class="suffix">
-					<i class="ph-caret-down ph-bold ph-lg"></i>
-				</div>
+				<slot></slot>
+			</select>
+			<div ref="suffixEl" class="suffix">
+				<i
+					class="ph-caret-down ph-bold ph-lg"
+					:class="[
+						$style.chevron,
+						{ [$style.chevronOpening]: opening },
+					]"
+				></i>
 			</div>
-			<div class="caption"><slot name="caption"></slot></div>
-		</label>
+		</div>
+		<div class="caption"><slot name="caption"></slot></div>
 
 		<MkButton v-if="manualSave && changed" primary @click="updated"
 			><i class="ph-floppy-disk-back ph-bold ph-lg"></i>
@@ -42,16 +43,15 @@
 </template>
 
 <script lang="ts" setup>
+import type { VNode } from "vue";
 import {
-	onMounted,
-	onUnmounted,
-	nextTick,
-	ref,
-	watch,
 	computed,
+	nextTick,
+	onMounted,
+	ref,
 	toRefs,
-	VNode,
 	useSlots,
+	watch,
 } from "vue";
 import MkButton from "@/components/MkButton.vue";
 import * as os from "@/os";
@@ -59,7 +59,7 @@ import { useInterval } from "@/scripts/use-interval";
 import { i18n } from "@/i18n";
 
 const props = defineProps<{
-	modelValue: string;
+	modelValue: string | null;
 	required?: boolean;
 	readonly?: boolean;
 	disabled?: boolean;
@@ -73,7 +73,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
 	(ev: "change", _ev: KeyboardEvent): void;
-	(ev: "update:modelValue", value: string): void;
+	(ev: "update:modelValue", value: string | null): void;
 }>();
 
 const slots = useSlots();
@@ -81,6 +81,7 @@ const slots = useSlots();
 const { modelValue, autofocus } = toRefs(props);
 const v = ref(modelValue.value);
 const focused = ref(false);
+const opening = ref(false);
 const changed = ref(false);
 const invalid = ref(false);
 const filled = computed(() => v.value !== "" && v.value != null);
@@ -88,7 +89,7 @@ const inputEl = ref(null);
 const prefixEl = ref(null);
 const suffixEl = ref(null);
 const container = ref(null);
-const height = props.small ? 36 : props.large ? 40 : 38;
+const height = props.small ? 33 : props.large ? 39 : 36;
 
 const focus = () => inputEl.value.focus();
 const onInput = (ev) => {
@@ -134,7 +135,7 @@ useInterval(
 	{
 		immediate: true,
 		afterMounted: true,
-	}
+	},
 );
 
 onMounted(() => {
@@ -145,16 +146,17 @@ onMounted(() => {
 	});
 });
 
-const onClick = (ev: MouseEvent) => {
+function show(ev: MouseEvent) {
 	focused.value = true;
+	opening.value = true;
 
 	const menu = [];
-	let options = slots.default!();
+	const options = slots.default!();
 
 	const pushOption = (option: VNode) => {
 		menu.push({
 			text: option.children,
-			active: v.value === option.props.value,
+			active: computed(() => v.value === option.props.value),
 			action: () => {
 				v.value = option.props.value;
 			},
@@ -188,127 +190,136 @@ const onClick = (ev: MouseEvent) => {
 
 	os.popupMenu(menu, container.value, {
 		width: container.value.offsetWidth,
+		onClosing: () => {
+			opening.value = false;
+		},
 	}).then(() => {
 		focused.value = false;
 	});
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .vblkjoeq {
-	> label {
-		> .label {
-			font-size: 0.85em;
-			padding: 0 0 8px 0;
-			user-select: none;
+	> .label {
+		font-size: 0.85em;
+		padding: 0 0 8px 0;
+		user-select: none;
 
-			&:empty {
-				display: none;
-			}
+		&:empty {
+			display: none;
 		}
+	}
 
-		> .caption {
-			font-size: 0.85em;
-			padding: 8px 0 0 0;
-			color: var(--fgTransparentWeak);
+	> .caption {
+		font-size: 0.85em;
+		padding: 8px 0 0 0;
+		color: var(--fgTransparentWeak);
 
-			&:empty {
-				display: none;
-			}
+		&:empty {
+			display: none;
 		}
+	}
 
-		> .input {
-			position: relative;
-			cursor: pointer;
-			margin-left: 0.2rem;
-			margin-right: 0.2rem;
+	> .input {
+		position: relative;
+		cursor: pointer;
 
-			&:hover {
-				> .select {
-					border-color: var(--inputBorderHover) !important;
-				}
-			}
-
+		&:hover {
 			> .select {
-				appearance: none;
-				-webkit-appearance: none;
-				display: block;
-				height: v-bind("height + 'px'");
-				width: 100%;
-				margin: 0;
-				padding: 0 12px;
-				font: inherit;
-				font-weight: normal;
-				font-size: 1em;
-				color: var(--fg);
-				background: var(--panel);
-				border: solid 1px var(--panel);
-				border-radius: 6px;
-				outline: none;
-				box-shadow: none;
-				box-sizing: border-box;
-				cursor: pointer;
-				transition: border-color 0.1s ease-out;
-				pointer-events: none;
-				user-select: none;
+				border-color: var(--inputBorderHover) !important;
+			}
+		}
+
+		> .select {
+			appearance: none;
+			-webkit-appearance: none;
+			display: block;
+			height: v-bind("height + 'px'");
+			width: 100%;
+			margin: 0;
+			padding: 0 12px;
+			font: inherit;
+			font-weight: normal;
+			font-size: 1em;
+			color: var(--fg);
+			background: var(--panel);
+			border: solid 1px var(--panel);
+			border-radius: 6px;
+			outline: none;
+			box-shadow: none;
+			box-sizing: border-box;
+			cursor: pointer;
+			transition: border-color 0.1s ease-out;
+			pointer-events: none;
+			user-select: none;
+		}
+
+		> .prefix,
+		> .suffix {
+			display: flex;
+			align-items: center;
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			padding: 0 12px;
+			font-size: 1em;
+			height: v-bind("height + 'px'");
+			pointer-events: none;
+
+			&:empty {
+				display: none;
 			}
 
-			> .prefix,
-			> .suffix {
-				display: flex;
-				align-items: center;
-				position: absolute;
-				z-index: 1;
-				top: 0;
-				padding: 0 12px;
-				font-size: 1em;
-				height: v-bind("height + 'px'");
-				pointer-events: none;
-
-				&:empty {
-					display: none;
-				}
-
-				> * {
-					display: inline-block;
-					min-width: 16px;
-					max-width: 150px;
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
-			}
-
-			> .prefix {
-				left: 0;
-				padding-right: 6px;
-			}
-
-			> .suffix {
-				right: 0;
-				padding-left: 6px;
-			}
-
-			&.inline {
+			> * {
 				display: inline-block;
-				margin: 0;
+				min-width: 16px;
+				max-width: 150px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
+		}
 
-			&.focused {
-				> select {
-					border-color: var(--accent) !important;
-				}
+		> .prefix {
+			left: 0;
+			padding-right: 6px;
+		}
+
+		> .suffix {
+			right: 0;
+			padding-left: 6px;
+		}
+
+		&.inline {
+			display: inline-block;
+			margin: 0;
+		}
+
+		&.focused {
+			> select {
+				border-color: var(--accent) !important;
 			}
+		}
 
-			&.disabled {
-				opacity: 0.7;
+		&.disabled {
+			opacity: 0.7;
 
-				&,
-				* {
-					cursor: not-allowed !important;
-				}
+			&,
+			* {
+				cursor: not-allowed !important;
 			}
 		}
 	}
+}
+</style>
+
+<style lang="scss" module>
+.chevron {
+	transition: transform 0.1s ease-out;
+}
+
+.chevronOpening {
+	transform: rotateX(180deg);
 }
 </style>

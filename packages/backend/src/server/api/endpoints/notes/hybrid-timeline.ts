@@ -60,6 +60,11 @@ export const paramDef = {
 			default: false,
 			description: "Only show notes that have attached files.",
 		},
+		withReplies: {
+			type: "boolean",
+			default: false,
+			description: "Show replies in the timeline",
+		},
 	},
 	required: [],
 } as const;
@@ -104,7 +109,7 @@ export default define(meta, paramDef, async (ps, user) => {
 		.setParameters(followingQuery.getParameters());
 
 	generateChannelQuery(query, user);
-	generateRepliesQuery(query, user);
+	generateRepliesQuery(query, ps.withReplies, user);
 	generateVisibilityQuery(query, user);
 	generateMutedUserQuery(query, user);
 	generateMutedNoteQuery(query, user);

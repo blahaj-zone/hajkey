@@ -63,9 +63,9 @@ export default {
 									: undefined,
 							},
 						},
-						$slots.default()
-					)
-				)
+						$slots.default(),
+					),
+				),
 			),
 		]);
 	},

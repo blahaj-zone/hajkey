@@ -12,7 +12,7 @@
 					:list="id"
 					:value="modelValue"
 					:disabled="disabled"
-					v-on:change="(x) => onChange(x)"
+					@change="(x) => onChange(x)"
 					@focus="tooltipShow"
 					@blur="tooltipHide"
 					@touchstart="tooltipShow"
@@ -23,9 +23,9 @@
 				/>
 				<datalist v-if="showTicks && steps" :id="id">
 					<option
-						v-for="i in steps + 1"
-						:value="i"
-						:label="i.toString()"
+						v-for="i in steps"
+						:value="i + min"
+						:label="(i + min).toString()"
 					></option>
 				</datalist>
 			</div>
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent, ref } from "vue";
 import * as os from "@/os";
 
 const id = os.getUniqueId();
@@ -55,11 +55,11 @@ const props = withDefaults(
 		step: 1,
 		textConverter: (v) => v.toString(),
 		easing: false,
-	}
+	},
 );
 
 const inputEl = ref<HTMLElement>();
-let inputVal = $ref(props.modelValue);
+const inputVal = $ref(props.modelValue);
 
 const emit = defineEmits<{
 	(ev: "update:modelValue", value: number): void;
@@ -90,7 +90,7 @@ function tooltipShow() {
 			targetElement: inputEl,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 }
 function tooltipHide() {

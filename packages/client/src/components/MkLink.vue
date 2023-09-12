@@ -28,7 +28,7 @@ const props = withDefaults(
 		url: string;
 		rel?: null | string;
 	}>(),
-	{}
+	{},
 );
 
 const self = props.url.startsWith(local);
@@ -40,7 +40,7 @@ const el = $ref();
 useTooltip($$(el), (showing) => {
 	os.popup(
 		defineAsyncComponent(
-			() => import("@/components/MkUrlPreviewPopup.vue")
+			() => import("@/components/MkUrlPreviewPopup.vue"),
 		),
 		{
 			showing,
@@ -48,7 +48,7 @@ useTooltip($$(el), (showing) => {
 			source: el,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 });
 </script>

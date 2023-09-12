@@ -111,7 +111,6 @@
 								/>
 							</div>
 						</div>
-						<MkAd :prefer="['inline', 'inline-big']" />
 						<MkContainer
 							:max-height="300"
 							:foldable="true"
@@ -243,8 +242,8 @@ definePageMetadata(
 					title: post.title,
 					avatar: post.user,
 			  }
-			: null
-	)
+			: null,
+	),
 );
 </script>
 

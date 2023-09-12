@@ -57,12 +57,14 @@ export default define(meta, paramDef, async (ps, user) => {
 		throw err;
 	});
 
-	const exist = await ClipNotes.findOneBy({
-		noteId: note.id,
-		clipId: clip.id,
+	const exist = await ClipNotes.exist({
+		where: {
+			noteId: note.id,
+			clipId: clip.id,
+		},
 	});
 
-	if (exist != null) {
+	if (exist) {
 		throw new ApiError(meta.errors.alreadyClipped);
 	}
 

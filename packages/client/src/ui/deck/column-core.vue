@@ -49,6 +49,12 @@
 		:is-stacked="isStacked"
 		@parent-focus="emit('parent-focus', $event)"
 	/>
+	<XChannelColumn
+		v-else-if="column.type === 'channel'"
+		:column="column"
+		:is-stacked="isStacked"
+		@parent-focus="emit('parent-focus', $event)"
+	/>
 </template>
 
 <script lang="ts" setup>
@@ -61,7 +67,8 @@ import XNotificationsColumn from "./notifications-column.vue";
 import XWidgetsColumn from "./widgets-column.vue";
 import XMentionsColumn from "./mentions-column.vue";
 import XDirectColumn from "./direct-column.vue";
-import { Column } from "./deck-store";
+import XChannelColumn from "./channel-column.vue";
+import type { Column } from "./deck-store";
 
 defineProps<{
 	column?: Column;

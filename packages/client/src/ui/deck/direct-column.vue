@@ -19,8 +19,8 @@
 <script lang="ts" setup>
 import {} from "vue";
 import XColumn from "./column.vue";
+import type { Column } from "./deck-store";
 import XNotes from "@/components/MkNotes.vue";
-import { Column } from "./deck-store";
 
 defineProps<{
 	column: Column;

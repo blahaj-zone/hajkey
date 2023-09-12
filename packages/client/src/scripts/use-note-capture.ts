@@ -1,5 +1,5 @@
 import { onUnmounted, Ref } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import { stream } from "@/stream";
 import { $i } from "@/account";
 import * as os from "@/os";

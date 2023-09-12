@@ -9,6 +9,7 @@ export default class extends Channel {
 	public readonly chName = "recommendedTimeline";
 	public static shouldShare = true;
 	public static requireCredential = true;
+	private withReplies: boolean;
 
 	constructor(id: string, connection: Channel["connection"]) {
 		super(id, connection);
@@ -23,6 +24,8 @@ export default class extends Channel {
 			!this.user!.isModerator
 		)
 			return;
+
+		this.withReplies = params.withReplies as boolean;
 
 		// Subscribe events
 		this.subscriber.on("notesStream", this.onNote);
@@ -54,7 +57,7 @@ export default class extends Channel {
 			return;
 
 		// 関係ない返信は除外
-		if (note.reply && !this.user!.showTimelineReplies) {
+		if (note.reply && !this.withReplies) {
 			const reply = note.reply;
 			// 「チャンネル接続主への返信」でもなければ、「チャンネル接続主が行った返信」でもなければ、「投稿者の投稿者自身への返信」でもない場合
 			if (
@@ -70,8 +73,7 @@ export default class extends Channel {
 		// 流れてきたNoteがブロックされているユーザーが関わるものだったら無視する
 		if (isUserRelated(note, this.blocking)) return;
 
-		if (note.renote && !note.text && isUserRelated(note, this.renoteMuting))
-			return;
+		if (note.renote && !note.text && this.renoteMuting.has(note.userId)) return;
 
 		// 流れてきたNoteがミュートすべきNoteだったら無視する
 		// TODO: 将来的には、単にMutedNoteテーブルにレコードがあるかどうかで判定したい(以下の理由により難しそうではある)

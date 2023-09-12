@@ -8,7 +8,7 @@ export class Hashtag {
 	public id: string;
 
 	@Index({ unique: true })
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
 	})
 	public name: string;
@@ -20,7 +20,7 @@ export class Hashtag {
 	public mentionedUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public mentionedUsersCount: number;
@@ -32,7 +32,7 @@ export class Hashtag {
 	public mentionedLocalUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public mentionedLocalUsersCount: number;
@@ -44,7 +44,7 @@ export class Hashtag {
 	public mentionedRemoteUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public mentionedRemoteUsersCount: number;
@@ -56,7 +56,7 @@ export class Hashtag {
 	public attachedUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public attachedUsersCount: number;
@@ -68,7 +68,7 @@ export class Hashtag {
 	public attachedLocalUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public attachedLocalUsersCount: number;
@@ -80,7 +80,7 @@ export class Hashtag {
 	public attachedRemoteUserIds: User["id"][];
 
 	@Index()
-	@Column('integer', {
+	@Column("integer", {
 		default: 0,
 	})
 	public attachedRemoteUsersCount: number;

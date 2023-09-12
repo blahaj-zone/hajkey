@@ -1,5 +1,5 @@
-export class FixCalckeyAgain1668831378728 {
-	name = "FixCalckeyAgain1668831378728";
+export class FixFirefishAgain1668831378728 {
+	name = "FixFirefishAgain1668831378728";
 
 	async up(queryRunner) {
 		await queryRunner.query(

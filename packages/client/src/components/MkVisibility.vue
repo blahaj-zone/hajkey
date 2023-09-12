@@ -7,7 +7,7 @@
 		></i>
 		<i
 			v-else-if="note.visibility === 'followers'"
-			class="ph-lock-simple-open ph-bold ph-lg"
+			class="ph-lock ph-bold ph-lg"
 			v-tooltip="i18n.ts._visibility.followers"
 		></i>
 		<i
@@ -57,7 +57,7 @@ if (props.note.visibility === "specified") {
 				targetElement: specified,
 			},
 			{},
-			"closed"
+			"closed",
 		);
 	});
 }

@@ -1,8 +1,8 @@
 _lang_: "Polski"
-headlineMisskey: "Otwartoźródłowa, zdecentralizowana sieć społecznościowa, która zawsze\
-  \ będzie darmowa! \U0001F680"
-introMisskey: "Hej! Calckey to otwartoźródłowa oraz zdecentralizowana sieć społecznościowa,\
-  \ która zawsze będzie darmowa! \U0001F680"
+headlineIceshrimp: "Otwartoźródłowa, zdecentralizowana sieć społecznościowa, która zawsze
+  będzie darmowa! 🚀"
+introIceshrimp: "Hej! Iceshrimp to otwartoźródłowa oraz zdecentralizowana sieć społecznościowa,
+  która zawsze będzie darmowa! 🚀"
 monthAndDay: "{month}-{day}"
 search: "Szukaj"
 notifications: "Powiadomienia"
@@ -17,7 +17,7 @@ enterUsername: "Wprowadź nazwę użytkownika"
 renotedBy: "Podbito przez {user}"
 noNotes: "Brak wpisów"
 noNotifications: "Brak powiadomień"
-instance: "Instancja"
+instance: "Serwer"
 settings: "Ustawienia"
 basicSettings: "Podstawowe ustawienia"
 otherSettings: "Pozostałe ustawienia"
@@ -45,8 +45,8 @@ copyContent: "Skopiuj zawartość"
 copyLink: "Skopiuj odnośnik"
 delete: "Usuń"
 deleteAndEdit: "Usuń i edytuj"
-deleteAndEditConfirm: "Czy na pewno chcesz usunąć ten wpis i zedytować go? Utracisz\
-  \ wszystkie reakcje, podbicia i odpowiedzi do tego wpisu."
+deleteAndEditConfirm: "Czy na pewno chcesz usunąć ten wpis i zedytować go? Utracisz
+  wszystkie reakcje, podbicia i odpowiedzi do tego wpisu."
 addToList: "Dodaj do listy"
 sendMessage: "Wyślij wiadomość"
 copyUsername: "Kopiuj nazwę użytkownika"
@@ -66,11 +66,11 @@ import: "Importuj"
 export: "Eksportuj"
 files: "Pliki"
 download: "Pobierz"
-driveFileDeleteConfirm: "Czy chcesz usunąć plik \"{name}\"? Wszystkie wpisy zawierające\
-  \ ten plik również zostaną usunięte."
+driveFileDeleteConfirm: "Czy chcesz usunąć plik \"{name}\"? Wszystkie wpisy zawierające
+  ten plik również zostaną usunięte."
 unfollowConfirm: "Czy na pewno chcesz przestać obserwować {name}?"
-exportRequested: "Zażądałeś eksportu. Może to zająć chwilę. Po zakończeniu eksportu\
-  \ zostanie on dodany do Twojego dysku."
+exportRequested: "Zażądałeś eksportu. Może to zająć chwilę. Po zakończeniu eksportu
+  zostanie on dodany do Twojego dysku."
 importRequested: "Zażądano importu. Może to zająć chwilę."
 lists: "Listy"
 noLists: "Nie masz żadnych list"
@@ -85,8 +85,8 @@ error: "Błąd"
 somethingHappened: "Coś poszło nie tak"
 retry: "Spróbuj ponownie"
 pageLoadError: "Nie udało się załadować strony."
-pageLoadErrorDescription: "Zwykle jest to spowodowane problemem z siecią lub cache\
-  \ przeglądarki. Spróbuj wyczyścić cache i sprawdź jeszcze raz za chwilę."
+pageLoadErrorDescription: "Zwykle jest to spowodowane problemem z siecią lub cache
+  przeglądarki. Spróbuj wyczyścić cache i sprawdź jeszcze raz za chwilę."
 serverIsDead: "Serwer nie odpowiada. Zaczekaj chwilę i spróbuj ponownie."
 youShouldUpgradeClient: "Aby zobaczyć tą stronę, odśwież ją, by zaaktualizować klienta."
 enterListName: "Wpisz nazwę listy"
@@ -113,8 +113,8 @@ sensitive: "NSFW"
 add: "Dodaj"
 reaction: "Reakcja"
 reactionSetting: "Reakcje do pokazania w wyborniku reakcji"
-reactionSettingDescription2: "Przeciągnij aby zmienić kolejność, naciśnij aby usunąć,\
-  \ naciśnij „+” aby dodać."
+reactionSettingDescription2: "Przeciągnij aby zmienić kolejność, naciśnij aby usunąć,
+  naciśnij „+” aby dodać."
 rememberNoteVisibility: "Zapamiętuj ustawienia widoczności wpisu"
 attachCancel: "Usuń załącznik"
 markAsSensitive: "Oznacz jako NSFW"
@@ -143,22 +143,22 @@ emojiUrl: "Adres URL emoji"
 addEmoji: "Dodaj emoji"
 settingGuide: "Proponowana konfiguracja"
 cacheRemoteFiles: "Przechowuj zdalne pliki w pamięci podręcznej"
-cacheRemoteFilesDescription: "Gdy ta opcja jest wyłączona, zdalne pliki są ładowane\
-  \ bezpośrednio ze zdalnych instancji. Wyłączenie the opcji zmniejszy użycie powierzchni\
-  \ dyskowej, ale zwiększy transfer, ponieważ miniaturki nie będą generowane."
+cacheRemoteFilesDescription: "Gdy ta opcja jest wyłączona, zdalne pliki są ładowane
+  bezpośrednio ze zdalnego serwera. Wyłączenie tej opcji zmniejszy użycie powierzchni
+  dyskowej, ale zwiększy transfer, ponieważ miniaturki nie będą generowane."
 flagAsBot: "To konto jest botem"
-flagAsBotDescription: "Jeżeli ten kanał jest kontrolowany przez jakiś program, ustaw\
-  \ tę opcję. Jeżeli włączona, będzie działać jako flaga informująca innych programistów,\
-  \ aby zapobiegać nieskończonej interakcji z różnymi botami i dostosowywać wewnętrzne\
-  \ systemy Calckey, traktując konto jako bota."
-flagAsCat: "Czy jesteś kotem? \U0001F63A"
+flagAsBotDescription: "Jeżeli ten kanał jest kontrolowany przez jakiś program, ustaw
+  tę opcję. Jeżeli włączona, będzie działać jako flaga informująca innych programistów,
+  aby zapobiegać nieskończonej interakcji z różnymi botami i dostosowywać wewnętrzne
+  systemy Iceshrimp, traktując konto jako bota."
+flagAsCat: "Czy jesteś kotem? 😺"
 flagAsCatDescription: "Dostaniesz kocie uszka, oraz będziesz mówić jak kot!"
 flagShowTimelineReplies: "Pokazuj odpowiedzi na osi czasu"
-autoAcceptFollowed: "Automatycznie przyjmuj prośby o możliwość obserwacji od użytkowników,\
-  \ których obserwujesz"
+autoAcceptFollowed: "Automatycznie przyjmuj prośby o możliwość obserwacji od użytkowników,
+  których obserwujesz"
 addAccount: "Dodaj konto"
 loginFailed: "Nie udało się zalogować"
-showOnRemote: "Zobacz na zdalnej instancji"
+showOnRemote: "Zobacz na zdalnym serwerze"
 general: "Ogólne"
 wallpaper: "Tapeta"
 setWallpaper: "Ustaw tapetę"
@@ -172,7 +172,7 @@ selectUser: "Wybierz użytkownika"
 recipient: "Odbiorca(-y)"
 annotation: "Komentarze"
 federation: "Federacja"
-instances: "Instancja"
+instances: "Serwery"
 registeredAt: "Zarejestrowano"
 latestRequestSentAt: "Ostatnie żądanie wysłano o"
 latestRequestReceivedAt: "Ostatnie żądanie otrzymano o"
@@ -182,29 +182,28 @@ charts: "Wykresy"
 perHour: "co godzinę"
 perDay: "co dzień"
 stopActivityDelivery: "Przestań przesyłać aktywności"
-blockThisInstance: "Zablokuj tę instancję"
+blockThisInstance: "Zablokuj ten serwer"
 operations: "Działania"
 software: "Oprogramowanie"
 version: "Wersja"
 metadata: "Metadane"
-withNFiles: "{n} plik(i/ów)"
 monitor: "Monitor"
 jobQueue: "Kolejka zadań"
 cpuAndMemory: "CPU i pamięć"
 network: "Sieć"
 disk: "Dysk"
-instanceInfo: "Informacje o instancji"
+instanceInfo: "Informacje o serwerze"
 statistics: "Statystyki"
 clearQueue: "Wyczyść kolejkę"
 clearQueueConfirmTitle: "Czy na pewno chcesz wyczyścić kolejkę?"
-clearQueueConfirmText: "Wszystkie niewysłane wpisy z kolejki nie zostaną wysłane.\
-  \ Zwykle to nie jest konieczne."
+clearQueueConfirmText: "Wszystkie niewysłane wpisy z kolejki nie zostaną wysłane.
+  Zwykle to nie jest konieczne."
 clearCachedFiles: "Wyczyść pamięć podręczną"
-clearCachedFilesConfirm: "Czy na pewno chcesz usunąć wszystkie zdalne pliki z pamięci\
-  \ podręcznej?"
-blockedInstances: "Zablokowane instancje"
-blockedInstancesDescription: "Wypisz nazwy hostów instancji, które powinny zostać\
-  \ zablokowane. Wypisane instancje nie będą mogły dłużej komunikować się z tą instancją."
+clearCachedFilesConfirm: "Czy na pewno chcesz usunąć wszystkie zdalne pliki z pamięci
+  podręcznej?"
+blockedInstances: "Zablokowane serwery"
+blockedInstancesDescription: "Wypisz nazwy hostów serwerów, które chcesz zablokować.
+  Wymienione serwery nie będą mogły dłużej komunikować się z tym serwerem."
 muteAndBlock: "Wyciszenia i blokady"
 mutedUsers: "Wyciszeni użytkownicy"
 blockedUsers: "Zablokowani użytkownicy"
@@ -212,9 +211,9 @@ noUsers: "Brak użytkowników"
 editProfile: "Edytuj profil"
 noteDeleteConfirm: "Czy na pewno chcesz usunąć ten wpis?"
 pinLimitExceeded: "Nie możesz przypiąć więcej wpisów"
-intro: "Zakończono instalację Calckey! Utwórz konto administratora."
+intro: "Zakończono instalację Iceshrimp! Utwórz konto administratora."
 done: "Gotowe"
-processing: "Przetwarzanie..."
+processing: "Przetwarzanie"
 preview: "Podgląd"
 default: "Domyślne"
 defaultValueIs: "Domyślne: {value}"
@@ -227,9 +226,9 @@ all: "Wszystkie"
 subscribing: "Subskrybowanie"
 publishing: "Publikowanie"
 notResponding: "Nie odpowiada"
-instanceFollowing: "Obserwowani na instancji"
-instanceFollowers: "Obserwujący na instancji"
-instanceUsers: "Użytkownicy tej instancji"
+instanceFollowing: "Obserwowani na serwerze"
+instanceFollowers: "Obserwujący na serwerze"
+instanceUsers: "Użytkownicy tego serwera"
 changePassword: "Zmień hasło"
 security: "Bezpieczeństwo"
 retypedNotMatch: "Wejście nie zgadza się."
@@ -268,8 +267,8 @@ agreeTo: "Wyrażam zgodę na {0}"
 tos: "Regulamin"
 start: "Rozpocznij"
 home: "Strona główna"
-remoteUserCaution: "Te informacje mogą nie być aktualne, ponieważ użytkownik pochodzi\
-  \ ze zdalnej instancji."
+remoteUserCaution: "Te informacje mogą nie być aktualne, ponieważ użytkownik pochodzi
+  ze zdalnej instancji."
 activity: "Aktywność"
 images: "Zdjęcia"
 birthday: "Data urodzenia"
@@ -302,8 +301,8 @@ unableToDelete: "Nie można usunąć"
 inputNewFileName: "Wprowadź nową nazwę pliku"
 inputNewDescription: "Proszę wpisać nowy napis"
 inputNewFolderName: "Wprowadź nową nazwę katalogu"
-circularReferenceFolder: "Katalog docelowy jest podkatalogiem katalogu, który chcesz\
-  \ przenieść."
+circularReferenceFolder: "Katalog docelowy jest podkatalogiem katalogu, który chcesz
+  przenieść."
 hasChildFilesOrFolders: "Ponieważ ten katalog nie jest pusty, nie może być usunięty."
 copyUrl: "Skopiuj adres URL"
 rename: "Zmień nazwę"
@@ -320,8 +319,8 @@ unwatch: "Przestań śledzić"
 accept: "Akceptuj"
 reject: "Odrzuć"
 normal: "Normalny"
-instanceName: "Nazwa instancji"
-instanceDescription: "Opis instancji"
+instanceName: "Nazwa serwera"
+instanceDescription: "Opis serwera"
 maintainerName: "Administrator"
 maintainerEmail: "E-mail administratora"
 tosUrl: "Adres URL regulaminu"
@@ -337,8 +336,8 @@ connectService: "Połącz"
 disconnectService: "Rozłącz"
 enableLocalTimeline: "Włącz lokalną oś czasu"
 enableGlobalTimeline: "Włącz globalną oś czasu"
-disablingTimelinesInfo: "Administratorzy i moderatorzy będą zawsze mieć dostęp do\
-  \ wszystkich osi czasu, nawet gdy są one wyłączone."
+disablingTimelinesInfo: "Administratorzy i moderatorzy będą zawsze mieć dostęp do
+  wszystkich osi czasu, nawet gdy są one wyłączone."
 registration: "Zarejestruj się"
 enableRegistration: "Włącz rejestrację nowych użytkowników"
 invite: "Zaproś"
@@ -350,11 +349,11 @@ bannerUrl: "Adres URL banera"
 backgroundImageUrl: "Adres URL tła"
 basicInfo: "Podstawowe informacje"
 pinnedUsers: "Przypięty użytkownik"
-pinnedUsersDescription: "Wypisz po jednej nazwie użytkownika w wierszu. Podani użytkownicy\
-  \ zostaną przypięci pod kartą „Eksploruj”."
+pinnedUsersDescription: "Wypisz po jednej nazwie użytkownika w wierszu. Podani użytkownicy
+  zostaną przypięci pod kartą „Eksploruj”."
 pinnedPages: "Przypięte strony"
-pinnedPagesDescription: "Wprowadź ścieżki stron które chcesz przypiąć na głównej stronie\
-  \ instancji, oddzielone znakiem nowego wiersza."
+pinnedPagesDescription: "Wprowadź ścieżki stron, które chcesz przypiąć do górnej strony
+  tego serwera, oddzielając je znakami końca wiersza."
 pinnedClipId: "ID przypiętego klipu"
 pinnedNotes: "Przypięty wpis"
 hcaptcha: "hCaptcha"
@@ -365,16 +364,16 @@ recaptcha: "reCAPTCHA"
 enableRecaptcha: "Włącz reCAPTCHA"
 recaptchaSiteKey: "Klucz strony"
 recaptchaSecretKey: "Tajny klucz"
-avoidMultiCaptchaConfirm: "Używanie wielu Captchy może spowodować zakłócenia. Czy\
-  \ chcesz wyłączyć inną Captchę? Możesz zostawić wiele jednocześnie, klikając Anuluj."
+avoidMultiCaptchaConfirm: "Używanie wielu Captchy może spowodować zakłócenia. Czy
+  chcesz wyłączyć inną Captchę? Możesz zostawić wiele jednocześnie, klikając Anuluj."
 antennas: "Anteny"
 manageAntennas: "Zarządzaj antenami"
 name: "Nazwa"
 antennaSource: "Źródło anteny"
 antennaKeywords: "Słowa kluczowe do obserwacji"
 antennaExcludeKeywords: "Wykluczone słowa kluczowe"
-antennaKeywordsDescription: "Oddziel spacjami dla warunku AND, albo wymuś koniec linii\
-  \ dla warunku OR."
+antennaKeywordsDescription: "Oddziel spacjami dla warunku AND, albo wymuś koniec linii
+  dla warunku OR."
 notifyAntenna: "Powiadamiaj o nowych wpisach"
 withFileAntenna: "Filtruj tylko wpisy z załączonym plikiem"
 enableServiceworker: "Włącz powiadomienia push dla twojej przeglądarki"
@@ -397,7 +396,7 @@ exploreFediverse: "Eksploruj Fediwersum"
 popularTags: "Tagi na czasie"
 userList: "Listy"
 about: "Informacje"
-aboutMisskey: "O Calckey"
+aboutIceshrimp: "O Iceshrimp"
 administrator: "Admin"
 token: "Token"
 twoStepAuthentication: "Uwierzytelnianie dwuskładnikowe"
@@ -462,8 +461,8 @@ strongPassword: "Silne hasło"
 passwordMatched: "Pasuje"
 passwordNotMatched: "Hasła nie pasują do siebie"
 signinWith: "Zaloguj się z {x}"
-signinFailed: "Nie udało się zalogować. Wprowadzona nazwa użytkownika lub hasło są\
-  \ nieprawidłowe."
+signinFailed: "Nie udało się zalogować. Wprowadzona nazwa użytkownika lub hasło są
+  nieprawidłowe."
 tapSecurityKey: "Wybierz swój klucz bezpieczeństwa"
 or: "Lub"
 language: "Język"
@@ -509,18 +508,18 @@ objectStorageBucketDesc: "Podaj nazwę „wiadra” używaną przez konfigurowan
 objectStoragePrefix: "Prefiks"
 objectStoragePrefixDesc: "Pliki będą przechowywane w katalogu z tym prefiksem."
 objectStorageEndpoint: "Punkt końcowy"
-objectStorageEndpointDesc: "Pozostaw puste jeżeli używasz AWS S3, w innym wypadku\
-  \ określ punkt końcowy jako '<host>' lub '<host>:<port>' zgodnie z instrukcjami\
-  \ usługi, której używasz."
+objectStorageEndpointDesc: "Pozostaw puste jeżeli używasz AWS S3, w innym wypadku
+  określ punkt końcowy jako '<host>' lub '<host>:<port>' zgodnie z instrukcjami usługi,
+  której używasz."
 objectStorageRegion: "Region"
-objectStorageRegionDesc: "Określ region, np. 'xx-east-1'. Jeżeli usługa której używasz\
-  \ nie zawiera rozróżnienia regionów, pozostaw to pustym lub wprowadź 'us-east-1'."
+objectStorageRegionDesc: "Określ region, np. 'xx-east-1'. Jeżeli usługa której używasz
+  nie zawiera rozróżnienia regionów, pozostaw to pustym lub wprowadź 'us-east-1'."
 objectStorageUseSSL: "Użyj SSL"
-objectStorageUseSSLDesc: "Wyłącz, jeżeli nie zamierzasz używać HTTPS dla połączenia\
-  \ z API"
+objectStorageUseSSLDesc: "Wyłącz, jeżeli nie zamierzasz używać HTTPS dla połączenia
+  z API"
 objectStorageUseProxy: "Połącz przez proxy"
-objectStorageUseProxyDesc: "Wyłącz, jeżeli nie zamierzasz używać proxy dla połączenia\
-  \ z pamięcią blokową"
+objectStorageUseProxyDesc: "Wyłącz, jeżeli nie zamierzasz używać proxy dla połączenia
+  z pamięcią blokową"
 serverLogs: "Dziennik zdarzeń"
 deleteAll: "Usuń wszystkie"
 showFixedPostForm: "Wyświetlaj formularz tworzenia wpisu w górnej części osi czasu"
@@ -547,22 +546,22 @@ sort: "Sortuj"
 ascendingOrder: "Rosnąco"
 descendingOrder: "Malejąco"
 scratchpad: "Brudnopis"
-scratchpadDescription: "Brudnopis to środowisko dla eksperymentów z AiScript. Możesz\
-  \ pisać, wykonywać i sprawdzać wyniki interakcji skryptu z Calckey."
+scratchpadDescription: "Brudnopis to środowisko dla eksperymentów z AiScript. Możesz
+  pisać, wykonywać i sprawdzać wyniki interakcji skryptu z Iceshrimp."
 output: "Wyjście"
 script: "Skrypt"
 disablePagesScript: "Wyłącz AiScript na Stronach"
 updateRemoteUser: "Aktualizuj zdalne dane o użytkowniku"
 deleteAllFiles: "Usuń wszystkie pliki"
 deleteAllFilesConfirm: "Czy na pewno chcesz usunąć wszystkie pliki?"
-removeAllFollowingDescription: "Przestań obserwować wszystkie konta z {host}. Wykonaj\
-  \ to, jeżeli instancja już nie istnieje."
+removeAllFollowingDescription: "Wykonanie tego polecenia spowoduje usunięcie wszystkich
+  kont z {host}. Zrób to, jeśli serwer np. już nie istnieje."
 userSuspended: "To konto zostało zawieszone."
 userSilenced: "Ten użytkownik został wyciszony."
 yourAccountSuspendedTitle: "To konto jest zawieszone"
-yourAccountSuspendedDescription: "To konto zostało zawieszone z powodu złamania regulaminu\
-  \ serwera lub innych podobnych. Skontaktuj się z administratorem, jeśli chciałbyś\
-  \ poznać bardziej szczegółowy powód. Proszę nie zakładać nowego konta."
+yourAccountSuspendedDescription: "To konto zostało zawieszone z powodu złamania regulaminu
+  serwera lub innych podobnych. Skontaktuj się z administratorem, jeśli chciałbyś
+  poznać bardziej szczegółowy powód. Proszę nie zakładać nowego konta."
 menu: "Menu"
 divider: "Rozdzielacz"
 addItem: "Dodaj element"
@@ -601,14 +600,14 @@ permission: "Uprawnienia"
 enableAll: "Włącz wszystko"
 disableAll: "Wyłącz wszystko"
 tokenRequested: "Przydziel dostęp do konta"
-pluginTokenRequestedDescription: "Ta wtyczka będzie mogła korzystać z ustawionych\
-  \ tu uprawnień."
+pluginTokenRequestedDescription: "Ta wtyczka będzie mogła korzystać z ustawionych
+  tu uprawnień."
 notificationType: "Rodzaj powiadomień"
 edit: "Edytuj"
 emailServer: "Serwer poczty e-mail"
 enableEmail: "Włącz dostarczanie wiadomości e-mail"
-emailConfigInfo: "Wykorzystywany do potwierdzenia adresu e-mail w trakcie rejestracji,\
-  \ lub gdy zapomnisz hasła"
+emailConfigInfo: "Wykorzystywany do potwierdzenia adresu e-mail w trakcie rejestracji,
+  lub gdy zapomnisz hasła"
 email: "Adres e-mail"
 emailAddress: "Adres e-mail"
 smtpConfig: "Konfiguracja serwera SMTP"
@@ -616,12 +615,12 @@ smtpHost: "Host"
 smtpPort: "Port"
 smtpUser: "Nazwa użytkownika"
 smtpPass: "Hasło"
-emptyToDisableSmtpAuth: "Pozostaw adres e-mail i hasło puste, aby wyłączyć weryfikację\
-  \ SMTP"
+emptyToDisableSmtpAuth: "Pozostaw adres e-mail i hasło puste, aby wyłączyć weryfikację
+  SMTP"
 smtpSecureInfo: "Wyłącz, jeżeli używasz STARTTLS"
 testEmail: "Przetestuj dostarczanie wiadomości e-mail"
 wordMute: "Wyciszenie słowa"
-instanceMute: "Wyciszone instancje"
+instanceMute: "Wyciszenie serwera"
 userSaysSomething: "{name} powiedział* coś"
 makeActive: "Aktywuj"
 display: "Wyświetlanie"
@@ -636,12 +635,12 @@ create: "Utwórz"
 notificationSetting: "Ustawienia powiadomień"
 notificationSettingDesc: "Wybierz rodzaj powiadomień do wyświetlania."
 useGlobalSetting: "Użyj globalnych ustawień"
-useGlobalSettingDesc: "Jeżeli włączone, zostaną wykorzystane ustawienia powiadomień\
-  \ Twojego konta. Jeżeli wyłączone, mogą zostać wykonane oddzielne konfiguracje."
+useGlobalSettingDesc: "Jeżeli włączone, zostaną wykorzystane ustawienia powiadomień
+  Twojego konta. Jeżeli wyłączone, mogą zostać wykonane oddzielne konfiguracje."
 other: "Inne"
 regenerateLoginToken: "Generuj token logowania ponownie"
-regenerateLoginTokenDescription: "Regeneruje token używany wewnętrznie podczas logowania.\
-  \ Zazwyczaj nie jest to konieczne. Po regeneracji wszystkie urządzenia zostaną wylogowane."
+regenerateLoginTokenDescription: "Regeneruje token używany wewnętrznie podczas logowania.
+  Zazwyczaj nie jest to konieczne. Po regeneracji wszystkie urządzenia zostaną wylogowane."
 setMultipleBySeparatingWithSpace: "Możesz ustawić wiele, oddzielając je spacjami."
 fileIdOrUrl: "ID pliku albo URL"
 behavior: "Zachowanie"
@@ -649,19 +648,19 @@ sample: "Przykład"
 abuseReports: "Zgłoszenia"
 reportAbuse: "Zgłoś"
 reportAbuseOf: "Zgłoś {name}"
-fillAbuseReportDescription: "Wypełnij szczegóły zgłoszenia. Jeżeli dotyczy ono określonego\
-  \ wpisu, uwzględnij jego adres URL."
+fillAbuseReportDescription: "Wypełnij szczegóły zgłoszenia. Jeżeli dotyczy ono określonego
+  wpisu, uwzględnij jego adres URL."
 abuseReported: "Twoje zgłoszenie zostało wysłane. Dziękujemy."
 reporteeOrigin: "Pochodzenie osoby zgłoszonej"
 reporterOrigin: "Pochodzenie osoby zgłaszającej"
-forwardReport: "Przekaż zgłoszenie do innej instancji"
+forwardReport: "Przekaż zgłoszenie do zdalnego serwera"
 send: "Wyślij"
 abuseMarkAsResolved: "Oznacz zgłoszenie jako rozwiązane"
 openInNewTab: "Otwórz w nowej karcie"
 openInSideView: "Otwórz w bocznym widoku"
 defaultNavigationBehaviour: "Domyślne zachowanie nawigacji"
 editTheseSettingsMayBreakAccount: "Edycja tych ustawień może uszkodzić Twoje konto."
-instanceTicker: "Informacje o wpisach instancji"
+instanceTicker: "Informacje o wpisach serwera"
 waitingFor: "Oczekiwanie na {x}"
 random: "Losowe"
 system: "System"
@@ -672,11 +671,11 @@ createNew: "Utwórz nowy"
 optional: "Nieobowiązkowe"
 createNewClip: "Utwórz nowy klip"
 unclip: "Odczep"
-confirmToUnclipAlreadyClippedNote: "Ten wpis jest już częścią klipu \"{name}\". Czy\
-  \ chcesz ją usunąć z tego klipu?"
+confirmToUnclipAlreadyClippedNote: "Ten wpis jest już częścią klipu \"{name}\". Czy
+  chcesz ją usunąć z tego klipu?"
 public: "Publiczny"
-i18nInfo: "Calckey jest tłumaczone na wiele języków przez wolontariuszy. Możesz pomóc\
-  \ na {link}."
+i18nInfo: "Iceshrimp jest tłumaczone na wiele języków przez wolontariuszy. Możesz pomóc
+  na {link}."
 manageAccessTokens: "Zarządzaj tokenami dostępu"
 accountInfo: "Informacje o koncie"
 notesCount: "Liczba wpisów"
@@ -695,16 +694,15 @@ no: "Nie"
 driveFilesCount: "Liczba plików na dysku"
 driveUsage: "Użycie przestrzeni dyskowej"
 noCrawle: "Odrzuć indeksowanie przez crawlery"
-noCrawleDescription: "Proś wyszukiwarki internetowe, aby nie indeksowały Twojego profilu,\
-  \ wpisów, stron itd."
-lockedAccountInfo: "Dopóki nie ustawisz widoczności wpisu na \"Obserwujący\", twoje\
-  \ wpisy będą mogli widzieć wszyscy, nawet jeśli ustawisz manualne zatwierdzanie\
-  \ obserwujących."
+noCrawleDescription: "Proś wyszukiwarki internetowe, aby nie indeksowały Twojego profilu,
+  wpisów, stron itd."
+lockedAccountInfo: "Dopóki nie ustawisz widoczności wpisu na \"Obserwujący\", twoje
+  wpisy będą mogli widzieć wszyscy, nawet jeśli ustawisz manualne zatwierdzanie obserwujących."
 alwaysMarkSensitive: "Oznacz domyślnie jako NSFW"
 loadRawImages: "Wyświetlaj zdjęcia w załącznikach w całości zamiast miniatur"
 disableShowingAnimatedImages: "Nie odtwarzaj animowanych obrazów"
-verificationEmailSent: "Wiadomość weryfikacyjna została wysłana. Odwiedź uwzględniony\
-  \ odnośnik, aby ukończyć weryfikację."
+verificationEmailSent: "Wiadomość weryfikacyjna została wysłana. Odwiedź uwzględniony
+  odnośnik, aby ukończyć weryfikację."
 notSet: "Nie ustawiono"
 emailVerified: "Adres e-mail został potwierdzony"
 noteFavoritesCount: "Liczba zakładek"
@@ -716,16 +714,16 @@ clips: "Klipy"
 experimentalFeatures: "Eksperymentalne funkcje"
 developer: "Programista"
 makeExplorable: "Pokazuj konto na stronie „Eksploruj”"
-makeExplorableDescription: "Jeżeli wyłączysz tę opcję, Twoje konto nie będzie wyświetlać\
-  \ się w sekcji „Eksploruj”."
+makeExplorableDescription: "Jeżeli wyłączysz tę opcję, Twoje konto nie będzie wyświetlać
+  się w sekcji „Eksploruj”."
 showGapBetweenNotesInTimeline: "Pokazuj odstęp między wpisami na osi czasu"
 duplicate: "Duplikuj"
 left: "Lewo"
 center: "Wyśrodkuj"
 wide: "Szerokie"
 narrow: "Wąskie"
-reloadToApplySetting: "To ustawienie zostanie zastosowane po odświeżeniu strony. Chcesz\
-  \ odświeżyć?"
+reloadToApplySetting: "To ustawienie zostanie zastosowane po odświeżeniu strony. Chcesz
+  odświeżyć?"
 needReloadToApply: "To ustawienie zostanie zastosowane po odświeżeniu strony."
 showTitlebar: "Pokazuj pasek tytułowy"
 clearCache: "Wyczyść pamięć podręczną"
@@ -756,7 +754,7 @@ capacity: "Pojemność"
 inUse: "Użyto"
 editCode: "Edytuj kod"
 apply: "Zastosuj"
-receiveAnnouncementFromInstance: "Otrzymuj powiadomienia e-mail z tej instancji"
+receiveAnnouncementFromInstance: "Otrzymuj powiadomienia e-mail z tego serwera"
 emailNotification: "Powiadomienia e-mail"
 publish: "Publikuj"
 inChannelSearch: "Szukaj na kanale"
@@ -773,21 +771,21 @@ quitFullView: "Opuść pełny widok"
 addDescription: "Dodaj opis"
 userPagePinTip: "Możesz wyświetlać wpisy w tym miejscu po wybraniu \"Przypnij do profilu\"\
   \ z menu pojedynczego wpisu."
-notSpecifiedMentionWarning: "Ten wpis zawiera wzmianki o użytkownikach niezawartych\
-  \ jako odbiorcy"
+notSpecifiedMentionWarning: "Ten wpis zawiera wzmianki o użytkownikach niezawartych
+  jako odbiorcy"
 info: "Informacje"
 userInfo: "Informacje o użykowniku"
 unknown: "Nieznane"
 onlineStatus: "Status online"
 hideOnlineStatus: "Ukryj status online"
-hideOnlineStatusDescription: "Ukrywanie statusu online ogranicza wygody niektórych\
-  \ funkcji, takich jak wyszukiwanie."
+hideOnlineStatusDescription: "Ukrywanie statusu online ogranicza wygody niektórych
+  funkcji, takich jak wyszukiwanie."
 online: "Online"
 active: "Aktywny"
 offline: "Offline"
 notRecommended: "Nie zalecane"
 botProtection: "Zabezpieczenie przed botami"
-instanceBlocking: "Zablokowane/wyciszone instancje"
+instanceBlocking: "Zarządzanie federacją"
 selectAccount: "Wybierz konto"
 switchAccount: "Przełącz konto"
 enabled: "Właczono"
@@ -816,8 +814,8 @@ emailNotConfiguredWarning: "Nie podano adresu e-mail."
 ratio: "Stosunek"
 previewNoteText: "Pokaż podgląd"
 customCss: "Własny CSS"
-customCssWarn: "Używaj tego ustawienia tylko wtedy, gdy wiesz co ono robi. Nieprawidłowe\
-  \ wpisy mogą spowodować, że klient przestanie działać poprawnie."
+customCssWarn: "Używaj tego ustawienia tylko wtedy, gdy wiesz co ono robi. Nieprawidłowe
+  wpisy mogą spowodować, że klient przestanie działać poprawnie."
 global: "Globalna"
 squareAvatars: "Wyświetlaj kwadratowe awatary"
 sent: "Wysłane"
@@ -827,14 +825,14 @@ hashtags: "Hashtag"
 troubleshooting: "Rozwiązywanie problemów"
 useBlurEffect: "Użyj efektów rozmycia w UI"
 learnMore: "Dowiedz się więcej"
-misskeyUpdated: "Calckey zostało zaktualizowane!"
+iceshrimpUpdated: "Iceshrimp zostało zaktualizowane!"
 whatIsNew: "Pokaż zmiany"
 translate: "Przetłumacz"
 translatedFrom: "Przetłumaczone z {x}"
 accountDeletionInProgress: "Trwa usuwanie konta"
 usernameInfo: "Nazwa, która identyfikuje Twoje konto spośród innych na tym serwerze.\
-  \  Możesz użyć alfabetu (a~z, A~Z), cyfr (0~9) lub podkreślników (_). Nazwy użytkownika\
-  \ nie mogą być później zmieniane."
+  \  Możesz użyć alfabetu (a~z, A~Z), cyfr (0~9) lub podkreślników (_). Nazwy użytkownika
+  nie mogą być później zmieniane."
 aiChanMode: "Ai-chan w klasycznym interfejsie"
 keepCw: "Zostaw ostrzeżenia o zawartości"
 pubSub: "Konta Pub/Sub"
@@ -848,14 +846,14 @@ filter: "Filtr"
 controlPanel: "Panel sterowania"
 manageAccounts: "Zarządzaj kontami"
 makeReactionsPublic: "Ustaw historię reakcji jako publiczną"
-makeReactionsPublicDescription: "To spowoduje, że lista wszystkich Twoich dotychczasowych\
-  \ reakcji będzie publicznie widoczna."
-classic: "Klasyczny"
+makeReactionsPublicDescription: "To spowoduje, że lista wszystkich Twoich dotychczasowych
+  reakcji będzie publicznie widoczna."
+classic: "Wyśrodkowany"
 muteThread: "Wycisz wątek"
 unmuteThread: "Wyłącz wyciszenie wątku"
 ffVisibility: "Widoczność obserwowanych/obserwujących"
-ffVisibilityDescription: "Pozwala skonfigurować, kto może zobaczyć, kogo obserwujesz\
-  \ i kto Cię obserwuje."
+ffVisibilityDescription: "Pozwala skonfigurować, kto może zobaczyć, kogo obserwujesz
+  i kto Cię obserwuje."
 continueThread: "Kontynuuj wątek"
 deleteAccountConfirm: "Spowoduje to nieodwracalne usunięcie Twojego konta. Kontynuować?"
 incorrectPassword: "Nieprawidłowe hasło."
@@ -863,8 +861,8 @@ voteConfirm: "Potwierdzić swój głos na \"{choice}\"?"
 hide: "Ukryj"
 leaveGroup: "Opuść grupę"
 leaveGroupConfirm: "Czy na pewno chcesz opuścić \"{name}\"?"
-useDrawerReactionPickerForMobile: "Wyświetlaj wybornik reakcji jako szufladę na urządzeniach\
-  \ mobilnych"
+useDrawerReactionPickerForMobile: "Wyświetlaj wybornik reakcji jako szufladę na urządzeniach
+  mobilnych"
 welcomeBackWithName: "Witaj z powrotem, {name}"
 clickToFinishEmailVerification: "Kliknij [{ok}], aby zakończyć weryfikację e-mail."
 overridedDeviceKind: "Typ urządzenia"
@@ -887,22 +885,22 @@ type: "Typ"
 speed: "Prędkość"
 localOnly: "Tylko lokalne"
 failedToUpload: "Przesyłanie nie powiodło się"
-cannotUploadBecauseInappropriate: "Nie można przesłać tego pliku, ponieważ jego części\
-  \ zostały wykryte jako potencjalnie nieodpowiednie."
-cannotUploadBecauseNoFreeSpace: "Przesyłanie nie powiodło się z powodu braku miejsca\
-  \ na dysku."
+cannotUploadBecauseInappropriate: "Nie można przesłać tego pliku, ponieważ jego części
+  zostały wykryte jako potencjalnie nieodpowiednie."
+cannotUploadBecauseNoFreeSpace: "Przesyłanie nie powiodło się z powodu braku miejsca
+  na dysku."
 beta: "Beta"
 enableAutoSensitive: "Automatyczne oznaczanie NSFW"
-enableAutoSensitiveDescription: "Umożliwia automatyczne wykrywanie i oznaczanie zawartości\
-  \ NSFW za pomocą uczenia maszynowego. Nawet jeśli ta opcja jest wyłączona, może\
-  \ być włączona na całej instancji."
+enableAutoSensitiveDescription: "Umożliwia automatyczne wykrywanie i oznaczanie zawartości
+  NSFW za pomocą uczenia maszynowego tam, gdzie to możliwe. Nawet jeśli ta opcja jest
+  wyłączona, może być włączona na całym serwerze."
 navbar: "Pasek nawigacyjny"
 account: "Konta"
 move: "Przenieś"
 _sensitiveMediaDetection:
-  description: "Zmniejsza wysiłek związany z moderacją serwera dzięki automatycznemu\
-    \ rozpoznawaniu zawartości NSFW za pomocą uczenia maszynowego. To nieznacznie\
-    \ zwiększy obciążenie serwera."
+  description: "Zmniejsza wysiłek związany z moderacją serwera dzięki automatycznemu
+    rozpoznawaniu zawartości NSFW za pomocą uczenia maszynowego. To nieznacznie zwiększy
+    obciążenie serwera."
   setSensitiveFlagAutomatically: "Oznacz jako NSFW"
   sensitivity: Czułość wykrywania
   analyzeVideosDescription: Analizuje filmy, w dodatku do zdjęć. Zwiększy to nieznacznie
@@ -926,15 +924,15 @@ _ffVisibility:
 _signup:
   almostThere: "Prawie na miejscu"
   emailAddressInfo: "Podaj swój adres e-mail. Nie zostanie on upubliczniony."
-  emailSent: "E-mail z potwierdzeniem został wysłany na Twój adres e-mail ({email}).\
-    \ Kliknij dołączony link, aby dokończyć tworzenie konta."
+  emailSent: "E-mail z potwierdzeniem został wysłany na Twój adres e-mail ({email}).
+    Kliknij dołączony link, aby dokończyć tworzenie konta."
 _accountDelete:
   accountDelete: "Usuń konto"
-  mayTakeTime: "Ponieważ usuwanie konta jest procesem wymagającym dużej ilości zasobów,\
-    \ jego ukończenie może zająć trochę czasu, w zależności od ilości utworzonej zawartości\
-    \ i liczby przesłanych plików."
-  sendEmail: "Po zakończeniu usuwania konta na adres e-mail zarejestrowany na tym\
-    \ koncie zostanie wysłana wiadomość e-mail."
+  mayTakeTime: "Ponieważ usuwanie konta jest procesem wymagającym dużej ilości zasobów,
+    jego ukończenie może zająć trochę czasu, w zależności od ilości utworzonej zawartości
+    i liczby przesłanych plików."
+  sendEmail: "Po zakończeniu usuwania konta na adres e-mail zarejestrowany na tym
+    koncie zostanie wysłana wiadomość e-mail."
   requestAccountDelete: "Poproś o usunięcie konta"
   started: "Usuwanie się rozpoczęło."
   inProgress: "Usuwanie jest obecnie w toku"
@@ -942,12 +940,12 @@ _ad:
   back: "Wróć"
   reduceFrequencyOfThisAd: "Pokazuj tę reklamę rzadziej"
 _forgotPassword:
-  enterEmail: "Wpisz adres e-mail użyty do rejestracji. Zostanie do niego wysłany\
-    \ link, za pomocą którego możesz zresetować hasło."
-  ifNoEmail: "Jeżeli nie podano adresu e-mail podczas rejestracji, skontaktuj się\
-    \ z administratorem zamiast tego."
-  contactAdmin: "Jeżeli Twoja instancja nie obsługuje adresów e-mail, skontaktuj się\
-    \ zamiast tego z administratorem, aby zresetować hasło."
+  enterEmail: "Wpisz adres e-mail użyty do rejestracji. Zostanie do niego wysłany
+    link, za pomocą którego możesz zresetować hasło."
+  ifNoEmail: "Jeśli nie użyłeś adresu e-mail podczas rejestracji, skontaktuj się z
+    administratorem serwera."
+  contactAdmin: "Ten serwer nie obsługuje adresów e-mail, zamiast tego skontaktuj
+    się z administratorem serwera, aby zresetować hasło."
 _gallery:
   my: "Moja galeria"
   liked: "Polubione wpisy"
@@ -970,10 +968,10 @@ _preferencesBackups:
   save: "Zapisz zmiany"
   inputName: "Proszę podać nazwę dla tej kopii zapasowej"
   cannotSave: "Zapisanie nie powiodło się"
-  nameAlreadyExists: "Kopia zapasowa o nazwie \"{name}\" już istnieje. Proszę podać\
-    \ inną nazwę."
-  applyConfirm: "Czy na pewno chcesz zastosować kopię zapasową \"{name}\" na tym urządzeniu?\
-    \ Istniejące ustawienia tego urządzenia zostaną nadpisane."
+  nameAlreadyExists: "Kopia zapasowa o nazwie \"{name}\" już istnieje. Proszę podać
+    inną nazwę."
+  applyConfirm: "Czy na pewno chcesz zastosować kopię zapasową \"{name}\" na tym urządzeniu?
+    Istniejące ustawienia tego urządzenia zostaną nadpisane."
   saveConfirm: "Zapisać kopię zapasową jako {name}?"
   deleteConfirm: "Usunąć kopię zapasową {name}?"
   renameConfirm: "Zmienić nazwę kopii zapasowej z \"{old}\" na \"{new}\"?"
@@ -989,16 +987,16 @@ _registry:
   keys: "Klucz"
   domain: "Domena"
   createKey: "Utwórz klucz"
-_aboutMisskey:
-  about: "Calckey jest forkiem Misskey utworzonym przez ThatOneCalculator, rozwijanym\
-    \ od 2022."
+_aboutIceshrimp:
+  about: "Iceshrimp jest forkiem Iceshrimp utworzonym przez ThatOneCalculator, rozwijanym
+    od 2022."
   contributors: "Główni twórcy"
   allContributors: "Wszyscy twórcy"
   source: "Kod źródłowy"
-  translation: "Tłumacz Calckey"
-  donate: "Przekaż darowiznę na Calckey"
-  morePatrons: "Naprawdę doceniam wsparcie ze strony wielu niewymienionych tu osób.\
-    \ Dziękuję! \U0001F970"
+  translation: "Tłumacz Iceshrimp"
+  donate: "Przekaż darowiznę na Iceshrimp"
+  morePatrons: "Naprawdę doceniam wsparcie ze strony wielu niewymienionych tu osób.
+    Dziękuję! 🥰"
   patrons: "Wspierający"
 _nsfw:
   respect: "Ukrywaj media NSFW"
@@ -1006,13 +1004,13 @@ _nsfw:
   force: "Ukrywaj wszystkie media"
 _mfm:
   cheatSheet: "Ściąga MFM"
-  intro: "MFM jest językiem składniowym używanym przez m.in. Calckey, forki *key (w\
-    \ tym Calckey), oraz Akkomę, który może być użyty w wielu miejscach. Tu znajdziesz\
-    \ listę wszystkich możliwych elementów składni MFM."
-  dummy: "Calckey rozszerza świat Fediwersum"
+  intro: "MFM jest językiem składniowym używanym przez m.in. Iceshrimp, forki *key (w
+    tym Iceshrimp), oraz Akkomę, który może być użyty w wielu miejscach. Tu znajdziesz
+    listę wszystkich możliwych elementów składni MFM."
+  dummy: "Iceshrimp rozszerza świat Fediwersum"
   mention: "Wspomnij"
-  mentionDescription: "Używając znaku @ i nazwy użytkownika, możesz określić danego\
-    \ użytkownika."
+  mentionDescription: "Używając znaku @ i nazwy użytkownika, możesz określić danego
+    użytkownika."
   hashtag: "Hashtag"
   hashtagDescription: "Używając kratki i tekstu, możesz określić hashtag."
   url: "Adres URL"
@@ -1027,14 +1025,14 @@ _mfm:
   centerDescription: "Wyśrodkowuje zawartość."
   inlineCode: "Kod (w wierszu)"
   blockCode: "Kod (blok)"
-  blockCodeDescription: "Wyświetla kod z podświetlaną składnią składający się z wielu\
-    \ linii."
+  blockCodeDescription: "Wyświetla kod z podświetlaną składnią składający się z wielu
+    linii."
   blockMath: "Matematyka (Blok)"
   quote: "Cytuj"
   quoteDescription: "Wyświetla treść jako cytat."
   emoji: "Niestandardowe emoji"
-  emojiDescription: "Otaczając nazwę niestandardowego emoji dwukropkami, możesz użyć\
-    \ niestandardowego emoji."
+  emojiDescription: "Otaczając nazwę niestandardowego emoji dwukropkami, możesz użyć
+    niestandardowego emoji."
   search: "Szukaj"
   searchDescription: "Wyświetla pole wyszukiwania z wcześniej wpisanym tekstem."
   flip: "Odwróć"
@@ -1078,7 +1076,7 @@ _mfm:
   background: Kolor tła
   backgroundDescription: Zmień kolor tła tekstu.
   foregroundDescription: Zmień kolor pierwszoplanowy tekstu.
-  positionDescription: Przesuń treść o określoną odległość.
+  positionDescription: Przesuń zawartość o określoną wartość.
   position: Pozycjonuj
   foreground: Kolor pierwszoplanowy
   scaleDescription: Skaluj treść o określoną wielkość.
@@ -1155,8 +1153,8 @@ _theme:
   darken: "Ściemnij"
   lighten: "Rozjaśnij"
   inputConstantName: "Wprowadź nazwę stałej"
-  importInfo: "Jeżeli wprowadzisz tu kod motywu, możesz zaimportować go w edytorze\
-    \ motywu"
+  importInfo: "Jeżeli wprowadzisz tu kod motywu, możesz zaimportować go w edytorze
+    motywu"
   deleteConstantConfirm: "Czy na pewno chcesz usunąć stałą {const}?"
   keys:
     accent: "Akcent"
@@ -1226,46 +1224,46 @@ _time:
   hour: "godz."
   day: "dzień"
 _tutorial:
-  title: "Jak korzystać z Calckey"
+  title: "Jak korzystać z Iceshrimp"
   step1_1: "Witamy!"
   step1_2: "Pozwól, że Cię skonfigurujemy. Będziesz działać w mgnieniu oka!"
   step2_1: "Najpierw, proszę wypełnij swój profil."
-  step2_2: "Podanie kilku informacji o tym, kim jesteś, ułatwi innym stwierdzenie,\
-    \ czy chcą zobaczyć Twoje wpisy lub śledzić Cię."
+  step2_2: "Podanie kilku informacji o tym, kim jesteś, ułatwi innym stwierdzenie,
+    czy chcą zobaczyć Twoje wpisy lub śledzić Cię."
   step3_1: "Pora znaleźć osoby do śledzenia!"
-  step3_2: "Twoje domowe i społeczne linie czasu opierają się na tym, kogo śledzisz,\
-    \ więc spróbuj śledzić kilka kont, aby zacząć.\nKliknij kółko z plusem w prawym\
-    \ górnym rogu profilu, aby go śledzić."
+  step3_2: "Twoje domowe i społeczne linie czasu opierają się na tym, kogo śledzisz,
+    więc spróbuj śledzić kilka kont, aby zacząć.\nKliknij kółko z plusem w prawym
+    górnym rogu profilu, aby go śledzić."
   step4_1: "Pozwól, że zabierzemy Cię tam."
-  step4_2: "W pierwszym wpisie możesz się przedstawić lub wysłać powitanie - \"Witaj,\
-    \ świecie!\""
+  step4_2: "W pierwszym wpisie możesz się przedstawić lub wysłać powitanie - \"Witaj,
+    świecie!\""
   step5_1: "Osie czasu, wszędzie widzę osie czasu!"
   step5_2: "Twoja instancja ma włączone {timelines} różne osie czasu."
-  step5_3: "Główna {icon} oś czasu to miejsce, w którym możesz zobaczyć posty od użytkowników\
-    \ których obserwujesz, oraz innych użytkowników z tej instancji. Jeśli wolisz,\
-    \ by główna oś czasu pokazywała tylko posty od użytkowników których obserwujesz,\
-    \ możesz łatwo to zmienić w ustawieniach!"
-  step5_4: "Lokalna {icon} oś czasu to miejsce, w którym możesz zobaczyć posty od\
-    \ wszystkich innych osób na tej instancji."
-  step5_5: "Społeczna {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z instancji,\
-    \ które admini polecają."
-  step5_6: "Polecana {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z instancji,\
-    \ które admini polecają."
-  step5_7: "Globalna {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z każdej\
-    \ innej połączonej instancji."
+  step5_3: "Główna {icon} oś czasu to miejsce, w którym możesz zobaczyć posty od użytkowników
+    których obserwujesz, oraz innych użytkowników z tej instancji. Jeśli wolisz, by
+    główna oś czasu pokazywała tylko posty od użytkowników których obserwujesz, możesz
+    łatwo to zmienić w ustawieniach!"
+  step5_4: "Lokalna {icon} oś czasu to miejsce, w którym możesz zobaczyć posty od
+    wszystkich innych osób na tej instancji."
+  step5_5: "Społeczna {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z instancji,
+    które admini polecają."
+  step5_6: "Polecana {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z instancji,
+    które admini polecają."
+  step5_7: "Globalna {icon} oś czasu to miejsce, gdzie możesz zobaczyć posty z każdej
+    innej połączonej instancji."
   step6_1: "Więc, czym to jest to miejsce?"
-  step6_2: "Cóż, nie dołączył*ś po prostu do Calckey. Dołączył*ś do portalu do Fediverse,\
-    \ połączonej sieci tysięcy serwerów, zwanych instancjami."
-  step6_3: "Każdy serwer działa w inny sposób, i nie wszystkie serwery używają Calckey.\
-    \ Ten jednak używa! Jest to trochę skomplikowane, ale w krótkim czasie załapiesz\
-    \ o co chodzi."
+  step6_2: "Cóż, nie dołączył*ś po prostu do Iceshrimp. Dołączył*ś do portalu do Fediverse,
+    połączonej sieci tysięcy serwerów, zwanych instancjami."
+  step6_3: "Każdy serwer działa w inny sposób, i nie wszystkie serwery używają Iceshrimp.
+    Ten jednak używa! Jest to trochę skomplikowane, ale w krótkim czasie załapiesz
+    o co chodzi."
   step6_4: "A teraz idź, odkrywaj i baw się dobrze!"
 _2fa:
   alreadyRegistered: "Zarejestrowałeś już urządzenie do uwierzytelniania dwuskładnikowego."
-  registerDevice: "Zarejestruj nowe urządzenie"
-  registerKey: "Zarejestruj klucz bezpieczeństwa"
-  step1: "Najpierw, zainstaluj aplikację uwierzytelniającą (taką jak {a} lub {b})\
-    \ na swoim urządzeniu."
+  registerTOTP: "Zarejestruj nowe urządzenie"
+  registerSecurityKey: "Zarejestruj klucz bezpieczeństwa"
+  step1: "Najpierw, zainstaluj aplikację uwierzytelniającą (taką jak {a} lub {b})
+    na swoim urządzeniu."
   step2: "Następnie, zeskanuje kod QR z ekranu."
   step3: "Wprowadź token podany w aplikacji, aby ukończyć konfigurację."
   step4: "Od teraz, przy każdej próbie logowania otrzymasz prośbę o token logowania."
@@ -1405,8 +1403,8 @@ _profile:
   youCanIncludeHashtags: "Możesz umieścić hashtagi w swoim opisie."
   metadata: "Dodatkowe informacje"
   metadataEdit: "Edytuj dodatkowe informacje"
-  metadataDescription: "Możesz wyświetlać do czterech sekcji dodatkowych informacji\
-    \ na swoim profilu."
+  metadataDescription: "Możesz wyświetlać do czterech sekcji dodatkowych informacji
+    na swoim profilu. Możesz dodać tag {a} lub tag {l} z {rel}, aby zweryfikować link w swoim profilu!"
   metadataLabel: "Etykieta"
   metadataContent: "Treść"
   changeAvatar: "Zmień awatar"
@@ -1816,12 +1814,12 @@ objectStorageSetPublicRead: Ustaw "public-read" podczas wysyłania
 removeAllFollowing: Przestań obserwować wszystkich obserwowanych użytkowników
 smtpSecure: Użyj implicit SSL/TLS dla połączeń SMTP
 secureMode: Tryb bezpieczny (Authorized Fetch)
-instanceSecurity: Bezpieczeństwo instancji
+instanceSecurity: Bezpieczeństwo serwera
 privateMode: Tryb prywatny
-allowedInstances: Dopuszczone instancje
+allowedInstances: Dopuszczone serwery
 recommended: Polecane
-allowedInstancesDescription: Hosty instancji które mają być dopuszczone do federacji,
-  każdy separowany nową linią (dotyczy tylko trybu prywatnego).
+allowedInstancesDescription: Hosty serwerów, które mają być dopuszczone do federacji,
+  każdy oddzielony nowym wierszem (dotyczy tylko trybu prywatnego).
 seperateRenoteQuote: Oddziel przyciski podbicia i cytowania
 refreshInterval: 'Częstotliwość aktualizacji '
 slow: Wolna
@@ -1847,34 +1845,34 @@ moveToLabel: 'Konto na które się przenosisz:'
 moveAccount: Przenieś konto!
 moveAccountDescription: Ten proces jest nieodwracalny. Upewnij się, że utworzył*ś
   alias dla tego konta na nowym koncie, przed rozpoczęciem. Proszę wpisz tag konta
-  w formacie @person@instance.com
+  w formacie @osoba@serwer.com
 moveFrom: Przejdź ze starego konta na obecne
 moveFromLabel: 'Konto które przenosisz:'
-showUpdates: Pokaż pop-up po aktualizacji Calckey
+showUpdates: Pokaż pop-up po aktualizacji Iceshrimp
 swipeOnDesktop: Zezwól na przeciąganie w stylu mobilnym na desktopie
 moveFromDescription: To utworzy alias twojego starego konta, w celu umożliwienia migracji
   z tamtego konta na to. Zrób to ZANIM rozpoczniesz przenoszenie się z tamtego konta.
-  Proszę wpisz tag konta w formacie @person@instance.com
-migrationConfirm: "Czy jesteś absolutnie pewn* tego, że chcesz przenieść swoje konto\
-  \ na {account}? Tego działania nie można odwrócić. Nieodwracalnie stracisz możliwość\
-  \ normalnego korzystania z konta.\nUpewnij się, że to konto zostało ustawione jako\
-  \ konto z którego się przenosisz."
+  Proszę wpisz tag konta w formacie @osoba@serwer.com
+migrationConfirm: "Czy jesteś absolutnie pewn* tego, że chcesz przenieść swoje konto
+  na {account}? Tego działania nie można odwrócić. Nieodwracalnie stracisz możliwość
+  normalnego korzystania z konta.\nUpewnij się, że to konto zostało ustawione jako
+  konto z którego się przenosisz."
 noThankYou: Nie, dziękuję
-addInstance: Dodaj instancję
+addInstance: Dodaj serwer
 renoteMute: Wycisz podbicia
 renoteUnmute: Odcisz podbicia
 flagSpeakAsCat: Mów jak kot
 flagSpeakAsCatDescription: Twoje posty zostaną znya-izowane, gdy w trybie kota
-selectInstance: Wybierz instancję
-noInstances: Brak instancji
+selectInstance: Wybierz serwer
+noInstances: Brak serwerów
 keepOriginalUploadingDescription: Zapisuje oryginalne zdjęcie. Jeśli wyłączone, wersja
   do wyświetlania w sieci zostanie wygenerowana podczas wysłania.
-antennaInstancesDescription: Wypisz jednego hosta instancji na linię
+antennaInstancesDescription: Wymień jeden host serwera w każdym wierszu
 regexpError: Błąd regularnego wyrażenia
 regexpErrorDescription: 'Wystąpił błąd w regularnym wyrażeniu znajdującym się w linijce
   {line} Twoich {tab} wyciszeń słownych:'
-forwardReportIsAnonymous: Zamiast Twojego konta, anonimowe konto systemowe zostanie
-  wyświetlone na zdalnej instancji jako zgłaszający.
+forwardReportIsAnonymous: Zamiast twojego konta, anonimowe konto systemowe będzie
+  wyświetlane jako zgłaszający na zdalnym serwerze.
 breakFollowConfirm: Czy na pewno chcesz usunąć obserwującego?
 instanceDefaultThemeDescription: Wpisz kod motywu w formacie obiektowym.
 mutePeriod: Długość wyciszenia
@@ -1888,7 +1886,7 @@ pushNotification: Powiadomienia push
 subscribePushNotification: Włącz powiadomienia push
 unsubscribePushNotification: Wyłącz powiadomienia push
 pushNotificationAlreadySubscribed: Powiadomienia push są już włączone
-pushNotificationNotSupported: Twoja przeglądarka lub instancja nie obsługuje powiadomień
+pushNotificationNotSupported: Twoja przeglądarka lub serwer nie obsługuje powiadomień
   push
 sendPushNotificationReadMessage: Usuń powiadomienia push, gdy odpowiednie powiadomienia
   lub wiadomości zostaną odczytane
@@ -1898,7 +1896,8 @@ sendPushNotificationReadMessageCaption: Powiadomienie zawierające tekst "{empty
 defaultReaction: Domyślna reakcja emoji dla wychodzących i przychodzących wpisów
 license: Licencja
 indexPosts: Indeksuj wpisy
-indexFrom: Indeksuj wpisy od ID (zostaw puste dla indeksowania wszystkich wpisów)
+indexFrom: Indeksuj wpisy od ID
+indexFromDescription: Zostaw puste dla indeksowania wszystkich wpisów
 indexNotice: Indeksuję. Zapewne zajmie to chwilę, nie restartuj serwera przez co najmniej
   godzinę.
 customKaTeXMacro: Niestandardowe makra KaTeX
@@ -1912,21 +1911,20 @@ proxyAccountDescription: Konto proxy jest kontem które w określonych sytuacjac
   do listy, oraz żaden lokalny użytkownik nie obserwuje tego konta, aktywność owego
   użytkownika nie zostanie dostarczona na oś czasu. W takim razie, użytkownika zaobserwuje
   konto proxy.
-objectStorageBaseUrlDesc: "URL stosowany jako odniesienie. Podaj URL twojego CDN,\
-  \ albo proxy, jeśli używasz któregokolwiek.\nDla S3 użyj 'https://<bucket>.s3.amazonaws.com',\
-  \ a dla GCS i jego odpowiedników użyj 'https://storage.googleapis.com/<bucket>',\
-  \ itd."
-sendErrorReportsDescription: "Gdy ta opcja jest włączona, szczegółowe informacje o\
-  \ błędach będą udostępnianie z Calckey gdy wystąpi problem, pomagając w ulepszaniu\
-  \ Calckey.\nZawrze to informacje takie jak wersja twojego systemu operacyjnego,\
-  \ przeglądarki, Twoja aktywność na Calckey itd."
-privateModeInfo: Jeśli włączone, tylko dopuszczone instancje będą mogły federować
-  z Twoją instancją. Wszystkie posty będą jedynie widoczne na Twojej instancji.
+objectStorageBaseUrlDesc: "URL stosowany jako odniesienie. Podaj URL twojego CDN,
+  albo proxy, jeśli używasz któregokolwiek.\nDla S3 użyj 'https://<bucket>.s3.amazonaws.com',
+  a dla GCS i jego odpowiedników użyj 'https://storage.googleapis.com/<bucket>', itd."
+sendErrorReportsDescription: "Gdy ta opcja jest włączona, szczegółowe informacje o
+  błędach będą udostępnianie z Iceshrimp gdy wystąpi problem, pomagając w ulepszaniu
+  Iceshrimp.\nZawrze to informacje takie jak wersja twojego systemu operacyjnego, przeglądarki,
+  Twoja aktywność na Iceshrimp itd."
+privateModeInfo: Gdy ta opcja jest włączona, tylko serwery z białej listy mogą federować
+  się z twoim serwerem. Wszystkie posty będą ukryte publicznie.
 oneHour: Godzina
 oneDay: Dzień
 oneWeek: Tydzień
-recommendedInstances: Polecane instancje
-recommendedInstancesDescription: Polecane instancje, mające pojawić się w odpowiedniej
+recommendedInstances: Polecane serwery
+recommendedInstancesDescription: Polecane serwery, mające pojawić się w odpowiedniej
   osi czasu, oddzielane nowymi liniami. NIE dodawaj “https://”, TYLKO samą domenę.
 rateLimitExceeded: Przekroczono ratelimit
 cropImage: Kadruj zdjęcie
@@ -1936,7 +1934,9 @@ noEmailServerWarning: Serwer email nie jest skonfigurowany.
 thereIsUnresolvedAbuseReportWarning: Istnieją nierozwiązane zgłoszenia.
 check: Sprawdź
 driveCapOverrideLabel: Zmień pojemność dysku dla tego użytkownika
-isSystemAccount: Konto założone i automatycznie zarządzane przez system.
+isSystemAccount: To konto jest tworzone i automatycznie obsługiwane przez system.
+  Nie moderuj, nie edytuj, nie usuwaj, ani w żaden inny sposób nie ingeruj w to konto,
+  bowiem może to uszkodzić twój serwer.
 typeToConfirm: Wpisz {x} by potwierdzić
 deleteAccount: Usuń konto
 document: Dokumentacja
@@ -1970,7 +1970,7 @@ caption: Auto opis
 splash: Splash screen
 updateAvailable: Może być dostępna aktualizacja!
 logoImageUrl: URL grafiki loga
-showAdminUpdates: Wskaż, że jest dostępna nowa wersja Calckey (tylko dla adminów)
+showAdminUpdates: Wskaż, że jest dostępna nowa wersja Iceshrimp (tylko dla adminów)
 hiddenTags: Ukryte hashtagi
 userSaysSomethingReason: '{name} powiedział* {reason}'
 customKaTeXMacroDescription: 'Skonfiguruj makra, aby łatwo pisać wyrażenia matematyczne!
@@ -1982,34 +1982,51 @@ customKaTeXMacroDescription: 'Skonfiguruj makra, aby łatwo pisać wyrażenia ma
   nie można przerwać linii w środku definicji. Nieprawidłowe linie są po prostu ignorowane.
   Obsługiwane są tylko proste funkcje podstawiania łańcuchów; nie można tu stosować
   zaawansowanej składni, takiej jak warunkowe rozgałęzienia.'
-secureModeInfo: Nie odsyłaj bez dowodu przy żądaniu z innych instancji.
+secureModeInfo: W przypadku żądań z innych serwerów nie odsyłaj bez dowodu.
 preferencesBackups: Kopie zapasowe ustawień
 undeck: Opuść tablicę
 reporter: Osoba zgłaszająca
-instanceDefaultDarkTheme: Domyślny ciemny motyw instancji
+instanceDefaultDarkTheme: Domyślny ciemny motyw serwera
 lastCommunication: Ostatnie połączenie
 emailRequiredForSignup: Wymagaj adresu email przy rejestracji
-themeColor: Kolor znacznika instancji
-instanceDefaultLightTheme: Domyślny jasny motyw instancji
+themeColor: Kolor znacznika serwera
+instanceDefaultLightTheme: Domyślny jasny motyw serwera
 enableEmojiReactions: Włącz reakcje emoji
 showEmojisInReactionNotifications: Pokazuj emoji w powiadomieniach reakcyjnych
 apps: Aplikacje
-silenceThisInstance: Wycisz tę instancję
-silencedInstances: Wyciszone instancje
+silenceThisInstance: Wycisz ten serwer
+silencedInstances: Wyciszone serwery
 deleted: Usunięte
 editNote: Edytuj wpis
-edited: Edytowany
+edited: 'Edytowano o {date} {time}'
 silenced: Wyciszony
 findOtherInstance: Znajdź inny serwer
 userSaysSomethingReasonReply: '{name} odpowiedział na wpis zawierający {reason}'
 userSaysSomethingReasonRenote: '{name} podbił post zawierający {reason}'
 signupsDisabled: Rejestracja na tym serwerze jest obecnie zamknięta, ale zawsze możesz
-  się zapisać na innym! Jeśli masz kod zaproszeniowy na ten serwer, wpisz go poniżej.
+  zarejestrować się na innym serwerze! Jeśli masz kod zaproszenia na ten serwer, wpisz
+  go poniżej.
 userSaysSomethingReasonQuote: '{name} zacytował wpis zawierający {reason}'
-silencedInstancesDescription: Wymień nazwy domenowe instancji, które chcesz wyciszyć.
-  Profile w wyciszonych instancjach są traktowane jako "Wyciszony", mogą jedynie wysyłać
-  prośby obserwacji, i nie mogą oznaczać w wzmiankach profili lokalnych jeśli nie
-  są obserwowane. To nie będzie miało wpływu na zablokowane instancje.
+silencedInstancesDescription: Wypisz nazwy hostów serwerów, które chcesz wyciszyć.
+  Konta na wymienionych serwerach są traktowane jako "Wyciszone", mogą jedynie wysyłać
+  prośby obserwacji i nie mogą oznaczać we wzmiankach profili lokalnych jeśli nie
+  są obserwowane. To nie będzie miało wpływu na zablokowane serwery.
 cannotUploadBecauseExceedsFileSizeLimit: Ten plik nie mógł być przesłany, ponieważ
   jego wielkość przekracza dozwolony limit.
 sendModMail: Wyślij Powiadomienie Moderacyjne
+searchPlaceholder: Szukaj Iceshrimp
+jumpToPrevious: Przejdź do poprzedniej sekcji
+listsDesc: Listy umożliwiają tworzenie osi czasu z określonymi użytkownikami. Dostęp
+  do nich można uzyskać na stronie osi czasu.
+accessibility: Dostępność
+selectChannel: Wybierz kanał
+antennasDesc: "Anteny wyświetlają nowe posty spełniające ustawione przez Ciebie kryteria!\n
+  Dostęp do nich można uzyskać ze strony osi czasu."
+expandOnNoteClick: Otwórz post przy kliknięciu
+expandOnNoteClickDesc: Jeśli opcja ta jest wyłączona, nadal będzie można otwierać
+  posty w menu po kliknięciu prawym przyciskiem myszy lub klikając znacznik czasowy.
+channelFederationWarn: Kanały nie są jeszcze federowane z innymi serwerami
+newer: nowsze
+older: starsze
+cw: Ostrzeżenie zawartości
+removeReaction: Usuń reakcję

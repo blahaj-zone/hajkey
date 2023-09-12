@@ -47,12 +47,14 @@ export default define(meta, paramDef, async (ps, user) => {
 	});
 
 	// Check if already muting
-	const exist = await RenoteMutings.findOneBy({
-		muterId: muter.id,
-		muteeId: mutee.id,
+	const exist = await RenoteMutings.exist({
+		where: {
+			muterId: muter.id,
+			muteeId: mutee.id,
+		},
 	});
 
-	if (exist != null) {
+	if (exist) {
 		throw new ApiError(meta.errors.alreadyMuting);
 	}
 

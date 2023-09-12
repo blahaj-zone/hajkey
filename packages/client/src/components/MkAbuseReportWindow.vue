@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import * as Misskey from "calckey-js";
+import type * as Misskey from "iceshrimp-js";
 import XWindow from "@/components/MkWindow.vue";
 import MkTextarea from "@/components/form/textarea.vue";
 import MkButton from "@/components/MkButton.vue";
@@ -67,7 +67,7 @@ function send() {
 			userId: props.user.id,
 			comment: comment.value,
 		},
-		undefined
+		undefined,
 	).then((res) => {
 		os.alert({
 			type: "success",

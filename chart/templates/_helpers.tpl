@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "calckey.name" -}}
+{{- define "firefish.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "calckey.fullname" -}}
+{{- define "firefish.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "calckey.chart" -}}
+{{- define "firefish.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "calckey.labels" -}}
-helm.sh/chart: {{ include "calckey.chart" . }}
-{{ include "calckey.selectorLabels" . }}
+{{- define "firefish.labels" -}}
+helm.sh/chart: {{ include "firefish.chart" . }}
+{{ include "firefish.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "calckey.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "calckey.name" . }}
+{{- define "firefish.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "firefish.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "calckey.serviceAccountName" -}}
+{{- define "firefish.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "calckey.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "firefish.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -65,31 +65,31 @@ Create the name of the service account to use
 Create a default fully qualified name for dependent services.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "calckey.elasticsearch.fullname" -}}
+{{- define "firefish.elasticsearch.fullname" -}}
 {{- printf "%s-%s" .Release.Name "elasticsearch" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "calckey.redis.fullname" -}}
+{{- define "firefish.redis.fullname" -}}
 {{- printf "%s-%s" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "calckey.postgresql.fullname" -}}
+{{- define "firefish.postgresql.fullname" -}}
 {{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 config/default.yml content
 */}}
-{{- define "calckey.configDir.default.yml" -}}
+{{- define "firefish.configDir.default.yml" -}}
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Calckey configuration
+# Firefish configuration
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 #   ┌─────┐
 #───┘ URL └─────────────────────────────────────────────────────
 
 # Final accessible URL seen by a user.
-url: "https://{{ .Values.calckey.domain }}/"
+url: "https://{{ .Values.firefish.domain }}/"
 
 # ONCE YOU HAVE STARTED THE INSTANCE, DO NOT CHANGE THE
 # URL SETTINGS AFTER THAT!
@@ -118,7 +118,7 @@ port: 3000
 
 db:
   {{- if .Values.postgresql.enabled }}
-  host: {{ template "calckey.postgresql.fullname" . }}
+  host: {{ template "firefish.postgresql.fullname" . }}
   port: '5432'
   {{- else }}
   host: {{ .Values.postgresql.postgresqlHostname }}
@@ -137,14 +137,16 @@ db:
 
   # Extra Connection options
   #extra:
-  #  ssl: true
+  #  ssl:
+  #   host: localhost
+  #   rejectUnauthorized: false
 
 #   ┌─────────────────────┐
 #───┘ Redis configuration └─────────────────────────────────────
 
 redis:
   {{- if .Values.redis.enabled }}
-  host: {{ template "calckey.redis.fullname" . }}-master
+  host: {{ template "firefish.redis.fullname" . }}-master
   {{- else }}
   host: {{ required "When the redis chart is disabled .Values.redis.hostname is required" .Values.redis.hostname }}
   {{- end }}
@@ -153,6 +155,10 @@ redis:
   pass: {{ .Values.redis.auth.password | quote }}
   #prefix: example-prefix
   #db: 1
+	#user: default
+	#tls:
+  #  host: localhost
+  #  rejectUnauthorized: false
 
 #   ┌─────────────────────┐
 #───┘ Sonic configuration └─────────────────────────────────────
@@ -212,7 +218,7 @@ id: 'aid'
 
 # Reserved usernames that only the administrator can register with
 reservedUsernames:
-{{ .Values.calckey.reservedUsernames | toYaml }}
+{{ .Values.firefish.reservedUsernames | toYaml }}
 
 # Whether disable HSTS
 #disableHsts: true
@@ -260,7 +266,7 @@ reservedUsernames:
 #proxyRemoteFiles: true
 
 allowedPrivateNetworks:
-{{ .Values.calckey.allowedPrivateNetworks | toYaml }}
+{{ .Values.firefish.allowedPrivateNetworks | toYaml }}
 
 # TWA
 #twa:
@@ -280,34 +286,34 @@ allowedPrivateNetworks:
 # If you mess this up, that's on you, you've been warned...
 
 #maxUserSignups: 100
-isManagedHosting: {{ .Values.calckey.isManagedHosting }}
+isManagedHosting: {{ .Values.firefish.isManagedHosting }}
 deepl:
-  managed: {{ .Values.calckey.deepl.managed }}
-  authKey: {{ .Values.calckey.deepl.authKey | quote}}
-  isPro: {{ .Values.calckey.deepl.isPro }}
+  managed: {{ .Values.firefish.deepl.managed }}
+  authKey: {{ .Values.firefish.deepl.authKey | quote}}
+  isPro: {{ .Values.firefish.deepl.isPro }}
 
 libreTranslate:
-  managed: {{ .Values.calckey.libreTranslate.managed }}
-  apiUrl: {{ .Values.calckey.libreTranslate.apiUrl | quote }}
-  apiKey: {{ .Values.calckey.libreTranslate.apiKey | quote }}
+  managed: {{ .Values.firefish.libreTranslate.managed }}
+  apiUrl: {{ .Values.firefish.libreTranslate.apiUrl | quote }}
+  apiKey: {{ .Values.firefish.libreTranslate.apiKey | quote }}
 
 email:
-  managed: {{ .Values.calckey.smtp.managed }}
-  address: {{ .Values.calckey.smtp.from_address | quote }}
-  host: {{ .Values.calckey.smtp.server | quote }}
-  port: {{ .Values.calckey.smtp.port }}
-  user: {{ .Values.calckey.smtp.login | quote }}
-  pass: {{ .Values.calckey.smtp.password | quote }}
-  useImplicitSslTls: {{ .Values.calckey.smtp.useImplicitSslTls }}
+  managed: {{ .Values.firefish.smtp.managed }}
+  address: {{ .Values.firefish.smtp.from_address | quote }}
+  host: {{ .Values.firefish.smtp.server | quote }}
+  port: {{ .Values.firefish.smtp.port }}
+  user: {{ .Values.firefish.smtp.login | quote }}
+  pass: {{ .Values.firefish.smtp.password | quote }}
+  useImplicitSslTls: {{ .Values.firefish.smtp.useImplicitSslTls }}
 objectStorage:
-  managed: {{ .Values.calckey.objectStorage.managed }}
-  baseUrl: {{ .Values.calckey.objectStorage.baseUrl | quote }}
-  bucket: {{ .Values.calckey.objectStorage.bucket | quote }}
-  prefix: {{ .Values.calckey.objectStorage.prefix | quote }}
-  endpoint: {{ .Values.calckey.objectStorage.endpoint | quote }}
-  region: {{ .Values.calckey.objectStorage.region | quote }}
-  accessKey: {{ .Values.calckey.objectStorage.access_key | quote }}
-  secretKey: {{ .Values.calckey.objectStorage.access_secret | quote }}
+  managed: {{ .Values.firefish.objectStorage.managed }}
+  baseUrl: {{ .Values.firefish.objectStorage.baseUrl | quote }}
+  bucket: {{ .Values.firefish.objectStorage.bucket | quote }}
+  prefix: {{ .Values.firefish.objectStorage.prefix | quote }}
+  endpoint: {{ .Values.firefish.objectStorage.endpoint | quote }}
+  region: {{ .Values.firefish.objectStorage.region | quote }}
+  accessKey: {{ .Values.firefish.objectStorage.access_key | quote }}
+  secretKey: {{ .Values.firefish.objectStorage.access_secret | quote }}
   useSsl: true
   connnectOverProxy: false
   setPublicReadOnUpload: true

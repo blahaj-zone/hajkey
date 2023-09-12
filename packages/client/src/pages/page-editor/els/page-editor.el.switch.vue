@@ -42,7 +42,7 @@ withDefaults(
 		value: {
 			name: "",
 		},
-	}
+	},
 );
 </script>
 

@@ -39,7 +39,7 @@ const props = withDefaults(
 		maxWidth: 250,
 		direction: "top",
 		innerMargin: 0,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -91,7 +91,8 @@ onUnmounted(() => {
 .tooltip-leave-active {
 	opacity: 1;
 	transform: scale(1);
-	transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+	transition:
+		transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
 		opacity 200ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .tooltip-enter-from,

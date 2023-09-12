@@ -4,7 +4,7 @@
 # changelog header
 header = """
 # Changelog\n
-All changes from v13.0.0 onwards, for a full list of differences read CALCKEY.md\n
+All changes from v13.0.0 onwards, for a list of differences read FIREFISH.md\n
 """
 # template for the changelog body
 # https://tera.netlify.app/docs/#introduction
@@ -35,10 +35,6 @@ conventional_commits = false
 filter_unconventional = true
 # process each line of a commit as an individual commit
 split_commits = false
-# regex for preprocessing the commit messages
-commit_preprocessors = [
-    { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/orhun/git-cliff/issues/${2}))"},
-]
 # regex for parsing and grouping commits
 commit_parsers = [
     { message = "^feat", group = "Features"},

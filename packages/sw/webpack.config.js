@@ -44,7 +44,7 @@ module.exports = {
 			),
 			_ENV_: JSON.stringify(process.env.NODE_ENV),
 			_DEV_: !isProduction,
-			_PERF_PREFIX_: JSON.stringify("Calckey:"),
+			_PERF_PREFIX_: JSON.stringify("Firefish:"),
 		}),
 	],
 };

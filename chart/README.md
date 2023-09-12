@@ -1,8 +1,8 @@
-# calckey
+# firefish
 
 ![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: rc](https://img.shields.io/badge/AppVersion-rc-informational?style=flat-square)
 
-A fun, new, open way to experience social media https://calckey.org
+A fun, new, open way to experience social media https://joinfirefish.org
 
 ## Requirements
 
@@ -21,39 +21,39 @@ A fun, new, open way to experience social media https://calckey.org
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| calckey.allowedPrivateNetworks | list | `[]` | If you want to allow calckey to connect to private ips, enter the cidrs here. |
-| calckey.deepl.authKey | string | `""` |  |
-| calckey.deepl.isPro | bool | `false` |  |
-| calckey.deepl.managed | bool | `false` |  |
-| calckey.domain | string | `"calckey.local"` |  |
-| calckey.isManagedHosting | bool | `true` |  |
-| calckey.libreTranslate.apiKey | string | `""` |  |
-| calckey.libreTranslate.apiUrl | string | `""` |  |
-| calckey.libreTranslate.managed | bool | `false` |  |
-| calckey.objectStorage.access_key | string | `""` |  |
-| calckey.objectStorage.access_secret | string | `""` |  |
-| calckey.objectStorage.baseUrl | string | `""` |  |
-| calckey.objectStorage.bucket | string | `""` |  |
-| calckey.objectStorage.endpoint | string | `""` |  |
-| calckey.objectStorage.managed | bool | `true` |  |
-| calckey.objectStorage.prefix | string | `"files"` |  |
-| calckey.objectStorage.region | string | `""` |  |
-| calckey.reservedUsernames[0] | string | `"root"` |  |
-| calckey.reservedUsernames[1] | string | `"admin"` |  |
-| calckey.reservedUsernames[2] | string | `"administrator"` |  |
-| calckey.reservedUsernames[3] | string | `"me"` |  |
-| calckey.reservedUsernames[4] | string | `"system"` |  |
-| calckey.smtp.from_address | string | `"notifications@example.com"` |  |
-| calckey.smtp.login | string | `""` |  |
-| calckey.smtp.managed | bool | `true` |  |
-| calckey.smtp.password | string | `""` |  |
-| calckey.smtp.port | int | `587` |  |
-| calckey.smtp.server | string | `"smtp.mailgun.org"` |  |
-| calckey.smtp.useImplicitSslTls | bool | `false` |  |
+| firefish.allowedPrivateNetworks | list | `[]` | If you want to allow firefish to connect to private ips, enter the cidrs here. |
+| firefish.deepl.authKey | string | `""` |  |
+| firefish.deepl.isPro | bool | `false` |  |
+| firefish.deepl.managed | bool | `false` |  |
+| firefish.domain | string | `"firefish.local"` |  |
+| firefish.isManagedHosting | bool | `true` |  |
+| firefish.libreTranslate.apiKey | string | `""` |  |
+| firefish.libreTranslate.apiUrl | string | `""` |  |
+| firefish.libreTranslate.managed | bool | `false` |  |
+| firefish.objectStorage.access_key | string | `""` |  |
+| firefish.objectStorage.access_secret | string | `""` |  |
+| firefish.objectStorage.baseUrl | string | `""` |  |
+| firefish.objectStorage.bucket | string | `""` |  |
+| firefish.objectStorage.endpoint | string | `""` |  |
+| firefish.objectStorage.managed | bool | `true` |  |
+| firefish.objectStorage.prefix | string | `"files"` |  |
+| firefish.objectStorage.region | string | `""` |  |
+| firefish.reservedUsernames[0] | string | `"root"` |  |
+| firefish.reservedUsernames[1] | string | `"admin"` |  |
+| firefish.reservedUsernames[2] | string | `"administrator"` |  |
+| firefish.reservedUsernames[3] | string | `"me"` |  |
+| firefish.reservedUsernames[4] | string | `"system"` |  |
+| firefish.smtp.from_address | string | `"notifications@example.com"` |  |
+| firefish.smtp.login | string | `""` |  |
+| firefish.smtp.managed | bool | `true` |  |
+| firefish.smtp.password | string | `""` |  |
+| firefish.smtp.port | int | `587` |  |
+| firefish.smtp.server | string | `"smtp.mailgun.org"` |  |
+| firefish.smtp.useImplicitSslTls | bool | `false` |  |
 | elasticsearch | object | `{"auth":{},"enabled":false,"hostname":"","port":9200,"ssl":false}` | https://github.com/bitnami/charts/tree/master/bitnami/elasticsearch#parameters |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"docker.io/thatonecalculator/calckey"` |  |
+| image.repository | string | `"docker.io/thatonecalculator/firefish"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -67,9 +67,9 @@ A fun, new, open way to experience social media https://calckey.org
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.auth.database | string | `"calckey_production"` |  |
+| postgresql.auth.database | string | `"firefish_production"` |  |
 | postgresql.auth.password | string | `""` |  |
-| postgresql.auth.username | string | `"calckey"` |  |
+| postgresql.auth.username | string | `"firefish"` |  |
 | postgresql.enabled | bool | `true` | disable if you want to use an existing db; in which case the values below must match those of that external postgres instance |
 | redis.auth.password | string | `""` | you must set a password; the password generated by the redis chart will be rotated on each upgrade: |
 | redis.enabled | bool | `true` |  |

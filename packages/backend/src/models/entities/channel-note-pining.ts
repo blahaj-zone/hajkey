@@ -11,13 +11,13 @@ import { Channel } from "./channel.js";
 import { id } from "../id.js";
 
 @Entity()
-@Index(['channelId', 'noteId'], { unique: true })
+@Index(["channelId", "noteId"], { unique: true })
 export class ChannelNotePining {
 	@PrimaryColumn(id())
 	public id: string;
 
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the ChannelNotePining.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the ChannelNotePining.",
 	})
 	public createdAt: Date;
 
@@ -25,8 +25,8 @@ export class ChannelNotePining {
 	@Column(id())
 	public channelId: Channel["id"];
 
-	@ManyToOne(type => Channel, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Channel, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public channel: Channel | null;
@@ -34,8 +34,8 @@ export class ChannelNotePining {
 	@Column(id())
 	public noteId: Note["id"];
 
-	@ManyToOne(type => Note, {
-		onDelete: 'CASCADE',
+	@ManyToOne((type) => Note, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public note: Note | null;

@@ -9,6 +9,7 @@ export const meta = {
 
 	requireCredential: false,
 	requireCredentialPrivateMode: true,
+	description: "Get conversation of a note thread/chain by a reply",
 
 	res: {
 		type: "array",
@@ -34,7 +35,11 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		noteId: { type: "string", format: "misskey:id" },
+		noteId: {
+			type: "string",
+			format: "misskey:id",
+			description: "Should be a reply",
+		},
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
 		offset: { type: "integer", default: 0 },
 	},
@@ -51,7 +56,7 @@ export default define(meta, paramDef, async (ps, user) => {
 	const conversation: Note[] = [];
 	let i = 0;
 
-	async function get(id: any) {
+	async function get(id: string) {
 		i++;
 		const p = await getNote(id, user).catch((e) => {
 			if (e.id === "9725d0ce-ba28-4dde-95a7-2cbb2c15de24") return null;
@@ -60,7 +65,7 @@ export default define(meta, paramDef, async (ps, user) => {
 
 		if (p == null) return;
 
-		if (i > ps.offset!) {
+		if (i > ps.offset) {
 			conversation.push(p);
 		}
 

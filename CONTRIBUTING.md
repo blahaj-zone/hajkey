@@ -1,26 +1,26 @@
 # Contribution guide
-We're glad you're interested in contributing Calckey! In this document you will find the information you need to contribute to the project.
+We're glad you're interested in contributing Firefish! In this document you will find the information you need to contribute to the project.
 
 ## Translation (i18n)
-Calckey uses [Weblate](hhttps://hosted.weblate.org/engage/calckey/) for translation and internationalization management.
+Firefish uses [Weblate](hhttps://hosted.weblate.org/engage/firefish/) for translation and internationalization management.
 
 If your language is not listed in Weblate, please open an issue.
 
 You can contribute without knowing how to code by helping translate here:
 
-[![Translation status](https://hosted.weblate.org/widgets/calckey/-/287x66-grey.png)](https://hosted.weblate.org/engage/calckey/)
+[![Translation status](https://hosted.weblate.org/widgets/firefish/-/287x66-grey.png)](https://hosted.weblate.org/engage/firefish/)
 
-[![Translation bars](https://hosted.weblate.org/widgets/calckey/-/multi-auto.svg)](https://hosted.weblate.org/engage/calckey/)
+[![Translation bars](https://hosted.weblate.org/widgets/firefish/-/multi-auto.svg)](https://hosted.weblate.org/engage/firefish/)
 
 ## Roadmap
-See [CALCKEY.md](./CALCKEY.md)
+See [FIREFISH.md](./FIREFISH.md)
 
 ## Issues
 Before creating an issue, please check the following:
 - To avoid duplication, please search for similar issues before creating a new issue.
 - Do not use Issues to ask questions or troubleshooting.
 	- Issues should only be used to feature requests, suggestions, and bug tracking.
-	- Please ask questions or troubleshooting in the [Matrix room](https://matrix.to/#/#calckey:matrix.fedibird.com).
+	- Please ask questions or troubleshooting in the [Matrix room](https://matrix.to/#/#firefish:matrix.fedibird.com).
 
 > **Warning**
 > Do not close issues that are about to be resolved. It should remain open until a commit that actually resolves it is merged.

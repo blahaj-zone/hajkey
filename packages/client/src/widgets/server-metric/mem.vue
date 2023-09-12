@@ -2,7 +2,7 @@
 	<div class="zlxnikvl">
 		<XPie class="pie" :value="usage" />
 		<div>
-			<p><i class="ph-cpu ph-bold ph-lg"></i>RAM</p>
+			<p><i class="ph-microchip ph-bold ph-lg"></i>RAM</p>
 			<p>Total: {{ bytes(total, 1) }}</p>
 			<p>Used: {{ bytes(used, 1) }}</p>
 			<p>Free: {{ bytes(free, 1) }}</p>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onBeforeUnmount } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 import XPie from "./pie.vue";
 import bytes from "@/filters/bytes";
 
@@ -20,14 +20,14 @@ const props = defineProps<{
 	meta: any;
 }>();
 
-let usage: number = $ref(0);
-let total: number = $ref(0);
-let used: number = $ref(0);
-let free: number = $ref(0);
+let usage: number = $ref(0),
+	total: number = $ref(0),
+	used: number = $ref(0),
+	free: number = $ref(0);
 
 function onStats(stats) {
-	usage = stats.mem.active / props.meta.mem.total;
-	total = props.meta.mem.total;
+	usage = stats.mem.active / stats.mem.total;
+	total = stats.mem.total;
 	used = stats.mem.active;
 	free = total - used;
 }

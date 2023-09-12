@@ -1,8 +1,8 @@
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import axios from "axios";
-import { Converter } from "@calckey/megalodon";
+import { Converter } from "megalodon";
 import { convertTimelinesArgsId, limitToInt } from "./timeline.js";
 import { convertAccount, convertStatus } from "../converters.js";
 
@@ -30,21 +30,26 @@ export function apiSearchMastodon(router: Router): void {
 		try {
 			const query: any = convertTimelinesArgsId(limitToInt(ctx.query));
 			const type = query.type;
-			if (type) {
-				const data = await client.search(query.q, type, query);
-				ctx.body = data.data.accounts.map((account) => convertAccount(account));
-			} else {
-				const acct = await client.search(query.q, "accounts", query);
-				const stat = await client.search(query.q, "statuses", query);
-				const tags = await client.search(query.q, "hashtags", query);
-				ctx.body = {
-					accounts: acct.data.accounts.map((account) =>
-						convertAccount(account),
-					),
-					statuses: stat.data.statuses.map((status) => convertStatus(status)),
-					hashtags: tags.data.hashtags,
-				};
-			}
+			const acct =
+				!type || type === "accounts"
+					? await client.search(query.q, "accounts", query)
+					: null;
+			const stat =
+				!type || type === "statuses"
+					? await client.search(query.q, "statuses", query)
+					: null;
+			const tags =
+				!type || type === "hashtags"
+					? await client.search(query.q, "hashtags", query)
+					: null;
+
+			ctx.body = {
+				accounts:
+					acct?.data?.accounts.map((account) => convertAccount(account)) ?? [],
+				statuses:
+					stat?.data?.statuses.map((status) => convertStatus(status)) ?? [],
+				hashtags: tags?.data?.hashtags ?? [],
+			};
 		} catch (e: any) {
 			console.error(e);
 			ctx.status = 401;
@@ -103,7 +108,7 @@ async function getHighlight(
 			i: accessToken,
 		});
 		const data: MisskeyEntity.Note[] = api.data;
-		return data.map((note) => Converter.note(note, domain));
+		return data.map((note) => new Converter(BASE_URL).note(note, domain));
 	} catch (e: any) {
 		console.log(e);
 		console.log(e.response.data);
@@ -131,7 +136,7 @@ async function getFeaturedUser(
 		return data.map((u) => {
 			return {
 				source: "past_interactions",
-				account: Converter.userDetail(u, host),
+				account: new Converter(BASE_URL).userDetail(u, host),
 			};
 		});
 	} catch (e: any) {

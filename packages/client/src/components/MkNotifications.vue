@@ -21,11 +21,16 @@
 				<XNote
 					v-if="
 						['reply', 'quote', 'mention'].includes(
-							notification.type
+							notification.type,
 						)
 					"
 					:key="notification.id"
 					:note="notification.note"
+					:collapsedReply="
+						notification.type === 'reply' ||
+						(notification.type === 'mention' &&
+							notification.note.replyId != null)
+					"
 				/>
 				<XNotification
 					v-else
@@ -49,7 +54,7 @@ import {
 	computed,
 	ref,
 } from "vue";
-import { notificationTypes } from "calckey-js";
+import { notificationTypes } from "iceshrimp-js";
 import MkPagination, { Paging } from "@/components/MkPagination.vue";
 import XNotification from "@/components/MkNotification.vue";
 import XList from "@/components/MkDateSeparatedList.vue";

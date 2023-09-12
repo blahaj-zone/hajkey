@@ -8,14 +8,17 @@
 		/></template>
 		<MkSpacer :content-max="600" :margin-min="16" :margin-max="32">
 			<swiper
+				:round-lengths="true"
+				:touch-angle="25"
+				:threshold="10"
+				:centeredSlides="true"
 				:modules="[Virtual]"
 				:space-between="20"
 				:virtual="true"
 				:allow-touch-move="
-					!(
-						deviceKind === 'desktop' &&
-						!defaultStore.state.swipeOnDesktop
-					) && defaultStore.state.allowSwipe
+					defaultStore.state.swipeOnMobile &&
+					(deviceKind !== 'desktop' ||
+						defaultStore.state.swipeOnDesktop)
 				"
 				@swiper="setSwiperRef"
 				@slide-change="onSlideChange"
@@ -154,7 +157,7 @@
 
 <script lang="ts" setup>
 import { computed, watch } from "vue";
-import { Virtual } from "swiper";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MkButton from "@/components/MkButton.vue";
 import MkSwitch from "@/components/form/switch.vue";
@@ -251,7 +254,7 @@ definePageMetadata(
 	computed(() => ({
 		title: file ? i18n.ts.file + ": " + file.name : i18n.ts.file,
 		icon: "ph-file ph-bold ph-lg",
-	}))
+	})),
 );
 
 let swiperRef = null;

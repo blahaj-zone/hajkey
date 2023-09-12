@@ -99,7 +99,7 @@ function subscribe() {
 			.subscribe({
 				userVisibleOnly: true,
 				applicationServerKey: urlBase64ToUint8Array(
-					instance.swPublickey
+					instance.swPublickey,
 				),
 			})
 			.then(
@@ -118,7 +118,7 @@ function subscribe() {
 					// 通知が許可されていなかったとき
 					if (err?.name === "NotAllowedError") {
 						console.info(
-							"User denied the notification permission request."
+							"User denied the notification permission request.",
 						);
 						return;
 					}
@@ -128,10 +128,10 @@ function subscribe() {
 					// そのサブスクリプションを解除しておく
 					// （これは実行されなさそうだけど、おまじない的に古い実装から残してある）
 					await unsubscribe();
-				}
+				},
 			),
 		null,
-		null
+		null,
 	);
 }
 

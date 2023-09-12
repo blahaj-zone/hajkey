@@ -1,5 +1,10 @@
 <template>
-	<MkContainer :show-header="widgetProps.showHeader" class="mkw-rss">
+	<MkContainer
+		:show-header="widgetProps.showHeader"
+		class="mkw-rss"
+		:scrollable="true"
+		:style="`height: ${widgetProps.height}px;`"
+	>
 		<template #header><i class="ph-rss ph-bold ph-lg"></i>RSS</template>
 		<template #func
 			><button class="_button" @click="configure">
@@ -25,14 +30,13 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import MkContainer from "@/components/MkContainer.vue";
 import { useInterval } from "@/scripts/use-interval";
@@ -44,6 +48,10 @@ const widgetPropsDef = {
 		type: "string" as const,
 		default: "http://feeds.afpbb.com/rss/afpbb/afpbbnews",
 	},
+	height: {
+		type: "number" as const,
+		default: 300,
+	},
 	showHeader: {
 		type: "boolean" as const,
 		default: true,
@@ -53,8 +61,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -62,7 +70,7 @@ const { widgetProps, configure } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const items = ref([]);

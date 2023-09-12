@@ -28,13 +28,8 @@
 					i18n.ts.close
 				}}</MkButton>
 			</header>
-			<XDraggable
-				v-model="widgets_"
-				item-key="id"
-				handle=".handle"
-				animation="150"
-			>
-				<template #item="{ element }">
+			<VueDraggable v-model="widgets_" handle=".handle" animation="150">
+				<div v-for="element in widgets_" :key="element.id">
 					<div class="customize-container">
 						<button
 							class="config _button"
@@ -45,6 +40,7 @@
 						<button
 							class="remove _button"
 							@click.prevent.stop="removeWidget(element)"
+							:aria-label="i18n.t('close')"
 						>
 							<i class="ph-x ph-bold ph-lg"></i>
 						</button>
@@ -58,8 +54,8 @@
 							/>
 						</div>
 					</div>
-				</template>
-			</XDraggable>
+				</div>
+			</VueDraggable>
 		</template>
 		<component
 			:is="`mkw-${widget.name}`"
@@ -78,13 +74,12 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, reactive, ref, computed } from "vue";
 import { v4 as uuid } from "uuid";
+import { VueDraggable } from "vue-draggable-plus";
 import MkSelect from "@/components/form/select.vue";
 import MkButton from "@/components/MkButton.vue";
 import { widgets as widgetDefs } from "@/widgets";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
-
-const XDraggable = defineAsyncComponent(() => import("vuedraggable"));
 
 type Widget = {
 	name: string;
@@ -144,7 +139,7 @@ function onContextmenu(widget: Widget, ev: MouseEvent) {
 	if (isLink(ev.target)) return;
 	if (
 		["INPUT", "TEXTAREA", "IMG", "VIDEO", "CANVAS"].includes(
-			ev.target.tagName
+			ev.target.tagName,
 		) ||
 		ev.target.attributes["contenteditable"]
 	)
@@ -165,13 +160,16 @@ function onContextmenu(widget: Widget, ev: MouseEvent) {
 				},
 			},
 		],
-		ev
+		ev,
 	);
 }
 </script>
 
 <style lang="scss" scoped>
 .vjoppmmu {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 	> header {
 		margin: 16px 0;
 
@@ -184,7 +182,7 @@ function onContextmenu(widget: Widget, ev: MouseEvent) {
 	> .widget,
 	.customize-container {
 		contain: content;
-		margin: var(--margin) 0;
+		margin-bottom: var(--margin);
 
 		&:first-of-type {
 			margin-top: 0;

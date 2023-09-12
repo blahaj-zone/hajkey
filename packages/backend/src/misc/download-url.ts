@@ -24,6 +24,7 @@ export async function downloadUrl(url: string, path: string): Promise<void> {
 		.stream(url, {
 			headers: {
 				"User-Agent": config.userAgent,
+				Host: new URL(url).hostname,
 			},
 			timeout: {
 				lookup: timeout,

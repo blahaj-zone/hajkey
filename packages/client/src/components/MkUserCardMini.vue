@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
 import { acct, userPage } from "@/filters/user";
@@ -36,7 +36,7 @@ const props = withDefaults(
 	}>(),
 	{
 		withChart: true,
-	}
+	},
 );
 
 let chartValues = $ref<number[] | null>(null);

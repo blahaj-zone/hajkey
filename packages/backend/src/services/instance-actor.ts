@@ -6,10 +6,10 @@ import { IsNull } from "typeorm";
 
 const ACTOR_USERNAME = "instance.actor" as const;
 
-const cache = new Cache<ILocalUser>(Infinity);
+const cache = new Cache<ILocalUser>("instanceActor", 60 * 30);
 
 export async function getInstanceActor(): Promise<ILocalUser> {
-	const cached = cache.get(null);
+	const cached = await cache.get(null, true);
 	if (cached) return cached;
 
 	const user = (await Users.findOneBy({
@@ -18,11 +18,11 @@ export async function getInstanceActor(): Promise<ILocalUser> {
 	})) as ILocalUser | undefined;
 
 	if (user) {
-		cache.set(null, user);
+		await cache.set(null, user);
 		return user;
 	} else {
 		const created = (await createSystemUser(ACTOR_USERNAME)) as ILocalUser;
-		cache.set(null, created);
+		await cache.set(null, created);
 		return created;
 	}
 }

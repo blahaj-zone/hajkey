@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
-import { CustomEmoji } from "calckey-js/built/entities";
+import type { CustomEmoji } from "iceshrimp-js/built/entities";
 import { getStaticImageUrl } from "@/scripts/get-static-image-url";
 import { char2filePath } from "@/scripts/twemoji-base";
 import { defaultStore } from "@/store";
@@ -39,15 +39,15 @@ const props = defineProps<{
 const isCustom = computed(() => props.emoji.startsWith(":"));
 const char = computed(() => (isCustom.value ? null : props.emoji));
 const useOsNativeEmojis = computed(
-	() => defaultStore.state.useOsNativeEmojis && !props.isReaction
+	() => defaultStore.state.useOsNativeEmojis && !props.isReaction,
 );
 const ce = computed(() => props.customEmojis ?? instance.emojis ?? []);
 const customEmoji = computed(() =>
 	isCustom.value
 		? ce.value.find(
-				(x) => x.name === props.emoji.substr(1, props.emoji.length - 2)
+				(x) => x.name === props.emoji.substr(1, props.emoji.length - 2),
 		  )
-		: null
+		: null,
 );
 const url = computed(() => {
 	if (char.value) {
@@ -59,7 +59,7 @@ const url = computed(() => {
 	}
 });
 const alt = computed(() =>
-	customEmoji.value ? `:${customEmoji.value.name}:` : char.value
+	customEmoji.value ? `:${customEmoji.value.name}:` : char.value,
 );
 </script>
 
@@ -69,7 +69,7 @@ const alt = computed(() =>
 	vertical-align: -0.25em;
 
 	&.custom {
-		height: 2.5em;
+		height: 2em;
 		vertical-align: middle;
 		transition: transform 0.2s ease;
 

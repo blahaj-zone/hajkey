@@ -1,4 +1,4 @@
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import { IdType, convertId } from "../../index.js";
@@ -27,7 +27,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.getFilter(
-				convertId(ctx.params.id, IdType.CalckeyId),
+				convertId(ctx.params.id, IdType.FirefishId),
 			);
 			ctx.body = convertFilter(data.data);
 		} catch (e: any) {
@@ -59,7 +59,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.updateFilter(
-				convertId(ctx.params.id, IdType.CalckeyId),
+				convertId(ctx.params.id, IdType.FirefishId),
 				body.phrase,
 				body.context,
 			);
@@ -78,7 +78,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.deleteFilter(
-				convertId(ctx.params.id, IdType.CalckeyId),
+				convertId(ctx.params.id, IdType.FirefishId),
 			);
 			ctx.body = data.data;
 		} catch (e: any) {

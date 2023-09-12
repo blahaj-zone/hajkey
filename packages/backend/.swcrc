@@ -1,15 +1,15 @@
 {
-  "$schema": "https://json.schemastore.org/swcrc",
-  "jsc": {
-    "parser": {
-      "syntax": "typescript",
-      "dynamicImport": true,
-      "decorators": true
-    },
-    "transform": {
-      "legacyDecorator": true,
-      "decoratorMetadata": true
-    },
+	"$schema": "https://json.schemastore.org/swcrc",
+	"jsc": {
+		"parser": {
+			"syntax": "typescript",
+			"dynamicImport": true,
+			"decorators": true
+		},
+		"transform": {
+			"legacyDecorator": true,
+			"decoratorMetadata": true
+		},
 		"experimental": {
 			"keepImportAssertions": true
 		},
@@ -20,6 +20,6 @@
 			]
 		},
 		"target": "es2022"
-  },
-  "minify": false
+	},
+	"minify": false
 }

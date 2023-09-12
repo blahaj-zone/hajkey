@@ -7,6 +7,7 @@ import { argsToBools, convertTimelinesArgsId, limitToInt } from "./timeline.js";
 import { convertId, IdType } from "../../index.js";
 import {
 	convertAccount,
+	convertFeaturedTag,
 	convertList,
 	convertRelationship,
 	convertStatus,
@@ -42,12 +43,12 @@ export function apiAccountMastodon(router: Router): void {
 			acct.url = `${BASE_URL}/@${acct.url}`;
 			acct.note = acct.note || "";
 			acct.avatar_static = acct.avatar;
-			acct.header = acct.header || "https://http.cat/404";
-			acct.header_static = acct.header || "https://http.cat/404";
+			acct.header = acct.header || "/static-assets/transparent.png";
+			acct.header_static = acct.header || "/static-assets/transparent.png";
 			acct.source = {
 				note: acct.note,
 				fields: acct.fields,
-				privacy: "public",
+				privacy: await client.getDefaultPostPrivacy(),
 				sensitive: false,
 				language: "",
 			};
@@ -113,7 +114,7 @@ export function apiAccountMastodon(router: Router): void {
 
 			let reqIds = [];
 			for (let i = 0; i < ids.length; i++) {
-				reqIds.push(convertId(ids[i], IdType.CalckeyId));
+				reqIds.push(convertId(ids[i], IdType.FirefishId));
 			}
 
 			const data = await client.getRelationships(reqIds);
@@ -134,7 +135,7 @@ export function apiAccountMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		const client = getClient(BASE_URL, accessTokens);
 		try {
-			const calcId = convertId(ctx.params.id, IdType.CalckeyId);
+			const calcId = convertId(ctx.params.id, IdType.FirefishId);
 			const data = await client.getAccount(calcId);
 			ctx.body = convertAccount(data.data);
 		} catch (e: any) {
@@ -152,10 +153,29 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountStatuses(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 					convertTimelinesArgsId(argsToBools(limitToInt(ctx.query as any))),
 				);
 				ctx.body = data.data.map((status) => convertStatus(status));
+			} catch (e: any) {
+				console.error(e);
+				console.error(e.response.data);
+				ctx.status = 401;
+				ctx.body = e.response.data;
+			}
+		},
+	);
+	router.get<{ Params: { id: string } }>(
+		"/v1/accounts/:id/featured_tags",
+		async (ctx) => {
+			const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+			const accessTokens = ctx.headers.authorization;
+			const client = getClient(BASE_URL, accessTokens);
+			try {
+				const data = await client.getAccountFeaturedTags(
+					convertId(ctx.params.id, IdType.FirefishId),
+				);
+				ctx.body = data.data.map((tag) => convertFeaturedTag(tag));
 			} catch (e: any) {
 				console.error(e);
 				console.error(e.response.data);
@@ -172,7 +192,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountFollowers(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 					convertTimelinesArgsId(limitToInt(ctx.query as any)),
 				);
 				ctx.body = data.data.map((account) => convertAccount(account));
@@ -192,7 +212,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountFollowing(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 					convertTimelinesArgsId(limitToInt(ctx.query as any)),
 				);
 				ctx.body = data.data.map((account) => convertAccount(account));
@@ -212,7 +232,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountLists(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = data.data.map((list) => convertList(list));
 			} catch (e: any) {
@@ -231,7 +251,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.followAccount(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				let acct = convertRelationship(data.data);
 				acct.following = true;
@@ -252,7 +272,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.unfollowAccount(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				let acct = convertRelationship(data.data);
 				acct.following = false;
@@ -273,7 +293,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.blockAccount(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -311,7 +331,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.muteAccount(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 					(ctx.request as any).body as any,
 				);
 				ctx.body = convertRelationship(data.data);
@@ -331,7 +351,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.unmuteAccount(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -342,6 +362,34 @@ export function apiAccountMastodon(router: Router): void {
 			}
 		},
 	);
+	router.get("/v1/featured_tags", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getFeaturedTags();
+			ctx.body = data.data.map((tag) => convertFeaturedTag(tag));
+		} catch (e: any) {
+			console.error(e);
+			console.error(e.response.data);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
+	router.get("/v1/followed_tags", async (ctx) => {
+		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
+		const accessTokens = ctx.headers.authorization;
+		const client = getClient(BASE_URL, accessTokens);
+		try {
+			const data = await client.getFollowedTags();
+			ctx.body = data.data;
+		} catch (e: any) {
+			console.error(e);
+			console.error(e.response.data);
+			ctx.status = 401;
+			ctx.body = e.response.data;
+		}
+	});
 	router.get("/v1/bookmarks", async (ctx) => {
 		const BASE_URL = `${ctx.protocol}://${ctx.hostname}`;
 		const accessTokens = ctx.headers.authorization;
@@ -430,7 +478,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.acceptFollowRequest(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -449,7 +497,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.rejectFollowRequest(
-					convertId(ctx.params.id, IdType.CalckeyId),
+					convertId(ctx.params.id, IdType.FirefishId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {

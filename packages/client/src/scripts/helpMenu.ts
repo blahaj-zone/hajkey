@@ -20,9 +20,9 @@ export function openHelpMenu_(ev: MouseEvent) {
 			},
 			{
 				type: "link",
-				text: i18n.ts.aboutMisskey,
+				text: i18n.ts.aboutIceshrimp,
 				icon: "ph-lightbulb ph-bold ph-lg",
-				to: "/about-calckey",
+				to: "/about-iceshrimp",
 			},
 			{
 				type: "button",
@@ -37,7 +37,7 @@ export function openHelpMenu_(ev: MouseEvent) {
 				text: i18n.ts.apps,
 				icon: "ph-device-mobile ph-bold ph-lg",
 				action: () => {
-					window.open("https://calckey.org/apps", "_blank");
+					window.open("https://joinfirefish.org/apps", "_blank");
 				},
 			},
 			{

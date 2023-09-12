@@ -78,7 +78,7 @@ function menu(account, ev) {
 				action: () => removeAccount(account),
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 
@@ -98,7 +98,7 @@ function addAccount(ev) {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 
@@ -116,7 +116,7 @@ function addExistingAccount() {
 				os.success();
 			},
 		},
-		"closed"
+		"closed",
 	);
 }
 
@@ -130,7 +130,7 @@ function createAccount() {
 				switchAccountWithToken(res.i);
 			},
 		},
-		"closed"
+		"closed",
 	);
 }
 

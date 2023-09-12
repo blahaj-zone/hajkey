@@ -8,14 +8,17 @@
 		/></template>
 		<MkSpacer :content-max="600" :margin-min="20">
 			<swiper
+				:round-lengths="true"
+				:touch-angle="25"
+				:threshold="10"
+				:centeredSlides="true"
 				:modules="[Virtual]"
 				:space-between="20"
 				:virtual="true"
 				:allow-touch-move="
-					!(
-						deviceKind === 'desktop' &&
-						!defaultStore.state.swipeOnDesktop
-					) && defaultStore.state.allowSwipe
+					defaultStore.state.swipeOnMobile &&
+					(deviceKind !== 'desktop' ||
+						defaultStore.state.swipeOnDesktop)
 				"
 				@swiper="setSwiperRef"
 				@slide-change="onSlideChange"
@@ -49,18 +52,18 @@
 
 						<MkKeyValue class="_formBlock">
 							<template #key>{{ i18n.ts.description }}</template>
-							<template #value>{{
-								$instance.description
-							}}</template>
+							<template #value
+								><div v-html="$instance.description"></div
+							></template>
 						</MkKeyValue>
 
 						<FormSection>
 							<MkKeyValue class="_formBlock" :copy="version">
-								<template #key>Calckey</template>
+								<template #key>Iceshrimp</template>
 								<template #value>{{ version }}</template>
 							</MkKeyValue>
-							<FormLink to="/about-calckey">{{
-								i18n.ts.aboutMisskey
+							<FormLink to="/about-iceshrimp">{{
+								i18n.ts.aboutIceshrimp
 							}}</FormLink>
 						</FormSection>
 
@@ -90,6 +93,21 @@
 								external
 								>{{ i18n.ts.tos }}</FormLink
 							>
+							<FormLink
+								v-if="$instance.donationLink"
+								:to="$instance.donationLink"
+								external
+							>
+								<template #icon
+									><i class="ph-money ph-bold ph-lg"></i
+								></template>
+								{{
+									i18n.t("_aboutIceshrimp.donateHost", {
+										host: $instance.name || host,
+									})
+								}}
+								<template #suffix>Donate</template>
+							</FormLink>
 						</FormSection>
 
 						<FormSuspense :p="initStats">
@@ -160,7 +178,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, watch } from "vue";
-import { Virtual } from "swiper";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import XEmojis from "./about.emojis.vue";
 import XFederation from "./about.federation.vue";
@@ -188,7 +206,7 @@ withDefaults(
 	}>(),
 	{
 		initialTab: "overview",
-	}
+	},
 );
 
 let stats = $ref(null);
@@ -240,7 +258,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.instanceInfo,
 		icon: "ph-info ph-bold ph-lg",
-	}))
+	})),
 );
 
 async function sleep(seconds) {

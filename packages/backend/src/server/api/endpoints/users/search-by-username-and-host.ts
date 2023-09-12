@@ -32,6 +32,12 @@ export const paramDef = {
 		username: { type: "string", nullable: true },
 		host: { type: "string", nullable: true },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
+		maxDaysSinceLastActive: {
+			type: "integer",
+			minimum: 1,
+			maximum: 1000,
+			default: 30,
+		},
 		detail: { type: "boolean", default: true },
 	},
 	anyOf: [{ required: ["username"] }, { required: ["host"] }],
@@ -40,7 +46,9 @@ export const paramDef = {
 // TODO: avatar,bannerをJOINしたいけどエラーになる
 
 export default define(meta, paramDef, async (ps, me) => {
-	const activeThreshold = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30); // 30日
+	const activeThreshold = ps.maxDaysSinceLastActive
+		? new Date(Date.now() - 1000 * 60 * 60 * 24 * ps.maxDaysSinceLastActive)
+		: null;
 
 	if (ps.host) {
 		const q = Users.createQueryBuilder("user")
@@ -75,8 +83,10 @@ export default define(meta, paramDef, async (ps, me) => {
 				.andWhere("user.isSuspended = FALSE")
 				.andWhere("user.usernameLower LIKE :username", {
 					username: `${sqlLikeEscape(ps.username.toLowerCase())}%`,
-				})
-				.andWhere(
+				});
+
+			if (activeThreshold) {
+				query.andWhere(
 					new Brackets((qb) => {
 						qb.where("user.updatedAt IS NULL").orWhere(
 							"user.updatedAt > :activeThreshold",
@@ -84,6 +94,7 @@ export default define(meta, paramDef, async (ps, me) => {
 						);
 					}),
 				);
+			}
 
 			query.setParameters(followingQuery.getParameters());
 

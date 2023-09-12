@@ -38,29 +38,37 @@
 				:connection="connection"
 				:meta="meta"
 			/>
+			<XMeili
+				v-else-if="
+					instance.features.searchFilters && widgetProps.view === 5
+				"
+				:connection="connection"
+				:meta="meta"
+			/>
 		</div>
 	</MkContainer>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from "vue";
+import type { Widget, WidgetComponentExpose } from "../widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "../widget";
 import XCpuMemory from "./cpu-mem.vue";
 import XNet from "./net.vue";
 import XCpu from "./cpu.vue";
 import XMemory from "./mem.vue";
 import XDisk from "./disk.vue";
+import XMeili from "./meilisearch.vue";
 import MkContainer from "@/components/MkContainer.vue";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import { stream } from "@/stream";
 import { i18n } from "@/i18n";
+import { instance } from "@/instance";
 
 const name = "serverMetric";
 
@@ -83,8 +91,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -92,17 +100,20 @@ const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const meta = ref(null);
 
-os.api("server-info", {}).then((res) => {
+os.apiGet("server-info", {}).then((res) => {
 	meta.value = res;
 });
 
 const toggleView = () => {
-	if (widgetProps.view === 4) {
+	if (
+		(widgetProps.view === 5 && instance.features.searchFilters) ||
+		(widgetProps.view === 4 && !instance.features.searchFilters)
+	) {
 		widgetProps.view = 0;
 	} else {
 		widgetProps.view++;

@@ -7,6 +7,7 @@ import type { DriveFile } from "@/models/entities/drive-file.js";
 import { MoreThan } from "typeorm";
 import { deleteFileSync } from "@/services/drive/delete-file.js";
 import { sendEmail } from "@/services/send-email.js";
+import meilisearch from "@/db/meilisearch.js";
 
 const logger = queueLogger.createSubLogger("delete-account");
 
@@ -16,9 +17,7 @@ export async function deleteAccount(
 	logger.info(`Deleting account of ${job.data.user.id} ...`);
 
 	const user = await Users.findOneBy({ id: job.data.user.id });
-	if (user == null) {
-		return;
-	}
+	if (!user) return;
 
 	{
 		// Delete notes
@@ -43,6 +42,9 @@ export async function deleteAccount(
 			cursor = notes[notes.length - 1].id;
 
 			await Notes.delete(notes.map((note) => note.id));
+			if (meilisearch) {
+				await meilisearch.deleteNotes(notes);
+			}
 		}
 
 		logger.succ("All of notes deleted");

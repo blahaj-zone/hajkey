@@ -89,6 +89,10 @@ export default function (app: App) {
 		"MkwUserList",
 		defineAsyncComponent(() => import("./user-list.vue")),
 	);
+	app.component(
+		"MkwServerInfo",
+		defineAsyncComponent(() => import("./server-info.vue")),
+	);
 }
 
 export const widgets = [
@@ -110,6 +114,7 @@ export const widgets = [
 	"postForm",
 	"slideshow",
 	"serverMetric",
+	"serverInfo",
 	"onlineUsers",
 	"jobQueue",
 	"button",

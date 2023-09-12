@@ -28,8 +28,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useWidgetPropsManager, Widget, WidgetComponentExpose } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { Widget, WidgetComponentExpose } from "./widget";
+import { useWidgetPropsManager } from "./widget";
+import type { GetFormResultType } from "@/scripts/form";
 import MkContainer from "@/components/MkContainer.vue";
 import MkAvatars from "@/components/MkAvatars.vue";
 import * as os from "@/os";
@@ -51,19 +52,19 @@ const widgetPropsDef = {
 };
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
-let list = $ref();
-let users = $ref([]);
-let fetching = $ref(true);
+let list = $ref(),
+	users = $ref([]),
+	fetching = $ref(true);
 async function chooseList() {
 	const lists = await os.api("users/lists/list");
 	const { canceled, result: list } = await os.select({

@@ -16,14 +16,13 @@
 
 <script lang="ts" setup>
 import { onUnmounted, ref, watch } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import { timezones } from "@/scripts/timezones";
 import MkDigitalClock from "@/components/MkDigitalClock.vue";
 
@@ -66,8 +65,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -75,7 +74,7 @@ const { widgetProps, configure } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const tzAbbrev = $computed(
@@ -86,18 +85,18 @@ const tzAbbrev = $computed(
 						tz.name.toLowerCase() ===
 						Intl.DateTimeFormat()
 							.resolvedOptions()
-							.timeZone.toLowerCase()
+							.timeZone.toLowerCase(),
 			  )?.abbrev
 			: timezones.find(
-					(tz) => tz.name.toLowerCase() === widgetProps.timezone
-			  )?.abbrev) ?? "?"
+					(tz) => tz.name.toLowerCase() === widgetProps.timezone,
+			  )?.abbrev) ?? "?",
 );
 
 const tzOffset = $computed(() =>
 	widgetProps.timezone === null
 		? 0 - new Date().getTimezoneOffset()
 		: timezones.find((tz) => tz.name.toLowerCase() === widgetProps.timezone)
-				?.offset ?? 0
+				?.offset ?? 0,
 );
 
 const tzOffsetLabel = $computed(
@@ -107,7 +106,7 @@ const tzOffsetLabel = $computed(
 			.toString()
 			.padStart(2, "0") +
 		":" +
-		(tzOffset % 60).toString().padStart(2, "0")
+		(tzOffset % 60).toString().padStart(2, "0"),
 );
 
 defineExpose<WidgetComponentExpose>({

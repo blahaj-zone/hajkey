@@ -12,6 +12,6 @@ defineProps<{
 }>();
 
 const XCode = defineAsyncComponent(
-	() => import("@/components/MkCode.core.vue")
+	() => import("@/components/MkCode.core.vue"),
 );
 </script>

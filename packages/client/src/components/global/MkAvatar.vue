@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch } from "vue";
-import * as misskey from "calckey-js";
+import type * as misskey from "iceshrimp-js";
 import { getStaticImageUrl } from "@/scripts/get-static-image-url";
 import { extractAvgColorFromBlurhash } from "@/scripts/extract-avg-color-from-blurhash";
 import { acct, userPage } from "@/filters/user";
@@ -67,7 +67,7 @@ const props = withDefaults(
 		disableLink: false,
 		disablePreview: false,
 		showIndicator: false,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -77,7 +77,7 @@ const emit = defineEmits<{
 const url = $computed(() =>
 	defaultStore.state.disableShowingAnimatedImages
 		? getStaticImageUrl(props.user.avatarUrl)
-		: props.user.avatarUrl
+		: props.user.avatarUrl,
 );
 
 function onClick(ev: MouseEvent) {
@@ -95,7 +95,7 @@ watch(
 	},
 	{
 		immediate: true,
-	}
+	},
 );
 </script>
 

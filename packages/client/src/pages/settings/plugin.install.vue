@@ -43,7 +43,7 @@ function installPlugin({ id, meta, ast, token }) {
 			configData: {},
 			token: token,
 			ast: ast,
-		})
+		}),
 	);
 }
 
@@ -94,7 +94,9 @@ async function install() {
 					os.popup(
 						defineAsyncComponent(
 							() =>
-								import("@/components/MkTokenGenerateWindow.vue")
+								import(
+									"@/components/MkTokenGenerateWindow.vue"
+								),
 						),
 						{
 							title: i18n.ts.tokenRequested,
@@ -112,12 +114,12 @@ async function install() {
 										session: null,
 										name: name,
 										permission: permissions,
-									}
+									},
 								);
 								res(token);
 							},
 						},
-						"closed"
+						"closed",
 					);
 			  });
 

@@ -43,13 +43,7 @@ describe("ユーザー", () => {
 			roles: any[];
 		};
 
-	type MeDetailed = UserDetailedNotMe &
-		misskey.entities.MeDetailed & {
-			showTimelineReplies: boolean;
-			achievements: object[];
-			loggedInDays: number;
-			policies: object;
-		};
+	type MeDetailed = UserDetailedNotMe & misskey.entities.MeDetailed;
 
 	type User = MeDetailed & { token: string };
 
@@ -172,9 +166,6 @@ describe("ユーザー", () => {
 			mutedInstances: user.mutedInstances,
 			mutingNotificationTypes: user.mutingNotificationTypes,
 			emailNotificationTypes: user.emailNotificationTypes,
-			showTimelineReplies: user.showTimelineReplies,
-			achievements: user.achievements,
-			loggedInDays: user.loggedInDays,
 			policies: user.policies,
 			...(security
 				? {
@@ -479,13 +470,6 @@ describe("ユーザー", () => {
 			"follow",
 			"receiveFollowRequest",
 		]);
-		assert.strictEqual(response.showTimelineReplies, false);
-		assert.deepStrictEqual(response.achievements, []);
-		assert.deepStrictEqual(response.loggedInDays, 0);
-		assert.deepStrictEqual(response.policies, DEFAULT_POLICIES);
-		assert.notStrictEqual(response.email, undefined);
-		assert.strictEqual(response.emailVerified, false);
-		assert.deepStrictEqual(response.securityKeysList, []);
 	});
 
 	//#endregion
@@ -551,8 +535,6 @@ describe("ユーザー", () => {
 		{ parameters: (): object => ({ isBot: false }) },
 		{ parameters: (): object => ({ isCat: true }) },
 		{ parameters: (): object => ({ isCat: false }) },
-		{ parameters: (): object => ({ showTimelineReplies: true }) },
-		{ parameters: (): object => ({ showTimelineReplies: false }) },
 		{ parameters: (): object => ({ injectFeaturedNote: true }) },
 		{ parameters: (): object => ({ injectFeaturedNote: false }) },
 		{ parameters: (): object => ({ receiveAnnouncementEmail: true }) },

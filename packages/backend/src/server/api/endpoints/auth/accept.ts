@@ -41,12 +41,14 @@ export default define(meta, paramDef, async (ps, user) => {
 	const accessToken = secureRndstr(32, true);
 
 	// Fetch exist access token
-	const exist = await AccessTokens.findOneBy({
-		appId: session.appId,
-		userId: user.id,
+	const exist = await AccessTokens.exist({
+		where: {
+			appId: session.appId,
+			userId: user.id,
+		},
 	});
 
-	if (exist == null) {
+	if (!exist) {
 		// Lookup app
 		const app = await Apps.findOneByOrFail({ id: session.appId });
 

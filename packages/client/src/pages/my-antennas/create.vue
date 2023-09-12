@@ -1,7 +1,9 @@
 <template>
-	<div class="geegznzt">
-		<XAntenna :antenna="draft" @created="onAntennaCreated" />
-	</div>
+	<MkSpacer :content-max="700">
+		<div class="geegznzt">
+			<XAntenna :antenna="draft" @created="onAntennaCreated" />
+		</div>
+	</MkSpacer>
 </template>
 
 <script lang="ts" setup>

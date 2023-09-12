@@ -50,6 +50,7 @@
 										<button
 											class="_button"
 											@click="removeUser(user)"
+											:aria-label="i18n.t('removeMember')"
 										>
 											<i class="ph-x ph-bold ph-lg"></i>
 										</button>
@@ -154,8 +155,8 @@ definePageMetadata(
 					title: list.name,
 					icon: "ph-list-bullets ph-bold ph-lg",
 			  }
-			: null
-	)
+			: null,
+	),
 );
 </script>
 

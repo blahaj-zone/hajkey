@@ -35,7 +35,7 @@ const emit = defineEmits<{
 function func(): void {
 	os.popup(
 		defineAsyncComponent(
-			() => import("@/components/MkNotificationSettingWindow.vue")
+			() => import("@/components/MkNotificationSettingWindow.vue"),
 		),
 		{
 			includingTypes: props.column.includingTypes,
@@ -44,11 +44,11 @@ function func(): void {
 			done: async (res) => {
 				const { includingTypes } = res;
 				updateColumn(props.column.id, {
-					includingTypes: includingTypes,
+					includingTypes,
 				});
 			},
 		},
-		"closed"
+		"closed",
 	);
 }
 

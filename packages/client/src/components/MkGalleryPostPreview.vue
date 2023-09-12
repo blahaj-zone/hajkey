@@ -59,6 +59,7 @@ const props = defineProps<{
 		transition: all 0.5s ease;
 
 		> .img {
+			position: relative;
 			width: 100%;
 			height: 100%;
 			object-fit: cover;

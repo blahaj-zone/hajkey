@@ -11,6 +11,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { i18n } from "@/i18n";
+import {engine} from "../../../../sane-defaults"
 
 const props = defineProps<{
 	q: string;
@@ -19,7 +20,10 @@ const props = defineProps<{
 const query = ref(props.q);
 
 const search = () => {
-	window.open(`https://duckduckgo.com/?q=${query.value}`, "_blank");
+	window.open(
+		`${engine}${query.value}`,
+		"_blank",
+	);
 };
 </script>
 

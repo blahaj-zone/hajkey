@@ -26,7 +26,11 @@
 					></i>
 					<span>{{ pageMetadata?.value.title }}</span>
 				</span>
-				<button class="_button" @click="$refs.modal.close()">
+				<button
+					class="_button"
+					@click="$refs.modal.close()"
+					:aria-label="i18n.t('close')"
+				>
 					<i class="ph-x ph-bold ph-lg"></i>
 				</button>
 			</div>

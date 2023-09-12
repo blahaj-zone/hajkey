@@ -1,7 +1,7 @@
 <template>
 	<div v-if="instance.disableRegistration" style="margin-bottom: 1rem">
 		<p>{{ i18n.ts.signupsDisabled }}</p>
-		<a href="https://calckey.org/join">
+		<a href="https://joinfirefish.org/join">
 			<MkButton rounded gradate
 				>{{ i18n.ts.findOtherInstance }}
 			</MkButton>
@@ -303,7 +303,7 @@ const props = withDefaults(
 	}>(),
 	{
 		autoSet: false,
-	}
+	},
 );
 
 const emit = defineEmits<{

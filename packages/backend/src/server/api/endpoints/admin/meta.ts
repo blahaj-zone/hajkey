@@ -64,7 +64,7 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "/assets/ai.png",
+				default: "/static-assets/badges/info.png",
 			},
 			bannerUrl: {
 				type: "string",
@@ -75,7 +75,7 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://xn--931a.moe/aiart/yubitun.png",
+				default: "/static-assets/badges/error.png",
 			},
 			iconUrl: {
 				type: "string",
@@ -128,35 +128,6 @@ export const meta = {
 							nullable: true,
 						},
 						url: {
-							type: "string",
-							optional: false,
-							nullable: false,
-							format: "url",
-						},
-					},
-				},
-			},
-			ads: {
-				type: "array",
-				optional: false,
-				nullable: false,
-				items: {
-					type: "object",
-					optional: false,
-					nullable: false,
-					properties: {
-						place: {
-							type: "string",
-							optional: false,
-							nullable: false,
-						},
-						url: {
-							type: "string",
-							optional: false,
-							nullable: false,
-							format: "url",
-						},
-						imageUrl: {
 							type: "string",
 							optional: false,
 							nullable: false,
@@ -476,10 +447,25 @@ export const meta = {
 				optional: true,
 				nullable: true,
 				properties: {
-					postEditing: {
+					postImports: {
 						type: "boolean",
 					},
 				},
+			},
+			enableServerMachineStats: {
+				type: "boolean",
+				optional: false,
+				nullable: false,
+			},
+			enableIdenticonGeneration: {
+				type: "boolean",
+				optional: false,
+				nullable: false,
+			},
+			donationLink: {
+				type: "string",
+				optional: true,
+				nullable: true,
 			},
 		},
 	},
@@ -592,5 +578,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		enableIpLogging: instance.enableIpLogging,
 		enableActiveEmailValidation: instance.enableActiveEmailValidation,
 		experimentalFeatures: instance.experimentalFeatures,
+		enableServerMachineStats: instance.enableServerMachineStats,
+		enableIdenticonGeneration: instance.enableIdenticonGeneration,
+		donationLink: instance.donationLink,
 	};
 });

@@ -11,7 +11,7 @@
 			message.groupId
 				? `/my/messaging/group/${message.groupId}`
 				: `/my/messaging/${getAcct(
-						isMe(message) ? message.recipient : message.user
+						isMe(message) ? message.recipient : message.user,
 				  )}`
 		"
 	>
@@ -26,7 +26,7 @@
 						: message.user
 				"
 				:show-indicator="true"
-				disableLink
+				disable-link
 			/>
 			<header v-if="message.groupId">
 				<span class="name">{{ message.group.name }}</span>
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts" setup>
-import * as Acct from "calckey-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import { i18n } from "@/i18n";
 import { acct } from "@/filters/user";
 import { $i } from "@/account";
@@ -103,11 +103,7 @@ function isMe(message): boolean {
 		}
 
 		&:not(.isMe):not(.isRead) {
-			> div {
-				background-image: url("/client-assets/unread.svg");
-				background-repeat: no-repeat;
-				background-position: 0 center;
-			}
+			background-color: var(--accentedBg);
 		}
 
 		&:after {
@@ -179,13 +175,6 @@ function isMe(message): boolean {
 
 	&.max-width_400px {
 		> .message {
-			&:not(.isMe):not(.isRead) {
-				> div {
-					background-image: none;
-					border-left: solid 4px #3aa2dc;
-				}
-			}
-
 			> div {
 				padding: 16px;
 				font-size: 0.9em;

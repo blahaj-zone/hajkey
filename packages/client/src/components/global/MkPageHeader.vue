@@ -10,11 +10,11 @@
 		<div class="left">
 			<div class="buttons">
 				<button
-					v-if="props.displayBackButton"
-					class="_button button icon backButton"
+					v-if="displayBackButton"
+					v-tooltip.noDelay="i18n.ts.goBack"
+					class="_buttonIcon button icon backButton"
 					@click.stop="goBack()"
 					@touchstart="preventDrag"
-					v-tooltip.noDelay="i18n.ts.goBack"
 				>
 					<i class="ph-caret-left ph-bold ph-lg"></i>
 				</button>
@@ -23,7 +23,7 @@
 					class="avatar button"
 					:user="$i"
 					:disable-preview="true"
-					disableLink
+					disable-link
 					@click.stop="openAccountMenu"
 				/>
 			</div>
@@ -33,12 +33,10 @@
 				@click="showTabsPopup"
 			>
 				<MkAvatar
-					v-if="metadata.avatar"
+					v-if="metadata && metadata.avatar"
 					class="avatar"
 					:user="metadata.avatar"
-					:disable-preview="true"
 					:show-indicator="true"
-					disableLink
 				/>
 				<i
 					v-else-if="metadata.icon && !narrow"
@@ -70,8 +68,8 @@
 		</div>
 		<template v-if="metadata">
 			<nav
-				ref="tabsEl"
 				v-if="hasTabs"
+				ref="tabsEl"
 				class="tabs"
 				:class="{ collapse: hasTabs && tabs.length > 3 }"
 			>
@@ -93,7 +91,7 @@
 			</nav>
 		</template>
 		<div class="buttons right">
-			<template v-if="metadata.avatar">
+			<template v-if="metadata && metadata.avatar">
 				<MkFollowButton
 					v-if="narrow"
 					:user="metadata.avatar"
@@ -110,7 +108,7 @@
 			<template v-for="action in actions">
 				<button
 					v-tooltip.noDelay="action.text"
-					class="_button button"
+					class="_buttonIcon button"
 					:class="{ highlighted: action.highlighted }"
 					@click.stop="action.handler"
 					@touchstart="preventDrag"
@@ -125,14 +123,14 @@
 <script lang="ts" setup>
 import {
 	computed,
+	inject,
+	nextTick,
 	onMounted,
 	onUnmounted,
-	ref,
-	inject,
-	watch,
-	shallowReactive,
-	nextTick,
 	reactive,
+	ref,
+	shallowReactive,
+	watch,
 } from "vue";
 import MkFollowButton from "@/components/MkFollowButton.vue";
 import { popupMenu } from "@/os";
@@ -142,13 +140,13 @@ import { injectPageMetadata } from "@/scripts/page-metadata";
 import { $i, openAccountMenu as openAccountMenu_ } from "@/account";
 import { i18n } from "@/i18n";
 
-type Tab = {
+interface Tab {
 	key?: string | null;
 	title: string;
 	icon?: string;
 	iconOnly?: boolean;
 	onClick?: (ev: MouseEvent) => void;
-};
+}
 
 const props = defineProps<{
 	tabs?: Tab[];
@@ -163,6 +161,11 @@ const props = defineProps<{
 	displayBackButton?: boolean;
 	to?: string;
 }>();
+
+const displayBackButton =
+	props.displayBackButton &&
+	history.length > 1 &&
+	inject("shouldBackButton", true);
 
 const emit = defineEmits<{
 	(ev: "update:tab", key: string);
@@ -191,7 +194,7 @@ const openAccountMenu = (ev: MouseEvent) => {
 		{
 			withExtraOperation: true,
 		},
-		ev
+		ev,
 	);
 };
 
@@ -275,7 +278,7 @@ onMounted(() => {
 		},
 		{
 			immediate: true,
-		}
+		},
 	);
 
 	if (el && el.parentElement) {
@@ -304,6 +307,8 @@ onUnmounted(() => {
 	padding-inline: 24px;
 	box-sizing: border-box;
 	overflow: hidden;
+	-webkit-backdrop-filter: var(--blur, blur(15px));
+	backdrop-filter: var(--blur, blur(15px));
 	@media (max-width: 500px) {
 		padding-inline: 16px;
 		&.tabs > .buttons > :deep(.follow-button > span) {
@@ -342,8 +347,6 @@ onUnmounted(() => {
 		position: absolute;
 		inset: 0;
 		border-bottom: solid 0.5px var(--divider);
-		-webkit-backdrop-filter: var(--blur, blur(15px));
-		backdrop-filter: var(--blur, blur(15px));
 		z-index: -1;
 	}
 	&::after {
@@ -369,6 +372,7 @@ onUnmounted(() => {
 		display: flex;
 		> .buttons {
 			&:not(:empty) {
+				margin-right: 8px;
 				margin-left: calc(0px - var(--margin));
 			}
 			> .avatar {
@@ -386,30 +390,11 @@ onUnmounted(() => {
 		height: var(--height);
 		&.right {
 			justify-content: flex-end;
+			z-index: 2;
 			// margin-right: calc(0px - var(--margin));
 			// margin-left: var(--margin);
 			> .button:last-child {
 				margin-right: calc(0px - var(--margin));
-			}
-		}
-
-		> .button/*, @at-root .backButton*/ {
-			/* I don't know how to get this to work */
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: calc(var(--height) - (var(--margin) * 2));
-			width: calc(var(--height) - (var(--margin) * 2));
-			box-sizing: border-box;
-			position: relative;
-			border-radius: 5px;
-
-			&:hover {
-				background: rgba(0, 0, 0, 0.05);
-			}
-
-			&.highlighted {
-				color: var(--accent);
 			}
 		}
 
@@ -441,13 +426,13 @@ onUnmounted(() => {
 				width: $size;
 				height: $size;
 				vertical-align: bottom;
-				margin: 0 8px;
-				pointer-events: none;
+				margin-right: 8px;
 			}
 
 			> .icon {
 				margin-right: 8px;
-				width: 16px;
+				min-width: 16px;
+				width: 1em;
 				text-align: center;
 			}
 
@@ -524,10 +509,11 @@ onUnmounted(() => {
 		}
 
 		&.collapse {
-			--width: 38px;
+			--width: 2.7em;
+			// --width: 1.33333em
 			> .tab {
-				width: 38px;
-				min-width: 38px !important;
+				width: 2.7em;
+				min-width: 2.7em !important;
 				&:not(.active) > .title {
 					opacity: 0;
 				}
@@ -547,7 +533,11 @@ onUnmounted(() => {
 			font-weight: normal;
 			opacity: 0.7;
 			overflow: hidden;
-			transition: color 0.2s, opacity 0.2s, width 0.2s, min-width 0.2s;
+			transition:
+				color 0.2s,
+				opacity 0.2s,
+				width 0.2s,
+				min-width 0.2s;
 			--width: 38px;
 
 			&:hover {
@@ -576,7 +566,9 @@ onUnmounted(() => {
 			height: 3px;
 			background: var(--accent);
 			border-radius: 999px;
-			transition: width 0.2s, transform 0.2s;
+			transition:
+				width 0.2s,
+				transform 0.2s;
 			transition-timing-function: cubic-bezier(0, 0, 0, 1.2);
 			pointer-events: none;
 		}

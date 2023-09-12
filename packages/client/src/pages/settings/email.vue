@@ -92,22 +92,22 @@ const saveEmailAddress = () => {
 };
 
 const emailNotification_mention = ref(
-	$i!.emailNotificationTypes.includes("mention")
+	$i!.emailNotificationTypes.includes("mention"),
 );
 const emailNotification_reply = ref(
-	$i!.emailNotificationTypes.includes("reply")
+	$i!.emailNotificationTypes.includes("reply"),
 );
 const emailNotification_quote = ref(
-	$i!.emailNotificationTypes.includes("quote")
+	$i!.emailNotificationTypes.includes("quote"),
 );
 const emailNotification_follow = ref(
-	$i!.emailNotificationTypes.includes("follow")
+	$i!.emailNotificationTypes.includes("follow"),
 );
 const emailNotification_receiveFollowRequest = ref(
-	$i!.emailNotificationTypes.includes("receiveFollowRequest")
+	$i!.emailNotificationTypes.includes("receiveFollowRequest"),
 );
 const emailNotification_groupInvited = ref(
-	$i!.emailNotificationTypes.includes("groupInvited")
+	$i!.emailNotificationTypes.includes("groupInvited"),
 );
 
 const saveNotificationSettings = () => {
@@ -138,7 +138,7 @@ watch(
 	],
 	() => {
 		saveNotificationSettings();
-	}
+	},
 );
 
 onMounted(() => {

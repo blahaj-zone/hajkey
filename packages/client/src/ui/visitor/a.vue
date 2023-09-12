@@ -63,8 +63,8 @@
 					>
 					<small
 						>Powered by
-						<a href="https://calckey.org/" target="_blank"
-							>Calckey</a
+						<a href="https://joinfirefish.org/" target="_blank"
+							>Firefish</a
 						></small
 					>
 				</div>
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from "vue";
+import { defineAsyncComponent, defineComponent } from "vue";
 import XHeader from "./header.vue";
 import { host, instanceName } from "@/config";
 import { search } from "@/scripts/search";
@@ -140,7 +140,7 @@ export default defineComponent({
 					if (window.innerWidth >= DESKTOP_THRESHOLD)
 						this.isDesktop = true;
 				},
-				{ passive: true }
+				{ passive: true },
 			);
 		}
 	},

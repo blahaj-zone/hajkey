@@ -15,7 +15,11 @@
 		@contextmenu.stop="onContextmenu"
 	>
 		<div v-if="conversation && depth > 1" class="line"></div>
-		<div class="main" @click="noteClick">
+		<div
+			class="main"
+			@click="noteClick"
+			:style="{ cursor: expandOnNoteClick ? 'pointer' : '' }"
+		>
 			<div class="avatar-container">
 				<MkAvatar class="avatar" :user="appearNote.user" />
 				<div
@@ -29,8 +33,9 @@
 					<MkSubNoteContent
 						class="text"
 						:note="note"
-						:parentId="appearNote.parentId"
+						:parentId="parentId"
 						:conversation="conversation"
+						:detailedView="detailedView"
 						@focusfooter="footerEl.focus()"
 					/>
 					<div v-if="translating || translation" class="translation">
@@ -52,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<footer ref="footerEl" class="footer" @click.stop tabindex="-1">
+				<footer ref="footerEl" class="footer" tabindex="-1">
 					<XReactionsViewer
 						v-if="enableEmojiReactions"
 						ref="reactionsViewer"
@@ -61,7 +66,7 @@
 					<button
 						v-tooltip.noDelay.bottom="i18n.ts.reply"
 						class="button _button"
-						@click="reply()"
+						@click.stop="reply()"
 					>
 						<i class="ph-arrow-u-up-left ph-bold ph-lg"></i>
 						<template v-if="appearNote.repliesCount > 0">
@@ -82,7 +87,7 @@
 						:count="
 							Object.values(appearNote.reactions).reduce(
 								(partialSum, val) => partialSum + val,
-								0
+								0,
 							)
 						"
 						:reacted="appearNote.myReaction != null"
@@ -104,7 +109,7 @@
 						ref="reactButton"
 						v-tooltip.noDelay.bottom="i18n.ts.reaction"
 						class="button _button"
-						@click="react()"
+						@click.stop="react()"
 					>
 						<i class="ph-smiley ph-bold ph-lg"></i>
 					</button>
@@ -115,7 +120,8 @@
 						"
 						ref="reactButton"
 						class="button _button reacted"
-						@click="undoReact(appearNote)"
+						@click.stop="undoReact(appearNote)"
+						v-tooltip.noDelay.bottom="i18n.ts.removeReaction"
 					>
 						<i class="ph-minus ph-bold ph-lg"></i>
 					</button>
@@ -124,7 +130,7 @@
 						ref="menuButton"
 						v-tooltip.noDelay.bottom="i18n.ts.more"
 						class="button _button"
-						@click="menu()"
+						@click.stop="menu()"
 					>
 						<i class="ph-dots-three-outline ph-bold ph-lg"></i>
 					</button>
@@ -140,11 +146,9 @@
 				class="reply"
 				:class="{ single: replies.length == 1 }"
 				:conversation="conversation"
-				:depth="
-					replies.length == 1 && collapseSingles ? depth : depth + 1
-				"
-				:colorizer="colorizer.advance()"
-				:parentId="appearNote.replyId"
+				:depth="replies.length == 1 ? depth : depth + 1"
+				:replyLevel="replyLevel + 1"
+				:parentId="appearNote.id"
 				:detailedView="detailedView"
 			/>
 			<div v-else-if="replies.length > 0" class="more">
@@ -177,7 +181,7 @@
 <script lang="ts" setup>
 import { inject, ref } from "vue";
 import type { Ref } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import XNoteHeader from "@/components/MkNoteHeader.vue";
 import MkSubNoteContent from "@/components/MkSubNoteContent.vue";
 import XReactionsViewer from "@/components/MkReactionsViewer.vue";
@@ -237,8 +241,8 @@ const props = withDefaults(
 	}>(),
 	{
 		depth: 1,
-		child: 0,
-	}
+		replyLevel: 1,
+	},
 );
 
 const colorizer: Colorizer = props.colorizer ?? new Colorizer();
@@ -268,7 +272,7 @@ const starButton = ref<InstanceType<typeof XStarButton>>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const reactButton = ref<HTMLElement>();
 let appearNote = $computed(() =>
-	isRenote ? (note.renote as misskey.entities.Note) : note
+	isRenote ? (note.renote as misskey.entities.Note) : note,
 );
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
@@ -280,11 +284,12 @@ const replies: misskey.entities.Note[] =
 		?.filter(
 			(item) =>
 				item.replyId === props.note.id ||
-				item.renoteId === props.note.id
+				item.renoteId === props.note.id,
 		)
 		.reverse() ?? [];
 let collapseSingles = $ref(defaultStore.state.replyCollapseSingles);
 const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
+const expandOnNoteClick = defaultStore.state.expandOnNoteClick;
 
 useNoteCapture({
 	rootEl: el,
@@ -315,7 +320,7 @@ function react(viaKeyboard = false): void {
 		},
 		() => {
 			focus();
-		}
+		},
 	);
 }
 
@@ -329,7 +334,7 @@ function undoReact(note): void {
 
 const currentClipPage = inject<Ref<misskey.entities.Clip> | null>(
 	"currentClipPage",
-	null
+	null,
 );
 
 function menu(viaKeyboard = false): void {
@@ -345,7 +350,7 @@ function menu(viaKeyboard = false): void {
 		menuButton.value,
 		{
 			viaKeyboard,
-		}
+		},
 	).then(focus);
 }
 
@@ -410,7 +415,7 @@ function onContextmenu(ev: MouseEvent): void {
 					  }
 					: undefined,
 			],
-			ev
+			ev,
 		);
 	}
 }
@@ -424,7 +429,7 @@ function blur() {
 }
 
 function noteClick(e) {
-	if (document.getSelection()?.type === "Range") {
+	if (document.getSelection().type === "Range" || !expandOnNoteClick) {
 		e.stopPropagation();
 	} else {
 		router.push(notePage(props.note));
@@ -583,17 +588,17 @@ function noteClick(e) {
 		font-size: 1em;
 		cursor: auto;
 
-		&.max-width_450px {
+		&.max-width_500px {
 			padding: 10px 0 0 8px;
 		}
 	}
 
 	> .main {
 		display: flex;
-		cursor: pointer;
 
 		> .avatar-container {
 			margin-right: 8px;
+			z-index: 2;
 			> .avatar {
 				flex-shrink: 0;
 				display: block;
@@ -604,6 +609,7 @@ function noteClick(e) {
 		}
 
 		> .body {
+			position: relative;
 			flex: 1;
 			min-width: 0;
 			margin: 0 -200px;
@@ -631,18 +637,19 @@ function noteClick(e) {
 				z-index: 2;
 				display: flex;
 				flex-wrap: wrap;
-				pointer-events: none; // Allow clicking anything w/out pointer-events: all; to open post
 
 				> :deep(.button) {
 					position: relative;
 					margin: 0;
 					padding: 8px;
 					opacity: 0.7;
+					&:disabled {
+						opacity: 0.5 !important;
+					}
 					flex-grow: 1;
 					max-width: 3.5em;
 					width: max-content;
 					min-width: max-content;
-					pointer-events: all;
 					height: auto;
 					transition: opacity 0.2s;
 					&::before {
@@ -667,6 +674,10 @@ function noteClick(e) {
 					}
 					&:hover {
 						color: var(--fgHighlighted);
+					}
+
+					> i {
+						display: inline !important;
 					}
 
 					> .count {
@@ -700,6 +711,14 @@ function noteClick(e) {
 			margin-left: calc(0px - var(--avatarSize) - 32px);
 			padding-left: calc(var(--avatarSize) + 32px);
 			border-radius: var(--radius);
+		}
+	}
+	&.reply-to {
+		> .main > .body {
+			margin-left: calc(0px - var(--avatarSize) - 38px);
+			padding-left: calc(var(--avatarSize) + 38px);
+			margin-top: -16px;
+			padding-top: 16px;
 		}
 	}
 	&.reply {
@@ -801,10 +820,11 @@ function noteClick(e) {
 			flex-grow: 1;
 			margin-bottom: -10px;
 			pointer-events: none;
+			opacity: 0.25;
 			&::before {
 				content: "";
 				position: absolute;
-				border-left: 2px solid var(--X13);
+				border-left: 2px solid currentColor;
 				margin-left: calc((var(--avatarSize) / 2) - 1px);
 				width: calc(var(--indent) / 2);
 				inset-block: 0;
@@ -842,11 +862,12 @@ function noteClick(e) {
 			z-index: 2;
 			left: 0;
 			top: 0;
+			opacity: 0.25;
 			&::after {
 				content: "";
 				position: absolute;
-				border-left: 2px solid var(--X13);
-				border-bottom: 2px solid var(--X13);
+				border-left: 2px solid currentColor;
+				border-bottom: 2px solid currentColor;
 				margin-left: calc((var(--avatarSize) / 2) - 1px);
 				width: calc(var(--indent) / 2);
 				height: calc((var(--avatarSize) / 2));
@@ -883,6 +904,7 @@ function noteClick(e) {
 	}
 
 	&.max-width_500px {
+		padding: 14px 16px;
 		:not(.reply) > & {
 			.reply {
 				--avatarSize: 24px;
@@ -900,11 +922,8 @@ function noteClick(e) {
 				padding-left: 28px !important;
 			}
 		}
-	}
-	&.max-width_450px {
-		padding: 14px 16px;
-		&.reply-to,
-		&.reply-to-more {
+		&.reply-to {
+			--avatarSize: 46px;
 			padding: 14px 16px;
 			padding-top: 14px !important;
 			padding-bottom: 0 !important;

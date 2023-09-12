@@ -21,6 +21,7 @@ export const meta = {
 			message: "No such note.",
 			code: "NO_SUCH_NOTE",
 			id: "24fcbfc6-2e37-42b6-8388-c29b3861a08d",
+			httpStatusCode: 404,
 		},
 	},
 } as const;

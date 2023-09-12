@@ -4,11 +4,6 @@
 			><MkPageHeader :actions="headerActions" :tabs="headerTabs"
 		/></template>
 		<div ref="rootEl" v-size="{ min: [800] }" class="eqqrhokj">
-			<div v-if="queue > 0" class="new">
-				<button class="_buttonPrimary" @click="top()">
-					{{ i18n.ts.newNoteRecived }}
-				</button>
-			</div>
 			<div class="tl _block">
 				<XTimeline
 					ref="tlEl"
@@ -17,7 +12,6 @@
 					src="list"
 					:list="listId"
 					:sound="true"
-					@queue="queueUpdated"
 				/>
 			</div>
 		</div>
@@ -27,7 +21,6 @@
 <script lang="ts" setup>
 import { computed, watch, inject } from "vue";
 import XTimeline from "@/components/MkTimeline.vue";
-import { scroll } from "@/scripts/scroll";
 import * as os from "@/os";
 import { useRouter } from "@/router";
 import { definePageMetadata } from "@/scripts/page-metadata";
@@ -40,7 +33,6 @@ const props = defineProps<{
 }>();
 
 let list = $ref(null);
-let queue = $ref(0);
 let tlEl = $ref<InstanceType<typeof XTimeline>>();
 let rootEl = $ref<HTMLElement>();
 
@@ -51,16 +43,8 @@ watch(
 			listId: props.listId,
 		});
 	},
-	{ immediate: true }
+	{ immediate: true },
 );
-
-function queueUpdated(q) {
-	queue = q;
-}
-
-function top() {
-	scroll(rootEl, { top: 0 });
-}
 
 function settings() {
 	router.push(`/my/lists/${props.listId}`);
@@ -89,7 +73,7 @@ const headerActions = $computed(() =>
 					handler: settings,
 				},
 		  ]
-		: []
+		: [],
 );
 
 const headerTabs = $computed(() => []);
@@ -101,33 +85,17 @@ definePageMetadata(
 					title: list.name,
 					icon: "ph-list-bullets ph-bold ph-lg",
 			  }
-			: null
-	)
+			: null,
+	),
 );
 </script>
 
 <style lang="scss" scoped>
 .eqqrhokj {
 	padding: var(--margin);
-
-	> .new {
-		position: sticky;
-		top: calc(var(--stickyTop, 0px) + 16px);
-		z-index: 1000;
-		width: 100%;
-
-		> button {
-			display: block;
-			margin: var(--margin) auto 0 auto;
-			padding: 8px 16px;
-			border-radius: 32px;
-		}
-	}
-
 	> .tl {
 		background: none;
 		border-radius: var(--radius);
-		overflow: clip;
 	}
 
 	&.min-width_800px {

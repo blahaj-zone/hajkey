@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import {} from "vue";
-import { permissions as kinds } from "calckey-js";
+import { permissions as kinds } from "iceshrimp-js";
 import MkInput from "./form/input.vue";
 import MkSwitch from "./form/switch.vue";
 import MkButton from "./MkButton.vue";
@@ -64,7 +64,7 @@ const props = withDefaults(
 		information: null,
 		initialName: null,
 		initialPermissions: null,
-	}
+	},
 );
 
 const emit = defineEmits<{

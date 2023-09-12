@@ -18,7 +18,7 @@ function getUserToken(ctx: Koa.BaseContext): string | null {
 
 function compareOrigin(ctx: Koa.BaseContext): boolean {
 	function normalizeUrl(url?: string): string {
-		return url ? (url.endsWith("/") ? url.substr(0, url.length - 1) : url) : "";
+		return url ? (url.endsWith("/") ? url.slice(0, url.length - 1) : url) : "";
 	}
 
 	const referer = ctx.headers["referer"];

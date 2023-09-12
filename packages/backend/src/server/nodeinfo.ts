@@ -50,10 +50,10 @@ const nodeinfo2 = async () => {
 
 	return {
 		software: {
-			name: "calckey",
+			name: "iceshrimp",
 			version: config.version,
 			repository: meta.repositoryUrl,
-			homepage: "https://calckey.org/",
+			homepage: "https://joinfirefish.org/",
 		},
 		protocols: ["activitypub"],
 		services: {
@@ -82,6 +82,9 @@ const nodeinfo2 = async () => {
 			disableRecommendedTimeline: meta.disableRecommendedTimeline,
 			disableGlobalTimeline: meta.disableGlobalTimeline,
 			emailRequiredForSignup: meta.emailRequiredForSignup,
+			searchFilters: config.meilisearch ? true : false,
+			postEditing: true,
+			postImports: meta.experimentalFeatures?.postImports || false,
 			enableHcaptcha: meta.enableHcaptcha,
 			enableRecaptcha: meta.enableRecaptcha,
 			maxNoteTextLength: MAX_NOTE_TEXT_LENGTH,
@@ -97,7 +100,10 @@ const nodeinfo2 = async () => {
 	};
 };
 
-const cache = new Cache<Awaited<ReturnType<typeof nodeinfo2>>>(1000 * 60 * 10);
+const cache = new Cache<Awaited<ReturnType<typeof nodeinfo2>>>(
+	"nodeinfo",
+	60 * 10,
+);
 
 router.get(nodeinfo2_1path, async (ctx) => {
 	const base = await cache.fetch(null, () => nodeinfo2());

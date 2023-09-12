@@ -1,5 +1,5 @@
 <template>
-	<div v-if="note" class="_gaps reacted-users">
+	<div v-if="note" class="reacted-users">
 		<div :class="$style.tabs">
 			<button
 				v-for="reaction in reactions"
@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch } from "vue";
-import * as misskey from "calckey-js";
+import * as misskey from "iceshrimp-js";
 import MkReactionIcon from "@/components/MkReactionIcon.vue";
 import MkUserCardMini from "@/components/MkUserCardMini.vue";
 import { i18n } from "@/i18n";

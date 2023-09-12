@@ -42,7 +42,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		userId: me.id,
 	});
 
-	if (userList == null) {
+	if (!userList) {
 		throw new ApiError(meta.errors.noSuchList);
 	}
 

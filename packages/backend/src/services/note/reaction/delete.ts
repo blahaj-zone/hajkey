@@ -13,13 +13,13 @@ export default async (
 	user: { id: User["id"]; host: User["host"] },
 	note: Note,
 ) => {
-	// if already unreacted
-	const exist = await NoteReactions.findOneBy({
+	const reaction = await NoteReactions.findOneBy({
 		noteId: note.id,
 		userId: user.id,
 	});
 
-	if (exist == null) {
+	// if already unreacted
+	if (reaction == null) {
 		throw new IdentifiableError(
 			"60527ec9-b4cb-4a88-a6bd-32d3ad26817d",
 			"not reacted",
@@ -27,7 +27,7 @@ export default async (
 	}
 
 	// Delete reaction
-	const result = await NoteReactions.delete(exist.id);
+	const result = await NoteReactions.delete(reaction.id);
 
 	if (result.affected !== 1) {
 		throw new IdentifiableError(
@@ -37,7 +37,7 @@ export default async (
 	}
 
 	// Decrement reactions count
-	const sql = `jsonb_set("reactions", '{${exist.reaction}}', (COALESCE("reactions"->>'${exist.reaction}', '0')::int - 1)::text::jsonb)`;
+	const sql = `jsonb_set("reactions", '{${reaction.reaction}}', (COALESCE("reactions"->>'${reaction.reaction}', '0')::int - 1)::text::jsonb)`;
 	await Notes.createQueryBuilder()
 		.update()
 		.set({
@@ -49,14 +49,14 @@ export default async (
 	Notes.decrement({ id: note.id }, "score", 1);
 
 	publishNoteStream(note.id, "unreacted", {
-		reaction: decodeReaction(exist.reaction).reaction,
+		reaction: decodeReaction(reaction.reaction).reaction,
 		userId: user.id,
 	});
 
 	//#region 配信
 	if (Users.isLocalUser(user) && !note.localOnly) {
 		const content = renderActivity(
-			renderUndo(await renderLike(exist, note), user),
+			renderUndo(await renderLike(reaction, note), user),
 		);
 		const dm = new DeliverManager(user, content);
 		if (note.userHost !== null) {

@@ -2,7 +2,6 @@
 	<MkModal
 		ref="modal"
 		:prefer-type="'dialog'"
-		:z-priority="'high'"
 		@click="done(true)"
 		@closed="emit('closed')"
 	>
@@ -54,18 +53,60 @@
 			>
 				<Mfm :text="i18n.ts.password" />
 			</header>
-			<div v-if="text" :class="$style.text"><Mfm :text="text" /></div>
+			<div v-if="text" :class="$style.text">
+				<Mfm :text="text" />
+			</div>
 			<MkInput
 				v-if="input && input.type !== 'paragraph'"
+				ref="inputEl"
 				v-model="inputValue"
 				autofocus
-				:type="input.type || 'text'"
+				:autocomplete="input.autocomplete"
+				:type="input.type == 'search' ? 'search' : input.type || 'text'"
 				:placeholder="input.placeholder || undefined"
+				:style="{
+					width: input.type === 'search' ? '300px' : null,
+				}"
 				@keydown="onInputKeydown"
 			>
 				<template v-if="input.type === 'password'" #prefix
 					><i class="ph-password ph-bold ph-lg"></i
 				></template>
+				<template #caption>
+					<span
+						v-if="
+							okButtonDisabled &&
+							disabledReason === 'charactersExceeded'
+						"
+						v-text="
+							i18n.t('_dialog.charactersExceeded', {
+								current: (inputValue as string).length,
+								max: input.maxLength ?? 'NaN',
+							})
+						"
+					/>
+					<span
+						v-else-if="
+							okButtonDisabled &&
+							disabledReason === 'charactersBelow'
+						"
+						v-text="
+							i18n.t('_dialog.charactersBelow', {
+								current: (inputValue as string).length,
+								min: input.minLength ?? 'NaN',
+							})
+						"
+					/>
+				</template>
+				<template v-if="input.type === 'search'" #suffix>
+					<button
+						v-tooltip.noDelay="i18n.ts.filter"
+						class="_buttonIcon"
+						@click.stop="openSearchFilters"
+					>
+						<i class="ph-funnel ph-bold"></i>
+					</button>
+				</template>
 			</MkInput>
 			<MkTextarea
 				v-if="input && input.type === 'paragraph'"
@@ -95,6 +136,7 @@
 					</optgroup>
 				</template>
 			</MkSelect>
+
 			<div
 				v-if="(showOkButton || showCancelButton) && !actions"
 				:class="$style.buttons"
@@ -105,6 +147,7 @@
 						inline
 						primary
 						:autofocus="!input && !select"
+						:disabled="okButtonDisabled"
 						@click="ok"
 						>{{
 							showCancelButton || input || select
@@ -126,8 +169,8 @@
 						primary
 						:autofocus="!input && !select"
 						@click="ok"
-						>{{ i18n.ts.yes }}</MkButton
-					>
+						>{{ i18n.ts.yes }}
+					</MkButton>
 					<MkButton
 						v-if="showCancelButton || input || select"
 						inline
@@ -157,20 +200,25 @@
 
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import * as Acct from "iceshrimp-js/built/acct";
 import MkModal from "@/components/MkModal.vue";
 import MkButton from "@/components/MkButton.vue";
 import MkInput from "@/components/form/input.vue";
 import MkTextarea from "@/components/form/textarea.vue";
 import MkSelect from "@/components/form/select.vue";
+import * as os from "@/os";
 import { i18n } from "@/i18n";
 
-export type Input = {
+interface Input {
 	type: HTMLInputElement["type"];
 	placeholder?: string | null;
-	default: any | null;
-};
+	autocomplete?: string;
+	default: string | number | null;
+	minLength?: number;
+	maxLength?: number;
+}
 
-export type Select = {
+interface Select {
 	items: {
 		value: string;
 		text: string;
@@ -183,7 +231,7 @@ export type Select = {
 		}[];
 	}[];
 	default: string | null;
-};
+}
 
 const props = withDefaults(
 	defineProps<{
@@ -193,7 +241,8 @@ const props = withDefaults(
 			| "warning"
 			| "info"
 			| "question"
-			| "waiting";
+			| "waiting"
+			| "search";
 		title: string;
 		text?: string;
 		input?: Input;
@@ -219,7 +268,7 @@ const props = withDefaults(
 		isYesNo: false,
 
 		cancelableByBgClick: true,
-	}
+	},
 );
 
 const emit = defineEmits<{
@@ -229,8 +278,37 @@ const emit = defineEmits<{
 
 const modal = shallowRef<InstanceType<typeof MkModal>>();
 
-const inputValue = ref(props.input?.default || null);
-const selectedValue = ref(props.select?.default || null);
+const inputValue = ref<string | number | null>(props.input?.default ?? null);
+const selectedValue = ref(props.select?.default ?? null);
+
+let disabledReason = $ref<null | "charactersExceeded" | "charactersBelow">(
+	null,
+);
+const okButtonDisabled = $computed<boolean>(() => {
+	if (props.input) {
+		if (props.input.minLength) {
+			if (
+				(inputValue.value || inputValue.value === "") &&
+				(inputValue.value as string).length < props.input.minLength
+			) {
+				disabledReason = "charactersBelow";
+				return true;
+			}
+		}
+		if (props.input.maxLength) {
+			if (
+				inputValue.value &&
+				(inputValue.value as string).length > props.input.maxLength
+			) {
+				disabledReason = "charactersExceeded";
+				return true;
+			}
+		}
+	}
+	return false;
+});
+
+const inputEl = ref<typeof MkInput>();
 
 function done(canceled: boolean, result?) {
 	emit("done", { canceled, result });
@@ -266,6 +344,115 @@ function onInputKeydown(evt: KeyboardEvent) {
 		evt.stopPropagation();
 		ok();
 	}
+}
+
+function formatDateToYYYYMMDD(date) {
+	const year = date.getFullYear();
+	const month = ("0" + (date.getMonth() + 1)).slice(-2);
+	const day = ("0" + (date.getDate() + 1)).slice(-2);
+	return `${year}-${month}-${day}`;
+}
+
+async function openSearchFilters(ev) {
+	await os.popupMenu(
+		[
+			{
+				icon: "ph-user ph-bold ph-lg",
+				text: i18n.ts._filters.fromUser,
+				action: () => {
+					os.selectUser().then((user) => {
+						inputValue.value += " from:@" + Acct.toString(user);
+					});
+				},
+			},
+			{
+				type: "parent",
+				text: i18n.ts._filters.withFile,
+				icon: "ph-paperclip ph-bold ph-lg",
+				children: [
+					{
+						text: i18n.ts.image,
+						icon: "ph-image-square ph-bold ph-lg",
+						action: () => {
+							inputValue.value += " has:image";
+						},
+					},
+					{
+						text: i18n.ts.video,
+						icon: "ph-video-camera ph-bold ph-lg",
+						action: () => {
+							inputValue.value += " has:video";
+						},
+					},
+					{
+						text: i18n.ts.audio,
+						icon: "ph-music-note ph-bold ph-lg",
+						action: () => {
+							inputValue.value += " has:audio";
+						},
+					},
+					{
+						text: i18n.ts.file,
+						icon: "ph-file ph-bold ph-lg",
+						action: () => {
+							inputValue.value += " has:file";
+						},
+					},
+				],
+			},
+			{
+				icon: "ph-link ph-bold ph-lg",
+				text: i18n.ts._filters.fromDomain,
+				action: () => {
+					inputValue.value += " domain:";
+				},
+			},
+			{
+				icon: "ph-calendar-blank ph-bold ph-lg",
+				text: i18n.ts._filters.notesBefore,
+				action: () => {
+					os.inputDate({
+						title: i18n.ts._filters.notesBefore,
+					}).then((res) => {
+						if (res.canceled) return;
+						inputValue.value +=
+							" before:" + formatDateToYYYYMMDD(res.result);
+					});
+				},
+			},
+			{
+				icon: "ph-calendar-blank ph-bold ph-lg",
+				text: i18n.ts._filters.notesAfter,
+				action: () => {
+					os.inputDate({
+						title: i18n.ts._filters.notesAfter,
+					}).then((res) => {
+						if (res.canceled) return;
+						inputValue.value +=
+							" after:" + formatDateToYYYYMMDD(res.result);
+					});
+				},
+			},
+			{
+				icon: "ph-eye ph-bold ph-lg",
+				text: i18n.ts._filters.followingOnly,
+				action: () => {
+					inputValue.value += " filter:following ";
+				},
+			},
+			{
+				icon: "ph-users-three ph-bold ph-lg",
+				text: i18n.ts._filters.followersOnly,
+				action: () => {
+					inputValue.value += " filter:followers ";
+				},
+			},
+		],
+		ev.target,
+		{ noReturnFocus: true },
+	);
+	inputEl.value.focus();
+	inputEl.value.selectRange(inputValue.value.length, inputValue.value.length); // cursor at end
 }
 
 onMounted(() => {

@@ -43,6 +43,6 @@ withDefaults(
 			attachCanvasImage: false,
 			canvasId: "",
 		},
-	}
+	},
 );
 </script>

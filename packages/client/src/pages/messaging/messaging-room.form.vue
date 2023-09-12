@@ -17,16 +17,25 @@
 				{{ file.name }}
 			</div>
 			<div class="buttons">
-				<button class="_button" @click="chooseFile">
+				<button
+					class="_button"
+					@click="chooseFile"
+					:aria-label="i18n.t('attachFile')"
+				>
 					<i class="ph-upload ph-bold ph-lg"></i>
 				</button>
-				<button class="_button" @click="insertEmoji">
+				<button
+					class="_button"
+					@click="insertEmoji"
+					:aria-label="i18n.t('chooseEmoji')"
+				>
 					<i class="ph-smiley ph-bold ph-lg"></i>
 				</button>
 				<button
 					class="send _button"
 					:disabled="!canSend || sending"
 					:title="i18n.ts.send"
+					:aria-label="i18n.ts.send"
 					@click="send"
 				>
 					<template v-if="!sending"
@@ -47,7 +56,7 @@
 
 <script lang="ts" setup>
 import { onMounted, watch } from "vue";
-import * as Misskey from "calckey-js";
+import * as Misskey from "iceshrimp-js";
 import autosize from "autosize";
 //import insertTextAtCursor from 'insert-text-at-cursor';
 import { throttle } from "throttle-debounce";
@@ -74,15 +83,15 @@ let sending = $ref(false);
 const typing = throttle(3000, () => {
 	stream.send(
 		"typingOnMessaging",
-		props.user ? { partner: props.user.id } : { group: props.group?.id }
+		props.user ? { partner: props.user.id } : { group: props.group?.id },
 	);
 });
 
 let draftKey = $computed(() =>
-	props.user ? "user:" + props.user.id : "group:" + props.group?.id
+	props.user ? "user:" + props.user.id : "group:" + props.group?.id,
 );
 let canSend = $computed(
-	() => (text != null && text.trim() !== "") || file != null
+	() => (text != null && text.trim() !== "") || file != null,
 );
 
 watch([$$(text), $$(file)], saveDraft);
@@ -102,7 +111,7 @@ async function onPaste(ev: ClipboardEvent) {
 			const formatted =
 				formatTimeString(
 					new Date(pastedFile.lastModified),
-					defaultStore.state.pastedFileName
+					defaultStore.state.pastedFileName,
 				).replace(/{{number}}/g, "1") + ext;
 			if (formatted) upload(pastedFile, formatted);
 		}
@@ -187,7 +196,7 @@ function chooseFile(ev: MouseEvent) {
 	selectFile(ev.currentTarget ?? ev.target, i18n.ts.selectFile).then(
 		(selectedFile) => {
 			file = selectedFile;
-		}
+		},
 	);
 }
 
@@ -199,7 +208,7 @@ function upload(fileToUpload: File, name?: string) {
 	uploadFile(fileToUpload, defaultStore.state.uploadFolder, name).then(
 		(res) => {
 			file = res;
-		}
+		},
 	);
 }
 

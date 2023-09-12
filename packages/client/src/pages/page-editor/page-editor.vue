@@ -118,29 +118,28 @@
 
 			<div v-else-if="tab === 'variables'">
 				<div class="qmuvgica">
-					<XDraggable
+					<VueDraggable
 						v-show="variables.length > 0"
 						v-model="variables"
 						tag="div"
 						class="variables"
-						item-key="name"
 						handle=".drag-handle"
 						:group="{ name: 'variables' }"
 						animation="150"
 						swap-threshold="0.5"
 					>
-						<template #item="{ element }">
-							<XVariable
-								:model-value="element"
-								:removable="true"
-								:hpml="hpml"
-								:name="element.name"
-								:title="element.name"
-								:draggable="true"
-								@remove="() => removeVariable(element)"
-							/>
-						</template>
-					</XDraggable>
+						<XVariable
+							v-for="element in variables"
+							:key="element.name"
+							:model-value="element"
+							:removable="true"
+							:hpml="hpml"
+							:name="element.name"
+							:title="element.name"
+							:draggable="true"
+							@remove="() => removeVariable(element)"
+						/>
+					</VueDraggable>
 
 					<MkButton
 						v-if="!readonly"
@@ -174,16 +173,13 @@ import { blockDefs } from "@/scripts/hpml/index";
 import { HpmlTypeChecker } from "@/scripts/hpml/type-checker";
 import { url } from "@/config";
 import { collectPageVars } from "@/scripts/collect-page-vars";
+import { VueDraggable } from "vue-draggable-plus";
 import * as os from "@/os";
 import { selectFile } from "@/scripts/select-file";
 import { mainRouter } from "@/router";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { $i } from "@/account";
-
-const XDraggable = defineAsyncComponent(() =>
-	import("vuedraggable").then((x) => x.default)
-);
 
 const props = defineProps<{
 	initPageId?: string;
@@ -407,7 +403,7 @@ function getScriptBlockList(type: string = null) {
 			type == null ||
 			block.out == null ||
 			block.out === type ||
-			typeof block.out === "number"
+			typeof block.out === "number",
 	);
 
 	for (const block of blocks) {
@@ -463,7 +459,7 @@ async function init() {
 		() => {
 			hpml.variables = variables;
 		},
-		{ deep: true }
+		{ deep: true },
 	);
 
 	watch(
@@ -471,7 +467,7 @@ async function init() {
 		() => {
 			hpml.pageVars = collectPageVars(content);
 		},
-		{ deep: true }
+		{ deep: true },
 	);
 
 	if (props.initPageId) {
@@ -552,7 +548,7 @@ definePageMetadata(
 			title: title,
 			icon: "ph-pencil ph-bold ph-lg",
 		};
-	})
+	}),
 );
 </script>
 

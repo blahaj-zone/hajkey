@@ -41,7 +41,12 @@
 		<div class="jobs">
 			<div v-if="jobs.length > 0">
 				<div v-for="job in jobs" :key="job[0]">
-					<span>{{ job[0] }}</span>
+					<a
+						@click.stop="os.pageWindow(`/instance-info/${job[0]}`)"
+						class="_link"
+					>
+						{{ job[0] }}
+					</a>
 					<span style="margin-left: 8px; opacity: 0.7"
 						>({{ number(job[1]) }} jobs)</span
 					>
@@ -114,7 +119,7 @@ onMounted(() => {
 			: props.domain === "deliver"
 			? "admin/queue/deliver-delayed"
 			: null,
-		{}
+		{},
 	).then((result) => {
 		jobs.value = result;
 	});

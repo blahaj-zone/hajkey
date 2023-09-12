@@ -8,16 +8,13 @@
 		/></template>
 		<MkSpacer :content-max="700">
 			<div class="qkcjvfiv">
-				<div class="buttonWrapper">
+				<MkInfo class="_gap" :icon="'list-bullets'" :card="true">
+					<p>{{ i18n.ts.listsDesc }}</p>
 					<MkButton primary class="add" @click="create"
 						><i class="ph-plus ph-bold ph-lg"></i>
 						{{ i18n.ts.createList }}</MkButton
 					>
-					<MkButton @click="deleteAll"
-						><i class="ph-trash ph-bold ph-lg"></i>
-						{{ i18n.ts.deleteAll }}</MkButton
-					>
-				</div>
+				</MkInfo>
 
 				<MkPagination
 					v-slot="{ items }"
@@ -34,6 +31,10 @@
 						<div class="name">{{ list.name }}</div>
 						<MkAvatars :user-ids="list.userIds" />
 					</MkA>
+					<MkButton @click="deleteAll"
+						><i class="ph-trash ph-bold ph-lg"></i>
+						{{ i18n.ts.deleteAll }}</MkButton
+					>
 				</MkPagination>
 			</div>
 		</MkSpacer>
@@ -45,6 +46,7 @@ import {} from "vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkButton from "@/components/MkButton.vue";
 import MkAvatars from "@/components/MkAvatars.vue";
+import MkInfo from "@/components/MkInfo.vue";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
@@ -92,15 +94,6 @@ definePageMetadata({
 
 <style lang="scss" scoped>
 .qkcjvfiv {
-	> .buttonWrapper {
-		display: grid;
-		justify-content: center;
-
-		> .add {
-			margin: 0 auto var(--margin) auto;
-		}
-	}
-
 	> .lists {
 		> .list {
 			display: block;

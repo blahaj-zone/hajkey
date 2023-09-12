@@ -3,6 +3,7 @@ import { CacheableLocalUser, User } from "@/models/entities/user.js";
 import Logger from "@/services/logger.js";
 import { redisClient } from "../../db/redis.js";
 import type { IEndpointMeta } from "./endpoints.js";
+import { convertMilliseconds } from "@/misc/convert-milliseconds.js";
 
 const logger = new Logger("limiter");
 
@@ -76,7 +77,10 @@ export const limiter = (
 				);
 
 				if (info.remaining === 0) {
-					reject("RATE_LIMIT_EXCEEDED");
+					reject({
+						message: "RATE_LIMIT_EXCEEDED",
+						remainingTime: convertMilliseconds(info.resetMs - Date.now()),
+					});
 				} else {
 					ok();
 				}

@@ -20,14 +20,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ComputedRef, provide } from "vue";
+import type { ComputedRef } from "vue";
+import { provide } from "vue";
 import XColumn from "./column.vue";
-import { deckStore, Column } from "@/ui/deck/deck-store";
+import type { Column } from "@/ui/deck/deck-store";
+import { deckStore } from "@/ui/deck/deck-store";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
 import { mainRouter } from "@/router";
+import type { PageMetadata } from "@/scripts/page-metadata";
 import {
-	PageMetadata,
 	provideMetadataReceiver,
 	setPageMetadata,
 } from "@/scripts/page-metadata";
@@ -65,9 +67,9 @@ function onContextmenu(ev: MouseEvent) {
 	if (isLink(ev.target as HTMLElement)) return;
 	if (
 		["INPUT", "TEXTAREA", "IMG", "VIDEO", "CANVAS"].includes(
-			(ev.target as HTMLElement).tagName
+			(ev.target as HTMLElement).tagName,
 		) ||
-		(ev.target as HTMLElement).attributes["contenteditable"]
+		(ev.target as HTMLElement).attributes.contenteditable
 	)
 		return;
 	if (window.getSelection()?.toString() !== "") return;
@@ -86,7 +88,7 @@ function onContextmenu(ev: MouseEvent) {
 				},
 			},
 		],
-		ev
+		ev,
 	);
 }
 </script>

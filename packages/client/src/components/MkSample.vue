@@ -8,7 +8,7 @@
 				<span>Switch is now {{ flag ? "on" : "off" }}</span>
 			</MkSwitch>
 			<div style="margin: 32px 0">
-				<MkRadio v-model="radio" value="misskey">Calckey</MkRadio>
+				<MkRadio v-model="radio" value="misskey">Firefish</MkRadio>
 				<MkRadio v-model="radio" value="mastodon">Mastodon</MkRadio>
 				<MkRadio v-model="radio" value="pleroma">Pleroma</MkRadio>
 			</div>
@@ -50,12 +50,12 @@ export default defineComponent({
 		return {
 			text: "",
 			flag: true,
-			radio: "calckey",
+			radio: "firefish",
 			mfm: `Hello world! This is an @example mention. BTW, you are @${
 				this.$i ? this.$i.username : "guest"
 			}.\nAlso, here is ${config.url} and [example link](${
 				config.url
-			}). for more details, see https://calckey.org.\nAs you know #misskey is open-source software.`,
+			}). for more details, see https://joinfirefish.org.\nAs you know #misskey is open-source software.`,
 		};
 	},
 
@@ -82,7 +82,7 @@ export default defineComponent({
 				},
 				baz: {
 					type: "string",
-					default: "Calckey makes you happy.",
+					default: "Firefish makes you happy.",
 					label: "This is a string property",
 				},
 			});
@@ -122,7 +122,7 @@ export default defineComponent({
 						action: () => {},
 					},
 				],
-				ev.currentTarget ?? ev.target
+				ev.currentTarget ?? ev.target,
 			);
 		},
 	},

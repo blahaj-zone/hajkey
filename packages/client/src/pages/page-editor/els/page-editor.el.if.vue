@@ -64,7 +64,7 @@ const props = withDefaults(
 			children: [],
 			var: null,
 		},
-	}
+	},
 );
 
 const getPageBlockList = inject<(any) => any>("getPageBlockList");

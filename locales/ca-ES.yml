@@ -1,7 +1,7 @@
 _lang_: "Català"
-headlineMisskey: "Una xarxa social de codi obert, descentralitzada i gratuïta per
+headlineIceshrimp: "Una xarxa social de codi obert, descentralitzada i gratuïta per
   a sempre! 🚀"
-introMisskey: "Benvinguts! Calckey és una plataforma social de codi obert, descentralitzada
+introIceshrimp: "Benvinguts! Iceshrimp és una plataforma social de codi obert, descentralitzada
   i gratuïta per a sempre! 🚀"
 monthAndDay: "{day}/{month}"
 search: "Cerca"
@@ -67,7 +67,7 @@ files: "Fitxers"
 download: "Baixa"
 driveFileDeleteConfirm: "Segur que vols eliminar el fitxer «{name}»? S'eliminarà de
   totes les notes que el continguin com a fitxer adjunt."
-unfollowConfirm: "Segur que vols deixar de seguir {name}?"
+unfollowConfirm: "Segur que vols deixar de seguir a {name}?"
 exportRequested: "Has sol·licitat una exportació. Això pot trigar una estona. S'afegirà
   al teu Disc un cop completada."
 importRequested: "Has sol·licitat una importació. Això pot trigar una estona."
@@ -95,7 +95,7 @@ privacy: "Privadesa"
 makeFollowManuallyApprove: "Les sol·licituds de seguiment requereixen aprovació"
 defaultNoteVisibility: "Visibilitat per defecte"
 follow: "Segueix"
-followRequest: "Segueix"
+followRequest: "Sol·licitud de Seguiment"
 followRequests: "Sol·licituds de seguiment"
 unfollow: "Deixa de seguir"
 followRequestPending: "Sol·licituds de seguiment pendents"
@@ -136,19 +136,19 @@ smtpUser: "Nom d'usuari"
 smtpPass: "Contrasenya"
 user: "Usuari"
 searchByGoogle: "Cercar"
-file: "Fitxers"
+file: "Fitxer"
 _email:
   _follow:
-    title: "t'ha seguit"
+    title: "Tens un nou seguidor"
   _receiveFollowRequest:
     title: Heu rebut una sol·licitud de seguiment
 _mfm:
   mention: "Menció"
   quote: "Citar"
   search: "Cercar"
-  dummy: Calckey amplia el món del Fediverse
+  dummy: Iceshrimp amplia el món del Fediverse
   hashtag: Etiqueta
-  intro: MFM és un llenguatge de marques utilitzat a Misskey, Calckey, Akkoma i més
+  intro: MFM és un llenguatge de marques utilitzat a Iceshrimp, Iceshrimp, Akkoma i més
     que es pot utilitzar en molts llocs. Aquí podeu veure una llista de tota la sintaxi
     MFM disponible.
   hashtagDescription: Podeu especificar una etiqueta mitjançant un coixinet i un text.
@@ -228,6 +228,11 @@ _mfm:
   alwaysPlay: Reprodueix automàticament tots els MFM animats
   fade: Esvair
   fadeDescription: Esvaeix el contingut cap a dintre i cap en fora.
+  crop: Retallar
+  advanced: MFM avançat
+  advancedDescription: Si està desactivat, només permet l'etiquetatge bàsic tret que
+    es reproduïnt un MFM animat
+  cropDescription: Retalla el contingut.
 _theme:
   keys:
     mention: "Menció"
@@ -314,21 +319,41 @@ _sfx:
 _2fa:
   step2Url: "També pots inserir aquest enllaç i utilitzes una aplicació d'escriptori:"
   alreadyRegistered: Ja heu registrat un dispositiu d'autenticació de dos factors.
-  registerDevice: Registrar un dispositiu nou
+  registerTOTP: Registrar un dispositiu nou
   securityKeyInfo: A més de l'autenticació d'empremta digital o PIN, també podeu configurar
     l'autenticació mitjançant claus de seguretat de maquinari compatibles amb FIDO2
     per protegir encara més el vostre compte.
   step4: A partir d'ara, qualsevol intent d'inici de sessió futur demanarà aquest
     token d'inici de sessió.
-  registerKey: Registra una clau de seguretat
+  registerSecurityKey: Registrar una clau de seguretat o d'accés
   step1: En primer lloc, instal·la una aplicació d'autenticació (com ara {a} o {b})
     al dispositiu.
   step2: A continuació, escaneja el codi QR que es mostra en aquesta pantalla.
   step3: Introdueix el token que t'ha proporcionat l'aplicació per finalitzar la configuració.
+  step3Title: Introduïu un codi d'autenticació
+  chromePasskeyNotSupported: Les claus de pas de Chrome actualment no s'admeten.
+  securityKeyName: Introduïu un nom de clau
+  removeKey: Suprimeix la clau de seguretat
+  removeKeyConfirm: Vols suprimir la clau {name}?
+  renewTOTP: Tornar a configurar l'aplicació d'autenticació
+  renewTOTPOk: Reconfigurar
+  renewTOTPCancel: Cancel·lar
+  step2Click: Fer clic en aquest codi QR us permetrà registrar 2FA a la vostra clau
+    de seguretat o aplicació d'autenticació del telèfon.
+  securityKeyNotSupported: El vostre navegador no admet claus de seguretat.
+  registerTOTPBeforeKey: Configureu una aplicació d'autenticació per registrar una
+    clau de seguretat o de passi.
+  tapSecurityKey: Si us plau, seguiu el vostre navegador per registrar la clau de
+    seguretat o d'accés
+  renewTOTPConfirm: Això farà que els codis de verificació de l'aplicació anterior
+    deixin de funcionar
+  whyTOTPOnlyRenew: L’aplicació d’autenticació no es pot eliminar sempre que es hi
+    hagi una clau de seguretat registrada.
+  token: Token 2FA
 _widgets:
   notifications: "Notificacions"
   timeline: "Línia de temps"
-  unixClock: Rellotge UNIX
+  unixClock: Rellotge d'UNIX
   federation: Federació
   instanceCloud: Núvol de servidors
   trends: Tendència
@@ -340,9 +365,9 @@ _widgets:
   onlineUsers: Usuaris en línia
   memo: Notes adhesives
   digitalClock: Rellotge digital
-  postForm: Formulari de notes
+  postForm: Formulari per publicar
   slideshow: Presentació de diapositives
-  serverMetric: Mètriques del servidor
+  serverMetric: Estadístiques del servidor
   userList: Llista d'usuaris
   rss: Lector d'RSS
   jobQueue: Cua de treball
@@ -350,6 +375,10 @@ _widgets:
     chooseList: Selecciona una llista
   aiscript: Consola AiScript
   button: Botó
+  serverInfo: Informació del servidor
+  meiliStatus: Estat del servidor
+  meiliSize: Mida de l'índex
+  meiliIndexCount: Publicacions indexades
 _cw:
   show: "Carregar més"
   files: '{count} fitxers'
@@ -357,12 +386,13 @@ _cw:
   chars: '{count} caràcters'
 _visibility:
   followers: "Seguidors"
-  publicDescription: La teva publicació serà visible per a tots els usuaris
+  publicDescription: La teva publicació serà visible per a totes les línies de temps
+    públiques
   localOnly: Només Local
   specified: Directe
   home: Sense llistar
   homeDescription: Publica només a la línea de temps local
-  followersDescription: Fes visible només per als teus seguidors
+  followersDescription: Fes visible només per als teus seguidors i usuaris mencionats
   specifiedDescription: Fer visible només per a usuaris determinats
   public: Públic
   localOnlyDescription: No és visible per als usuaris remots
@@ -379,10 +409,11 @@ _profile:
   locationDescription: Si primer introduïu la vostra ciutat, es mostrarà l'hora local
     a altres usuaris.
   name: Nom
-  metadataDescription: Fent servir això, podràs mostrar camps d'informació addicionals
-    al vostre perfil.
+  metadataDescription: "Fent servir això, podràs mostrar camps d'informació addicionals
+    al vostre perfil. Podeu afegir una etiqueta {a} o una etiqueta {l} amb {rel} per
+    verificar l'enllaç al vostre perfil!"
 _exportOrImport:
-  followingList: "Seguint"
+  followingList: "Usuaris que segueixes"
   muteList: "Silencia"
   blockingList: "Bloqueja"
   userLists: "Llistes"
@@ -684,7 +715,7 @@ _pages:
 _notification:
   youWereFollowed: "t'ha seguit"
   _types:
-    follow: "Seguint"
+    follow: "Nous seguidors"
     mention: "Menció"
     renote: "Impulsos"
     quote: "Citar"
@@ -700,7 +731,7 @@ _notification:
   _actions:
     reply: "Respondre"
     renote: "Impulsos"
-    followBack: et va seguir de tornada
+    followBack: t'ha tornat el seguiment
   youGotQuote: "{name} t'ha citat"
   fileUploaded: El fitxer s'ha penjat correctament
   youGotMention: "{nom} t'ha esmentat"
@@ -725,8 +756,9 @@ _deck:
     mentions: "Mencions"
     widgets: Ginys
     main: Principal
-    antenna: Antenes
+    antenna: Antena
     direct: Missatges directes
+    channel: Canal
   alwaysShowMainColumn: Mostra sempre la columna principal
   columnAlign: Alinear columnes
   introduction: Crea la interfície perfecta per a tu organitzant columnes lliurement!
@@ -764,7 +796,7 @@ flagAsBot: Marca aquest compte com a bot
 flagAsBotDescription: Activa aquesta opció si aquest compte és controlat per un programa.
   Si s'activa, això actuarà com una bandera per a altres desenvolupadors i ajuda a
   prevenir cadenes de interaccions infinites amb altres bots a més d'ajustar els sistemes
-  interns de Calckey per tractar aquest compte com un bot.
+  interns de Iceshrimp per tractar aquest compte com un bot.
 flagAsCat: Ets un gat? 🐱
 flagShowTimelineReplies: Mostra respostes a la línia de temps
 flagAsCatDescription: Guanyaràs unes orelles de gat i parlares com un gat!
@@ -776,11 +808,11 @@ autoAcceptFollowed: Aprova automàticament les peticions de seguiment d'usuaris 
 accountMoved: "L'usuari s'ha mogut a un compte nou:"
 addAccount: Afegeix un compte
 loginFailed: No s'ha pogut iniciar sessió
-showOnRemote: Mostra al servidor remot
+showOnRemote: Obre la pàgina original
 wallpaper: Fons de pantalla
 setWallpaper: Estableix fons de pantalla
 removeWallpaper: Elimina el fons de pantalla
-followConfirm: Segur que vols seguir a l'usuari {name}?
+followConfirm: Segur que vols seguir a {name}?
 proxyAccount: Compte proxy
 proxyAccountDescription: Un compte proxy es un compte que actua com un seguidor remot
   per a usuaris sota determinades condicions. Per exemple, quant un usuari afegeix
@@ -791,7 +823,6 @@ selectUser: Selecciona un usuari
 latestStatus: Últim estat
 storageUsage: Ús del emmagatzematge
 metadata: Metadades
-withNFiles: '{n} fitxer(s)'
 monitor: Seguiment
 software: Programari
 version: Versió
@@ -816,7 +847,7 @@ mutedUsers: Usuaris silenciats
 done: Fet
 preview: Vista prèvia
 default: Per defecte
-intro: La instal·lació de Calckey ha acabat! Crea un compte d'usuari d'administració.
+intro: La instal·lació de Iceshrimp ha acabat! Crea un compte d'usuari d'administració.
 processing: S'està processant
 noCustomEmojis: No hi ha cap emoji
 noJobs: No hi ha cap feina
@@ -979,7 +1010,7 @@ avoidMultiCaptchaConfirm: Fent servir diferents sistemes de Captcha pot causar i
 antennas: Antenes
 enableEmojiReactions: Activa reaccions amb emojis
 blockThisInstance: Bloqueja aquest servidor
-registration: Registre
+registration: Registra't
 showEmojisInReactionNotifications: Mostra els emojis a les notificacions de les reaccions
 renoteMute: Silencia els impulsos
 renoteUnmute: Treu el silenci als impulsos
@@ -1026,7 +1057,7 @@ recentlyRegisteredUsers: Usuaris registrats fa poc
 recentlyDiscoveredUsers: Nous suaris descoberts
 administrator: Administrador
 token: Token
-registerSecurityKey: Registra una clau de seguretat
+registerSecurityKey: Registreu una clau de seguretat
 securityKeyName: Nom clau
 lastUsed: Feta servir per última vegada
 unregister: Anul·lar el registre
@@ -1179,7 +1210,7 @@ large: Gran
 notificationSetting: Preferències de notificacions
 makeActive: Activar
 notificationSettingDesc: Tria el tipus de notificació que es veure.
-notifyAntenna: Notificar noves notes
+notifyAntenna: Notificar publicacions noves
 withFileAntenna: Només notes amb fitxers
 enableServiceworker: Activa les notificacions push per al teu navegador
 antennaUsersDescription: Escriu un nom d'usuari per línea
@@ -1196,7 +1227,7 @@ connectedTo: Aquest(s) compte(s) estan connectats
 silenceConfirm: Segur que vols posa en silenci aquest usuari?
 unsilence: Desfés posar en silenci
 unsilenceConfirm: Segur que vols treure el silenci a aquest usuari?
-aboutMisskey: Sobre Calckey
+aboutIceshrimp: Sobre Iceshrimp
 twoStepAuthentication: Autentificació de dos factors
 moderator: Moderador
 moderation: Moderació
@@ -1239,7 +1270,7 @@ sample: Exemple
 abuseReports: Informes
 reportAbuse: Informe
 reporter: Informador
-reporterOrigin: Origen d'el informador
+reporterOrigin: Origen informador
 forwardReport: Envia l'informe a un servidor remot
 abuseReported: El teu informe ha sigut enviat. Moltes gràcies.
 reporteeOrigin: Origen de l'informe
@@ -1349,16 +1380,16 @@ adminCustomCssWarn: Aquesta configuració només s'ha d'utilitzar si sabeu què 
   introducció de valors inadequats pot fer que els clients de TOTS deixin de funcionar
   amb normalitat. Assegureu-vos que el vostre CSS funcioni correctament provant-lo
   a la configuració de l'usuari.
-showUpdates: Mostra una finestra emergent quan Calckey s'actualitzi
+showUpdates: Mostra una finestra emergent quan Iceshrimp s'actualitzi
 recommendedInstances: Servidors recomanats
 recommendedInstancesDescription: Servidors recomanats separats per salts de línia
-  que apareixen a la línia de temps recomanada. NO afegiu `https://`, NOMÉS el domini.
+  que apareixen a la línia de temps recomanada.
 caption: Descripció Automàtica
 splash: Pantalla de Benvinguda
 swipeOnDesktop: Permet lliscar a l'estil del mòbil a l'escriptori
 updateAvailable: Pot ser que hi hagi una actualització disponible!
 logoImageUrl: URL de la imatge del logotip
-showAdminUpdates: Indica que hi ha disponible una versió nova de Calckey (només per
+showAdminUpdates: Indica que hi ha disponible una versió nova de Iceshrimp (només per
   a administradors)
 replayTutorial: Repetició del tutorial
 migration: Migració
@@ -1459,7 +1490,7 @@ _registry:
 silenced: Silenciat
 objectStorageUseSSL: Fes servir SSL
 yourAccountSuspendedTitle: Aquest compte està suspès
-i18nInfo: Calckey està sent traduït a diversos idiomes per voluntaris. Pots ajudar
+i18nInfo: Iceshrimp està sent traduït a diversos idiomes per voluntaris. Pots ajudar
   {link}.
 manageAccessTokens: Administrar tokens d'accés
 accountInfo: Informació del compte
@@ -1520,14 +1551,14 @@ searchResult: Resultats de la cerca
 hashtags: Etiquetes
 troubleshooting: Resolució de problemes
 learnMore: Més informació
-misskeyUpdated: Calckey s'ha actualitzat!
+iceshrimpUpdated: Iceshrimp s'ha actualitzat!
 translate: Tradueix
 translatedFrom: Traduït per {x}
 aiChanMode: Ai-chan a la interfície d'usuari clàssica
 keepCw: Mantenir els avisos de contingut
 pubSub: Comptes Pub/Sub
 lastCommunication: Última comunicació
-breakFollowConfirm: Confirmes que vols eliminar un seguidor?
+breakFollowConfirm: Confirmes que vols eliminar el seguidor?
 itsOn: Activat
 itsOff: Desactivat
 emailRequiredForSignup: Requereix una adreça de correu electrònic per registrar-te
@@ -1560,17 +1591,26 @@ cannotUploadBecauseNoFreeSpace: La pujada ha fallat a causa de la manca d'espai 
 enableAutoSensitive: Marcatge automàtic NSFW
 moveTo: Mou el compte actual al compte nou
 customKaTeXMacro: Macros KaTeX personalitzats
-_aboutMisskey:
+_aboutIceshrimp:
   contributors: Col·laboradors principals
   allContributors: Tots els col·laboradors
-  donate: Fes una donació a Calckey
+  donate: Fes una donació a Iceshrimp
   source: Codi font
-  translation: Tradueix Calckey
-  about: Calckey és una bifurcació de Misskey feta per ThatOneCalculator, que està
+  translation: Tradueix Iceshrimp
+  about: Iceshrimp és una bifurcació de Iceshrimp feta per ThatOneCalculator, que està
     en desenvolupament des del 2022.
   morePatrons: També agraïm el suport de molts altres ajudants que no figuren aquí.
     Gràcies! 🥰
-  patrons: Mecenes de Calckey
+  patrons: Mecenes de Iceshrimp
+  patronsList: Llistats cronològicament, no per la quantitat donada. Fes una donació
+    amb l'enllaç de dalt per veure el teu nom aquí!
+  donateTitle: T'agrada Iceshrimp?
+  pleaseDonateToIceshrimp: Penseu en fer una donació a Iceshrimp per donar suport al seu
+    desenvolupament.
+  pleaseDonateToHost: Penseu també en fer una donació a la vostre instància, {host},
+    per ajudar-lo a suportar els costos de funcionament.
+  donateHost: Fes una donació a {host}
+  sponsors: Patrocinadors de Calckey
 unknown: Desconegut
 pageLikesCount: Nombre de pàgines amb M'agrada
 youAreRunningUpToDateClient: Estás fent servir la versió del client més nova.
@@ -1586,7 +1626,7 @@ silenceThisInstance: Silencia el servidor
 silencedInstancesDescription: Llista amb els noms dels servidors que vols silenciar.
   Els comptes als servidors silenciats seran tractades com "Silenciades", només poden
   fer sol·licituds de seguiments, i no poden mencionar comptes locals si no les segueixen.
-  Això no afectarà els servidoes bloquejats.
+  Això no afectarà els servidors bloquejats.
 objectStorageEndpointDesc: Deixa això buit si fas servir AWS, S3, d'una altre manera
   específica un "endpoint" com a '<host>' o '<host>:<port>', depend del proveïdor
   que facis servir.
@@ -1619,7 +1659,7 @@ enableAutoSensitiveDescription: Permet la detecció i el marcatge automàtics de
 localOnly: Només local
 customKaTeXMacroDescription: "Configura macros per escriure expressions matemàtiques
   fàcilment! La notació s'ajusta a les definicions de l'ordre LaTeX i s'escriu com
-  a \\newcommand{\\name}{content} o \\newcommand{\\name}[nombre d'arguments]{contingut}.
+  a \\newcommand{\\ name}{content} o \\newcommand{\\name}[nombre d'arguments]{content}.
   Per exemple, \\newcommand{\\add}[2]{#1 + #2} ampliarà \\add{3}{foo} a 3 + foo. Els
   claudàtors que envolten el nom de la macro es poden canviar per claudàtors rodons
   o quadrats. Això afecta els claudàtors utilitzats per als arguments. Es pot definir
@@ -1640,9 +1680,9 @@ popout: Apareixa
 volume: Volum
 objectStorageUseSSLDesc: Desactiva això si no fas servir HTTPS per les connexions
   API
-objectStorageUseProxy: Conectarse mitjançant un Proxy
+objectStorageUseProxy: Connectar-se mitjançant un Proxy
 objectStorageUseProxyDesc: Desactiva això si no faràs servir un servidor Proxy per
-  conexions API
+  conexions amb l'API
 objectStorageSetPublicRead: Fixar com a "public-read" al pujar
 serverLogs: Registres del servidor
 deleteAll: Esborrar tot
@@ -1667,21 +1707,21 @@ ascendingOrder: Ascendent
 descendingOrder: Descendent
 scratchpad: Bloc de notes
 scratchpadDescription: El bloc de notes proporciona un entorn per experiments amb
-  AiScript. Pots escriure, executar i comprovar els resultats interactuant amb Calckey.
+  AiScript. Pots escriure, executar i comprovar els resultats interactuant amb Iceshrimp.
 output: Sortida
 script: Script
 disablePagesScript: Desactivar AiScript a les pàgines
 updateRemoteUser: Actualitzar la informació de l'usuari remot
 deleteAllFiles: Esborrar tots els fitxers
 deleteAllFilesConfirm: Segur que vols esborrar tots els fitxers?
-removeAllFollowing: Deixar de seguir a tots els que segueixis
+removeAllFollowing: Deixar de seguir a tots els usuaris que segueixes
 accentColor: Color principal
 textColor: Color del text
 value: Valor
-sendErrorReportsDescription: "Quant està activat quant aparegui un error, es compartirà
-  amb els desenvolupadors de Calckey, que ajudarà a millorar la qualitat.\nAixò inclourà
-  informació com la versió del teu sistema operatiu, el navegador que estiguis fent
-  servir, la teva activitat a Calckey, etc."
+sendErrorReportsDescription: "Quan està activat, quan es produeixi un problema la
+  informació detallada d'errors es compartirà amb Iceshrimp, ajudant a millorar la qualitat
+  de Iceshrimp.\nAixò inclourà informació com la versió del vostre sistema operatiu,
+  quin navegador utilitzeu, la vostra activitat a Iceshrimp, etc."
 myTheme: El meu tema
 backgroundColor: Color de fons
 saveAs: Desa com...
@@ -1758,7 +1798,7 @@ createNew: Crear una nova
 optional: Opcional
 jumpToSpecifiedDate: Vés a una data concreta
 showingPastTimeline: Ara es mostra un línea de temps antiga
-clear: Tornar
+clear: Netejar
 markAllAsRead: Marcar tot com a llegit
 recentPosts: Pàgines recents
 noMaintainerInformationWarning: La informació de l'administrador no està configurada.
@@ -1802,8 +1842,8 @@ pushNotificationNotSupported: El vostre navegador o servidor no admet notificaci
   push
 license: Llicència
 indexPosts: Índex de notes
-indexFrom: Índex a partir de l'ID de Publicacions (deixeu en blanc per indexar cada
-  publicació)
+indexFrom: Índex a partir de l'ID de Publicacions
+indexFromDescription: Deixeu en blanc per indexar cada publicació
 indexNotice: Ara indexant. Això probablement trigarà una estona, si us plau, no reinicieu
   el servidor durant almenys una hora.
 _instanceTicker:
@@ -1823,7 +1863,7 @@ _channel:
   featured: Tendència
   owned: Propietari
   usersCount: '{n} Participants'
-  following: Seguit
+  following: Seguit per
   notesCount: '{n} Notes'
   nameAndDescription: Nom i descripció
   nameOnly: Només nom
@@ -1841,7 +1881,7 @@ _ago:
   hoursAgo: Fa {n}h
   daysAgo: Fa {n}d
   secondsAgo: Fa {n}s
-  weeksAgo: Fa {n}s
+  weeksAgo: Fa {n}set
   monthsAgo: Fa {n}me
   yearsAgo: Fa {n}a
 _time:
@@ -1856,31 +1896,31 @@ _tutorial:
   step5_3: La línea de temps d'inici {icon} es on pots veure les publicacions dels
     comptes que segueixes.
   step5_6: La línia de temps de Recomanats {icon} és on pots veure les publicacions
-    dels servidors recomanen els administradors.
+    dels servidors que recomanen els administradors.
   step5_7: La línia de temps Global {icon} és on pots veure les publicacions de tots
     els servidors connectats.
   step6_1: Aleshores, què és aquest lloc?
   step6_4: Ara ves, explora i diverteix-te!
   step1_2: Anem a fer la configuració. Estaràs en funcionament en un tres i no res!
-  title: Com utilitzar Calckey
+  title: Com utilitzar Iceshrimp
   step1_1: Benvingut!
   step2_1: En primer lloc, empleneu el vostre perfil.
   step4_1: Anem a treure't allà fora.
   step5_5: La línea de temps Social {icon} és una combinació de les línies de temps
     d'Inici i Local.
   step6_3: Cada servidor funciona de diferents maneres, i no tots els servidors executen
-    Calckey. Aquest sí que sí! És una mica complicat, però ho aconseguiràs en poc
+    Iceshrimp. Aquest sí que sí! És una mica complicat, però ho aconseguiràs en poc
     temps.
   step2_2: Proporcionar informació sobre qui sou facilitarà que altres puguin saber
     si volen veure les vostres notes o seguir-vos.
   step3_1: Ara toca seguir a algunes persones!
-  step3_2: "Les teves líneas de temps domèstiques i socials es basen en qui seguiu,
-    així que proveu de seguir un parell de comptes per començar.\nFeu clic al cercle
-    més situat a la part superior dreta d'un perfil per seguir-los."
+  step3_2: "Les teves líneas de temps d'inici i social es basen en qui seguiu, així
+    que proveu de seguir un parell de comptes per començar.\nFeu clic al cercle més
+    situat a la part superior dreta d'un perfil per seguir-los."
   step4_2: A algunes persones els agrada fer una publicació de {introduction} o un
     senzill "Hola món!"
   step5_1: Línies de temps, línies de temps a tot arreu!
-  step6_2: Bé, no només t'has unit a Calckey. T'has unit a un portal al Fediverse,
+  step6_2: Bé, no només t'has unit a Iceshrimp. T'has unit a un portal al Fediverse,
     una xarxa interconnectada de milers de servidors.
 _permissions:
   "read:account": Consulta la informació del teu compte
@@ -1967,13 +2007,13 @@ _instanceCharts:
   users: Diferència en el nombre d'usuaris
   usersTotal: Nombre acumulat d'usuaris
   notes: Diferència en el nombre de notes
-  ffTotal: Nombre acumulat d'usuaris seguits/seguidors seguits
+  ffTotal: Nombre acumulat d'usuaris que segueixes/et segueixen
   cacheSize: Diferència en la mida de la memòria cau
   cacheSizeTotal: Mida total acumulada de la memòria cau
   files: Diferència en el nombre de fitxers
   filesTotal: Nombre acumulat de fitxers
   notesTotal: Nombre acumulat de notes
-  ff: "Diferència en el nombre d'usuaris seguits/seguidors seguits "
+  ff: "Diferència en el nombre d'usuaris que segueixes/que et segueixen "
 _timelines:
   home: Inici
   local: Local
@@ -2003,11 +2043,12 @@ _auth:
   shareAccessAsk: Estàs segur que vols autoritzar aquesta aplicació per accedir al
     teu compte?
   shareAccess: Vols autoritzar "{name}" per accedir a aquest compte?
-  permissionAsk: Aquesta aplicació sol·licita els següents permisos
+  permissionAsk: 'Aquesta aplicació sol·licita els següents permisos:'
   callback: Tornant a l'aplicació
   denied: Accés denegat
   pleaseGoBack: Si us plau, torneu a l'aplicació
-  copyAsk: Enganxeu el següent codi d'autorització a l'aplicació
+  copyAsk: "Posa el següent codi d'autorització a l'aplicació:"
+  allPermissions: Accés complet al compte
 _weekday:
   wednesday: Dimecres
   saturday: Dissabte
@@ -2021,7 +2062,7 @@ _messaging:
   dms: Privat
 _antennaSources:
   all: Totes les notes
-  homeTimeline: Notes dels usuaris que segueixes
+  homeTimeline: Publicacions dels usuaris que segueixes
   users: Notes d'usuaris concrets
   userGroup: Notes d'usuaris d'un grup determinat
   userList: Notes d'una llista determinada d'usuaris
@@ -2032,7 +2073,7 @@ _relayStatus:
   rejected: Rebutjat
 deleted: Eliminat
 editNote: Edita la nota
-edited: Editat
+edited: 'Editat a {date} {time}'
 findOtherInstance: Cercar un altre servidor
 signupsDisabled: Actualment, les inscripcions en aquest servidor estan desactivades,
   però sempre podeu registrar-vos en un altre servidor. Si teniu un codi d'invitació
@@ -2051,12 +2092,13 @@ _experiments:
   alpha: Alfa
   beta: Beta
   release: Publicà
-  enablePostEditing: Activà l'edició de publicacions
   title: Experiments
-  postEditingCaption: Mostra l'opció perquè els usuaris editin les seves publicacions
-    existents mitjançant el menú d'opcions de publicació
+  enablePostImports: Activar l'importació de publicacions
+  postImportsCaption: Permet els usuaris importar publicacions desde comptes a Iceshrimp,
+    Iceshrimp, Mastodon, Akkoma i Pleroma. Pot fer que el servidor vagi més lent durant
+    la càrrega si tens un coll d'ampolla a la cua.
 noGraze: Si us plau, desactiva l'extensió del navegador "Graze for Mastodon", ja que
-  interfereix amb Calckey.
+  interfereix amb Iceshrimp.
 accessibility: Accessibilitat
 jumpToReply: Vés a la resposta
 newer: Més nou
@@ -2065,3 +2107,64 @@ silencedWarning: S'està mostrant aquesta pàgina per què aquest usuari és d'u
   que l'administrador a silenciat, així que pot ser spam.
 jumpToPrevious: Vés a l'anterior
 cw: Avís de contingut
+antennasDesc: "Les antenes mostren publicacions noves que coincideixen amb els criteris
+  establerts!\nS'hi pot accedir des de la pàgina de línies de temps."
+expandOnNoteClick: Obre la publicació amb un clic
+expandOnNoteClickDesc: Si està desactivat, encara pots obrir les publicacions al menú
+  del botó dret o fent clic a la marca de temps.
+channelFederationWarn: Els canals encara no es federen amb altres servidors
+searchPlaceholder: Cerca a Iceshrimp
+listsDesc: Les llistes et permeten crear línies de temps amb usuaris específics. Es
+  pot accedir des de la pàgina de línies de temps.
+clipsDesc: Els clips són com marcadors categoritzats que es poden compartir. Podeu
+  crear clips des del menú de publicacions individuals.
+selectChannel: Selecciona un canal
+isLocked: Aquest compte té les següents aprovacions
+isPatron: Mecenes de Calkey
+isBot: Aquest compte és un bot
+isModerator: Moderador
+isAdmin: Administrador
+_filters:
+  fromDomain: Des del domini
+  notesBefore: Publicacions anteriors
+  notesAfter: Publicacions posteriors
+  followingOnly: Només seguint
+  followersOnly: Només seguidors
+  withFile: Amb arxiu
+  fromUser: De l'usuari
+image: Imatge
+video: Vídeo
+audio: Àudio
+_dialog:
+  charactersExceeded: "S'han superat el màxim de caràcters! Actual: {current}/Límit:
+    {max}"
+  charactersBelow: 'No hi ha caràcters suficients! Corrent: {current}/Limit: {min}'
+removeReaction: Elimina la teva reacció
+reactionPickerSkinTone: To de pell d'emoji preferit
+alt: ALT
+_skinTones:
+  light: Clar
+  mediumLight: Clar Mitx
+  medium: Mitx
+  mediumDark: Fosc Mitx
+  dark: Fosc
+  yellow: Groc
+swipeOnMobile: Permet lliscar entre pàgines
+enableIdenticonGeneration: Habilitar la generació d'Identicon
+enableServerMachineStats: Habilitar les estadístiques del maquinari del servidor
+showPopup: Notificar els usuaris amb una finestra emergent
+showWithSparkles: Mostra amb espurnes
+youHaveUnreadAnnouncements: Tens anuncis sense llegir
+xl: XL
+donationLink: Enllaç a la pàgina de donacions
+neverShow: No tornis a mostrar
+remindMeLater: Potser després
+removeMember: Elimina el membre
+removeQuote: Elimina la cita
+removeRecipient: Elimina el destinatari
+verifiedLink: Enllaç verificat
+_feeds:
+  rss: RSS
+  atom: Atom
+  jsonFeed: Feed JSON
+  copyFeed: Copiar feed

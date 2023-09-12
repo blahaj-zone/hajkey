@@ -1,6 +1,6 @@
 _lang_: "繁體中文"
-headlineMisskey: "貼文連繫網路"
-introMisskey: "歡迎！ Calckey是一個免費，開放原碼，去中心化的社群網路🚀"
+headlineIceshrimp: "貼文連繫網路"
+introIceshrimp: "歡迎！ Iceshrimp是一個開源、去中心化且永遠免費的社群網路平台！🚀"
 monthAndDay: "{month}月 {day}日"
 search: "搜尋"
 notifications: "通知"
@@ -21,7 +21,7 @@ basicSettings: "基本設定"
 otherSettings: "其他設定"
 openInWindow: "在新視窗開啟"
 profile: "個人檔案"
-timeline: "時間軸"
+timeline: "時間線"
 noAccountDescription: "此用戶還沒有自我介紹。"
 login: "登入"
 loggingIn: "登入中"
@@ -31,7 +31,7 @@ uploading: "上傳中..."
 save: "儲存"
 users: "使用者"
 addUser: "新增使用者"
-favorite: "我的最愛"
+favorite: "添加至我的最愛"
 favorites: "我的最愛"
 unfavorite: "從我的最愛中移除"
 favorited: "已添加至我的最愛。"
@@ -43,7 +43,7 @@ copyContent: "複製內容"
 copyLink: "複製連結"
 delete: "刪除"
 deleteAndEdit: "刪除並編輯"
-deleteAndEditConfirm: "要刪除並再次編輯嗎？此貼文的所有情感、轉發和回覆也將會消失。"
+deleteAndEditConfirm: "要刪除並再次編輯嗎？此貼文的所有反應、轉發和回覆也會消失。"
 addToList: "加入至清單"
 sendMessage: "發送訊息"
 copyUsername: "複製使用者名稱"
@@ -64,7 +64,7 @@ export: "匯出"
 files: "檔案"
 download: "下載"
 driveFileDeleteConfirm: "確定要刪除檔案「{name}」嗎？使用此附件的貼文也會跟著消失。"
-unfollowConfirm: "確定要取消追隨{name}嗎？"
+unfollowConfirm: "確定要取消追隨 「{name}」 嗎？"
 exportRequested: "已請求匯出。這可能會花一點時間。結束後檔案將會被放到雲端裡。"
 importRequested: "已請求匯入。這可能會花一點時間。"
 lists: "清單"
@@ -95,9 +95,9 @@ followRequestPending: "追隨許可批准中"
 enterEmoji: "輸入表情符號"
 renote: "轉發"
 unrenote: "取消轉發"
-renoted: "已轉傳。"
+renoted: "已轉發。"
 cantRenote: "無法轉發此貼文。"
-cantReRenote: "無法轉傳之前已經轉傳過的內容。"
+cantReRenote: "無法轉發之前已經轉發過的內容。"
 quote: "引用"
 pinnedNote: "已置頂的貼文"
 pinned: "置頂"
@@ -105,7 +105,7 @@ you: "您"
 clickToShow: "按一下以顯示"
 sensitive: "敏感內容"
 add: "新增"
-reaction: "情感"
+reaction: "反應"
 enableEmojiReaction: "啟用表情符號反應"
 showEmojisInReactionNotifications: "在反應通知中顯示表情符號"
 reactionSetting: "在選擇器中顯示反應"
@@ -140,14 +140,14 @@ emojiUrl: "表情符號URL"
 addEmoji: "加入表情符號"
 settingGuide: "推薦設定"
 cacheRemoteFiles: "快取遠端檔案"
-cacheRemoteFilesDescription: "禁用此設定會停止遠端檔案的緩存，從而節省儲存空間，但資料會因直接連線從而產生額外連接數據。"
-flagAsBot: "此使用者是機器人"
-flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Calckey內部系統將本帳戶識別為機器人。"
-flagAsCat: "此使用者是貓"
+cacheRemoteFilesDescription: "禁用此設定會停止遠端檔案的緩存，從而節省儲存空間，但資料會因直接連線從而產生額外數據花費。"
+flagAsBot: "標記此帳號是機器人"
+flagAsBotDescription: "如果本帳戶是由程式控制，請啟用此選項。啟用後，會作為標示幫助其他開發者防止機器人之間產生無限互動的行為，並會調整Iceshrimp內部系統將本帳戶識別為機器人。"
+flagAsCat: "你是喵咪嗎？w😺"
 flagAsCatDescription: "如果想將本帳戶標示為一隻貓，請開啟此標示！"
-flagShowTimelineReplies: "在時間軸上顯示貼文的回覆"
+flagShowTimelineReplies: "在時間線上顯示貼文的回覆"
 flagShowTimelineRepliesDescription: "啟用時，時間線除了顯示用戶的貼文以外，還會顯示用戶對其他貼文的回覆。"
-autoAcceptFollowed: "自動追隨中使用者的追隨請求"
+autoAcceptFollowed: "自動准予追隨中使用者的追隨請求"
 addAccount: "添加帳戶"
 loginFailed: "登入失敗"
 showOnRemote: "轉到所在伺服器顯示"
@@ -157,7 +157,7 @@ setWallpaper: "設定桌布"
 removeWallpaper: "移除桌布"
 searchWith: "搜尋: {q}"
 youHaveNoLists: "你沒有任何清單"
-followConfirm: "你真的要追隨{name}嗎？"
+followConfirm: "你真的要追隨 「{name}」 嗎？"
 proxyAccount: "代理帳戶"
 proxyAccountDescription: "代理帳戶是在某些情況下充當其他伺服器用戶的帳戶。例如，當使用者將一個來自其他伺服器的帳戶放在列表中時，由於沒有其他使用者追蹤該帳戶，該指令不會傳送到該伺服器上，因此會由代理帳戶追蹤。"
 host: "主機"
@@ -166,7 +166,7 @@ recipient: "收件人"
 annotation: "註解"
 federation: "站台聯邦"
 instances: "伺服器"
-registeredAt: "初次觀測"
+registeredAt: "初次註冊"
 latestRequestSentAt: "上次發送的請求"
 latestRequestReceivedAt: "上次收到的請求"
 latestStatus: "最後狀態"
@@ -180,7 +180,6 @@ operations: "操作"
 software: "軟體"
 version: "版本"
 metadata: "元資料"
-withNFiles: "{n}個檔案"
 monitor: "監視器"
 jobQueue: "佇列"
 cpuAndMemory: "CPU及記憶體用量"
@@ -202,7 +201,7 @@ noUsers: "沒有任何使用者"
 editProfile: "編輯個人檔案"
 noteDeleteConfirm: "確定刪除此貼文嗎？"
 pinLimitExceeded: "不能置頂更多貼文了"
-intro: "Calckey 部署完成！請建立管理員帳戶。"
+intro: "Iceshrimp 部署完成！請建立管理員帳戶。"
 done: "完成"
 processing: "處理中"
 preview: "預覽"
@@ -235,19 +234,19 @@ lookup: "查詢"
 announcements: "公告"
 imageUrl: "圖片URL"
 remove: "刪除"
-removed: "已刪除"
+removed: "已成功刪除"
 removeAreYouSure: "確定要刪掉「{x}」嗎？"
 deleteAreYouSure: "確定要刪掉「{x}」嗎？"
 resetAreYouSure: "確定要重設嗎？"
 saved: "已儲存"
-messaging: "傳送訊息"
+messaging: "訊息"
 upload: "上傳"
 keepOriginalUploading: "保留原圖"
-keepOriginalUploadingDescription: "上傳圖片時保留原始圖片。關閉時，瀏覽器會在上傳時生成一張用於web發布的圖片。"
+keepOriginalUploadingDescription: "上傳圖片時保留原始圖片。關閉時，瀏覽器會在上傳時自動產生用於貼文發布的圖片。"
 fromDrive: "從雲端空間"
-fromUrl: "從URL"
+fromUrl: "從網址"
 uploadFromUrl: "從網址上傳"
-uploadFromUrlDescription: "您要上傳的文件的URL"
+uploadFromUrlDescription: "您要上傳的文件的網址"
 uploadFromUrlRequested: "已請求上傳"
 uploadFromUrlMayTakeTime: "還需要一些時間才能完成上傳。"
 explore: "探索"
@@ -259,7 +258,7 @@ agreeTo: "我同意{0}"
 tos: "使用條款"
 start: "開始"
 home: "首頁"
-remoteUserCaution: "由於該使用者來自遠端實例，因此資訊可能非即時的。"
+remoteUserCaution: "由於該使用者來自遠端實例，因此資料可能是非即時的。"
 activity: "動態"
 images: "圖片"
 birthday: "生日"
@@ -268,12 +267,12 @@ registeredDate: "註冊日期"
 location: "位置"
 theme: "外觀主題"
 themeForLightMode: "在淺色模式下使用的主題"
-themeForDarkMode: "在黑暗模式下使用的主題"
+themeForDarkMode: "在闇黑模式下使用的主題"
 light: "淺色"
-dark: "黑暗"
+dark: "闇黑"
 lightThemes: "明亮主題"
-darkThemes: "黑暗主題"
-syncDeviceDarkMode: "將黑暗模式與設備設置同步"
+darkThemes: "闇黑主題"
+syncDeviceDarkMode: "闇黑模式使用裝置設定"
 drive: "雲端硬碟"
 fileName: "檔案名稱"
 selectFile: "選擇檔案"
@@ -282,19 +281,19 @@ selectFolder: "選擇資料夾"
 selectFolders: "選擇資料夾"
 renameFile: "重新命名檔案"
 folderName: "資料夾名稱"
-createFolder: "新增資料夾"
+createFolder: "創建資料夾"
 renameFolder: "重新命名資料夾"
 deleteFolder: "刪除資料夾"
 addFile: "加入附件"
-emptyDrive: "雲端硬碟為空"
-emptyFolder: "資料夾為空"
+emptyDrive: "你的雲端硬碟沒有任何東西(￣▽￣)\""
+emptyFolder: "資料夾裡面沒有東西(⊙_⊙;)"
 unableToDelete: "無法刪除"
 inputNewFileName: "輸入檔案名稱"
 inputNewDescription: "請輸入新標題"
 inputNewFolderName: "輸入新資料夾的名稱"
 circularReferenceFolder: "目標文件夾是您要移動的文件夾的子文件夾。"
 hasChildFilesOrFolders: "此文件夾不是空的，無法刪除。"
-copyUrl: "複製URL"
+copyUrl: "複製網址"
 rename: "重新命名"
 avatar: "大頭貼"
 banner: "橫幅"
@@ -305,7 +304,7 @@ reload: "重新整理"
 doNothing: "無視"
 reloadConfirm: "確定要重新整理嗎？"
 watch: "關注"
-unwatch: "取消追隨"
+unwatch: "取消關注"
 accept: "接受"
 reject: "拒絕"
 normal: "正常"
@@ -313,7 +312,7 @@ instanceName: "伺服器名稱"
 instanceDescription: "伺服器說明"
 maintainerName: "管理員名稱"
 maintainerEmail: "管理員郵箱"
-tosUrl: "服務條款URL"
+tosUrl: "服務條款網址"
 thisYear: "本年"
 thisMonth: "本月"
 today: "本日"
@@ -324,23 +323,23 @@ pages: "頁面"
 integration: "整合"
 connectService: "己連結"
 disconnectService: "己斷開"
-enableLocalTimeline: "開啟本地時間軸"
-enableGlobalTimeline: "啟用公開時間軸"
-disablingTimelinesInfo: "即使您關閉了時間線功能，管理員和協調人仍可以繼續使用，以方便您。"
+enableLocalTimeline: "開啟本地時間線"
+enableGlobalTimeline: "啟用公開時間線"
+disablingTimelinesInfo: "即使您關閉了時間線功能，管理員和版主始終可以訪問所有的時間線。"
 registration: "註冊"
 enableRegistration: "開啟新使用者註冊"
 invite: "邀請"
 driveCapacityPerLocalAccount: "每個本地用戶的雲端空間大小"
 driveCapacityPerRemoteAccount: "每個非本地用戶的雲端容量"
-inMb: "以Mbps為單位"
-iconUrl: "圖像URL"
-bannerUrl: "橫幅圖像URL"
+inMb: "以MB為單位"
+iconUrl: "圖標網址"
+bannerUrl: "橫幅圖像網址"
 backgroundImageUrl: "背景圖片的來源網址"
 basicInfo: "基本資訊"
 pinnedUsers: "置頂用戶"
-pinnedUsersDescription: "在「發現」頁面中使用換行標記想要置頂的使用者。"
-pinnedPages: "釘選頁面"
-pinnedPagesDescription: "輸入要固定至伺服器首頁的頁面路徑，以換行符分隔。"
+pinnedUsersDescription: "在「探索」頁面中使用換行標記想要置頂的使用者。"
+pinnedPages: "已釘選的頁面"
+pinnedPagesDescription: "輸入要固定至伺服器首頁的頁面路徑，一行一個。"
 pinnedClipId: "置頂的摘錄ID"
 pinnedNotes: "已置頂的貼文"
 hcaptcha: "hCaptcha"
@@ -381,7 +380,7 @@ exploreFediverse: "探索聯邦世界"
 popularTags: "熱門標籤"
 userList: "清單"
 about: "資訊"
-aboutMisskey: "關於 Calckey"
+aboutIceshrimp: "關於 Iceshrimp"
 administrator: "管理員"
 token: "權杖"
 twoStepAuthentication: "兩階段驗證"
@@ -483,7 +482,7 @@ promotion: "推廣"
 promote: "推廣"
 numberOfDays: "有效天數"
 hideThisNote: "隱藏此貼文"
-showFeaturedNotesInTimeline: "在時間軸上顯示熱門推薦"
+showFeaturedNotesInTimeline: "在時間線上顯示熱門推薦"
 objectStorage: "Object Storage (物件儲存)"
 useObjectStorage: "使用Object Storage"
 objectStorageBaseUrl: "根URL"
@@ -503,7 +502,7 @@ objectStorageUseProxyDesc: "如果不使用代理進行API連接，請關閉"
 objectStorageSetPublicRead: "上傳時設定為\"public-read\""
 serverLogs: "伺服器日誌"
 deleteAll: "刪除所有記錄"
-showFixedPostForm: "於時間軸頁頂顯示「發送貼文」方框"
+showFixedPostForm: "於時間線頁頂顯示「發送貼文」方框"
 newNoteRecived: "發現新的貼文"
 sounds: "音效"
 listen: "聆聽"
@@ -527,7 +526,7 @@ sort: "排序"
 ascendingOrder: "昇冪"
 descendingOrder: "降冪"
 scratchpad: "暫存記憶體"
-scratchpadDescription: "AiScript控制台為AiScript提供了實驗環境。您可以在此編寫、執行和確認代碼與Calckey互動的结果。"
+scratchpadDescription: "AiScript控制台為AiScript提供了實驗環境。您可以在此編寫、執行和確認代碼與Iceshrimp互動的结果。"
 output: "輸出"
 script: "腳本"
 disablePagesScript: "停用頁面的AiScript腳本"
@@ -652,7 +651,7 @@ createNewClip: "建立新摘錄"
 unclip: "解除摘錄"
 confirmToUnclipAlreadyClippedNote: "此貼文已包含在摘錄「{name}」中。 你想將貼文從這個摘錄中排除嗎？"
 public: "公開"
-i18nInfo: "Calckey已經被志願者們翻譯成各種語言版本，如果想要幫忙的話，可以進入{link}幫助翻譯。"
+i18nInfo: "Iceshrimp已經被志願者們翻譯成各種語言版本，如果想要幫忙的話，可以進入{link}幫助翻譯。"
 manageAccessTokens: "管理存取權杖"
 accountInfo: "帳戶資訊"
 notesCount: "貼文數量"
@@ -662,8 +661,8 @@ repliedCount: "回覆數量"
 renotedCount: "轉發次數"
 followingCount: "正在跟隨的用戶數量"
 followersCount: "跟隨者數量"
-sentReactionsCount: "情感發送次數"
-receivedReactionsCount: "情感收到次數"
+sentReactionsCount: "反應發送次數"
+receivedReactionsCount: "反應收到次數"
 pollVotesCount: "已統計的投票數"
 pollVotedCount: "已投票數"
 yes: "確定"
@@ -689,7 +688,7 @@ experimentalFeatures: "實驗中的功能"
 developer: "開發者"
 makeExplorable: "使自己的帳戶能夠在“探索”頁面中顯示"
 makeExplorableDescription: "如果關閉，帳戶將不會被顯示在\"探索\"頁面中。"
-showGapBetweenNotesInTimeline: "分開顯示時間軸上的貼文"
+showGapBetweenNotesInTimeline: "分開顯示時間線上的貼文"
 duplicate: "複製"
 left: "左"
 center: "置中"
@@ -703,7 +702,8 @@ onlineUsersCount: "{n}人正在線上"
 nUsers: "{n}用戶"
 nNotes: "{n}貼文"
 sendErrorReports: "傳送錯誤報告"
-sendErrorReportsDescription: "啟用後，問題報告將傳送至Calckey開發者以提升軟體品質。\n問題報告可能包括OS版本，瀏覽器類型，行為歷史記錄等。"
+sendErrorReportsDescription: "開啟後，錯誤出現時將會與 Iceshrimp 分享詳細紀錄，對於 Iceshrimp 的開發會有非常大的幫助。\n
+  這將包括您的操作系統版本、使用的瀏覽器、您在 Iceshrimp 中的活動等資料。"
 myTheme: "我的佈景主題"
 backgroundColor: "背景"
 accentColor: "重點色彩"
@@ -794,7 +794,7 @@ hashtags: "#tag"
 troubleshooting: "故障排除"
 useBlurEffect: "在 UI 上使用模糊效果"
 learnMore: "更多資訊"
-misskeyUpdated: "Calckey 更新完成！"
+iceshrimpUpdated: "Iceshrimp 更新完成！"
 whatIsNew: "顯示更新資訊"
 translate: "翻譯"
 translatedFrom: "從 {x} 翻譯"
@@ -863,7 +863,7 @@ check: "檢查"
 driveCapOverrideLabel: "更改這個使用者的雲端硬碟容量上限"
 driveCapOverrideCaption: "如果指定0以下的值，就會被取消。"
 requireAdminForView: "必須以管理者帳號登入才可以檢視。"
-isSystemAccount: "由系統自動建立與管理的帳號。"
+isSystemAccount: "該帳號由系統自動創建並運行。 千千萬萬不要審核、編輯、刪除或以其他方式修改此帳戶，否則可能會破壞您的伺服器。"
 typeToConfirm: "要執行這項操作，請輸入 {x}"
 deleteAccount: "刪除帳號"
 document: "文件"
@@ -975,23 +975,29 @@ _registry:
   keys: "機碼"
   domain: "域"
   createKey: "新增機碼"
-_aboutMisskey:
-  about: "Calckey是由ThatOneCalculator自2022年起開發的Misskey分支。"
+_aboutIceshrimp:
+  about: "Iceshrimp是由ThatOneCalculator自2022年起開發的Iceshrimp分支。"
   contributors: "主要貢獻者"
   allContributors: "全體貢獻人員"
   source: "原始碼"
-  translation: "翻譯Calckey"
-  donate: "贊助Calckey"
+  translation: "翻譯Iceshrimp"
+  donate: "贊助Iceshrimp"
   morePatrons: "還有許許多多幫助我們的其他人，非常感謝你們。 🥰"
   patrons: "贊助者"
+  patronsList: 按時間順序列出，而不是按贊助規模列出。使用上面的連結贊助，在這裡獲得顯示您名字的機會！
+  sponsors: Iceshrimp 贊助者們
+  donateTitle: 覺得 Iceshrimp 棒嗎?
+  pleaseDonateToIceshrimp: 請考慮向 Iceshrimp 贊助以支持其發展。
+  pleaseDonateToHost: 還請考慮捐贈給您在使用的伺服器 {host}，以支援龐大的運營成本。
+  donateHost: 贊助給 {host}
 _nsfw:
   respect: "隱藏敏感內容"
   ignore: "不隱藏敏感內容"
   force: "隱藏所有內容"
 _mfm:
   cheatSheet: "MFM代碼小抄"
-  intro: "MFM是Misskey專用的標記語言，可以在Misskey中的各個位置使用。 您可以這裏看到MFM可用語法列表。"
-  dummy: "Calckey拓展了Fediverse的世界"
+  intro: "MFM是Iceshrimp專用的標記語言，可以在Iceshrimp中的各個位置使用。 您可以這裏看到MFM可用語法列表。"
+  dummy: "Iceshrimp拓展了Fediverse的世界"
   mention: "提及"
   mentionDescription: "透過 @+用戶名 來標示特定使用者。"
   hashtag: "#tag"
@@ -1060,6 +1066,8 @@ _mfm:
   position: 位置
   alwaysPlay: 自動播放所有MFM動畫
   positionDescription: 按指定數量移動內容。
+  advancedDescription: 如果禁用，則僅允許基本標記，除非正在播放 MFM 動畫
+  advanced: 高級MFM
 _instanceTicker:
   none: "隱藏"
   remote: "向遠端使用者顯示"
@@ -1090,8 +1098,8 @@ _wordMute:
   muteWords: "加入靜音文字"
   muteWordsDescription: "用空格分隔指定AND，用換行分隔指定OR。"
   muteWordsDescription2: "將關鍵字用斜線括起來表示正規表達式。"
-  softDescription: "隱藏時間軸中指定條件的貼文。"
-  hardDescription: "具有指定條件的貼文將不添加到時間軸。 即使您更改條件，未被添加的貼文也會被排除在外。"
+  softDescription: "隱藏時間線中指定條件的貼文。"
+  hardDescription: "具有指定條件的貼文將不添加到時間線。 即使您更改條件，未被添加的貼文也會被排除在外。"
   soft: "軟性靜音"
   hard: "硬性靜音"
   mutedNotes: "已靜音的貼文"
@@ -1198,30 +1206,30 @@ _time:
   hour: "小時"
   day: "日"
 _tutorial:
-  title: "如何使用Calckey"
+  title: "如何使用Iceshrimp"
   step1_1: "歡迎！"
   step1_2: "讓我們把你安排好。你很快就會啟動並運行！"
   step2_1: "首先，請完成你的個人資料。"
-  step2_2: "通過提供一些關於你自己的資料，其他人會更容易了解他們是否想看到你的帖子或關注你。"
+  step2_2: "通過提供一些關於你自己的資料，其他人會更容易了解他們是否想看到你的貼文或關注你。"
   step3_1: "現在是時候追隨一些人了！"
-  step3_2: "你的主頁和社交時間軸是基於你所追蹤的人，所以試著先追蹤幾個賬戶。\n點擊個人資料右上角的加號圈就可以關注它。"
+  step3_2: "你的主頁和社交時間線是基於你所追蹤的人，所以試著先追蹤幾個帳戶。\n點擊個人資料右上角的加號圈就可以關注它。"
   step4_1: "讓我們出去找你。"
   step4_2: "對於他們的第一條信息，有些人喜歡做 {introduction} 或一個簡單的 \"hello world!\""
-  step5_1: "時間軸，到處都是時間軸！"
-  step5_2: "您的伺服器已啟用了{timelines}個時間軸。"
-  step5_3: "主 {icon} 時間軸是顯示你追蹤的帳號的帖子。"
-  step5_4: "本地 {icon} 時間軸是你可以看到伺服器中所有其他用戶的信息的時間軸。"
-  step5_5: "社交 {icon} 時間軸是顯示你的主時間軸 + 本地時間軸。"
-  step5_6: "推薦 {icon} 時間軸是顯示你的伺服器管理員推薦的帖文。"
-  step5_7: "全球 {icon} 時間軸是顯示來自所有其他連接的伺服器的帖文。"
+  step5_1: "時間線，到處都是時間線！"
+  step5_2: "您的伺服器已啟用了{timelines}個時間線。"
+  step5_3: "首頁 {icon} 時間線是顯示你追蹤的帳號的貼文。"
+  step5_4: "本地 {icon} 時間線是你可以看到伺服器中所有其他用戶的貼文的時間線。"
+  step5_5: "社交 {icon} 時間線是你的 首頁時間線 和 本地時間線 的結合體。"
+  step5_6: "推薦 {icon} 時間線是顯示你的伺服器管理員推薦的貼文。"
+  step5_7: "全球 {icon} 時間線是顯示來自所有其他連接的伺服器的貼文。"
   step6_1: "那麼，這裡是什麼地方？"
-  step6_2: "你不只是加入Calckey。你已經加入了Fediverse的一個門戶，這是一個由成千上萬台服務器組成的互聯網絡。"
-  step6_3: "每個服務器也有不同，而並不是所有的服務器都運行Calckey。但這個服務器確實是運行Calckey的! 你可能會覺得有點複雜，但你很快就會明白的。"
+  step6_2: "你不只是加入Iceshrimp。你已經加入了Fediverse的一個門戶，這是一個由成千上萬台服務器組成的互聯網絡。"
+  step6_3: "每個服務器也有不同，而並不是所有的服務器都運行Iceshrimp。但這個服務器確實是運行Iceshrimp的! 你可能會覺得有點複雜，但你很快就會明白的。"
   step6_4: "現在開始探索吧！"
 _2fa:
   alreadyRegistered: "你已註冊過一個雙重認證的裝置。"
-  registerDevice: "註冊裝置"
-  registerKey: "註冊鍵"
+  registerTOTP: "註冊裝置"
+  registerSecurityKey: "註冊鍵"
   step1: "首先，在您的設備上安裝二步驗證程式，例如{a}或{b}。"
   step2: "然後，掃描螢幕上的QR code。"
   step2Url: "在桌面版應用中，請輸入以下的URL："
@@ -1246,8 +1254,8 @@ _permissions:
   "write:notes": "撰寫或刪除貼文"
   "read:notifications": "查看通知"
   "write:notifications": "編輯通知"
-  "read:reactions": "查看情感"
-  "write:reactions": "編輯情感"
+  "read:reactions": "查看反應"
+  "write:reactions": "編輯反應"
   "write:votes": "投票"
   "read:pages": "顯示頁面"
   "write:pages": "編輯頁面"
@@ -1285,7 +1293,7 @@ _weekday:
 _widgets:
   memo: "備忘錄"
   notifications: "通知"
-  timeline: "時間軸"
+  timeline: "時間線"
   calendar: "行事曆"
   trends: "發燒貼文"
   clock: "時鐘"
@@ -1336,7 +1344,7 @@ _visibility:
   public: "公開"
   publicDescription: "發布給所有用戶"
   home: "不在主頁顯示"
-  homeDescription: "僅發送至首頁的時間軸"
+  homeDescription: "僅發送至首頁的時間線"
   followers: "追隨者"
   followersDescription: "僅發送至關注者"
   specified: "指定使用者"
@@ -1361,7 +1369,7 @@ _profile:
   youCanIncludeHashtags: "你也可以在「關於我」中加上 #tag。"
   metadata: "進階資訊"
   metadataEdit: "編輯進階資訊"
-  metadataDescription: "可以在個人資料中以表格形式顯示其他資訊。"
+  metadataDescription: "可以在個人資料中以表格形式顯示其他資訊。您可以添加帶有 {rel} 的 {a} 標籤或 {l} 標籤來驗證您個人資料上的鏈接！"
   metadataLabel: "標籤"
   metadataContent: "内容"
   changeAvatar: "更換大頭貼"
@@ -1404,7 +1412,7 @@ _instanceCharts:
 _timelines:
   home: "首頁"
   local: "本地"
-  social: "社群"
+  social: "社交"
   global: "公開"
   recommended: 推薦
 _pages:
@@ -1727,7 +1735,7 @@ _notification:
     pollEnded: "問卷調查結束"
     receiveFollowRequest: "已收到追隨請求"
     followRequestAccepted: "追隨請求已接受"
-    groupInvited: "加入社群邀請"
+    groupInvited: "群組加入邀請"
     app: "應用程式通知"
   _actions:
     followBack: "回關"
@@ -1756,7 +1764,7 @@ _deck:
     main: "主列"
     widgets: "小工具"
     notifications: "通知"
-    tl: "時間軸"
+    tl: "時間線"
     antenna: "天線"
     list: "清單"
     mentions: "提及"
@@ -1776,18 +1784,18 @@ customMOTDDescription: 每次用戶加載/重新加載頁面時，由換行符�
 privateModeInfo: 啟用後，只有列入白名單的伺服器才能與你的伺服器聯合。所有貼文都將對公眾隱藏。
 adminCustomCssWarn: 除非你知道它的作用，否則請不要使用此設定。 輸入不正確的值可能會導致每個人的客戶端無法正常運行。你可在你的的用戶設定中測試，確保你的
   CSS 正常工作。
-showUpdates: Calckey 更新時顯示彈出視窗
+showUpdates: Iceshrimp 更新時顯示彈出視窗
 recommendedInstances: 建議的伺服器
 caption: 自動字幕
 enterSendsMessage: 在 Messaging 中按 Return 發送消息 (如關閉則是 Ctrl + Return)
 migrationConfirm: "您確定要將你的帳戶遷移到 {account} 嗎？ 一旦這樣做，你將無法復原，而你將無法再次正常使用您的帳戶。\n另外，請確保你已將此當前帳戶設置為您要遷移的帳戶。"
 customSplashIconsDescription: 每次用戶加載/重新加載頁面時，以換行符號分隔的自定啟動畫面圖標的網址將隨機顯示。請確保圖片位於靜態網址上，最好所有圖片解析度調整為
   192x192。
-accountMoved: '該使用者已移至新帳戶:'
+accountMoved: '該使用者已遷移至新帳戶:'
 showAds: 顯示廣告
 noThankYou: 不用了，謝謝
 selectInstance: 選擇伺服器
-enableRecommendedTimeline: 啟用推薦時間軸
+enableRecommendedTimeline: 啟用推薦時間線
 antennaInstancesDescription: 分行列出一個伺服器
 moveTo: 遷移此帳戶到新帳戶
 moveToLabel: '請輸入你將會遷移到的帳戶:'
@@ -1805,7 +1813,7 @@ customMOTD: 自定義MOTD (網頁載入時顯示的信息)
 customSplashIcons: 啟動畫面圖標 (網址)
 splash: 啟動畫面
 updateAvailable: 可能有可用的更新!
-showAdminUpdates: 表明新的 Calckey 版本可用（只限管理員）
+showAdminUpdates: 表明新的 Iceshrimp 版本可用（只限管理員）
 migration: 遷移
 homeTimeline: 主頁時間軸
 swipeOnDesktop: 允許在桌面上進行手機式滑動
@@ -1817,20 +1825,19 @@ silenceThisInstance: 靜音此伺服器
 silencedInstances: 已靜音的伺服器
 silenced: 已靜音
 _experiments:
-  enablePostEditing: 啟用帖子編輯
   title: 試驗功能
 findOtherInstance: 找找另一個伺服器
-noGraze: 瀏覽器擴展 "Graze for Mastodon" 會與Calckey發生衝突，請停用該擴展。
-userSaysSomethingReasonRenote: '{name} 轉傳了包含 {reason} 的帖子'
+noGraze: 瀏覽器擴展 "Graze for Mastodon" 會與Iceshrimp發生衝突，請停用該擴展。
+userSaysSomethingReasonRenote: '{name} 轉傳了包含 {reason} 的貼文'
 pushNotificationNotSupported: 你的瀏覽器或伺服器不支援推送通知
 accessibility: 輔助功能
-userSaysSomethingReasonReply: '{name} 回復了包含 {reason} 的帖子'
+userSaysSomethingReasonReply: '{name} 回覆了包含 {reason} 的貼文'
 hiddenTags: 隱藏主題標籤
-indexPosts: 索引帖子
+indexPosts: 索引貼文
 indexNotice: 現在開始索引。 這可能需要一段時間，請不要在一個小時內重啟你的伺服器。
 deleted: 已刪除
 editNote: 編輯筆記
-edited: 已修改
+edited: '於 {date} {time} 編輯'
 userSaysSomethingReason: '{name} 說了 {reason}'
 allowedInstancesDescription: 要加入聯邦白名單的服務器，每台伺服器用新行分隔（僅適用於私有模式）。
 defaultReaction: 默認的表情符號反應
@@ -1840,4 +1847,55 @@ pushNotification: 推送通知
 subscribePushNotification: 啟用推送通知
 unsubscribePushNotification: 禁用推送通知
 pushNotificationAlreadySubscribed: 推送通知已經啟用
-recommendedInstancesDescription: 以每行分隔的推薦服務器出現在推薦的時間軸中。 不要添加 `https://`，只添加域名。
+recommendedInstancesDescription: 以每行分隔的推薦伺服器出現在推薦的時間線中。
+searchPlaceholder: 在聯邦網路上搜尋
+cw: 內容警告
+selectChannel: 選擇一個頻道
+newer: 較新
+older: 較舊
+jumpToPrevious: 跳到上一個
+removeReaction: 移除你的反應
+listsDesc: 清單可以創建一個只有您指定用戶的時間線。 可以從時間線頁面訪問它們。
+flagSpeakAsCatDescription: 在喵咪模式下你的貼文會被喵化ヾ(•ω•`)o
+antennasDesc: "天線會顯示符合您設置條件的新貼文！\n 可以從時間線訪問它們。"
+expandOnNoteClick: 點擊以打開貼文
+expandOnNoteClickDesc: 如果禁用，您仍然可以通過右鍵單擊菜單或單擊時間戳來打開貼文。
+hiddenTagsDescription: '列出您希望隱藏趨勢和探索的主題標籤（不帶 #）。 隱藏的主題標籤仍然可以通過其他方式發現。'
+userSaysSomethingReasonQuote: '{name} 引用了一篇包含 {reason} 的貼文'
+silencedInstancesDescription: 列出您想要靜音的伺服器的網址。 您列出的伺服器內的帳戶將被視為“沉默”，只能發出追隨請求，如果不追隨則不能提及本地帳戶。
+  這不會影響被阻止的伺服器。
+video: 影片
+audio: 音訊
+sendPushNotificationReadMessageCaption: 包含文本 “{emptyPushNotificationMessage}” 的通知將顯示一小段時間。
+  這可能會增加您設備的電池使用量（如果適用）。
+channelFederationWarn: 頻道功能尚未與聯邦宇宙連動
+swipeOnMobile: 允許以滑動在頁面之間切換
+sendPushNotificationReadMessage: 閱讀相關通知或消息後刪除推送通知
+image: 圖片
+seperateRenoteQuote: 分別獨立的轉傳及引用按鈕
+clipsDesc: 摘錄就像一個可以分享的書籤。 你可以從每個貼文的菜單創建新摘錄或將貼文加入已有的摘錄。
+noteId: 貼文 ID
+sendModMail: 發送審核通知
+enableIdenticonGeneration: 啟用碎片生成
+enableServerMachineStats: 啟用伺服器硬體統計資訊
+reactionPickerSkinTone: 首選表情符號膚色
+indexFromDescription: 留空以索引每個貼文
+preventAiLearning: 防止 AI 機器人抓取
+preventAiLearningDescription: 請求第三方 AI 語言模型不要研究您上傳的內容，例如貼文和圖像。
+indexFrom: 從貼文 ID 開始的索引
+isLocked: 該帳戶已獲得以下批准
+isModerator: 板主
+isAdmin: 管理員
+isPatron: Iceshrimp 項目贊助者
+silencedWarning: 顯示此頁面是因為這些使用者來自您伺服器管理員已靜音的伺服器，因此他們可能是垃圾訊息。
+signupsDisabled: 該伺服器上的註冊當前已被禁用，但您隨時可以在另一台伺服器上註冊！或是您有該伺服器的邀請碼，請在下面輸入。
+showPopup: 通過彈出式視窗通知用戶
+showWithSparkles: 閃閃發光的顯示
+youHaveUnreadAnnouncements: 您有未讀的公告
+donationLink: 連結到贊助頁面
+neverShow: 不再顯示
+remindMeLater: 可能之後
+removeQuote: 删除引用
+removeRecipient: 刪除收件者
+removeMember: 刪除成員
+isBot: 此帳戶是機器人

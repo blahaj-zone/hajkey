@@ -116,7 +116,7 @@ export default defineComponent({
 				if (!!getUrlParams().state)
 					callbackUrl.searchParams.append(
 						"state",
-						getUrlParams().state
+						getUrlParams().state,
 					);
 				location.href = callbackUrl.toString();
 			} else if (this.session.app.callbackUrl) {

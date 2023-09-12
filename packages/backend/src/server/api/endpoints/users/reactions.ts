@@ -49,7 +49,7 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, me) => {
 	const profile = await UserProfiles.findOneByOrFail({ userId: ps.userId });
 
-	if (me == null || (me.id !== ps.userId && !profile.publicReactions)) {
+	if (me.id !== ps.userId && !profile.publicReactions) {
 		throw new ApiError(meta.errors.reactionsNotPublic);
 	}
 

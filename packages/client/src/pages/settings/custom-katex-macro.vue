@@ -33,17 +33,17 @@ import { parseKaTeXMacros } from "@/scripts/katex-macro";
 import { defaultStore } from "@/store";
 
 const localCustomKaTeXMacro = ref(
-	localStorage.getItem("customKaTeXMacro") ?? ""
+	localStorage.getItem("customKaTeXMacro") ?? "",
 );
 const enableCustomKaTeXMacro = computed(
-	defaultStore.makeGetterSetter("enableCustomKaTeXMacro")
+	defaultStore.makeGetterSetter("enableCustomKaTeXMacro"),
 );
 
 async function apply() {
 	localStorage.setItem("customKaTeXMacro", localCustomKaTeXMacro.value);
 	localStorage.setItem(
 		"customKaTeXMacroParsed",
-		parseKaTeXMacros(localCustomKaTeXMacro.value)
+		parseKaTeXMacros(localCustomKaTeXMacro.value),
 	);
 
 	const { canceled } = await os.confirm({

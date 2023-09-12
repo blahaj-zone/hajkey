@@ -47,6 +47,16 @@ export const meta = {
 				optional: false,
 				nullable: true,
 			},
+			showPopup: {
+				type: "boolean",
+				optional: true,
+				nullable: false,
+			},
+			isGoodNews: {
+				type: "boolean",
+				optional: true,
+				nullable: false,
+			},
 		},
 	},
 } as const;
@@ -57,6 +67,8 @@ export const paramDef = {
 		title: { type: "string", minLength: 1 },
 		text: { type: "string", minLength: 1 },
 		imageUrl: { type: "string", nullable: true, minLength: 1 },
+		showPopup: { type: "boolean" },
+		isGoodNews: { type: "boolean" },
 	},
 	required: ["title", "text", "imageUrl"],
 } as const;
@@ -69,6 +81,8 @@ export default define(meta, paramDef, async (ps) => {
 		title: ps.title,
 		text: ps.text,
 		imageUrl: ps.imageUrl,
+		showPopup: ps.showPopup ?? false,
+		isGoodNews: ps.isGoodNews ?? false,
 	}).then((x) => Announcements.findOneByOrFail(x.identifiers[0]));
 
 	return Object.assign({}, announcement, {

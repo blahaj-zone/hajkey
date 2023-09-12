@@ -40,7 +40,7 @@ Chart.register(
 	Title,
 	Tooltip,
 	SubTitle,
-	Filler
+	Filler,
 );
 
 const props = defineProps<{
@@ -63,7 +63,7 @@ const gridColor = defaultStore.state.darkMode
 
 // フォントカラー
 Chart.defaults.color = getComputedStyle(
-	document.documentElement
+	document.documentElement,
 ).getPropertyValue("--fg");
 
 const { handler: externalTooltipHandler } = useChartTooltip();

@@ -28,7 +28,7 @@ const isDesktop = ref(window.innerWidth >= 1100);
 function generateToken() {
 	os.popup(
 		defineAsyncComponent(
-			() => import("@/components/MkTokenGenerateWindow.vue")
+			() => import("@/components/MkTokenGenerateWindow.vue"),
 		),
 		{},
 		{
@@ -47,7 +47,7 @@ function generateToken() {
 				});
 			},
 		},
-		"closed"
+		"closed",
 	);
 }
 

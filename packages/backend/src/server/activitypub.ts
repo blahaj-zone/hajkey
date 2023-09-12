@@ -20,7 +20,11 @@ import {
 import type { ILocalUser, User } from "@/models/entities/user.js";
 import { renderLike } from "@/remote/activitypub/renderer/like.js";
 import { getUserKeypair } from "@/misc/keypair-store.js";
-import { checkFetch, hasSignature } from "@/remote/activitypub/check-fetch.js";
+import {
+	checkFetch,
+	hasSignature,
+	getSignatureUser,
+} from "@/remote/activitypub/check-fetch.js";
 import { getInstanceActor } from "@/services/instance-actor.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import renderFollow from "@/remote/activitypub/renderer/follow.js";
@@ -28,6 +32,7 @@ import Featured from "./activitypub/featured.js";
 import Following from "./activitypub/following.js";
 import Followers from "./activitypub/followers.js";
 import Outbox, { packActivity } from "./activitypub/outbox.js";
+import { serverLogger } from "./index.js";
 
 // Init router
 const router = new Router();
@@ -84,7 +89,7 @@ router.get("/notes/:note", async (ctx, next) => {
 
 	const note = await Notes.findOneBy({
 		id: ctx.params.note,
-		visibility: In(["public" as const, "home" as const]),
+		visibility: In(["public" as const, "home" as const, "followers" as const]),
 		localOnly: false,
 	});
 
@@ -101,6 +106,37 @@ router.get("/notes/:note", async (ctx, next) => {
 		}
 		ctx.redirect(note.uri);
 		return;
+	}
+
+	if (note.visibility === "followers") {
+		serverLogger.debug(
+			"Responding to request for follower-only note, validating access...",
+		);
+		const remoteUser = await getSignatureUser(ctx.req);
+		serverLogger.debug("Local note author user:");
+		serverLogger.debug(JSON.stringify(note, null, 2));
+		serverLogger.debug("Authenticated remote user:");
+		serverLogger.debug(JSON.stringify(remoteUser, null, 2));
+
+		if (remoteUser == null) {
+			serverLogger.debug("Rejecting: no user");
+			ctx.status = 401;
+			return;
+		}
+
+		const relation = await Users.getRelation(remoteUser.user.id, note.userId);
+		serverLogger.debug("Relation:");
+		serverLogger.debug(JSON.stringify(relation, null, 2));
+
+		if (!relation.isFollowing || relation.isBlocked) {
+			serverLogger.debug(
+				"Rejecting: authenticated user is not following us or was blocked by us",
+			);
+			ctx.status = 403;
+			return;
+		}
+
+		serverLogger.debug("Accepting: access criteria met");
 	}
 
 	ctx.body = renderActivity(await renderNote(note, false));

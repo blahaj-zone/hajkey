@@ -1,4 +1,4 @@
-import type { User, UserDetailedNotMeOnly } from "@/models/entities/user.js";
+import type { User } from "@/models/entities/user.js";
 import { Users } from "@/models/index.js";
 import { resolveUser } from "@/remote/resolve-user.js";
 import acceptAllFollowRequests from "@/services/following/requests/accept-all.js";
@@ -6,10 +6,9 @@ import { publishToFollowers } from "@/services/i/update.js";
 import { publishMainStream } from "@/services/stream.js";
 import { DAY } from "@/const.js";
 import { apiLogger } from "../../logger.js";
-import { UserProfiles } from "@/models/index.js";
-import config from "@/config/index.js";
 import define from "../../define.js";
 import { ApiError } from "../../error.js";
+import { parse } from "@/misc/acct.js";
 
 export const meta = {
 	tags: ["users"],
@@ -38,48 +37,56 @@ export const meta = {
 			code: "URI_NULL",
 			id: "bf326f31-d430-4f97-9933-5d61e4d48a23",
 		},
+		alreadyMoved: {
+			message: "You have already moved your account.",
+			code: "ALREADY_MOVED",
+			id: "56f20ec9-fd06-4fa5-841b-edd6d7d4fa31",
+		},
+		yourself: {
+			message: "You can't set yourself as your own alias.",
+			code: "FORBIDDEN_TO_SET_YOURSELF",
+			id: "25c90186-4ab0-49c8-9bba-a1fa6c202ba4",
+		},
 	},
 } as const;
 
 export const paramDef = {
 	type: "object",
 	properties: {
-		alsoKnownAs: { type: "string" },
+		alsoKnownAs: {
+			type: "array",
+			maxItems: 10,
+			uniqueItems: true,
+			items: { type: "string" },
+		},
 	},
 	required: ["alsoKnownAs"],
 } as const;
 
 export default define(meta, paramDef, async (ps, user) => {
 	if (!ps.alsoKnownAs) throw new ApiError(meta.errors.noSuchUser);
+	if (user.movedToUri) throw new ApiError(meta.errors.alreadyMoved);
 
-	let unfiltered: string = ps.alsoKnownAs;
-	const updates = {} as Partial<User>;
+	const newAka = new Set<string>();
 
-	if (!unfiltered) {
-		updates.alsoKnownAs = null;
-	} else {
-		if (unfiltered.startsWith("acct:")) unfiltered = unfiltered.substring(5);
-		if (unfiltered.startsWith("@")) unfiltered = unfiltered.substring(1);
-		if (!unfiltered.includes("@")) throw new ApiError(meta.errors.notRemote);
+	for (const line of ps.alsoKnownAs) {
+		if (!line) throw new ApiError(meta.errors.noSuchUser);
+		const { username, host } = parse(line);
 
-		const userAddress: string[] = unfiltered.split("@");
-		const knownAs = await resolveUser(userAddress[0], userAddress[1]).catch(
-			(e) => {
-				apiLogger.warn(`failed to resolve remote user: ${e}`);
-				throw new ApiError(meta.errors.noSuchUser);
-			},
-		);
+		const aka = await resolveUser(username, host).catch((e) => {
+			apiLogger.warn(`failed to resolve remote user: ${e}`);
+			throw new ApiError(meta.errors.noSuchUser);
+		});
 
-		const toUrl: string | null = knownAs.uri;
-		if (!toUrl) {
-			throw new ApiError(meta.errors.uriNull);
-		}
-		if (updates.alsoKnownAs == null || updates.alsoKnownAs.length === 0) {
-			updates.alsoKnownAs = [toUrl];
-		} else {
-			updates.alsoKnownAs.push(toUrl);
-		}
+		if (aka.id === user.id) throw new ApiError(meta.errors.yourself);
+		if (!aka.uri) throw new ApiError(meta.errors.uriNull);
+
+		newAka.add(aka.uri);
 	}
+
+	const updates = {
+		alsoKnownAs: newAka.size > 0 ? Array.from(newAka) : null,
+	} as Partial<User>;
 
 	await Users.update(user.id, updates);
 

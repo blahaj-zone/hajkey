@@ -1,7 +1,8 @@
+import JSON5 from "json5";
 import { IsNull, MoreThan } from "typeorm";
 import config from "@/config/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
-import { Ads, Emojis, Users } from "@/models/index.js";
+import { Emojis, Users } from "@/models/index.js";
 import { MAX_NOTE_TEXT_LENGTH, MAX_CAPTION_TEXT_LENGTH } from "@/const.js";
 import define from "../define.js";
 
@@ -41,7 +42,7 @@ export const meta = {
 				optional: false,
 				nullable: false,
 				format: "url",
-				example: "https://calckey.example.com",
+				example: "https://firefish.example.com",
 			},
 			description: {
 				type: "string",
@@ -67,13 +68,13 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/calckey/calckey",
+				default: "https://codeberg.org/firefish/firefish",
 			},
 			feedbackUrl: {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/calckey/calckey/issues",
+				default: "https://codeberg.org/firefish/firefish/issues",
 			},
 			defaultDarkTheme: {
 				type: "string",
@@ -154,7 +155,7 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "/assets/ai.png",
+				default: "/static-assets/badges/info.png",
 			},
 			bannerUrl: {
 				type: "string",
@@ -165,7 +166,7 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://xn--931a.moe/aiart/yubitun.png",
+				default: "/static-assets/badges/error.png",
 			},
 			iconUrl: {
 				type: "string",
@@ -219,35 +220,6 @@ export const meta = {
 							description: "The local host is represented with `null`.",
 						},
 						url: {
-							type: "string",
-							optional: false,
-							nullable: false,
-							format: "url",
-						},
-					},
-				},
-			},
-			ads: {
-				type: "array",
-				optional: false,
-				nullable: false,
-				items: {
-					type: "object",
-					optional: false,
-					nullable: false,
-					properties: {
-						place: {
-							type: "string",
-							optional: false,
-							nullable: false,
-						},
-						url: {
-							type: "string",
-							optional: false,
-							nullable: false,
-							format: "url",
-						},
-						imageUrl: {
 							type: "string",
 							optional: false,
 							nullable: false,
@@ -322,7 +294,7 @@ export const meta = {
 						optional: false,
 						nullable: false,
 					},
-					elasticsearch: {
+					searchFilters: {
 						type: "boolean",
 						optional: false,
 						nullable: false,
@@ -388,6 +360,11 @@ export const meta = {
 				nullable: false,
 				default: "⭐",
 			},
+			donationLink: {
+				type: "string",
+				optional: "true",
+				nullable: true,
+			},
 		},
 	},
 } as const;
@@ -414,12 +391,6 @@ export default define(meta, paramDef, async (ps, me) => {
 		cache: {
 			id: "meta_emojis",
 			milliseconds: 3600000, // 1 hour
-		},
-	});
-
-	const ads = await Ads.find({
-		where: {
-			expiresAt: MoreThan(new Date()),
 		},
 	});
 
@@ -462,18 +433,14 @@ export default define(meta, paramDef, async (ps, me) => {
 		maxNoteTextLength: MAX_NOTE_TEXT_LENGTH, // 後方互換性のため
 		maxCaptionTextLength: MAX_CAPTION_TEXT_LENGTH,
 		emojis: instance.privateMode && !me ? [] : await Emojis.packMany(emojis),
-		defaultLightTheme: instance.defaultLightTheme,
-		defaultDarkTheme: instance.defaultDarkTheme,
-		ads:
-			instance.privateMode && !me
-				? []
-				: ads.map((ad) => ({
-						id: ad.id,
-						url: ad.url,
-						place: ad.place,
-						ratio: ad.ratio,
-						imageUrl: ad.imageUrl,
-				  })),
+		// クライアントの手間を減らすためあらかじめJSONに変換しておく
+		defaultLightTheme: instance.defaultLightTheme
+			? JSON.stringify(JSON5.parse(instance.defaultLightTheme))
+			: null,
+		defaultDarkTheme: instance.defaultDarkTheme
+			? JSON.stringify(JSON5.parse(instance.defaultDarkTheme))
+			: null,
+
 		enableEmail: instance.enableEmail,
 
 		enableTwitterIntegration: instance.enableTwitterIntegration,
@@ -485,6 +452,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		translatorAvailable:
 			instance.deeplAuthKey != null || instance.libreTranslateApiUrl != null,
 		defaultReaction: instance.defaultReaction,
+		donationLink: instance.donationLink,
 
 		...(ps.detail
 			? {
@@ -515,7 +483,7 @@ export default define(meta, paramDef, async (ps, me) => {
 			recommendedTimeline: !instance.disableRecommendedTimeline,
 			globalTimeLine: !instance.disableGlobalTimeline,
 			emailRequiredForSignup: instance.emailRequiredForSignup,
-			elasticsearch: config.elasticsearch ? true : false,
+			searchFilters: config.meilisearch ? true : false,
 			hcaptcha: instance.enableHcaptcha,
 			recaptcha: instance.enableRecaptcha,
 			objectStorage: instance.useObjectStorage,
@@ -523,7 +491,8 @@ export default define(meta, paramDef, async (ps, me) => {
 			github: instance.enableGithubIntegration,
 			discord: instance.enableDiscordIntegration,
 			serviceWorker: instance.enableServiceWorker,
-			postEditing: instance.experimentalFeatures?.postEditing || false,
+			postEditing: true,
+			postImports: instance.experimentalFeatures?.postImports || false,
 			miauth: true,
 		};
 	}

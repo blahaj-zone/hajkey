@@ -1,3 +1,4 @@
 export function isDuplicateKeyValueError(e: unknown | Error): boolean {
-	return (e as Error).message?.startsWith("duplicate key value");
+	const nodeError = e as NodeJS.ErrnoException;
+	return nodeError.code === "23505";
 }

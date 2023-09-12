@@ -85,11 +85,11 @@
 <script lang="ts">
 import {
 	markRaw,
-	ref,
-	onUpdated,
-	onMounted,
-	onBeforeUnmount,
 	nextTick,
+	onBeforeUnmount,
+	onMounted,
+	onUpdated,
+	ref,
 	watch,
 } from "vue";
 import contains from "@/scripts/contains";
@@ -99,34 +99,40 @@ import { acct } from "@/filters/user";
 import * as os from "@/os";
 import { MFM_TAGS } from "@/scripts/mfm-tags";
 import { defaultStore } from "@/store";
-import { emojilist } from "@/scripts/emojilist";
+import { addSkinTone, emojilist } from "@/scripts/emojilist";
 import { instance } from "@/instance";
 import { i18n } from "@/i18n";
 
-type EmojiDef = {
+interface EmojiDef {
 	emoji: string;
 	name: string;
 	aliasOf?: string;
 	url?: string;
 	isCustomEmoji?: boolean;
-};
+}
 
 const lib = emojilist.filter((x) => x.category !== "flags");
 
+for (const emoji of lib) {
+	if (emoji.skin_tone_support) {
+		emoji.emoji = addSkinTone(emoji.emoji);
+	}
+}
+
 const emjdb: EmojiDef[] = lib.map((x) => ({
-	emoji: x.char,
-	name: x.name,
-	url: char2filePath(x.char),
+	emoji: x.emoji,
+	name: x.slug,
+	url: char2filePath(x.emoji),
 }));
 
 for (const x of lib) {
 	if (x.keywords) {
 		for (const k of x.keywords) {
 			emjdb.push({
-				emoji: x.char,
+				emoji: x.emoji,
 				name: k,
-				aliasOf: x.name,
-				url: char2filePath(x.char),
+				aliasOf: x.slug,
+				url: char2filePath(x.emoji),
 			});
 		}
 	}
@@ -134,7 +140,7 @@ for (const x of lib) {
 
 emjdb.sort((a, b) => a.name.length - b.name.length);
 
-//#region Construct Emoji DB
+// #region Construct Emoji DB
 const customEmojis = instance.emojis;
 const emojiDefinitions: EmojiDef[] = [];
 
@@ -162,7 +168,7 @@ for (const x of customEmojis) {
 emojiDefinitions.sort((a, b) => a.name.length - b.name.length);
 
 const emojiDb = markRaw(emojiDefinitions.concat(emjdb));
-//#endregion
+// #endregion
 
 export default {
 	emojiDb,
@@ -262,7 +268,7 @@ function exec() {
 	} else if (props.type === "hashtag") {
 		if (!props.q || props.q === "") {
 			hashtags.value = JSON.parse(
-				localStorage.getItem("hashtags") || "[]"
+				localStorage.getItem("hashtags") || "[]",
 			);
 			fetching.value = false;
 		} else {
@@ -282,7 +288,7 @@ function exec() {
 					// キャッシュ
 					sessionStorage.setItem(
 						cacheKey,
-						JSON.stringify(searchedHashtags)
+						JSON.stringify(searchedHashtags),
 					);
 				});
 			}
@@ -292,7 +298,7 @@ function exec() {
 			// 最近使った絵文字をサジェスト
 			emojis.value = defaultStore.state.recentlyUsedEmojis
 				.map((emoji) =>
-					emojiDb.find((dbEmoji) => dbEmoji.emoji === emoji)
+					emojiDb.find((dbEmoji) => dbEmoji.emoji === emoji),
 				)
 				.filter((x) => x) as EmojiDef[];
 			return;
@@ -430,10 +436,7 @@ onMounted(() => {
 	setPosition();
 
 	props.textarea.addEventListener("keydown", onKeydown);
-
-	for (const el of Array.from(document.querySelectorAll("body *"))) {
-		el.addEventListener("mousedown", onMousedown);
-	}
+	document.body.addEventListener("mousedown", onMousedown);
 
 	nextTick(() => {
 		exec();
@@ -444,17 +447,14 @@ onMounted(() => {
 				nextTick(() => {
 					exec();
 				});
-			}
+			},
 		);
 	});
 });
 
 onBeforeUnmount(() => {
 	props.textarea.removeEventListener("keydown", onKeydown);
-
-	for (const el of Array.from(document.querySelectorAll("body *"))) {
-		el.removeEventListener("mousedown", onMousedown);
-	}
+	document.body.removeEventListener("mousedown", onMousedown);
 });
 </script>
 
@@ -464,7 +464,9 @@ onBeforeUnmount(() => {
 	max-width: 100%;
 	margin-top: calc(1em + 8px);
 	overflow: hidden;
-	transition: top 0.1s ease, left 0.1s ease;
+	transition:
+		top 0.1s ease,
+		left 0.1s ease;
 
 	> ol {
 		display: block;

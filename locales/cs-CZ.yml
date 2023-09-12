@@ -1,6 +1,6 @@
 _lang_: "Čeština"
-headlineMisskey: "Síť propojená poznámkami"
-introMisskey: "Vítejte! Calckey je otevřený a decentralizovaný microblogový servis.\n\
+headlineIceshrimp: "Síť propojená poznámkami"
+introIceshrimp: "Vítejte! Iceshrimp je otevřený a decentralizovaný microblogový servis.\n\
   \"Poznámkami\" můžete sdílet co se zrovna děje se všemi ve Vašem okolí. \U0001F4E1\
   \nPomocí \"reakcí\" můžete sdílet své názory a pocity na ostatní poznámky. \U0001F44D\
   \nPojďte objevovat nový svět! \U0001F680"
@@ -147,7 +147,7 @@ cacheRemoteFilesDescription: "Zakázání tohoto nastavení způsobí, že vzdá
 flagAsBot: "Tento účet je bot"
 flagAsBotDescription: "Pokud je tento účet kontrolován programem zaškrtněte tuto možnost.\
   \ To označí tento účet jako bot pro ostatní vývojáře a zabrání tak nekonečným interakcím\
-  \ s ostatními boty a upraví Calckey systém aby se choval k tomuhle účtu jako bot."
+  \ s ostatními boty a upraví Iceshrimp systém aby se choval k tomuhle účtu jako bot."
 flagAsCat: "Tenhle účet je kočka"
 flagAsCatDescription: "Vyberte tuto možnost aby tento účet byl označen jako kočka."
 flagShowTimelineReplies: "Zobrazovat odpovědi na časové ose"
@@ -189,7 +189,6 @@ operations: "Operace"
 software: "Software"
 version: "Verze"
 metadata: "Metadata"
-withNFiles: "{n} soubor(ů)"
 monitor: "Monitorovat"
 jobQueue: "Fronta úloh"
 cpuAndMemory: "CPU a paměť"
@@ -204,7 +203,7 @@ blockedInstances: "Blokované instance"
 noUsers: "Žádní uživatelé"
 editProfile: "Upravit můj profil"
 pinLimitExceeded: "Nemůžete připnout další poznámky."
-intro: "Instalace Calckey byla dokončena! Prosím vytvořte admina."
+intro: "Instalace Iceshrimp byla dokončena! Prosím vytvořte admina."
 done: "Hotovo"
 processing: "Zpracovávám"
 preview: "Náhled"
@@ -348,7 +347,7 @@ recentlyUpdatedUsers: "Nedávno aktívni uživatelé"
 popularTags: "Populární tagy"
 userList: "Seznamy"
 about: "Informace"
-aboutMisskey: "O Calckey"
+aboutIceshrimp: "O Iceshrimp"
 administrator: "Administrátor"
 token: "Token"
 twoStepAuthentication: "Dvoufaktorová autentikace"
@@ -647,7 +646,7 @@ _registry:
   keys: "Klíče"
   domain: "Doména"
   createKey: "Vytvořit klíč"
-_aboutMisskey:
+_aboutIceshrimp:
   allContributors: "Všichni přispěvatelé"
   source: "Zdrojový kód"
 _mfm:
@@ -699,8 +698,8 @@ _time:
   minute: "Minut"
   hour: "Hodin"
 _2fa:
-  registerDevice: "Přidat zařízení"
-  registerKey: "Přidat bezpečnostní klíč"
+  registerTOTP: "Přidat zařízení"
+  registerSecurityKey: "Přidat bezpečnostní klíč"
 _weekday:
   sunday: "Neděle"
   monday: "Pondělí"
@@ -964,7 +963,7 @@ disablingTimelinesInfo: Administrátoři a moderátoři budou vždy mít příst
   časovým osám, i pokud jsou vypnuté.
 deleted: Vymazáno
 editNote: Upravit poznámku
-edited: Upraveno
+edited: 'Upraveno dne {date} {time}'
 silencedInstancesDescription: Vypište hostnames instancí, které chcete ztlumit. Účty
   v uvedených instancích jsou považovány za "ztlumené", mohou pouze zadávat požadavky
   na sledování a nemohou zmiňovat místní účty, pokud nejsou sledovány. Na blokované

@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { length } from "stringz";
-import * as misskey from "calckey-js";
+import type * as misskey from "iceshrimp-js";
 import { concat } from "@/scripts/array";
 import { i18n } from "@/i18n";
 
@@ -59,11 +59,13 @@ defineExpose({
 <style lang="scss" scoped>
 ._button {
 	font-weight: 700;
-	z-index: 2;
+	z-index: 5;
 	> span {
 		background: var(--cwBg) !important;
 		color: var(--cwFg);
-		transition: background 0.2s, color 0.2s;
+		transition:
+			background 0.2s,
+			color 0.2s;
 		> span {
 			font-weight: 500;
 			&::before {
@@ -102,9 +104,9 @@ defineExpose({
 	}
 	&.showLess {
 		width: 100%;
-		margin-top: 1em;
 		position: sticky;
-		bottom: var(--stickyBottom);
+		bottom: calc(var(--stickyBottom) - 1em);
+		padding: 20px;
 
 		> span {
 			display: inline-block;

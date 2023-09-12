@@ -5,10 +5,9 @@
 		:z-priority="'high'"
 		:src="src"
 		:transparent-bg="true"
-		@click="modal.close()"
+		@click="modal?.close()"
 		@closed="emit('closed')"
 		tabindex="-1"
-		v-focus
 	>
 		<MkMenu
 			:items="items"
@@ -17,11 +16,9 @@
 			:max-height="maxHeight"
 			:as-drawer="type === 'drawer'"
 			class="sfhdhdhq"
-			:class="{
-				drawer: type === 'drawer',
-				...classMap(classes),
-			}"
-			@close="modal.close()"
+			:class="{ drawer: type === 'drawer' }"
+			:no-return-focus="noReturnFocus"
+			@close="modal?.close()"
 		/>
 	</MkModal>
 </template>
@@ -37,7 +34,7 @@ defineProps<{
 	width?: number;
 	viaKeyboard?: boolean;
 	src?: any;
-	classes?: MenuClasses;
+	noReturnFocus?;
 }>();
 
 const emit = defineEmits<{

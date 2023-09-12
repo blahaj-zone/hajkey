@@ -24,7 +24,7 @@ withDefaults(
 		value: {
 			text: "",
 		},
-	}
+	},
 );
 </script>
 

@@ -22,7 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import type { PropType } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import MkButton from "@/components/MkButton.vue";
 import { i18n } from "@/i18n";
 
@@ -70,7 +71,7 @@ export default defineComponent({
 			},
 			{
 				immediate: true,
-			}
+			},
 		);
 
 		const retry = () => {

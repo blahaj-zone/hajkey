@@ -105,13 +105,16 @@ onMounted(() => {
 			particles.value.push(particle);
 			window.setTimeout(() => {
 				particles.value = particles.value.filter(
-					(x) => x.id !== particle.id
+					(x) => x.id !== particle.id,
 				);
 			}, particle.dur - 100);
 
-			window.setTimeout(() => {
-				add();
-			}, 500 + Math.random() * 500);
+			window.setTimeout(
+				() => {
+					add();
+				},
+				500 + Math.random() * 500,
+			);
 		};
 		add();
 	}

@@ -22,6 +22,6 @@ definePageMetadata(
 		title: folder ? folder.name : i18n.ts.drive,
 		icon: "ph-cloud ph-bold ph-lg",
 		hideHeader: true,
-	}))
+	})),
 );
 </script>

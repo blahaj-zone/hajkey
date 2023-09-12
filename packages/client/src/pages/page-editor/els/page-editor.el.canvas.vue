@@ -46,6 +46,6 @@ withDefaults(
 			width: 300,
 			height: 200,
 		},
-	}
+	},
 );
 </script>

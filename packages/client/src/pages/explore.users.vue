@@ -164,7 +164,7 @@ watch(
 	() => props.tag,
 	() => {
 		if (tagsEl) tagsEl.toggleContent(props.tag == null);
-	}
+	},
 );
 
 const tagUsers = $computed(() => ({

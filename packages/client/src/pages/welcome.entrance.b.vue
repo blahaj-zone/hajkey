@@ -130,7 +130,7 @@ export default defineComponent({
 					autoSet: true,
 				},
 				{},
-				"closed"
+				"closed",
 			);
 		},
 
@@ -141,7 +141,7 @@ export default defineComponent({
 					autoSet: true,
 				},
 				{},
-				"closed"
+				"closed",
 			);
 		},
 
@@ -156,10 +156,10 @@ export default defineComponent({
 						},
 					},
 					{
-						text: i18n.ts.aboutMisskey,
+						text: i18n.ts.aboutIceshrimp,
 						icon: "ph-info ph-bold ph-lg",
 						action: () => {
-							os.pageWindow("/about-calckey");
+							os.pageWindow("/about-iceshrimp");
 						},
 					},
 					null,
@@ -169,12 +169,12 @@ export default defineComponent({
 						action: () => {
 							window.open(
 								`https://misskey-hub.net/help.md`,
-								"_blank"
+								"_blank",
 							);
 						},
 					},
 				],
-				ev.currentTarget ?? ev.target
+				ev.currentTarget ?? ev.target,
 			);
 		},
 

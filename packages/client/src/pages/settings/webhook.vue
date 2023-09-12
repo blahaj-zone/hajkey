@@ -25,7 +25,7 @@
 							<i
 								v-else-if="
 									[200, 201, 204].includes(
-										webhook.latestStatus
+										webhook.latestStatus,
 									)
 								"
 								class="ph-check ph-bold ph-lg"

@@ -95,9 +95,18 @@
 	}
 	//#endregion
 
-	const fontSize = localStorage.getItem("fontSize");
+	let fontSize = localStorage.getItem("fontSize");
 	if (fontSize) {
-		document.documentElement.classList.add("f-" + fontSize);
+		if (fontSize < 10) {
+			// need to do this for now, as values before were 1, 2, 3 depending on the option
+			localStorage.setItem("fontSize", null);
+			fontSize = localStorage.getItem("fontSize");
+		}
+		document.documentElement.style.fontSize = `${fontSize}px`;
+	}
+
+	if (["ja-JP", "ja-KS", "ko-KR", "zh-CN", "zh-TW"].includes(lang)) {
+		document.documentElement.classList.add("useCJKFont");
 	}
 
 	const useSystemFont = localStorage.getItem("useSystemFont");
@@ -118,7 +127,7 @@
 	}
 
 	async function addStyle(styleText) {
-		let css = document.createElement("style");
+		const css = document.createElement("style");
 		css.appendChild(document.createTextNode(styleText));
 		document.head.appendChild(css);
 	}
@@ -138,7 +147,8 @@
 				<span class="button-label-big">Refresh</span>
 			</button>
 			<p class="dont-worry">Don't worry, it's (probably) not your fault.</p>
-			<p>Please make sure your browser is up-to-date and any AdBlockers are off.</p>
+			<p>Please make sure your browser is up-to-date.</p>
+			<p>While we don't serve ads, ad-blockers might interfere with this application,<br/> so disabling them might also fix this issue.</p>
 			<p>If the problem persists after refreshing, please contact your instance's administrator.<br>You may also try the following options:</p>
 			<a href="/flush">
 				<button class="button-small">
@@ -175,7 +185,7 @@
 			font-family: BIZ UDGothic, Roboto, HelveticaNeue, Arial, sans-serif;
 		}
 
-		#calckey_app,
+		#firefish_app,
 		#splash {
 			display: none !important;
 		}

@@ -35,7 +35,7 @@ export default defineComponent({
 		function click() {
 			props.hpml.updatePageVar(
 				props.block.name,
-				value.value + (props.block.inc || 1)
+				value.value + (props.block.inc || 1),
 			);
 			props.hpml.eval();
 		}

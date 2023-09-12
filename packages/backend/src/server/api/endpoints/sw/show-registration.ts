@@ -42,16 +42,16 @@ export const paramDef = {
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
-	const exist = await SwSubscriptions.findOneBy({
+	const subscription = await SwSubscriptions.findOneBy({
 		userId: me.id,
 		endpoint: ps.endpoint,
 	});
 
-	if (exist != null) {
+	if (subscription != null) {
 		return {
-			userId: exist.userId,
-			endpoint: exist.endpoint,
-			sendReadMessage: exist.sendReadMessage,
+			userId: subscription.userId,
+			endpoint: subscription.endpoint,
+			sendReadMessage: subscription.sendReadMessage,
 		};
 	}
 

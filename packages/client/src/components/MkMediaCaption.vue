@@ -184,10 +184,10 @@ export default defineComponent({
 
 		caption() {
 			const img = document.getElementById(
-				"imgtocaption"
+				"imgtocaption",
 			) as HTMLImageElement;
 			const ta = document.getElementById(
-				"captioninput"
+				"captioninput",
 			) as HTMLTextAreaElement;
 			os.api("drive/files/caption-image", {
 				url: img.src,

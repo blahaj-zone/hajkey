@@ -87,6 +87,7 @@
 
 							<FormInput
 								v-model="objectStorageSecretKey"
+								type="password"
 								class="_formBlock"
 							>
 								<template #prefix

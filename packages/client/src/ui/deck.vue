@@ -9,6 +9,7 @@
 				class="columns"
 				:class="deckStore.reactiveState.columnAlign.value"
 				@contextmenu.self.prevent="onContextmenu"
+				@wheel.self="onWheel"
 			>
 				<template v-for="ids in layout">
 					<!-- sectionを利用しているのは、deck.vue側でcolumnに対してfirst-of-typeを効かせるため -->
@@ -25,12 +26,13 @@
 											Math.max(
 												...columns
 													.filter((c) =>
-														ids.includes(c.id)
+														ids.includes(c.id),
 													)
-													.map((c) => c.width)
+													.map((c) => c.width),
 											) + 'px',
 								  }
 						"
+						@wheel.self="onWheel"
 					>
 						<DeckColumnCore
 							v-for="id in ids"
@@ -48,8 +50,18 @@
 						class="column"
 						:column="columns.find((c) => c.id === ids[0])"
 						:is-stacked="false"
-						:style="columns.find(c => c.id === ids[0])!.flexible ? { flex: 1, minWidth: '350px' } : { width: columns.find(c => c.id === ids[0])!.width + 'px' }"
+						:style="
+							columns.find((c) => c.id === ids[0])!.flexible
+								? { flex: 1, minWidth: '350px' }
+								: {
+										width:
+											columns.find(
+												(c) => c.id === ids[0],
+											)!.width + 'px',
+								  }
+						"
 						@parent-focus="moveFocus(ids[0], $event)"
+						@headerWheel="onWheel"
 					/>
 				</template>
 				<div v-if="layout.length === 0" class="intro _panel">
@@ -116,7 +128,10 @@
 				@click="drawerMenuShowing = true"
 			>
 				<i class="ph-list ph-bold ph-lg"></i
-				><span v-if="menuIndicated" class="indicator"
+				><span
+					v-if="menuIndicated"
+					class="indicator"
+					:class="{ animateIndicator: $store.state.animation }"
 					><i class="ph-circle ph-fill"></i
 				></span>
 			</button>
@@ -133,7 +148,10 @@
 				@click="mainRouter.push('/my/notifications')"
 			>
 				<i class="ph-bell ph-bold ph-lg"></i
-				><span v-if="$i?.hasUnreadNotification" class="indicator"
+				><span
+					v-if="$i?.hasUnreadNotification"
+					class="indicator"
+					:class="{ animateIndicator: $store.state.animation }"
 					><i class="ph-circle ph-fill"></i
 				></span>
 			</button>
@@ -175,12 +193,12 @@ import {
 import { v4 as uuid } from "uuid";
 import XCommon from "./_common_/common.vue";
 import {
-	deckStore,
 	addColumn as addColumnToStore,
-	loadDeck,
-	getProfiles,
-	renameProfile as renameProfile_,
+	deckStore,
 	deleteProfile as deleteProfile_,
+	getProfiles,
+	loadDeck,
+	renameProfile as renameProfile_,
 } from "./deck/deck-store";
 import DeckColumnCore from "@/ui/deck/column-core.vue";
 import XSidebar from "@/ui/_common_/navbar.vue";
@@ -194,13 +212,13 @@ import { i18n } from "@/i18n";
 import { mainRouter } from "@/router";
 import { unisonReload } from "@/scripts/unison-reload";
 const XStatusBars = defineAsyncComponent(
-	() => import("@/ui/_common_/statusbars.vue")
+	() => import("@/ui/_common_/statusbars.vue"),
 );
 
 mainRouter.navHook = (path, flag): boolean => {
 	if (flag === "forcePage") return false;
 	const noMainColumn = !deckStore.state.columns.some(
-		(x) => x.type === "main"
+		(x) => x.type === "main",
 	);
 	if (deckStore.state.navWindow || noMainColumn) {
 		os.pageWindow(path);
@@ -235,7 +253,7 @@ function showSettings() {
 	os.pageWindow("/settings/deck");
 }
 
-let columnsEl = $ref<HTMLElement>();
+const columnsEl = $ref<HTMLElement>();
 
 const addColumn = async (ev) => {
 	const columns = [
@@ -245,6 +263,7 @@ const addColumn = async (ev) => {
 		"tl",
 		"antenna",
 		"list",
+		"channel",
 		"mentions",
 		"direct",
 	];
@@ -274,22 +293,19 @@ const onContextmenu = (ev) => {
 				action: addColumn,
 			},
 		],
-		ev
+		ev,
 	);
 };
 
-document.documentElement.style.overflowY = "hidden";
-document.documentElement.style.scrollBehavior = "auto";
-window.addEventListener("wheel", (ev) => {
-	if (ev.target === columnsEl && ev.deltaX === 0) {
-		columnsEl.scrollLeft += ev.deltaY;
-	} else if (
-		getScrollContainer(ev.target as HTMLElement) == null &&
-		ev.deltaX === 0
-	) {
+function onWheel(ev: WheelEvent) {
+	if (ev.deltaX === 0) {
 		columnsEl.scrollLeft += ev.deltaY;
 	}
-});
+}
+
+document.documentElement.style.overflowY = "hidden";
+document.documentElement.style.scrollBehavior = "auto";
+
 loadDeck();
 
 function moveFocus(id: string, direction: "up" | "down" | "left" | "right") {
@@ -373,7 +389,8 @@ async function deleteProfile() {
 .menu-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
+	transition:
+		transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
 		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .menu-enter-from,
@@ -550,7 +567,9 @@ async function deleteProfile() {
 				left: 0;
 				color: var(--indicator);
 				font-size: 16px;
-				animation: blink 1s infinite;
+			}
+
+			> .animateIndicator {
 			}
 
 			&:first-child {

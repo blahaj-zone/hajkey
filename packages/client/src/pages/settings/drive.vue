@@ -107,7 +107,7 @@ const meterStyle = computed(() => {
 });
 
 const keepOriginalUploading = computed(
-	defaultStore.makeGetterSetter("keepOriginalUploading")
+	defaultStore.makeGetterSetter("keepOriginalUploading"),
 );
 
 os.api("drive").then((info) => {

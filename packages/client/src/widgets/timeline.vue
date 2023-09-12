@@ -68,14 +68,13 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
-import { GetFormResultType } from "@/scripts/form";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
+import type { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
 import MkContainer from "@/components/MkContainer.vue";
 import XTimeline from "@/components/MkTimeline.vue";
@@ -113,8 +112,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps>>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{ widget?: Widget<WidgetProps> }>();
 const emit = defineEmits<{ (ev: "updateProps", props: WidgetProps) }>();
 
@@ -122,7 +121,7 @@ const { widgetProps, configure, save } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const menuOpened = ref(false);
@@ -189,7 +188,7 @@ const choose = async (ev) => {
 			listItems.length > 0 ? null : undefined,
 			...listItems,
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	).then(() => {
 		menuOpened.value = false;
 	});

@@ -4,19 +4,25 @@
 		ref="buttonRef"
 		v-tooltip.noDelay.bottom="i18n.ts.renote"
 		class="button _button canRenote"
-		@click="renote(false, $event)"
+		:class="{ renoted: hasRenotedBefore }"
+		@click.stop="renote(false, $event)"
 	>
 		<i class="ph-repeat ph-bold ph-lg"></i>
 		<p v-if="count > 0 && !detailedView" class="count">{{ count }}</p>
 	</button>
-	<button v-else class="eddddedb _button">
-		<i class="ph-prohibit ph-bold ph-lg"></i>
+	<button
+		v-else
+		class="eddddedb _button"
+		disabled="true"
+		v-tooltip.noDelay.bottom="i18n.ts.disabled"
+	>
+		<i class="ph-repeat ph-bold ph-lg"></i>
 	</button>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import type * as misskey from "calckey-js";
+import type * as misskey from "iceshrimp-js";
 import Ripple from "@/components/MkRipple.vue";
 import XDetails from "@/components/MkUsersTooltip.vue";
 import { pleaseLogin } from "@/scripts/please-login";
@@ -42,7 +48,7 @@ const cwInput = ref<string>(props.renoteCw ?? "");
 const canRenote = computed(
 	() =>
 		["public", "home"].includes(props.note.visibility) ||
-		props.note.userId === $i.id
+		props.note.userId === $i.id,
 );
 
 const getCw = () =>
@@ -69,27 +75,27 @@ useTooltip(buttonRef, async (showing) => {
 			targetElement: buttonRef.value,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 });
 
-const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
+let hasRenotedBefore = $ref(false);
+os.api("notes/renotes", {
+	noteId: props.note.id,
+	userId: $i.id,
+	limit: 1,
+}).then((res) => {
+	hasRenotedBefore = res.length > 0;
+});
+
+const renote = (viaKeyboard = false, ev?: MouseEvent) => {
 	pleaseLogin();
-
-	const renotes = await os.api("notes/renotes", {
-		noteId: props.note.id,
-		userId: $i.id,
-		limit: 1,
-	});
-
-	const hasRenotedBefore = renotes.length > 0;
 
 	let buttonActions: Array<MenuItem> = [];
 
 	if (props.note.visibility === "public") {
 		buttonActions.push({
 			text: i18n.ts.renote,
-			textStyle: "font-weight: bold",
 			icon: "ph-repeat ph-bold ph-lg",
 			danger: false,
 			action: () => {
@@ -98,6 +104,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 					visibility: "public",
 					cw: getCw(),
 				});
+				hasRenotedBefore = true;
 				const el =
 					ev &&
 					((ev.currentTarget ?? ev.target) as
@@ -125,6 +132,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 					visibility: "home",
 					cw: getCw(),
 				});
+				hasRenotedBefore = true;
 				const el =
 					ev &&
 					((ev.currentTarget ?? ev.target) as
@@ -153,6 +161,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 					visibleUserIds: props.note.visibleUserIds,
 					cw: getCw(),
 				});
+				hasRenotedBefore = true;
 				const el =
 					ev &&
 					((ev.currentTarget ?? ev.target) as
@@ -170,7 +179,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 	} else {
 		buttonActions.push({
 			text: `${i18n.ts.renote} (${i18n.ts._visibility.followers})`,
-			icon: "ph-lock-simple-open ph-bold ph-lg",
+			icon: "ph-lock ph-bold ph-lg",
 			danger: false,
 			action: () => {
 				os.api("notes/create", {
@@ -178,6 +187,7 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 					visibility: "followers",
 					cw: getCw(),
 				});
+				hasRenotedBefore = true;
 				const el =
 					ev &&
 					((ev.currentTarget ?? ev.target) as
@@ -215,8 +225,9 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 								renoteId: props.note.id,
 								visibility: props.note.visibility,
 								localOnly: true,
-						  }
+						  },
 				);
+				hasRenotedBefore = true;
 				const el =
 					ev &&
 					((ev.currentTarget ?? ev.target) as
@@ -276,12 +287,14 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 				os.api("notes/unrenote", {
 					noteId: props.note.id,
 				});
+				hasRenotedBefore = false;
 			},
 		});
 	}
-	os.popupMenu(buttonActions, buttonRef.value, {
-		viaKeyboard,
-	});
+
+	buttonActions[0].textStyle = "font-weight: bold";
+
+	os.popupMenu(buttonActions, buttonRef.value, { viaKeyboard });
 };
 </script>
 
@@ -291,7 +304,9 @@ const renote = async (viaKeyboard = false, ev?: MouseEvent) => {
 		cursor: default;
 	}
 	&.renoted {
-		background: var(--accent);
+		color: var(--accent) !important;
+		opacity: 1 !important;
+		font-weight: 700;
 	}
 }
 </style>

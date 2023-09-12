@@ -176,24 +176,24 @@ const installedThemes = ref(getThemes());
 const builtinThemes = getBuiltinThemesRef();
 
 const instanceDarkTheme = computed(() =>
-	instance.defaultDarkTheme ? JSON5.parse(instance.defaultDarkTheme) : null
+	instance.defaultDarkTheme ? JSON5.parse(instance.defaultDarkTheme) : null,
 );
 const installedDarkThemes = computed(() =>
-	installedThemes.value.filter((t) => t.base === "dark" || t.kind === "dark")
+	installedThemes.value.filter((t) => t.base === "dark" || t.kind === "dark"),
 );
 const builtinDarkThemes = computed(() =>
-	builtinThemes.value.filter((t) => t.base === "dark" || t.kind === "dark")
+	builtinThemes.value.filter((t) => t.base === "dark" || t.kind === "dark"),
 );
 const instanceLightTheme = computed(() =>
-	instance.defaultLightTheme ? JSON5.parse(instance.defaultLightTheme) : null
+	instance.defaultLightTheme ? JSON5.parse(instance.defaultLightTheme) : null,
 );
 const installedLightThemes = computed(() =>
 	installedThemes.value.filter(
-		(t) => t.base === "light" || t.kind === "light"
-	)
+		(t) => t.base === "light" || t.kind === "light",
+	),
 );
 const builtinLightThemes = computed(() =>
-	builtinThemes.value.filter((t) => t.base === "light" || t.kind === "light")
+	builtinThemes.value.filter((t) => t.base === "light" || t.kind === "light"),
 );
 const themes = computed(() =>
 	uniqueBy(
@@ -203,8 +203,8 @@ const themes = computed(() =>
 			...builtinThemes.value,
 			...installedThemes.value,
 		].filter((x) => x != null),
-		(theme) => theme.id
-	)
+		(theme) => theme.id,
+	),
 );
 
 const darkTheme = ColdDeviceStorage.ref("darkTheme");
@@ -235,7 +235,7 @@ const lightThemeId = computed({
 });
 const darkMode = computed(defaultStore.makeGetterSetter("darkMode"));
 const syncDeviceDarkMode = computed(
-	ColdDeviceStorage.makeGetterSetter("syncDeviceDarkMode")
+	ColdDeviceStorage.makeGetterSetter("syncDeviceDarkMode"),
 );
 const wallpaper = ref(localStorage.getItem("wallpaper"));
 const themesCount = installedThemes.value.length;

@@ -49,14 +49,13 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from "vue";
+import type { Widget, WidgetComponentExpose } from "./widget";
 import {
-	useWidgetPropsManager,
-	Widget,
 	WidgetComponentEmits,
-	WidgetComponentExpose,
 	WidgetComponentProps,
+	useWidgetPropsManager,
 } from "./widget";
-import { GetFormResultType } from "@/scripts/form";
+import type { GetFormResultType } from "@/scripts/form";
 import MkContainer from "@/components/MkContainer.vue";
 import MkMiniChart from "@/components/MkMiniChart.vue";
 import * as os from "@/os";
@@ -76,8 +75,8 @@ const widgetPropsDef = {
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
 // 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps> & { foldable?: boolean; scrollable?: boolean; }>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
+// const props = defineProps<WidgetComponentProps<WidgetProps> & { foldable?: boolean; scrollable?: boolean; }>();
+// const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 const props = defineProps<{
 	widget?: Widget<WidgetProps>;
 	foldable?: boolean;
@@ -89,7 +88,7 @@ const { widgetProps, configure } = useWidgetPropsManager(
 	name,
 	widgetPropsDef,
 	props,
-	emit
+	emit,
 );
 
 const instances = ref([]);
@@ -107,8 +106,8 @@ const fetch = async () => {
 				host: i.host,
 				limit: 16,
 				span: "hour",
-			})
-		)
+			}),
+		),
 	);
 	instances.value = fetchedInstances;
 	charts.value = fetchedCharts;

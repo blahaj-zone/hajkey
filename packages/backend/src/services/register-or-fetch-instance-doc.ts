@@ -4,30 +4,30 @@ import { genId } from "@/misc/gen-id.js";
 import { toPuny } from "@/misc/convert-host.js";
 import { Cache } from "@/misc/cache.js";
 
-const cache = new Cache<Instance>(1000 * 60 * 60);
+const cache = new Cache<Instance>("registerOrFetchInstanceDoc", 60 * 60);
 
 export async function registerOrFetchInstanceDoc(
 	host: string,
 ): Promise<Instance> {
-	host = toPuny(host);
+	const _host = toPuny(host);
 
-	const cached = cache.get(host);
+	const cached = await cache.get(_host);
 	if (cached) return cached;
 
-	const index = await Instances.findOneBy({ host });
+	const index = await Instances.findOneBy({ host: _host });
 
 	if (index == null) {
 		const i = await Instances.insert({
 			id: genId(),
-			host,
+			host: _host,
 			caughtAt: new Date(),
 			lastCommunicatedAt: new Date(),
 		}).then((x) => Instances.findOneByOrFail(x.identifiers[0]));
 
-		cache.set(host, i);
+		await cache.set(_host, i);
 		return i;
 	} else {
-		cache.set(host, index);
+		await cache.set(_host, index);
 		return index;
 	}
 }

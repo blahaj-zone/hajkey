@@ -31,8 +31,8 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, computed, watch } from "vue";
 import calcAge from "s-age";
-import * as Acct from "calckey-js/built/acct";
-import type * as misskey from "calckey-js";
+import * as Acct from "iceshrimp-js/built/acct";
+import type * as misskey from "iceshrimp-js";
 import { getScrollPosition } from "@/scripts/scroll";
 import number from "@/filters/number";
 import { userPage, acct as getAcct } from "@/filters/user";
@@ -55,7 +55,7 @@ const props = withDefaults(
 	}>(),
 	{
 		page: "home",
-	}
+	},
 );
 
 const router = useRouter();
@@ -119,7 +119,7 @@ const headerTabs = $computed(() =>
 					  ]
 					: []),
 		  ]
-		: null
+		: null,
 );
 
 definePageMetadata(
@@ -138,8 +138,8 @@ definePageMetadata(
 						title: user.name,
 					},
 			  }
-			: null
-	)
+			: null,
+	),
 );
 </script>
 

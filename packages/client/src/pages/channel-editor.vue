@@ -74,7 +74,7 @@ watch(
 				})
 			).url;
 		}
-	}
+	},
 );
 
 async function fetchChannel() {
@@ -136,8 +136,8 @@ definePageMetadata(
 			: {
 					title: i18n.ts._channel.create,
 					icon: "ph-television ph-bold ph-lg",
-			  }
-	)
+			  },
+	),
 );
 </script>
 

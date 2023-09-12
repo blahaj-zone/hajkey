@@ -14,7 +14,11 @@
 					@update:modelValue="onInput(i, $event)"
 				>
 				</MkInput>
-				<button class="_button" @click="remove(i)">
+				<button
+					class="_button"
+					@click="remove(i)"
+					:aria-label="i18n.t('remove')"
+				>
 					<i class="ph-x ph-bold ph-lg"></i>
 				</button>
 			</li>
@@ -96,7 +100,7 @@ const emit = defineEmits<{
 			expiredAfter: number;
 			choices: string[];
 			multiple: boolean;
-		}
+		},
 	): void;
 }>();
 
@@ -104,7 +108,7 @@ const choices = ref(props.modelValue.choices);
 const multiple = ref(props.modelValue.multiple);
 const expiration = ref("infinite");
 const atDate = ref(
-	formatDateTimeString(addTime(new Date(), 1, "day"), "yyyy-MM-dd")
+	formatDateTimeString(addTime(new Date(), 1, "day"), "yyyy-MM-dd"),
 );
 const atTime = ref("00:00");
 const after = ref(0);
@@ -176,7 +180,7 @@ watch(
 	() => emit("update:modelValue", get()),
 	{
 		deep: true,
-	}
+	},
 );
 </script>
 

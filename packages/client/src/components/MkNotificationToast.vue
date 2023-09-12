@@ -40,7 +40,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .notification-toast-enter-active,
 .notification-toast-leave-active {
-	transition: opacity 0.3s, transform 0.3s !important;
+	transition:
+		opacity 0.3s,
+		transform 0.3s !important;
 }
 .notification-toast-enter-from,
 .notification-toast-leave-to {

@@ -16,12 +16,13 @@ import { IsNull } from "typeorm";
 import config from "@/config/index.js";
 import Logger from "@/services/logger.js";
 import { UserProfiles, Users } from "@/models/index.js";
+import { fetchMeta } from "@/misc/fetch-meta.js";
 import { genIdenticon } from "@/misc/gen-identicon.js";
 import { createTemp } from "@/misc/create-temp.js";
 import { publishMainStream } from "@/services/stream.js";
 import * as Acct from "@/misc/acct.js";
 import { envOption } from "@/env.js";
-import megalodon, { MegalodonInterface } from "@calckey/megalodon";
+import megalodon, { MegalodonInterface } from "megalodon";
 import activityPub from "./activitypub.js";
 import nodeinfo from "./nodeinfo.js";
 import wellKnown from "./well-known.js";
@@ -125,10 +126,15 @@ router.get("/avatar/@:acct", async (ctx) => {
 });
 
 router.get("/identicon/:x", async (ctx) => {
-	const [temp, cleanup] = await createTemp();
-	await genIdenticon(ctx.params.x, fs.createWriteStream(temp));
-	ctx.set("Content-Type", "image/png");
-	ctx.body = fs.createReadStream(temp).on("close", () => cleanup());
+	const meta = await fetchMeta();
+	if (meta.enableIdenticonGeneration) {
+		const [temp, cleanup] = await createTemp();
+		await genIdenticon(ctx.params.x, fs.createWriteStream(temp));
+		ctx.set("Content-Type", "image/png");
+		ctx.body = fs.createReadStream(temp).on("close", () => cleanup());
+	} else {
+		ctx.redirect("/static-assets/avatar.png");
+	}
 });
 
 mastoRouter.get("/oauth/authorize", async (ctx) => {
@@ -160,7 +166,7 @@ mastoRouter.post("/oauth/token", async (ctx) => {
 	let client_id: any = body.client_id;
 	const BASE_URL = `${ctx.request.protocol}://${ctx.request.hostname}`;
 	const generator = (megalodon as any).default;
-	const client = generator("misskey", BASE_URL, null) as MegalodonInterface;
+	const client = generator(BASE_URL, null) as MegalodonInterface;
 	let m = null;
 	let token = null;
 	if (body.code) {

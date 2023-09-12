@@ -23,6 +23,7 @@
 								<button
 									class="_button"
 									@click="removeUser(user)"
+									:aria-label="i18n.t('removeMember')"
 								>
 									<i class="ph-x ph-bold ph-lg"></i>
 								</button>
@@ -58,7 +59,7 @@ watch(
 	() => props.groupId,
 	() => {
 		fetch();
-	}
+	},
 );
 
 async function fetch() {
@@ -77,7 +78,7 @@ async function fetch() {
 fetch();
 
 function invite() {
-	os.selectUser().then((user) => {
+	os.selectLocalUser().then((user) => {
 		os.apiWithDialog("users/groups/invite", {
 			groupId: group.value.id,
 			userId: user.id,
@@ -110,7 +111,7 @@ async function renameGroup() {
 }
 
 function transfer() {
-	os.selectUser().then((user) => {
+	os.selectLocalUser().then((user) => {
 		os.apiWithDialog("users/groups/transfer", {
 			groupId: group.value.id,
 			userId: user.id,
@@ -135,7 +136,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.members,
 		icon: "ph-users-three ph-bold ph-lg",
-	}))
+	})),
 );
 
 const headerActions = $computed(() => [

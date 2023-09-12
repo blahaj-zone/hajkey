@@ -10,28 +10,30 @@
 					i18n.ts.reactionSettingDescription
 				}}</template>
 				<div v-panel style="border-radius: 6px">
-					<XDraggable
+					<VueDraggable
 						v-model="reactions"
 						class="zoaiodol"
-						:item-key="(item) => item"
 						animation="150"
 						delay="100"
+						@end="save"
 						delay-on-touch-only="true"
 					>
-						<template #item="{ element }">
-							<button
-								class="_button item"
-								@click="remove(element, $event)"
-							>
-								<MkEmoji :emoji="element" :normal="true" />
-							</button>
-						</template>
-						<template #footer>
-							<button class="_button add" @click="chooseEmoji">
-								<i class="ph-plus ph-bold ph-lg"></i>
-							</button>
-						</template>
-					</XDraggable>
+						<div
+							v-for="item in reactions"
+							:key="item"
+							class="_button item"
+							@click="remove(item, $event)"
+						>
+							<MkEmoji
+								:emoji="item"
+								style="height: 1.7em"
+								class="emoji"
+							/>
+						</div>
+					</VueDraggable>
+					<button class="_button add" @click="chooseEmoji">
+						<i class="ph-plus ph-bold ph-lg"></i>
+					</button>
 				</div>
 				<template #caption
 					>{{ i18n.ts.reactionSettingDescription2 }}
@@ -41,6 +43,27 @@
 				>
 			</FromSlot>
 
+			<FormRadios v-model="reactionPickerSkinTone" class="_formBlock">
+				<template #label>{{ i18n.ts.reactionPickerSkinTone }}</template>
+				<option :value="1" :aria-label="i18n.ts._skinTones.yellow">
+					<MkEmoji style="height: 1.7em" emoji="✌️" />
+				</option>
+				<option :value="6" :aria-label="i18n.ts._skinTones.dark">
+					<MkEmoji style="height: 1.7em" emoji="✌🏿" />
+				</option>
+				<option :value="5" :aria-label="i18n.ts._skinTones.mediumDark">
+					<MkEmoji style="height: 1.7em" emoji="✌🏾" />
+				</option>
+				<option :value="4" :aria-label="i18n.ts._skinTones.medium">
+					<MkEmoji style="height: 1.7em" emoji="✌🏽" />
+				</option>
+				<option :value="3" :aria-label="i18n.ts._skinTones.mediumLight">
+					<MkEmoji style="height: 1.7em" emoji="✌🏼" />
+				</option>
+				<option :value="2" :aria-label="i18n.ts._skinTones.light">
+					<MkEmoji style="height: 1.7em" emoji="✌🏻" />
+				</option>
+			</FormRadios>
 			<FormRadios v-model="reactionPickerSize" class="_formBlock">
 				<template #label>{{ i18n.ts.size }}</template>
 				<option :value="1">{{ i18n.ts.small }}</option>
@@ -60,7 +83,7 @@
 				<option :value="1">{{ i18n.ts.small }}</option>
 				<option :value="2">{{ i18n.ts.medium }}</option>
 				<option :value="3">{{ i18n.ts.large }}</option>
-				<option :value="4">{{ i18n.ts.large }}+</option>
+				<option :value="4">{{ i18n.ts.xl }}</option>
 			</FormRadios>
 
 			<FormSwitch
@@ -99,8 +122,7 @@
 
 <script lang="ts" setup>
 import { defineAsyncComponent, watch } from "vue";
-import XDraggable from "vuedraggable";
-import FormInput from "@/components/form/input.vue";
+import { VueDraggable } from "vue-draggable-plus";
 import FormRadios from "@/components/form/radios.vue";
 import FromSlot from "@/components/form/slot.vue";
 import FormButton from "@/components/MkButton.vue";
@@ -112,6 +134,7 @@ import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { deepClone } from "@/scripts/clone";
 import { unisonReload } from "@/scripts/unison-reload";
+import { addSkinTone } from "@/scripts/emojilist";
 
 async function reloadAsk() {
 	const { canceled } = await os.confirm({
@@ -125,23 +148,26 @@ async function reloadAsk() {
 
 let reactions = $ref(deepClone(defaultStore.state.reactions));
 
+const reactionPickerSkinTone = $computed(
+	defaultStore.makeGetterSetter("reactionPickerSkinTone"),
+);
 const reactionPickerSize = $computed(
-	defaultStore.makeGetterSetter("reactionPickerSize")
+	defaultStore.makeGetterSetter("reactionPickerSize"),
 );
 const reactionPickerWidth = $computed(
-	defaultStore.makeGetterSetter("reactionPickerWidth")
+	defaultStore.makeGetterSetter("reactionPickerWidth"),
 );
 const reactionPickerHeight = $computed(
-	defaultStore.makeGetterSetter("reactionPickerHeight")
+	defaultStore.makeGetterSetter("reactionPickerHeight"),
 );
 const reactionPickerUseDrawerForMobile = $computed(
-	defaultStore.makeGetterSetter("reactionPickerUseDrawerForMobile")
+	defaultStore.makeGetterSetter("reactionPickerUseDrawerForMobile"),
 );
 const enableEmojiReactions = $computed(
-	defaultStore.makeGetterSetter("enableEmojiReactions")
+	defaultStore.makeGetterSetter("enableEmojiReactions"),
 );
 const showEmojisInReactionNotifications = $computed(
-	defaultStore.makeGetterSetter("showEmojisInReactionNotifications")
+	defaultStore.makeGetterSetter("showEmojisInReactionNotifications"),
 );
 
 function save() {
@@ -155,24 +181,25 @@ function remove(reaction, ev: MouseEvent) {
 				text: i18n.ts.remove,
 				action: () => {
 					reactions = reactions.filter((x) => x !== reaction);
+					save();
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 }
 
 function preview(ev: MouseEvent) {
 	os.popup(
 		defineAsyncComponent(
-			() => import("@/components/MkEmojiPickerDialog.vue")
+			() => import("@/components/MkEmojiPickerDialog.vue"),
 		),
 		{
 			asReactionPicker: true,
 			src: ev.currentTarget ?? ev.target,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 }
 
@@ -192,21 +219,19 @@ function chooseEmoji(ev: MouseEvent) {
 	}).then((emoji) => {
 		if (!reactions.includes(emoji)) {
 			reactions.push(emoji);
+			save();
 		}
 	});
 }
 
-watch(
-	$$(reactions),
-	() => {
-		save();
-	},
-	{
-		deep: true,
-	}
-);
-
 watch(enableEmojiReactions, async () => {
+	await reloadAsk();
+});
+
+watch(reactionPickerSkinTone, async () => {
+	reactions.forEach((emoji) => {
+		addSkinTone(emoji, reactionPickerSkinTone.value);
+	});
 	await reloadAsk();
 });
 
@@ -217,10 +242,6 @@ const headerTabs = $computed(() => []);
 definePageMetadata({
 	title: i18n.ts.reaction,
 	icon: "ph-smiley ph-bold ph-lg",
-	action: {
-		icon: "ph-eye ph-bold ph-lg",
-		handler: preview,
-	},
 });
 </script>
 
@@ -234,10 +255,12 @@ definePageMetadata({
 		padding: 8px;
 		cursor: move;
 	}
+}
 
-	> .add {
-		display: inline-block;
-		padding: 8px;
-	}
+.add {
+	display: inline-block;
+	padding: 8px;
+	margin-left: 12px;
+	margin-bottom: 12px;
 }
 </style>

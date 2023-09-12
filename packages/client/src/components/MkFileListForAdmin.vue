@@ -11,7 +11,7 @@
 				:key="file.id"
 				v-tooltip.mfm="
 					`${file.type}\n${bytes(file.size)}\n${new Date(
-						file.createdAt
+						file.createdAt,
 					).toLocaleString()}\nby ${
 						file.user ? '@' + Acct.toString(file.user) : 'system'
 					}`
@@ -53,7 +53,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import * as Acct from "calckey-js/built/acct";
+import * as Acct from "iceshrimp-js/built/acct";
 import MkSwitch from "@/components/ui/switch.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkDriveFileThumbnail from "@/components/MkDriveFileThumbnail.vue";

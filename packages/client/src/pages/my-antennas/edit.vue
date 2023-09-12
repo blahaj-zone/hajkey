@@ -31,7 +31,7 @@ function onAntennaUpdated() {
 os.api("antennas/show", { antennaId: props.antennaId }).then(
 	(antennaResponse) => {
 		antenna = antennaResponse;
-	}
+	},
 );
 
 const headerActions = $computed(() => []);

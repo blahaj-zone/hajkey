@@ -28,7 +28,7 @@ import {
 import { db } from "@/db/postgre.js";
 import { IdentifiableError } from "@/misc/identifiable-error.js";
 
-async function populatePoll(note: Note, meId: User["id"] | null) {
+export async function populatePoll(note: Note, meId: User["id"] | null) {
 	const poll = await Polls.findOneByOrFail({ noteId: note.id });
 	const choices = poll.choices.map((c) => ({
 		text: c,
@@ -236,11 +236,17 @@ export const NoteRepository = db.getRepository(Note).extend({
 			uri: note.uri || undefined,
 			url: note.url || undefined,
 			updatedAt: note.updatedAt?.toISOString() || undefined,
+			poll: note.hasPoll ? populatePoll(note, meId) : undefined,
+			...(meId
+				? {
+						myReaction: populateMyReaction(note, meId, options?._hint_),
+				  }
+				: {}),
 
 			...(opts.detail
 				? {
 						reply: note.replyId
-							? this.pack(note.reply || note.replyId, me, {
+							? this.tryPack(note.reply || note.replyId, me, {
 									detail: false,
 									_hint_: options?._hint_,
 							  })
@@ -252,14 +258,6 @@ export const NoteRepository = db.getRepository(Note).extend({
 									_hint_: options?._hint_,
 							  })
 							: undefined,
-
-						poll: note.hasPoll ? populatePoll(note, meId) : undefined,
-
-						...(meId
-							? {
-									myReaction: populateMyReaction(note, meId, options?._hint_),
-							  }
-							: {}),
 				  }
 				: {}),
 		});
@@ -283,6 +281,23 @@ export const NoteRepository = db.getRepository(Note).extend({
 		}
 
 		return packed;
+	},
+
+	async tryPack(
+		src: Note["id"] | Note,
+		me?: { id: User["id"] } | null | undefined,
+		options?: {
+			detail?: boolean;
+			_hint_?: {
+				myReactions: Map<Note["id"], NoteReaction | null>;
+			};
+		},
+	): Promise<Packed<"Note"> | undefined> {
+		try {
+			return await this.pack(src, me, options);
+		} catch {
+			return undefined;
+		}
 	},
 
 	async packMany(

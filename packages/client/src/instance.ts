@@ -1,11 +1,10 @@
 import { computed, reactive } from "vue";
 import { api } from "./os";
-import type * as Misskey from "calckey-js";
+import type * as Misskey from "iceshrimp-js";
 
 // TODO: 他のタブと永続化されたstateを同期
 
 const instanceData = localStorage.getItem("instance");
-
 // TODO: instanceをリアクティブにするかは再考の余地あり
 
 export const instance: Misskey.entities.DetailedInstanceMetadata = reactive(

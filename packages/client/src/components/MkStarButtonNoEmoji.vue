@@ -4,7 +4,7 @@
 		class="button _button"
 		:class="$style.root"
 		ref="buttonRef"
-		@click="toggleStar($event)"
+		@click.stop="toggleStar($event)"
 	>
 		<span v-if="!reacted">
 			<i
@@ -35,14 +35,14 @@
 			></i>
 		</span>
 		<template v-if="count > 0"
-			><p :class="$style.count">{{ count }}</p></template
+			><p class="count">{{ count }}</p></template
 		>
 	</button>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import type { Note } from "calckey-js/built/entities";
+import type { Note } from "iceshrimp-js/built/entities";
 import Ripple from "@/components/MkRipple.vue";
 import XDetails from "@/components/MkUsersTooltip.vue";
 import { pleaseLogin } from "@/scripts/please-login";
@@ -104,7 +104,7 @@ useTooltip(buttonRef, async (showing) => {
 			targetElement: buttonRef.value,
 		},
 		{},
-		"closed"
+		"closed",
 	);
 });
 </script>

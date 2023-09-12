@@ -34,6 +34,24 @@ export default define(meta, paramDef, async (ps, user) => {
 		id: ps.credentialId,
 	});
 
+	// 使われているキーがなくなったらパスワードレスログインをやめる
+	const keyCount = await UserSecurityKeys.count({
+		where: {
+			userId: user.id,
+		},
+		select: {
+			id: true,
+			name: true,
+			lastUsed: true,
+		},
+	});
+
+	if (keyCount === 0) {
+		await UserProfiles.update(me.id, {
+			usePasswordLessLogin: false,
+		});
+	}
+
 	// Publish meUpdated event
 	publishMainStream(
 		user.id,

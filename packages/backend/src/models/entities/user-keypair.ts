@@ -7,18 +7,18 @@ export class UserKeypair {
 	@PrimaryColumn(id())
 	public userId: User["id"];
 
-	@OneToOne(type => User, {
-		onDelete: 'CASCADE',
+	@OneToOne((type) => User, {
+		onDelete: "CASCADE",
 	})
 	@JoinColumn()
 	public user: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 4096,
 	})
 	public publicKey: string;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 4096,
 	})
 	public privateKey: string;

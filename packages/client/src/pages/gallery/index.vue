@@ -9,14 +9,17 @@
 		/></template>
 		<MkSpacer :content-max="1200">
 			<swiper
+				:round-lengths="true"
+				:touch-angle="25"
+				:threshold="10"
+				:centeredSlides="true"
 				:modules="[Virtual]"
 				:space-between="20"
 				:virtual="true"
 				:allow-touch-move="
-					!(
-						deviceKind === 'desktop' &&
-						!defaultStore.state.swipeOnDesktop
-					) && defaultStore.state.allowSwipe
+					defaultStore.state.swipeOnMobile &&
+					(deviceKind !== 'desktop' ||
+						defaultStore.state.swipeOnDesktop)
 				"
 				@swiper="setSwiperRef"
 				@slide-change="onSlideChange"
@@ -89,9 +92,9 @@
 					>
 						<div class="vfpdbgtk">
 							<MkGalleryPostPreview
-								v-for="post in items"
-								:key="post.id"
-								:post="post"
+								v-for="mypost in items"
+								:key="mypost.id"
+								:post="mypost"
 								class="post"
 							/>
 						</div>
@@ -104,7 +107,7 @@
 
 <script lang="ts" setup>
 import { computed, defineComponent, watch, onMounted } from "vue";
-import { Virtual } from "swiper";
+import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MkFolder from "@/components/MkFolder.vue";
 import MkPagination from "@/components/MkPagination.vue";
@@ -150,7 +153,7 @@ watch(
 	() => props.tag,
 	() => {
 		if (tagsRef) tagsRef.tags.toggleContent(props.tag == null);
-	}
+	},
 );
 
 const headerActions = $computed(() => [

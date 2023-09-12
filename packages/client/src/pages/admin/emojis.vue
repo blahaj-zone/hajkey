@@ -69,7 +69,7 @@
 										class="emoji _panel _button"
 										:class="{
 											selected: selectedEmojis.includes(
-												emoji.id
+												emoji.id,
 											),
 										}"
 										@click="
@@ -206,7 +206,7 @@ const selectAll = () => {
 		selectedEmojis.value = [];
 	} else {
 		selectedEmojis.value = emojisPaginationComponent.value.items.map(
-			(item) => item.id
+			(item) => item.id,
 		);
 	}
 };
@@ -214,7 +214,7 @@ const selectAll = () => {
 const toggleSelect = (emoji) => {
 	if (selectedEmojis.value.includes(emoji.id)) {
 		selectedEmojis.value = selectedEmojis.value.filter(
-			(x) => x !== emoji.id
+			(x) => x !== emoji.id,
 		);
 	} else {
 		selectedEmojis.value.push(emoji.id);
@@ -228,8 +228,8 @@ const add = async (ev: MouseEvent) => {
 		files.map((file) =>
 			os.api("admin/emoji/add", {
 				fileId: file.id,
-			})
-		)
+			}),
+		),
 	);
 	promise.then(() => {
 		emojisPaginationComponent.value.reload();
@@ -251,16 +251,16 @@ const edit = (emoji) => {
 						(oldEmoji: any) => ({
 							...oldEmoji,
 							...result.updated,
-						})
+						}),
 					);
 				} else if (result.deleted) {
 					emojisPaginationComponent.value.removeItem(
-						(item) => item.id === emoji.id
+						(item) => item.id === emoji.id,
 					);
 				}
 			},
 		},
-		"closed"
+		"closed",
 	);
 };
 
@@ -285,7 +285,7 @@ const remoteMenu = (emoji, ev: MouseEvent) => {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 };
 
@@ -316,7 +316,7 @@ const menu = (ev: MouseEvent) => {
 				text: i18n.ts.import,
 				action: async () => {
 					const file = await selectFile(
-						ev.currentTarget ?? ev.target
+						ev.currentTarget ?? ev.target,
 					);
 					os.api("admin/emoji/import-zip", {
 						fileId: file.id,
@@ -336,7 +336,7 @@ const menu = (ev: MouseEvent) => {
 				},
 			},
 		],
-		ev.currentTarget ?? ev.target
+		ev.currentTarget ?? ev.target,
 	);
 };
 
@@ -442,7 +442,7 @@ definePageMetadata(
 	computed(() => ({
 		title: i18n.ts.customEmojis,
 		icon: "ph-smiley ph-bold ph-lg",
-	}))
+	})),
 );
 </script>
 

@@ -38,17 +38,17 @@ export default define(meta, paramDef, async (ps, user) => {
 		throw new ApiError(meta.errors.noSuchPost);
 	}
 
-	const exist = await GalleryLikes.findOneBy({
+	const like = await GalleryLikes.findOneBy({
 		postId: post.id,
 		userId: user.id,
 	});
 
-	if (exist == null) {
+	if (like == null) {
 		throw new ApiError(meta.errors.notLiked);
 	}
 
 	// Delete like
-	await GalleryLikes.delete(exist.id);
+	await GalleryLikes.delete(like.id);
 
 	GalleryPosts.decrement({ id: post.id }, "likedCount", 1);
 });

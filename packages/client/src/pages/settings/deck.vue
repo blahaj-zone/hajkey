@@ -31,7 +31,7 @@ import { definePageMetadata } from "@/scripts/page-metadata";
 
 const navWindow = computed(deckStore.makeGetterSetter("navWindow"));
 const alwaysShowMainColumn = computed(
-	deckStore.makeGetterSetter("alwaysShowMainColumn")
+	deckStore.makeGetterSetter("alwaysShowMainColumn"),
 );
 const columnAlign = computed(deckStore.makeGetterSetter("columnAlign"));
 
