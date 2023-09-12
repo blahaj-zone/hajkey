@@ -37,7 +37,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
 	if (!signature?.keyId) {
 		const err = `Invalid signature: ${signature}`;
-		job.moveToFailed({ message: err });
+		job.moveToFailed({ message: err }, true);
 		return err;
 	}
 	//#endregion
