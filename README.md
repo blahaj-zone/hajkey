@@ -13,7 +13,6 @@
 - Project anti-goals:
   - Flashy marketing
   - Commercialization of any kind
-- Read **[this document](./CHANGES_FROM_UPSTREAM.md)** all for current and future differences.
 
 ---
 
