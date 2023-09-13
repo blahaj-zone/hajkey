@@ -12,7 +12,7 @@ export function createConnection() {
 		host: source.host,
 		family: source.family ?? 0,
 		password: source.pass,
-		username: source.user || undefined,
+		username: source.user,
 		keyPrefix: `${source.prefix}:`,
 		db: source.db || 0,
 		tls: source.tls,
