@@ -5026,7 +5026,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "nanoid",\
-        "npm:3.3.3"\
+        "npm:3.3.6"\
       ],\
       [\
         "nanomatch",\
@@ -29209,6 +29209,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["source-map-js", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:8.4.29", {\
+          "packageLocation": "./.yarn/cache/postcss-npm-8.4.29-2319a64d31-dd6daa25e7.zip/node_modules/postcss/",\
+          "packageDependencies": [\
+            ["postcss", "npm:8.4.29"],\
+            ["nanoid", "npm:3.3.6"],\
+            ["picocolors", "npm:1.0.0"],\
+            ["source-map-js", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["postcss-calc", [\
@@ -31125,10 +31135,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:3.26.3", {\
-          "packageLocation": "./.yarn/cache/rollup-npm-3.26.3-072c90700e-e6a765b2b7.zip/node_modules/rollup/",\
+        ["npm:3.29.1", {\
+          "packageLocation": "./.yarn/cache/rollup-npm-3.29.1-c6f1191ba8-eb92dbb838.zip/node_modules/rollup/",\
           "packageDependencies": [\
-            ["rollup", "npm:3.26.3"],\
+            ["rollup", "npm:3.29.1"],\
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"]\
           ],\
           "linkType": "HARD"\
@@ -34618,8 +34628,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
             ["less", null],\
             ["lightningcss", null],\
-            ["postcss", "npm:8.4.27"],\
-            ["rollup", "npm:3.26.3"],\
+            ["postcss", "npm:8.4.29"],\
+            ["rollup", "npm:3.29.1"],\
             ["sass", "npm:1.63.6"],\
             ["stylus", null],\
             ["sugarss", null],\

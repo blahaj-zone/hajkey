@@ -70,7 +70,7 @@
 		"start-server-and-test": "1.15.2",
 		"typescript": "5.1.6"
 	},
-	"packageManager": "yarn@3.6.1",
+	"packageManager": "yarn@3.6.3",
 	"dependenciesMeta": {
 		"@discordapp/twemoji@14.1.2": {
 			"unplugged": true
