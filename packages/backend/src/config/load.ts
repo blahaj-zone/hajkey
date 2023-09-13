@@ -42,16 +42,26 @@ export default function load() {
 
 	config.port = config.port || parseInt(process.env.PORT || "", 10);
 
+	config.images = {
+		...config.images,
+		info: '/twemoji/1f440.svg',
+		notFound: '/twemoji/2049.svg',
+		error: '/twemoji/1f480.svg',
+	};
+
+	config.searchEngine = config.searchEngine ?? 'https://duckduckgo.com/?q=';
+
 	mixin.version = meta.version;
 	mixin.host = url.host;
 	mixin.hostname = url.hostname;
+	mixin.domain = config.accountDomain ?? url.host;
 	mixin.scheme = url.protocol.replace(/:$/, "");
 	mixin.wsScheme = mixin.scheme.replace("http", "ws");
 	mixin.wsUrl = `${mixin.wsScheme}://${mixin.host}`;
 	mixin.apiUrl = `${mixin.scheme}://${mixin.host}/api`;
 	mixin.authUrl = `${mixin.scheme}://${mixin.host}/auth`;
 	mixin.driveUrl = `${mixin.scheme}://${mixin.host}/files`;
-	mixin.userAgent = `Firefish/${meta.version} (${config.url})`;
+	mixin.userAgent = `Iceshrimp/${meta.version} (${config.url})`;
 	mixin.clientEntry = clientManifest["src/init.ts"];
 
 	if (!config.redis.prefix) config.redis.prefix = mixin.hostname;

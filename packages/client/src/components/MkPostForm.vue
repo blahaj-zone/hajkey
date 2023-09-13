@@ -35,9 +35,9 @@
 				></span>
 				<button
 					ref="visibilityButton"
-					v-tooltip="i18n.ts.visibility"
+					v-tooltip="$props.editId != null ? i18n.ts.cannotChangeScopeWhenEditing : i18n.ts.visibility"
 					class="_button visibility"
-					:disabled="channel != null"
+					:disabled="channel != null || $props.editId != null"
 					@click="setVisibility"
 				>
 					<span v-if="visibility === 'public'"
@@ -1307,8 +1307,8 @@ onMounted(() => {
 				padding: 0;
 				margin: 0;
 				font-size: 16px;
-				width: 48px;
-				height: 48px;
+				width: 40px;
+				height: 40px;
 				border-radius: 6px;
 
 				&:hover {
@@ -1368,8 +1368,8 @@ onMounted(() => {
 			> footer {
 				> button {
 					font-size: 14px;
-					width: 44px;
-					height: 44px;
+					width: 40px;
+					height: 40px;
 				}
 			}
 		}

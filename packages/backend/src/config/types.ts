@@ -5,6 +5,7 @@ export type Source = {
 	repository_url?: string;
 	feedback_url?: string;
 	url: string;
+	accountDomain?: string;
 	port: number;
 	disableHsts?: boolean;
 	db: {
@@ -57,6 +58,21 @@ export type Source = {
 		apiKey?: string;
 		ssl: boolean;
 	};
+
+	mediaCleanup?: {
+		cron?: boolean;
+		maxAgeDays?: number;
+		keepAvatars?: boolean;
+		keepHeaders?: boolean;
+	};
+
+	images?: {
+		error?: string;
+		notFound?: string;
+		info?: string;
+	};
+
+	searchEngine?: string;
 
 	proxy?: string;
 	proxySmtp?: string;
@@ -150,6 +166,7 @@ export type Mixin = {
 	version: string;
 	host: string;
 	hostname: string;
+	domain: string;
 	scheme: string;
 	wsScheme: string;
 	apiUrl: string;

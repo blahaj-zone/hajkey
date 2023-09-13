@@ -38,7 +38,13 @@ export interface InternalStreamTypes {
 	localUserUpdated: {
 		id: User["id"];
 	};
+	localUserDeleted: {
+		id: User["id"];
+	};
 	remoteUserUpdated: {
+		id: User["id"];
+	};
+	remoteUserDeleted: {
 		id: User["id"];
 	};
 	webhookCreated: Webhook;

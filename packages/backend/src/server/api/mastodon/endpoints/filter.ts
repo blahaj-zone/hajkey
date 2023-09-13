@@ -27,7 +27,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.getFilter(
-				convertId(ctx.params.id, IdType.FirefishId),
+				convertId(ctx.params.id, IdType.IceshrimpId),
 			);
 			ctx.body = convertFilter(data.data);
 		} catch (e: any) {
@@ -59,7 +59,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.updateFilter(
-				convertId(ctx.params.id, IdType.FirefishId),
+				convertId(ctx.params.id, IdType.IceshrimpId),
 				body.phrase,
 				body.context,
 			);
@@ -78,7 +78,7 @@ export function apiFilterMastodon(router: Router): void {
 		const body: any = ctx.request.body;
 		try {
 			const data = await client.deleteFilter(
-				convertId(ctx.params.id, IdType.FirefishId),
+				convertId(ctx.params.id, IdType.IceshrimpId),
 			);
 			ctx.body = data.data;
 		} catch (e: any) {

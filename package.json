@@ -1,37 +1,45 @@
 {
 	"name": "iceshrimp",
-	"version": "1.0.2",
+	"version": "2023.09.13-rc1",
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
 		"url": "https://iceshrimp.dev/iceshrimp/iceshrimp.git"
 	},
-	"packageManager": "pnpm@8.6.9",
 	"private": true,
 	"scripts": {
-		"rebuild": "pnpm run clean && pnpm node ./scripts/build-greet.js && pnpm -r --parallel run build && pnpm run gulp",
-		"build": "pnpm node ./scripts/build-greet.js && pnpm -r --parallel run build && pnpm run gulp",
-		"start": "pnpm --filter backend run start",
-		"start:test": "pnpm --filter backend run start:test",
-		"init": "pnpm run migrate",
-		"migrate": "pnpm --filter backend run migrate",
-		"revertmigration": "pnpm --filter backend run revertmigration",
-		"migrateandstart": "pnpm run migrate && pnpm run start",
+		"rebuild": "clean && node ./scripts/build-greet.js && yarn workspace iceshrimp-js build &&  yarn workspaces foreach -pitv run build && gulp",
+		"build": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build && yarn workspaces foreach -pitv run build && gulp",
+		"build:debug": "node ./scripts/build-greet.js && yarn workspace iceshrimp-js run build:debug && yarn workspaces foreach -pitv run build:debug && gulp",
+		"start": "yarn workspace backend run start",
+		"start:test": "yarn workspace backend run start:test",
+		"init": "yarn migrate",
+		"migrate": "yarn workspace backend run migrate",
+		"revertmigration": "yarn workspace backend run revertmigration",
+		"migrateandstart": "yarn migrate && yarn start",
 		"gulp": "gulp build",
-		"watch": "pnpm run dev",
-		"dev": "pnpm node ./scripts/dev.js",
-		"dev:staging": "NODE_OPTIONS=--max_old_space_size=3072 NODE_ENV=development pnpm run build && pnpm run start",
-		"lint": "pnpm -r --parallel run lint",
+		"watch": "yarn dev",
+		"dev": "node ./scripts/dev.js",
+		"dev:staging": "NODE_OPTIONS=--max_old_space_size=3072 NODE_ENV=development yarn build && yarn start",
+		"lint": "yarn workspaces foreach -p run lint",
 		"cy:open": "cypress open --browser --e2e --config-file=cypress.config.ts",
 		"cy:run": "cypress run",
 		"e2e": "start-server-and-test start:test http://localhost:61812 cy:run",
-		"mocha": "pnpm --filter backend run mocha",
-		"test": "pnpm run mocha",
-		"format": "pnpm -r --parallel run format",
-		"clean": "pnpm node ./scripts/clean.js",
-		"clean-all": "pnpm node ./scripts/clean-all.js",
-		"cleanall": "pnpm run clean-all"
+		"mocha": "yarn workspace backend run mocha",
+		"test": "yarn mocha",
+		"format": "yarn workspaces foreach -p run format",
+		"clean": "node ./scripts/clean.js",
+		"clean-all": "node ./scripts/clean-all.js",
+		"cleanall": "yarn clean-all"
 	},
+	"workspaces": [
+		"packages/backend",
+		"packages/backend/native-utils",
+		"packages/client",
+		"packages/sw",
+		"packages/iceshrimp-js",
+		"packages/megalodon"
+	],
 	"resolutions": {
 		"chokidar": "^3.3.1"
 	},
@@ -48,6 +56,7 @@
 		"@types/gulp-rename": "2.0.2",
 		"@types/node": "20.4.1",
 		"chalk": "4.1.2",
+		"chokidar": "^3.5.3",
 		"cross-env": "7.0.3",
 		"cypress": "10.11.0",
 		"execa": "5.1.1",
@@ -60,5 +69,11 @@
 		"rome": "^v12.1.3-nightly.f65b0d9",
 		"start-server-and-test": "1.15.2",
 		"typescript": "5.1.6"
+	},
+	"packageManager": "yarn@3.6.1",
+	"dependenciesMeta": {
+		"@discordapp/twemoji@14.1.2": {
+			"unplugged": true
+		}
 	}
 }

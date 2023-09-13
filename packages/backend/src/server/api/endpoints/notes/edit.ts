@@ -142,14 +142,26 @@ export const meta = {
 			code: "NOT_LOCAL_USER",
 			id: "b907f407-2aa0-4283-800b-a2c56290b822",
 		},
-	},
+
+		cannotChangeVisibility: {
+				message: "You cannot change the visibility of a note.",
+				code: "CANNOT_CHANGE_VISIBILITY",
+				id: "2917fd0b-da04-41de-949f-146835a006c6",
+		},
+
+		cannotQuoteOwnNote: {
+			message: "You cannot quote your own note.",
+			code: "CANNOT_QUOTE_OWN_NOTE",
+			id: "070eee98-5f8a-4eca-9dc0-830b4d4e52ac",
+		},
+	}
 } as const;
 
 export const paramDef = {
 	type: "object",
 	properties: {
 		editId: { type: "string", format: "misskey:id" },
-		visibility: { type: "string", enum: noteVisibilities, default: "public" },
+		visibility: { type: "string", enum: noteVisibilities, nullable: true },
 		visibleUserIds: {
 			type: "array",
 			uniqueItems: true,
@@ -270,6 +282,10 @@ export default define(meta, paramDef, async (ps, user) => {
 			throw e;
 		});
 
+		if (ps.renoteId === note.id) {
+			throw new ApiError(meta.errors.cannotQuoteOwnNote);
+		}
+
 		if (renote.renoteId && !renote.text && !renote.fileIds && !renote.hasPoll) {
 			throw new ApiError(meta.errors.cannotReRenote);
 		}
@@ -318,6 +334,11 @@ export default define(meta, paramDef, async (ps, user) => {
 		if (channel == null) {
 			throw new ApiError(meta.errors.noSuchChannel);
 		}
+	}
+
+	// keep visibility on edit if not specified
+	if (ps.visibility == null) {
+		ps.visibility = note.visibility;
 	}
 
 	// enforce silent clients on server
@@ -525,7 +546,8 @@ export default define(meta, paramDef, async (ps, user) => {
 		update.cw = null;
 	}
 	if (ps.visibility !== note.visibility) {
-		update.visibility = ps.visibility;
+		// update.visibility = ps.visibility;
+		throw new ApiError(meta.errors.cannotChangeVisibility);
 	}
 	if (ps.localOnly !== note.localOnly) {
 		update.localOnly = ps.localOnly;

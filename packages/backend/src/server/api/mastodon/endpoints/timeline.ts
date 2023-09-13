@@ -1,7 +1,12 @@
 import Router from "@koa/router";
 import { getClient } from "../ApiMastodonCompatibleService.js";
 import { ParsedUrlQuery } from "querystring";
-import { convertAccount, convertList, convertStatus } from "../converters.js";
+import {
+	convertAccount,
+	convertConversation,
+	convertList,
+	convertStatus,
+} from "../converters.js";
 import { convertId, IdType } from "../../index.js";
 
 export function limitToInt(q: ParsedUrlQuery) {
@@ -18,6 +23,10 @@ export function argsToBools(q: ParsedUrlQuery) {
 	const toBoolean = (value: string) =>
 		!["0", "f", "F", "false", "FALSE", "off", "OFF"].includes(value);
 
+	// Keys taken from:
+	// - https://docs.joinmastodon.org/methods/accounts/#statuses
+	// - https://docs.joinmastodon.org/methods/timelines/#public
+	// - https://docs.joinmastodon.org/methods/timelines/#tag
 	let object: any = q;
 	if (q.only_media)
 		if (typeof q.only_media === "string")
@@ -25,16 +34,23 @@ export function argsToBools(q: ParsedUrlQuery) {
 	if (q.exclude_replies)
 		if (typeof q.exclude_replies === "string")
 			object.exclude_replies = toBoolean(q.exclude_replies);
+	if (q.exclude_reblogs)
+		if (typeof q.exclude_reblogs === "string")
+			object.exclude_reblogs = toBoolean(q.exclude_reblogs);
+	if (q.pinned)
+		if (typeof q.pinned === "string") object.pinned = toBoolean(q.pinned);
+	if (q.local)
+		if (typeof q.local === "string") object.local = toBoolean(q.local);
 	return q;
 }
 
 export function convertTimelinesArgsId(q: ParsedUrlQuery) {
 	if (typeof q.min_id === "string")
-		q.min_id = convertId(q.min_id, IdType.FirefishId);
+		q.min_id = convertId(q.min_id, IdType.IceshrimpId);
 	if (typeof q.max_id === "string")
-		q.max_id = convertId(q.max_id, IdType.FirefishId);
+		q.max_id = convertId(q.max_id, IdType.IceshrimpId);
 	if (typeof q.since_id === "string")
-		q.since_id = convertId(q.since_id, IdType.FirefishId);
+		q.since_id = convertId(q.since_id, IdType.IceshrimpId);
 	return q;
 }
 
@@ -105,7 +121,7 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getListTimeline(
-					convertId(ctx.params.listId, IdType.FirefishId),
+					convertId(ctx.params.listId, IdType.IceshrimpId),
 					convertTimelinesArgsId(limitToInt(ctx.query)),
 				);
 				ctx.body = data.data.map((status) => convertStatus(status));
@@ -125,7 +141,9 @@ export function apiTimelineMastodon(router: Router): void {
 			const data = await client.getConversationTimeline(
 				convertTimelinesArgsId(limitToInt(ctx.query)),
 			);
-			ctx.body = data.data;
+			ctx.body = data.data.map((conversation) =>
+				convertConversation(conversation),
+			);
 		} catch (e: any) {
 			console.error(e);
 			console.error(e.response.data);
@@ -155,7 +173,7 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = convertList(data.data);
 			} catch (e: any) {
@@ -188,7 +206,7 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.updateList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					(ctx.request.body as any).title,
 				);
 				ctx.body = convertList(data.data);
@@ -208,7 +226,7 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.deleteList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = data.data;
 			} catch (e: any) {
@@ -227,7 +245,7 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountsInList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					convertTimelinesArgsId(ctx.query as any),
 				);
 				ctx.body = data.data.map((account) => convertAccount(account));
@@ -247,9 +265,9 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.addAccountsToList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					(ctx.query.account_ids as string[]).map((id) =>
-						convertId(id, IdType.FirefishId),
+						convertId(id, IdType.IceshrimpId),
 					),
 				);
 				ctx.body = data.data;
@@ -269,9 +287,9 @@ export function apiTimelineMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.deleteAccountsFromList(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					(ctx.query.account_ids as string[]).map((id) =>
-						convertId(id, IdType.FirefishId),
+						convertId(id, IdType.IceshrimpId),
 					),
 				);
 				ctx.body = data.data;

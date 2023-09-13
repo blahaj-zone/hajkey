@@ -2,7 +2,7 @@
 	<transition :name="$store.state.animation ? 'zoom' : ''" appear>
 		<div class="mjndxjcg">
 			<img
-				src="/static-assets/badges/error.png"
+				:src="instance.images.error"
 				class="_ghost"
 				alt="Error"
 			/>
@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 import MkButton from "@/components/MkButton.vue";
 import { i18n } from "@/i18n";
+import { instance } from "@/instance";
 </script>
 
 <style lang="scss" scoped>

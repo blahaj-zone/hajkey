@@ -25,7 +25,24 @@
 				@slide-change="onSlideChange"
 			>
 				<swiper-slide>
-					<XNotes ref="notes" :pagination="notesPagination" />
+					<template v-if="$i">
+						<XNotes ref="notes" :pagination="notesPagination" />
+					</template>
+					<template v-else>
+						<transition :name="$store.state.animation ? 'zoom' : ''" appear>
+							<div class="_fullinfo" ref="notes">
+								<img
+									:src="instance.images.info"
+									class="_ghost"
+									alt="Info"
+								/>
+								<div>
+									{{ i18n.ts.searchNotLoggedIn_1 }}<br>
+									{{ i18n.ts.searchNotLoggedIn_2 }}
+								</div>
+							</div>
+						</transition>
+					</template>
 				</swiper-slide>
 				<swiper-slide>
 					<XUserList
@@ -49,8 +66,10 @@ import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { defaultStore } from "@/store";
 import { deviceKind } from "@/scripts/device-kind";
+import { $i } from "@/account";
 import "swiper/scss";
 import "swiper/scss/virtual";
+import {instance} from "@/instance";
 
 const props = defineProps<{
 	query: string;

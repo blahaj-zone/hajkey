@@ -1,7 +1,7 @@
-# Running a Firefish server with Kubernetes and Helm
+# Running a iceshrimp server with Kubernetes and Helm
 
 This is a [Helm](https://helm.sh/) chart directory in the root of the project
-that you can use to deploy firefish to a Kubernetes cluster
+that you can use to deploy iceshrimp to a Kubernetes cluster
 
 ## Deployment
 
@@ -17,29 +17,29 @@ helm dependency list $dir 2> /dev/null | tail +2 | head -n -1 | awk '{ print "he
 cd ../
 ```
 
-3. Create the firefish helm release (also used to update existing deployment):
+3. Create the iceshrimp helm release (also used to update existing deployment):
 ```shell
 helm upgrade \
     --install \
-    --namespace firefish \
+    --namespace iceshrimp \
     --create-namespace \
-    firefish chart/ \
+    iceshrimp chart/ \
     -f .config/helm_values.yml
 ```
 
-4. Watch your firefish server spin up:
+4. Watch your iceshrimp server spin up:
 ```shell
-kubectl -n firefish get po -w
+kubectl -n iceshrimp get po -w
 ```
 
 5. Initial the admin user and managed config:
 ```shell
-export firefish_USERNAME="my_desired_admin_handle" && \
-export firefish_PASSWORD="myDesiredInitialPassword" && \
-export firefish_HOST="firefish.example.com" && \
-export firefish_TOKEN=$(curl -X POST https://$firefish_HOST/api/admin/accounts/create  -H "Content-Type: application/json" -d "{ \"username\":\"$firefish_USERNAME\", \"password\":\"$firefish_PASSWORD\" }" | jq -r '.token') && \
-echo "Save this token: ${firefish_TOKEN}" && \
-curl -X POST -H "Authorization: Bearer $firefish_TOKEN" https://$firefish_HOST/api/admin/accounts/hosted
+export iceshrimp_USERNAME="my_desired_admin_handle" && \
+export iceshrimp_PASSWORD="myDesiredInitialPassword" && \
+export iceshrimp_HOST="iceshrimp.example.com" && \
+export iceshrimp_TOKEN=$(curl -X POST https://$iceshrimp_HOST/api/admin/accounts/create  -H "Content-Type: application/json" -d "{ \"username\":\"$iceshrimp_USERNAME\", \"password\":\"$iceshrimp_PASSWORD\" }" | jq -r '.token') && \
+echo "Save this token: ${iceshrimp_TOKEN}" && \
+curl -X POST -H "Authorization: Bearer $iceshrimp_TOKEN" https://$iceshrimp_HOST/api/admin/accounts/hosted
 ```
 
 6. Enjoy!

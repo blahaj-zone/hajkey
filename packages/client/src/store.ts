@@ -12,9 +12,10 @@ const menuOptions = [
 	"notifications",
 	"followRequests",
 	"messaging",
-	"explore",
+	"-",
 	"favorites",
-	"channels",
+	"announcements",
+	"explore",
 	"search",
 ];
 
@@ -43,6 +44,10 @@ export const defaultStore = markRaw(
 			default: false,
 		},
 		tlGlobalHintClosed: {
+			where: "device",
+			default: false,
+		},
+		tlAntennaHintClosed: {
 			where: "device",
 			default: false,
 		},
@@ -202,13 +207,9 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
-		useBlurEffectForModal: {
-			where: "device",
-			default: true,
-		},
 		useBlurEffect: {
 			where: "device",
-			default: true,
+			default: false,
 		},
 		showFixedPostForm: {
 			where: "device",
@@ -448,6 +449,14 @@ export const defaultStore = markRaw(
 			where: "device",
 			default: false,
 		},
+		cwStyle: {
+			where: "device",
+			default: "modern" as "modern" | "classic" | "alternative",
+		},
+		alwaysExpandCws: {
+			where: "device",
+			default: false,
+		},
 	}),
 );
 
@@ -467,8 +476,8 @@ type Plugin = {
 /**
  * 常にメモリにロードしておく必要がないような設定情報を保管するストレージ(非リアクティブ)
  */
-import lightTheme from "@/themes/l-rosepinedawn.json5";
-import darkTheme from "@/themes/d-rosepine.json5";
+import lightTheme from "@/themes/l-iceshrimp.json5";
+import darkTheme from "@/themes/d-iceshrimp.json5";
 
 export class ColdDeviceStorage {
 	public static default = {

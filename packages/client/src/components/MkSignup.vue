@@ -1,7 +1,7 @@
 <template>
 	<div v-if="instance.disableRegistration" style="margin-bottom: 1rem">
 		<p>{{ i18n.ts.signupsDisabled }}</p>
-		<a href="https://joinfirefish.org/join">
+		<a href="https://iceshrimp.dev/join">
 			<MkButton rounded gradate
 				>{{ i18n.ts.findOtherInstance }}
 			</MkButton>

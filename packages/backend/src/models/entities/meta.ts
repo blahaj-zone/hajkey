@@ -436,14 +436,14 @@ export class Meta {
 
 	@Column("varchar", {
 		length: 512,
-		default: "https://codeberg.org/firefish/firefish",
+		default: "https://iceshrimp.dev/iceshrimp/iceshrimp",
 		nullable: false,
 	})
 	public repositoryUrl: string;
 
 	@Column("varchar", {
 		length: 512,
-		default: "https://codeberg.org/firefish/firefish/issues/new",
+		default: "https://iceshrimp.dev/iceshrimp/iceshrimp/issues/new",
 		nullable: true,
 	})
 	public feedbackUrl: string | null;

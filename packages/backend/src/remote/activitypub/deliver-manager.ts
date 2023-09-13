@@ -1,8 +1,9 @@
-import { IsNull, Not } from "typeorm";
-import { Users, Followings } from "@/models/index.js";
-import type { ILocalUser, IRemoteUser, User } from "@/models/entities/user.js";
-import { deliver } from "@/queue/index.js";
-import { skippedInstances } from "@/misc/skipped-instances.js";
+import {IsNull, Not} from "typeorm";
+import {Followings, Users} from "@/models/index.js";
+import type {ILocalUser, IRemoteUser, User} from "@/models/entities/user.js";
+import {deliver} from "@/queue/index.js";
+import {skippedInstances} from "@/misc/skipped-instances.js";
+import {apLogger} from "@/remote/activitypub/logger.js";
 
 //#region types
 interface IRecipe {
@@ -127,14 +128,32 @@ export default class DeliverManager {
 		const instancesToSkip = await skippedInstances(
 			// get (unique) list of hosts
 			Array.from(
-				new Set(Array.from(inboxes).map((inbox) => new URL(inbox).host)),
+				new Set(Array.from(inboxes).map((inbox) => {
+					try {
+						return new URL(inbox).host;
+					} catch (e) {
+						apLogger.error(`Invalid inbox URL: ${inbox}`);
+						return null;
+					}
+				} ).filter((host) => host != null) as string[]),
 			),
 		);
 
 		// deliver
 		for (const inbox of inboxes) {
 			// skip instances as indicated
-			if (instancesToSkip.includes(new URL(inbox).host)) continue;
+
+			try {
+				const host = new URL(inbox).host;
+				if (instancesToSkip.includes(host))
+					continue;
+
+			} catch (e) {
+				// skip invalid URLs
+				apLogger.error(`Invalid inbox URL: ${inbox}`);
+				continue;
+			}
+
 
 			deliver(this.actor, this.activity, inbox);
 		}

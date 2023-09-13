@@ -18,5 +18,5 @@ export const paramDef = {
 
 export default define(meta, paramDef, async (ps) => {
 	const user = await getRemoteUser(ps.userId);
-	await updatePerson(user.uri!);
+	await updatePerson(user.uri!, undefined, undefined, user);
 });

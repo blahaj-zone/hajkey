@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "firefish.fullname" . }}-db-migrate
+  name: {{ include "iceshrimp.fullname" . }}-db-migrate
   labels:
-    {{- include "firefish.labels" . | nindent 4 }}
+    {{- include "iceshrimp.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
@@ -11,7 +11,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ include "firefish.fullname" . }}-db-migrate
+      name: {{ include "iceshrimp.fullname" . }}-db-migrate
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
@@ -22,13 +22,13 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "firefish.serviceAccountName" . }}
+      serviceAccountName: {{ include "iceshrimp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
         - name: config-volume
           secret:
-            secretName: {{ template "firefish.fullname" . }}-config
+            secretName: {{ template "iceshrimp.fullname" . }}-config
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -44,7 +44,7 @@ spec:
               value: "production"
           volumeMounts:
             - name: config-volume
-              mountPath: /firefish/.config
+              mountPath: /iceshrimp/.config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

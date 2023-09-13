@@ -42,7 +42,14 @@ export const meta = {
 				optional: false,
 				nullable: false,
 				format: "url",
-				example: "https://firefish.example.com",
+				example: "https://iceshrimp.example.com",
+			},
+			domain: {
+				type: "string",
+				optional: false,
+				nullable: false,
+				format: "domain",
+				example: "example.com",
 			},
 			description: {
 				type: "string",
@@ -68,13 +75,13 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/firefish/firefish",
+				default: "https://iceshrimp.dev/iceshrimp/iceshrimp",
 			},
 			feedbackUrl: {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://codeberg.org/firefish/firefish/issues",
+				default: "https://iceshrimp.dev/iceshrimp/iceshrimp/issues",
 			},
 			defaultDarkTheme: {
 				type: "string",
@@ -183,6 +190,11 @@ export const meta = {
 				optional: false,
 				nullable: false,
 			},
+			searchEngine: {
+				type: "string",
+				optional: false,
+				nullable: false,
+			},
 			emojis: {
 				type: "array",
 				optional: false,
@@ -268,6 +280,15 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: true,
+			},
+			images: {
+				type: 'object',
+				optional: false, nullable: false,
+				properties: {
+					info: { type: 'string' },
+					notFound: { type: 'string' },
+					error: { type: 'string' },
+				},
 			},
 			features: {
 				type: "object",
@@ -402,6 +423,7 @@ export default define(meta, paramDef, async (ps, me) => {
 
 		name: instance.name,
 		uri: config.url,
+		domain: config.domain,
 		description: instance.description,
 		langs: instance.langs,
 		tosUrl: instance.ToSUrl,
@@ -432,6 +454,7 @@ export default define(meta, paramDef, async (ps, me) => {
 		logoImageUrl: instance.logoImageUrl,
 		maxNoteTextLength: MAX_NOTE_TEXT_LENGTH, // 後方互換性のため
 		maxCaptionTextLength: MAX_CAPTION_TEXT_LENGTH,
+		searchEngine: config.searchEngine,
 		emojis: instance.privateMode && !me ? [] : await Emojis.packMany(emojis),
 		// クライアントの手間を減らすためあらかじめJSONに変換しておく
 		defaultLightTheme: instance.defaultLightTheme
@@ -440,6 +463,8 @@ export default define(meta, paramDef, async (ps, me) => {
 		defaultDarkTheme: instance.defaultDarkTheme
 			? JSON.stringify(JSON5.parse(instance.defaultDarkTheme))
 			: null,
+
+		images: config.images,
 
 		enableEmail: instance.enableEmail,
 

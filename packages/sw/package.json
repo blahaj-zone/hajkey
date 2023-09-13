@@ -3,9 +3,10 @@
 	"private": true,
 	"scripts": {
 		"build": "webpack",
-		"watch": "pnpm swc src -d built -D -w",
-		"lint": "pnpm rome check **/*.ts --apply",
-		"format": "pnpm rome format * --write"
+		"build:debug": "yarn build",
+		"watch": "swc src -d built -D -w",
+		"lint": "rome check **/*.ts --apply",
+		"format": "rome format * --write"
 	},
 	"devDependencies": {
 		"@swc/cli": "^0.1.62",

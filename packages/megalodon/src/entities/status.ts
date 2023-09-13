@@ -18,7 +18,7 @@ namespace Entity {
 		in_reply_to_account_id: string | null;
 		reblog: Status | null;
 		content: string;
-		plain_content: string | null;
+		text: string | null;
 		created_at: string;
 		emojis: Emoji[];
 		replies_count: number;
@@ -38,7 +38,7 @@ namespace Entity {
 		application: Application | null;
 		language: string | null;
 		pinned: boolean | null;
-		emoji_reactions: Array<Reaction>;
+		reactions: Array<Reaction>;
 		quote: Status | null;
 		bookmarked: boolean;
 	};

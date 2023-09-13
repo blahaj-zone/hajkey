@@ -1518,7 +1518,7 @@ export default class Misskey implements MegalodonInterface {
 		const origin = idx < 0 ? null : status.account.acct.substring(idx + 1);
 
 		status.mentions = (
-			await this.getMentions(status.plain_content!, origin, cache)
+			await this.getMentions(status.text!, origin, cache)
 		).filter((p) => p != null);
 		for (const m of status.mentions.filter(
 			(value, index, array) => array.indexOf(value) === index,
@@ -1632,33 +1632,79 @@ export default class Misskey implements MegalodonInterface {
 	}
 
 	public async editStatus(
-		_id: string,
-		_options: {
+		id: string,
+		options: {
 			status?: string;
 			spoiler_text?: string;
 			sensitive?: boolean;
 			media_ids?: Array<string>;
 			poll?: {
-				options?: Array<string>;
-				expires_in?: number;
+				options: Array<string>;
+				expires_in: number;
 				multiple?: boolean;
 				hide_totals?: boolean;
 			};
 		},
 	): Promise<Response<Entity.Status>> {
-		return new Promise((_, reject) => {
-			const err = new NoImplementedError("misskey does not support");
-			reject(err);
-		});
+		let params = {
+			editId: id,
+		};
+		if (options) {
+			params = Object.assign(params, {
+				text: options.status,
+			});
+			if (options.media_ids) {
+				params = Object.assign(params, {
+					fileIds: options.media_ids,
+				});
+			}
+			if (options.poll) {
+				let pollParam = {
+					choices: options.poll.options,
+					expiresAt: null,
+					expiredAfter: options.poll.expires_in * 1000,
+				};
+				if (options.poll.multiple !== undefined) {
+					pollParam = Object.assign(pollParam, {
+						multiple: options.poll.multiple,
+					});
+				}
+				params = Object.assign(params, {
+					poll: pollParam,
+				});
+			}
+			if (options.sensitive) {
+				params = Object.assign(params, {
+					cw: "",
+				});
+			}
+			if (options.spoiler_text) {
+				params = Object.assign(params, {
+					cw: options.spoiler_text,
+				});
+			}
+		}
+		return this.client
+			.post<MisskeyAPI.Entity.CreatedNote>("/api/notes/edit", params)
+			.then(async (res) => ({
+				...res,
+				data: await this.noteWithDetails(
+					res.data.createdNote,
+					this.baseUrlToHost(this.baseUrl),
+					this.getFreshAccountCache(),
+				),
+			}));
 	}
 
 	/**
 	 * POST /api/notes/delete
 	 */
-	public async deleteStatus(id: string): Promise<Response<{}>> {
-		return this.client.post<{}>("/api/notes/delete", {
+	public async deleteStatus(id: string): Promise<Response<Entity.Status>> {
+		const status = await this.getStatus(id);
+		await this.client.post<{}>("/api/notes/delete", {
 			noteId: id,
 		});
+		return status;
 	}
 
 	/**
@@ -1994,6 +2040,63 @@ export default class Misskey implements MegalodonInterface {
 	public async unpinStatus(id: string): Promise<Response<Entity.Status>> {
 		await this.client.post<{}>("/api/i/unpin", {
 			noteId: id,
+		});
+		return this.client
+			.post<MisskeyAPI.Entity.Note>("/api/notes/show", {
+				noteId: id,
+			})
+			.then(async (res) => ({
+				...res,
+				data: await this.noteWithDetails(
+					res.data,
+					this.baseUrlToHost(this.baseUrl),
+					this.getFreshAccountCache(),
+				),
+			}));
+	}
+
+	/**
+	 * Convert a Unicode emoji or custom emoji name to a Misskey reaction.
+	 * @see Misskey's reaction-lib.ts
+	 */
+	private reactionName(name: string): string {
+		// See: https://github.com/tc39/proposal-regexp-unicode-property-escapes#matching-emoji
+		const isUnicodeEmoji = /\p{Emoji_Modifier_Base}\p{Emoji_Modifier}?|\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu.test(name);
+		if (isUnicodeEmoji) {
+			return name;
+		}
+		return `:${name}:`;
+	}
+
+	/**
+	 * POST /api/notes/reactions/create
+	 */
+	public async reactStatus(id: string, name: string): Promise<Response<Entity.Status>> {
+		await this.client.post<{}>("/api/notes/reactions/create", {
+			noteId: id,
+			reaction: this.reactionName(name),
+		});
+		return this.client
+			.post<MisskeyAPI.Entity.Note>("/api/notes/show", {
+				noteId: id,
+			})
+			.then(async (res) => ({
+				...res,
+				data: await this.noteWithDetails(
+					res.data,
+					this.baseUrlToHost(this.baseUrl),
+					this.getFreshAccountCache(),
+				),
+			}));
+	}
+
+	/**
+	 * POST /api/notes/reactions/delete
+	 */
+	public async unreactStatus(id: string, name: string): Promise<Response<Entity.Status>> {
+		await this.client.post<{}>("/api/notes/reactions/delete", {
+			noteId: id,
+			reaction: this.reactionName(name),
 		});
 		return this.client
 			.post<MisskeyAPI.Entity.Note>("/api/notes/show", {

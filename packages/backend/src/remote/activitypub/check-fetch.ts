@@ -46,6 +46,7 @@ export async function checkFetch(req: IncomingMessage): Promise<number> {
 		if (
 			meta.privateMode &&
 			host !== config.host &&
+			host !== config.domain &&
 			!meta.allowedHosts.includes(host)
 		) {
 			return 403;

@@ -42,13 +42,15 @@ async fn main() {
             None => "redis",
             Some(_) => "rediss",
         };
-        let redis_uri_userpass = match redis_conf.user {
-            None => "".to_string(),
-            Some(user) => format!("{}:{}@", user, encode(&redis_conf.pass.unwrap_or_default())),
-        };
+        let redis_user = redis_conf.user.unwrap_or("default".to_string());
+        let redis_uri_userpass = format!(
+            "{}:{}",
+            redis_user,
+            encode(&redis_conf.pass.unwrap_or_default())
+        );
         let redis_uri_hostport = format!("{}:{}", redis_conf.host, redis_conf.port);
         let redis_uri = format!(
-            "{}://{}{}/{}",
+            "{}://{}@{}/{}",
             redis_proto, redis_uri_userpass, redis_uri_hostport, redis_conf.db
         );
         env::set_var(CACHE_URL_ENV, redis_uri);

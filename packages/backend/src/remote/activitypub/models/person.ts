@@ -48,6 +48,11 @@ import Resolver from "../resolver.js";
 import { extractApHashtags } from "./tag.js";
 import { resolveNote, extractEmojis } from "./note.js";
 import { resolveImage } from "./image.js";
+import {
+	getSubjectHostFromUri,
+	getSubjectHostFromRemoteUser,
+	getSubjectHostFromAcctParts
+} from "@/remote/resolve-user.js"
 
 const logger = apLogger;
 
@@ -127,7 +132,7 @@ function validateActor(x: IObject, uri: string): IActor {
 /**
  * Fetch a Person.
  *
- * If the target Person is registered in Firefish, it will be returned.
+ * If the target Person is registered in Iceshrimp, it will be returned.
  */
 export async function fetchPerson(
 	uri: string,
@@ -164,6 +169,7 @@ export async function fetchPerson(
 export async function createPerson(
 	uri: string,
 	resolver?: Resolver,
+	subjectHost?: string,
 ): Promise<User> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
@@ -183,9 +189,52 @@ export async function createPerson(
 
 	logger.info(`Creating the Person: ${person.id}`);
 
-	const host = toPuny(new URL(object.id).hostname);
+	const usernameLower = person.preferredUsername?.toLowerCase();
 
-	const { fields } = analyzeAttachments(person.attachment || []);
+	const urlHostname = toPuny(new URL(object.id).hostname);
+
+	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? await getSubjectHostFromAcctParts(usernameLower, urlHostname) ?? urlHostname;
+
+	if (usernameLower !== null) {
+		let checkUser = (await Users.findOneBy({
+			usernameLower: usernameLower,
+			host: toPuny(new URL(object.id).hostname),
+		})) as IRemoteUser | null;
+
+		if (checkUser != null) {
+			logger.info('Person already exists');
+			if (host != checkUser.host) {
+				logger.info(`Updating existing person with canonical account domain (${usernameLower}@${checkUser.host} -> ${usernameLower}@${host})`);
+				await Users.update(
+					{
+						usernameLower: usernameLower,
+						host: checkUser.host,
+					},
+					{
+						host: host,
+					},
+				);
+				checkUser.host = host;
+			}
+			logger.info('Returning existing person');
+			return checkUser;
+		}
+
+		if (host != toPuny(new URL(object.id).hostname)) {
+			checkUser = (await Users.findOneBy({
+				usernameLower: usernameLower,
+				host: host,
+			})) as IRemoteUser | null;
+
+			if (checkUser != null) {
+				logger.info('Person already exists');
+				logger.info('Returning existing person');
+				return checkUser;
+			}
+		}
+	}
+
+	const { fields } = await analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
@@ -286,7 +335,7 @@ export async function createPerson(
 				new UserProfile({
 					userId: user.id,
 					description: person.summary
-						? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+						? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 						: null,
 					url: url,
 					fields,
@@ -378,15 +427,17 @@ export async function createPerson(
 
 /**
  * Update Person data from remote.
- * If the target Person is not registered in Firefish, it is ignored.
+ * If the target Person is not registered in Iceshrimp, it is ignored.
  * @param uri URI of Person
  * @param resolver Resolver
  * @param hint Hint of Person object (If this value is a valid Person, it is used for updating without Remote resolve)
+ * @param userHint Hint of IRemoteUser object, used for updating user information for remotes that only support webfinger with acct: query
  */
 export async function updatePerson(
 	uri: string,
 	resolver?: Resolver | null,
 	hint?: IObject,
+	userHint?: IRemoteUser,
 ): Promise<void> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
@@ -411,6 +462,8 @@ export async function updatePerson(
 
 	logger.info(`Updating the Person: ${person.id}`);
 
+	const host = await getSubjectHostFromUri(uri) ?? await getSubjectHostFromRemoteUser(userHint);
+
 	// Fetch avatar and header image
 	const [avatar, banner] = await Promise.all(
 		[person.icon, person.image].map((img) =>
@@ -428,7 +481,7 @@ export async function updatePerson(
 
 	const emojiNames = emojis.map((emoji) => emoji.name);
 
-	const { fields } = analyzeAttachments(person.attachment || []);
+	const { fields } = await analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
@@ -515,6 +568,10 @@ export async function updatePerson(
 		updates.bannerId = banner.id;
 	}
 
+	if (host) {
+		updates.host = host;
+	}
+
 	// Update user
 	await Users.update(user.id, updates);
 
@@ -534,7 +591,7 @@ export async function updatePerson(
 			url: url,
 			fields,
 			description: person.summary
-				? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+				? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 				: null,
 			birthday: bday ? bday[0] : null,
 			location: person["vcard:Address"] || null,
@@ -554,7 +611,7 @@ export async function updatePerson(
 		{
 			followerSharedInbox:
 				person.sharedInbox ||
-				(person.endpoints ? person.endpoints.sharedInbox : undefined),
+				(person.endpoints ? person.endpoints.sharedInbox : null),
 		},
 	);
 
@@ -564,8 +621,8 @@ export async function updatePerson(
 /**
  * Resolve Person.
  *
- * If the target person is registered in Firefish, it returns it;
- * otherwise, it fetches it from the remote server, registers it in Firefish, and returns it.
+ * If the target person is registered in Iceshrimp, it returns it;
+ * otherwise, it fetches it from the remote server, registers it in Iceshrimp, and returns it.
  */
 export async function resolvePerson(
 	uri: string,
@@ -619,7 +676,7 @@ function addService(target: { [x: string]: any }, source: IApPropertyValue) {
 	}
 }
 
-export function analyzeAttachments(
+export async function analyzeAttachments(
 	attachments: IObject | IObject[] | undefined,
 ) {
 	const fields: {
@@ -635,7 +692,7 @@ export function analyzeAttachments(
 			} else {
 				fields.push({
 					name: attachment.name,
-					value: fromHtml(attachment.value),
+					value: await fromHtml(attachment.value),
 				});
 			}
 		}
@@ -667,6 +724,7 @@ export async function updateFeatured(userId: User["id"], resolver?: Resolver) {
 	);
 
 	// Resolve and regist Notes
+	resolver.reset();
 	const limit = promiseLimit<Note | null>(2);
 	const featuredNotes = await Promise.all(
 		items

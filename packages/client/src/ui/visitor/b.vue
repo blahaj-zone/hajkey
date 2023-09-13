@@ -18,8 +18,8 @@
 					>
 					<small
 						>Powered by
-						<a href="https://joinfirefish.org/" target="_blank"
-							>Firefish</a
+						<a href="https://iceshrimp.dev/" target="_blank"
+							>Iceshrimp</a
 						></small
 					>
 				</div>
@@ -57,6 +57,10 @@
 					><i class="ph-image-square ph-bold ph-lg icon"></i
 					>{{ i18n.ts.gallery }}</MkA
 				>
+				<button class="_button link" active-class="active" @click="search()">
+					<i class="ph-magnifying-glass ph-bold ph-lg icon"></i
+					><span>{{ i18n.ts.search }}</span>
+				</button>
 				<div class="action">
 					<button class="_buttonPrimary" @click="signup()">
 						{{ i18n.ts.signup }}

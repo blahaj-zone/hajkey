@@ -19,8 +19,8 @@
 					}}</template>
 				</MkSwitch>
 			</div>
-			<div v-if="!useGlobalSetting" class="_section">
-				<MkInfo>{{ i18n.ts.notificationSettingDesc }}</MkInfo>
+			<div v-if="!useGlobalSetting" class="_section _formRoot">
+				<MkInfo class="_formBlock">{{ i18n.ts.notificationSettingDesc }}</MkInfo>
 				<MkButton inline @click="disableAll">{{
 					i18n.ts.disableAll
 				}}</MkButton>
@@ -29,6 +29,7 @@
 				}}</MkButton>
 				<MkSwitch
 					v-for="ntype in notificationTypes"
+					class="_formBlock"
 					:key="ntype"
 					v-model="typesMap[ntype]"
 					>{{ i18n.t(`_notification._types.${ntype}`) }}</MkSwitch

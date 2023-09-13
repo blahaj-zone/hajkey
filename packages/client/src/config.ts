@@ -3,7 +3,15 @@ const siteName = (
 	document.querySelector('meta[property="og:site_name"]') as HTMLMetaElement
 )?.content;
 
-export const host = address.host;
+export function setHost(newHost: string): void {
+	host = newHost;
+}
+
+export function setSearchEngine(engine: string): void {
+	searchEngine = engine;
+}
+
+export let host = address.host;
 export const hostname = address.hostname;
 export const url = address.origin;
 export const apiUrl = `${url}/api`;
@@ -14,6 +22,7 @@ export const lang = localStorage.getItem("lang");
 export const langs = _LANGS_;
 export const locale = JSON.parse(localStorage.getItem("locale"));
 export const version = _VERSION_;
-export const instanceName = siteName === "Firefish" ? host : siteName;
+export const instanceName = siteName === "Iceshrimp" ? host : siteName;
+export let searchEngine = 'https://duckduckgo.com/?q=';
 export const ui = localStorage.getItem("ui");
 export const debug = localStorage.getItem("debug") === "true";

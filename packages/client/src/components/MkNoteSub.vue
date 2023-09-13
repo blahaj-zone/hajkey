@@ -36,6 +36,7 @@
 						:parentId="parentId"
 						:conversation="conversation"
 						:detailedView="detailedView"
+						:forceExpandCw="props.forceExpandCw"
 						@focusfooter="footerEl.focus()"
 					/>
 					<div v-if="translating || translation" class="translation">
@@ -150,6 +151,7 @@
 				:replyLevel="replyLevel + 1"
 				:parentId="appearNote.id"
 				:detailedView="detailedView"
+				:forceExpandCw="props.forceExpandCw"
 			/>
 			<div v-else-if="replies.length > 0" class="more">
 				<div class="line"></div>
@@ -230,8 +232,9 @@ const props = withDefaults(
 	defineProps<{
 		note: misskey.entities.Note;
 		conversation?: misskey.entities.Note[];
-		parentId?: misskey.entities.Note["id"];
-		detailedView?: boolean;
+		parentId?;
+		detailedView?;
+		forceExpandCw?: boolean;
 
 		// how many notes are in between this one and the note being viewed in detail
 		depth?: number;
@@ -280,14 +283,13 @@ const translation = ref(null);
 const translating = ref(false);
 const repliesDepth = defaultStore.state.repliesDepth;
 const replies: misskey.entities.Note[] =
-	props.conversation
-		?.filter(
-			(item) =>
-				item.replyId === props.note.id ||
-				item.renoteId === props.note.id,
-		)
-		.reverse() ?? [];
-let collapseSingles = $ref(defaultStore.state.replyCollapseSingles);
+	$computed(() => props.conversation
+      ?.filter(
+          (item) =>
+              item.replyId === props.note.id ||
+              item.renoteId === props.note.id,
+      )
+      .reverse() ?? []);
 const enableEmojiReactions = defaultStore.state.enableEmojiReactions;
 const expandOnNoteClick = defaultStore.state.expandOnNoteClick;
 

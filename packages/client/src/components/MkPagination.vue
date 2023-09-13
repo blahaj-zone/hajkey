@@ -8,7 +8,7 @@
 			<slot name="empty">
 				<div class="_fullinfo">
 					<img
-						src="/static-assets/badges/info.png"
+						:src="instance.images.info"
 						class="_ghost"
 						alt="Error"
 					/>
@@ -84,6 +84,7 @@ import {
 } from "@/scripts/scroll";
 import MkButton from "@/components/MkButton.vue";
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 
 export type Paging<
 	E extends keyof misskey.Endpoints = keyof misskey.Endpoints,
@@ -140,13 +141,7 @@ const isBackTop = ref(false);
 const empty = computed(() => items.value.length === 0);
 const error = ref(false);
 
-const filteredItems = props.visibleCheck ? ref<Item[]>([]) : items;
-
-const runFilter = () => {
-	if (!props.visibleCheck) return;
-	props.visibleCheck(false);
-	filteredItems.value = items.value.filter(props.visibleCheck);
-};
+let redisPaginationStr = ref("+");
 
 const init = async (): Promise<void> => {
 	queue.value = [];
@@ -165,6 +160,10 @@ const init = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
 				for (let i = 0; i < res.length; i++) {
 					const item = res[i];
 					if (props.pagination.reversed) {
@@ -265,6 +264,11 @@ const fetchMore = async (): Promise<void> => {
 			? props.pagination.params.value
 			: props.pagination.params
 		: {};
+
+	if (props.pagination.endpoint == 'antennas/notes') {
+		params.pagination = redisPaginationStr;
+	}
+
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
@@ -283,6 +287,11 @@ const fetchMore = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
+
 				for (let i = 0; i < res.length; i++) {
 					const item = res[i];
 					if (props.pagination.reversed) {
@@ -327,6 +336,11 @@ const fetchMoreAhead = async (): Promise<void> => {
 			? props.pagination.params.value
 			: props.pagination.params
 		: {};
+
+	if (props.pagination.endpoint == 'antennas/notes') {
+		params.pagination = redisPaginationStr;
+	}
+
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
@@ -345,6 +359,11 @@ const fetchMoreAhead = async (): Promise<void> => {
 		})
 		.then(
 			(res) => {
+				if (props.pagination.endpoint == 'antennas/notes') {
+					redisPaginationStr = res.pagination;
+					res = res.notes;
+				}
+
 				if (res.length > SECOND_FETCH_LIMIT) {
 					res.pop();
 					items.value = props.pagination.reversed

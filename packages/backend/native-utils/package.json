@@ -34,17 +34,17 @@
 	},
 	"scripts": {
 		"artifacts": "napi artifacts",
-		"build": "pnpm run build:napi && pnpm run build:migration",
+		"build": "yarn build:napi && yarn build:migration",
 		"build:napi": "napi build --features napi --platform --release ./built/",
-		"build:migration": "cargo build --locked --release --manifest-path ./migration/Cargo.toml && cp ./target/release/migration ./built/migration",
-		"build:debug": "napi build --platform ./built/ && cargo build --manifest-path ./migration/Cargo.toml",
+		"build:migration": "cargo build --locked --profile release-no-lto -p migration && cp ./target/release-no-lto/migration ./built/migration",
+		"build:debug": "napi build --features napi --platform --profile debug-napi ./built/ && cargo build --locked --profile debug-migration -p migration && cp ./target/debug-migration/migration ./built/migration",
 		"prepublishOnly": "napi prepublish -t npm",
-		"test": "pnpm run cargo:test && pnpm run build:napi && ava",
+		"test": "yarn cargo:test && yarn build:napi && ava",
 		"universal": "napi universal",
 		"version": "napi version",
 		"format": "cargo fmt --all",
 		"lint": "cargo clippy --fix",
-		"cargo:test": "pnpm run cargo:unit && pnpm run cargo:integration",
+		"cargo:test": "yarn cargo:unit && yarn cargo:integration",
 		"cargo:unit": "cargo test unit_test && cargo test -F napi unit_test",
 		"cargo:integration": "cargo test -F noarray int_test -- --test-threads=1"
 	}

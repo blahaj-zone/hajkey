@@ -14,6 +14,7 @@
 		<MkNoteSub
 			v-if="appearNote.reply && !detailedView && !collapsedReply"
 			:note="appearNote.reply"
+			:forceExpandCw="props.forceExpandCw"
 			class="reply-to"
 		/>
 		<div
@@ -105,6 +106,7 @@
 						:detailed="true"
 						:detailedView="detailedView"
 						:parentId="appearNote.parentId"
+						:forceExpandCw="props.forceExpandCw"
 						@push="(e) => router.push(notePage(e))"
 						@focusfooter="footerEl.focus()"
 						@expanded="(e) => setPostExpanded(e)"
@@ -299,6 +301,7 @@ const props = defineProps<{
 	pinned?: boolean;
 	detailedView?: boolean;
 	collapsedReply?: boolean;
+	forceExpandCw?: boolean;
 }>();
 
 const inChannel = inject("inChannel", null);
@@ -344,7 +347,7 @@ let appearNote = $computed(() =>
 	isRenote ? (note.renote as misskey.entities.Note) : note,
 );
 const isMyRenote = $i && $i.id === note.userId;
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.alwaysExpandCws);
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);

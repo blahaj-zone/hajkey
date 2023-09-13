@@ -6,7 +6,7 @@
 				<template #empty>
 					<div class="_fullinfo">
 						<img
-							src="/static-assets/badges/info.png"
+							:src="instance.images.info"
 							class="_ghost"
 							alt="Info"
 						/>
@@ -40,6 +40,7 @@ import XNote from "@/components/MkNote.vue";
 import XList from "@/components/MkDateSeparatedList.vue";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import {instance} from "@/instance";
 
 const pagination = {
 	endpoint: "i/favorites" as const,

@@ -45,3 +45,13 @@ napi-build = "2.0.1"
 
 [profile.release]
 lto = true
+
+[profile.release-no-lto]
+inherits = "release"
+lto = false
+
+[profile.debug-napi]
+inherits = "dev"
+
+[profile.debug-migration]
+inherits = "dev"

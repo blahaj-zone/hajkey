@@ -3,7 +3,7 @@
 		<template #empty>
 			<div class="_fullinfo">
 				<img
-					src="/static-assets/badges/info.png"
+					:src="instance.images.info"
 					class="_ghost"
 					alt="Info"
 				/>
@@ -63,6 +63,7 @@ import * as os from "@/os";
 import { stream } from "@/stream";
 import { $i } from "@/account";
 import { i18n } from "@/i18n";
+import {instance} from "@/instance";
 
 const props = defineProps<{
 	includeTypes?: (typeof notificationTypes)[number][];

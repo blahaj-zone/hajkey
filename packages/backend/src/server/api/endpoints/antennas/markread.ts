@@ -38,13 +38,5 @@ export default define(meta, paramDef, async (ps, me) => {
 	// 	},
 	// );
 
-	publishMainStream(me.id, "readAntenna", antenna);
-
-	Users.getHasUnreadAntenna(me.id).then((unread: boolean) => {
-		if (!unread) {
-			publishMainStream(me.id, "readAllAntennas");
-		}
-	});
-
 	return true;
 });

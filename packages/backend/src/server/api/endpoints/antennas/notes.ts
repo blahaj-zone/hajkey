@@ -2,12 +2,12 @@ import define from "../../define.js";
 import readNote from "@/services/note/read.js";
 import { Antennas, Notes } from "@/models/index.js";
 import { redisClient } from "@/db/redis.js";
-import { genId } from "@/misc/gen-id.js";
 import { makePaginationQuery } from "../../common/make-pagination-query.js";
 import { generateVisibilityQuery } from "../../common/generate-visibility-query.js";
 import { generateMutedUserQuery } from "../../common/generate-muted-user-query.js";
 import { ApiError } from "../../error.js";
 import { generateBlockedUserQuery } from "../../common/generate-block-query.js";
+import { Note } from "@/models/entities/note.js";
 
 export const meta = {
 	tags: ["antennas", "account", "notes"],
@@ -25,14 +25,26 @@ export const meta = {
 	},
 
 	res: {
-		type: "array",
+		type: "object",
 		optional: false,
 		nullable: false,
-		items: {
-			type: "object",
-			optional: false,
-			nullable: false,
-			ref: "Note",
+		properties: {
+			pagination: {
+				type: "string",
+				nullable: false,
+				optional: false,
+			},
+			notes: {
+				type: "array",
+				optional: false,
+				nullable: false,
+				items: {
+					type: "object",
+					optional: false,
+					nullable: false,
+					ref: "Note",
+				},
+			},
 		},
 	},
 } as const;
@@ -42,10 +54,7 @@ export const paramDef = {
 	properties: {
 		antennaId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "misskey:id" },
-		untilId: { type: "string", format: "misskey:id" },
-		sinceDate: { type: "integer" },
-		untilDate: { type: "integer" },
+		pagination: { type: "string", default: "+" },
 	},
 	required: ["antennaId"],
 } as const;
@@ -56,71 +65,86 @@ export default define(meta, paramDef, async (ps, user) => {
 		userId: user.id,
 	});
 
+	let pagination = ps.pagination || "+";
+
 	if (antenna == null) {
 		throw new ApiError(meta.errors.noSuchAntenna);
 	}
 
-	const noteIdsRes = await redisClient.xrevrange(
-		`antennaTimeline:${antenna.id}`,
-		ps.untilDate || "+",
-		"-",
-		"COUNT",
-		ps.limit + 1,
-	); // untilIdに指定したものも含まれるため+1
+	let notes: Note[] = [];
+	let paginationMap: string[][] = [];
 
-	if (noteIdsRes.length === 0) {
-		return [];
-	}
+	while (notes.length < ps.limit && pagination !== "-1") {
+		// exclusive range
+		if (pagination != "+" && !pagination.startsWith("("))
+			pagination = `(${pagination}`;
 
-	const noteIds = noteIdsRes
-		.map((x) => x[1][1])
-		.filter((x) => x !== ps.untilId);
+		const noteIdsRes = await redisClient.xrevrange(
+			`antennaTimeline:${antenna.id}`,
+			pagination,
+			"-",
+			"COUNT",
+			ps.limit - notes.length,
+		);
 
-	if (noteIds.length === 0) {
-		return [];
-	}
+		const noteIds = noteIdsRes.map((x) => x[1][1]);
 
-	const query = makePaginationQuery(
-		Notes.createQueryBuilder("note"),
-		ps.sinceId,
-		ps.untilId,
-		ps.sinceDate,
-		ps.untilDate,
-	)
-		.where("note.id IN (:...noteIds)", { noteIds: noteIds })
-		.innerJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
-		.andWhere("note.visibility != 'home'");
-
-	const order = query.expressionMap.orderBys;
-	query.orderBy("antennaNote.read", "ASC");
-	for (const k of Object.keys(order)) {
-		const v = order[k];
-		if ("string" === typeof v) {
-			query.addOrderBy(k, v);
-		} else {
-			query.addOrderBy(k, v.order, v.nulls);
+		if (noteIds.length === 0) {
+			pagination = "-1";
+			break;
 		}
+
+		const query = makePaginationQuery(Notes.createQueryBuilder("note"))
+			.where("note.id IN (:...noteIds)", { noteIds: noteIds })
+			.innerJoinAndSelect("note.user", "user")
+			.leftJoinAndSelect("user.avatar", "avatar")
+			.leftJoinAndSelect("user.banner", "banner")
+			.leftJoinAndSelect("note.reply", "reply")
+			.leftJoinAndSelect("note.renote", "renote")
+			.leftJoinAndSelect("reply.user", "replyUser")
+			.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+			.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+			.leftJoinAndSelect("renote.user", "renoteUser")
+			.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+			.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
+			.andWhere("note.visibility != 'home'");
+
+		generateVisibilityQuery(query, user);
+		generateMutedUserQuery(query, user);
+		generateBlockedUserQuery(query, user);
+
+		pagination = noteIdsRes[noteIdsRes.length - 1][0];
+		paginationMap = paginationMap.concat(
+			noteIdsRes.map((x) => [x[1][1], x[0]]),
+		);
+		notes = notes.concat(await query.take(ps.limit - notes.length).getMany());
 	}
 
-	generateVisibilityQuery(query, user);
-	generateMutedUserQuery(query, user);
-	generateBlockedUserQuery(query, user);
-
-	const notes = await query.take(ps.limit).getMany();
-
-	if (notes.length > 0) {
+	if (notes.length === 0) {
+		return { pagination: "-1", notes: [] };
+	} else {
 		readNote(user.id, notes);
 	}
 
-	return await Notes.packMany(notes, user);
+	const packedNotes = (await Notes.packMany(notes, user)).sort(
+		(a, b) =>
+			paginationMap.findIndex((p) => p[0] == a.id) -
+			paginationMap.findIndex((p) => p[0] == b.id),
+	);
+
+	if (notes.length < ps.limit) {
+		pagination = "-1";
+	} else {
+		// I'm so sorry, FIXME: rewrite pagination system
+		pagination = paginationMap.find(
+			(p) =>
+				p[0] ==
+				packedNotes[packedNotes.length - (packedNotes.length > 1 ? 2 : 1)].id,
+		)[1];
+	}
+
+	return {
+		pagination: pagination,
+		notes: packedNotes,
+	};
 });

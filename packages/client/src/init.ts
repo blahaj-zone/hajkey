@@ -32,7 +32,7 @@ import { compareVersions } from "compare-versions";
 import widgets from "@/widgets";
 import directives from "@/directives";
 import components from "@/components";
-import { version, ui, lang, host } from "@/config";
+import { version, ui, lang, setHost, setSearchEngine } from "@/config";
 import { applyTheme } from "@/scripts/theme";
 import { isDeviceDarkmode } from "@/scripts/is-device-darkmode";
 import { i18n } from "@/i18n";
@@ -180,6 +180,8 @@ function checkForSplash() {
 
 	fetchInstanceMetaPromise.then(() => {
 		localStorage.setItem("v", instance.version);
+		setHost(instance.domain);
+		setSearchEngine(instance.searchEngine);
 
 		// Init service worker
 		initializeSw();
@@ -217,7 +219,7 @@ function checkForSplash() {
 	// https://github.com/misskey-dev/misskey/pull/8575#issuecomment-1114239210
 	// なぜかinit.tsの内容が2回実行されることがあるため、mountするdivを1つに制限する
 	const rootEl = (() => {
-		const MISSKEY_MOUNT_DIV_ID = "firefish_app";
+		const MISSKEY_MOUNT_DIV_ID = "iceshrimp_app";
 
 		const currentEl = document.getElementById(MISSKEY_MOUNT_DIV_ID);
 
@@ -365,8 +367,14 @@ function checkForSplash() {
 	});
 
 	watch(
-		defaultStore.reactiveState.useBlurEffectForModal,
+		defaultStore.reactiveState.useBlurEffect,
 		(v) => {
+			if (v) {
+				document.documentElement.style.removeProperty("--blur");
+			} else {
+				document.documentElement.style.setProperty("--blur", "none");
+			}
+
 			document.documentElement.style.setProperty(
 				"--modalBgFilter",
 				v ? "blur(4px)" : "none",
@@ -377,14 +385,10 @@ function checkForSplash() {
 
 	watch(
 		defaultStore.reactiveState.useBlurEffect,
-		(v) => {
-			if (v && deviceKind !== "smartphone") {
-				document.documentElement.style.removeProperty("--blur");
-			} else {
-				document.documentElement.style.setProperty("--blur", "none");
-			}
-		},
-		{ immediate: true },
+		() => {
+			const theme = defaultStore.state.darkMode ? ColdDeviceStorage.get("darkTheme") : ColdDeviceStorage.get("lightTheme");
+			applyTheme(theme);
+		}
 	);
 
 	let reloadDialogShowing = false;

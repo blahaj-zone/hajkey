@@ -1,8 +1,8 @@
-# firefish
+# iceshrimp
 
 ![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: rc](https://img.shields.io/badge/AppVersion-rc-informational?style=flat-square)
 
-A fun, new, open way to experience social media https://joinfirefish.org
+A fun, new, open way to experience social media https://iceshrimp.dev
 
 ## Requirements
 
@@ -21,39 +21,39 @@ A fun, new, open way to experience social media https://joinfirefish.org
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| firefish.allowedPrivateNetworks | list | `[]` | If you want to allow firefish to connect to private ips, enter the cidrs here. |
-| firefish.deepl.authKey | string | `""` |  |
-| firefish.deepl.isPro | bool | `false` |  |
-| firefish.deepl.managed | bool | `false` |  |
-| firefish.domain | string | `"firefish.local"` |  |
-| firefish.isManagedHosting | bool | `true` |  |
-| firefish.libreTranslate.apiKey | string | `""` |  |
-| firefish.libreTranslate.apiUrl | string | `""` |  |
-| firefish.libreTranslate.managed | bool | `false` |  |
-| firefish.objectStorage.access_key | string | `""` |  |
-| firefish.objectStorage.access_secret | string | `""` |  |
-| firefish.objectStorage.baseUrl | string | `""` |  |
-| firefish.objectStorage.bucket | string | `""` |  |
-| firefish.objectStorage.endpoint | string | `""` |  |
-| firefish.objectStorage.managed | bool | `true` |  |
-| firefish.objectStorage.prefix | string | `"files"` |  |
-| firefish.objectStorage.region | string | `""` |  |
-| firefish.reservedUsernames[0] | string | `"root"` |  |
-| firefish.reservedUsernames[1] | string | `"admin"` |  |
-| firefish.reservedUsernames[2] | string | `"administrator"` |  |
-| firefish.reservedUsernames[3] | string | `"me"` |  |
-| firefish.reservedUsernames[4] | string | `"system"` |  |
-| firefish.smtp.from_address | string | `"notifications@example.com"` |  |
-| firefish.smtp.login | string | `""` |  |
-| firefish.smtp.managed | bool | `true` |  |
-| firefish.smtp.password | string | `""` |  |
-| firefish.smtp.port | int | `587` |  |
-| firefish.smtp.server | string | `"smtp.mailgun.org"` |  |
-| firefish.smtp.useImplicitSslTls | bool | `false` |  |
+| iceshrimp.allowedPrivateNetworks | list | `[]` | If you want to allow iceshrimp to connect to private ips, enter the cidrs here. |
+| iceshrimp.deepl.authKey | string | `""` |  |
+| iceshrimp.deepl.isPro | bool | `false` |  |
+| iceshrimp.deepl.managed | bool | `false` |  |
+| iceshrimp.domain | string | `"iceshrimp.local"` |  |
+| iceshrimp.isManagedHosting | bool | `true` |  |
+| iceshrimp.libreTranslate.apiKey | string | `""` |  |
+| iceshrimp.libreTranslate.apiUrl | string | `""` |  |
+| iceshrimp.libreTranslate.managed | bool | `false` |  |
+| iceshrimp.objectStorage.access_key | string | `""` |  |
+| iceshrimp.objectStorage.access_secret | string | `""` |  |
+| iceshrimp.objectStorage.baseUrl | string | `""` |  |
+| iceshrimp.objectStorage.bucket | string | `""` |  |
+| iceshrimp.objectStorage.endpoint | string | `""` |  |
+| iceshrimp.objectStorage.managed | bool | `true` |  |
+| iceshrimp.objectStorage.prefix | string | `"files"` |  |
+| iceshrimp.objectStorage.region | string | `""` |  |
+| iceshrimp.reservedUsernames[0] | string | `"root"` |  |
+| iceshrimp.reservedUsernames[1] | string | `"admin"` |  |
+| iceshrimp.reservedUsernames[2] | string | `"administrator"` |  |
+| iceshrimp.reservedUsernames[3] | string | `"me"` |  |
+| iceshrimp.reservedUsernames[4] | string | `"system"` |  |
+| iceshrimp.smtp.from_address | string | `"notifications@example.com"` |  |
+| iceshrimp.smtp.login | string | `""` |  |
+| iceshrimp.smtp.managed | bool | `true` |  |
+| iceshrimp.smtp.password | string | `""` |  |
+| iceshrimp.smtp.port | int | `587` |  |
+| iceshrimp.smtp.server | string | `"smtp.mailgun.org"` |  |
+| iceshrimp.smtp.useImplicitSslTls | bool | `false` |  |
 | elasticsearch | object | `{"auth":{},"enabled":false,"hostname":"","port":9200,"ssl":false}` | https://github.com/bitnami/charts/tree/master/bitnami/elasticsearch#parameters |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"docker.io/thatonecalculator/firefish"` |  |
+| image.repository | string | `"iceshrimp.dev/iceshrimp/iceshrimp"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -67,9 +67,9 @@ A fun, new, open way to experience social media https://joinfirefish.org
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.auth.database | string | `"firefish_production"` |  |
+| postgresql.auth.database | string | `"iceshrimp_production"` |  |
 | postgresql.auth.password | string | `""` |  |
-| postgresql.auth.username | string | `"firefish"` |  |
+| postgresql.auth.username | string | `"iceshrimp"` |  |
 | postgresql.enabled | bool | `true` | disable if you want to use an existing db; in which case the values below must match those of that external postgres instance |
 | redis.auth.password | string | `""` | you must set a password; the password generated by the redis chart will be rotated on each upgrade: |
 | redis.enabled | bool | `true` |  |

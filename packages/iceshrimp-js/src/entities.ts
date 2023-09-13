@@ -301,7 +301,13 @@ export type LiteInstanceMetadata = {
 	enableGithubIntegration: boolean;
 	enableDiscordIntegration: boolean;
 	enableServiceWorker: boolean;
+	searchEngine: string;
 	emojis: CustomEmoji[];
+	images: {
+		error: string;
+		notFound: string;
+		info: string;
+	};
 };
 
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {

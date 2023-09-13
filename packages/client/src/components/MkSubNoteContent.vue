@@ -1,53 +1,80 @@
 <template>
-	<div
-		:class="{
-			hasCw: !!cw,
-			cwHighlight,
-			isRenoteCw,
-		}"
-	>
-		<p v-if="cw" class="cw">
-			<MkA
-				v-if="!detailed && note.replyId"
-				:to="`#${note.replyId}`"
-				behavior="browser"
-				class="reply-icon"
-				@click.stop
-			>
-				<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
-			</MkA>
-			<MkA
-				v-if="
-					conversation &&
-					note.renoteId &&
-					note.renoteId != parentId &&
-					!note.replyId
-				"
-				:to="`/notes/${note.renoteId}`"
-				v-tooltip="i18n.ts.jumpToPrevious"
-				class="reply-icon"
-				@click.stop
-			>
-				<i class="ph-quotes ph-bold ph-lg"></i>
-			</MkA>
-
-			<span v-if="isRenoteCw" class="note-warning boost-warning"
-				><i class="bw-icon ph-fill ph-cloud-warning ph-lg"></i
-				><span class="moniker">{{ i18n.ts.boostWarningShort }}:</span>
-			</span>
-
-			<span v-else-if="cw" class="note-warning content-warning"
-				><i class="cw-icon ph-fill ph-shield-warning ph-lg"></i
-				><span class="moniker">{{ i18n.ts.contentWarningShort }}:</span>
-			</span>
-
-			<Mfm
-				v-if="cw"
-				class="text"
-				:text="cw"
-				:author="cwAuthor"
-				:i="$i"
-				:custom-emojis="appearNote.emojis"
+	<p v-if="note.cw != null" class="cw" :class="cwStyle">
+		<MkA
+			v-if="conversation && note.renoteId == parentId"
+			:to="
+				detailedView ? `#${parentId}` : `${notePage(note)}#${parentId}`
+			"
+			behavior="browser"
+			class="reply-icon"
+			@click.stop
+		>
+			<i class="ph-quotes ph-bold ph-lg"></i>
+		</MkA>
+		<MkA
+			v-else-if="!detailed && note.replyId"
+			:to="
+				detailedView
+					? `#${note.replyId}`
+					: `${notePage(note)}#${note.replyId}`
+			"
+			behavior="browser"
+			v-tooltip="i18n.ts.jumpToPrevious"
+			class="reply-icon"
+			@click.stop
+		>
+			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+		</MkA>
+		<span
+			v-else-if="note.replyId && !note.reply"
+			class="reply-icon"
+			@click.stop
+		>
+			<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+			<i class="ph-lock ph-bold"></i>
+		</span>
+		<Mfm
+			v-if="note.cw != '' && (showContent || defaultStore.state.cwStyle !== 'modern')"
+			class="text"
+			:text="note.cw"
+			:author="note.user"
+			:i="$i"
+			:custom-emojis="note.emojis"
+		/>
+		<XCwButton
+			ref="cwButton"
+			v-if="note.cw && defaultStore.state.cwStyle === 'classic'"
+			v-model="showContent"
+			:note="note"
+			v-on:keydown="focusFooter"
+			v-on:update:model-value="(val) => emit('expanded', val)"
+		/>
+	</p>
+	<div class="wrmlmaau">
+		<div
+			class="content"
+			:class="[{
+				collapsed,
+				isLong,
+				manyImages: note.files.length > 4,
+				showContent: note.cw && !showContent,
+				animatedMfm: !disableMfm,
+			}, cwStyle]"
+		>
+			<XShowMoreButton
+				ref="showMoreButton"
+				v-if="isLong && collapsed"
+				v-model="collapsed"
+				v-on:keydown="focusFooter"
+			></XShowMoreButton>
+			<Mfm v-if="note.cw && ((!showContent && defaultStore.state.cwStyle === 'modern'))" class="hiddenNote" :text="note.cw" :author="note.user" :i="$i" :custom-emojis="note.emojis"/>
+			<XCwButton
+				ref="cwButton"
+				v-if="note.cw && !showContent && defaultStore.state.cwStyle !== 'classic'"
+				v-model="showContent"
+				:note="note"
+				v-on:keydown="focusFooter"
+				v-on:update:model-value="(val) => emit('expanded', val)"
 			/>
 		</p>
 		<div class="wrmlmaau">
@@ -61,20 +88,81 @@
 					animatedMfm: !disableMfm,
 				}"
 			>
-				<XShowMoreButton
-					ref="showMoreButton"
-					v-if="isLong && collapsed"
-					v-model="collapsed"
-					v-on:keydown="focusFooter"
-				></XShowMoreButton>
-				<XCwButton
-					ref="cwButton"
-					v-if="note.cw && !showContent"
-					v-model="showContent"
-					:note="note"
-					v-on:keydown="focusFooter"
-					v-on:update:model-value="(val) => emit('expanded', val)"
+				<span v-if="note.deletedAt" style="opacity: 0.5"
+					>({{ i18n.ts.deleted }})</span
+				>
+				<template v-if="!note.cw">
+					<MkA
+						v-if="conversation && note.renoteId == parentId"
+						:to="
+							detailedView
+								? `#${parentId}`
+								: `${notePage(note)}#${parentId}`
+						"
+						behavior="browser"
+						class="reply-icon"
+						@click.stop
+					>
+						<i class="ph-quotes ph-bold ph-lg"></i>
+					</MkA>
+					<MkA
+						v-else-if="!detailed && note.replyId"
+						:to="
+							detailedView
+								? `#${note.replyId}`
+								: `${notePage(note)}#${note.replyId}`
+						"
+						behavior="browser"
+						v-tooltip="i18n.ts.jumpToPrevious"
+						class="reply-icon"
+						@click.stop
+					>
+						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+					</MkA>
+					<span
+						v-else-if="note.replyId && !note.reply"
+						class="reply-icon"
+						@click.stop
+					>
+						<i class="ph-arrow-bend-left-up ph-bold ph-lg"></i>
+						<i class="ph-lock ph-bold"></i>
+					</span>
+				</template>
+				<Mfm
+					v-if="note.text"
+					:text="note.text"
+					:author="note.user"
+					:i="$i"
+					:custom-emojis="note.emojis"
 				/>
+				<MkA
+					v-if="!detailed && note.renoteId"
+					class="rp"
+					:to="`/notes/${note.renoteId}`"
+					>{{ i18n.ts.quoteAttached }}: ...</MkA
+				>
+				<XMediaList
+					v-if="note.files.length > 0"
+					:media-list="note.files"
+				/>
+				<XPoll v-if="note.poll" :note="note" class="poll" />
+				<template v-if="detailed">
+					<MkUrlPreview
+						v-for="url in urls"
+						:key="url"
+						:url="url"
+						:compact="true"
+						:detail="false"
+						class="url-preview"
+					/>
+					<div
+						v-if="note.renote"
+						class="renote"
+						@click.stop="emit('push', note.renote)"
+					>
+						<XNoteSimple :note="note.renote" />
+					</div>
+				</template>
 				<div
 					class="body"
 					v-bind="{
@@ -152,12 +240,38 @@
 					</template>
 				</div>
 			</div>
+			<XShowMoreButton
+				v-if="isLong && !collapsed"
+				v-model="collapsed"
+			></XShowMoreButton>
+			<XCwButton
+				v-if="note.cw && showContent && defaultStore.state.cwStyle !== 'classic'"
+				v-model="showContent"
+				:note="note"
+			/>
 		</div>
+		<MkButton
+			v-if="hasMfm && defaultStore.state.animatedMfm"
+			@click.stop="toggleMfm"
+			mini
+			rounded
+		>
+			<template v-if="disableMfm">
+				<i class="ph-play ph-bold"></i> {{ i18n.ts._mfm.play }}
+			</template>
+			<template v-else>
+				<i class="ph-stop ph-bold"></i> {{ i18n.ts._mfm.stop }}
+			</template>
+		</MkButton>
+		<!-- <div
+			v-if="(isLong && !collapsed) || (props.note.cw && showContent)"
+			class="fade"
+		></div> -->
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import * as misskey from "iceshrimp-js";
 import * as mfm from "mfm-js";
 import * as os from "@/os";
@@ -181,6 +295,7 @@ const props = defineProps<{
 	conversation?;
 	detailed?: boolean;
 	detailedView?: boolean;
+	forceExpandCw?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -189,61 +304,34 @@ const emit = defineEmits<{
 	(ev: "expanded", v): void;
 }>();
 
-const note = props.note;
-
-const isRenote =
-	note.renote != null &&
-	note.text == null &&
-	note.fileIds.length === 0 &&
-	note.poll == null;
-
-let appearNote = $computed(() =>
-	isRenote ? (note.renote as misskey.entities.Note) : note
-);
-let cw = $computed(() => appearNote.cw || note.cw);
-let cwAuthor = $computed(() => (appearNote.cw ? appearNote.user : note.user));
-const cwHighlight = defaultStore.state.highlightCw;
-const isRenoteCw = $computed(() => isRenote && !appearNote.cw && note.cw);
-
-const MOBILE_THRESHOLD = 500;
-const isMobile = ref(
-	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD
-);
-const exceedsCharacterLimit =
-	defaultStore.state.expandPostMaxCharacters > 0 &&
-	appearNote.text != null &&
-	appearNote.text.length > defaultStore.state.expandPostMaxCharacters;
-const estimatedLines =
-	appearNote.text != null
-		? appearNote.text
-				.split("\n")
-				.map((line) =>
-					Math.ceil(line.length / (isMobile.value ? 40 : 90))
-				)
-				.reduce((a, b) => a + b, 0)
-		: 1;
-const exceedsLinesLimit =
-	defaultStore.state.expandPostMaxLines > 0 &&
-	estimatedLines > defaultStore.state.expandPostMaxLines;
+const cwButton = ref<HTMLElement>();
+const showMoreButton = ref<HTMLElement>();
 
 const isLong =
 	!props.detailedView &&
-	!cw &&
-	appearNote.text != null &&
-	(exceedsCharacterLimit || exceedsLinesLimit);
-const collapsed = ref(!cw && isLong && !defaultStore.state.expandPostAlways);
+	props.note.cw == null &&
+	((props.note.text != null &&
+		(props.note.text.split("\n").length > 10 ||
+			props.note.text.length > 800)) ||
+		props.note.files.length > 4);
+const collapsed = $ref(props.note.cw == null && isLong);
 const urls = props.note.text
 	? extractUrlFromMfm(mfm.parse(props.note.text)).slice(0, 5)
 	: null;
 
-const showContent = ref(defaultStore.state.autoShowCw);
+const cwStyle = computed (() => `_cw_style_${defaultStore.state.cwStyle}`);
+let _showContent = $ref(defaultStore.state.alwaysExpandCws);
+let showContent = $computed({
+	set(val) { _showContent = val },
+	get() {
+		if (props.forceExpandCw != null && props.detailedView) {
+			_showContent = props.forceExpandCw;
+			props.forceExpandCw = null;
+		}
 
-const displayPreviews = props.detailedView
-	? true
-	: defaultStore.reactiveState.filterDisplayPreviews;
-const displayMedia = props.detailedView
-	? true
-	: defaultStore.reactiveState.filterDisplayMedia;
+		return _showContent;
+	},
+})
 
 const mfms = props.note.text
 	? extractMfmWithAnimation(mfm.parse(props.note.text))
@@ -251,7 +339,7 @@ const mfms = props.note.text
 
 const hasMfm = $ref(mfms && mfms.length > 0);
 
-let disableMfm = $ref(hasMfm && defaultStore.state.animatedMfm);
+let disableMfm = $ref(defaultStore.state.animatedMfm);
 
 async function toggleMfm() {
 	if (disableMfm) {
@@ -301,7 +389,9 @@ function focusFooter(ev) {
 	display: block;
 	margin: 0;
 	padding: 0;
-	margin-bottom: 10px;
+	&:not(._cw_style_classic) {
+		margin-bottom: 10px;
+	}
 	overflow-wrap: break-word;
 	> .text {
 		margin-right: 8px;
@@ -348,6 +438,24 @@ function focusFooter(ev) {
 .wrmlmaau {
 	> .content {
 		overflow-wrap: break-word;
+		&._cw_style_modern {
+			> .hiddenNote {
+				display: block;
+				padding: 0.5em 0 0.5em;
+				font-weight: 700;
+				font-size: 1.1em;
+				text-align: center;
+			}
+		}
+		&._cw_style_classic {
+			overflow: clip;
+
+			cursor: default;
+			display: block;
+			margin: 0;
+			padding: 0;
+			overflow-wrap: break-word;
+		}
 		> .body {
 			transition: filter 0.1s;
 			> .rp {
@@ -397,7 +505,10 @@ function focusFooter(ev) {
 		&.collapsed,
 		&.showContent {
 			position: relative;
-			max-height: calc(9em + 50px);
+			&._cw_style_modern {
+				min-height: calc(1em + 100px);
+			}
+			max-height: calc(15em + 100px);
 			> .body {
 				max-height: inherit;
 				mask: linear-gradient(black calc(100% - 64px), transparent);
@@ -405,10 +516,10 @@ function focusFooter(ev) {
 					black calc(100% - 64px),
 					transparent
 				);
-				padding-inline: 50px;
-				margin-inline: -50px;
-				margin-top: -50px;
-				padding-top: 50px;
+				padding-inline: 100px;
+				margin-inline: -100px;
+				margin-top: -100px;
+				padding-top: 100px;
 				overflow: hidden;
 				user-select: none;
 				-webkit-user-select: none;
@@ -424,59 +535,44 @@ function focusFooter(ev) {
 			}
 		}
 		&.showContent {
-			> .body {
-				min-height: 2em;
-				max-height: 5em;
-				filter: blur(4px);
-				:deep(span) {
-					animation: none !important;
-					transform: none !important;
+			&._cw_style_alternative {
+				> .body {
+					min-height: 2em;
+					max-height: 5em;
+					filter: blur(4px);
+					:deep(span) {
+						animation: none !important;
+						transform: none !important;
+					}
+					:deep(img) {
+						filter: blur(12px);
+					}
 				}
-				:deep(img) {
-					filter: blur(12px);
+				:deep(.fade) {
+					inset: 0;
+					top: 90px;
 				}
 			}
-			:deep(.fade) {
-				inset: 0;
-				top: 40px;
+			&._cw_style_modern {
+				> .body {
+					min-height: 2em;
+					max-height: 5em;
+					visibility: hidden;
+				}
+				:deep(.fade) {
+					inset: 0;
+					top: 0;
+				}
 			}
-		}
-
-		:deep(.fade) {
-			display: block;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			> span {
-				display: inline-block;
-				background: var(--panel);
-				padding: 0.4em 1em;
-				font-size: 0.8em;
-				border-radius: 999px;
-				box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
-			}
-			&:hover {
-				> span {
-					background: var(--panelHighlight);
+			&._cw_style_classic {
+				> .body {
+					display: none;
 				}
 			}
 		}
-	}
 
-	:deep(.showLess) {
-		width: 100%;
-		margin-top: 1em;
-		position: sticky;
-		bottom: var(--stickyBottom);
-
-		> span {
-			display: inline-block;
-			background: var(--panel);
-			padding: 6px 10px;
-			font-size: 0.8em;
-			border-radius: 999px;
-			box-shadow: 0 0 7px 7px var(--bg);
+		&:not(.animatedMfm) :deep(span) {
+			animation: none !important;
 		}
 	}
 
@@ -488,6 +584,27 @@ function focusFooter(ev) {
 		margin-top: 10px;
 		margin-left: 0;
 		margin-right: 0.4rem;
+	}
+	> .fade {
+		position: absolute;
+		inset: 0;
+		bottom: -400px;
+		display: flex;
+		align-items: flex-end;
+		z-index: 4;
+		pointer-events: none;
+		&::before {
+			content: "";
+			display: block;
+			height: 100px;
+			position: sticky;
+			bottom: 0;
+			width: 100%;
+			background: var(--panel);
+			mask: linear-gradient(to top, var(--gradient));
+			-webkit-mask: linear-gradient(to top, var(--gradient));
+			transition: background 0.2s;
+		}
 	}
 }
 </style>

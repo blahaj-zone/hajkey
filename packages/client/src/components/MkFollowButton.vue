@@ -1,7 +1,7 @@
 <template>
 	<button
 		v-if="!hideMenu"
-		class="menu _button"
+		class="_buttonIcon _button"
 		@click.stop="menu"
 		v-tooltip="i18n.ts.menu"
 	>
@@ -201,6 +201,7 @@ onBeforeUnmount(() => {
 	border-radius: 100px;
 	background: var(--bg);
 	vertical-align: middle;
+	margin-left: 0.5em;
 
 	&.full {
 		padding: 0.2em 0.7em;

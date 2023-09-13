@@ -185,7 +185,7 @@
 			font-family: BIZ UDGothic, Roboto, HelveticaNeue, Arial, sans-serif;
 		}
 
-		#firefish_app,
+		#iceshrimp_app,
 		#splash {
 			display: none !important;
 		}

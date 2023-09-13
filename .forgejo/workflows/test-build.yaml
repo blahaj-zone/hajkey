@@ -1,0 +1,37 @@
+on:
+  - push
+jobs:
+  test-build:
+    runs-on: docker
+    container:
+      image: iceshrimp.dev/iceshrimp/ci-env:latest
+      options: --volume /opt/iceshrimp-cache/yarn:/iceshrimp-caches/yarn --volume /opt/iceshrimp-cache/cargo:/root/.cargo --volume /opt/iceshrimp-cache/built:/iceshrimp-caches/built --volume /opt/iceshrimp-cache/target:/iceshrimp-caches/target
+    services:
+      database:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: "test"
+      redis:
+        image: redis
+    steps:
+      - name: Clone repository
+        run: git clone https://iceshrimp.dev/iceshrimp/iceshrimp.git --branch=${{ github.ref_name }} --depth=1 /iceshrimp
+      - name: Install build dependencies
+        run: |
+          cd /iceshrimp
+          cp -Tr /iceshrimp-caches/yarn .yarn
+          yarn
+          rm -rf /iceshrimp-caches/yarn/* && cp -Tr .yarn /iceshrimp-caches/yarn
+      - name: Build the shrimp
+        run: |
+          cd /iceshrimp
+          cp -Trp /iceshrimp-caches/built packages/backend/native-utils/built
+          cp -Trp /iceshrimp-caches/target packages/backend/native-utils/target
+          yarn build:debug
+          rm -rf /iceshrimp-caches/built/* && cp -Trp packages/backend/native-utils/built /iceshrimp-caches/built
+          rm -rf /iceshrimp-caches/target/* && cp -Trp packages/backend/native-utils/target /iceshrimp-caches/target
+      - name: Test the shrimp
+        run: |
+          cd /iceshrimp
+          cp .config/ci.yml .config/default.yml
+          yarn run migrate

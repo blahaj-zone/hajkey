@@ -32,7 +32,7 @@ const status: Entity.Status = {
   in_reply_to_account_id: null,
   reblog: null,
   content: 'hoge',
-  plain_content: 'hoge',
+  text: 'hoge',
   created_at: '2019-03-26T21:40:32',
   emojis: [],
   replies_count: 0,
@@ -54,7 +54,7 @@ const status: Entity.Status = {
   } as Entity.Application,
   language: null,
   pinned: null,
-  emoji_reactions: [],
+  reactions: [],
   bookmarked: false,
   quote: null
 }

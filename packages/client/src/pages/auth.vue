@@ -111,7 +111,13 @@ export default defineComponent({
 					}, {});
 			const isMastodon = !!getUrlParams().mastodon;
 			if (this.session.app.callbackUrl && isMastodon) {
-				const callbackUrl = new URL(this.session.app.callbackUrl);
+				const redirectUri = decodeURIComponent(getUrlParams().redirect_uri);
+				if (!this.session.app.callbackUrl.split('\n').some(p => p === redirectUri)){
+					this.state = "fetch-session-error";
+					this.fetching = false;
+					throw new Error("callback uri doesn't match registered app");
+				}
+				const callbackUrl = new URL(redirectUri)
 				callbackUrl.searchParams.append("code", this.session.token);
 				if (!!getUrlParams().state)
 					callbackUrl.searchParams.append(

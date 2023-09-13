@@ -5,8 +5,9 @@
   "typings": "./lib/src/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
-    "lint": "pnpm rome check **/*.ts --apply",
-		"format": "pnpm rome format --write src/**/*.ts",
+    "build:debug": "yarn build",
+    "lint": "rome check **/*.ts --apply",
+    "format": "rome format --write src/**/*.ts",
     "doc": "typedoc --out ../docs ./src",
     "test": "NODE_ENV=test jest -u --maxWorkers=3"
   },
@@ -36,6 +37,7 @@
   "dependencies": {
     "@types/oauth": "^0.9.0",
     "@types/ws": "^8.5.4",
+    "async-lock": "1.4.0",
     "axios": "1.2.2",
     "dayjs": "^1.11.7",
     "form-data": "^4.0.0",
@@ -46,20 +48,19 @@
     "socks-proxy-agent": "^7.0.0",
     "typescript": "4.9.4",
     "uuid": "^9.0.0",
-    "ws": "8.12.0",
-    "async-lock": "1.4.0"
+    "ws": "8.12.0"
   },
   "devDependencies": {
+    "@types/async-lock": "1.4.0",
     "@types/core-js": "^2.5.0",
     "@types/form-data": "^2.5.0",
     "@types/jest": "^29.4.0",
+    "@types/node": "18.11.18",
     "@types/object-assign-deep": "^0.4.0",
     "@types/parse-link-header": "^2.0.0",
     "@types/uuid": "^9.0.0",
-		"@types/node": "18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
-    "@types/async-lock": "1.4.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard": "^16.0.3",

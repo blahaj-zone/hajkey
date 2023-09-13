@@ -4,20 +4,20 @@
 			><MkPageHeader :actions="headerActions" :tabs="headerTabs"
 		/></template>
 		<MkSpacer :content-max="800" :margin-min="16" :margin-max="32">
-			<FormSuspense :p="init">
-				<FormInput v-model="title">
+			<FormSuspense :p="init" class="_formRoot">
+				<FormInput v-model="title" class="_formBlock">
 					<template #label>{{ i18n.ts.title }}</template>
 				</FormInput>
 
-				<FormTextarea v-model="description" :max="500">
+				<FormTextarea v-model="description" :max="500" class="_formBlock">
 					<template #label>{{ i18n.ts.description }}</template>
 				</FormTextarea>
 
-				<div class="">
+				<div class="_formBlock">
 					<div
 						v-for="file in files"
 						:key="file.id"
-						class="wqugxsfx"
+						class="wqugxsfx _formBlock"
 						:style="{
 							backgroundImage: file
 								? `url(${file.thumbnailUrl})`
@@ -40,20 +40,20 @@
 					>
 				</div>
 
-				<FormSwitch v-model="isSensitive">{{
+				<FormSwitch v-model="isSensitive" class="_formBlock">{{
 					i18n.ts.markAsSensitive
 				}}</FormSwitch>
 
-				<FormButton v-if="postId" primary @click="save"
+				<FormButton v-if="postId" primary @click="save" class="_formBlock"
 					><i class="ph-floppy-disk-back ph-bold ph-lg"></i>
 					{{ i18n.ts.save }}</FormButton
 				>
-				<FormButton v-else primary @click="save"
+				<FormButton v-else primary @click="save" class="_formBlock"
 					><i class="ph-floppy-disk-back ph-bold ph-lg"></i>
 					{{ i18n.ts.publish }}</FormButton
 				>
 
-				<FormButton v-if="postId" danger @click="del"
+				<FormButton v-if="postId" danger @click="del" class="_formBlock"
 					><i class="ph-trash ph-bold ph-lg"></i>
 					{{ i18n.ts.delete }}</FormButton
 				>

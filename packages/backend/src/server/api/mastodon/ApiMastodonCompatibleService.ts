@@ -103,7 +103,7 @@ export function apiMastodonCompatible(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.dismissInstanceAnnouncement(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = data.data;
 			} catch (e: any) {

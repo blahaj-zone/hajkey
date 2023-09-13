@@ -340,7 +340,7 @@
 import { watch } from "vue";
 import { Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import type * as firefish from "iceshrimp-js";
+import type * as iceshrimp from "iceshrimp-js";
 import MkChart from "@/components/MkChart.vue";
 import MkObjectView from "@/components/MkObjectView.vue";
 import FormLink from "@/components/form/link.vue";
@@ -363,11 +363,11 @@ import "swiper/scss";
 import "swiper/scss/virtual";
 import { getProxiedImageUrlNullable } from "@/scripts/media-proxy";
 
-type AugmentedInstanceMetadata = firefish.entities.DetailedInstanceMetadata & {
+type AugmentedInstanceMetadata = iceshrimp.entities.DetailedInstanceMetadata & {
 	blockedHosts: string[];
 	silencedHosts: string[];
 };
-type AugmentedInstance = firefish.entities.Instance & {
+type AugmentedInstance = iceshrimp.entities.Instance & {
 	isBlocked: boolean;
 	isSilenced: boolean;
 };

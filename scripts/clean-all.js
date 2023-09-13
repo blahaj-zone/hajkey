@@ -61,7 +61,7 @@ const { join } = require("node:path");
 		force: true,
 	});
 
-	execa("pnpm", ["store", "prune"], {
+	execa("yarn", ["clean"], {
 		cwd: join(__dirname, "/../"),
 		stdio: "inherit",
 	});

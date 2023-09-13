@@ -16,7 +16,7 @@
 		disabled="true"
 		v-tooltip.noDelay.bottom="i18n.ts.disabled"
 	>
-		<i class="ph-repeat ph-bold ph-lg"></i>
+		<i class="ph-lock-simple ph-bold ph-lg"></i>
 	</button>
 </template>
 

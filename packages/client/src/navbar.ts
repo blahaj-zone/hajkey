@@ -9,6 +9,7 @@ import { defaultStore } from "@/store";
 import { instance } from "@/instance";
 import { host } from "@/config";
 import XTutorial from "@/components/MkTutorialDialog.vue";
+import { openHelpMenu_ } from "@/scripts/helpMenu";
 
 export const navbarItemDef = reactive({
 	notifications: {
@@ -50,7 +51,7 @@ export const navbarItemDef = reactive({
 	},
 	explore: {
 		title: "explore",
-		icon: "ph-compass ph-bold ph-lg",
+		icon: "ph-hash ph-bold ph-lg",
 		to: "/explore",
 	},
 	announcements: {
@@ -160,11 +161,22 @@ export const navbarItemDef = reactive({
 			);
 		},
 	},
+	help: {
+		title: "help",
+		icon: "ph-info ph-bold ph-lg",
+		action: (ev) => {
+			openHelpMenu(ev);
+		},
+	},
 	reload: {
 		title: "reload",
 		icon: "ph-arrows-clockwise ph-bold ph-lg",
-		action: (ev) => {
+		action: () => {
 			location.reload();
-		},
-	},
+		}
+	}
 });
+
+function openHelpMenu(ev: MouseEvent) {
+	openHelpMenu_(ev);
+}

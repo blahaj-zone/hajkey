@@ -14,7 +14,7 @@ export default async function (
 ) {
 	const author = {
 		link: `${config.url}/@${user.username}`,
-		email: `${user.username}@${config.host}`,
+		email: `${user.username}@${config.domain}`,
 		name: user.name || user.username,
 	};
 
@@ -41,9 +41,9 @@ export default async function (
 
 	const feed = new Feed({
 		id: author.link,
-		title: `${author.name} (@${user.username}@${config.host})`,
+		title: `${author.name} (@${user.username}@${config.domain})`,
 		updated: notes[0].createdAt,
-		generator: "Firefish",
+		generator: "Iceshrimp",
 		description: `${user.notesCount} Notes, ${
 			profile.ffVisibility === "public" ? user.followingCount : "?"
 		} Following, ${

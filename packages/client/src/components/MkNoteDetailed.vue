@@ -23,6 +23,7 @@
 			class="reply-to"
 			:note="note"
 			:detailedView="true"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="note.reply" mini />
 		<MkNoteSub
@@ -30,6 +31,7 @@
 			:note="note.reply"
 			class="reply-to"
 			:detailedView="true"
+			:forceExpandCw="props.expandAllCws"
 		/>
 
 		<MkNote
@@ -38,6 +40,7 @@
 			tabindex="-1"
 			:note="note"
 			detailedView
+			:forceExpandCw="props.expandAllCws"
 		></MkNote>
 
 		<MkTab v-model="tab" :style="'underline'" @update:modelValue="loadTab">
@@ -79,6 +82,7 @@
 			:conversation="replies"
 			:detailedView="true"
 			:parentId="note.id"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="tab === 'replies' && note.repliesCount > 0" />
 
@@ -91,6 +95,7 @@
 			:conversation="replies"
 			:detailedView="true"
 			:parentId="note.id"
+			:forceExpandCw="props.expandAllCws"
 		/>
 		<MkLoading v-else-if="tab === 'quotes' && directQuotes.length > 0" />
 
@@ -187,12 +192,13 @@ import { getNoteMenu } from "@/scripts/get-note-menu";
 import { useNoteCapture } from "@/scripts/use-note-capture";
 import { deepClone } from "@/scripts/clone";
 import { stream } from "@/stream";
-import { NoteUpdatedEvent } from "iceshrimp-js/built/streaming.types";
+import { NoteUpdatedEvent } from "iceshrimp-js/src/streaming.types";
 import appear from "@/directives/appear";
 
 const props = defineProps<{
 	note: misskey.entities.Note;
 	pinned?: boolean;
+	expandAllCws?: boolean;
 }>();
 
 const colorize = defaultStore.state.replyDividerColorize;
@@ -231,7 +237,7 @@ const noteEl = $ref();
 const menuButton = ref<HTMLElement>();
 const renoteButton = ref<InstanceType<typeof XRenoteButton>>();
 const reactButton = ref<HTMLElement>();
-const showContent = ref(false);
+const showContent = ref(defaultStore.state.alwaysExpandCws);
 const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
@@ -405,41 +411,24 @@ function loadTab() {
 async function onNoteUpdated(noteData: NoteUpdatedEvent): Promise<void> {
 	const { type, id, body } = noteData;
 
-	let found = -1;
-	if (id === note.id) {
-		found = 0;
-	} else if (replies?.value) {
-		for (let i = 0; i < replies.value.length; i++) {
-			const reply = replies.value[i];
-			if (reply.id === id) {
-				found = i + 1;
-				break;
-			}
-		}
-	}
-
-	if (found === -1) {
-		return;
-	}
-
 	switch (type) {
 		case "replied":
-			const { id: createdId } = body;
+			const createdId = body.id;
 			const replyNote = await os.api("notes/show", {
 				noteId: createdId,
 			});
-
-			replies?.value?.splice(found, 0, replyNote);
-			if (found === 0) {
-				directReplies?.value?.unshift(replyNote);
+			delete replyNote.reply;
+			replies.value.unshift(replyNote);
+			if (id === note.id) {
+				directReplies?.push(replyNote);
 			}
 			break;
 
 		case "deleted":
-			if (found === 0) {
+			if (id === note.id) {
 				isDeleted.value = true;
 			} else {
-				replies?.value?.splice(found - 1, 1);
+				replies.value.splice(replies.value.findIndex(p => p.id == id), 1);
 			}
 			break;
 	}

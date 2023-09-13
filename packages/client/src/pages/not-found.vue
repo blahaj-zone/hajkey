@@ -2,7 +2,7 @@
 	<div class="ipledcug">
 		<div class="_fullinfo">
 			<img
-				src="/static-assets/badges/not-found.png"
+				:src="instance.images.notFound"
 				class="_ghost"
 				alt="Not found"
 			/>
@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import { instance } from "@/instance";
 
 const headerActions = $computed(() => []);
 

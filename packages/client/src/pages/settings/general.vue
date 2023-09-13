@@ -9,7 +9,7 @@
 				<I18n :src="i18n.ts.i18nInfo" tag="span">
 					<template #link>
 						<MkLink
-							url="https://hosted.weblate.org/engage/firefish/"
+							url="https://translate.iceshrimp.dev/engage/iceshrimp/"
 							>Weblate</MkLink
 						>
 					</template>
@@ -159,9 +159,6 @@
 			<FormSwitch v-model="useBlurEffect" class="_formBlock">{{
 				i18n.ts.useBlurEffect
 			}}</FormSwitch>
-			<FormSwitch v-model="useBlurEffectForModal" class="_formBlock">{{
-				i18n.ts.useBlurEffectForModal
-			}}</FormSwitch>
 			<FormSwitch
 				v-model="showGapBetweenNotesInTimeline"
 				class="_formBlock"
@@ -203,6 +200,23 @@
 				class="_formBlock"
 				>{{ i18n.ts.showAdminUpdates }}</FormSwitch
 			>
+      <FormSwitch v-model="alwaysExpandCws" class="_formBlock">{{
+        i18n.ts.alwaysExpandCws
+      }}</FormSwitch>
+
+			<FormSelect v-model="cwStyle" class="_formBlock">
+				<template #label>{{ i18n.ts.cwStyle }}</template>
+				<option value="modern">
+					{{ i18n.ts._cwStyle.modern }}
+				</option>
+				<option value="classic">
+					{{ i18n.ts._cwStyle.classic }}
+				</option>
+				<option value="alternative">
+					{{ i18n.ts._cwStyle.alternative }}
+				</option>
+			</FormSelect>
+
 			<FormSelect v-model="instanceTicker" class="_formBlock">
 				<template #label>{{ i18n.ts.instanceTicker }}</template>
 				<option value="none">{{ i18n.ts._instanceTicker.none }}</option>
@@ -292,9 +306,6 @@ const reduceAnimation = computed(
 		(v) => !v,
 	),
 );
-const useBlurEffectForModal = computed(
-	defaultStore.makeGetterSetter("useBlurEffectForModal"),
-);
 const useBlurEffect = computed(defaultStore.makeGetterSetter("useBlurEffect"));
 const showGapBetweenNotesInTimeline = computed(
 	defaultStore.makeGetterSetter("showGapBetweenNotesInTimeline"),
@@ -326,6 +337,9 @@ const expandOnNoteClick = computed(
 const showFixedPostForm = computed(
 	defaultStore.makeGetterSetter("showFixedPostForm"),
 );
+const alwaysExpandCws = computed(
+    defaultStore.makeGetterSetter("alwaysExpandCws"),
+);
 const numberOfPageCache = computed(
 	defaultStore.makeGetterSetter("numberOfPageCache"),
 );
@@ -356,6 +370,9 @@ const showAdminUpdates = computed(
 );
 const showTimelineReplies = computed(
 	defaultStore.makeGetterSetter("showTimelineReplies"),
+);
+const cwStyle = computed(
+	defaultStore.makeGetterSetter("cwStyle"),
 );
 
 watch(swipeOnDesktop, () => {
@@ -401,6 +418,8 @@ watch(
 		advancedMfm,
 		autoplayMfm,
 		expandOnNoteClick,
+		cwStyle,
+		alwaysExpandCws
 	],
 	async () => {
 		await reloadAsk();

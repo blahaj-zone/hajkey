@@ -6,8 +6,7 @@ export function createConnection() {
 	if (config.cacheServer) {
 		source = config.cacheServer;
 	}
-
-	const cfg = {
+	return new Redis({
 		port: source.port,
 		host: source.host,
 		family: source.family ?? 0,
@@ -16,10 +15,7 @@ export function createConnection() {
 		keyPrefix: `${source.prefix}:`,
 		db: source.db || 0,
 		tls: source.tls,
-	};
-	console.log("Connecting to redis", cfg);
-	const redis = new Redis(cfg);
-	return redis;
+	});
 }
 
 export const subscriber = createConnection();

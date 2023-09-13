@@ -5,12 +5,12 @@ import { toASCII } from "punycode";
 export function getFullApAccount(username: string, host: string | null) {
 	return host
 		? `${username}@${toPuny(host)}`
-		: `${username}@${toPuny(config.host)}`;
+		: `${username}@${toPuny(config.domain)}`;
 }
 
 export function isSelfHost(host: string) {
 	if (host == null) return true;
-	return toPuny(config.host) === toPuny(host);
+	return toPuny(config.domain) === toPuny(host) || toPuny(config.host) === toPuny(host);
 }
 
 export function extractDbHost(uri: string) {

@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:1.2
 ## Install dev and compilation dependencies, build files
 FROM alpine:3.18 as build
 WORKDIR /iceshrimp
@@ -13,10 +14,10 @@ COPY packages/backend/native-utils/migration/Cargo.toml packages/backend/native-
 COPY packages/backend/native-utils/migration/src/lib.rs packages/backend/native-utils/migration/src/
 
 # Install cargo dependencies
-RUN cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
+RUN --mount=type=cache,target=/root/.cargo cargo fetch --locked --manifest-path /iceshrimp/packages/backend/native-utils/Cargo.toml
 
 # Copy only the dependency-related files first, to cache efficiently
-COPY package.json pnpm*.yaml ./
+COPY package.json yarn.lock .pnp.cjs .pnp.loader.mjs ./
 COPY packages/backend/package.json packages/backend/package.json
 COPY packages/client/package.json packages/client/package.json
 COPY packages/sw/package.json packages/sw/package.json
@@ -26,21 +27,37 @@ COPY packages/backend/native-utils/package.json packages/backend/native-utils/pa
 COPY packages/backend/native-utils/npm/linux-x64-musl/package.json packages/backend/native-utils/npm/linux-x64-musl/package.json
 COPY packages/backend/native-utils/npm/linux-arm64-musl/package.json packages/backend/native-utils/npm/linux-arm64-musl/package.json
 
-# Configure corepack and pnpm, and install dev mode dependencies for compilation
-RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm i
+# Prepare yarn cache
+COPY .yarn/cache .yarn/cache
+RUN --mount=type=cache,target=/iceshrimp/.yarncache cp -Tr .yarncache .yarn
 
-# Copy in the rest of the native-utils rust files
-COPY packages/backend/native-utils packages/backend/native-utils/
+# Configure corepack and yarn, and install dev mode dependencies for compilation
+RUN corepack enable && corepack prepare yarn@stable --activate && yarn
 
-# Compile native-utils
-RUN pnpm run --filter native-utils build
+# Save yarn cache
+RUN --mount=type=cache,target=/iceshrimp/.yarncache rm -rf .yarncache/* && cp -Tr .yarn .yarncache
 
 # Copy in the rest of the files to compile
 COPY . ./
-RUN env NODE_ENV=production sh -c "pnpm run --filter '!native-utils' build && pnpm run gulp"
+
+# Fix napi-rs jank
+RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/.napi_buildcache /iceshrimp/packages/backend/native-utils/built
+RUN --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target if [[ ! -f /iceshrimp/packages/backend/native-utils/built/index.js ]]; then rm -rf /iceshrimp/packages/backend/native-utils/target/release; fi
+
+# Build the thing
+RUN --mount=type=cache,target=/root/.cargo --mount=type=cache,target=/iceshrimp/packages/backend/native-utils/target env NODE_ENV=production yarn build
+
+# Fix napi-rs jank (part 2)
+RUN --mount=type=cache,target=/iceshrimp/.napi_buildcache cp -Tr /iceshrimp/packages/backend/native-utils/built /iceshrimp/.napi_buildcache
+
+# Prepare yarn cache (production)
+RUN --mount=type=cache,target=/iceshrimp/.yarncache_prod cp -Tr .yarncache_prod .yarn
 
 # Trim down the dependencies to only those for production
-RUN pnpm i --prod
+RUN yarn workspaces focus --all --production
+
+# Save yarn cache (production)
+RUN --mount=type=cache,target=/iceshrimp/.yarncache_prod rm -rf .yarncache_prod/* && cp -Tr .yarn .yarncache_prod
 
 ## Runtime container
 FROM alpine:3.18
@@ -54,11 +71,7 @@ COPY . ./
 COPY --from=build /iceshrimp/packages/megalodon /iceshrimp/packages/megalodon
 
 # Copy node modules
-COPY --from=build /iceshrimp/node_modules /iceshrimp/node_modules
-COPY --from=build /iceshrimp/packages/backend/node_modules /iceshrimp/packages/backend/node_modules
-COPY --from=build /iceshrimp/packages/sw/node_modules /iceshrimp/packages/sw/node_modules
-COPY --from=build /iceshrimp/packages/client/node_modules /iceshrimp/packages/client/node_modules
-COPY --from=build /iceshrimp/packages/iceshrimp-js/node_modules /iceshrimp/packages/iceshrimp-js/node_modules
+COPY --from=build /iceshrimp/.yarn /iceshrimp/.yarn
 
 # Copy the finished compiled files
 COPY --from=build /iceshrimp/built /iceshrimp/built
@@ -66,8 +79,8 @@ COPY --from=build /iceshrimp/packages/backend/built /iceshrimp/packages/backend/
 COPY --from=build /iceshrimp/packages/backend/assets/instance.css /iceshrimp/packages/backend/assets/instance.css
 COPY --from=build /iceshrimp/packages/backend/native-utils/built /iceshrimp/packages/backend/native-utils/built
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare yarn@stable --activate
 ENV NODE_ENV=production
 VOLUME "/iceshrimp/files"
 ENTRYPOINT [ "/sbin/tini", "--" ]
-CMD [ "pnpm", "run", "migrateandstart" ]
+CMD [ "yarn", "run", "migrateandstart" ]

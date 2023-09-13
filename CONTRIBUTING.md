@@ -1,26 +1,24 @@
 # Contribution guide
-We're glad you're interested in contributing Firefish! In this document you will find the information you need to contribute to the project.
+We're glad you're interested in contributing Iceshrimp! In this document you will find the information you need to contribute to the project.
 
 ## Translation (i18n)
-Firefish uses [Weblate](hhttps://hosted.weblate.org/engage/firefish/) for translation and internationalization management.
+Iceshrimp uses [Weblate](https://translate.iceshrimp.dev/) for translation and internationalization management.
 
 If your language is not listed in Weblate, please open an issue.
 
 You can contribute without knowing how to code by helping translate here:
 
-[![Translation status](https://hosted.weblate.org/widgets/firefish/-/287x66-grey.png)](https://hosted.weblate.org/engage/firefish/)
+[![Translation status](https://translate.iceshrimp.dev/widgets/iceshrimp/-/287x66-grey.png)](https://translate.iceshrimp.dev/)
 
-[![Translation bars](https://hosted.weblate.org/widgets/firefish/-/multi-auto.svg)](https://hosted.weblate.org/engage/firefish/)
+[![Translation bars](https://translate.iceshrimp.dev/widgets/iceshrimp/-/multi-auto.svg)](https://translate.iceshrimp.dev/)
 
-## Roadmap
-See [FIREFISH.md](./FIREFISH.md)
 
 ## Issues
 Before creating an issue, please check the following:
 - To avoid duplication, please search for similar issues before creating a new issue.
 - Do not use Issues to ask questions or troubleshooting.
 	- Issues should only be used to feature requests, suggestions, and bug tracking.
-	- Please ask questions or troubleshooting in the [Matrix room](https://matrix.to/#/#firefish:matrix.fedibird.com).
+	- Please ask questions or troubleshooting in the [Matrix room](https://matrix.to/#/#iceshrimp-dev:161.rocks).
 
 > **Warning**
 > Do not close issues that are about to be resolved. It should remain open until a commit that actually resolves it is merged.

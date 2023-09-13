@@ -1,5 +1,5 @@
 {
-	description = "Firefish development flake";
+	description = "Iceshrimp development flake";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -31,7 +31,7 @@
 							name = "iceshrimp-dev-shell";
 							# Add additional packages to our environment
 							packages = [
-								pkgs.nodePackages.pnpm
+								pkgs.yarn-berry
 
 								pkgs.python3
 							];
@@ -39,22 +39,22 @@
 							devenv.warnOnNewVersion = false;
 							# Enable typescript support
 							languages.typescript.enable = true;
-							# Enable javascript for NPM and PNPM
+							# Enable javascript for NPM and Yarn
 							languages.javascript.enable = true;
 							languages.javascript.package = pkgs.nodejs_18;
 							# Enable stable Rust for the backend
 							languages.rust.enable = true;
 							languages.rust.channel = "stable";
 							processes = {
-								dev-server.exec = "pnpm run dev";
+								dev-server.exec = "yarn run dev";
 							};
 							scripts = {
-								build.exec = "pnpm run build";
-								clean.exec = "pnpm run clean";
+								build.exec = "yarn run build";
+								clean.exec = "yarn run clean";
 								clear-state.exec = "rm -rf .devenv/state/redis .devenv/state/postgres";
-								format.exec = "pnpm run format";
-								install-deps.exec = "pnpm install";
-								migrate.exec = "pnpm run migrate";
+								format.exec = "yarn run format";
+								install-deps.exec = "yarn install";
+								migrate.exec = "yarn run migrate";
 								prepare-config.exec = "cp .config/devenv.yml .config/default.yml";
 							};
 							services = {
@@ -66,7 +66,7 @@
 									}];
 									initialScript = ''
 										CREATE USER iceshrimp WITH PASSWORD 'iceshrimp';
-										ALTER USER firefish WITH SUPERUSER;
+										ALTER USER iceshrimp WITH SUPERUSER;
 										GRANT ALL ON DATABASE iceshrimp TO iceshrimp;
 									'';
 									listen_addresses = "127.0.0.1";

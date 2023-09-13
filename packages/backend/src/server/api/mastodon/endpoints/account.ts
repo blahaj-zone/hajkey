@@ -114,7 +114,7 @@ export function apiAccountMastodon(router: Router): void {
 
 			let reqIds = [];
 			for (let i = 0; i < ids.length; i++) {
-				reqIds.push(convertId(ids[i], IdType.FirefishId));
+				reqIds.push(convertId(ids[i], IdType.IceshrimpId));
 			}
 
 			const data = await client.getRelationships(reqIds);
@@ -135,7 +135,7 @@ export function apiAccountMastodon(router: Router): void {
 		const accessTokens = ctx.headers.authorization;
 		const client = getClient(BASE_URL, accessTokens);
 		try {
-			const calcId = convertId(ctx.params.id, IdType.FirefishId);
+			const calcId = convertId(ctx.params.id, IdType.IceshrimpId);
 			const data = await client.getAccount(calcId);
 			ctx.body = convertAccount(data.data);
 		} catch (e: any) {
@@ -153,7 +153,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountStatuses(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					convertTimelinesArgsId(argsToBools(limitToInt(ctx.query as any))),
 				);
 				ctx.body = data.data.map((status) => convertStatus(status));
@@ -173,7 +173,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountFeaturedTags(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = data.data.map((tag) => convertFeaturedTag(tag));
 			} catch (e: any) {
@@ -192,7 +192,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountFollowers(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					convertTimelinesArgsId(limitToInt(ctx.query as any)),
 				);
 				ctx.body = data.data.map((account) => convertAccount(account));
@@ -212,7 +212,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountFollowing(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					convertTimelinesArgsId(limitToInt(ctx.query as any)),
 				);
 				ctx.body = data.data.map((account) => convertAccount(account));
@@ -232,7 +232,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.getAccountLists(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = data.data.map((list) => convertList(list));
 			} catch (e: any) {
@@ -251,7 +251,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.followAccount(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				let acct = convertRelationship(data.data);
 				acct.following = true;
@@ -272,7 +272,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.unfollowAccount(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				let acct = convertRelationship(data.data);
 				acct.following = false;
@@ -293,7 +293,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.blockAccount(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -331,7 +331,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.muteAccount(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 					(ctx.request as any).body as any,
 				);
 				ctx.body = convertRelationship(data.data);
@@ -351,7 +351,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.unmuteAccount(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -478,7 +478,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.acceptFollowRequest(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {
@@ -497,7 +497,7 @@ export function apiAccountMastodon(router: Router): void {
 			const client = getClient(BASE_URL, accessTokens);
 			try {
 				const data = await client.rejectFollowRequest(
-					convertId(ctx.params.id, IdType.FirefishId),
+					convertId(ctx.params.id, IdType.IceshrimpId),
 				);
 				ctx.body = convertRelationship(data.data);
 			} catch (e: any) {

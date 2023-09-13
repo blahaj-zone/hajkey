@@ -69,8 +69,8 @@
 						>
 						<small
 							>Powered by
-							<a href="https://joinfirefish.org/" target="_blank"
-								>Firefish</a
+							<a href="https://iceshrimp.dev/" target="_blank"
+								>Iceshrimp</a
 							></small
 						>
 					</div>

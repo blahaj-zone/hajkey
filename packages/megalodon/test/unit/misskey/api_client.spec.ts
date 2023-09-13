@@ -34,7 +34,7 @@ describe('api_client', () => {
             dist: MisskeyNotificationType.Reaction
           },
           {
-            src: MegalodonNotificationType.EmojiReaction,
+            src: MegalodonNotificationType.Reaction,
             dist: MisskeyNotificationType.Reaction
           },
           {
@@ -80,7 +80,7 @@ describe('api_client', () => {
           },
           {
             src: MisskeyNotificationType.Reaction,
-            dist: MegalodonNotificationType.EmojiReaction
+            dist: MegalodonNotificationType.Reaction
           },
           {
             src: MisskeyNotificationType.PollEnded,
@@ -201,7 +201,7 @@ describe('api_client', () => {
           renoteId: null
         }
         const megalodonStatus = converter.note(note, user.host || 'misskey.io')
-        expect(megalodonStatus.plain_content).toEqual(plainContent)
+        expect(megalodonStatus.text).toEqual(plainContent)
         expect(megalodonStatus.content).toEqual(content)
       })
       it('html tags should be escaped', () => {
@@ -225,7 +225,7 @@ describe('api_client', () => {
           renoteId: null
         }
         const megalodonStatus = converter.note(note, user.host || 'misskey.io')
-        expect(megalodonStatus.plain_content).toEqual(plainContent)
+        expect(megalodonStatus.text).toEqual(plainContent)
         expect(megalodonStatus.content).toEqual(content)
       })
     })

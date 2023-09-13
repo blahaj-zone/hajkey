@@ -157,7 +157,7 @@ export function toHtml(
 
 		search(node) {
 			const a = doc.createElement("a");
-			a.href = `${engine}{node.props.query}`;
+			a.href = `${config.searchEngine}${node.props.query}`;
 			a.textContent = node.props.content;
 			return a;
 		},

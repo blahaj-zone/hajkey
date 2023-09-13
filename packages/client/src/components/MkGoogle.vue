@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { i18n } from "@/i18n";
-import {engine} from "../../../../sane-defaults"
+import { searchEngine } from "@/config"
 
 const props = defineProps<{
 	q: string;
@@ -21,7 +21,7 @@ const query = ref(props.q);
 
 const search = () => {
 	window.open(
-		`${engine}${query.value}`,
+		`${searchEngine}${query.value}`,
 		"_blank",
 	);
 };

@@ -2,9 +2,10 @@ import type Bull from "bull";
 
 import { queueLogger } from "../../logger.js";
 import { deleteFileSync } from "@/services/drive/delete-file.js";
-import { DriveFiles } from "@/models/index.js";
-import { MoreThan, LessThan, Not, IsNull } from "typeorm";
-import { fail } from "node:assert";
+import { DriveFiles, Users } from "@/models/index.js";
+import { MoreThan, Not, IsNull } from "typeorm";
+import { User } from "@/models/entities/user.js";
+import config from "@/config/index.js";
 
 const logger = queueLogger.createSubLogger("clean-remote-files");
 
@@ -12,12 +13,42 @@ export default async function cleanRemoteFiles(
 	job: Bull.Job<Record<string, unknown>>,
 	done: any,
 ): Promise<void> {
-	logger.info("Deleting cached remote files...");
-	job.log("Beginning");
+	let progress = 0;
+	const untilDate = new Date(Date.now() - ((new Date()).getTimezoneOffset() * 60000));
+	untilDate.setDate(untilDate.getDate() - (config.mediaCleanup?.maxAgeDays ?? 0));
+	const avatars = !(config.mediaCleanup?.keepHeaders ?? true);
+	const headers = !(config.mediaCleanup?.keepHeaders ?? true);
 
-	let deletedCount = 0;
-	let failedCount = 0;
-	let cursor: any = null;
+	const until = untilDate.toISOString().replace("T", " ").slice(0, -1);
+
+	let target = "files";
+	if (avatars)
+		if (headers) target += ", avatars & headers";
+		else target += " & avatars";
+	else if (headers) target += " & headers";
+
+	logger.info(`Deleting cached remote ${target} created before ${until}...`);
+
+	let query = DriveFiles.createQueryBuilder("file")
+		.where(`file.isLink = FALSE`)
+		.andWhere(`file.userHost IS NOT NULL`)
+		.andWhere("file.createdAt < :until", { until });
+
+	if (!avatars || !headers) {
+		query = query.andWhere((qb) => {
+			let sq = qb.subQuery().from(User, "user");
+
+			if (!avatars) sq = sq.where("file.id = user.avatarId");
+			if (!headers) sq = sq.orWhere("file.id = user.bannerId");
+
+			return `NOT EXISTS ${sq.getQuery()}`;
+		});
+	}
+
+	query = query.take(8);
+
+	const total = await query.getCount();
+	logger.info(`Deleting ${total} files, please wait...`);
 
 	const total = await DriveFiles.countBy({
 		userHost: Not(IsNull()),
@@ -29,19 +60,7 @@ export default async function cleanRemoteFiles(
 	const batch = 1000;
 	let loop = 0;
 	while (true) {
-		loop++;
-		const files = await DriveFiles.find({
-			where: {
-				userHost: Not(IsNull()),
-				isLink: false,
-				createdAt: LessThan(new Date(Date.now() - 1000 * 60 * 60 * 12)),
-				...(cursor ? { id: MoreThan(cursor) } : {}),
-			},
-			take: batch,
-			order: {
-				id: 1,
-			},
-		});
+		const files = await query.getMany();
 
 		if (files.length === 0) {
 			job.log("No more files to delete.");
@@ -49,26 +68,13 @@ export default async function cleanRemoteFiles(
 			break;
 		}
 
-		cursor = files[files.length - 1].id;
+		await Promise.all(files.map((file) => deleteFileSync(file, true)));
 
-		job.log(`Deleting ${files.length} files...`);
-		for (const file of files) {
-			try {
-				await deleteFileSync(file, true);
-				logger.info(`Deleted cached remote file ${file.id}`);
-				deletedCount++;
-			} catch (e) {
-				logger.error(`Failed to delete cached remote file ${file.id}: ${e}`);
-				job.log(`Failed to delete cached remote file ${file.id}: ${e}`);
-				failedCount++;
-			}
-		}
+		progress += files.length;
 
-		job.progress(~~(100 * deletedCount / total));
-		job.log(`Progress ${loop}: ${deletedCount}/${total} (${failedCount} failed) [id=${cursor}]`);
+		job.progress((progress / total) * 100);
 	}
 
-	logger.succ("All cached remote files has been deleted.");
-	job.log("Completed");
+	logger.succ(`Remote media cleanup job completed successfully.`);
 	done();
 }

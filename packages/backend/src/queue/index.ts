@@ -522,6 +522,21 @@ export default function () {
 	endedPollNotificationQueue.process(endedPollNotification);
 	webhookDeliverQueue.process(64, processWebhookDeliver);
 	processDb(dbQueue);
+
+	if (config.mediaCleanup?.cron) {
+		objectStorageQueue.add(
+			"cleanRemoteFiles",
+			{},
+			{
+				repeat: {
+					cron: "0 0 * * *",
+				},
+				removeOnComplete: true,
+				removeOnFail: true,
+			},
+		);
+	}
+
 	processObjectStorage(objectStorageQueue);
 	processBackground(backgroundQueue);
 

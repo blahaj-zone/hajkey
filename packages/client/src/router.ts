@@ -312,7 +312,7 @@ export const routes = [
 	},
 	{
 		path: "/about-iceshrimp",
-		component: page(() => import("./pages/about-firefish.vue")),
+		component: page(() => import("./pages/about-iceshrimp.vue")),
 	},
 	{
 		path: "/theme-editor",

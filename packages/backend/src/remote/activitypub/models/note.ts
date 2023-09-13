@@ -92,7 +92,7 @@ export function validateNote(object: any, uri: string) {
 /**
  * Fetch Notes.
  *
- * If the target Note is registered in Firefish, it will be returned.
+ * If the target Note is registered in Iceshrimp, it will be returned.
  */
 export async function fetchNote(
 	object: string | IObject,
@@ -313,7 +313,7 @@ export async function createNote(
 	} else if (typeof note._misskey_content !== "undefined") {
 		text = note._misskey_content;
 	} else if (typeof note.content === "string") {
-		text = htmlToMfm(note.content, note.tag);
+		text = await htmlToMfm(note.content, note.tag);
 	}
 
 	// vote
@@ -397,8 +397,8 @@ export async function createNote(
 /**
  * Resolve Note.
  *
- * If the target Note is registered in Firefish, return it, otherwise
- * Fetch from remote server, register with Firefish and return it.
+ * If the target Note is registered in Iceshrimp, return it, otherwise
+ * Fetch from remote server, register with Iceshrimp and return it.
  */
 export async function resolveNote(
 	value: string | IObject,
@@ -575,7 +575,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	} else if (typeof post._misskey_content !== "undefined") {
 		text = post._misskey_content;
 	} else if (typeof post.content === "string") {
-		text = htmlToMfm(post.content, post.tag);
+		text = await htmlToMfm(post.content, post.tag);
 	}
 
 	const cw = post.sensitive && post.summary;

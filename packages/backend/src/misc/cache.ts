@@ -1,6 +1,7 @@
 import { redisClient } from "@/db/redis.js";
 import { encode, decode } from "msgpackr";
 import { ChainableCommander } from "ioredis";
+import config from "@/config/index.js";
 
 export class Cache<T> {
 	private ttl: number;
@@ -37,12 +38,14 @@ export class Cache<T> {
 	}
 
 	public async getAll(renew = false): Promise<Map<string, T>> {
-		const keys = await redisClient.keys(`${this.prefix}*`);
+		const finalPrefix = `${config.cacheServer?.prefix ?? config.redis.prefix}:${this.prefix}:`;
+		const keys = (await redisClient.keys(`${finalPrefix}*`)).map(p => p.substring(finalPrefix.length));
+		const prefixedKeys = keys.map(p => this.prefixedKey(p));
 		const map = new Map<string, T>();
 		if (keys.length === 0) {
 			return map;
 		}
-		const values = await redisClient.mgetBuffer(keys);
+		const values = await redisClient.mgetBuffer(prefixedKeys);
 
 		for (const [i, key] of keys.entries()) {
 			const val = values[i];
@@ -54,7 +57,7 @@ export class Cache<T> {
 		if (renew) {
 			const trans = redisClient.multi();
 			for (const key of map.keys()) {
-				trans.expire(key, this.ttl);
+				trans.expire(this.prefixedKey(key), this.ttl);
 			}
 			await trans.exec();
 		}
@@ -64,7 +67,7 @@ export class Cache<T> {
 
 	public async delete(...keys: (string | null)[]): Promise<void> {
 		if (keys.length > 0) {
-			const _keys = keys.map(this.prefixedKey);
+			const _keys = keys.map(p => this.prefixedKey(p));
 			await redisClient.del(_keys);
 		}
 	}

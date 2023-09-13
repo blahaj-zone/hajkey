@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "firefish.fullname" . }}
+  name: {{ include "iceshrimp.fullname" . }}
   labels:
-    {{- include "firefish.labels" . | nindent 4 }}
+    {{- include "iceshrimp.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "firefish.selectorLabels" . | nindent 6 }}
+      {{- include "iceshrimp.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -19,19 +19,19 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "firefish.selectorLabels" . | nindent 8 }}
+        {{- include "iceshrimp.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "firefish.serviceAccountName" . }}
+      serviceAccountName: {{ include "iceshrimp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
         - name: config-volume
           secret:
-            secretName: {{ template "firefish.fullname" . }}-config
+            secretName: {{ template "iceshrimp.fullname" . }}-config
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -47,7 +47,7 @@ spec:
               value: "production"
           volumeMounts:
             - name: config-volume
-              mountPath: /firefish/.config
+              mountPath: /iceshrimp/.config
           ports:
             - name: http
               containerPort: 3000

@@ -47,6 +47,15 @@ export default class Resolver {
 		return this;
 	}
 
+	public setUser(user) {
+		this.user = user;
+	}
+
+	public reset(): Resolver {
+		this.history = new Set();
+		return this;
+	}
+
 	public getHistory(): string[] {
 		return Array.from(this.history);
 	}
@@ -111,6 +120,7 @@ export default class Resolver {
 		if (
 			meta.privateMode &&
 			config.host !== host &&
+			config.domain !== host &&
 			!meta.allowedHosts.includes(host)
 		) {
 			throw new Error("Instance is not allowed");

@@ -2,7 +2,7 @@ pipeline:
   docker-build:
     image: plugins/kaniko
     settings:
-      repo: thatonecalculator/firefish
+      repo: iceshrimp/iceshrimp
       tags: test
       dockerfile: Dockerfile
       no_push: true

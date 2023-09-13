@@ -4,6 +4,7 @@ import { Users, UserProfiles } from "@/models/index.js";
 import { ApiError } from "../../error.js";
 import { sendEmail } from "@/services/send-email.js";
 import { createNotification } from "@/services/create-notification.js";
+import config from "@/config/index.js";
 
 export const meta = {
 	tags: ["users"],
@@ -49,7 +50,7 @@ export default define(meta, paramDef, async (ps) => {
 	createNotification(user.id, "app", {
 		customBody: ps.comment,
 		customHeader: "Moderation Notice",
-		customIcon: "/static-assets/badges/info.png",
+		customIcon: config?.images?.info,
 	});
 
 	setImmediate(async () => {

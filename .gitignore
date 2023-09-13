@@ -22,19 +22,26 @@ coverage
 # config
 /.config/*
 !/.config/example.yml
+!/.config/example-docker.yml
 !/.config/devenv.yml
 !/.config/docker_example.env
 !/.config/helm_values_example.yml
 !/.config/LICENSE
 
-# docker dev config
+# docker configs
 /dev/docker-compose.yml
+/docker-compose.yml
 
 # misskey
 built
 db
 elasticsearch
 redis
+meili_data
+sonic
+dragonflydb
+keydb
+redis_cache
 npm-debug.log
 *.pem
 run.bat
@@ -62,9 +69,17 @@ packages/megalodon/.idea
 *.blend4
 *.blend5
 
-# old yarn
-.yarn
-yarn*
+#old pnpm
+pnpm*
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+!.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97
 
 # Nix Development shell items
 .devenv

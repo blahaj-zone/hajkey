@@ -143,7 +143,6 @@ router.get("/apple-touch-icon.png", async (ctx) => {
 
 router.get("/twemoji/(.*)", async (ctx) => {
 	const path = ctx.path.replace("/twemoji/", "");
-
 	if (!path.match(/^[0-9a-f-]+\.svg$/)) {
 		ctx.status = 404;
 		return;
@@ -155,7 +154,7 @@ router.get("/twemoji/(.*)", async (ctx) => {
 	);
 
 	await send(ctx as any, path, {
-		root: `${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/`,
+		root: `${_dirname}../../../../../../.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97/node_modules/@discordapp/twemoji/dist/svg/`,
 		maxage: 30 * DAY,
 	});
 });
@@ -169,7 +168,7 @@ router.get("/twemoji-badge/(.*)", async (ctx) => {
 	}
 
 	const mask = await sharp(
-		`${_dirname}/../../../node_modules/@discordapp/twemoji/dist/svg/${path.replace(
+		`${_dirname}../../../../../../.yarn/unplugged/@discordapp-twemoji-npm-14.1.2-3097b95b97/node_modules/@discordapp/twemoji/dist/svg/${path.replace(
 			".png",
 			"",
 		)}.svg`,

@@ -92,6 +92,7 @@
 					><i class="icon ph-door ph-bold ph-fw ph-lg"></i
 					><span class="text">{{ i18n.ts.controlPanel }}</span>
 				</MkA>
+				<div class="divider" v-if="$i.isAdmin || $i.isModerator"></div>
 				<button
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.more"
@@ -127,13 +128,6 @@
 					<i class="icon ph-pencil ph-bold ph-fw ph-lg"></i
 					><span class="text">{{ i18n.ts.note }}</span>
 				</button>
-				<button
-					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button help"
-					@click="openHelpMenu"
-				>
-					<i class="help icon ph-info ph-bold ph-xl ph-fw"></i>
-				</button>
 				<!-- <button v-click-anime v-tooltip.noDelay.right="$instance.name ?? i18n.ts.instance" class="item _button instance" @click="openInstanceMenu">
 				<img :src="$instance.iconUrl || $instance.faviconUrl || '/favicon.ico'" alt="" class="icon"/>
 			</button> -->
@@ -150,7 +144,6 @@ import { computed, defineAsyncComponent, ref, watch } from "vue";
 import * as os from "@/os";
 import { navbarItemDef } from "@/navbar";
 import { $i, openAccountMenu as openAccountMenu_ } from "@/account";
-import { openHelpMenu_ } from "@/scripts/helpMenu";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { instance } from "@/instance";
@@ -224,10 +217,6 @@ function openAccountMenu(ev: MouseEvent) {
 	);
 }
 
-function openHelpMenu(ev: MouseEvent) {
-	openHelpMenu_(ev);
-}
-
 function more(ev: MouseEvent) {
 	os.popup(
 		defineAsyncComponent(() => import("@/components/MkLaunchPad.vue")),
@@ -257,10 +246,10 @@ function more(ev: MouseEvent) {
 		box-sizing: border-box;
 		overflow: auto;
 		overflow-x: clip;
-		#firefish_app > :not(.wallpaper) & {
+		#iceshrimp_app > :not(.wallpaper) & {
 			background: var(--navBg);
 		}
-		#firefish_app > .wallpaper:not(.centered) & {
+		#iceshrimp_app > .wallpaper:not(.centered) & {
 			border-right: 1px solid var(--divider);
 		}
 		contain: strict;
@@ -342,7 +331,6 @@ function more(ev: MouseEvent) {
 					&.active {
 						&:before {
 							background: var(--accentLighten);
-							transition: all 0.4s ease;
 						}
 					}
 
@@ -392,6 +380,10 @@ function more(ev: MouseEvent) {
 			> .middle {
 				flex: 0.1;
 
+				> a {
+					text-decoration: none;
+				}
+
 				> .divider {
 					margin: 16px 16px;
 					border-top: solid 0.5px var(--divider);
@@ -432,22 +424,8 @@ function more(ev: MouseEvent) {
 					}
 
 					&:hover,
-					&:focus-within {
-						text-decoration: none;
-						color: var(--navHoverFg);
-						transition: all 0.4s ease;
-					}
-
-					&.active {
-						color: var(--navActive);
-					}
-
-					&:hover,
 					&:focus-within,
 					&.active {
-						color: var(--accent);
-						transition: all 0.4s ease;
-
 						&:before {
 							content: "";
 							display: block;
@@ -460,6 +438,21 @@ function more(ev: MouseEvent) {
 							right: 0;
 							bottom: 0;
 							border-radius: 999px;
+						}
+					}
+
+					&:hover,
+					&:focus-within {
+						&:before {
+							background: var(--panelHighlight);
+						}
+					}
+
+					&.active {
+						color: var(--accent);
+						transition: all 0.4s ease;
+
+						&:before {
 							background: var(--accentedBg);
 						}
 					}
@@ -527,7 +520,6 @@ function more(ev: MouseEvent) {
 					&.active {
 						&:before {
 							background: var(--accentLighten);
-							transition: all 0.4s ease;
 						}
 					}
 
@@ -572,6 +564,10 @@ function more(ev: MouseEvent) {
 
 			> .middle {
 				flex: 0.1;
+
+				> a {
+					text-decoration: none;
+				}
 
 				> .divider {
 					margin: 8px auto;
@@ -625,12 +621,24 @@ function more(ev: MouseEvent) {
 							right: 0;
 							bottom: 0;
 							border-radius: 999px;
-							background: var(--accentedBg);
 						}
 
 						> .icon,
 						> .text {
 							opacity: 1;
+						}
+					}
+					
+					&:hover,
+					&:focus-within {
+						&:before {
+							background: var(--panelHighlight);
+						}
+					}
+
+					&.active {
+						&:before {
+							background: var(--accentedBg);
 						}
 					}
 				}

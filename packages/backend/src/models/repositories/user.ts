@@ -40,8 +40,6 @@ import type { Instance } from "../entities/instance.js";
 import { StatusError } from "../../misc/fetch.js";
 import { repoLogger } from "./logger.js";
 
-const logger = repoLogger.createSubLogger("user");
-
 const userInstanceCache = new Cache<Instance | null>(
 	"userInstance",
 	60 * 60 * 3,

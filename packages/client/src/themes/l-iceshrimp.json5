@@ -1,0 +1,21 @@
+{
+	id: '360da846-debe-40f9-9f10-5ad035afa546',
+
+	name: 'Iceshrimp Light',
+	author: 'aylamz',
+
+	base: 'light',
+
+	props: {
+		fg: '#444',
+		bg: '#f7f7f7',
+		accent: '#008cff',
+		panel: ':lighten<3<@bg',
+		panelHeaderBg: ':lighten<1<@bg',
+		panelHighlight: ':darken<6<@bg',
+		shadow: 'rgba(0, 0, 0, 0)',
+		hashtag: '#c44100',
+		link: '#2c7386',
+		infoFg: '#212528',
+	},
+}

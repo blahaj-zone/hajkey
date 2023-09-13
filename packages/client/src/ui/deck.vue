@@ -220,7 +220,7 @@ mainRouter.navHook = (path, flag): boolean => {
 	const noMainColumn = !deckStore.state.columns.some(
 		(x) => x.type === "main",
 	);
-	if (deckStore.state.navWindow || noMainColumn) {
+	if (deckStore.reactiveState.navWindow.value === "window" || noMainColumn) {
 		os.pageWindow(path);
 		return true;
 	}

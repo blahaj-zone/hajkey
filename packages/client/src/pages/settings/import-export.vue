@@ -22,7 +22,7 @@
 					><i class="ph-upload-simple ph-bold ph-lg"></i
 				></template>
 				<FormRadios v-model="importType" class="_formBlock">
-					<option value="firefish">Firefish/Misskey</option>
+					<option value="iceshrimp">iceshrimp/Misskey</option>
 					<option value="mastodon">Mastodon/Akkoma/Pleroma</option>
 					<option :disabled="true" value="twitter">
 						Twitter (soon)
@@ -188,7 +188,7 @@ import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 
 const excludeMutingUsers = ref(false);
-const importType = ref("firefish");
+const importType = ref("iceshrimp");
 const excludeInactiveUsers = ref(false);
 
 const onExportSuccess = () => {

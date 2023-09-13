@@ -30,6 +30,10 @@
 					><i class="ph-image-square ph-bold ph-lg icon"></i
 					>{{ i18n.ts.gallery }}</MkA
 				>
+				<button class="_button link" active-class="active" @click="search()">
+					<i class="ph-magnifying-glass ph-bold ph-lg icon"></i
+					><span>{{ i18n.ts.search }}</span>
+				</button>
 				<div v-if="info" class="page active link">
 					<div class="title">
 						<i v-if="info.icon" class="icon" :class="info.icon"></i>
@@ -59,10 +63,6 @@
 					</button>
 				</div>
 				<div class="right">
-					<button class="_button search" @click="search()">
-						<i class="ph-magnifying-glass ph-bold ph-lg icon"></i
-						><span>{{ i18n.ts.search }}</span>
-					</button>
 					<button class="_buttonPrimary signup" @click="signup()">
 						{{ i18n.ts.signup }}
 					</button>
@@ -198,6 +198,16 @@ export default defineComponent({
 				&.page {
 					border-bottom-color: var(--accent);
 				}
+				
+				&._button {
+					text-decoration: underline;
+					text-decoration-color: transparent;
+					transition: text-decoration-color .2s;
+
+					&:hover {
+						text-decoration-color: currentColor;
+					}
+				}
 			}
 
 			> .page {
@@ -242,24 +252,6 @@ export default defineComponent({
 
 			> .right {
 				margin-left: auto;
-
-				> .search {
-					background: var(--bg);
-					border-radius: 999px;
-					width: 230px;
-					line-height: $height - 20px;
-					margin-right: 16px;
-					text-align: left;
-
-					> * {
-						opacity: 0.7;
-					}
-
-					> .icon {
-						padding: 0 16px;
-					}
-				}
-
 				> .signup {
 					border-radius: 999px;
 					padding: 0 24px;
