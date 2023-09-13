@@ -14,7 +14,7 @@ import { Cache } from "./cache.js";
 const blockingCache = new Cache<User["id"][]>("blocking", 60 * 5);
 
 type matchFunction = (text: string) => boolean;
-const matcherCache = new Cache<matchFunction>(1000 * 60 * 60);
+const matcherCache: {[key: string]: matchFunction} = {};
 
 // NOTE: フォローしているユーザーのノート、リストのユーザーのノート、グループのユーザーのノート指定はパフォーマンス上の理由で無効になっている
 
@@ -106,7 +106,7 @@ export async function checkHitAntenna(
 
 	const compileKeyphrase = (keyphrase: string): matchFunction => {
 		const now = Date.now();
-		const ce = matcherCache.get(keyphrase);
+		const ce = matcherCache[keyphrase];
 		if (ce) {
 			return ce;
 		}
@@ -158,7 +158,7 @@ export async function checkHitAntenna(
 			return makeReMatcher(kpRe);
 		})();
 
-		matcherCache.set(keyphrase, matcher);
+		matcherCache[keyphrase] = matcher;
 
 		return matcher;
 	};
