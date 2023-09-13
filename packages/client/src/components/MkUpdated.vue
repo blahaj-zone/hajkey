@@ -7,7 +7,7 @@
 	>
 		<div :class="$style.root">
 			<div :class="$style.title">
-				<MkSparkle>{{ i18n.ts.misskeyUpdated }}</MkSparkle>
+				<MkSparkle>{{ i18n.ts.iceshrimpUpdated }}</MkSparkle>
 			</div>
 			<div :class="$style.version">✨ {{ version }} 🚀</div>
 			<div v-if="newRelease" :class="$style.releaseNotes">
