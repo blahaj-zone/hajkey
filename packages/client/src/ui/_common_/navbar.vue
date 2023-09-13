@@ -423,9 +423,6 @@ function more(ev: MouseEvent) {
 					&:hover,
 					&:focus-within,
 					&.active {
-						color: var(--accent);
-						transition: all 0.4s ease;
-
 						&:before {
 							content: "";
 							display: block;
@@ -449,6 +446,9 @@ function more(ev: MouseEvent) {
 					}
 
 					&.active {
+						color: var(--accent);
+						transition: all 0.4s ease;
+
 						&:before {
 							background: var(--accentedBg);
 						}
