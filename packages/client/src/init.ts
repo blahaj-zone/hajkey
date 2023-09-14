@@ -69,7 +69,7 @@ function checkForSplash() {
 	console.log(" ╱         ╱   _╱    ╱___╱     ╱       __╱   _╱    ╱         ╱");
 	console.log("╱    _    ╱    _    ╱   ╱     ╱        ╲╱      ___╱╲___     ╱ ");
 	console.log("╲___╱____╱╲___╱____╱╲________╱╲___╱╲___╱╲________╱╲________╱  ");
-	console.info(`Hajkey v${version}`);
+	console.info(`Welcome to Hajkey v${version} — it's pronounced ‘high-key’!`);
 
 	if (_DEV_) {
 		console.warn("Development mode!!!");
