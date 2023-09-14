@@ -19,17 +19,7 @@
 			>
 				<template v-for="(item, i) in items2">
 					<div v-if="item === null" class="divider"></div>
-					<template
-						v-else-if="
-							item.hidden ||
-							(item.visible !== undefined && !item.visible)
-						"
-					/>
-					<span
-						v-else-if="item.type === 'label'"
-						class="label item"
-						:class="classMap(item.classes)"
-					>
+					<span v-else-if="item.type === 'label'" class="label item">
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
@@ -37,7 +27,6 @@
 					<span
 						v-else-if="item.type === 'pending'"
 						class="pending item"
-						:class="classMap(item.classes)"
 					>
 						<span><MkEllipsis /></span>
 					</span>
@@ -45,7 +34,6 @@
 						v-else-if="item.type === 'link'"
 						:to="item.to"
 						class="_button item"
-						:class="classMap(item.classes)"
 						@click.passive="close(true)"
 						@mouseenter.passive="onItemMouseEnter(item)"
 						@mouseleave.passive="onItemMouseLeave(item)"
@@ -55,13 +43,6 @@
 							class="ph-fw ph-lg"
 							:class="item.icon"
 						></i>
-						<span v-else-if="item.icons">
-							<i
-								v-for="icon in item.icons"
-								class="ph-fw ph-lg"
-								:class="icon"
-							></i>
-						</span>
 						<MkAvatar
 							v-if="item.avatar"
 							:user="item.avatar"
@@ -86,7 +67,6 @@
 						:target="item.target"
 						:download="item.download"
 						class="_button item"
-						:class="classMap(item.classes)"
 						@click="close(true)"
 						@mouseenter.passive="onItemMouseEnter(item)"
 						@mouseleave.passive="onItemMouseLeave(item)"
@@ -96,13 +76,6 @@
 							class="ph-fw ph-lg"
 							:class="item.icon"
 						></i>
-						<span v-else-if="item.icons">
-							<i
-								v-for="icon in item.icons"
-								class="ph-fw ph-lg"
-								:class="icon"
-							></i>
-						</span>
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
@@ -118,10 +91,7 @@
 					<button
 						v-else-if="item.type === 'user' && !items.hidden"
 						class="_button item"
-						:class="{
-							active: item.active,
-							...classMap(item.classes),
-						}"
+						:class="{ active: item.active }"
 						:disabled="item.active"
 						@click="clicked(item.action, $event)"
 						@mouseenter.passive="onItemMouseEnter(item)"
@@ -144,7 +114,6 @@
 					<span
 						v-else-if="item.type === 'switch'"
 						class="item"
-						:class="classMap(item.classes)"
 						@mouseenter.passive="onItemMouseEnter(item)"
 						@mouseleave.passive="onItemMouseLeave(item)"
 					>
@@ -156,28 +125,10 @@
 							>{{ item.text }}</FormSwitch
 						>
 					</span>
-					<span
-						v-else-if="item.type === 'input'"
-						class="item"
-						:class="classMap(item.classes)"
-						@mouseenter.passive="onItemMouseEnter(item)"
-						@mouseleave.passive="onItemMouseLeave(item)"
-					>
-						<FormInput
-							v-model="item.ref"
-							:disabled="item.disabled"
-							class="form-input"
-							:required="item.required"
-							:placeholder="item.placeholder"
-						/>
-					</span>
 					<button
 						v-else-if="item.type === 'parent'"
 						class="_button item parent"
-						:class="{
-							childShowing: childShowingItem === item,
-							...classMap(item.classes),
-						}"
+						:class="{ childShowing: childShowingItem === item }"
 						@mouseenter="showChildren(item, $event)"
 						@click.stop="showChildren(item, $event)"
 					>
@@ -186,13 +137,6 @@
 							class="ph-fw ph-lg"
 							:class="item.icon"
 						></i>
-						<span v-else-if="item.icons">
-							<i
-								v-for="icon in item.icons"
-								class="ph-fw ph-lg"
-								:class="icon"
-							></i>
-						</span>
 						<span :style="item.textStyle || ''">{{
 							item.text
 						}}</span>
@@ -221,13 +165,6 @@
 							class="ph-fw ph-lg"
 							:class="item.icon"
 						></i>
-						<span v-else-if="item.icons">
-							<i
-								v-for="icon in item.icons"
-								class="ph-fw ph-lg"
-								:class="icon"
-							></i>
-						</span>
 						<MkAvatar
 							v-if="item.avatar"
 							:user="item.avatar"
@@ -251,7 +188,7 @@
 					<span>{{ i18n.ts.none }}</span>
 				</span>
 			</div>
-			<div v-if="childMenu" class="child" :class="classMap(item.classes)">
+			<div v-if="childMenu" class="child">
 				<XChild
 					ref="child"
 					:items="childMenu"
@@ -281,18 +218,13 @@ import {
 } from "vue";
 import { focusPrev, focusNext } from "@/scripts/focus";
 import FormSwitch from "@/components/form/switch.vue";
-import FormInput from "@/components/form/input.vue";
-import {
-	MenuItem,
-	InnerMenuItem,
-	MenuPending,
-	MenuAction,
-	MenuClasses,
-} from "@/types/menu";
+import { MenuItem, InnerMenuItem, MenuPending, MenuAction } from "@/types/menu";
 import * as os from "@/os";
 import { i18n } from "@/i18n";
+import { FocusTrap } from "focus-trap-vue";
 
 const XChild = defineAsyncComponent(() => import("./MkMenu.child.vue"));
+const focusTrap = ref();
 
 const props = defineProps<{
 	items: MenuItem[];
@@ -313,12 +245,6 @@ let itemsEl = $ref<HTMLDivElement>();
 let items2: InnerMenuItem[] = $ref([]);
 
 let child = $ref<InstanceType<typeof XChild>>();
-
-let keymap = computed(() => ({
-	"up|k|shift+tab": focusUp,
-	"down|j|tab": focusDown,
-	esc: close,
-}));
 
 let childShowingItem = $ref<MenuItem | null>();
 
@@ -350,18 +276,6 @@ watch(
 
 let childMenu = $ref<MenuItem[] | null>();
 let childTarget = $ref<HTMLElement | null>();
-
-function classMap(classes?: MenuClasses) {
-	if (!classes) return {};
-
-	return (Array.isArray(classes) ? classes : classes.value).reduce(
-		(acc, cls) => {
-			acc[cls] = true;
-			return acc;
-		},
-		{}
-	);
-}
 
 function closeChild() {
 	childMenu = null;
@@ -449,8 +363,7 @@ onBeforeUnmount(() => {
 		font-size: 0.9em;
 		line-height: 20px;
 		text-align: left;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		outline: none;
 
 		&:before {
 			content: "";
@@ -478,6 +391,9 @@ onBeforeUnmount(() => {
 			&:before {
 				background: var(--accentedBg);
 			}
+		}
+		&:focus-visible:before {
+			outline: auto;
 		}
 
 		&.danger {
