@@ -35,7 +35,7 @@
 				</MkButton>
 				<MkLoading v-else class="loading" />
 			</div>
-			<slot :items="filteredItems"></slot>
+			<slot :items="items"></slot>
 			<div
 				v-show="!pagination.reversed && more"
 				key="_more_"
@@ -116,7 +116,6 @@ const props = withDefaults(
 		pagination: Paging;
 		disableAutoLoad?: boolean;
 		displayLimit?: number;
-		visibleCheck?: (item: Item | false) => boolean;
 	}>(),
 	{
 		displayLimit: 30,
@@ -190,7 +189,6 @@ const init = async (): Promise<void> => {
 				offset.value = res.length;
 				error.value = false;
 				fetching.value = false;
-				runFilter();
 			},
 			(err) => {
 				error.value = true;
@@ -213,10 +211,7 @@ const refresh = async (): void => {
 	await os
 		.api(props.pagination.endpoint, {
 			...params,
-			limit:
-				(items.value.length < SECOND_FETCH_LIMIT
-					? items.value.length
-					: SECOND_FETCH_LIMIT) + 1,
+			limit: items.value.length + 1,
 			offset: 0,
 		})
 		.then(
@@ -240,7 +235,6 @@ const refresh = async (): void => {
 				for (const id in ids) {
 					removeItem((i) => i.id === id);
 				}
-				runFilter();
 			},
 			(err) => {
 				error.value = true;
@@ -314,7 +308,6 @@ const fetchMore = async (): Promise<void> => {
 				}
 				offset.value += res.length;
 				moreFetching.value = false;
-				runFilter();
 			},
 			(err) => {
 				moreFetching.value = false;
@@ -378,7 +371,6 @@ const fetchMoreAhead = async (): Promise<void> => {
 				}
 				offset.value += res.length;
 				moreFetching.value = false;
-				runFilter();
 			},
 			(err) => {
 				moreFetching.value = false;
@@ -416,7 +408,6 @@ const prepend = (item: Item): void => {
 		// 初回表示時はunshiftだけでOK
 		if (!rootEl.value) {
 			items.value.unshift(item);
-			runFilter();
 			return;
 		}
 
@@ -448,7 +439,6 @@ const prepend = (item: Item): void => {
 			});
 		}
 	}
-	runFilter();
 };
 
 const append = (item: Item): void => {
@@ -508,7 +498,6 @@ defineExpose({
 	append,
 	removeItem,
 	updateItem,
-	runFilter,
 });
 </script>
 
