@@ -14,7 +14,7 @@ import { Cache } from "./cache.js";
 const blockingCache = new Cache<User["id"][]>("blocking", 60 * 5);
 
 type matchFunction = (text: string) => boolean;
-const matcherCache: {[key: string]: matchFunction} = {};
+const matcherCache: { [key: string]: matchFunction } = {};
 
 // NOTE: フォローしているユーザーのノート、リストのユーザーのノート、グループのユーザーのノート指定はパフォーマンス上の理由で無効になっている
 

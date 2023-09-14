@@ -15,15 +15,15 @@ export class WikiPage {
 	public id: string;
 
 	@Index()
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the WikiPage.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the WikiPage.",
 	})
 	public createdAt: Date;
 
 	@Index({ unique: true })
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 64,
-		comment: 'The slug of the WikiPage.',
+		comment: "The slug of the WikiPage.",
 	})
 	public slug: string;
 
@@ -31,37 +31,38 @@ export class WikiPage {
 	@Column({
 		...id(),
 		nullable: true,
-		comment: 'The owner of the WikiPage.'
+		comment: "The owner of the WikiPage.",
 	})
 	public ownerId: User["id"];
 
-	@OneToOne(type => User, {
-		onDelete: 'SET NULL',
+	@OneToOne((type) => User, {
+		onDelete: "SET NULL",
 	})
 	@JoinColumn()
 	public owner: User | null;
 
-	@Column('boolean', {
+	@Column("boolean", {
 		default: false,
-		comment: "Whether the WikiPage is locked to the owner, or open to editors / everyone."
+		comment:
+			"Whether the WikiPage is locked to the owner, or open to editors / everyone.",
 	})
 	public locked: boolean;
 
 	@Column({
 		...id(),
 		array: true,
-		comment: 'The allowed editors of the WikiPage.',
+		comment: "The allowed editors of the WikiPage.",
 	})
 	public editorIds: User["id"][];
 
 	@Column({
 		...id(),
-		comment: 'The currently live version of the WikiPage.'
+		comment: "The currently live version of the WikiPage.",
 	})
 	public revisionId: WikiPageRevision["id"];
 
-	@OneToOne(type => WikiPageRevision, {
-		onDelete: 'SET NULL',
+	@OneToOne((type) => WikiPageRevision, {
+		onDelete: "SET NULL",
 	})
 	@JoinColumn()
 	public revision: WikiPageRevision | null;
@@ -73,8 +74,8 @@ export class WikiPageRevision {
 	public id: string;
 
 	@Index()
-	@Column('timestamp with time zone', {
-		comment: 'The created date of the WikiPageRevision.',
+	@Column("timestamp with time zone", {
+		comment: "The created date of the WikiPageRevision.",
 	})
 	public createdAt: Date;
 
@@ -86,20 +87,20 @@ export class WikiPageRevision {
 	@Column(id())
 	public editorId: User["id"];
 
-	@OneToOne(type => User, {
-		onDelete: 'SET NULL',
+	@OneToOne((type) => User, {
+		onDelete: "SET NULL",
 	})
 	@JoinColumn()
 	public editor: User | null;
 
-	@Column('varchar', {
+	@Column("varchar", {
 		length: 128,
-		comment: 'The title of the WikiPage.',
+		comment: "The title of the WikiPage.",
 	})
 	public title: string;
 
-	@Column('varchar', {
-		comment: 'The body of the WikiPage.',
+	@Column("varchar", {
+		comment: "The body of the WikiPage.",
 	})
 	public body: string;
 }
