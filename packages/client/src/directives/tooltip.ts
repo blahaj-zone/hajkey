@@ -110,11 +110,13 @@ export default {
 
 	updated(el, binding) {
 		const self = el._tooltipDirective_;
+		if (!self) return;
 		self.text = binding.value as string;
 	},
 
 	unmounted(el, binding, vn) {
 		const self = el._tooltipDirective_;
+		if (!self) return;
 		window.clearInterval(self.checkTimer);
 		self.close();
 	},
