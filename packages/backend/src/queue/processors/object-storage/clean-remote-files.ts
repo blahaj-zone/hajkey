@@ -6,6 +6,7 @@ import { DriveFiles, Users } from "@/models/index.js";
 import { MoreThan, Not, IsNull } from "typeorm";
 import { User } from "@/models/entities/user.js";
 import config from "@/config/index.js";
+import { DriveFile } from "@/models/entities/drive-file.js";
 
 const logger = queueLogger.createSubLogger("clean-remote-files");
 
@@ -35,7 +36,7 @@ export default async function cleanRemoteFiles(
 		.andWhere("file.createdAt < :until", { until });
 
 	if (!avatars || !headers) {
-		query = query.andWhere((qb) => {
+		query = query.andWhere((qb: QueryBuilder) => {
 			let sq = qb.subQuery().from(User, "user");
 
 			if (!avatars) sq = sq.where("file.id = user.avatarId");
@@ -47,9 +48,6 @@ export default async function cleanRemoteFiles(
 
 	query = query.take(8);
 
-	const total = await query.getCount();
-	logger.info(`Deleting ${total} files, please wait...`);
-
 	const total = await DriveFiles.countBy({
 		userHost: Not(IsNull()),
 		isLink: false,
@@ -57,8 +55,6 @@ export default async function cleanRemoteFiles(
 
 	job.log(`Total: ${total}`);
 
-	const batch = 1000;
-	let loop = 0;
 	while (true) {
 		const files = await query.getMany();
 
@@ -68,13 +64,12 @@ export default async function cleanRemoteFiles(
 			break;
 		}
 
-		await Promise.all(files.map((file) => deleteFileSync(file, true)));
+		await Promise.all(files.map((file: DriveFile) => deleteFileSync(file, true)));
 
 		progress += files.length;
 
 		job.progress((progress / total) * 100);
 	}
 
-	logger.succ(`Remote media cleanup job completed successfully.`);
 	done();
 }
