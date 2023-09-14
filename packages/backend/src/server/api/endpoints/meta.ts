@@ -75,13 +75,13 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://iceshrimp.dev/iceshrimp/iceshrimp",
+				default: "https://git.hajkey.org/hajkey/hajkey",
 			},
 			feedbackUrl: {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://iceshrimp.dev/iceshrimp/iceshrimp/issues",
+				default: "https://git.hajkey.org/hajkey/hajkey/issues",
 			},
 			defaultDarkTheme: {
 				type: "string",

@@ -342,7 +342,7 @@ import * as ep___wiki_list from "./endpoints/wiki/list.js";
 import * as ep___wiki_show from "./endpoints/wiki/show.js";
 import * as ep___wiki_save from "./endpoints/wiki/save.js";
 
-//Iceshrimp Move
+//Hajkey Move
 import * as ep___i_move from "./endpoints/i/move.js";
 import * as ep___i_known_as from "./endpoints/i/known-as.js";
 

@@ -1,14 +1,14 @@
-# 🐳 Running a Iceshrimp server with Docker
+# 🐳 Running a Hajkey server with Docker
 
 ## Pre-built docker container
-[iceshrimp/iceshrimp](iceshrimp.dev/iceshrimp/iceshrimp)
+[hajkey/hajkey](https://git.hajkey.org/hajkey/hajkey)
 
 ## `docker-compose`
 
 There is a `docker-compose.yml` in the root of the project that you can use to build the container from source
 
 - .config/docker.env (**db config settings**)
-- .config/default.yml (**Iceshrimp server settings**)
+- .config/default.yml (**Hajkey server settings**)
 
 ## Configuring
 
@@ -29,14 +29,14 @@ Everything else can be left as-is.
 
 ## Running docker-compose
 
-The [prebuilt container for iceshrimp](https://iceshrimp.dev/iceshrimp/-/packages/container/iceshrimp/latest) is fairly large, and may take a few minutes to download and extract using docker.
+The [prebuilt container for iceshrimp](https://git.hajkey.org/hajkey/-/packages/container/iceshrimp/latest) is fairly large, and may take a few minutes to download and extract using docker.
 
 Copy `docker-compose.yml` and the `config/` to a directory, then run the **docker-compose** command:
 `docker-compose up -d`.
 
-NOTE: This will take some time to come fully online, even after download and extracting the container images, and it may emit some error messages before completing successfully. Specifically, the `db` container needs to initialize and so isn't available to the `web` container right away. Only once the `db` container comes online does the `web` container start building and initializing the Iceshrimp tables.
+NOTE: This will take some time to come fully online, even after download and extracting the container images, and it may emit some error messages before completing successfully. Specifically, the `db` container needs to initialize and so isn't available to the `web` container right away. Only once the `db` container comes online does the `web` container start building and initializing the Hajkey tables.
 
-Once the server is up you can use a web browser to access the web interface at `http://serverip:3000` (where `serverip` is the IP of the server you are running the Iceshrimp server on).
+Once the server is up you can use a web browser to access the web interface at `http://serverip:3000` (where `serverip` is the IP of the server you are running the Hajkey server on).
 
 ## Docker for development
 

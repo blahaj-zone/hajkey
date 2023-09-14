@@ -16,7 +16,7 @@ export const paramDef = {
 export default define(meta, paramDef, async () => {
 	let tag_name;
 	await fetch(
-		"https://iceshrimp.dev/api/v1/repos/iceshrimp/iceshrimp/releases?draft=false&pre-release=false&page=1&limit=1",
+		"https://git.hajkey.org/api/v1/repos/hajkey/hajkey/releases?draft=false&pre-release=false&page=1&limit=1",
 	)
 		.then((response) => response.json())
 		.then((data) => {

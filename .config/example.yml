@@ -1,5 +1,5 @@
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Iceshrimp configuration
+# Hajkey configuration
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 # After starting your server, please don't change the URL! Doing so will break federation.
@@ -19,11 +19,11 @@ url: https://example.org/
 #───┘ Port and TLS settings └───────────────────────────────────
 
 #
-# Iceshrimp requires a reverse proxy to support HTTPS connections.
+# Hajkey requires a reverse proxy to support HTTPS connections.
 #
 #                 +------- https://example.com/ ------------+
 #   +------+      |+-------------+      +------------------+|
-#   | User | ---> || Proxy (443) | ---> | Iceshrimp (3000) ||
+#   | User | ---> || Proxy (443) | ---> | Hajkey (3000) ||
 #   +------+      |+-------------+      +------------------+|
 #                 +-----------------------------------------+
 #
@@ -31,7 +31,7 @@ url: https://example.org/
 #   An encrypted connection with HTTPS is highly recommended
 #   because tokens may be transferred in GET requests.
 
-# The port that your Iceshrimp server should listen on.
+# The port that your Hajkey server should listen on.
 port: 3000
 
 #   ┌──────────────────────────┐
@@ -221,7 +221,7 @@ reservedUsernames: [
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Congrats, you've reached the end of the config file needed for most deployments!
-# Enjoy your Iceshrimp server!
+# Enjoy your Hajkey server!
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 

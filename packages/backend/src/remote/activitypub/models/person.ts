@@ -132,7 +132,7 @@ function validateActor(x: IObject, uri: string): IActor {
 /**
  * Fetch a Person.
  *
- * If the target Person is registered in Iceshrimp, it will be returned.
+ * If the target Person is registered in Hajkey, it will be returned.
  */
 export async function fetchPerson(
 	uri: string,
@@ -427,7 +427,7 @@ export async function createPerson(
 
 /**
  * Update Person data from remote.
- * If the target Person is not registered in Iceshrimp, it is ignored.
+ * If the target Person is not registered in Hajkey, it is ignored.
  * @param uri URI of Person
  * @param resolver Resolver
  * @param hint Hint of Person object (If this value is a valid Person, it is used for updating without Remote resolve)
@@ -621,8 +621,8 @@ export async function updatePerson(
 /**
  * Resolve Person.
  *
- * If the target person is registered in Iceshrimp, it returns it;
- * otherwise, it fetches it from the remote server, registers it in Iceshrimp, and returns it.
+ * If the target person is registered in Hajkey, it returns it;
+ * otherwise, it fetches it from the remote server, registers it in Hajkey, and returns it.
  */
 export async function resolvePerson(
 	uri: string,

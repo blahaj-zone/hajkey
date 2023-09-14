@@ -21,7 +21,7 @@
 							@load="iconLoaded"
 							@click="gravity"
 						/>
-						<div class="misskey">Iceshrimp</div>
+						<div class="misskey">Hajkey</div>
 						<div class="version">v{{ version }}</div>
 						<span
 							v-for="emoji in easterEggEmojis"
@@ -42,8 +42,8 @@
 						/></span>
 					</div>
 					<div class="_formBlock" style="text-align: center">
-						{{ i18n.ts._aboutIceshrimp.about }}<br /><a
-							href="https://iceshrimp.dev/"
+						{{ i18n.ts._aboutHajkey.about }}<br /><a
+							href="https://hajkey.org/"
 							target="_blank"
 							class="_link"
 							>{{ i18n.ts.learnMore }}</a
@@ -51,21 +51,21 @@
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						<MkButton primary rounded inline @click="iLoveMisskey"
-							>I <Mfm text="$[jelly ❤]" /> #Iceshrimp</MkButton
+							>I <Mfm text="$[jelly ❤]" /> #Hajkey</MkButton
 						>
 					</div>
 					<FormSection>
 						<div class="_formLinks">
 							<FormLink
-								to="https://iceshrimp.dev/iceshrimp/iceshrimp"
+								to="https://git.hajkey.org/hajkey/hajkey"
 								external
 							>
 								<template #icon
 									><i class="ph-code ph-bold ph-lg"></i
 								></template>
-								{{ i18n.ts._aboutIceshrimp.source }}
+								{{ i18n.ts._aboutHajkey.source }}
 								<template #suffix
-									>Iceshrimp development</template
+									>Hajkey development</template
 								>
 							</FormLink>
 						</div>
@@ -120,7 +120,7 @@ function gravity() {
 
 function iLoveMisskey() {
 	os.post({
-		initialText: "I $[jelly ❤] #Iceshrimp",
+		initialText: "I $[jelly ❤] #Hajkey",
 		instant: true,
 	});
 }
@@ -136,7 +136,7 @@ const headerActions = $computed(() => []);
 const headerTabs = $computed(() => []);
 
 definePageMetadata({
-	title: i18n.ts.aboutIceshrimp,
+	title: i18n.ts.aboutHajkey,
 	icon: null,
 });
 </script>

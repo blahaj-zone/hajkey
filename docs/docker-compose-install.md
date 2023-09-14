@@ -1,4 +1,4 @@
-# Installing Iceshrimp with Docker
+# Installing Hajkey with Docker
 
 This guide is based on `docker compose`/Docker Compose v2, but `docker-compose`/Docker Compose v1 should work as well. Docker 20.10+ is required for building your own images because of BuildKit usage, and Docker 20.10 users need to [enable BuildKit first](https://docs.docker.com/build/buildkit/#getting-started), or [upgrade to latest Docker](https://docs.docker.com/engine/install/#server).
 
@@ -6,12 +6,12 @@ This guide is based on `docker compose`/Docker Compose v2, but `docker-compose`/
 
 ### Getting needed files
 
-Run `git clone https://iceshrimp.dev/iceshrimp/iceshrimp`, but if you are not planning on building your own image, just grabbing `.config` and `docs/examples/docker-compose.yml` from the repo will suffice.
+Run `git clone https://git.hajkey.org/hajkey/hajkey`, but if you are not planning on building your own image, just grabbing `.config` and `docs/examples/docker-compose.yml` from the repo will suffice.
 
 ### docker-compose.yml
 
 First, run `cp docs/examples/docker-compose.yml docker-compose.yml`, and edit `docker-compose.yml` if
-- you want to build the image yourself or choose a [different tag](https://iceshrimp.dev/iceshrimp/-/packages/container/iceshrimp/versions), and/or
+- you want to build the image yourself or choose a [different tag](https://git.hajkey.org//-/packages/container/iceshrimp/versions), and/or
 - you want a search engine for better search performance and/or a cache server for better antenna handling.
 
 ### .config
@@ -25,7 +25,7 @@ Run `cp .config/example-docker.yml .config/default.yml`, and edit `.config/defau
 ## Installation and first start
 
 Choose a method, whether you chose to build the image yourself or not.  
-Note: Ctrl-C will shut down Iceshrimp gracefully.
+Note: Ctrl-C will shut down Hajkey gracefully.
 
 ### Pulling the image
 
@@ -43,11 +43,11 @@ docker compose build
 docker compose up
 ```
 
-## Starting Iceshrimp automatically
+## Starting Hajkey automatically
 
-Run `docker compose up -d` and Iceshrimp will start automatically on boot.
+Run `docker compose up -d` and Hajkey will start automatically on boot.
 
-## Updating Iceshrimp
+## Updating Hajkey
 
 ### Pulling the image
 

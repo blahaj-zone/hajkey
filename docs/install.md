@@ -1,6 +1,6 @@
-# Installing Iceshrimp
+# Installing Hajkey
 
-This document will guide you through manual installation of Iceshrimp on dev branch, for main branch, use Firefish's installation guide.
+This document will guide you through manual installation of Hajkey on dev branch, for main branch, use Firefish's installation guide.
 
 ## Dependencies
 
@@ -25,7 +25,7 @@ This document will guide you through manual installation of Iceshrimp on dev bra
 
 - [**FFmpeg**](https://ffmpeg.org/) for video transcoding
 - Full text search (Choose one)  
-  Iceshrimp has full text search powered by Postgres by default, however it's very slow, and these are alternatives for that
+  Hajkey has full text search powered by Postgres by default, however it's very slow, and these are alternatives for that
   - [**Meilisearch**](https://www.meilisearch.com/) | [Installation guide](https://www.meilisearch.com/docs/learn/getting_started/quick_start) 
   - [**Sonic**](https://crates.io/crates/sonic-server) (More lightweight, but less features) | [Installation guide](https://github.com/valeriansaliou/sonic#installation)
 - Caching server (Choose one)   
@@ -39,12 +39,12 @@ This document will guide you through manual installation of Iceshrimp on dev bra
 ### Download repository
 
 ```sh
-git clone https://iceshrimp.dev/iceshrimp/iceshrimp
+git clone https://git.hajkey.org/hajkey/hajkey
 ```
 
 ### Creating a new user
 
-In case you want to run Iceshrimp as a different user, run `adduser --disabled-password --disabled-login iceshrimp`  
+In case you want to run Hajkey as a different user, run `adduser --disabled-password --disabled-login iceshrimp`  
 Following steps will require you to run them as the user you have made, so use `su - iceshrimp`, or `sudo -iu iceshrimp`, or whatever else method in order to temporarily log in as that user. 
 
 ### Configuration
@@ -63,7 +63,7 @@ yarn
 ```
 <!--TODO: Find out a way to do no-optional (no tensorflow) install on yarn berry, so far I have found none-->
 
-## Building Iceshrimp
+## Building Hajkey
 
 ```sh
 yarn build
@@ -86,7 +86,7 @@ grant all privileges on database iceshrimp to iceshrimp;
 
 ### First migration
 
-In order for Iceshrimp to work properly, you need to initialise the database using
+In order for Hajkey to work properly, you need to initialise the database using
 ```bash
 yarn run init
 ```
@@ -109,12 +109,12 @@ example.com {
 }
 ```
 
-## Running Iceshrimp
+## Running Hajkey
 
 ### Running manually
 
-- Start Iceshrimp by running `NODE_ENV=production yarn run start`.  
-If this is your first run, after Iceshrimp has started successfully, you'll be able to go to the URL you have specified in `.config/default.yml` and create first user.  
+- Start Hajkey by running `NODE_ENV=production yarn run start`.  
+If this is your first run, after Hajkey has started successfully, you'll be able to go to the URL you have specified in `.config/default.yml` and create first user.  
 - To stop the server, use `Ctrl-C`.
 
 ### Running using systemd
@@ -122,12 +122,12 @@ If this is your first run, after Iceshrimp has started successfully, you'll be a
 - Run `sudo cp docs/examples/iceshrimp.service /etc/systemd/system/`
 - Edit `/etc/systemd/system/iceshrimp.service` with text editor, and change `User`, `WorkingDir`, `ExecStart` if necessary.
 - Run `sudo systemctl daemon-reload`
-- Run `sudo systemctl enable --now iceshrimp` in order to enable and start Iceshrimp.
+- Run `sudo systemctl enable --now iceshrimp` in order to enable and start Hajkey.
 - (Optional) Check if instance is running using `sudo systemctl status iceshrimp`
 
-### Updating Iceshrimp
+### Updating Hajkey
 
-Shut down Iceshrimp and then run these commands
+Shut down Hajkey and then run these commands
 
 ```sh
 ## Run git stash commands only if you have uncommitted changes
@@ -138,7 +138,7 @@ yarn
 yarn build && yarn migrate
 ```
 
-Start Iceshrimp back up
+Start Hajkey back up
 
 ## Post-install
 

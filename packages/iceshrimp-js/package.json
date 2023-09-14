@@ -19,7 +19,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://iceshrimp.dev/iceshrimp/iceshrimp.git"
+		"url": "https://git.hajkey.org/hajkey/hajkey.git"
 	},
 	"devDependencies": {
 		"@microsoft/api-documenter": "^7.22.21",

@@ -436,14 +436,14 @@ export class Meta {
 
 	@Column("varchar", {
 		length: 512,
-		default: "https://iceshrimp.dev/iceshrimp/iceshrimp",
+		default: "https://git.hajkey.org/hajkey/hajkey",
 		nullable: false,
 	})
 	public repositoryUrl: string;
 
 	@Column("varchar", {
 		length: 512,
-		default: "https://iceshrimp.dev/iceshrimp/iceshrimp/issues/new",
+		default: "https://git.hajkey.org/hajkey/hajkey/issues/new",
 		nullable: true,
 	})
 	public feedbackUrl: string | null;

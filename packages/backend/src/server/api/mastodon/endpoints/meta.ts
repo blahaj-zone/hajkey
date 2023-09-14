@@ -18,14 +18,14 @@ export async function getInstance(
 
 	return {
 		uri: response.uri,
-		title: response.title || "Iceshrimp",
+		title: response.title || "Hajkey",
 		short_description:
 			response.description?.substring(0, 50) || "See real server website",
 		description:
 			response.description ||
-			"This is a vanilla Iceshrimp Instance. It doesn't seem to have a description.",
+			"This is a vanilla Hajkey Instance. It doesn't seem to have a description.",
 		email: response.email || "",
-		version: `3.0.0 (compatible; Iceshrimp ${config.version})`,
+		version: `3.0.0 (compatible; Hajkey ${config.version})`,
 		urls: response.urls,
 		stats: {
 			user_count: await totalUsers,

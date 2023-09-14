@@ -156,7 +156,7 @@ export default defineComponent({
 						},
 					},
 					{
-						text: i18n.ts.aboutIceshrimp,
+						text: i18n.ts.aboutHajkey,
 						icon: "ph-info ph-bold ph-lg",
 						action: () => {
 							os.pageWindow("/about-iceshrimp");

@@ -8,7 +8,7 @@
 				<span>Switch is now {{ flag ? "on" : "off" }}</span>
 			</MkSwitch>
 			<div style="margin: 32px 0">
-				<MkRadio v-model="radio" value="misskey">Iceshrimp</MkRadio>
+				<MkRadio v-model="radio" value="misskey">Hajkey</MkRadio>
 				<MkRadio v-model="radio" value="mastodon">Mastodon</MkRadio>
 				<MkRadio v-model="radio" value="pleroma">Pleroma</MkRadio>
 			</div>
@@ -55,7 +55,7 @@ export default defineComponent({
 				this.$i ? this.$i.username : "guest"
 			}.\nAlso, here is ${config.url} and [example link](${
 				config.url
-			}). for more details, see https://iceshrimp.dev.\nAs you know #misskey is open-source software.`,
+			}). for more details, see https://hajkey.org.\nAs you know #misskey is open-source software.`,
 		};
 	},
 

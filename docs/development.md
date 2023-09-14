@@ -1,7 +1,7 @@
-# 🌎 Iceshrimp Developer Docs
+# 🌎 Hajkey Developer Docs
 
 ## Nix Dev Environment
-The Iceshrimp repo comes with a Nix-based shell environment to help make development as easy as possible!
+The Hajkey repo comes with a Nix-based shell environment to help make development as easy as possible!
 
 Please note, however, that this environment will not work on Windows outside of a WSL2 environment.
 
@@ -10,12 +10,12 @@ Please note, however, that this environment will not work on Windows outside of 
 - Installed the [Nix Package Manager](https://nixos.org/download.html) (use the comman on their website)
 - Installed [direnv](https://direnv.net/docs/installation.html) and added its hook to your shell. (package manager)
 
-Once the repo is cloned to your computer, follow these next few steps inside the Iceshrimp folder:
+Once the repo is cloned to your computer, follow these next few steps inside the Hajkey folder:
 
 - Run `direnv allow`. This will build the environment and install all needed tools.
 - Run `install-deps`, then `prepare-config`, to install the node dependencies and prepare the needed config files.
-- In a second terminal,  run `devenv up`. This will spawn a **Redis** server, a **Postgres** server, and the **Iceshrimp** server in dev mode.
-- Once you see the Iceshrimp banner printed in your second terminal, run `migrate` in the first.
+- In a second terminal,  run `devenv up`. This will spawn a **Redis** server, a **Postgres** server, and the **Hajkey** server in dev mode.
+- Once you see the Hajkey banner printed in your second terminal, run `migrate` in the first.
 - Once migrations finish, open http://localhost:3000 in your web browser.
 - You should now see the admin user creation screen!
 
@@ -97,7 +97,7 @@ Exit status 1
 the script is designed to constantly try to start the server, while the build is still running.
 this just means that the build isn't finished yet.
 
-at some point you should see a banner that says "Iceshrimp" in big letters -
+at some point you should see a banner that says "Hajkey" in big letters -
 then you're good to go and can run `migrate` (in another terminal)!
 
 if you don't see the banner, 

@@ -43,7 +43,7 @@ export default async function (
 		id: author.link,
 		title: `${author.name} (@${user.username}@${config.domain})`,
 		updated: notes[0].createdAt,
-		generator: "Iceshrimp",
+		generator: "Hajkey",
 		description: `${user.notesCount} Notes, ${
 			profile.ffVisibility === "public" ? user.followingCount : "?"
 		} Following, ${

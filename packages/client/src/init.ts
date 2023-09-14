@@ -64,7 +64,12 @@ function checkForSplash() {
 }
 
 (async () => {
-	console.info(`Iceshrimp v${version}`);
+	console.log("   ________  ________     ____  ____ ___  ________  ________ ");
+	console.log("  ╱    ╱   ╲╱        ╲   ╱    ╲╱    ╱   ╲╱        ╲╱    ╱   ╲");
+	console.log(" ╱         ╱   ╱     ╱__╱     ╱         ╱    ╱    ╱    ╱    ╱");
+	console.log("╱         ╱         ╱  ╱     ╱        ╲╱      ___╱╲__      ╱ ");
+	console.log("╲___╱____╱╲___╱____╱╲_______╱╲____╱___╱╲________╱   ╲_____╱  ");
+	console.info(`Hajkey v${version}`);
 
 	if (_DEV_) {
 		console.warn("Development mode!!!");

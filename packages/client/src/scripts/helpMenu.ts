@@ -20,7 +20,7 @@ export function openHelpMenu_(ev: MouseEvent) {
 			},
 			{
 				type: "link",
-				text: i18n.ts.aboutIceshrimp,
+				text: i18n.ts.aboutHajkey,
 				icon: "ph-lightbulb ph-bold ph-lg",
 				to: "/about-iceshrimp",
 			},
@@ -37,7 +37,7 @@ export function openHelpMenu_(ev: MouseEvent) {
 				text: i18n.ts.apps,
 				icon: "ph-device-mobile ph-bold ph-lg",
 				action: () => {
-					window.open("https://iceshrimp.dev/apps", "_blank");
+					window.open("https://hajkey.org/apps", "_blank");
 				},
 			},
 			{

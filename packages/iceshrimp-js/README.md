@@ -1,6 +1,6 @@
 # iceshrimp.js
 
-Fork of Misskey.js for Iceshrimp
+Fork of Misskey.js for Hajkey
 
 https://www.npmjs.com/package/iceshrimp-js
 

@@ -9,13 +9,13 @@ export function genOpenapiSpec() {
 
 		info: {
 			version: "v1",
-			title: "Iceshrimp API",
+			title: "Hajkey API",
 			"x-logo": { url: "/static-assets/api-doc.png" },
 		},
 
 		externalDocs: {
 			description: "Repository",
-			url: "https://iceshrimp.dev/iceshrimp/iceshrimp",
+			url: "https://git.hajkey.org/hajkey/hajkey",
 		},
 
 		servers: [
@@ -106,7 +106,7 @@ export function genOpenapiSpec() {
 			description: desc,
 			externalDocs: {
 				description: "Source code",
-				url: `https://iceshrimp.dev/iceshrimp/iceshrimp/src/branch/dev/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
+				url: `https://git.hajkey.org/hajkey/hajkey/src/branch/dev/packages/backend/src/server/api/endpoints/${endpoint.name}.ts`,
 			},
 			tags: endpoint.meta.tags || undefined,
 			security,

@@ -55,15 +55,15 @@ describe("fromHtml", () => {
 
 	it("link with different text", async () => {
 		assert.deepStrictEqual(
-			await fromHtml('<p>a <a href="https://iceshrimp.dev/b">c</a> d</p>'),
-			"a [c](https://iceshrimp.dev/b) d",
+			await fromHtml('<p>a <a href="https://hajkey.org/b">c</a> d</p>'),
+			"a [c](https://hajkey.org/b) d",
 		);
 	});
 
 	it("link with different text, but not encoded", async () => {
 		assert.deepStrictEqual(
-			await fromHtml('<p>a <a href="https://iceshrimp.dev/ä">c</a> d</p>'),
-			"a [c](<https://iceshrimp.dev/ä>) d",
+			await fromHtml('<p>a <a href="https://hajkey.org/ä">c</a> d</p>'),
+			"a [c](<https://hajkey.org/ä>) d",
 		);
 	});
 

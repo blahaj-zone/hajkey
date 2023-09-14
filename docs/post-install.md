@@ -1,6 +1,6 @@
 # Post-install
 
-This document describes things you can do after successfully installing Iceshrimp.
+This document describes things you can do after successfully installing Hajkey.
 
 ## Automatic translation
 
@@ -44,11 +44,11 @@ Recommended if using Docker
   - If instance is ran by a different system user: Prepend that command with `sudo -U iceshrimp`, replace `iceshrimp` with a name of that user if needed
   - Docker Compose users: `docker compose exec db psql -d iceshrimp -U iceshrimp`, replace both `iceshrimp` with name of your db, and username owning that db respectively, if needed
 - Run `UPDATE "user" SET "isAdmin" = true WHERE id='999999';`, where `999999` is the copied ID of that user
-- Restart your Iceshrimp server
+- Restart your Hajkey server
 
 ### Removing admin privileges
 - Get ID of the user
 - Run `psql` the same way when adding admin
 - Run `UPDATE "user" SET "isAdmin" = false WHERE id='999999';`, where `999999` is the copied ID of that user
-- Restart your Iceshrimp server
+- Restart your Hajkey server
 - Remove moderator privileges of the user

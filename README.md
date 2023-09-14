@@ -1,8 +1,8 @@
-# 🧡 About Iceshrimp
+# 🧡 About Hajkey
 
-- Iceshrimp is yet another Misskey fork (you know the drill by now)
+- Hajkey is yet another Misskey fork (you know the drill by now)
 - Need help or want to contribute? Join the [matrix room](https://matrix.to/#/%23iceshrimp-dev:161.rocks)!
-- Documentation on installing (and updating) Iceshrimp:
+- Documentation on installing (and updating) Hajkey:
   - [Bare metal](docs/install.md)
   - [Docker Compose](docs/docker-compose-install.md)
 - Project goals:

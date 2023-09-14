@@ -18,8 +18,8 @@
 					>
 					<small
 						>Powered by
-						<a href="https://iceshrimp.dev/" target="_blank"
-							>Iceshrimp</a
+						<a href="https://hajkey.org/" target="_blank"
+							>Hajkey</a
 						></small
 					>
 				</div>

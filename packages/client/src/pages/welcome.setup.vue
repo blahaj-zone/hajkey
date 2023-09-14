@@ -1,6 +1,6 @@
 <template>
 	<form class="mk-setup" @submit.prevent="submit()">
-		<h1>Welcome to Iceshrimp!</h1>
+		<h1>Welcome to Hajkey!</h1>
 		<div class="_formRoot">
 			<p>{{ i18n.ts.intro }}</p>
 			<MkInput

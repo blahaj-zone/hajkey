@@ -22,7 +22,7 @@ export const lang = localStorage.getItem("lang");
 export const langs = _LANGS_;
 export const locale = JSON.parse(localStorage.getItem("locale"));
 export const version = _VERSION_;
-export const instanceName = siteName === "Iceshrimp" ? host : siteName;
+export const instanceName = siteName === "Hajkey" ? host : siteName;
 export let searchEngine = 'https://duckduckgo.com/?q=';
 export const ui = localStorage.getItem("ui");
 export const debug = localStorage.getItem("debug") === "true";

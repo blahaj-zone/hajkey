@@ -59,11 +59,11 @@
 
 						<FormSection>
 							<MkKeyValue class="_formBlock" :copy="version">
-								<template #key>Iceshrimp</template>
+								<template #key>Hajkey</template>
 								<template #value>{{ version }}</template>
 							</MkKeyValue>
 							<FormLink to="/about-iceshrimp">{{
-								i18n.ts.aboutIceshrimp
+								i18n.ts.aboutHajkey
 							}}</FormLink>
 						</FormSection>
 
@@ -102,7 +102,7 @@
 									><i class="ph-money ph-bold ph-lg"></i
 								></template>
 								{{
-									i18n.t("_aboutIceshrimp.donateHost", {
+									i18n.t("_aboutHajkey.donateHost", {
 										host: $instance.name || host,
 									})
 								}}

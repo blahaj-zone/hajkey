@@ -3,10 +3,10 @@ export class IceshrimpRepo1689965609061 {
 
 	async up(queryRunner) {
 		await queryRunner.query(
-			`UPDATE meta SET "repositoryUrl" = 'https://iceshrimp.dev/iceshrimp/iceshrimp'`,
+			`UPDATE meta SET "repositoryUrl" = 'https://git.hajkey.org/hajkey/hajkey'`,
 		);
 		await queryRunner.query(
-			`UPDATE meta SET "feedbackUrl" = 'https://iceshrimp.dev/iceshrimp/iceshrimp/issues'`,
+			`UPDATE meta SET "feedbackUrl" = 'https://git.hajkey.org/hajkey/hajkey/issues'`,
 		);
 	}
 

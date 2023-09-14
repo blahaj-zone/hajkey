@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: iceshrimp.dev/iceshrimp/iceshrimp:dev
+    image: git.hajkey.org/hajkey/hajkey:dev
     build: ..
     container_name: iceshrimp_web
     restart: always

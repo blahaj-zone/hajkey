@@ -4,7 +4,7 @@
 	"codename": "aqua",
 	"repository": {
 		"type": "git",
-		"url": "https://iceshrimp.dev/iceshrimp/iceshrimp.git"
+		"url": "https://git.hajkey.org/hajkey/hajkey.git"
 	},
 	"private": true,
 	"scripts": {

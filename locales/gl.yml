@@ -1,5 +1,5 @@
 _lang_: Inglés
-introIceshrimp: Benvida! Iceshrimp é unha plataforma de medios sociais de código aberto,
+introHajkey: Benvida! Hajkey é unha plataforma de medios sociais de código aberto,
   descentralizada e gratuíta para sempre!🚀
 monthAndDay: '{day}/{month}'
 notifications: Notificacións
@@ -8,10 +8,10 @@ forgotPassword: Esquecín o contrasinal
 gotIt: Vale!
 cancel: Cancelar
 noThankYou: Non, grazas
-headlineIceshrimp: Plataforma de medios sociais de código aberto e descentralizada,
+headlineHajkey: Plataforma de medios sociais de código aberto e descentralizada,
   gratuíta para sempre!🚀
 search: Buscar
-searchPlaceholder: Buscar en Iceshrimp
+searchPlaceholder: Buscar en Hajkey
 username: Identificador
 fetchingAsApObject: Descargando desde o Fediverso
 ok: OK

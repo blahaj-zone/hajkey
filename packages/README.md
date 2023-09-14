@@ -1,6 +1,6 @@
 # 📦 Packages
 
-This directory contains all of the packages Iceshrimp uses.
+This directory contains all of the packages Hajkey uses.
 
 - `backend`: Main backend code written in TypeScript for NodeJS
 - `backend/native-utils`: Backend code written in Rust, bound to NodeJS by [NAPI-RS](https://napi.rs/)

@@ -1,14 +1,14 @@
 [Unit]
-Description=Iceshrimp daemon
+Description=Hajkey daemon
 
 [Service]
 Type=simple
-User=iceshrimp
+User=hajkey
 ExecStart=/usr/bin/yarn start
-WorkingDirectory=/home/iceshrimp/iceshrimp
+WorkingDirectory=/home/hajkey/iceshrimp
 Environment="NODE_ENV=production"
 TimeoutSec=60
-SyslogIdentifier=iceshrimp
+SyslogIdentifier=hajkey
 Restart=always
 
 [Install]

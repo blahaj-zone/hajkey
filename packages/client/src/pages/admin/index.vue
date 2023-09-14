@@ -41,7 +41,7 @@
 					<MkInfo v-if="updateAvailable" warn class="info"
 						>{{ i18n.ts.updateAvailable }}
 						<a
-							href="https://iceshrimp.dev/iceshrimp/iceshrimp/releases"
+							href="https://git.hajkey.org/hajkey/hajkey/releases"
 							target="_bank"
 							class="_link"
 							>{{ i18n.ts.check }}</a

@@ -8,7 +8,7 @@ profile: Profil
 timeline: Tidslinje
 save: Lagre
 addToList: Legg til liste
-searchPlaceholder: Søk Iceshrimp
+searchPlaceholder: Søk Hajkey
 username: Brukernavn
 password: Passord
 notifications: Meldinger
@@ -63,9 +63,9 @@ alreadyFavorited: Allerede lagt til i bokmerker.
 delete: Slett
 openInWindow: Åpne i vindu
 basicSettings: Grunnleggende innstillinger
-headlineIceshrimp: En desentralisert sosialt media-plattform, basert på åpen kildekode,
+headlineHajkey: En desentralisert sosialt media-plattform, basert på åpen kildekode,
   som alltid vil være gratis! 🚀
-introIceshrimp: Velkommen! Iceshrimp er en desentralisert sosialt media-plattform, basert
+introHajkey: Velkommen! Hajkey er en desentralisert sosialt media-plattform, basert
   på åpen kildekode, som alltid vil være gratis! 🚀
 exportRequested: Du har bedt om en eksportering. Dette vil ta litt tid. Den vil bli
   lagt til på disken din når den er ferdig.

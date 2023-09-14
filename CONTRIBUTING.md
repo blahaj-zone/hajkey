@@ -1,8 +1,8 @@
 # Contribution guide
-We're glad you're interested in contributing Iceshrimp! In this document you will find the information you need to contribute to the project.
+We're glad you're interested in contributing Hajkey! In this document you will find the information you need to contribute to the project.
 
 ## Translation (i18n)
-Iceshrimp uses [Weblate](https://translate.iceshrimp.dev/) for translation and internationalization management.
+Hajkey uses [Weblate](https://translate.iceshrimp.dev/) for translation and internationalization management.
 
 If your language is not listed in Weblate, please open an issue.
 

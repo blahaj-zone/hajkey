@@ -1,7 +1,7 @@
 
-# Iceshrimp Community Code of Conduct
+# Hajkey Community Code of Conduct
 
-The Iceshrimp Code of Conduct is a set of guidelines that explains how our community behaves and what we value as members and project to others. This Code of Conduct is a living document and will be updated when and as deemed necessary.
+The Hajkey Code of Conduct is a set of guidelines that explains how our community behaves and what we value as members and project to others. This Code of Conduct is a living document and will be updated when and as deemed necessary.
 
 The Code of Conduct does not seek to restrict speech or penalize non-native speakers of English or any other language. Instead the Code of Conduct spells out the kinds of behaviors we, as a community, find to be acceptable and unacceptable.
 
@@ -14,7 +14,7 @@ It is important to assume good faith and remember that many of our contributors 
 - Please be kind and courteous. There's no need to be mean or rude.
 - Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
 - We will exclude you from interaction if you insult, demean or harass anyone. That is not welcome behavior. We interpret the term “harassment” as including the definition in the [Citizen Code of Conduct](https://github.com/stumpsyn/policies/blob/master/citizen_code_of_conduct.md#4-unacceptable-behavior); if you have any lack of clarity about what might be included in that concept, please read their definition. In particular, we don't tolerate behavior that excludes people in socially marginalized groups.
-- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please contact conduct@iceshrimp.dev. Whether you're a regular contributor or a newcomer, we care about making this community a safe place for you and we've got your back.
+- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please contact conduct@hajkey.org. Whether you're a regular contributor or a newcomer, we care about making this community a safe place for you and we've got your back.
 - Likewise any spamming, trolling, flaming, baiting or other attention-stealing behavior is not welcome
 
 Try to avoid flirting with offensive or sensitive issues, particularly if they're off-topic; this all too often leads to unnecessary fights, hurt feelings, and damaged trust; worse, it can drive people away from the community entirely.
@@ -23,7 +23,7 @@ And if someone takes issue with something you said or did, resist the urge to be
 
 ## Moderation
 
-**People who have an issue or questions about a potential Code of Conduct violation can raise it by writing an e-mail to [conduct@iceshrimp.dev](mailto:conduct@iceshrimp.dev)**
+**People who have an issue or questions about a potential Code of Conduct violation can raise it by writing an e-mail to [conduct@hajkey.org](mailto:conduct@hajkey.org)**
 
 ## Scope
 

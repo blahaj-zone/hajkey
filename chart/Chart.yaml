@@ -1,6 +1,6 @@
 apiVersion: v2
-name: iceshrimp
-description: A fun, new, open way to experience social media https://iceshrimp.dev
+name: hajkey
+description: A fun, new, open way to experience social media https://hajkey.org
 
 # A chart can be either an 'application' or a 'library' chart.
 #

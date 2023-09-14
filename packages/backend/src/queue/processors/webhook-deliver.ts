@@ -16,10 +16,10 @@ export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 			url: job.data.to,
 			method: "POST",
 			headers: {
-				"User-Agent": "Iceshrimp-Hooks",
-				"X-Iceshrimp-Host": config.host,
-				"X-Iceshrimp-Hook-Id": job.data.webhookId,
-				"X-Iceshrimp-Hook-Secret": job.data.secret,
+				"User-Agent": "Hajkey-Hooks",
+				"X-Hajkey-Host": config.host,
+				"X-Hajkey-Hook-Id": job.data.webhookId,
+				"X-Hajkey-Hook-Secret": job.data.secret,
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({

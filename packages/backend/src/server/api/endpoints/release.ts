@@ -18,7 +18,7 @@ export default define(meta, paramDef, async () => {
 	let release;
 
 	await fetch(
-		"https://iceshrimp.dev/iceshrimp/iceshrimp/raw/branch/dev/release.json",
+		"https://git.hajkey.org/hajkey/hajkey/raw/branch/dev/release.json",
 	)
 		.then((response) => response.json())
 		.then((data) => {

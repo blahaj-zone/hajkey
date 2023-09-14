@@ -34,7 +34,7 @@ function greet() {
 		);
 	}
 
-	bootLogger.info(`Iceshrimp v${meta.version}, initializing...`, null, true);
+	bootLogger.info(`Hajkey v${meta.version}, initializing...`, null, true);
 }
 
 /**
@@ -57,7 +57,7 @@ export async function masterMain() {
 		process.exit(1);
 	}
 
-	bootLogger.succ("Iceshrimp initialized");
+	bootLogger.succ("Hajkey initialized");
 
 	if (!envOption.disableClustering) {
 		await spawnWorkers(config.clusterLimit);

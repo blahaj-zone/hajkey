@@ -1,7 +1,7 @@
 _lang_: "Deutsch"
-headlineIceshrimp: "Eine dezentralisierte Open-Source Social Media Plattform, die
+headlineHajkey: "Eine dezentralisierte Open-Source Social Media Plattform, die
   für immer gratis bleibt! 🚀"
-introIceshrimp: "Willkommen! Iceshrimp ist eine dezentralisierte Open-Source Social
+introHajkey: "Willkommen! Hajkey ist eine dezentralisierte Open-Source Social
   Media Plattform, die für immer gratis bleibt!🚀"
 monthAndDay: "{month}/{day}"
 search: "Suchen"
@@ -155,7 +155,7 @@ cacheRemoteFilesDescription: "Ist diese Einstellung deaktiviert, so werden Datei
 flagAsBot: "Dieses Nutzerkonto als Bot kennzeichnen"
 flagAsBotDescription: "Aktiviere diese Option, falls dieses Nutzerkonto durch ein
   Programm gesteuert wird. Falls aktiviert, agiert es als Flag für andere Entwickler
-  zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Iceshrimps
+  zur Verhinderung von endlosen Kettenreaktionen mit anderen Bots und lässt Hajkeys
   interne Systeme dieses Nutzerkonto als Bot behandeln."
 flagAsCat: "Bist du eine Katze? 😺"
 flagAsCatDescription: "Du bekommst Katzenohren und sprichst wie eine Katze!"
@@ -225,7 +225,7 @@ noUsers: "Es sind keine Nutzer vorhanden"
 editProfile: "Profil bearbeiten"
 noteDeleteConfirm: "Sind Sie sicher, dass Sie diesen Beitrag löschen wollen?"
 pinLimitExceeded: "Sie können keine weiteren Beiträge anpinnen"
-intro: "Die Installation von Iceshrimp ist abgeschlossen! Bitte erstellen Sie einen
+intro: "Die Installation von Hajkey ist abgeschlossen! Bitte erstellen Sie einen
   Admin-Benutzer."
 done: "Erledigt"
 processing: "In Bearbeitung"
@@ -419,7 +419,7 @@ exploreFediverse: "Das Fediverse erkunden"
 popularTags: "Beliebte Schlagwörter"
 userList: "Liste"
 about: "Über"
-aboutIceshrimp: "Über Iceshrimp"
+aboutHajkey: "Über Hajkey"
 administrator: "Administrator"
 token: "Token"
 twoStepAuthentication: "Zwei-Faktor-Authentifizierung"
@@ -575,7 +575,7 @@ ascendingOrder: "Aufsteigende Reihenfolge"
 descendingOrder: "Absteigende Reihenfolge"
 scratchpad: "Testumgebung"
 scratchpadDescription: "Die Testumgebung bietet einen Bereich für AiScript-Experimente.
-  Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Iceshrimp
+  Dort kannst du AiScript schreiben, ausführen sowie dessen Auswirkungen auf Hajkey
   überprüfen."
 output: "Ausgabe"
 script: "Skript"
@@ -717,7 +717,7 @@ unclip: "Aus Clip entfernen"
 confirmToUnclipAlreadyClippedNote: "Dieser Beitrag ist bereits im \"{name}\" Clip
   enthalten. Möchtest du ihn aus diesem Clip entfernen?"
 public: "Öffentlich"
-i18nInfo: "Iceshrimp wird durch freiwillige Helfer in viele verschiedene Sprachen
+i18nInfo: "Hajkey wird durch freiwillige Helfer in viele verschiedene Sprachen
   übersetzt. Auf {link} kannst du mithelfen."
 manageAccessTokens: "Zugriffstokens verwalten"
 accountInfo: "Nutzerkonto-Informationen"
@@ -777,10 +777,10 @@ nUsers: "{n} Nutzer"
 nNotes: "{n} Beiträge"
 sendErrorReports: "Fehlerberichte senden"
 sendErrorReportsDescription: "Ist diese Option aktiviert, so werden beim Auftreten
-  von Fehlern detaillierte Fehlerinformationen an Iceshrimp weitergegeben, was zur
-  Verbesserung der Qualität von Iceshrimp beiträgt.\nEnthalten in diesen Informationen
+  von Fehlern detaillierte Fehlerinformationen an Hajkey weitergegeben, was zur
+  Verbesserung der Qualität von Hajkey beiträgt.\nEnthalten in diesen Informationen
   sind u.a. die Version deines Betriebssystems, welchen Browser du verwendest und
-  ein Verlauf deiner Aktivitäten innerhalb Iceshrimp."
+  ein Verlauf deiner Aktivitäten innerhalb Hajkey."
 myTheme: "Meine Farbkombination"
 backgroundColor: "Hintergrundfarbe"
 accentColor: "Akzentfarbe"
@@ -875,7 +875,7 @@ hashtags: "Hashtags"
 troubleshooting: "Problembehandlung"
 useBlurEffect: "Weichzeichnungseffekt in der Benutzeroberfläche verwenden"
 learnMore: "Mehr erfahren"
-iceshrimpUpdated: "Iceshrimp wurde aktualisiert!"
+iceshrimpUpdated: "Hajkey wurde aktualisiert!"
 whatIsNew: "Änderungen anzeigen"
 translate: "Übersetzen"
 translatedFrom: "Aus {x} übersetzt"
@@ -1085,28 +1085,28 @@ _registry:
   keys: "Schlüssel"
   domain: "Domain"
   createKey: "Schlüssel erstellen"
-_aboutIceshrimp:
-  about: "Iceshrimp ist ein Fork von Iceshrimp, der seit 2022 von ThatOneCalculator
+_aboutHajkey:
+  about: "Hajkey ist ein Fork von Hajkey, der seit 2022 von ThatOneCalculator
     entwickelt wird."
   contributors: "Hauptmitwirkende"
   allContributors: "Alle Mitwirkenden"
   source: "Quellcode"
-  translation: "Iceshrimp übersetzen"
-  donate: "An Iceshrimp spenden"
+  translation: "Hajkey übersetzen"
+  donate: "An Hajkey spenden"
   morePatrons: "Wir schätzen ebenso die Unterstützung vieler anderer hier nicht gelisteter
     Personen sehr. Danke! 🥰"
   patrons: "UnterstützerInnen"
-  donateTitle: Gefällt dir Iceshrimp?
+  donateTitle: Gefällt dir Hajkey?
 _nsfw:
   respect: "Mit NSFW gekennzeichnete Bilder verbergen"
   ignore: "Mit NSFW gekennzeichnete Bilder nicht verbergen"
   force: "Alle Medien verbergen"
 _mfm:
   cheatSheet: "MFM Spickzettel"
-  intro: "MFM ist eine Markup-Sprache, die in Iceshrimp, Iceshrimp, Akkoma und anderen
+  intro: "MFM ist eine Markup-Sprache, die in Hajkey, Hajkey, Akkoma und anderen
     Programmen verwendet wird und an vielen Stellen eingesetzt werden kann. Hier können
     Sie eine Liste aller verfügbaren MFM-Syntaxe einsehen."
-  dummy: "Iceshrimp erweitert die Welt des Fediverse"
+  dummy: "Hajkey erweitert die Welt des Fediverse"
   mention: "Erwähnung"
   mentionDescription: "Mit At-Zeichen und Nutzername kann ein individueller Nutzer
     angegeben werden."
@@ -1339,7 +1339,7 @@ _time:
   hour: "Stunde(n)"
   day: "Tag(en)"
 _tutorial:
-  title: "Wie man Iceshrimp benutzt"
+  title: "Wie man Hajkey benutzt"
   step1_1: "Willkommen!"
   step1_2: "Wir werden Sie einrichten. Sie werden im Handumdrehen einsatzbereit sein!"
   step2_1: "Bitte füllen Sie zuerst Ihr Profil aus."
@@ -1365,11 +1365,11 @@ _tutorial:
   step5_7: "In der {icon} Global-Timeline können Sie Beiträge von allen verknüpften
     Servern aus dem Fediverse sehen."
   step6_1: "Also, was ist das hier?"
-  step6_2: "Mit Deiner Anmeldung zu Iceshrimp bist Du gleichzeitig einem Portal zum
+  step6_2: "Mit Deiner Anmeldung zu Hajkey bist Du gleichzeitig einem Portal zum
     Fediverse beigetreten, einem Netzwerk mit Tausenden von, miteinander verbundenen,
     Servern."
   step6_3: "Jeder der Server funktioniert auf unterschiedliche Weise, und nicht alle
-    Server führen Iceshrimp aus. Dieser jedoch schon! Es ist zu Beginn vielleicht
+    Server führen Hajkey aus. Dieser jedoch schon! Es ist zu Beginn vielleicht
     ein wenig kompliziert, aber Sie werden in kürzester Zeit den Dreh raus haben."
   step6_4: "Jetzt bist Du startbereit, entdecke die Möglichkeiten und hab Spaß dabei!"
 _2fa:
@@ -2031,7 +2031,7 @@ signupsDisabled: Derzeit sind keine Anmeldungen auf diesem Server möglich! Anme
 swipeOnDesktop: Am Desktop PC das Wischen wie bei mobilen Geräten zulassen
 enterSendsMessage: Drücken sie zum Senden des Beitrages die Eingabetaste (Strg-Taste
   ausgeschaltet)
-showUpdates: Zeigt ein Popup-Fenster an, wenn Iceshrimp aktualisiert wird.
+showUpdates: Zeigt ein Popup-Fenster an, wenn Hajkey aktualisiert wird.
 socialTimeline: Social-Timeline
 moveFrom: Bisheriges Nutzerkonto zu diesem Nutzerkonto umziehen
 _messaging:
@@ -2063,7 +2063,7 @@ allowedInstancesDescription: Hosts von Servern, die zur Verbindung auf die Liste
   (gilt nur im privaten Modus).
 migration: Migration
 updateAvailable: Es könnte eine Aktualisierung verfügbar sein!
-showAdminUpdates: Anzeigen, dass eine neue Iceshrimp-Version verfügbar ist (nur Administrator)
+showAdminUpdates: Anzeigen, dass eine neue Hajkey-Version verfügbar ist (nur Administrator)
 customMOTDDescription: Benutzerdefinierte Meldungen für die Meldung des Tages (Begrüßungsbildschirm),
   die durch Zeilenumbrüche getrennt sind und nach dem Zufallsprinzip jedes Mal angezeigt
   werden, wenn ein Benutzer die Seite (neu) lädt.
@@ -2102,11 +2102,11 @@ silencedWarning: Diese Meldung wird angezeigt, weil diese Nutzer von Servern sta
 _experiments:
   title: Funktionstests
   enablePostImports: Beitragsimporte aktivieren
-  postImportsCaption: Erlaubt es Nutzer:innen ihre Posts von alten Iceshrimp, Iceshrimp,
+  postImportsCaption: Erlaubt es Nutzer:innen ihre Posts von alten Hajkey, Hajkey,
     Mastodon, Akkoma und Pleroma Accounts zu importieren. Bei Engpässen in der Warteschlange
     kann es zu Verlangsamungen beim Laden während des Imports kommen.
 noGraze: Bitte deaktivieren Sie die Browsererweiterung "Graze for Mastodon", da sie
-  die Funktion von Iceshrimp stört.
+  die Funktion von Hajkey stört.
 indexFrom: Indexieren ab Beitragskennung aufwärts
 indexNotice: Wird jetzt indexiert. Dies wird wahrscheinlich eine Weile dauern, bitte
   starten Sie Ihren Server für mindestens eine Stunde nicht neu.
@@ -2144,10 +2144,10 @@ _dialog:
   charactersExceeded: 'Maximale Anzahl an Zeichen aufgebraucht! Limit: {current} /
     {max}'
   charactersBelow: Nicht genug Zeichen! Du hast aktuell {current} von {min} Zeichen
-searchPlaceholder: Iceshrimp durchsuchen
+searchPlaceholder: Hajkey durchsuchen
 antennasDesc: "Antennen zeigen neue Posts an, die deinen definierten Kriterien entsprechen!\n
   Sie können von der Timeline-Seite aufgerufen werden."
-isPatron: Iceshrimp Patron
+isPatron: Hajkey Patron
 removeReaction: Entferne deine Reaktion
 listsDesc: Listen lassen dich Timelines mit bestimmten Nutzer:innen erstellen. Sie
   können von der Timeline-Seite erreicht werden.

@@ -68,8 +68,8 @@ export async function createImage(
 /**
  * Resolve Image.
  *
- * If the target Image is registered in Iceshrimp, return it, otherwise
- * Fetch from remote server, register with Iceshrimp and return it.
+ * If the target Image is registered in Hajkey, return it, otherwise
+ * Fetch from remote server, register with Hajkey and return it.
  */
 export async function resolveImage(
 	actor: CacheableRemoteUser,

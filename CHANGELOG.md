@@ -2,7 +2,7 @@
 ### Highlights
 - New branding & documentation
 - Proper support for split domain deployments, both local and remote
-- [Configurable](https://iceshrimp.dev/iceshrimp/iceshrimp/src/commit/f3c1e4efd30e660372a652a7b43fdb63e2817bae/.config/example.yml#L193-L198) automatic remote media pruning (disabled by default)
+- [Configurable](https://git.hajkey.org/hajkey/hajkey/src/commit/f3c1e4efd30e660372a652a7b43fdb63e2817bae/.config/example.yml#L193-L198) automatic remote media pruning (disabled by default)
 - Reworked content warnings (three different styles for CW'd posts, 'Expand all CWs in thread' button, 'Expand all CWs by default' client option)
 
 ### Bug fixes
@@ -38,7 +38,7 @@
 - Blur is now disabled by default
 - When blur is disabled, UI elements are now properly opaque
 - The antenna timeline now has a help text explaining why posts can be out of order
-- Status images have been replaced with [configurable](https://iceshrimp.dev/iceshrimp/iceshrimp/src/commit/3afbaacc3773ac0772204d872126d37309302562/.config/example-docker.yml#L201-L205) status emoji
+- Status images have been replaced with [configurable](https://git.hajkey.org/hajkey/hajkey/src/commit/3afbaacc3773ac0772204d872126d37309302562/.config/example-docker.yml#L201-L205) status emoji
 - The navbar layout has been tweaked
 - Various inconsistencies as well as alignment & animation issues have been fixed
 
@@ -64,7 +64,7 @@
 - The migration rust crate now builds much faster
 
 ### Miscellaneous
-- The MFM search engine is now [configurable](https://iceshrimp.dev/iceshrimp/iceshrimp/src/commit/afd9ffb3c728b143c6d3d4d3dd8562ec6bde3a91/.config/example.yml#L206-L207)
+- The MFM search engine is now [configurable](https://git.hajkey.org/hajkey/hajkey/src/commit/afd9ffb3c728b143c6d3d4d3dd8562ec6bde3a91/.config/example.yml#L206-L207)
 - Various translation updates
 
 ### Infrastructure and governance

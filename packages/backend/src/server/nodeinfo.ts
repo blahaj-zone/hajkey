@@ -50,10 +50,10 @@ const nodeinfo2 = async () => {
 
 	return {
 		software: {
-			name: "iceshrimp",
+			name: "hajkey",
 			version: config.version,
 			repository: meta.repositoryUrl,
-			homepage: "https://iceshrimp.dev/",
+			homepage: "https://hajkey.org/",
 		},
 		protocols: ["activitypub"],
 		services: {

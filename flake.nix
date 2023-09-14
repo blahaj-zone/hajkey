@@ -1,5 +1,5 @@
 {
-	description = "Iceshrimp development flake";
+	description = "Hajkey development flake";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";

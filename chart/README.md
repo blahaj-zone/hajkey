@@ -2,7 +2,7 @@
 
 ![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: rc](https://img.shields.io/badge/AppVersion-rc-informational?style=flat-square)
 
-A fun, new, open way to experience social media https://iceshrimp.dev
+A fun, new, open way to experience social media https://hajkey.org
 
 ## Requirements
 
@@ -53,7 +53,7 @@ A fun, new, open way to experience social media https://iceshrimp.dev
 | elasticsearch | object | `{"auth":{},"enabled":false,"hostname":"","port":9200,"ssl":false}` | https://github.com/bitnami/charts/tree/master/bitnami/elasticsearch#parameters |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"iceshrimp.dev/iceshrimp/iceshrimp"` |  |
+| image.repository | string | `"git.hajkey.org/hajkey/hajkey"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |

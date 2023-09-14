@@ -4,7 +4,7 @@ jobs:
   test-build:
     runs-on: docker
     container:
-      image: iceshrimp.dev/iceshrimp/ci-env:latest
+      image: git.hajkey.org/hajkey/ci-env:latest
       options: --volume /opt/iceshrimp-cache/yarn:/iceshrimp-caches/yarn --volume /opt/iceshrimp-cache/cargo:/root/.cargo --volume /opt/iceshrimp-cache/built:/iceshrimp-caches/built --volume /opt/iceshrimp-cache/target:/iceshrimp-caches/target
     services:
       database:
@@ -15,7 +15,7 @@ jobs:
         image: redis
     steps:
       - name: Clone repository
-        run: git clone https://iceshrimp.dev/iceshrimp/iceshrimp.git --branch=${{ github.ref_name }} --depth=1 /iceshrimp
+        run: git clone https://git.hajkey.org/hajkey/hajkey.git --branch=${{ github.ref_name }} --depth=1 /iceshrimp
       - name: Install build dependencies
         run: |
           cd /iceshrimp
