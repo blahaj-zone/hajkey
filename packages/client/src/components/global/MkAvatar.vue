@@ -214,6 +214,7 @@ watch(
 
 			&.catBordered {
 				border: 2px solid currentColor;
+				background-color: currentColor;
 			}
 		}
 	}
