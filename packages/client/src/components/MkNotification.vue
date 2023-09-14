@@ -114,7 +114,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note)"
 			>
-				<span>{{ i18n.ts._notification.reacted }}</span>
+				<span>{{ isMine(notification.note) ? i18n.ts._notification.reacted : i18n.ts._notification.reactedWatched }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note)"
@@ -130,7 +130,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note.renote)"
 			>
-				<span>{{ i18n.ts._notification.renoted }}</span>
+				<span>{{ isMine(notification.note.renote) ? i18n.ts._notification.renoted : i18n.ts._notification.renotedWatched }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note.renote)"
@@ -185,7 +185,7 @@
 				:to="notePage(notification.note)"
 				:title="getNoteSummary(notification.note)"
 			>
-				<span>{{ i18n.ts._notification.voted }}</span>
+				<span>{{ isMine(notification.note) ? i18n.ts._notification.voted : i18n.ts._notification.votedWatched }}</span>
 				<i class="ph-quotes ph-fill ph-lg"></i>
 				<Mfm
 					:text="getNoteSummary(notification.note)"
@@ -312,6 +312,9 @@ const defaultReaction = ["⭐", "👍", "❤️"].includes(instance.defaultReact
 
 let readObserver: IntersectionObserver | undefined;
 let connection;
+
+const isMine = (note: misskey.entities.Note) =>
+	note.user.id === defaultStore.state.user?.id;
 
 onMounted(() => {
 	if (!props.notification.isRead) {

@@ -2135,6 +2135,9 @@ _notification:
   reacted: "reacted to your post"
   renoted: "boosted your post"
   voted: "voted on your poll"
+  reactedWatched: "reacted to watched post"
+  renotedWatched: "boosted watched post"
+  votedWatched: "voted on watched poll"
   _types:
     all: "All"
     follow: "New followers"
