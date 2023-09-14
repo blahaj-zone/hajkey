@@ -71,13 +71,13 @@ function checkForSplash() {
 	console.log("╲___╱____╱╲___╱____╱╲________╱╲___╱╲___╱╲________╱╲________╱  ");
 	console.info(`Welcome to Hajkey v${version} — it's pronounced ‘high-key’!`);
 
+	(window as any).$i = $i;
+	(window as any).$store = defaultStore;
+
 	if (_DEV_) {
 		console.warn("Development mode!!!");
 
 		console.info(`vue ${vueVersion}`);
-
-		(window as any).$i = $i;
-		(window as any).$store = defaultStore;
 
 		window.addEventListener("error", (event) => {
 			console.error(event);
