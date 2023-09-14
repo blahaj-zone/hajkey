@@ -76,7 +76,6 @@
 				v-on:keydown="focusFooter"
 				v-on:update:model-value="(val) => emit('expanded', val)"
 			/>
-		</p>
 		<div class="wrmlmaau">
 			<div
 				class="content"
