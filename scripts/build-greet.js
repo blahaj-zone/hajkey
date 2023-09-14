@@ -2,11 +2,11 @@ const chalk = require("chalk");
 
 const themeColor = chalk.hex("#2068ba");
 
-console.log(themeColor("   ________  ________     ____  ____ ___  ________  ________ "));
-console.log(themeColor("  ╱    ╱   ╲╱        ╲   ╱    ╲╱    ╱   ╲╱        ╲╱    ╱   ╲"));
-console.log(themeColor(" ╱         ╱   ╱     ╱__╱     ╱         ╱    ╱    ╱    ╱    ╱"));
-console.log(themeColor("╱         ╱         ╱  ╱     ╱        ╲╱      ___╱╲__      ╱ "));
-console.log(themeColor("╲___╱____╱╲___╱____╱╲_______╱╲____╱___╱╲________╱   ╲_____╱  "));
+console.log(themeColor("   ____ ___  ________      ____  ____ ___  ________  ____ ___ "));
+console.log(themeColor("  ╱   _╱   ╲╱        ╲    ╱    ╲╱    ╱   ╲╱        ╲╱   _╱   ╲"));
+console.log(themeColor(" ╱         ╱   _╱    ╱___╱     ╱       __╱   _╱    ╱         ╱"));
+console.log(themeColor("╱    _    ╱    _    ╱   ╱     ╱        ╲╱      ___╱╲___     ╱ "));
+console.log(themeColor("╲___╱____╱╲___╱____╱╲________╱╲___╱╲___╱╲________╱╲________╱  "));
 
 console.log(" Currently building Hajkey!");
 console.log(
