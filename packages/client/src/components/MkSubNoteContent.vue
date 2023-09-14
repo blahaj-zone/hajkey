@@ -76,15 +76,11 @@
 				v-on:keydown="focusFooter"
 				v-on:update:model-value="(val) => emit('expanded', val)"
 			/>
-		<div class="wrmlmaau">
 			<div
-				class="content"
-				:class="{
-					collapsed,
-					isLong,
-					manyImages: note.files.length > 4,
-					showContent: cw && !showContent,
-					animatedMfm: !disableMfm,
+				class="body"
+				v-bind="{
+					'aria-hidden': note.cw && !showContent ? 'true' : null,
+					tabindex: !showContent ? '-1' : null,
 				}"
 			>
 				<span v-if="note.deletedAt" style="opacity: 0.5"
@@ -163,81 +159,16 @@
 					</div>
 				</template>
 				<div
-					class="body"
-					v-bind="{
-						'aria-hidden': note.cw && !showContent ? 'true' : null,
-						tabindex: !showContent ? '-1' : null,
-					}"
-				>
-					<span v-if="note.deletedAt" style="opacity: 0.5"
-						>({{ i18n.ts.deleted }})</span
-					>
-					<template v-if="!cw">
-						<MkA
-							v-if="!detailed && note.replyId"
-							:to="`#${note.replyId}`"
-							behavior="browser"
-							v-tooltip="i18n.ts.jumpToPrevious"
-							class="reply-icon"
-							@click.stop
-						>
-						</MkA>
-						<MkA
-							v-if="
-								conversation &&
-								appearNote.renoteId &&
-								appearNote.renoteId != parentId &&
-								!appearNote.replyId
-							"
-							:to="`/notes/${appearNote.renoteId}`"
-							class="reply-icon"
-							@click.stop
-						>
-							<i class="ph-quotes ph-bold ph-lg"></i>
-						</MkA>
-					</template>
-					<Mfm
-						v-if="appearNote.text"
-						:text="appearNote.text"
-						:author="appearNote.user"
-						:i="$i"
-						:custom-emojis="appearNote.emojis"
-					/>
-					<MkA
-						v-if="!detailed && appearNote.renoteId"
-						class="rp"
-						:to="`/notes/${appearNote.renoteId}`"
-						>{{ i18n.ts.quoteAttached }}: ...</MkA
-					>
-					<div
-						v-if="appearNote.files.length > 0 && displayMedia"
-						class="files"
-					>
-						<XMediaList :media-list="appearNote.files" />
-					</div>
-					<XPoll
-						v-if="appearNote.poll"
-						:note="appearNote"
-						class="poll"
-					/>
-					<template v-if="detailed && displayPreviews">
-						<MkUrlPreview
-							v-for="url in urls"
-							:key="url"
-							:url="url"
-							:compact="true"
-							:detail="false"
-							class="url-preview"
-						/>
-						<div
-							v-if="appearNote.renote"
-							class="renote"
-							@click.stop="emit('push', appearNote.renote)"
-						>
-							<XNoteSimple :note="appearNote.renote" />
-						</div>
-					</template>
-				</div>
+					v-if="
+						(note.cw && !showContent) ||
+						(showMoreButton && collapsed)
+					"
+					tabindex="0"
+					v-on:focus="
+						cwButton?.focus();
+						showMoreButton?.focus();
+					"
+				></div>
 			</div>
 			<XShowMoreButton
 				v-if="isLong && !collapsed"
@@ -285,7 +216,6 @@ import { notePage } from "@/filters/note";
 import { extractUrlFromMfm } from "@/scripts/extract-url-from-mfm";
 import { extractMfmWithAnimation } from "@/scripts/extract-mfm";
 import { i18n } from "@/i18n";
-import { deviceKind } from "@/scripts/device-kind";
 import { defaultStore } from "@/store";
 
 const props = defineProps<{
@@ -394,48 +324,11 @@ function focusFooter(ev) {
 	overflow-wrap: break-word;
 	> .text {
 		margin-right: 8px;
-		padding-inline-start: 0.25em;
-		font-weight: 900;
-	}
-
-	.note-warning {
-		> .moniker {
-			font-weight: 900;
-		}
-	}
-}
-
-.cwHighlight.hasCw {
-	outline: 1px dotted var(--fg);
-	border-radius: 5px;
-
-	> .wrmlmaau {
-		padding-inline-start: 0.25em;
-	}
-
-	> .cw {
-		background-color: var(--fg);
-		color: var(--bg);
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
-
-		> .reply-icon,
-		> .cw-icon {
-			padding-inline-start: 0.25em;
-			color: var(--bg);
-		}
-	}
-
-	&.isRenoteCw {
-		outline-color: var(--accent);
-		> .cw {
-			background-color: var(--accent);
-		}
 	}
 }
 
 .wrmlmaau {
-	> .content {
+	.content {
 		overflow-wrap: break-word;
 		&._cw_style_modern {
 			> .hiddenNote {
@@ -574,11 +467,6 @@ function focusFooter(ev) {
 			animation: none !important;
 		}
 	}
-
-	&:not(.animatedMfm) > .body > span :deep(span) {
-		animation: none !important;
-	}
-
 	> :deep(button) {
 		margin-top: 10px;
 		margin-left: 0;
