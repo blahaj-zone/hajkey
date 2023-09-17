@@ -64,12 +64,15 @@ function checkForSplash() {
 }
 
 (async () => {
-	console.log("   ____ ___  ________      ____  ____ ___  ________  ____ ___ ");
-	console.log("  ╱   _╱   ╲╱        ╲    ╱    ╲╱    ╱   ╲╱        ╲╱   _╱   ╲");
-	console.log(" ╱         ╱   _╱    ╱___╱     ╱       __╱   _╱    ╱         ╱");
-	console.log("╱    _    ╱    _    ╱   ╱     ╱        ╲╱      ___╱╲___     ╱ ");
-	console.log("╲___╱____╱╲___╱____╱╲________╱╲___╱╲___╱╲________╱╲________╱  ");
-	console.info(`Welcome to Hajkey v${version} — it's pronounced ‘high-key’!`);
+	const logo = [
+		"    ____ ___  ________      ____  ____ ___  ________  ____ ___ ",
+		"   ╱   _╱   ╲╱        ╲    ╱    ╲╱    ╱   ╲╱        ╲╱   _╱   ╲",
+		"  ╱         ╱   _╱    ╱___╱     ╱       __╱   _╱    ╱         ╱",
+		" ╱    _    ╱    _    ╱   ╱     ╱        ╲╱      ___╱╲___     ╱ ",
+		" ╲___╱____╱╲___╱____╱╲________╱╲___╱╲___╱╲________╱╲________╱  ",
+		`Welcome to Hajkey v${version} — it's pronounced ‘high-key’!`,
+	];
+	console.log(logo.join("\n"));
 
 	(window as any).$i = $i;
 	(window as any).$store = defaultStore;
