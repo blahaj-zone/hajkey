@@ -23,7 +23,7 @@ import {redisClient, subscriber} from "@/db/redis.js";
 const publicKeyCache = new Cache<UserPublickey | null>("publicKey", 60 * 30);
 const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
 	"publicKeyByUserId",
-	60 * 30,
+	60 * 60 * 3,
 );
 
 export type UriParseResult =

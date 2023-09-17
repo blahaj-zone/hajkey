@@ -10,15 +10,15 @@ import { redisClient, subscriber } from "@/db/redis.js";
 export const userByIdCache = new Cache<CacheableUser>("userById", 60 * 30);
 export const localUserByNativeTokenCache = new Cache<CacheableLocalUser | null>(
 	"localUserByNativeToken",
-	60 * 30,
+	60 * 60 * 3,
 );
 export const localUserByIdCache = new Cache<CacheableLocalUser>(
 	"localUserByIdCache",
-	60 * 30,
+	60 * 60 * 3,
 );
 export const uriPersonCache = new Cache<CacheableUser | null>(
 	"uriPerson",
-	60 * 30,
+	60 * 60 * 3,
 );
 
 subscriber.on("message", async (_, data) => {
