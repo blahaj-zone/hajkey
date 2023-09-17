@@ -7,7 +7,7 @@ import { Users } from "@/models/index.js";
 import { Cache } from "@/misc/cache.js";
 import { redisClient, subscriber } from "@/db/redis.js";
 import { set } from "nested-property";
-import Logger from "./logger";
+import Logger from "./logger.js";
 
 const logger = new Logger("user-cache");
 
