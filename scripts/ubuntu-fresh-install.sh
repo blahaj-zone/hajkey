@@ -342,15 +342,42 @@ asdf install
 yarn
 yarn run build
 
-mkdir -p ${INSTALL_DIR}/${INSTANCE_NAME}
-cd ${INSTALL_DIR}/${INSTANCE_NAME}
-cat <<EOF > install.sh
+mkdir -p "${INSTALL_DIR}/${INSTANCE_NAME}"
+cd "${INSTALL_DIR}/${INSTANCE_NAME}"
+
+cat <<EOF > upgrade
 #!/bin/bash
 
-rsync -av --exclude .git ${INSTALL_DIR}/src/hajkey/ .
+cd "${INSTALL_DIR}/${INSTANCE_NAME}"
+rsync -av --exclude .git "${INSTALL_DIR}/src/hajkey" .
 EOF
-chmod +x install.sh
-./install.sh
+chmod +x upgrade
+./upgrade
+
+cat <<EOF > rebuild
+#!/bin/bash
+
+set -e
+
+cd "${INSTALL_DIR}/src/hajkey/"
+git pull
+yarn
+yarn run build
+
+cd "${INSTALL_DIR}/${INSTANCE_NAME}"
+./upgrade
+EOF
+chmod +x rebuild
+
+cat <<EOF > manage
+#!/bin/bash
+if [[ \$USER != ${UNPRIV_USER} ]]; then
+	sudo -u "${UNPRIV_USER}" "${INSTALL_DIR}/${INSTANCE_NAME}/manage" "\$@"
+else
+	pm2 "\$@"
+fi
+EOF
+chmod +x manage
 
 if [[ ! -f .config/default.yml ]]; then
 	mkdir -p .config
@@ -404,28 +431,27 @@ clusterLimit: 16
 EOF
 fi
 
-if [[ ! -f install.sh ]]; then
-	cat <<EOF > install.sh
+if [[ ! -f extra/install.sh ]]; then
+	mkdir -p extra
+	cat <<EOF > extra/install.sh
 #!/bin/bash
 if [[ \$USER != ${UNPRIV_USER} ]]; then
-	echo "Please run as ${UNPRIV_USER}"
-	exit 1
+  sudo -u "${UNPRIV_USER}" "${INSTALL_DIR}/${INSTANCE_NAME}/extra/install.sh"
+  exit
 fi
 
-cd ${INSTALL_DIR}/${INSTANCE_NAME}
+cd "${INSTALL_DIR}/${INSTANCE_NAME}/hajkey"
 
-yarn run migrate
+node .yarn/releases/yarn-*.cjs run migrate
 
 export NODE_ENV=production
 
+pm2 delete ${INSTANCE_NAME} || true
 pm2 start --name ${INSTANCE_NAME} \
-  packages/backend/built/index.js
-
+  "node .yarn/releases/yarn-*.cjs run start"
 pm2 save
 EOF
 
-	chmod +x install.sh
-	sudo -u ${UNPRIV_USER} ${INSTALL_DIR}/install.sh
-else
-	echo "Config file already exists"
-fi
+	chmod +x extra/install.sh
+	extra/install.sh
+fi	
