@@ -2,7 +2,6 @@ import { URL } from "node:url";
 import type Bull from "bull";
 import httpSignature from "@peertube/http-signature";
 import perform from "@/remote/activitypub/perform.js";
-import Logger from "@/services/logger.js";
 import { registerOrFetchInstanceDoc } from "@/services/register-or-fetch-instance-doc.js";
 import { Instances } from "@/models/index.js";
 import {
@@ -24,8 +23,9 @@ import type { UserPublickey } from "@/models/entities/user-publickey.js";
 import { shouldBlockInstance } from "@/misc/should-block-instance.js";
 import { json } from "stream/consumers";
 import { JobId } from "bull";
+import { queueLogger } from "../logger.js";
 
-const logger = new Logger("inbox");
+const logger = queueLogger.createSubLogger("inbox");
 const processLog = logger.createSubLogger("process", "red");
 
 export class PerformanceTimer {

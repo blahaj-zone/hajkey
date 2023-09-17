@@ -19,9 +19,9 @@ import type { IObject } from "./type.js";
 import { getApId } from "./type.js";
 import { resolvePerson } from "./models/person.js";
 import { redisClient, subscriber } from "@/db/redis.js";
-import Logger from "@/services/logger.js";
+import {apLogger} from "./logger.js";
 
-const logger = new Logger("db-resolver-cache");
+const logger = apLogger.createSubLogger("db-resolver-cache");
 
 const publicKeyCache = new Cache<UserPublickey | null>(
 	"publicKey",
