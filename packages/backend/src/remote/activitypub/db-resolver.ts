@@ -18,13 +18,28 @@ import { uriPersonCache, userByIdCache } from "@/services/user-cache.js";
 import type { IObject } from "./type.js";
 import { getApId } from "./type.js";
 import { resolvePerson } from "./models/person.js";
-import {redisClient, subscriber} from "@/db/redis.js";
+import { redisClient, subscriber } from "@/db/redis.js";
+import Logger from "@/services/logger.js";
 
-const publicKeyCache = new Cache<UserPublickey | null>("publicKey", 60 * 30);
+const logger = new Logger("db-resolver-cache");
+
+const publicKeyCache = new Cache<UserPublickey | null>(
+	"publicKey",
+	60 * 60 * 3,
+);
 const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
 	"publicKeyByUserId",
 	60 * 60 * 3,
 );
+
+setInterval(() => {
+	logger.info(
+		`publicKey: ${publicKeyCache.hitCount}:${publicKeyCache.missCount}, ${publicKeyCache.notFoundCount} n/f`,
+	);
+	logger.info(
+		`publicKeyByUserId: ${publicKeyByUserIdCache.hitCount}:${publicKeyByUserIdCache.missCount}, ${publicKeyByUserIdCache.notFoundCount} n/f`,
+	);
+}, 1000 * 60);
 
 export type UriParseResult =
 	| {
@@ -229,4 +244,3 @@ subscriber.on("message", async (_, data) => {
 		}
 	}
 });
-

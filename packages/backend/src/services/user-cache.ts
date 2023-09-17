@@ -6,8 +6,12 @@ import type {
 import { Users } from "@/models/index.js";
 import { Cache } from "@/misc/cache.js";
 import { redisClient, subscriber } from "@/db/redis.js";
+import { set } from "nested-property";
+import Logger from "./logger";
 
-export const userByIdCache = new Cache<CacheableUser>("userById", 60 * 30);
+const logger = new Logger("user-cache");
+
+export const userByIdCache = new Cache<CacheableUser>("userById", 60 * 60 * 3);
 export const localUserByNativeTokenCache = new Cache<CacheableLocalUser | null>(
 	"localUserByNativeToken",
 	60 * 60 * 3,
@@ -20,6 +24,21 @@ export const uriPersonCache = new Cache<CacheableUser | null>(
 	"uriPerson",
 	60 * 60 * 3,
 );
+
+setInterval(() => {
+	logger.info(
+		`userById: ${userByIdCache.hitCount}:${userByIdCache.missCount}, ${userByIdCache.notFoundCount} n/f`,
+	);
+	logger.info(
+		`localUserByNativeToken: ${localUserByNativeTokenCache.hitCount}:${localUserByNativeTokenCache.missCount}, ${localUserByNativeTokenCache.notFoundCount} n/f`,
+	);
+	logger.info(
+		`localUserById: ${localUserByIdCache.hitCount}:${localUserByIdCache.missCount}, ${localUserByIdCache.notFoundCount} n/f`,
+	);
+	logger.info(
+		`uriPerson: ${uriPersonCache.hitCount}:${uriPersonCache.missCount}, ${uriPersonCache.notFoundCount} n/f`,
+	);
+}, 1000 * 60);
 
 subscriber.on("message", async (_, data) => {
 	const obj = JSON.parse(data);

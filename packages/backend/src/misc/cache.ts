@@ -6,6 +6,9 @@ import config from "@/config/index.js";
 export class Cache<T> {
 	private ttl: number;
 	private prefix: string;
+	public hitCount = 0;
+	public missCount = 0;
+	public notFoundCount = 0;
 
 	constructor(name: string, ttlSeconds: number) {
 		this.ttl = ttlSeconds;
@@ -38,9 +41,13 @@ export class Cache<T> {
 	}
 
 	public async getAll(renew = false): Promise<Map<string, T>> {
-		const finalPrefix = `${config.cacheServer?.prefix ?? config.redis.prefix}:${this.prefix}:`;
-		const keys = (await redisClient.keys(`${finalPrefix}*`)).map(p => p.substring(finalPrefix.length));
-		const prefixedKeys = keys.map(p => this.prefixedKey(p));
+		const finalPrefix = `${config.cacheServer?.prefix ?? config.redis.prefix}:${
+			this.prefix
+		}:`;
+		const keys = (await redisClient.keys(`${finalPrefix}*`)).map((p) =>
+			p.substring(finalPrefix.length),
+		);
+		const prefixedKeys = keys.map((p) => this.prefixedKey(p));
 		const map = new Map<string, T>();
 		if (keys.length === 0) {
 			return map;
@@ -67,7 +74,7 @@ export class Cache<T> {
 
 	public async delete(...keys: (string | null)[]): Promise<void> {
 		if (keys.length > 0) {
-			const _keys = keys.map(p => this.prefixedKey(p));
+			const _keys = keys.map((p) => this.prefixedKey(p));
 			await redisClient.del(_keys);
 		}
 	}
@@ -87,10 +94,12 @@ export class Cache<T> {
 			if (validator) {
 				if (validator(cachedValue)) {
 					// Cache HIT
+					this.hitCount++;
 					return cachedValue;
 				}
 			} else {
 				// Cache HIT
+				this.hitCount++;
 				return cachedValue;
 			}
 		}
@@ -98,6 +107,7 @@ export class Cache<T> {
 		// Cache MISS
 		const value = await fetcher();
 		await this.set(key, value);
+		this.missCount++;
 		return value;
 	}
 
@@ -116,10 +126,12 @@ export class Cache<T> {
 			if (validator) {
 				if (validator(cachedValue)) {
 					// Cache HIT
+					this.hitCount++;
 					return cachedValue;
 				}
 			} else {
 				// Cache HIT
+				this.hitCount++;
 				return cachedValue;
 			}
 		}
@@ -127,8 +139,10 @@ export class Cache<T> {
 		// Cache MISS
 		const value = await fetcher();
 		if (value !== undefined) {
+			this.notFoundCount++;
 			await this.set(key, value);
 		}
+		this.missCount++;
 		return value;
 	}
 }
