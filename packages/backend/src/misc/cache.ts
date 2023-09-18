@@ -15,6 +15,10 @@ export class Cache<T> {
 		this.prefix = `cache:${name}`;
 	}
 
+	public get used(): boolean {
+		return this.hitCount + this.missCount > 0;
+	}
+
 	private prefixedKey(key: string | null): string {
 		return key ? `${this.prefix}:${key}` : this.prefix;
 	}

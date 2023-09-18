@@ -19,29 +19,15 @@ import type { IObject } from "./type.js";
 import { getApId } from "./type.js";
 import { resolvePerson } from "./models/person.js";
 import { redisClient, subscriber } from "@/db/redis.js";
-import { apLogger } from "./logger.js";
 
-const logger = apLogger.createSubLogger("db-resolver-cache");
-
-const publicKeyCache = new Cache<UserPublickey | null>(
+export const publicKeyCache = new Cache<UserPublickey | null>(
 	"publicKey",
 	60 * 60 * 3,
 );
-const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
+export const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
 	"publicKeyByUserId",
 	60 * 60 * 3,
 );
-
-setInterval(() => {
-	if (publicKeyCache.hitCount + publicKeyCache.missCount > 0)
-		logger.info(
-			`publicKey: ${publicKeyCache.hitCount}:${publicKeyCache.missCount}, ${publicKeyCache.notFoundCount} n/f`,
-		);
-	if (publicKeyByUserIdCache.hitCount + publicKeyByUserIdCache.missCount > 0)
-		logger.info(
-			`publicKeyByUserId: ${publicKeyByUserIdCache.hitCount}:${publicKeyByUserIdCache.missCount}, ${publicKeyByUserIdCache.notFoundCount} n/f`,
-		);
-}, 1000 * 60);
 
 export type UriParseResult =
 	| {

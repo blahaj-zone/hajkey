@@ -10,6 +10,8 @@ import "reflect-metadata";
 import { masterMain } from "./master.js";
 import { workerMain } from "./worker.js";
 import os from "node:os";
+import stats from "@/server/api/endpoints/admin/queue/stats.js";
+import { statsScheduler } from "@/services/cache-stats.js";
 
 const logger = new Logger("core", "cyan");
 const clusterLogger = logger.createSubLogger("cluster", "orange", false);
@@ -41,6 +43,9 @@ export default async function () {
 		// able to respond to api calls even if the workers gank everything.
 		os.setPriority(10);
 	}
+
+	// Start cache stats scheduler
+	statsScheduler();
 
 	// For when Hajkey is started in a child process during unit testing.
 	// Otherwise, process.send cannot be used, so start it.
