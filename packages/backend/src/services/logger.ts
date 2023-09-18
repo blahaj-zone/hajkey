@@ -112,11 +112,13 @@ export default class Logger {
 
 		const dom = domains.join(" ");
 		const log = `${chalk.gray(time)}\t${l} ${worker}\t[${dom}]\t${m}`;
-		const cc = console as unknown as { _log: any };
+
+		const cc = console as unknown as { log: any; _log?: any };
+		const ccLog = cc._log || cc.log;
 		if (data) {
-			cc._log(important ? chalk.bold(log) : log, data);
+			ccLog(important ? chalk.bold(log) : log, data);
 		} else {
-			cc._log(important ? chalk.bold(log) : log);
+			ccLog(important ? chalk.bold(log) : log);
 		}
 
 		if (store) {
