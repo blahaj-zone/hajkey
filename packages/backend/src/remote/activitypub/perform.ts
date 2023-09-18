@@ -8,9 +8,9 @@ export default async (
 	actor: CacheableRemoteUser,
 	activity: IObject,
 	timer?: PerformanceTimer,
-): Promise<void> => {
+): Promise<boolean> => {
 	timer?.log("performActivity");
-	await performActivity(actor, activity, timer);
+	const results = await performActivity(actor, activity, timer);
 
 	// Update the remote user information if it is out of date
 	if (actor.uri) {
@@ -19,9 +19,14 @@ export default async (
 			Date.now() - actor.lastFetchedAt.getTime() > 1000 * 60 * 60 * 24
 		) {
 			timer?.log("performActivity: updatePerson");
-			setImmediate(() => {
-				updatePerson(actor.uri!);
-			});
+			if (actor.uri) {
+				const uri = actor.uri;
+				setImmediate(() => {
+					updatePerson(uri);
+				});
+			}
 		}
 	}
+
+	return results.every((result) => result === "success")
 };

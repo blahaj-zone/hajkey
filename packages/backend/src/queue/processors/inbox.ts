@@ -67,31 +67,46 @@ export class PerformanceTimer {
 }
 
 let times: number[] = [];
+let successes: number[] = [];
+let failures: number[] = [];
 
 let totalCount = 0;
 let totalTime = 0;
 let prevCount = 0;
 let prevTime = 0;
+const startTime = Date.now();
 
 setInterval(() => {
 	totalCount += times.length;
-	totalTime += times.reduce((a, b) => a + b, 0);
+	totalTime += times.reduce((a, b) => a + b, 0)/1000;
 	if (prevCount > 0) {
 		const newCount = totalCount - prevCount;
 		const newTime = totalTime - prevTime;
+		const newSuccesses = successes.length - prevCount;
+		const newFailures = failures.length - prevCount;
+		const successRate = ((newSuccesses / newCount) * 100).toFixed(2);
+		const successAvgTime = (successes.reduce((a, b) => a + b, 0) / 1000 / newSuccesses).toFixed(2);
+		const failureAvgTime = (failures.reduce((a, b) => a + b, 0) / 1000 / newFailures).toFixed(2);
 		const avgTotalTime = (totalTime / totalCount).toFixed(2);
 		const avgTime = (newTime / newCount).toFixed(2);
 		const minTime = Math.min(...times).toFixed(2);
 		const maxTime = Math.max(...times).toFixed(2);
+		const runTime = (Date.now() - startTime)/1000;
+		const avgPerMin = (newCount / 60).toFixed(2);
+		const avgPerMinTotal = (totalCount / (runTime / 60)).toFixed(2);
 
 		statsLog.info(
 			[
-				`inbox: ${newCount}(${totalCount}) in ${newTime}(${totalTime})ms`,
-				`average: ${avgTime}(${avgTotalTime})ms/min: ${minTime}ms/max: ${maxTime}ms`,
+				`inbox: ${newCount}(${totalCount}) in ${newTime}s(${totalTime})s`,
+				`average: ${avgTime}s(${avgTotalTime}s) / min: ${minTime}s / max: ${maxTime}s`,
+				`per min: ${avgPerMin}(${avgPerMinTotal})`,
+				`success: ${newSuccesses}:${newFailures} (${successRate}%) ${successAvgTime}s/${failureAvgTime}s`,
 			].join("\n"),
 		);
 	}
 	times = [];
+	successes = [];
+	failures = [];
 	prevCount = totalCount;
 	prevTime = totalTime;
 }, 1000 * 60);
@@ -109,6 +124,11 @@ const logResult = (
 		timer.log(message);
 		const taken = timer.total;
 		times.push(taken);
+		if (message === "success") {
+			successes.push(taken);
+		} else {
+			failures.push(taken);
+		}
 		if (timer.total > 3000) {
 			processLog.warn(
 				[`[${id}] slow request: ${taken}ms`, ...timer.render()].join("\n"),
@@ -397,8 +417,12 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
 		// アクティビティを処理
 		timer.log("before perform");
-		await perform(authUser.user, activity, timer);
-		logResult("performed activity okay", job.id, undefined, timer);
+		const success = await perform(authUser.user, activity, timer);
+		if (success) {
+			logResult("success", job.id, undefined, timer);
+		} else {
+			logResult("failed perform", job.id, undefined, timer);
+		}
 		return "ok";
 	} catch (e) {
 		logResult(
