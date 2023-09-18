@@ -4,7 +4,7 @@ import {
 	localUserByNativeTokenCache,
 	uriPersonCache,
 	userByIdCache,
-} from "./user-cache";
+} from "./user-cache.js";
 import {
 	publicKeyByUserIdCache,
 	publicKeyCache,
