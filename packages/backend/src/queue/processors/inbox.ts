@@ -84,7 +84,7 @@ setInterval(() => {
 		const newTime = totalTime - prevTime;
 		const newSuccesses = successes.length;
 		const newFailures = failures.length;
-		const successRate = ((newSuccesses / totalCount) * 100).toFixed(2);
+		const successRate = ((newSuccesses / newCount) * 100).toFixed(2);
 		const successAvgTime = (
 			successes.reduce((a, b) => a + b, 0) /
 			1000 /
@@ -100,10 +100,9 @@ setInterval(() => {
 		const minTime = (Math.min(...times) / 1000).toFixed(2);
 		const maxTime = (Math.max(...times) / 1000).toFixed(2);
 		const runTime = (Date.now() - startTime) / 1000;
-		const avgPerMin = (newCount / 60).toFixed(2);
-		const avgPerMinTotal = (totalCount / (runTime / 60)).toFixed(2);
-		const avgPerHour = (newCount / 60 / 60).toFixed(2);
-		const avgPerHourTotal = (totalCount / (runTime / 60 / 60)).toFixed(2);
+		const avgPerMin = ((totalCount / runTime) * 60).toFixed(2);
+		const avgPerHour = (newCount * 60).toFixed(2);
+		const avgPerHourInst = ((totalCount / runTime) * 3600).toFixed(2);
 
 		statsLog.info(
 			[
@@ -111,7 +110,7 @@ setInterval(() => {
 					2,
 				)}s(${totalTime.toFixed(2)})s`,
 				`average: ${avgTime}s(${avgTotalTime}s) / min: ${minTime}s / max: ${maxTime}s`,
-				`/min: ${avgPerMin}(${avgPerMinTotal}) /hour: ${avgPerHour}(${avgPerHourTotal})`,
+				`${avgPerMin}/min ${avgPerHour}/hr (${avgPerHourInst}/hr inst)`,
 				`success: ${newSuccesses}:${newFailures} (${successRate}%) ${successAvgTime}s/${failureAvgTime}s`,
 			].join("\n"),
 		);
