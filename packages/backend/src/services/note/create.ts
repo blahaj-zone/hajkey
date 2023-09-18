@@ -68,6 +68,9 @@ import { shouldSilenceInstance } from "@/misc/should-block-instance.js";
 import meilisearch from "../../db/meilisearch.js";
 import { redisClient } from "@/db/redis.js";
 import { Mutex } from "redis-semaphore";
+import Logger from "../logger.js";
+
+const logger = new Logger("note").createSubLogger("create");
 
 const mutedWordsCache = new Cache<
 	{ userId: UserProfile["userId"]; mutedWords: UserProfile["mutedWords"] }[]
@@ -330,7 +333,17 @@ export default async (
 			}
 		}
 
-		const note = await insertNote(user, data, tags, emojis, mentionedUsers);
+		let note: Note;
+		try {
+			note = await insertNote(user, data, tags, emojis, mentionedUsers);
+		} catch (e) {
+			if (isDuplicateKeyValueError(e) && data.uri) {
+				logger.warn("Duplicate note URI", { uri: data.uri });
+				res(await Notes.findOneByOrFail({ uri: data.uri }));
+				return;
+			}
+			throw e;
+		}
 
 		res(note);
 
