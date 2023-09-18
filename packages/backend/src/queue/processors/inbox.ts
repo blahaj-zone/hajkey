@@ -159,6 +159,12 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 		const signature = job.data.signature; // HTTP-signature
 		const activity = job.data.activity;
 
+		if (!signature && !activity) {
+			const err = `Empty job data`;
+			logResult("job data empty", job.id, undefined, timer);
+			return err;
+		}
+
 		//#region Log
 		const info = Object.assign({}, activity) as any;
 		info["@context"] = undefined;
