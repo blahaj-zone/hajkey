@@ -477,8 +477,21 @@ export default async (
 					noteToPublish = note;
 				}
 
-				const lock = new Mutex(redisClient, "publishedNote");
-				await lock.acquire();
+				const lock = new Mutex(redisClient, "publishedNote", {
+					lockTimeout: 1000 * 60 * 5,
+					acquireTimeout: 1000 * 5,
+					acquireAttemptsLimit: 10,
+					retryInterval: 1000 * 5,
+					refreshInterval: 1000 * 60 * 3,
+				}); // Wait 5 seconds and retry 10 times
+
+				try {
+					await lock.acquire();
+				} catch (e) {
+					rej(`Failed to acquire lock: ${e}`);
+					return;
+				}
+
 				try {
 					const published = (await redisClient.get(publishKey)) !== null;
 					if (!published) {

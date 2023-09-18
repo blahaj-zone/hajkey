@@ -95,33 +95,33 @@ cc._log = console.log;
 
 console.info = (message, ...args) => {
 	if (args.length === 0) {
-		logger.info(message);
+		cLogger.info(message);
 	} else {
-		logger.info(message, { args });
+		cLogger.info(message, { args });
 	}
 };
 
 console.error = (message, ...args) => {
 	if (args.length === 0) {
-		logger.error(message);
+		cLogger.error(message);
 	} else {
-		logger.error(message, { args });
+		cLogger.error(message, { args });
 	}
 };
 
 console.warn = (message, ...args) => {
 	if (args.length === 0) {
-		logger.warn(message);
+		cLogger.warn(message);
 	} else {
-		logger.warn(message, { args });
+		cLogger.warn(message, { args });
 	}
 };
 
 console.debug = (message, ...args) => {
 	if (args.length === 0) {
-		logger.debug(message);
+		cLogger.debug(message);
 	} else {
-		logger.debug(message, { args });
+		cLogger.debug(message, { args });
 	}
 };
 

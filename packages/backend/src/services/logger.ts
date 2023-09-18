@@ -72,7 +72,7 @@ export default class Logger {
 			return;
 		}
 
-		const time = dateFormat(new Date(), "HH:mm:ss");
+		const time = dateFormat(new Date(), "HH:mm:ss.SSS");
 		const worker = cluster.isPrimary ? "*" : cluster.worker.id;
 		const l =
 			level === "error"
@@ -110,11 +110,14 @@ export default class Logger {
 				? message
 				: null;
 
-		let log = `${l} ${worker}\t[${domains.join(" ")}]\t${m}`;
-		if (envOption.withLogTime) log = `${chalk.gray(time)} ${log}`;
-
+		const dom = domains.join(" ");
+		const log = `${chalk.gray(time)}\t${l} ${worker}\t[${dom}]\t${m}`;
 		const cc = console as unknown as { _log: any };
-		cc._log(important ? chalk.bold(log) : log);
+		if (data) {
+			cc._log(important ? chalk.bold(log) : log, data);
+		} else {
+			cc._log(important ? chalk.bold(log) : log);
+		}
 
 		if (store) {
 			if (this.syslogClient) {
