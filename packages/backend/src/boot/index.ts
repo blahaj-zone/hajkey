@@ -87,3 +87,42 @@ process.on("exit", (code) => {
 });
 
 //#endregion
+
+const cLogger = new Logger("console", "grey");
+
+const cc = console as unknown as { _log: any };
+cc._log = console.log;
+
+console.info = (message, ...args) => {
+	if (args.length === 0) {
+		logger.info(message);
+	} else {
+		logger.info(message, { args });
+	}
+};
+
+console.error = (message, ...args) => {
+	if (args.length === 0) {
+		logger.error(message);
+	} else {
+		logger.error(message, { args });
+	}
+};
+
+console.warn = (message, ...args) => {
+	if (args.length === 0) {
+		logger.warn(message);
+	} else {
+		logger.warn(message, { args });
+	}
+};
+
+console.debug = (message, ...args) => {
+	if (args.length === 0) {
+		logger.debug(message);
+	} else {
+		logger.debug(message, { args });
+	}
+};
+
+console.log = console.info;

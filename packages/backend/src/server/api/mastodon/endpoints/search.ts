@@ -5,6 +5,9 @@ import axios from "axios";
 import { Converter } from "megalodon";
 import { convertTimelinesArgsId, limitToInt } from "./timeline.js";
 import { convertAccount, convertStatus } from "../converters.js";
+import { apiLogger } from "../../logger.js";
+
+const logger = apiLogger.createSubLogger("mastodon/search");
 
 export function apiSearchMastodon(router: Router): void {
 	router.get("/v1/search", async (ctx) => {
@@ -110,8 +113,7 @@ async function getHighlight(
 		const data: MisskeyEntity.Note[] = api.data;
 		return data.map((note) => new Converter(BASE_URL).note(note, domain));
 	} catch (e: any) {
-		console.log(e);
-		console.log(e.response.data);
+		logger.error(e, { responseData: e.response.data });
 		return [];
 	}
 }
@@ -140,8 +142,7 @@ async function getFeaturedUser(
 			};
 		});
 	} catch (e: any) {
-		console.log(e);
-		console.log(e.response.data);
+		logger.error(e, { responseData: e.response.data });
 		return [];
 	}
 }

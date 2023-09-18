@@ -27,6 +27,9 @@ import type Channel from "./channel.js";
 import type { StreamEventEmitter, StreamMessages } from "./types.js";
 import { Converter } from "megalodon";
 import { getClient } from "../mastodon/ApiMastodonCompatibleService.js";
+import { apiLogger } from "../logger.js";
+
+const logger = apiLogger.createSubLogger("stream");
 
 /**
  * Main stream connection
@@ -185,8 +188,7 @@ export default class Connection {
 						const tl = await client.getHomeTimeline();
 						for (const t of tl.data) forSubscribe.push(t.id);
 					} catch (e: any) {
-						console.log(e);
-						console.error(e.response.data);
+						logger.error(e, { responseData: e.response.data });
 					}
 				} else if (simpleObj.stream === "public:local") {
 					this.currentSubscribe.push(["public:local"]);

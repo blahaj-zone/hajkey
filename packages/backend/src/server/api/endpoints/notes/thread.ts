@@ -1,6 +1,9 @@
 import { leveldb } from "cbor";
 import define from "../../define.js";
 import { db } from "@/db/postgre.js";
+import { apiLogger } from "../../logger.js";
+
+const logger = apiLogger.createSubLogger("notes/thread");
 
 export const meta = {
 	tags: ["notes"],
@@ -65,7 +68,7 @@ export default define(meta, paramDef, async (ps, user) => {
 			}
 		})
 		.catch((err) => {
-			console.log(err);
+			logger.error(err);
 		});
 
 	// Thread the items into a tree
@@ -83,18 +86,18 @@ export default define(meta, paramDef, async (ps, user) => {
 
 	dump(thread, 0);
 
-	console.log("relevel");
+	logger.info("relevel");
 	relevel(thread, 0, { id: 0 });
 	dump(thread, 0);
 
-	console.log("flatten");
+	logger.info("flatten");
 	flatten(thread, null);
 	dump(thread, 0);
 
 	for (const id of ids) {
 		const item = lookup[id];
 		if (!item.found) {
-			console.log("not found", item.id);
+			logger.warn("not found", { id: item.id });
 		}
 	}
 
@@ -149,7 +152,7 @@ function flatten(item: ThreadItem, parent: ThreadItem | null) {
 }
 
 function dump(item: ThreadItem, depth: number) {
-	console.log(
+	logger.info(
 		`${"|".repeat(depth)}-> ${item.id} (${item.score} ${item.single})`,
 	);
 	if (item.children) {

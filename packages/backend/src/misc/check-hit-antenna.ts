@@ -10,6 +10,9 @@ import { getFullApAccount } from "./convert-host.js";
 import * as Acct from "@/misc/acct.js";
 import type { Packed } from "./schema.js";
 import { Cache } from "./cache.js";
+import Logger from "@/services/logger.js";
+
+const logger = new Logger("check-hit-antenna");
 
 const blockingCache = new Cache<User["id"][]>("blocking", 60 * 5);
 
@@ -125,14 +128,14 @@ export async function checkHitAntenna(
 				try {
 					re = new RegExp(pattern, flags);
 				} catch (ex) {
-					console.log("failed to compile regex", pattern);
+					logger.warn("failed to compile regex", { pattern });
 					return alwaysFalseMatcher;
 				}
 
 				return makeReMatcher(re);
 			}
 
-			let words: string[] = [];
+			const words: string[] = [];
 
 			const splitPhrase = keyphrase.split(reWhitespace);
 			for (const keyword of splitPhrase) {
@@ -151,7 +154,7 @@ export async function checkHitAntenna(
 			try {
 				kpRe = new RegExp(kpReText, antenna.caseSensitive ? "u" : "iu");
 			} catch (ex) {
-				console.log("failed to compile keyphrase regex", kpReText, ex);
+				logger.warn("failed to compile keyphrase regex", { kpReText, ex });
 				return alwaysFalseMatcher;
 			}
 

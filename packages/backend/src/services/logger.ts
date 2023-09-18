@@ -113,7 +113,8 @@ export default class Logger {
 		let log = `${l} ${worker}\t[${domains.join(" ")}]\t${m}`;
 		if (envOption.withLogTime) log = `${chalk.gray(time)} ${log}`;
 
-		console.log(important ? chalk.bold(log) : log);
+		const cc = console as unknown as { _log: any };
+		cc._log(important ? chalk.bold(log) : log);
 
 		if (store) {
 			if (this.syslogClient) {
