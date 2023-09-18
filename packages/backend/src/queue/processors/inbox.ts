@@ -27,6 +27,7 @@ import { queueLogger } from "../logger.js";
 
 const logger = queueLogger.createSubLogger("inbox");
 const processLog = logger.createSubLogger("process", "red");
+const statsLog = logger.createSubLogger("queue-stats", "green");
 
 export class PerformanceTimer {
 	private start: number;
@@ -83,7 +84,7 @@ setInterval(() => {
 		const minTime = Math.min(...times).toFixed(2);
 		const maxTime = Math.max(...times).toFixed(2);
 
-		logger.info(
+		statsLog.info(
 			[
 				`inbox: ${newCount}(${totalCount}) in ${newTime}(${totalTime})ms`,
 				`average: ${avgTime}(${avgTotalTime})ms/min: ${minTime}ms/max: ${maxTime}ms`,
