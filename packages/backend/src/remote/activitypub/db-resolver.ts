@@ -33,12 +33,14 @@ const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
 );
 
 setInterval(() => {
-	logger.info(
-		`publicKey: ${publicKeyCache.hitCount}:${publicKeyCache.missCount}, ${publicKeyCache.notFoundCount} n/f`,
-	);
-	logger.info(
-		`publicKeyByUserId: ${publicKeyByUserIdCache.hitCount}:${publicKeyByUserIdCache.missCount}, ${publicKeyByUserIdCache.notFoundCount} n/f`,
-	);
+	if (publicKeyCache.hitCount + publicKeyCache.missCount > 0)
+		logger.info(
+			`publicKey: ${publicKeyCache.hitCount}:${publicKeyCache.missCount}, ${publicKeyCache.notFoundCount} n/f`,
+		);
+	if (publicKeyByUserIdCache.hitCount + publicKeyByUserIdCache.missCount > 0)
+		logger.info(
+			`publicKeyByUserId: ${publicKeyByUserIdCache.hitCount}:${publicKeyByUserIdCache.missCount}, ${publicKeyByUserIdCache.notFoundCount} n/f`,
+		);
 }, 1000 * 60);
 
 export type UriParseResult =

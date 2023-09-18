@@ -26,18 +26,26 @@ export const uriPersonCache = new Cache<CacheableUser | null>(
 );
 
 setInterval(() => {
-	logger.info(
-		`userById: ${userByIdCache.hitCount}:${userByIdCache.missCount}, ${userByIdCache.notFoundCount} n/f`,
-	);
-	logger.info(
-		`localUserByNativeToken: ${localUserByNativeTokenCache.hitCount}:${localUserByNativeTokenCache.missCount}, ${localUserByNativeTokenCache.notFoundCount} n/f`,
-	);
-	logger.info(
-		`localUserById: ${localUserByIdCache.hitCount}:${localUserByIdCache.missCount}, ${localUserByIdCache.notFoundCount} n/f`,
-	);
-	logger.info(
-		`uriPerson: ${uriPersonCache.hitCount}:${uriPersonCache.missCount}, ${uriPersonCache.notFoundCount} n/f`,
-	);
+	if (userByIdCache.hitCount + userByIdCache.missCount > 0)
+		logger.info(
+			`userById: ${userByIdCache.hitCount}:${userByIdCache.missCount}, ${userByIdCache.notFoundCount} n/f`,
+		);
+	if (
+		localUserByNativeTokenCache.hitCount +
+			localUserByNativeTokenCache.missCount >
+		0
+	)
+		logger.info(
+			`localUserByNativeToken: ${localUserByNativeTokenCache.hitCount}:${localUserByNativeTokenCache.missCount}, ${localUserByNativeTokenCache.notFoundCount} n/f`,
+		);
+	if (localUserByIdCache.hitCount + localUserByIdCache.missCount > 0)
+		logger.info(
+			`localUserById: ${localUserByIdCache.hitCount}:${localUserByIdCache.missCount}, ${localUserByIdCache.notFoundCount} n/f`,
+		);
+	if (uriPersonCache.hitCount + uriPersonCache.missCount > 0)
+		logger.info(
+			`uriPerson: ${uriPersonCache.hitCount}:${uriPersonCache.missCount}, ${uriPersonCache.notFoundCount} n/f`,
+		);
 }, 1000 * 60);
 
 subscriber.on("message", async (_, data) => {
