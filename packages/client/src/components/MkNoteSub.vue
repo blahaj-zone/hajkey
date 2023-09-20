@@ -281,7 +281,7 @@ const isDeleted = ref(false);
 const muted = ref(getWordSoftMute(note, $i, defaultStore.state.mutedWords));
 const translation = ref(null);
 const translating = ref(false);
-const repliesDepth = defaultStore.state.repliesDepth;
+const repliesDepth = ~~(defaultStore.state.repliesDepth);
 const replies: misskey.entities.Note[] =
 	$computed(() => props.conversation
       ?.filter(

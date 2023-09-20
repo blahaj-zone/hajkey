@@ -355,7 +355,7 @@ directReplies.value = null;
 os.api("notes/children", {
 	noteId: note.id,
 	limit: 30,
-	depth: repliesDepth + 1,
+	depth: ~~(repliesDepth) + 1,
 }).then((res) => {
 	res = res.reduce((acc, resNote) => {
 		if (resNote.userId == note.userId) {

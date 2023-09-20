@@ -74,7 +74,7 @@ const steps = computed(() => {
 });
 
 function onChange(x) {
-	emit("update:modelValue", inputVal);
+	emit("update:modelValue", ~~inputVal);
 }
 
 const tooltipShowing = ref(false);
